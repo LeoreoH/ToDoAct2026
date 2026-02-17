@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura Interactiva</title>
+    <link rel="stylesheet" href="styles-aventura.css">
+</head>
+
+<body>
+    <header class="game-header">
+        <button class="boton-volver" onclick="volverAInicio()">← Volver</button>
+        <h1>Aventura Interactiva</h1>
+    </header>
+
+    <div class="container">
+        <div id="etapas">
+            <div id="etapa1" class="etapa activa">
+                <div class="bienvenida-aventura">
+                    <h2 class="titulo-bienvenida">👋 ¡Hola, explorador!</h2>
+
+                    <p class="subtitulo">En esta aventura vas a:</p>
+
+                    <div class="paso"><span class="icono">⚑</span> <span>Elegir <strong>un lugar
+                                misterioso</strong></span></div>
+                    <div class="paso"><span class="icono">🎒</span> <span>Preparar tu <strong>mochila</strong> con
+                            objetos esenciales</span></div>
+                    <div class="paso"><span class="icono">❓</span> <span>Superar <strong>desafíos</strong> de pregunta
+                            rápida</span></div>
+                    <div class="paso"><span class="icono">🏆</span> <span>Ganar puntos y <strong>una
+                                medalla</strong></span></div>
+
+                    <p class="mensaje-final">¡Piensa bien cada decisión y diviértete!</p>
+                </div>
+
+                <button id="comenzar">Comenzar Aventura</button>
+            </div>
+
+            <div id="etapa2" class="etapa">
+                <h2>Selecciona tu ruta</h2>
+                <p>Elige hacia donde deseas aventurarte. Cada lugar tiene sus propios desafíos:</p>
+                <div class="opciones grid-rutas" id="opcionesRutas" aria-label="Lista de rutas"></div>
+            </div>
+
+            <div id="etapaPlot" class="etapa">
+                <h2>Tu historia comienza…</h2>
+                <p id="textoPlot"></p>
+
+                <button id="btnContinuarPlot">Preparar equipamiento</button>
+            </div>
+
+            <div id="etapa3" class="etapa">
+                <h2>Prepara tu Equipamiento</h2>
+
+                <p id="rutaActual" class="ruta-actual"></p>
+                <p>Arrastra los objetos que necesitarás para tu aventura. ¡Elige sabiamente!</p>
+
+                <div class="contenedor-objetos">
+                    <div class="objetos-disponibles">
+                        <h3>Objetos disponibles:</h3>
+                        <div class="objetos" id="objetos"></div>
+                    </div>
+                    <div class="maleta-container">
+                        <h3>Tu mochila:</h3>
+                        <div class="maleta" id="maleta"></div>
+                        <p class="contador-objetos">Objetos seleccionados: <span id="contador">0</span></p>
+                    </div>
+                </div>
+
+                <button id="siguienteEtapa3">Continuar Aventura</button>
+            </div>
+
+            <div id="etapa4" class="etapa">
+                <div class="desafio-container">
+                    <h2>Desafío <span id="numeroDesafio">1</span></h2>
+                    <div class="barra-progreso">
+                        <div class="progreso" id="progresoDesafios"></div>
+                    </div>
+                    <p id="pregunta"></p>
+                    <div class="opciones-desafio" id="opcionesDesafio"></div>
+                    <div id="retroalimentacion" class="retroalimentacion"></div>
+                </div>
+            </div>
+
+            <div id="etapa5" class="etapa">
+                <h2>Resumen de tu Aventura</h2>
+                <div class="medalla" id="medalla"></div>
+                <div id="resumenAventura"></div>
+                <button id="reiniciar">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+    <script src="configClient.js"></script>
+    <script src="script-aventura.js"></script>
+</body>
+
+</html>

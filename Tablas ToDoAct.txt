@@ -1,0 +1,237 @@
+--------------------TABLAS--------------------
+
+CREATE TABLE usuarios(
+	id SERIAL PRIMARY KEY,
+	usuario VARCHAR(50) UNIQUE NOT NULL,
+	contraseña VARCHAR(50) UNIQUE NOT NULL,
+	nombrecompleto VARCHAR(255) NOT NULL,
+	fechanacimiento DATE NOT NULL,
+	genero VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE actividades(
+	id INT PRIMARY KEY,
+	actividad VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE niveles(
+	id SERIAL NOT NULL PRIMARY KEY,
+	id_usuario INT NOT NULL,
+	id_actividad INT NOT NULL,
+	categoria TEXT DEFAULT NULL,
+	nivel INT NOT NULL,
+	desbloqueado BOOLEAN DEFAULT false,
+	FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+	FOREIGN KEY (id_actividad) REFERENCES actividades(id)
+);
+
+CREATE INDEX niveles_idx ON niveles (id_usuario, id_actividad, categoria, nivel);
+
+CREATE TABLE puntuaciones(
+	id SERIAL PRIMARY KEY,
+	id_usuario INT NOT NULL,
+	id_actividad INT NOT NULL,
+	categoria TEXT,
+	nivel INT NOT NULL,
+	puntuacion INT NOT NULL,
+	tiempo INT NOT NULL,
+	errores INT NOT NULL,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+	FOREIGN KEY (id_actividad) REFERENCES actividades(id)
+);
+
+--------------------INSERTS DE ACTIVIDADES--------------------
+
+INSERT INTO actividades(id, actividad) VALUES(1, 'Planificación de una aventura');
+INSERT INTO actividades(id, actividad) VALUES(2, 'Memorama');
+INSERT INTO actividades(id, actividad) VALUES(3, 'Problemas matemáticos');
+INSERT INTO actividades(id, actividad) VALUES(4, 'Notas musicales');
+INSERT INTO actividades(id, actividad) VALUES(5, 'Sopa de letras');
+
+--------------------SELECTS--------------------
+
+SELECT * FROM USUARIOS;
+SELECT * FROM ACTIVIDADES;
+SELECT * FROM NIVELES;
+SELECT * FROM PUNTUACIONES;
+
+
+--------------------MODIFICACIONES A TABLAS EXISTENTES (MÓDULO ASTRONOMÍA)--------------------
+
+ALTER TABLE usuarios ADD COLUMN estilo_aprendizaje VARCHAR(30);
+ALTER TABLE puntuaciones ADD COLUMN estilo_mostrado VARCHAR(30);
+
+
+--------------------TABLAS NUEVAS (MÓDULO ASTRONOMÍA)--------------------
+
+CREATE TABLE contenidos (
+	id SERIAL PRIMARY KEY,
+	area VARCHAR(50) NOT NULL,
+	slug VARCHAR(100) NOT NULL,
+	nombre VARCHAR(150) NOT NULL,
+	orden INT DEFAULT 0,
+	activo BOOLEAN DEFAULT true
+);
+
+CREATE TABLE niveles_contenido (
+	id SERIAL PRIMARY KEY,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE progreso_contenido_usuario (
+	usuario VARCHAR(50) NOT NULL,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	diagnostico_realizado BOOLEAN DEFAULT false,
+	nivel_asignado VARCHAR(20),
+	contenido_completado BOOLEAN DEFAULT false,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	-- Métricas del diagnóstico
+	tiempo_total_diagnostico INTEGER,
+	fecha_inicio_diagnostico TIMESTAMP,
+	fecha_fin_diagnostico TIMESTAMP,
+	PRIMARY KEY (usuario, contenido_id)
+);
+
+CREATE TABLE contenidos_archivos (
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel VARCHAR(20) NOT NULL,
+	estilo VARCHAR(30) NOT NULL,
+	archivo TEXT NOT NULL,
+	PRIMARY KEY (contenido_id, nivel, estilo)
+);
+
+CREATE TABLE examenes_diagnostico (
+	id SERIAL PRIMARY KEY,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	activo BOOLEAN DEFAULT true
+);
+
+CREATE TABLE preguntas_diagnostico (
+	id SERIAL PRIMARY KEY,
+	examen_id INTEGER NOT NULL REFERENCES examenes_diagnostico(id) ON DELETE CASCADE,
+	pregunta TEXT NOT NULL,
+	opcion_a TEXT NOT NULL,
+	opcion_b TEXT NOT NULL,
+	opcion_c TEXT NOT NULL,
+	opcion_d TEXT NOT NULL,
+	respuesta_correcta CHAR(1) NOT NULL
+);
+
+-- Las preguntas del diagnóstico se insertan con preguntas.sql (archivo separado)
+
+CREATE TABLE respuestas_diagnostico (
+	id SERIAL PRIMARY KEY,
+	usuario VARCHAR(50) NOT NULL,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	pregunta_id INTEGER NOT NULL REFERENCES preguntas_diagnostico(id) ON DELETE CASCADE,
+	respuesta_dada CHAR(1) NOT NULL,
+	es_correcta BOOLEAN NOT NULL,
+	intento INTEGER NOT NULL DEFAULT 1,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_resp_diag_usuario   ON respuestas_diagnostico(usuario);
+CREATE INDEX idx_resp_diag_contenido ON respuestas_diagnostico(contenido_id);
+CREATE INDEX idx_resp_diag_pregunta  ON respuestas_diagnostico(pregunta_id);
+CREATE INDEX idx_resp_diag_correcta  ON respuestas_diagnostico(es_correcta);
+
+-- Resultados del mini-quiz por nivel y estilo
+CREATE TABLE resultados_quiz (
+	id              SERIAL PRIMARY KEY,
+	usuario         VARCHAR(50) NOT NULL,
+	contenido_id    INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel           VARCHAR(20) NOT NULL,
+	estilo          VARCHAR(30) NOT NULL,
+	aciertos        INTEGER NOT NULL DEFAULT 0,
+	total_preguntas INTEGER NOT NULL DEFAULT 5,
+	puntaje         INTEGER NOT NULL DEFAULT 0,
+	tiempo_total    INTEGER,
+	intento         INTEGER NOT NULL DEFAULT 1,
+	aprobado        BOOLEAN NOT NULL DEFAULT false,
+	fecha_inicio    TIMESTAMP,
+	fecha_fin       TIMESTAMP,
+	fecha           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_quiz_usuario   ON resultados_quiz(usuario);
+CREATE INDEX idx_quiz_contenido ON resultados_quiz(contenido_id);
+CREATE INDEX idx_quiz_nivel     ON resultados_quiz(nivel);
+CREATE INDEX idx_quiz_aprobado  ON resultados_quiz(aprobado);
+
+CREATE TABLE ejercicios (
+	id SERIAL PRIMARY KEY,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel VARCHAR(20) NOT NULL,
+	enunciado TEXT NOT NULL,
+	respuesta_correcta TEXT NOT NULL,
+	retro_generica TEXT
+);
+
+CREATE TABLE progreso_ejercicio_usuario (
+	usuario        VARCHAR(50) NOT NULL,
+	ejercicio_id   INTEGER NOT NULL REFERENCES ejercicios(id) ON DELETE CASCADE,
+	correcto       BOOLEAN,
+	tiempo_segundos INTEGER,
+	intento        INTEGER NOT NULL DEFAULT 1,
+	respuesta_dada TEXT,
+	fecha_inicio   TIMESTAMP,
+	fecha_fin      TIMESTAMP,
+	fecha          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (usuario, ejercicio_id)
+);
+
+CREATE TABLE errores_ejercicio (
+	id                SERIAL PRIMARY KEY,
+	ejercicio_id      INTEGER NOT NULL REFERENCES ejercicios(id) ON DELETE CASCADE,
+	respuesta_erronea TEXT NOT NULL,
+	explicacion       TEXT NOT NULL
+);
+
+
+--------------------INSERTS MÓDULO ASTRONOMÍA--------------------
+
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo)
+VALUES (1, 'astronomia', 'sistema-solar', 'El Sistema Solar', 1, true);
+
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'facil');
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'normal');
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'dificil');
+
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES (1, 1, true);
+
+-- Las preguntas del diagnóstico se insertan con preguntas.sql (archivo separado)
+
+-- Archivos de contenido por nivel y estilo
+-- NOTA: ajusta las rutas si cambia la estructura de carpetas en public/
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo)
+VALUES
+(1, 'facil',   'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/visual_verbal.html'),
+(1, 'facil',   'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/visual_no_verbal.html'),
+(1, 'facil',   'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/auditivo.html'),
+(1, 'facil',   'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/kinestesico.html'),
+(1, 'normal',  'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/visual_verbal.html'),
+(1, 'normal',  'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/visual_no_verbal.html'),
+(1, 'normal',  'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/auditivo.html'),
+(1, 'normal',  'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/kinestesico.html'),
+(1, 'dificil', 'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/visual_verbal.html'),
+(1, 'dificil', 'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/visual_no_verbal.html'),
+(1, 'dificil', 'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/auditivo.html'),
+(1, 'dificil', 'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/kinestesico.html')
+ON CONFLICT (contenido_id, nivel, estilo) DO UPDATE SET archivo = EXCLUDED.archivo;
+
+
+--------------------SELECTS MÓDULO ASTRONOMÍA--------------------
+
+SELECT * FROM contenidos;
+SELECT * FROM niveles_contenido;
+SELECT * FROM progreso_contenido_usuario;
+SELECT * FROM contenidos_archivos;
+SELECT * FROM examenes_diagnostico;
+SELECT * FROM preguntas_diagnostico;
+SELECT * FROM respuestas_diagnostico;
+SELECT * FROM resultados_quiz;
+SELECT * FROM ejercicios;
+SELECT * FROM progreso_ejercicio_usuario;
+SELECT * FROM errores_ejercicio;

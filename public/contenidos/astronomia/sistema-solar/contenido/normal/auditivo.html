@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Sistema Solar - Nivel Normal - Auditivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #1565c0;
+      --azul-oscuro: #0d47a1;
+      --azul-suave: #e3f2fd;
+      --texto: #1a237e;
+      --texto-suave: #37474f;
+      --blanco: #ffffff;
+      --amarillo: #ffd600;
+      --fondo: #f0f4ff;
+      --naranja: #ff6f00;
+      --verde: #4caf50;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--fondo);
+      min-height: 100vh;
+      color: var(--texto);
+      line-height: 1.8;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(21,101,192,0.4);
+    }
+    .header-icon { font-size: 40px; }
+    .header h1 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--blanco); }
+    .header p { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 600; }
+    .badge-nivel {
+      margin-left: auto; background: var(--naranja); color: var(--blanco);
+      padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 13px;
+    }
+
+    .main { max-width: 820px; margin: 0 auto; padding: 32px 20px; }
+
+    .card {
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(21,101,192,0.1);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.5s forwards;
+    }
+    .card:nth-child(1){animation-delay:0.1s}
+    .card:nth-child(2){animation-delay:0.2s}
+    .card:nth-child(3){animation-delay:0.3s}
+    .card:nth-child(4){animation-delay:0.4s}
+    .card:nth-child(5){animation-delay:0.5s}
+    .card:nth-child(6){animation-delay:0.6s}
+    .card:nth-child(7){animation-delay:0.7s}
+    .card:nth-child(8){animation-delay:0.8s}
+
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+    .narrador-intro {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left: 5px solid var(--azul);
+      padding: 20px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--texto);
+      line-height: 1.7;
+    }
+
+    .narrador-intro .emoji {
+      font-size: 28px;
+      margin-right: 10px;
+    }
+
+    .audio-simulado {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(21,101,192,0.3);
+    }
+
+    .audio-icon {
+      font-size: 40px;
+      animation: pulsar 2s ease-in-out infinite;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .audio-texto {
+      flex: 1;
+      color: var(--blanco);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .seccion-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: var(--azul);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dialogo-box {
+      background: #fff9c4;
+      border-left: 4px solid var(--amarillo);
+      padding: 18px 22px;
+      border-radius: 12px;
+      margin: 18px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #f57f17;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .dialogo-box::before {
+      content: '"';
+      font-size: 32px;
+      font-weight: 900;
+      margin-right: 8px;
+      line-height: 0;
+      vertical-align: -8px;
+    }
+
+    .dialogo-box::after {
+      content: '"';
+      font-size: 32px;
+      font-weight: 900;
+      margin-left: 8px;
+      line-height: 0;
+      vertical-align: -8px;
+    }
+
+    .conversacion {
+      background: var(--azul-suave);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    .mensaje {
+      margin-bottom: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .mensaje-pregunta {
+      background: #e1f5fe;
+      border-left: 4px solid #0277bd;
+      color: #01579b;
+    }
+
+    .mensaje-respuesta {
+      background: #f3e5f5;
+      border-left: 4px solid #7b1fa2;
+      color: #4a148c;
+    }
+
+    .mensaje strong {
+      font-weight: 800;
+    }
+
+    .dato-sonoro {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      border-left: 4px solid var(--naranja);
+    }
+
+    .dato-sonoro-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      color: var(--naranja);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dato-sonoro-texto {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e65100;
+      line-height: 1.7;
+    }
+
+    p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--texto-suave);
+      font-weight: 600;
+      line-height: 1.8;
+    }
+
+    .enfasis {
+      background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      color: #f57f17;
+    }
+
+    /* ===== QUIZ ===== */
+    .quiz-section {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(21,101,192,0.35);
+      color: var(--blanco);
+    }
+
+    .quiz-header { text-align: center; margin-bottom: 28px; }
+    .quiz-header .quiz-icon { font-size: 48px; margin-bottom: 8px; }
+    .quiz-header h2 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--blanco); margin-bottom: 6px; }
+    .quiz-header p { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 600; }
+
+    .quiz-pregunta { background: rgba(255,255,255,0.12); border-radius: 16px; padding: 20px; margin-bottom: 20px; display: none; }
+    .quiz-pregunta.activa { display: block; }
+
+    .pregunta-numero { font-size: 12px; font-weight: 800; color: var(--amarillo); letter-spacing: 1px; margin-bottom: 10px; }
+    .pregunta-texto { font-size: 18px; font-weight: 700; color: var(--blanco); margin-bottom: 18px; line-height: 1.4; }
+
+    .opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .opcion-btn {
+      background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px; padding: 12px 14px; color: var(--blanco);
+      font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; text-align: left;
+    }
+    .opcion-btn:hover:not(:disabled) { background: rgba(255,255,255,0.25); border-color: var(--amarillo); transform: scale(1.02); }
+    .opcion-btn.correcta { background: rgba(76,175,80,0.4); border-color: #81c784; }
+    .opcion-btn.incorrecta { background: rgba(244,67,54,0.35); border-color: #ef9a9a; }
+
+    .feedback-texto { margin-top: 14px; padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 700; display: none; }
+    .feedback-texto.visible { display: block; }
+    .feedback-texto.bien { background: rgba(76,175,80,0.3); color: #c8e6c9; }
+    .feedback-texto.mal { background: rgba(244,67,54,0.3); color: #ffcdd2; }
+
+    .quiz-progreso { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+    .quiz-punto { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; }
+    .quiz-punto.respondida { background: var(--amarillo); }
+    .quiz-punto.activa-punto { background: var(--blanco); transform: scale(1.3); }
+
+    .quiz-resultado { display: none; text-align: center; padding: 20px; }
+    .quiz-resultado.visible { display: block; }
+    .resultado-emoji { font-size: 64px; margin-bottom: 12px; }
+    .resultado-titulo { font-family: 'Fredoka One', cursive; font-size: 28px; margin-bottom: 8px; }
+    .resultado-puntaje { font-size: 48px; font-weight: 900; color: var(--amarillo); margin: 12px 0; }
+    .resultado-mensaje { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 24px; }
+
+    .btn-principal {
+      background: var(--amarillo); color: var(--texto); border: none; border-radius: 14px;
+      padding: 14px 32px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+      cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .btn-principal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+
+    .btn-secundario {
+      background: rgba(255,255,255,0.2); color: var(--blanco);
+      border: 2px solid rgba(255,255,255,0.5); border-radius: 14px;
+      padding: 12px 28px; font-family: 'Nunito', sans-serif; font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 10px;
+    }
+    .btn-secundario:hover { background: rgba(255,255,255,0.3); }
+
+    .guardando { display: none; align-items: center; justify-content: center; gap: 10px; color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 700; margin-top: 14px; }
+    .guardando.visible { display: flex; }
+    .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: var(--blanco); border-radius: 50%; animation: girar 0.8s linear infinite; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      .opciones { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🌌</div>
+  <div>
+    <h1>El Sistema Solar</h1>
+    <p>Módulo 1 · Auditivo</p>
+  </div>
+  <div class="badge-nivel">🔥 Nivel Normal</div>
+</div>
+
+<div class="main">
+
+  <div class="narrador-intro">
+    <span class="emoji">🎙️</span>
+    <strong>Bienvenido al nivel Normal.</strong> En esta lección vamos a profundizar en los secretos del Sistema Solar. Escucha con atención cada sección y descubre datos increíbles que no conocías. Imagina que estás escuchando un documental espacial mientras lees. ¡Comencemos nuestro viaje!
+  </div>
+
+  <!-- Sección 1: Lunas Especiales -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🌙</span>
+      <span>Lunas Especiales del Sistema Solar</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Mientras que la Tierra tiene una sola luna, Júpiter tiene 95 lunas confirmadas hasta ahora. Algunas de estas lunas son tan especiales que los científicos creen que podrían albergar vida."
+      </div>
+    </div>
+
+    <p>Hoy vamos a hablar de tres lunas extraordinarias. Presta atención porque cada una tiene características únicas que las hacen fascinantes.</p>
+
+    <div class="dialogo-box">
+      Imagina que eres un explorador espacial y acabas de llegar a Europa, una luna de Júpiter. Miras hacia abajo y ves una superficie completamente congelada, brillante como un espejo. Pero lo más emocionante no es lo que ves, sino lo que está debajo de ese hielo.
+    </div>
+
+    <p><span class="enfasis">Europa</span> tiene un océano de agua líquida bajo una capa de hielo de varios kilómetros de espesor. Este océano es probablemente más profundo que todos los océanos de la Tierra juntos. ¿Por qué no se congela toda el agua? Porque la gravedad de Júpiter "estira" y "aprieta" constantemente a Europa, generando calor interno que mantiene el océano líquido.</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Escucha Esto</div>
+      <div class="dato-sonoro-texto">Los científicos han detectado géiseres en Europa: chorros de agua que salen desde el océano subterráneo y llegan hasta el espacio. Es como si la luna estuviera "llorando" agua al espacio.</div>
+    </div>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿Podría haber vida en Europa?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> Los científicos creen que sí es posible. En la Tierra hay vida en las profundidades del océano, incluso donde no llega la luz del Sol. Si Europa tiene agua líquida y calor, podría tener las condiciones para vida microscópica.
+      </div>
+    </div>
+
+    <p>Ahora viajemos a <span class="enfasis">Titán</span>, la luna más grande de Saturno. Cuando llegas ahí, lo primero que notas es que el cielo es naranja y denso. Titán es el único satélite del Sistema Solar con una atmósfera densa como la de la Tierra, pero su atmósfera está llena de nitrógeno y metano.</p>
+
+    <div class="dialogo-box">
+      Miras hacia abajo y ves algo increíble: lagos, ríos y hasta mares. Pero no son de agua, son de metano líquido. En la Tierra usamos metano para cocinar, pero en Titán hace tanto frío que el metano se comporta como agua líquida.
+    </div>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Dato Curioso</div>
+      <div class="dato-sonoro-texto">La atmósfera de Titán es tan densa que si tuvieras alas, podrías volar fácilmente. Claro, necesitarías un traje especial porque la temperatura es de -179°C.</div>
+    </div>
+
+    <p>Finalmente, visitemos <span class="enfasis">Ío</span>, otra luna de Júpiter. Apenas te acercas, ves erupciones volcánicas por todos lados. Ío tiene más de 400 volcanes activos, más que cualquier otro lugar del Sistema Solar. Algunos volcanes lanzan lava a 500 kilómetros de altura.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿Por qué Ío tiene tantos volcanes?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> Por la misma razón que Europa tiene océano líquido. La gravedad de Júpiter "estira" a Ío tanto que genera un calor extremo en su interior, derritiendo rocas y creando erupciones volcánicas constantes.
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección 2: Récords Planetarios -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🏆</span>
+      <span>Récords Extremos del Sistema Solar</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Cada planeta tiene algo que lo hace único. Vamos a descubrir los récords más impresionantes de nuestro Sistema Solar."
+      </div>
+    </div>
+
+    <p>Empecemos con el Monte Everest, la montaña más alta de la Tierra. Mide 8.8 kilómetros de altura. Ahora escucha esto: en Marte existe <span class="enfasis">Olympus Mons</span>, un volcán que mide aproximadamente 25 kilómetros de altura. ¡Es casi tres veces más alto que el Everest!</p>
+
+    <div class="dialogo-box">
+      Si estuvieras en la cima de Olympus Mons, la curva del planeta haría que no pudieras ver su base. Es tan grande que su base cubre un área del tamaño de Francia entera.
+    </div>
+
+    <p>Ahora hablemos del tiempo. Aquí en la Tierra, un día dura 24 horas. Pero en <span class="enfasis">Venus</span>, un solo día dura 243 días terrestres. Escuchaste bien: ¡243 días! Esto significa que el día en Venus es más largo que su año, que dura solo 225 días terrestres.</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Algo Más</div>
+      <div class="dato-sonoro-texto">Venus gira al revés comparado con la mayoría de los planetas. Si estuvieras ahí, verías al Sol salir por el oeste y ponerse por el este. Todo al revés.</div>
+    </div>
+
+    <p>¿Y el planeta más frío? Aunque Neptuno está más lejos del Sol, <span class="enfasis">Urano</span> es el planeta más frío del Sistema Solar. Su temperatura puede bajar hasta -224°C. Esto se debe a que Urano casi no tiene calor interno.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 ¿Sabías que...?</strong>
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡</strong> Urano está "acostado" de lado. Su eje de rotación está inclinado 98 grados. Por eso, cada polo tiene 42 años de luz solar continua, seguidos de 42 años de oscuridad total. ¡Imagina una noche que dura 42 años!
+      </div>
+    </div>
+
+    <p>En <span class="enfasis">Júpiter</span> hay una tormenta gigante llamada la Gran Mancha Roja. Es tan grande que cabrían tres Tierras dentro de ella. Lo más impresionante es que lleva activa más de 300 años. La descubrieron en el año 1665 y todavía sigue ahí.</p>
+
+    <div class="dialogo-box">
+      Los vientos de esta tormenta pueden alcanzar velocidades de hasta 640 kilómetros por hora. Para darte una idea, los huracanes más fuertes de la Tierra llegan a 250 km/h. ¡La Gran Mancha Roja es más del doble de fuerte!
+    </div>
+
+    <p>Y aquí va un dato que sorprende a mucha gente: <span class="enfasis">todos los planetas gigantes tienen anillos</span>. No solo Saturno. Júpiter, Urano y Neptuno también tienen sistemas de anillos, pero son mucho más delgados y oscuros, por eso son difíciles de ver desde la Tierra.</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Escucha Esto</div>
+      <div class="dato-sonoro-texto">Los anillos de Saturno son tan espectaculares porque están hechos de billones de piezas de hielo que reflejan la luz del Sol como espejos. Los anillos de los otros planetas están hechos principalmente de polvo oscuro.</div>
+    </div>
+  </div>
+
+  <!-- Sección 3: El Cinturón de Asteroides -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>☄️</span>
+      <span>El Cinturón de Asteroides</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Imagina que vas viajando en una nave espacial desde Marte hacia Júpiter. De repente empiezas a ver rocas flotando por todos lados. Has entrado al Cinturón de Asteroides."
+      </div>
+    </div>
+
+    <p>El Cinturón de Asteroides es una zona entre Marte y Júpiter llena de millones de rocas espaciales de diferentes tamaños. Es como un río de piedras que rodea al Sol.</p>
+
+    <div class="dialogo-box">
+      Los asteroides son fragmentos de roca y metal que quedaron del momento en que se formó el Sistema Solar hace 4,600 millones de años. Son como los "restos de construcción" que sobraron cuando se crearon los planetas.
+    </div>
+
+    <p>Hay asteroides de todos los tamaños. Los más pequeños son del tamaño de una piedra que cabe en tu mano. Los más grandes miden cientos de kilómetros de diámetro. El más grande se llama <span class="enfasis">Ceres</span> y mide 940 kilómetros. Ahora se clasifica como planeta enano.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿Por qué no se formó un planeta en esa zona?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> Los científicos creen que Júpiter es el responsable. Su enorme gravedad "revolvió" tanto esa zona que las rocas nunca pudieron unirse para formar un planeta. En lugar de eso, quedaron esparcidas formando el cinturón.
+      </div>
+    </div>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Dato Tranquilizador</div>
+      <div class="dato-sonoro-texto">Aunque hay millones de asteroides, el espacio entre ellos es tan grande que las naves espaciales pueden atravesar el cinturón sin chocar con ninguno. De hecho, varias misiones han pasado por ahí sin problemas.</div>
+    </div>
+
+    <p>Si juntaras todos los asteroides que existen en el cinturón, no llegarían a formar ni siquiera un planeta pequeño. Su masa total es menor que la de nuestra Luna. Están muy esparcidos en una zona gigante del espacio.</p>
+  </div>
+
+  <!-- Sección 4: Cometas -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>☄️</span>
+      <span>Los Cometas: Viajeros del Espacio Profundo</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "En las noches antiguas, cuando la gente veía un cometa en el cielo, pensaba que era un mensaje de los dioses. Hoy sabemos que son bolas de nieve sucia que viajan por el Sistema Solar."
+      </div>
+    </div>
+
+    <p>Los cometas están hechos de hielo, polvo y rocas. Cuando están lejos del Sol, son solo una bola congelada flotando en el espacio. Pero cuando se acercan al Sol, algo mágico sucede.</p>
+
+    <div class="dialogo-box">
+      El calor del Sol empieza a evaporar el hielo del cometa. El hielo se convierte en gas y forma una nube brillante alrededor del núcleo. Luego, el viento solar (partículas que salen del Sol) empuja ese gas y polvo, creando una cola brillante que puede verse desde la Tierra.
+    </div>
+
+    <p>Lo curioso es que la cola del cometa <span class="enfasis">siempre apunta en dirección contraria al Sol</span>, sin importar hacia dónde se esté moviendo el cometa. Es como si el Sol estuviera "soplando" la cola.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿De dónde vienen los cometas?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> Vienen de dos lugares muy lejanos. Primero, el Cinturón de Kuiper, que está más allá de Neptuno. Segundo, la Nube de Oort, una nube gigante que rodea todo el Sistema Solar a una distancia enorme.
+      </div>
+    </div>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 El Cometa Halley</div>
+      <div class="dato-sonoro-texto">El cometa Halley es el más famoso. Se acerca a la Tierra cada 76 años. La última vez que lo vimos fue en 1986. La próxima vez será en el año 2061. Si tienes 10 años ahora, tendrás 85 años cuando vuelva a pasar. ¡Marca tu calendario!</div>
+    </div>
+
+    <p>Cuando el cometa se aleja del Sol, la cola desaparece y vuelve a ser una simple bola de hielo viajando por el espacio frío y oscuro hasta su próxima visita.</p>
+  </div>
+
+  <!-- Sección 5: Planetas Enanos -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🪐</span>
+      <span>Planetas Enanos</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "En agosto del año 2006 ocurrió algo histórico. Los científicos se reunieron y votaron para cambiar la definición de lo que es un planeta. Ese día, Plutón dejó de ser el noveno planeta."
+      </div>
+    </div>
+
+    <p>Durante 76 años, Plutón fue considerado un planeta. Los niños lo aprendían en la escuela: Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano, Neptuno y Plutón. Pero en 2006 todo cambió.</p>
+
+    <div class="dialogo-box">
+      Los científicos decidieron que para ser un planeta completo, un objeto debe cumplir tres requisitos: orbitar alrededor del Sol, tener suficiente gravedad para ser redondo, y haber "limpiado" su órbita. Plutón cumple los primeros dos, pero no el tercero.
+    </div>
+
+    <p>¿Qué significa "limpiar su órbita"? Significa que cerca de su trayectoria no debe haber muchas rocas grandes. Los planetas completos tienen suficiente gravedad para atraer o empujar todas las rocas cercanas. Plutón no hizo eso, así que ahora es un <span class="enfasis">planeta enano</span>.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 ¿Sabías que...?</strong>
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡</strong> Plutón es más pequeño que nuestra Luna. Está tan lejos que el Sol se ve como una estrella brillante desde ahí. Un año en Plutón dura 248 años terrestres. Si nacieras en Plutón, no celebrarías tu primer cumpleaños hasta los 248 años.
+      </div>
+    </div>
+
+    <p><span class="enfasis">Ceres</span> es otro planeta enano, pero está mucho más cerca. Se encuentra en el Cinturón de Asteroides, entre Marte y Júpiter. Es el objeto más grande del cinturón y podría tener agua bajo su superficie.</p>
+
+    <p>Y luego está <span class="enfasis">Eris</span>, un planeta enano tan lejano que tarda 557 años en dar una vuelta completa alrededor del Sol. Su descubrimiento en 2005 fue una de las razones por las que se creó la categoría de "planetas enanos".</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Curiosidad Final</div>
+      <div class="dato-sonoro-texto">Aunque Plutón ya no es un planeta completo, sigue siendo fascinante. En 2015, la sonda New Horizons lo visitó y tomó fotos increíbles. Descubrieron que tiene un "corazón" de hielo en su superficie: una gran llanura helada con forma de corazón.</div>
+    </div>
+  </div>
+
+  <!-- Sección 6: Eclipses -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🌑</span>
+      <span>Eclipses: Alineaciones Perfectas</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Imagina que estás en un día normal. De repente, notas que el cielo empieza a oscurecerse en pleno mediodía. En unos minutos, es casi de noche. Las estrellas aparecen. Estás viviendo un eclipse solar total."
+      </div>
+    </div>
+
+    <p>Un eclipse ocurre cuando el Sol, la Tierra y la Luna se alinean de una manera especial. Hay dos tipos principales de eclipses.</p>
+
+    <div class="dialogo-box">
+      En un eclipse solar, la Luna se pone exactamente entre el Sol y la Tierra. Desde la Tierra, vemos que la Luna tapa al Sol, haciendo que el cielo se oscurezca en pleno día. Puedes ver las estrellas. Los pájaros se confunden y piensan que llegó la noche. Es una experiencia increíble.
+    </div>
+
+    <p><span class="enfasis">¡Advertencia importante!</span> Nunca mires directamente al Sol durante un eclipse. Puede dañar tus ojos permanentemente. Debes usar gafas especiales para eclipses.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿Cuánto dura un eclipse solar?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> Un eclipse total puede durar desde unos segundos hasta 7 minutos y medio. Depende de qué tan perfectamente alineados estén el Sol, la Luna y la Tierra.
+      </div>
+    </div>
+
+    <p>En un <span class="enfasis">eclipse lunar</span>, la Tierra se pone entre el Sol y la Luna. La sombra de la Tierra cae sobre la Luna, haciéndola ver oscura o rojiza. Por eso también se llama "Luna de Sangre".</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Buena Noticia</div>
+      <div class="dato-sonoro-texto">Los eclipses lunares SÍ son seguros para ver directamente. No necesitas protección especial. Puedes mirar la Luna roja toda la noche si quieres.</div>
+    </div>
+
+    <p>¿Por qué no hay eclipses todos los meses? Porque la órbita de la Luna alrededor de la Tierra está ligeramente inclinada. La mayoría de los meses, la Luna pasa por arriba o por debajo de la sombra de la Tierra. Solo cuando la alineación es perfecta ocurre un eclipse.</p>
+
+    <div class="dialogo-box">
+      Aquí va un dato triste: los eclipses solares totales no ocurrirán para siempre. La Luna se está alejando de la Tierra aproximadamente 3.8 centímetros por año. En unos 600 millones de años, estará tan lejos que ya no podrá tapar completamente al Sol.
+    </div>
+  </div>
+
+  <!-- Sección 7: Fases de la Luna -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🌙</span>
+      <span>Las Fases de la Luna</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Esta noche sal a mirar la Luna. Mañana vuelve a mirarla. Notarás que su forma ha cambiado un poquito. Si la observas todas las noches durante un mes, verás un ciclo completo de cambios."
+      </div>
+    </div>
+
+    <p>La Luna no cambia de forma realmente. Lo que cambia es la parte que vemos iluminada por el Sol. Es como cuando tienes una pelota y una lámpara: dependiendo de dónde estés, ves iluminada una parte diferente de la pelota.</p>
+
+    <div class="dialogo-box">
+      Luna Nueva: La Luna está entre el Sol y la Tierra. No la vemos porque la parte iluminada está del otro lado, mirando al espacio. El cielo nocturno está muy oscuro.
+    </div>
+
+    <p>Luego, poco a poco, empezamos a ver una pequeña curva iluminada. Es la <span class="enfasis">Luna Creciente</span>. Cada noche vemos un poco más de luz hasta llegar al <span class="enfasis">Cuarto Creciente</span>, donde vemos exactamente la mitad de la Luna iluminada.</p>
+
+    <p>Después viene la <span class="enfasis">Gibosa Creciente</span> (más de la mitad iluminada) hasta llegar a la <span class="enfasis">Luna Llena</span>. En este momento, la Luna está al otro lado de la Tierra, opuesta al Sol. Vemos toda su cara iluminada. Es cuando está más brillante.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 ¿Sabías que...?</strong>
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡</strong> La Luna Llena ilumina tanto que puedes leer un libro afuera solo con su luz. De hecho, antes de que se inventaran las luces eléctricas, la gente planeaba viajes largos para las noches de Luna Llena porque había más luz para ver el camino.
+      </div>
+    </div>
+
+    <p>Después de la Luna Llena, empieza a disminuir la parte iluminada. Pasa por <span class="enfasis">Gibosa Menguante</span>, luego <span class="enfasis">Cuarto Menguante</span>, y finalmente <span class="enfasis">Luna Menguante</span> antes de volver a Luna Nueva.</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 El Ciclo Completo</div>
+      <div class="dato-sonoro-texto">La Luna tarda aproximadamente 29.5 días en completar todas estas fases. Este periodo se llama "mes lunar". De hecho, nuestros meses del calendario están basados en el ciclo de la Luna.</div>
+    </div>
+
+    <p>Y aquí va algo fascinante: <span class="enfasis">la Luna siempre nos muestra la misma cara</span>. Nunca vemos el "lado oscuro de la Luna" desde la Tierra. ¿Por qué? Porque la Luna tarda el mismo tiempo en girar sobre sí misma que en dar una vuelta alrededor de la Tierra.</p>
+  </div>
+
+  <!-- Sección 8: Meteoroides, Meteoros y Meteoritos -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>💫</span>
+      <span>De Meteoroide a Meteorito</span>
+    </div>
+
+    <div class="audio-simulado">
+      <div class="audio-icon">🔊</div>
+      <div class="audio-texto">
+        Escucha: "Es una noche clara y estás mirando las estrellas. De repente ves una luz brillante que cruza el cielo en un segundo. ¡Una estrella fugaz! Pides un deseo rápidamente."
+      </div>
+    </div>
+
+    <p>Pero no era una estrella. Las estrellas no se caen. Lo que viste fue un <span class="enfasis">meteoro</span>: una pequeña roca espacial que se quemó al entrar a la atmósfera de la Tierra.</p>
+
+    <div class="dialogo-box">
+      Mientras esa roca estaba flotando en el espacio, se llamaba meteoroide. Cuando entró a la atmósfera y empezó a brillar, se convirtió en meteoro. Si hubiera sido lo suficientemente grande para llegar al suelo, se llamaría meteorito.
+    </div>
+
+    <p>La mayoría de los meteoroides son muy pequeños, del tamaño de un grano de arena. Cuando entran a la atmósfera a más de 70 kilómetros por segundo, el roce con el aire los calienta tanto que se evaporan completamente. Por eso vemos solo un brillo rápido en el cielo.</p>
+
+    <div class="conversacion">
+      <div class="mensaje mensaje-pregunta">
+        <strong>🤔 Pregunta:</strong> ¿Son peligrosos los meteoros?
+      </div>
+      <div class="mensaje mensaje-respuesta">
+        <strong>💡 Respuesta:</strong> La mayoría no. Se queman completamente antes de llegar al suelo. Solo los meteoroides muy grandes pueden llegar a ser meteoritos y tocar tierra. Pero eso es raro.
+      </div>
+    </div>
+
+    <p>Los meteoros más brillantes se llaman <span class="enfasis">bólidos</span>. Son tan brillantes que a veces puedes verlos incluso durante el día. Algunos hacen ruido cuando pasan.</p>
+
+    <div class="dato-sonoro">
+      <div class="dato-sonoro-titulo">🎵 Lluvias de Meteoros</div>
+      <div class="dato-sonoro-texto">Varias veces al año, la Tierra pasa por zonas del espacio llenas de polvo dejado por cometas. Cuando esto sucede, vemos muchas "estrellas fugaces" en una sola noche. Las lluvias de meteoros más famosas son las Perseidas en agosto. En una noche pico puedes ver hasta 100 meteoros por hora.</div>
+    </div>
+
+    <p>Los meteoritos que llegan al suelo son muy valiosos para los científicos. Los estudian para aprender sobre el Sistema Solar. Algunos contienen materiales que no existen en la Tierra. Están en museos de todo el mundo.</p>
+
+    <div class="dialogo-box">
+      Dato final: Cada día caen a la Tierra aproximadamente 100 toneladas de polvo espacial y pequeños meteoritos. La mayoría son tan pequeños que ni siquiera los notamos. Lentamente, la Tierra está ganando masa gracias a este polvo del espacio.
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="quiz-section" id="quizSection">
+    <div class="quiz-header">
+      <div class="quiz-icon">🎯</div>
+      <h2>Mini-Quiz Nivel Normal</h2>
+      <p>Responde correctamente 5 de 6 preguntas para desbloquear el nivel difícil</p>
+    </div>
+
+    <div class="quiz-progreso" id="quizProgreso">
+      <div class="quiz-punto activa-punto" data-i="0"></div>
+      <div class="quiz-punto" data-i="1"></div>
+      <div class="quiz-punto" data-i="2"></div>
+      <div class="quiz-punto" data-i="3"></div>
+      <div class="quiz-punto" data-i="4"></div>
+      <div class="quiz-punto" data-i="5"></div>
+    </div>
+
+    <div id="quizPreguntas">
+      <div class="quiz-pregunta activa" id="q0">
+        <div class="pregunta-numero">PREGUNTA 1 DE 6</div>
+        <div class="pregunta-texto">¿Qué luna tiene un océano de agua líquida bajo una capa de hielo?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(0,'A','A')">🧊 Europa (luna de Júpiter)</button>
+          <button class="opcion-btn" onclick="responder(0,'B','A')">🪐 Titán (luna de Saturno)</button>
+          <button class="opcion-btn" onclick="responder(0,'C','A')">🌋 Ío (luna de Júpiter)</button>
+          <button class="opcion-btn" onclick="responder(0,'D','A')">🌕 La Luna (satélite de la Tierra)</button>
+        </div>
+        <div class="feedback-texto" id="fb0"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q1">
+        <div class="pregunta-numero">PREGUNTA 2 DE 6</div>
+        <div class="pregunta-texto">¿Dónde está el cinturón de asteroides?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(1,'A','B')">🌍 Entre la Tierra y Marte</button>
+          <button class="opcion-btn" onclick="responder(1,'B','B')">🪨 Entre Marte y Júpiter</button>
+          <button class="opcion-btn" onclick="responder(1,'C','B')">🪐 Más allá de Neptuno</button>
+          <button class="opcion-btn" onclick="responder(1,'D','B')">☀️ Entre el Sol y Mercurio</button>
+        </div>
+        <div class="feedback-texto" id="fb1"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q2">
+        <div class="pregunta-numero">PREGUNTA 3 DE 6</div>
+        <div class="pregunta-texto">¿Qué causa las fases de la Luna?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(2,'A','C')">🌍 La sombra de la Tierra sobre la Luna</button>
+          <button class="opcion-btn" onclick="responder(2,'B','C')">🌙 La Luna cambia de tamaño cada noche</button>
+          <button class="opcion-btn" onclick="responder(2,'C','C')">☀️ Solo vemos la parte iluminada por el Sol</button>
+          <button class="opcion-btn" onclick="responder(2,'D','C')">🌌 Las estrellas tapan partes de la Luna</button>
+        </div>
+        <div class="feedback-texto" id="fb2"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q3">
+        <div class="pregunta-numero">PREGUNTA 4 DE 6</div>
+        <div class="pregunta-texto">¿Qué es un meteoro?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(3,'A','B')">🪨 Una roca flotando en el espacio</button>
+          <button class="opcion-btn" onclick="responder(3,'B','B')">💫 Una roca que se quema al entrar a la atmósfera</button>
+          <button class="opcion-btn" onclick="responder(3,'C','B')">🌍 Una roca que llegó al suelo</button>
+          <button class="opcion-btn" onclick="responder(3,'D','B')">☄️ Un cometa pequeño</button>
+        </div>
+        <div class="feedback-texto" id="fb3"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q4">
+        <div class="pregunta-numero">PREGUNTA 5 DE 6</div>
+        <div class="pregunta-texto">¿Por qué Plutón ya no es considerado un planeta?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(4,'A','A')">🪐 No ha limpiado su órbita de otras rocas</button>
+          <button class="opcion-btn" onclick="responder(4,'B','A')">❄️ Es demasiado frío</button>
+          <button class="opcion-btn" onclick="responder(4,'C','A')">📏 Es demasiado pequeño</button>
+          <button class="opcion-btn" onclick="responder(4,'D','A')">🌌 Está muy lejos del Sol</button>
+        </div>
+        <div class="feedback-texto" id="fb4"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q5">
+        <div class="pregunta-numero">PREGUNTA 6 DE 6</div>
+        <div class="pregunta-texto">¿Cuántos planetas gigantes tienen anillos?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(5,'A','D')">💍 Solo Saturno</button>
+          <button class="opcion-btn" onclick="responder(5,'B','D')">🪐 Saturno y Júpiter</button>
+          <button class="opcion-btn" onclick="responder(5,'C','D')">🌌 Saturno, Júpiter y Urano</button>
+          <button class="opcion-btn" onclick="responder(5,'D','D')">✨ Los 4 gigantes (Júpiter, Saturno, Urano, Neptuno)</button>
+        </div>
+        <div class="feedback-texto" id="fb5"></div>
+      </div>
+    </div>
+
+    <div class="quiz-resultado" id="quizResultado">
+      <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+      <div class="resultado-titulo" id="resultadoTitulo">¡Excelente!</div>
+      <div class="resultado-puntaje" id="resultadoPuntaje">6/6</div>
+      <div class="resultado-mensaje" id="resultadoMensaje"></div>
+      <button class="btn-principal" id="btnAccion" onclick="irNivelDificil()">🚀 Ir al Nivel Difícil →</button>
+      <br>
+      <button class="btn-secundario" id="btnReintentar" onclick="reiniciarQuiz()" style="display:none">🔄 Intentar de nuevo</button>
+      <div class="guardando" id="guardandoDiv">
+        <div class="spinner"></div>
+        Guardando tu progreso...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let preguntaActual = 0;
+  let respuestas = [null,null,null,null,null,null];
+  let aciertos = 0;
+  const TOTAL = 6;
+  const MINIMO = 5;
+
+  function responder(idx, elegida, correcta) {
+    const pregEl = document.getElementById('q' + idx);
+    const botones = pregEl.querySelectorAll('.opcion-btn');
+    botones.forEach(b => b.disabled = true);
+
+    const esCorrecta = elegida === correcta;
+    if (esCorrecta) aciertos++;
+
+    const map = {A:0,B:1,C:2,D:3};
+    botones[map[elegida]].classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+    if (!esCorrecta) botones[map[correcta]].classList.add('correcta');
+
+    const fb = document.getElementById('fb' + idx);
+    fb.textContent = esCorrecta ? '¡Correcto! ⭐' : '❌ Revisa la respuesta marcada en verde.';
+    fb.className = 'feedback-texto visible ' + (esCorrecta ? 'bien' : 'mal');
+
+    const puntos = document.querySelectorAll('.quiz-punto');
+    puntos[idx].classList.add('respondida');
+    respuestas[idx] = esCorrecta;
+
+    setTimeout(() => {
+      if (idx < TOTAL - 1) {
+        document.getElementById('q' + idx).classList.remove('activa');
+        preguntaActual = idx + 1;
+        document.getElementById('q' + preguntaActual).classList.add('activa');
+        puntos[idx].classList.remove('activa-punto');
+        puntos[preguntaActual].classList.add('activa-punto');
+      } else {
+        mostrarResultado();
+      }
+    }, 1200);
+  }
+
+  function mostrarResultado() {
+    document.getElementById('quizPreguntas').style.display = 'none';
+    document.getElementById('quizProgreso').style.display = 'none';
+    const res = document.getElementById('quizResultado');
+    res.classList.add('visible');
+
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
+
+    document.getElementById('resultadoPuntaje').textContent = `${aciertos}/${TOTAL}`;
+    document.getElementById('resultadoEmoji').textContent = aprobado ? '🏆' : '📚';
+    document.getElementById('resultadoTitulo').textContent = aprobado ? '¡Excelente!' : 'Sigue practicando';
+    document.getElementById('resultadoMensaje').textContent = aprobado
+      ? `Obtuviste ${pct}%. ¡Increíble! El nivel difícil está desbloqueado.`
+      : `Obtuviste ${pct}%. Necesitas 83% o más para avanzar. ¡Escucha de nuevo las secciones e inténtalo!`;
+
+    if (aprobado) {
+      document.getElementById('btnAccion').style.display = 'inline-block';
+      document.getElementById('btnReintentar').style.display = 'none';
+      guardarProgreso(aprobado, pct);
+    } else {
+      document.getElementById('btnAccion').style.display = 'none';
+      document.getElementById('btnReintentar').style.display = 'inline-block';
+    }
+  }
+
+  async function guardarProgreso(aprobado, pct) {
+    const guardando = document.getElementById('guardandoDiv');
+    if (guardando) guardando.classList.add('visible');
+    try {
+      const res = await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id:     1,
+          nivel_completado: 'normal',
+          puntaje:          pct,
+          aprobado:         aprobado
+        })
+      });
+      const data = await res.json();
+      if (guardando) {
+        guardando.innerHTML = (res.ok && data.success) ? '✅ ¡Progreso guardado!' : '⚠️ No se pudo guardar. Puedes continuar.';
+        if (!res.ok) guardando.style.color = '#ffcc02';
+      }
+    } catch(e) { if (guardando) guardando.classList.remove('visible'); }
+  }
+
+  function irNivelDificil() {
+    window.location.href = '/contenidos/astronomia/sistema-solar/menu.html';
+  }
+
+  function reiniciarQuiz() {
+    preguntaActual = 0; aciertos = 0; respuestas = [null,null,null,null,null,null];
+    const correctas = ['A','B','C','B','A','D'];
+    for (let i = 0; i < TOTAL; i++) {
+      const el = document.getElementById('q' + i);
+      el.classList.remove('activa');
+      el.querySelectorAll('.opcion-btn').forEach((b, j) => {
+        b.disabled = false; b.className = 'opcion-btn';
+        const letra = ['A','B','C','D'][j];
+        b.onclick = () => responder(i, letra, correctas[i]);
+      });
+      document.getElementById('fb' + i).className = 'feedback-texto';
+    }
+    document.querySelectorAll('.quiz-punto').forEach((p,i) => {
+      p.className = 'quiz-punto' + (i===0?' activa-punto':'');
+    });
+    document.getElementById('q0').classList.add('activa');
+    document.getElementById('quizPreguntas').style.display = 'block';
+    document.getElementById('quizProgreso').style.display = 'flex';
+    document.getElementById('quizResultado').classList.remove('visible');
+    document.getElementById('guardandoDiv').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

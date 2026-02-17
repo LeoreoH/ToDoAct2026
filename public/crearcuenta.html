@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta</title>
+    <link rel="stylesheet" href="styles-index-crearcuenta.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="imagenlogo">
+            <img src="recursos/logo.jpg" alt="logo">
+        </div>
+
+        <form class="formulario">
+            <h1>Crear cuenta</h1>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="password" name="contraseña" placeholder="Contraseña" required>
+            <input type="text" name="nombrecompleto" placeholder="Nombre completo" required>
+            <label for="fechanacimiento">Fecha de nacimiento:</label>
+            <input type="date" name="fechanacimiento" required>
+            <label for="genero">Género:</label>
+            <select name="genero" id="genero" required>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+
+            <button type="button" onclick="crearCuenta(event)">Crear cuenta</button>
+            <a href="index.html" class="enlace">¿Ya tienes una cuenta? <span>Iniciar sesión</span></a>
+        </form>
+    </div>
+
+    <script src="configClient.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

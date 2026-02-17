@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Sistema Solar - Nivel Normal - Kinestésico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #1565c0;
+      --azul-oscuro: #0d47a1;
+      --azul-suave: #e3f2fd;
+      --texto: #1a237e;
+      --texto-suave: #37474f;
+      --blanco: #ffffff;
+      --amarillo: #ffd600;
+      --fondo: #f0f4ff;
+      --naranja: #ff6f00;
+      --verde: #4caf50;
+      --morado: #7b1fa2;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--fondo);
+      min-height: 100vh;
+      color: var(--texto);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(21,101,192,0.4);
+    }
+    .header-icon { font-size: 40px; }
+    .header h1 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--blanco); }
+    .header p { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 600; }
+    .badge-nivel {
+      margin-left: auto; background: var(--naranja); color: var(--blanco);
+      padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 13px;
+    }
+
+    .main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+
+    .card {
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(21,101,192,0.1);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.5s forwards;
+    }
+    .card:nth-child(1){animation-delay:0.1s}
+    .card:nth-child(2){animation-delay:0.2s}
+    .card:nth-child(3){animation-delay:0.3s}
+    .card:nth-child(4){animation-delay:0.4s}
+    .card:nth-child(5){animation-delay:0.5s}
+    .card:nth-child(6){animation-delay:0.6s}
+    .card:nth-child(7){animation-delay:0.7s}
+    .card:nth-child(8){animation-delay:0.8s}
+
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+    .actividad-header {
+      background: linear-gradient(135deg, var(--verde) 0%, #388e3c 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      color: var(--blanco);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+    }
+
+    .actividad-header .emoji { font-size: 32px; }
+    .actividad-header .texto {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .seccion-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: var(--azul);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .instruccion {
+      background: #fff9c4;
+      border-left: 4px solid var(--amarillo);
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f57f17;
+      line-height: 1.6;
+    }
+
+    .drag-drop-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .columna-opciones {
+      background: var(--azul-suave);
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 200px;
+    }
+
+    .columna-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .item-draggable {
+      background: var(--blanco);
+      border: 2px solid var(--azul);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      cursor: move;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--texto);
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .item-draggable:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(21,101,192,0.2);
+    }
+
+    .item-draggable.correcto {
+      background: #c8e6c9;
+      border-color: var(--verde);
+      color: #2e7d32;
+    }
+
+    .item-draggable.incorrecto {
+      background: #ffcdd2;
+      border-color: #c62828;
+      color: #b71c1c;
+    }
+
+    .zona-drop {
+      min-height: 50px;
+      border: 2px dashed #90caf9;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+
+    .zona-drop.drag-over {
+      background: #e3f2fd;
+      border-color: var(--azul);
+    }
+
+    .btn-interactivo {
+      background: var(--verde);
+      color: var(--blanco);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+      margin: 10px 5px;
+    }
+
+    .btn-interactivo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76,175,80,0.4);
+    }
+
+    .btn-secundario-act {
+      background: var(--azul);
+      color: var(--blanco);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(21,101,192,0.3);
+      margin: 10px 5px;
+    }
+
+    .btn-secundario-act:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(21,101,192,0.4);
+    }
+
+    .selector-interactivo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .opcion-selector {
+      background: var(--azul-suave);
+      border: 3px solid transparent;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 700;
+    }
+
+    .opcion-selector:hover {
+      border-color: var(--azul);
+      transform: scale(1.05);
+    }
+
+    .opcion-selector.seleccionada {
+      background: var(--azul);
+      color: var(--blanco);
+      border-color: var(--azul-oscuro);
+    }
+
+    .feedback-actividad {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--azul);
+      display: none;
+    }
+
+    .feedback-actividad.visible {
+      display: block;
+    }
+
+    .feedback-actividad.exito {
+      background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+      color: #2e7d32;
+    }
+
+    .simulador-container {
+      background: linear-gradient(180deg, #0a0a2e 0%, #1a237e 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      position: relative;
+      min-height: 250px;
+    }
+
+    .control-panel {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .slider-control {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .slider-label {
+      color: rgba(255,255,255,0.9);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.3);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--amarillo);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--amarillo);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .resultado-experimento {
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      color: rgba(255,255,255,0.95);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .tarjeta-clickeable {
+      background: var(--azul-suave);
+      border: 2px solid var(--azul);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .tarjeta-clickeable:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(21,101,192,0.2);
+    }
+
+    .tarjeta-clickeable.activa {
+      background: var(--azul);
+      color: var(--blanco);
+    }
+
+    .tarjeta-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .tarjeta-desc {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .contenido-expandible {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .contenido-expandible.expandido {
+      max-height: 500px;
+    }
+
+    /* ===== QUIZ ===== */
+    .quiz-section {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 24px rgba(21,101,192,0.35);
+      color: var(--blanco);
+    }
+
+    .quiz-header { text-align: center; margin-bottom: 28px; }
+    .quiz-header .quiz-icon { font-size: 48px; margin-bottom: 8px; }
+    .quiz-header h2 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--blanco); margin-bottom: 6px; }
+    .quiz-header p { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 600; }
+
+    .quiz-pregunta { background: rgba(255,255,255,0.12); border-radius: 16px; padding: 20px; margin-bottom: 20px; display: none; }
+    .quiz-pregunta.activa { display: block; }
+
+    .pregunta-numero { font-size: 12px; font-weight: 800; color: var(--amarillo); letter-spacing: 1px; margin-bottom: 10px; }
+    .pregunta-texto { font-size: 18px; font-weight: 700; color: var(--blanco); margin-bottom: 18px; line-height: 1.4; }
+
+    .opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .opcion-btn {
+      background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px; padding: 12px 14px; color: var(--blanco);
+      font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; text-align: left;
+    }
+    .opcion-btn:hover:not(:disabled) { background: rgba(255,255,255,0.25); border-color: var(--amarillo); transform: scale(1.02); }
+    .opcion-btn.correcta { background: rgba(76,175,80,0.4); border-color: #81c784; }
+    .opcion-btn.incorrecta { background: rgba(244,67,54,0.35); border-color: #ef9a9a; }
+
+    .feedback-texto { margin-top: 14px; padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 700; display: none; }
+    .feedback-texto.visible { display: block; }
+    .feedback-texto.bien { background: rgba(76,175,80,0.3); color: #c8e6c9; }
+    .feedback-texto.mal { background: rgba(244,67,54,0.3); color: #ffcdd2; }
+
+    .quiz-progreso { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+    .quiz-punto { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; }
+    .quiz-punto.respondida { background: var(--amarillo); }
+    .quiz-punto.activa-punto { background: var(--blanco); transform: scale(1.3); }
+
+    .quiz-resultado { display: none; text-align: center; padding: 20px; }
+    .quiz-resultado.visible { display: block; }
+    .resultado-emoji { font-size: 64px; margin-bottom: 12px; }
+    .resultado-titulo { font-family: 'Fredoka One', cursive; font-size: 28px; margin-bottom: 8px; }
+    .resultado-puntaje { font-size: 48px; font-weight: 900; color: var(--amarillo); margin: 12px 0; }
+    .resultado-mensaje { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 24px; }
+
+    .btn-principal {
+      background: var(--amarillo); color: var(--texto); border: none; border-radius: 14px;
+      padding: 14px 32px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+      cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .btn-principal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+
+    .btn-secundario {
+      background: rgba(255,255,255,0.2); color: var(--blanco);
+      border: 2px solid rgba(255,255,255,0.5); border-radius: 14px;
+      padding: 12px 28px; font-family: 'Nunito', sans-serif; font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 10px;
+    }
+    .btn-secundario:hover { background: rgba(255,255,255,0.3); }
+
+    .guardando { display: none; align-items: center; justify-content: center; gap: 10px; color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 700; margin-top: 14px; }
+    .guardando.visible { display: flex; }
+    .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: var(--blanco); border-radius: 50%; animation: girar 0.8s linear infinite; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+
+    @media (max-width: 700px) {
+      .drag-drop-area { grid-template-columns: 1fr; }
+      .opciones { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🌌</div>
+  <div>
+    <h1>El Sistema Solar</h1>
+    <p>Módulo 1 · Kinestésico</p>
+  </div>
+  <div class="badge-nivel">🔥 Nivel Normal</div>
+</div>
+
+<div class="main">
+
+  <!-- Actividad 1: Clasifica las Lunas -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🌙</span>
+      <span>Actividad 1: Clasifica las Lunas Especiales</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🎯</div>
+      <div class="texto">Arrastra cada característica a la luna correcta. ¡Pon a prueba tu memoria!</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Lee cada característica y arrástrala a la columna de la luna correcta (Europa, Titán o Ío).
+    </div>
+
+    <div id="activ1-container">
+      <div class="columna-opciones" style="grid-column: 1/-1; margin-bottom: 20px;">
+        <div class="columna-titulo">Características para clasificar:</div>
+        <div id="items-origen">
+          <div class="item-draggable" draggable="true" data-correcta="europa">Tiene un océano de agua líquida bajo el hielo</div>
+          <div class="item-draggable" draggable="true" data-correcta="titan">Tiene lagos y ríos de metano</div>
+          <div class="item-draggable" draggable="true" data-correcta="io">Tiene más de 400 volcanes activos</div>
+          <div class="item-draggable" draggable="true" data-correcta="europa">Géiseres que lanzan agua al espacio</div>
+          <div class="item-draggable" draggable="true" data-correcta="titan">Atmósfera densa color naranja</div>
+          <div class="item-draggable" draggable="true" data-correcta="io">El objeto más volcánico del Sistema Solar</div>
+        </div>
+      </div>
+
+      <div class="drag-drop-area">
+        <div class="columna-opciones">
+          <div class="columna-titulo">🧊 Europa</div>
+          <div class="zona-drop" data-luna="europa"></div>
+        </div>
+
+        <div class="columna-opciones">
+          <div class="columna-titulo">🪐 Titán</div>
+          <div class="zona-drop" data-luna="titan"></div>
+        </div>
+
+        <div class="columna-opciones" style="grid-column: 1/-1;">
+          <div class="columna-titulo">🌋 Ío</div>
+          <div class="zona-drop" data-luna="io"></div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 16px;">
+        <button class="btn-interactivo" onclick="verificarActividad1()">✅ Verificar Respuestas</button>
+        <button class="btn-secundario-act" onclick="reiniciarActividad1()">🔄 Reiniciar</button>
+      </div>
+
+      <div class="feedback-actividad" id="feedback1"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 2: Récords Interactivos -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🏆</span>
+      <span>Actividad 2: Descubre los Récords</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🔍</div>
+      <div class="texto">Haz clic en cada tarjeta para descubrir los récords extremos del Sistema Solar</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Haz clic en cada tarjeta para expandirla y leer el récord completo.
+    </div>
+
+    <div class="tarjeta-clickeable" onclick="toggleTarjeta(this)">
+      <div class="tarjeta-titulo">🏔️ La Montaña Más Alta</div>
+      <div class="contenido-expandible">
+        <div class="tarjeta-desc" style="margin-top: 12px;">
+          <strong>Olympus Mons</strong> en Marte mide 25 km de altura (casi 3 veces el Monte Everest). Es tan grande que si estuvieras en su cima, no podrías ver su base por la curvatura del planeta. Su base cubre un área del tamaño de Francia.
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta-clickeable" onclick="toggleTarjeta(this)">
+      <div class="tarjeta-titulo">⏰ El Día Más Largo</div>
+      <div class="contenido-expandible">
+        <div class="tarjeta-desc" style="margin-top: 12px;">
+          Un día en <strong>Venus</strong> dura 243 días terrestres (el tiempo que tarda en girar sobre sí mismo). ¡Esto significa que el día en Venus es más largo que su año! Además, Venus gira al revés: el Sol sale por el oeste y se pone por el este.
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta-clickeable" onclick="toggleTarjeta(this)">
+      <div class="tarjeta-titulo">❄️ El Planeta Más Frío</div>
+      <div class="contenido-expandible">
+        <div class="tarjeta-desc" style="margin-top: 12px;">
+          <strong>Urano</strong> puede alcanzar -224°C, más frío que Neptuno aunque esté más cerca del Sol. Está "acostado" de lado con una inclinación de 98 grados. Cada polo tiene 42 años de luz solar seguidos de 42 años de oscuridad total.
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta-clickeable" onclick="toggleTarjeta(this)">
+      <div class="tarjeta-titulo">🌪️ La Tormenta Más Antigua</div>
+      <div class="contenido-expandible">
+        <div class="tarjeta-desc" style="margin-top: 12px;">
+          La <strong>Gran Mancha Roja</strong> de Júpiter lleva más de 300 años activa (descubierta en 1665). Es tan grande que cabrían 3 Tierras dentro. Los vientos alcanzan 640 km/h (más del doble de los huracanes terrestres más fuertes).
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta-clickeable" onclick="toggleTarjeta(this)">
+      <div class="tarjeta-titulo">💍 Anillos Sorprendentes</div>
+      <div class="contenido-expandible">
+        <div class="tarjeta-desc" style="margin-top: 12px;">
+          <strong>Los 4 planetas gigantes</strong> tienen anillos: Júpiter (polvo fino), Saturno (hielo brillante), Urano (13 anillos oscuros), y Neptuno (5 anillos tenues). Los de Saturno son tan espectaculares porque están hechos de billones de piezas de hielo que reflejan luz.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actividad 3: Simulador de Cometas -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>☄️</span>
+      <span>Actividad 3: Simulador de Cometas</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🎮</div>
+      <div class="texto">Experimenta cómo cambia un cometa según su distancia al Sol</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Mueve el control para acercar o alejar el cometa del Sol. Observa qué sucede con su cola.
+    </div>
+
+    <div class="simulador-container" id="simulador-cometa">
+      <div style="display: flex; align-items: center; justify-content: center; height: 180px; position: relative;">
+        <div style="position: absolute; left: 20px;">
+          <div style="width: 60px; height: 60px; background: radial-gradient(circle at 35% 35%, #fff59d, #ffd600); border-radius: 50%; box-shadow: 0 0 30px rgba(255,214,0,0.8);"></div>
+          <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700; margin-top: 6px;">☀️ Sol</div>
+        </div>
+
+        <div id="cometa-visual" style="position: absolute; left: 200px; transition: all 0.3s;">
+          <div style="display: flex; align-items: center;">
+            <div style="width: 20px; height: 20px; background: radial-gradient(circle, #e0e0e0, #757575); border-radius: 50%; z-index: 2;"></div>
+            <div id="cola-cometa" style="width: 80px; height: 30px; background: linear-gradient(90deg, rgba(129,212,250,0.6), transparent); border-radius: 50%; margin-left: -5px; filter: blur(3px);"></div>
+          </div>
+          <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 11px; font-weight: 700; margin-top: 6px;">☄️ Cometa</div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <div class="slider-control">
+          <div class="slider-label">Distancia del Sol:</div>
+          <input type="range" min="0" max="100" value="50" class="slider" id="distancia-slider">
+        </div>
+      </div>
+
+      <div class="resultado-experimento" id="resultado-cometa">
+        Mueve el control para ver cómo cambia el cometa según su distancia al Sol.
+      </div>
+    </div>
+  </div>
+
+  <!-- Actividad 4: Emparejamiento de Planetas Enanos -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🪐</span>
+      <span>Actividad 4: Empareja Planetas Enanos</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🧩</div>
+      <div class="texto">Conecta cada planeta enano con su característica principal</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Selecciona un planeta enano y luego la característica que le corresponde.
+    </div>
+
+    <div id="emparejamiento-container">
+      <div class="selector-interactivo">
+        <div class="opcion-selector" onclick="seleccionarPlaneta(this, 'pluton')">
+          <div style="font-size: 32px; margin-bottom: 8px;">❄️</div>
+          <div style="font-size: 15px;">Plutón</div>
+        </div>
+        <div class="opcion-selector" onclick="seleccionarPlaneta(this, 'ceres')">
+          <div style="font-size: 32px; margin-bottom: 8px;">🪨</div>
+          <div style="font-size: 15px;">Ceres</div>
+        </div>
+        <div class="opcion-selector" onclick="seleccionarPlaneta(this, 'eris')">
+          <div style="font-size: 32px; margin-bottom: 8px;">⚪</div>
+          <div style="font-size: 15px;">Eris</div>
+        </div>
+      </div>
+
+      <div class="selector-interactivo" style="margin-top: 20px;">
+        <div class="opcion-selector" onclick="seleccionarCaract(this, 'pluton')">
+          <div style="font-size: 14px;">Tiene un "corazón" de hielo en su superficie</div>
+        </div>
+        <div class="opcion-selector" onclick="seleccionarCaract(this, 'ceres')">
+          <div style="font-size: 14px;">Está en el Cinturón de Asteroides</div>
+        </div>
+        <div class="opcion-selector" onclick="seleccionarCaract(this, 'eris')">
+          <div style="font-size: 14px;">Tarda 557 años en orbitar el Sol</div>
+        </div>
+      </div>
+
+      <div class="feedback-actividad" id="feedback-emparejamiento"></div>
+    </div>
+  </div>
+
+  <!-- Actividad 5: Simulador de Fases Lunares -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>🌙</span>
+      <span>Actividad 5: Simula las Fases de la Luna</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🌓</div>
+      <div class="texto">Mueve la Luna alrededor de la Tierra y observa cómo cambian las fases</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Usa el control para mover la Luna en su órbita. Observa cómo cambia la parte iluminada que vemos desde la Tierra.
+    </div>
+
+    <div class="simulador-container">
+      <div style="position: relative; height: 250px; display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%);">
+          <div style="width: 50px; height: 50px; background: radial-gradient(circle at 35% 35%, #fff59d, #ffd600); border-radius: 50%; box-shadow: 0 0 25px rgba(255,214,0,0.7);"></div>
+          <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 11px; font-weight: 700; margin-top: 4px;">☀️ Sol</div>
+        </div>
+
+        <div style="width: 160px; height: 160px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 40px; height: 40px; background: radial-gradient(circle at 35% 35%, #81d4fa, #1565c0); border-radius: 50%;"></div>
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.9); font-size: 10px; font-weight: 700; margin-top: 30px;">🌍</div>
+          
+          <div id="luna-orbita" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); transition: all 0.3s;">
+            <div style="width: 25px; height: 25px; background: radial-gradient(circle at 35% 35%, #f5f5f5, #9e9e9e); border-radius: 50%;"></div>
+            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 10px; font-weight: 700; margin-top: 2px;">🌙</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <div class="slider-control">
+          <div class="slider-label">Posición de la Luna en su órbita:</div>
+          <input type="range" min="0" max="360" value="0" class="slider" id="fase-slider">
+        </div>
+      </div>
+
+      <div class="resultado-experimento" id="resultado-fase">
+        🌑 Luna Nueva - La Luna está entre el Sol y la Tierra
+      </div>
+    </div>
+  </div>
+
+  <!-- Actividad 6: Clasifica Meteoroides -->
+  <div class="card">
+    <div class="seccion-titulo">
+      <span>💫</span>
+      <span>Actividad 6: ¿Meteoroide, Meteoro o Meteorito?</span>
+    </div>
+
+    <div class="actividad-header">
+      <div class="emoji">🎯</div>
+      <div class="texto">Lee cada situación y selecciona el nombre correcto</div>
+    </div>
+
+    <div class="instruccion">
+      💡 Instrucción: Para cada situación, elige si se trata de un meteoroide, meteoro o meteorito.
+    </div>
+
+    <div id="meteoro-quiz">
+      <div style="background: var(--azul-suave); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+        <div style="font-weight: 700; margin-bottom: 12px; color: var(--azul);">Situación 1: Una roca del tamaño de una pelota flotando en el espacio entre Marte y Júpiter</div>
+        <div class="selector-interactivo">
+          <div class="opcion-selector" onclick="responderMeteoro(this, 1, 'correcto')">Meteoroide</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 1, 'incorrecto')">Meteoro</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 1, 'incorrecto')">Meteorito</div>
+        </div>
+      </div>
+
+      <div style="background: var(--azul-suave); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+        <div style="font-weight: 700; margin-bottom: 12px; color: var(--azul);">Situación 2: Ves una "estrella fugaz" cruzando el cielo nocturno en un segundo</div>
+        <div class="selector-interactivo">
+          <div class="opcion-selector" onclick="responderMeteoro(this, 2, 'incorrecto')">Meteoroide</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 2, 'correcto')">Meteoro</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 2, 'incorrecto')">Meteorito</div>
+        </div>
+      </div>
+
+      <div style="background: var(--azul-suave); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+        <div style="font-weight: 700; margin-bottom: 12px; color: var(--azul);">Situación 3: Los científicos encuentran una roca espacial en el desierto y la llevan a un museo</div>
+        <div class="selector-interactivo">
+          <div class="opcion-selector" onclick="responderMeteoro(this, 3, 'incorrecto')">Meteoroide</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 3, 'incorrecto')">Meteoro</div>
+          <div class="opcion-selector" onclick="responderMeteoro(this, 3, 'correcto')">Meteorito</div>
+        </div>
+      </div>
+
+      <div class="feedback-actividad" id="feedback-meteoro"></div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="quiz-section" id="quizSection">
+    <div class="quiz-header">
+      <div class="quiz-icon">🎯</div>
+      <h2>Mini-Quiz Nivel Normal</h2>
+      <p>Responde correctamente 5 de 6 preguntas para desbloquear el nivel difícil</p>
+    </div>
+
+    <div class="quiz-progreso" id="quizProgreso">
+      <div class="quiz-punto activa-punto" data-i="0"></div>
+      <div class="quiz-punto" data-i="1"></div>
+      <div class="quiz-punto" data-i="2"></div>
+      <div class="quiz-punto" data-i="3"></div>
+      <div class="quiz-punto" data-i="4"></div>
+      <div class="quiz-punto" data-i="5"></div>
+    </div>
+
+    <div id="quizPreguntas">
+      <div class="quiz-pregunta activa" id="q0">
+        <div class="pregunta-numero">PREGUNTA 1 DE 6</div>
+        <div class="pregunta-texto">¿Qué luna tiene un océano de agua líquida bajo una capa de hielo?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(0,'A','A')">🧊 Europa (luna de Júpiter)</button>
+          <button class="opcion-btn" onclick="responder(0,'B','A')">🪐 Titán (luna de Saturno)</button>
+          <button class="opcion-btn" onclick="responder(0,'C','A')">🌋 Ío (luna de Júpiter)</button>
+          <button class="opcion-btn" onclick="responder(0,'D','A')">🌕 La Luna (satélite de la Tierra)</button>
+        </div>
+        <div class="feedback-texto" id="fb0"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q1">
+        <div class="pregunta-numero">PREGUNTA 2 DE 6</div>
+        <div class="pregunta-texto">¿Dónde está el cinturón de asteroides?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(1,'A','B')">🌍 Entre la Tierra y Marte</button>
+          <button class="opcion-btn" onclick="responder(1,'B','B')">🪨 Entre Marte y Júpiter</button>
+          <button class="opcion-btn" onclick="responder(1,'C','B')">🪐 Más allá de Neptuno</button>
+          <button class="opcion-btn" onclick="responder(1,'D','B')">☀️ Entre el Sol y Mercurio</button>
+        </div>
+        <div class="feedback-texto" id="fb1"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q2">
+        <div class="pregunta-numero">PREGUNTA 3 DE 6</div>
+        <div class="pregunta-texto">¿Qué causa las fases de la Luna?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(2,'A','C')">🌍 La sombra de la Tierra sobre la Luna</button>
+          <button class="opcion-btn" onclick="responder(2,'B','C')">🌙 La Luna cambia de tamaño cada noche</button>
+          <button class="opcion-btn" onclick="responder(2,'C','C')">☀️ Solo vemos la parte iluminada por el Sol</button>
+          <button class="opcion-btn" onclick="responder(2,'D','C')">🌌 Las estrellas tapan partes de la Luna</button>
+        </div>
+        <div class="feedback-texto" id="fb2"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q3">
+        <div class="pregunta-numero">PREGUNTA 4 DE 6</div>
+        <div class="pregunta-texto">¿Qué es un meteoro?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(3,'A','B')">🪨 Una roca flotando en el espacio</button>
+          <button class="opcion-btn" onclick="responder(3,'B','B')">💫 Una roca que se quema al entrar a la atmósfera</button>
+          <button class="opcion-btn" onclick="responder(3,'C','B')">🌍 Una roca que llegó al suelo</button>
+          <button class="opcion-btn" onclick="responder(3,'D','B')">☄️ Un cometa pequeño</button>
+        </div>
+        <div class="feedback-texto" id="fb3"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q4">
+        <div class="pregunta-numero">PREGUNTA 5 DE 6</div>
+        <div class="pregunta-texto">¿Por qué Plutón ya no es considerado un planeta?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(4,'A','A')">🪐 No ha limpiado su órbita de otras rocas</button>
+          <button class="opcion-btn" onclick="responder(4,'B','A')">❄️ Es demasiado frío</button>
+          <button class="opcion-btn" onclick="responder(4,'C','A')">📏 Es demasiado pequeño</button>
+          <button class="opcion-btn" onclick="responder(4,'D','A')">🌌 Está muy lejos del Sol</button>
+        </div>
+        <div class="feedback-texto" id="fb4"></div>
+      </div>
+
+      <div class="quiz-pregunta" id="q5">
+        <div class="pregunta-numero">PREGUNTA 6 DE 6</div>
+        <div class="pregunta-texto">¿Cuántos planetas gigantes tienen anillos?</div>
+        <div class="opciones">
+          <button class="opcion-btn" onclick="responder(5,'A','D')">💍 Solo Saturno</button>
+          <button class="opcion-btn" onclick="responder(5,'B','D')">🪐 Saturno y Júpiter</button>
+          <button class="opcion-btn" onclick="responder(5,'C','D')">🌌 Saturno, Júpiter y Urano</button>
+          <button class="opcion-btn" onclick="responder(5,'D','D')">✨ Los 4 gigantes (Júpiter, Saturno, Urano, Neptuno)</button>
+        </div>
+        <div class="feedback-texto" id="fb5"></div>
+      </div>
+    </div>
+
+    <div class="quiz-resultado" id="quizResultado">
+      <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+      <div class="resultado-titulo" id="resultadoTitulo">¡Excelente!</div>
+      <div class="resultado-puntaje" id="resultadoPuntaje">6/6</div>
+      <div class="resultado-mensaje" id="resultadoMensaje"></div>
+      <button class="btn-principal" id="btnAccion" onclick="irNivelDificil()">🚀 Ir al Nivel Difícil →</button>
+      <br>
+      <button class="btn-secundario" id="btnReintentar" onclick="reiniciarQuiz()" style="display:none">🔄 Intentar de nuevo</button>
+      <div class="guardando" id="guardandoDiv">
+        <div class="spinner"></div>
+        Guardando tu progreso...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ===== ACTIVIDAD 1: DRAG AND DROP =====
+  let draggedItem = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupDragDrop();
+    setupCometaSimulator();
+    setupFaseSimulator();
+  });
+
+  function setupDragDrop() {
+    const items = document.querySelectorAll('.item-draggable');
+    const zonas = document.querySelectorAll('.zona-drop');
+
+    items.forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        draggedItem = e.target;
+        e.target.style.opacity = '0.5';
+      });
+
+      item.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '1';
+      });
+    });
+
+    zonas.forEach(zona => {
+      zona.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zona.classList.add('drag-over');
+      });
+
+      zona.addEventListener('dragleave', () => {
+        zona.classList.remove('drag-over');
+      });
+
+      zona.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zona.classList.remove('drag-over');
+        if (draggedItem) {
+          zona.appendChild(draggedItem);
+        }
+      });
+    });
+  }
+
+  function verificarActividad1() {
+    const zonas = document.querySelectorAll('.zona-drop');
+    let correctas = 0;
+    let total = 0;
+
+    zonas.forEach(zona => {
+      const lunaCorrecta = zona.dataset.luna;
+      const items = zona.querySelectorAll('.item-draggable');
+      
+      items.forEach(item => {
+        total++;
+        const respuestaCorrecta = item.dataset.correcta;
+        if (respuestaCorrecta === lunaCorrecta) {
+          item.classList.add('correcto');
+          item.classList.remove('incorrecto');
+          correctas++;
+        } else {
+          item.classList.add('incorrecto');
+          item.classList.remove('correcto');
+        }
+      });
+    });
+
+    const feedback = document.getElementById('feedback1');
+    if (correctas === total) {
+      feedback.className = 'feedback-actividad visible exito';
+      feedback.textContent = `🎉 ¡Perfecto! Todas las ${total} características están correctamente clasificadas.`;
+    } else {
+      feedback.className = 'feedback-actividad visible';
+      feedback.textContent = `Tienes ${correctas} de ${total} correctas. Las incorrectas están marcadas en rojo. ¡Inténtalo de nuevo!`;
+    }
+  }
+
+  function reiniciarActividad1() {
+    const items = document.querySelectorAll('.item-draggable');
+    const origen = document.getElementById('items-origen');
+    
+    items.forEach(item => {
+      item.classList.remove('correcto', 'incorrecto');
+      origen.appendChild(item);
+    });
+
+    document.getElementById('feedback1').classList.remove('visible');
+  }
+
+  // ===== ACTIVIDAD 2: TARJETAS EXPANDIBLES =====
+  function toggleTarjeta(tarjeta) {
+    const contenido = tarjeta.querySelector('.contenido-expandible');
+    const estaActiva = tarjeta.classList.contains('activa');
+
+    document.querySelectorAll('.tarjeta-clickeable').forEach(t => {
+      t.classList.remove('activa');
+      t.querySelector('.contenido-expandible').classList.remove('expandido');
+    });
+
+    if (!estaActiva) {
+      tarjeta.classList.add('activa');
+      contenido.classList.add('expandido');
+    }
+  }
+
+  // ===== ACTIVIDAD 3: SIMULADOR DE COMETAS =====
+  function setupCometaSimulator() {
+    const slider = document.getElementById('distancia-slider');
+    const cometa = document.getElementById('cometa-visual');
+    const cola = document.getElementById('cola-cometa');
+    const resultado = document.getElementById('resultado-cometa');
+
+    slider.addEventListener('input', (e) => {
+      const distancia = parseInt(e.target.value);
+      const posX = 100 + (distancia * 4);
+      cometa.style.left = posX + 'px';
+
+      const anchoCola = Math.max(10, 100 - distancia);
+      const opacidadCola = Math.max(0.1, 1 - (distancia / 100));
+      cola.style.width = anchoCola + 'px';
+      cola.style.opacity = opacidadCola;
+
+      if (distancia < 30) {
+        resultado.innerHTML = '🔥 <strong>Muy cerca del Sol:</strong> El hielo se evapora rápidamente. La cola es larga y brillante. El cometa pierde mucha masa.';
+      } else if (distancia < 70) {
+        resultado.innerHTML = '☄️ <strong>Distancia media:</strong> El cometa tiene una cola visible. El calor del Sol evapora parte del hielo.';
+      } else {
+        resultado.innerHTML = '❄️ <strong>Lejos del Sol:</strong> El cometa es solo una bola congelada. Casi no tiene cola. Todo su hielo está congelado.';
+      }
+    });
+  }
+
+  // ===== ACTIVIDAD 4: EMPAREJAMIENTO =====
+  let planetaSeleccionado = null;
+
+  function seleccionarPlaneta(elemento, planeta) {
+    document.querySelectorAll('.opcion-selector').forEach(op => op.classList.remove('seleccionada'));
+    elemento.classList.add('seleccionada');
+    planetaSeleccionado = planeta;
+  }
+
+  function seleccionarCaract(elemento, planetaCorrecto) {
+    if (!planetaSeleccionado) {
+      const feedback = document.getElementById('feedback-emparejamiento');
+      feedback.className = 'feedback-actividad visible';
+      feedback.textContent = '⚠️ Primero selecciona un planeta enano.';
+      return;
+    }
+
+    const esCorrecto = planetaSeleccionado === planetaCorrecto;
+    const feedback = document.getElementById('feedback-emparejamiento');
+
+    if (esCorrecto) {
+      feedback.className = 'feedback-actividad visible exito';
+      feedback.textContent = '✅ ¡Correcto! Esa característica pertenece a ' + planetaSeleccionado.charAt(0).toUpperCase() + planetaSeleccionado.slice(1) + '.';
+      elemento.classList.add('seleccionada');
+      setTimeout(() => {
+        document.querySelectorAll('.opcion-selector').forEach(op => op.classList.remove('seleccionada'));
+        planetaSeleccionado = null;
+      }, 2000);
+    } else {
+      feedback.className = 'feedback-actividad visible';
+      feedback.textContent = '❌ No es correcto. Esa característica no corresponde a ' + planetaSeleccionado.charAt(0).toUpperCase() + planetaSeleccionado.slice(1) + '. Intenta de nuevo.';
+    }
+  }
+
+  // ===== ACTIVIDAD 5: SIMULADOR DE FASES LUNARES =====
+  function setupFaseSimulator() {
+    const slider = document.getElementById('fase-slider');
+    const luna = document.getElementById('luna-orbita');
+    const resultado = document.getElementById('resultado-fase');
+
+    slider.addEventListener('input', (e) => {
+      const angulo = parseInt(e.target.value);
+      const radianes = angulo * (Math.PI / 180);
+      const radio = 80;
+      const centerX = 0;
+      const centerY = 0;
+      
+      const x = centerX + radio * Math.sin(radianes);
+      const y = centerY - radio * Math.cos(radianes);
+      
+      luna.style.transform = `translate(${x}px, ${y}px)`;
+
+      if (angulo >= 0 && angulo < 45) {
+        resultado.textContent = '🌑 Luna Nueva - La Luna está entre el Sol y la Tierra. No la vemos.';
+      } else if (angulo >= 45 && angulo < 90) {
+        resultado.textContent = '🌒 Luna Creciente - Vemos un pequeño gajo iluminado.';
+      } else if (angulo >= 90 && angulo < 135) {
+        resultado.textContent = '🌓 Cuarto Creciente - Vemos exactamente la mitad de la Luna iluminada.';
+      } else if (angulo >= 135 && angulo < 180) {
+        resultado.textContent = '🌔 Gibosa Creciente - Vemos más de la mitad iluminada.';
+      } else if (angulo >= 180 && angulo < 225) {
+        resultado.textContent = '🌕 Luna Llena - Vemos toda la cara de la Luna iluminada.';
+      } else if (angulo >= 225 && angulo < 270) {
+        resultado.textContent = '🌖 Gibosa Menguante - Empieza a disminuir la luz.';
+      } else if (angulo >= 270 && angulo < 315) {
+        resultado.textContent = '🌗 Cuarto Menguante - De nuevo vemos la mitad.';
+      } else {
+        resultado.textContent = '🌘 Luna Menguante - Queda un pequeño gajo iluminado.';
+      }
+    });
+  }
+
+  // ===== ACTIVIDAD 6: METEOROIDES =====
+  let respuestasMeteoro = [false, false, false];
+
+  function responderMeteoro(elemento, situacion, tipo) {
+    const hermanos = elemento.parentElement.querySelectorAll('.opcion-selector');
+    hermanos.forEach(h => h.classList.remove('seleccionada'));
+    elemento.classList.add('seleccionada');
+
+    respuestasMeteoro[situacion - 1] = (tipo === 'correcto');
+
+    if (respuestasMeteoro.every(r => r === true)) {
+      const feedback = document.getElementById('feedback-meteoro');
+      feedback.className = 'feedback-actividad visible exito';
+      feedback.textContent = '🎉 ¡Perfecto! Has clasificado correctamente las tres situaciones. Ahora sabes la diferencia entre meteoroide, meteoro y meteorito.';
+    }
+  }
+
+  // ===== QUIZ FINAL =====
+  let preguntaActual = 0;
+  let respuestas = [null,null,null,null,null,null];
+  let aciertos = 0;
+  const TOTAL = 6;
+  const MINIMO = 5;
+
+  function responder(idx, elegida, correcta) {
+    const pregEl = document.getElementById('q' + idx);
+    const botones = pregEl.querySelectorAll('.opcion-btn');
+    botones.forEach(b => b.disabled = true);
+
+    const esCorrecta = elegida === correcta;
+    if (esCorrecta) aciertos++;
+
+    const map = {A:0,B:1,C:2,D:3};
+    botones[map[elegida]].classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+    if (!esCorrecta) botones[map[correcta]].classList.add('correcta');
+
+    const fb = document.getElementById('fb' + idx);
+    fb.textContent = esCorrecta ? '¡Correcto! ⭐' : '❌ Revisa la respuesta marcada en verde.';
+    fb.className = 'feedback-texto visible ' + (esCorrecta ? 'bien' : 'mal');
+
+    const puntos = document.querySelectorAll('.quiz-punto');
+    puntos[idx].classList.add('respondida');
+    respuestas[idx] = esCorrecta;
+
+    setTimeout(() => {
+      if (idx < TOTAL - 1) {
+        document.getElementById('q' + idx).classList.remove('activa');
+        preguntaActual = idx + 1;
+        document.getElementById('q' + preguntaActual).classList.add('activa');
+        puntos[idx].classList.remove('activa-punto');
+        puntos[preguntaActual].classList.add('activa-punto');
+      } else {
+        mostrarResultado();
+      }
+    }, 1200);
+  }
+
+  function mostrarResultado() {
+    document.getElementById('quizPreguntas').style.display = 'none';
+    document.getElementById('quizProgreso').style.display = 'none';
+    const res = document.getElementById('quizResultado');
+    res.classList.add('visible');
+
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
+
+    document.getElementById('resultadoPuntaje').textContent = `${aciertos}/${TOTAL}`;
+    document.getElementById('resultadoEmoji').textContent = aprobado ? '🏆' : '📚';
+    document.getElementById('resultadoTitulo').textContent = aprobado ? '¡Excelente!' : 'Sigue practicando';
+    document.getElementById('resultadoMensaje').textContent = aprobado
+      ? `Obtuviste ${pct}%. ¡Increíble! El nivel difícil está desbloqueado.`
+      : `Obtuviste ${pct}%. Necesitas 83% o más para avanzar. ¡Practica las actividades e inténtalo de nuevo!`;
+
+    if (aprobado) {
+      document.getElementById('btnAccion').style.display = 'inline-block';
+      document.getElementById('btnReintentar').style.display = 'none';
+      guardarProgreso(aprobado, pct);
+    } else {
+      document.getElementById('btnAccion').style.display = 'none';
+      document.getElementById('btnReintentar').style.display = 'inline-block';
+    }
+  }
+
+  async function guardarProgreso(aprobado, pct) {
+    const guardando = document.getElementById('guardandoDiv');
+    if (guardando) guardando.classList.add('visible');
+    try {
+      const res = await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id:     1,
+          nivel_completado: 'normal',
+          puntaje:          pct,
+          aprobado:         aprobado
+        })
+      });
+      const data = await res.json();
+      if (guardando) {
+        guardando.innerHTML = (res.ok && data.success) ? '✅ ¡Progreso guardado!' : '⚠️ No se pudo guardar. Puedes continuar.';
+        if (!res.ok) guardando.style.color = '#ffcc02';
+      }
+    } catch(e) { if (guardando) guardando.classList.remove('visible'); }
+  }
+
+  function irNivelDificil() {
+    window.location.href = '/contenidos/astronomia/sistema-solar/menu.html';
+  }
+
+  function reiniciarQuiz() {
+    preguntaActual = 0; aciertos = 0; respuestas = [null,null,null,null,null,null];
+    const correctas = ['A','B','C','B','A','D'];
+    for (let i = 0; i < TOTAL; i++) {
+      const el = document.getElementById('q' + i);
+      el.classList.remove('activa');
+      el.querySelectorAll('.opcion-btn').forEach((b, j) => {
+        b.disabled = false; b.className = 'opcion-btn';
+        const letra = ['A','B','C','D'][j];
+        b.onclick = () => responder(i, letra, correctas[i]);
+      });
+      document.getElementById('fb' + i).className = 'feedback-texto';
+    }
+    document.querySelectorAll('.quiz-punto').forEach((p,i) => {
+      p.className = 'quiz-punto' + (i===0?' activa-punto':'');
+    });
+    document.getElementById('q0').classList.add('activa');
+    document.getElementById('quizPreguntas').style.display = 'block';
+    document.getElementById('quizProgreso').style.display = 'flex';
+    document.getElementById('quizResultado').classList.remove('visible');
+    document.getElementById('guardandoDiv').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

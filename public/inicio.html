@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio</title>
+  <link rel="stylesheet" href="styles-inicio-perfil.css" />
+</head>
+<body>
+  <div class="contenedor">
+    <div class="contenedor-cerrar-sesion">
+      <button onclick="cerrarSesion()" class="boton-cerrar-sesion">Cerrar sesión</button>
+    </div>
+
+    <div id="bienvenida">
+      <h1>¡Bienvenido!</h1>
+    </div>
+
+    <section id="actividades">
+      <h2>Actividades</h2>
+      <div class="lista-actividades">
+        <div class="actividad" onclick="irAActividad('actividades/aventura/index-aventura')">
+          <h3>Aventura Interactiva</h3>
+          <p>Aventúrate hacia rutas y desafíos misteriosos.</p>
+        </div>
+        <div class="actividad" onclick="irAActividad('actividades/memorama/memorama')">
+          <h3>Memorama</h3>
+          <p>Mejora tu memoria con este divertido juego.</p>
+        </div>
+        <div class="actividad" onclick="irAActividad('actividades/sopa de letras/sopa')">
+          <h3>Sopa de letras</h3>
+          <p>Encuentra palabras escondidas en la sopa de letras.</p>
+        </div>
+        <div class="actividad" onclick="irAActividad('actividades/matematicas/matematicas')">
+          <h3>Problemas Matemáticos</h3>
+          <p>Resuelve operaciones básicas con lógica y rapidez.</p>
+        </div>
+        <div class="actividad" onclick="irAActividad('actividades/Notas musicales/notas')">
+          <h3>Notas Musicales</h3>
+          <p>Recuerda y repite la secuencia musical.</p>
+        </div>
+        <div class="actividad" onclick="window.location.href='contenidos/astronomia/menu.html'">
+          <h3>Astronomia</h3>
+          <p>Aprende sobre la ciencia que estudia el universo.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="menu-inferior">
+    <a href="inicio.html" class="menu-item seleccionado">Actividades</a>
+    <a href="perfil.html" class="menu-item">Perfil</a>
+    <span id="xp-total" class="menu-item xp-item">XP: 0</span>
+  </nav>
+
+  <script src="configClient.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

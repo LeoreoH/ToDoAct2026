@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astronomía</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+
+<body>
+
+<header class="astro-header">
+    <button class="boton-volver" onclick="volver()">← Volver</button>
+    <h1>Astronomía</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Selecciona un módulo</h2>
+
+    <div class="contenedor-niveles">
+        <button onclick="abrirModulo('sistema-solar')">
+            <span>Sistema solar</span>
+        </button>
+
+        <button onclick="abrirModulo('luz-imagenes')">
+            <span>Luz e imágenes astronómicas</span>
+        </button>
+
+        <button onclick="abrirModulo('exoplanetas')">
+            <span>Exoplanetas y otros sistemas</span>
+        </button>
+
+        <button onclick="abrirModulo('estrellas')">
+            <span>Estrellas</span>
+        </button>
+
+        <button onclick="abrirModulo('galaxias')">
+            <span>Galaxias</span>
+        </button>
+
+        <button onclick="abrirModulo('observacion-cielo')">
+            <span>Observación del cielo</span>
+        </button>
+
+    </div>
+
+</div>
+
+<script src="../../configClient.js"></script>
+<script src="menu.js"></script>
+</body>
+</html>

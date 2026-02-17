@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f9;
+}
+
+.astro-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1565c0;
+    color: white;
+    position: relative;
+}
+
+.astro-header h1 {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+.boton-volver {
+    position: absolute;
+    left: 20px;
+    background: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.contenedor-actividad {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.contenedor-niveles {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedor-niveles button {
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #1565c0;
+    background: white;
+    color: #1565c0;
+    cursor: pointer;
+    text-align: center;
+}
+
+.contenedor-niveles button:disabled{
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.descripcion-nivel{
+    display:block;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
