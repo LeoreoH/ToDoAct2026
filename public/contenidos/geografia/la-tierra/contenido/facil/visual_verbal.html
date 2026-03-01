@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra · Nivel Fácil · Visual/Verbal</title>
+
+  <!-- Bootstrap solo para grid y componentes básicos, nada recargado -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes amigables para niños -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <!-- Iconos Font Awesome (para detalles) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f0f4fa;
+      color: #1a237e;
+      line-height: 1.6;
+    }
+
+    /* Encabezado principal */
+    .cabecera-geo {
+      background: linear-gradient(135deg, #0277bd, #01579b);
+      color: white;
+      padding: 24px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border-bottom: 4px solid #ffd600;
+    }
+
+    .cabecera-geo h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.2rem;
+      margin: 0;
+      text-shadow: 2px 2px 0 #001064;
+    }
+
+    .badge-estilo {
+      background-color: #ffd600;
+      color: #01579b;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1rem;
+      display: inline-block;
+      margin-top: 12px;
+      border: 2px solid white;
+    }
+
+    /* Barra de progreso de lectura */
+    .barra-progreso {
+      background: white;
+      border-radius: 40px;
+      padding: 12px 25px;
+      margin: 25px auto;
+      max-width: 900px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .progreso-texto {
+      font-weight: 700;
+      color: #0277bd;
+      white-space: nowrap;
+    }
+
+    .progreso-barra-fondo {
+      flex: 1;
+      height: 12px;
+      background: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progreso-barra-relleno {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd600, #ffb300);
+      width: 0%;
+      transition: width 0.3s;
+      border-radius: 20px;
+    }
+
+    /* Contenedor principal del contenido */
+    .contenedor-paginas {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(2,119,189,0.15);
+      padding: 30px 35px;
+      border: 1px solid rgba(2,119,189,0.2);
+    }
+
+    /* Cada página individual */
+    .pagina {
+      display: none;
+      animation: aparecer 0.4s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Títulos de las páginas */
+    .titulo-pagina {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #0277bd;
+      margin-bottom: 20px;
+      border-left: 8px solid #ffd600;
+      padding-left: 20px;
+    }
+
+    /* Imágenes con marco y pie de foto */
+    .contenedor-imagen {
+      background: #f5f9ff;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 25px 0;
+      text-align: center;
+      border: 2px dashed #90caf9;
+    }
+
+    .imagen-geo {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 3px solid white;
+    }
+
+    .pie-imagen {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #546e7a;
+      font-style: italic;
+      background: rgba(255,214,0,0.2);
+      padding: 8px 15px;
+      border-radius: 40px;
+      display: inline-block;
+    }
+
+    /* Recuadros de datos importantes */
+    .recuadro-datos {
+      background: #e1f5fe;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 25px 0;
+      border-left: 8px solid #ffd600;
+    }
+
+    .recuadro-datos h4 {
+      color: #01579b;
+      font-weight: 800;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .lista-iconos {
+      list-style: none;
+      padding: 0;
+    }
+
+    .lista-iconos li {
+      padding: 8px 0;
+      border-bottom: 1px solid #b3e5fc;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .lista-iconos i {
+      color: #ffd600;
+      font-size: 1.3rem;
+      width: 30px;
+      text-align: center;
+    }
+
+    /* Navegación entre páginas */
+    .navegador {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 35px;
+      background: #f5f9ff;
+      padding: 15px 25px;
+      border-radius: 60px;
+    }
+
+    .btn-nav {
+      background: #0277bd;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: #01579b;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(2,119,189,0.4);
+      border-color: #ffd600;
+    }
+
+    .btn-nav:disabled {
+      background: #b0bec5;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .contador-paginas {
+      font-weight: 800;
+      color: #01579b;
+      background: white;
+      padding: 8px 20px;
+      border-radius: 40px;
+      border: 2px solid #ffd600;
+    }
+
+    /* Botón al quiz */
+    .boton-quiz {
+      display: block;
+      width: fit-content;
+      margin: 30px auto 0;
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 16px 45px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 3px solid white;
+      box-shadow: 0 5px 0 #b26a00;
+    }
+
+    .boton-quiz:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 0 #b26a00;
+    }
+
+    /* Texto destacado */
+    .texto-destacado {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #01579b;
+      background: #fff9c4;
+      padding: 15px 25px;
+      border-radius: 20px;
+      margin: 20px 0;
+      border: 2px solid #ffd600;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .contenedor-paginas { padding: 20px; }
+      .titulo-pagina { font-size: 1.5rem; }
+      .navegador { flex-direction: column; gap: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<div class="cabecera-geo text-center">
+  <h1>🌍 La Tierra</h1>
+  <p class="lead mb-0">Bloque I · Nivel Fácil</p>
+  <div class="badge-estilo">⭐ Visual / Verbal</div>
+</div>
+
+<!-- BARRA DE PROGRESO DE LECTURA -->
+<div class="barra-progreso">
+  <span class="progreso-texto" id="progresoTexto">Página 1 de 4</span>
+  <div class="progreso-barra-fondo">
+    <div class="progreso-barra-relleno" id="progresoBarra" style="width: 25%;"></div>
+  </div>
+  <span class="badge bg-primary" id="progresoPorcentaje">25%</span>
+</div>
+
+<!-- CONTENIDO PRINCIPAL (PÁGINAS) -->
+<div class="contenedor-paginas">
+
+  <!-- PÁGINA 1: ¿Qué es la Tierra? (con imagen real del libro: vista satelital) -->
+  <div class="pagina activa" id="pagina1">
+    <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>¿Qué es la Tierra?</h2>
+    
+    <p class="lead">La <strong>Tierra</strong> es el planeta donde vivimos, el tercero más cercano al Sol y el único que conocemos con vida.</p>
+
+    <!-- Imagen del libro: imagen satelital de la Tierra (página 11) -->
+    <div class="contenedor-imagen">
+      <img src="/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
+           alt="Imagen satelital de la Tierra" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+      <div class="pie-imagen">
+        <i class="fas fa-satellite me-2"></i> Imagen satelital de la Tierra (NASA / Libro SEP)
+      </div>
+    </div>
+
+    <div class="recuadro-datos">
+      <h4><i class="fas fa-star me-2" style="color: #ffd600;"></i> Datos asombrosos</h4>
+      <ul class="lista-iconos">
+        <li><i class="fas fa-ruler"></i> <strong>Diámetro:</strong> 12,742 kilómetros</li>
+        <li><i class="fas fa-water"></i> <strong>Superficie:</strong> 71% agua, 29% tierra</li>
+        <li><i class="fas fa-clock"></i> <strong>Edad:</strong> ~4,500 millones de años</li>
+        <li><i class="fas fa-moon"></i> <strong>Satélite natural:</strong> La Luna</li>
+      </ul>
+    </div>
+
+    <p>La Tierra tiene forma de <strong>esfera ligeramente achatada en los polos</strong>. Esto significa que el diámetro de polo a polo es un poco más corto que el diámetro en el Ecuador.</p>
+
+    <!-- Segunda imagen: forma de la Tierra (diagrama simple) -->
+    <div class="contenedor-imagen">
+      <svg width="300" height="150" viewBox="0 0 300 150" style="background: #e3f2fd; border-radius: 20px; padding: 10px;">
+        <ellipse cx="150" cy="75" rx="120" ry="70" fill="#1565c0" stroke="#01579b" stroke-width="3"/>
+        <line x1="30" y1="75" x2="270" y2="75" stroke="#ffd600" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="150" y="30" text-anchor="middle" fill="white" font-size="12">Polo Norte</text>
+        <text x="150" y="130" text-anchor="middle" fill="white" font-size="12">Polo Sur</text>
+        <text x="270" y="85" fill="#ffd600" font-size="10">Ecuador</text>
+      </svg>
+      <div class="pie-imagen">La Tierra está achatada en los polos (exagerado para entender)</div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 2: Líneas imaginarias (con imágenes del libro: paralelos y meridianos) -->
+  <div class="pagina" id="pagina2">
+    <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>Líneas imaginarias</h2>
+
+    <p>Para ubicarnos en la Tierra, las personas inventaron <strong>líneas imaginarias</strong> que forman una red de coordenadas.</p>
+
+    <!-- Imagen del libro: esquema de paralelos y meridianos (página 14) -->
+    <div class="contenedor-imagen">
+      <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg"
+           alt="Paralelos y meridianos" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/World_map_with_equator.jpg/800px-World_map_with_equator.jpg'">
+      <div class="pie-imagen">Paralelos (horizontales) y meridianos (verticales)</div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="recuadro-datos" style="background: #fff3e0;">
+          <h4><i class="fas fa-circle-notch me-2"></i> Paralelos</h4>
+          <p>Son círculos que rodean la Tierra de <strong>este a oeste</strong>. El más importante es el <span class="badge bg-warning text-dark">Ecuador</span>, que divide la Tierra en:</p>
+          <ul>
+            <li><i class="fas fa-arrow-up text-primary"></i> Hemisferio Norte</li>
+            <li><i class="fas fa-arrow-down text-danger"></i> Hemisferio Sur</li>
+          </ul>
+          <p class="mb-0"><small>Otros paralelos: Trópicos y Círculos Polares.</small></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="recuadro-datos" style="background: #e8f5e8;">
+          <h4><i class="fas fa-arrow-up me-2"></i> Meridianos</h4>
+          <p>Van de <strong>polo a polo</strong>. El más importante es el <span class="badge bg-primary">Meridiano de Greenwich</span>, que divide en:</p>
+          <ul>
+            <li><i class="fas fa-arrow-left text-success"></i> Hemisferio Oeste</li>
+            <li><i class="fas fa-arrow-right text-warning"></i> Hemisferio Este</li>
+          </ul>
+          <p class="mb-0"><small>El meridiano opuesto es la Línea Internacional de Cambio de Fecha.</small></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagen del libro: globo terráqueo con líneas (página 23) -->
+    <div class="contenedor-imagen mt-3">
+      <img src="/contenidos/geografia/recursos/imagenes/libro/globo-lineas.jpg" 
+           alt="Globo terráqueo con líneas imaginarias" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/8/8d/Globo_terrestre.svg'">
+      <div class="pie-imagen">El globo terráqueo muestra todas las líneas imaginarias</div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 3: Puntos cardinales y orientación (con imagen de rosa de los vientos) -->
+  <div class="pagina" id="pagina3">
+    <h2 class="titulo-pagina"><i class="fas fa-compass me-3"></i>Puntos cardinales</h2>
+
+    <p>Los <strong>puntos cardinales</strong> son las cuatro direcciones principales que usamos para orientarnos.</p>
+
+    <!-- Imagen del libro: rosa de los vientos (probablemente en página 29 o similar) -->
+    <div class="contenedor-imagen">
+      <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" 
+           alt="Rosa de los vientos" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
+      <div class="pie-imagen">Rosa de los vientos: Norte, Sur, Este, Oeste</div>
+    </div>
+
+    <div class="texto-destacado">
+      <i class="fas fa-sun me-2"></i> <strong>Truco para recordar:</strong> "Nunca Soles Este Oeste" – El Sol sale por el <strong>Este</strong> y se oculta por el <strong>Oeste</strong>.
+    </div>
+
+    <div class="row text-center mt-4">
+      <div class="col-3">
+        <div style="background: #1e88e5; color: white; width: 70px; height: 70px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 3px solid #ffd600;">
+          <i class="fas fa-arrow-up fa-2x"></i>
+        </div>
+        <h5 class="mt-2">Norte</h5>
+      </div>
+      <div class="col-3">
+        <div style="background: #e53935; color: white; width: 70px; height: 70px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 3px solid #ffd600;">
+          <i class="fas fa-arrow-down fa-2x"></i>
+        </div>
+        <h5 class="mt-2">Sur</h5>
+      </div>
+      <div class="col-3">
+        <div style="background: #43a047; color: white; width: 70px; height: 70px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 3px solid #ffd600;">
+          <i class="fas fa-arrow-right fa-2x"></i>
+        </div>
+        <h5 class="mt-2">Este</h5>
+      </div>
+      <div class="col-3">
+        <div style="background: #fb8c00; color: white; width: 70px; height: 70px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 3px solid #ffd600;">
+          <i class="fas fa-arrow-left fa-2x"></i>
+        </div>
+        <h5 class="mt-2">Oeste</h5>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 4: Zonas térmicas (con imagen del libro: esquema de zonas térmicas) -->
+  <div class="pagina" id="pagina4">
+    <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas térmicas</h2>
+
+    <p>Gracias a la forma esférica de la Tierra y a la inclinación de su eje, los rayos del Sol calientan más unas zonas que otras. Así se crean <strong>cinco grandes zonas térmicas</strong>.</p>
+
+    <!-- Imagen del libro: esquema de zonas térmicas (página 15) -->
+    <div class="contenedor-imagen">
+      <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" 
+           alt="Zonas térmicas de la Tierra" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
+      <div class="pie-imagen">Las cinco zonas térmicas: cálida, dos templadas y dos frías</div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="card text-center h-100" style="border: 3px solid #ffb74d;">
+          <div class="card-header bg-warning fw-bold">🌞 Zona Cálida</div>
+          <div class="card-body">
+            <p class="card-text">Cerca del Ecuador. Hace calor todo el año. Hay selvas como el Amazonas y desiertos como el Sahara.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center h-100" style="border: 3px solid #66bb6a;">
+          <div class="card-header bg-success text-white fw-bold">🌤️ Zonas Templadas</div>
+          <div class="card-body">
+            <p class="card-text">Entre los trópicos y los círculos polares. Tenemos las 4 estaciones: primavera, verano, otoño e invierno.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center h-100" style="border: 3px solid #4fc3f7;">
+          <div class="card-header bg-info text-white fw-bold">❄️ Zonas Frías</div>
+          <div class="card-body">
+            <p class="card-text">Cerca de los polos. Hace mucho frío, hay hielo y nieve. En invierno el sol casi no sale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagen del libro: ejemplo de paisaje en zona fría (página 16) -->
+    <div class="contenedor-imagen mt-4">
+      <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" 
+           alt="Paisaje de zona fría" 
+           class="imagen-geo"
+           onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
+      <div class="pie-imagen">Paisaje de zona fría: hielo y nieve</div>
+    </div>
+
+    <div class="texto-destacado">
+      <i class="fas fa-map-pin me-2"></i> <strong>México</strong> se encuentra en la <strong>zona templada del hemisferio norte</strong>, pero también tenemos climas cálidos en el sur y desiertos en el norte.
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN ENTRE PÁGINAS -->
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+      <i class="fas fa-arrow-left me-2"></i> Anterior
+    </button>
+    <span class="contador-paginas" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+      Siguiente <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+  </div>
+
+  <!-- BOTÓN PARA IR AL QUIZ (después del contenido) -->
+  <a href="quiz.html" class="boton-quiz">
+    <i class="fas fa-puzzle-piece me-2"></i> Ir al Mini-Quiz
+  </a>
+
+</div> <!-- fin contenedor-paginas -->
+
+<script>
+  let paginaActual = 1;
+  const totalPaginas = 4;
+
+  function cambiarPagina(direccion) {
+    // Ocultar página actual
+    document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+    
+    // Actualizar número
+    paginaActual += direccion;
+    
+    // Mostrar nueva página
+    document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    
+    // Actualizar UI
+    actualizarNavegacion();
+    
+    // Guardar progreso en localStorage (opcional)
+    localStorage.setItem('progreso_lectura_facil', paginaActual);
+  }
+
+  function actualizarNavegacion() {
+    // Texto de progreso
+    document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
+    document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+    
+    // Barra de progreso
+    const porcentaje = (paginaActual / totalPaginas) * 100;
+    document.getElementById('progresoBarra').style.width = `${porcentaje}%`;
+    document.getElementById('progresoPorcentaje').innerText = `${Math.round(porcentaje)}%`;
+    
+    // Habilitar/deshabilitar botones
+    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+  }
+
+  // Cargar progreso guardado al iniciar
+  function cargarProgreso() {
+    const guardado = localStorage.getItem('progreso_lectura_facil');
+    if (guardado) {
+      const pag = parseInt(guardado);
+      if (pag >= 1 && pag <= totalPaginas) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual = pag;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+      }
+    }
+    actualizarNavegacion();
+  }
+
+  // Iniciar
+  window.addEventListener('DOMContentLoaded', cargarProgreso);
+</script>
+
+<!-- Bootstrap JS (necesario para algunos componentes, pero no abusamos) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

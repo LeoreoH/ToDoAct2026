@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geografía</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+
+<body>
+
+<header class="geo-header">
+    <button class="boton-volver" onclick="volver()">← Volver</button>
+    <h1>Geografía</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Selecciona un bloque</h2>
+
+    <div class="contenedor-niveles">
+        <button onclick="abrirModulo('la-tierra')">
+            <span>Bloque I: La Tierra</span>
+            <span class="descripcion-nivel">¿Dónde hace calor y frío? Mapas, coordenadas</span>
+        </button>
+
+        <button onclick="abrirModulo('componentes-naturales')">
+            <span>Bloque II: Componentes naturales</span>
+            <span class="descripcion-nivel">Relieve, agua, climas, regiones naturales</span>
+        </button>
+
+        <button onclick="abrirModulo('poblacion-mundial')">
+            <span>Bloque III: Población mundial</span>
+            <span class="descripcion-nivel">Distribución, ciudad/campo, migración, culturas</span>
+        </button>
+</div>
+
+<script src="/configClient.js"></script>
+<script src="menu.js"></script>
+</body>
+</html>

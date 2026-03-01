@@ -1,4 +1,6 @@
---------------------TABLAS--------------------
+-- ============================================
+-- TABLAS ORIGINALES
+-- ============================================
 
 CREATE TABLE usuarios(
 	id SERIAL PRIMARY KEY,
@@ -41,29 +43,16 @@ CREATE TABLE puntuaciones(
 	FOREIGN KEY (id_actividad) REFERENCES actividades(id)
 );
 
---------------------INSERTS DE ACTIVIDADES--------------------
-
-INSERT INTO actividades(id, actividad) VALUES(1, 'Planificación de una aventura');
-INSERT INTO actividades(id, actividad) VALUES(2, 'Memorama');
-INSERT INTO actividades(id, actividad) VALUES(3, 'Problemas matemáticos');
-INSERT INTO actividades(id, actividad) VALUES(4, 'Notas musicales');
-INSERT INTO actividades(id, actividad) VALUES(5, 'Sopa de letras');
-
---------------------SELECTS--------------------
-
-SELECT * FROM USUARIOS;
-SELECT * FROM ACTIVIDADES;
-SELECT * FROM NIVELES;
-SELECT * FROM PUNTUACIONES;
-
-
---------------------MODIFICACIONES A TABLAS EXISTENTES (MÓDULO ASTRONOMÍA)--------------------
+-- ============================================
+-- MODIFICACIONES A TABLAS EXISTENTES
+-- ============================================
 
 ALTER TABLE usuarios ADD COLUMN estilo_aprendizaje VARCHAR(30);
 ALTER TABLE puntuaciones ADD COLUMN estilo_mostrado VARCHAR(30);
 
-
---------------------TABLAS NUEVAS (MÓDULO ASTRONOMÍA)--------------------
+-- ============================================
+-- TABLAS DEL SISTEMA DE CONTENIDOS
+-- ============================================
 
 CREATE TABLE contenidos (
 	id SERIAL PRIMARY KEY,
@@ -87,7 +76,6 @@ CREATE TABLE progreso_contenido_usuario (
 	nivel_asignado VARCHAR(20),
 	contenido_completado BOOLEAN DEFAULT false,
 	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	-- Métricas del diagnóstico
 	tiempo_total_diagnostico INTEGER,
 	fecha_inicio_diagnostico TIMESTAMP,
 	fecha_fin_diagnostico TIMESTAMP,
@@ -119,8 +107,6 @@ CREATE TABLE preguntas_diagnostico (
 	respuesta_correcta CHAR(1) NOT NULL
 );
 
--- Las preguntas del diagnóstico se insertan con preguntas.sql (archivo separado)
-
 CREATE TABLE respuestas_diagnostico (
 	id SERIAL PRIMARY KEY,
 	usuario VARCHAR(50) NOT NULL,
@@ -132,106 +118,122 @@ CREATE TABLE respuestas_diagnostico (
 	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_resp_diag_usuario   ON respuestas_diagnostico(usuario);
+CREATE INDEX idx_resp_diag_usuario ON respuestas_diagnostico(usuario);
 CREATE INDEX idx_resp_diag_contenido ON respuestas_diagnostico(contenido_id);
-CREATE INDEX idx_resp_diag_pregunta  ON respuestas_diagnostico(pregunta_id);
-CREATE INDEX idx_resp_diag_correcta  ON respuestas_diagnostico(es_correcta);
 
--- Resultados del mini-quiz por nivel y estilo
 CREATE TABLE resultados_quiz (
-	id              SERIAL PRIMARY KEY,
-	usuario         VARCHAR(50) NOT NULL,
-	contenido_id    INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
-	nivel           VARCHAR(20) NOT NULL,
-	estilo          VARCHAR(30) NOT NULL,
-	aciertos        INTEGER NOT NULL DEFAULT 0,
-	total_preguntas INTEGER NOT NULL DEFAULT 5,
-	puntaje         INTEGER NOT NULL DEFAULT 0,
-	tiempo_total    INTEGER,
-	intento         INTEGER NOT NULL DEFAULT 1,
-	aprobado        BOOLEAN NOT NULL DEFAULT false,
-	fecha_inicio    TIMESTAMP,
-	fecha_fin       TIMESTAMP,
-	fecha           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_quiz_usuario   ON resultados_quiz(usuario);
-CREATE INDEX idx_quiz_contenido ON resultados_quiz(contenido_id);
-CREATE INDEX idx_quiz_nivel     ON resultados_quiz(nivel);
-CREATE INDEX idx_quiz_aprobado  ON resultados_quiz(aprobado);
-
-CREATE TABLE ejercicios (
 	id SERIAL PRIMARY KEY,
+	usuario VARCHAR(50) NOT NULL,
 	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
 	nivel VARCHAR(20) NOT NULL,
-	enunciado TEXT NOT NULL,
-	respuesta_correcta TEXT NOT NULL,
-	retro_generica TEXT
+	estilo VARCHAR(30) NOT NULL,
+	aciertos INTEGER NOT NULL DEFAULT 0,
+	total_preguntas INTEGER NOT NULL DEFAULT 5,
+	puntaje INTEGER NOT NULL DEFAULT 0,
+	tiempo_total INTEGER,
+	intento INTEGER NOT NULL DEFAULT 1,
+	aprobado BOOLEAN NOT NULL DEFAULT false,
+	fecha_inicio TIMESTAMP,
+	fecha_fin TIMESTAMP,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE progreso_ejercicio_usuario (
-	usuario        VARCHAR(50) NOT NULL,
-	ejercicio_id   INTEGER NOT NULL REFERENCES ejercicios(id) ON DELETE CASCADE,
-	correcto       BOOLEAN,
-	tiempo_segundos INTEGER,
-	intento        INTEGER NOT NULL DEFAULT 1,
-	respuesta_dada TEXT,
-	fecha_inicio   TIMESTAMP,
-	fecha_fin      TIMESTAMP,
-	fecha          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (usuario, ejercicio_id)
-);
+CREATE INDEX idx_quiz_usuario ON resultados_quiz(usuario);
+CREATE INDEX idx_quiz_contenido ON resultados_quiz(contenido_id);
+CREATE INDEX idx_quiz_nivel ON resultados_quiz(nivel);
+CREATE INDEX idx_quiz_aprobado ON resultados_quiz(aprobado);
 
-CREATE TABLE errores_ejercicio (
-	id                SERIAL PRIMARY KEY,
-	ejercicio_id      INTEGER NOT NULL REFERENCES ejercicios(id) ON DELETE CASCADE,
-	respuesta_erronea TEXT NOT NULL,
-	explicacion       TEXT NOT NULL
-);
+-- ============================================
+-- INSERTS DE ACTIVIDADES (originales)
+-- ============================================
 
+INSERT INTO actividades(id, actividad) VALUES(1, 'Planificación de una aventura');
+INSERT INTO actividades(id, actividad) VALUES(2, 'Memorama');
+INSERT INTO actividades(id, actividad) VALUES(3, 'Problemas matemáticos');
+INSERT INTO actividades(id, actividad) VALUES(4, 'Notas musicales');
+INSERT INTO actividades(id, actividad) VALUES(5, 'Sopa de letras');
 
---------------------INSERTS MÓDULO ASTRONOMÍA--------------------
+-- ============================================
+-- INSERTS DE CONTENIDOS DE GEOGRAFÍA (SOLO BLOQUES 1-3)
+-- ============================================
 
-INSERT INTO contenidos (id, area, slug, nombre, orden, activo)
-VALUES (1, 'astronomia', 'sistema-solar', 'El Sistema Solar', 1, true);
+-- Contenidos (Bloques de Geografía)
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
+(1, 'geografia', 'la-tierra', 'Bloque I: La Tierra', 1, true),
+(2, 'geografia', 'componentes-naturales', 'Bloque II: Componentes naturales de la Tierra', 2, true),
+(3, 'geografia', 'poblacion-mundial', 'Bloque III: Población mundial', 3, true);
 
-INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'facil');
-INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'normal');
-INSERT INTO niveles_contenido (contenido_id, nivel) VALUES (1, 'dificil');
+-- Niveles por contenido
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
+(1, 'facil'), (1, 'normal'), (1, 'dificil'),
+(2, 'facil'), (2, 'normal'), (2, 'dificil'),
+(3, 'facil'), (3, 'normal'), (3, 'dificil');
 
-INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES (1, 1, true);
+-- Exámenes diagnóstico
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
+(1, 1, true),
+(2, 2, true),
+(3, 3, true);
 
--- Las preguntas del diagnóstico se insertan con preguntas.sql (archivo separado)
+-- ============================================
+-- ARCHIVOS DE CONTENIDO (BLOQUE I: LA TIERRA)
+-- ============================================
 
--- Archivos de contenido por nivel y estilo
--- NOTA: ajusta las rutas si cambia la estructura de carpetas en public/
-INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo)
-VALUES
-(1, 'facil',   'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/visual_verbal.html'),
-(1, 'facil',   'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/visual_no_verbal.html'),
-(1, 'facil',   'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/auditivo.html'),
-(1, 'facil',   'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/facil/kinestesico.html'),
-(1, 'normal',  'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/visual_verbal.html'),
-(1, 'normal',  'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/visual_no_verbal.html'),
-(1, 'normal',  'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/auditivo.html'),
-(1, 'normal',  'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/normal/kinestesico.html'),
-(1, 'dificil', 'visual_verbal',    '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/visual_verbal.html'),
-(1, 'dificil', 'visual_no_verbal', '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/visual_no_verbal.html'),
-(1, 'dificil', 'auditivo',         '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/auditivo.html'),
-(1, 'dificil', 'kinestesico',      '/astronomia/contenidos/astronomia/sistema-solar/contenido/dificil/kinestesico.html')
-ON CONFLICT (contenido_id, nivel, estilo) DO UPDATE SET archivo = EXCLUDED.archivo;
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(1, 'facil', 'visual_verbal', '/contenidos/geografia/la-tierra/contenido/facil/visual_verbal.html'),
+(1, 'facil', 'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/facil/visual_no_verbal.html'),
+(1, 'facil', 'auditivo', '/contenidos/geografia/la-tierra/contenido/facil/auditivo.html'),
+(1, 'facil', 'kinestesico', '/contenidos/geografia/la-tierra/contenido/facil/kinestesico.html'),
+-- NIVEL NORMAL
+(1, 'normal', 'visual_verbal', '/contenidos/geografia/la-tierra/contenido/normal/visual_verbal.html'),
+(1, 'normal', 'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/normal/visual_no_verbal.html'),
+(1, 'normal', 'auditivo', '/contenidos/geografia/la-tierra/contenido/normal/auditivo.html'),
+(1, 'normal', 'kinestesico', '/contenidos/geografia/la-tierra/contenido/normal/kinestesico.html'),
+-- NIVEL DIFÍCIL
+(1, 'dificil', 'visual_verbal', '/contenidos/geografia/la-tierra/contenido/dificil/visual_verbal.html'),
+(1, 'dificil', 'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/dificil/visual_no_verbal.html'),
+(1, 'dificil', 'auditivo', '/contenidos/geografia/la-tierra/contenido/dificil/auditivo.html'),
+(1, 'dificil', 'kinestesico', '/contenidos/geografia/la-tierra/contenido/dificil/kinestesico.html');
 
+-- ============================================
+-- ARCHIVOS DE CONTENIDO (BLOQUE II: COMPONENTES NATURALES)
+-- ============================================
 
---------------------SELECTS MÓDULO ASTRONOMÍA--------------------
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(2, 'facil', 'visual_verbal', '/contenidos/geografia/componentes-naturales/contenido/facil/visual_verbal.html'),
+(2, 'facil', 'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/facil/visual_no_verbal.html'),
+(2, 'facil', 'auditivo', '/contenidos/geografia/componentes-naturales/contenido/facil/auditivo.html'),
+(2, 'facil', 'kinestesico', '/contenidos/geografia/componentes-naturales/contenido/facil/kinestesico.html'),
+-- NIVEL NORMAL
+(2, 'normal', 'visual_verbal', '/contenidos/geografia/componentes-naturales/contenido/normal/visual_verbal.html'),
+(2, 'normal', 'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/normal/visual_no_verbal.html'),
+(2, 'normal', 'auditivo', '/contenidos/geografia/componentes-naturales/contenido/normal/auditivo.html'),
+(2, 'normal', 'kinestesico', '/contenidos/geografia/componentes-naturales/contenido/normal/kinestesico.html'),
+-- NIVEL DIFÍCIL
+(2, 'dificil', 'visual_verbal', '/contenidos/geografia/componentes-naturales/contenido/dificil/visual_verbal.html'),
+(2, 'dificil', 'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/dificil/visual_no_verbal.html'),
+(2, 'dificil', 'auditivo', '/contenidos/geografia/componentes-naturales/contenido/dificil/auditivo.html'),
+(2, 'dificil', 'kinestesico', '/contenidos/geografia/componentes-naturales/contenido/dificil/kinestesico.html');
 
-SELECT * FROM contenidos;
-SELECT * FROM niveles_contenido;
-SELECT * FROM progreso_contenido_usuario;
-SELECT * FROM contenidos_archivos;
-SELECT * FROM examenes_diagnostico;
-SELECT * FROM preguntas_diagnostico;
-SELECT * FROM respuestas_diagnostico;
-SELECT * FROM resultados_quiz;
-SELECT * FROM ejercicios;
-SELECT * FROM progreso_ejercicio_usuario;
-SELECT * FROM errores_ejercicio;
+-- ============================================
+-- ARCHIVOS DE CONTENIDO (BLOQUE III: POBLACIÓN MUNDIAL)
+-- ============================================
+
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(3, 'facil', 'visual_verbal', '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_verbal.html'),
+(3, 'facil', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_no_verbal.html'),
+(3, 'facil', 'auditivo', '/contenidos/geografia/poblacion-mundial/contenido/facil/auditivo.html'),
+(3, 'facil', 'kinestesico', '/contenidos/geografia/poblacion-mundial/contenido/facil/kinestesico.html'),
+-- NIVEL NORMAL
+(3, 'normal', 'visual_verbal', '/contenidos/geografia/poblacion-mundial/contenido/normal/visual_verbal.html'),
+(3, 'normal', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/normal/visual_no_verbal.html'),
+(3, 'normal', 'auditivo', '/contenidos/geografia/poblacion-mundial/contenido/normal/auditivo.html'),
+(3, 'normal', 'kinestesico', '/contenidos/geografia/poblacion-mundial/contenido/normal/kinestesico.html'),
+-- NIVEL DIFÍCIL
+(3, 'dificil', 'visual_verbal', '/contenidos/geografia/poblacion-mundial/contenido/dificil/visual_verbal.html'),
+(3, 'dificil', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/dificil/visual_no_verbal.html'),
+(3, 'dificil', 'auditivo', '/contenidos/geografia/poblacion-mundial/contenido/dificil/auditivo.html'),
+(3, 'dificil', 'kinestesico', '/contenidos/geografia/poblacion-mundial/contenido/dificil/kinestesico.html');

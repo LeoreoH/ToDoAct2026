@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - La Tierra (Nivel Fácil)</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #0277bd, #01579b);
+      min-height: 100vh;
+      color: white;
+    }
+    
+    .quiz-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 3px solid #ffd600;
+    }
+    
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .quiz-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: #ffd600;
+    }
+    
+    .pregunta-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-left: 5px solid #ffd600;
+    }
+    
+    .pregunta-numero {
+      font-size: 14px;
+      color: #ffd600;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    
+    .pregunta-texto {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 15px 0;
+    }
+    
+    .opciones {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .opcion-btn {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      color: white;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .opcion-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.3);
+      border-color: #ffd600;
+      transform: translateX(5px);
+    }
+    
+    .opcion-btn.correcta {
+      background: rgba(76,175,80,0.4);
+      border-color: #81c784;
+    }
+    
+    .opcion-btn.incorrecta {
+      background: rgba(244,67,54,0.4);
+      border-color: #ef9a9a;
+    }
+    
+    .opcion-btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    
+    .feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+    }
+    
+    .feedback.visible {
+      display: block;
+    }
+    
+    .feedback.correcto {
+      background: rgba(76,175,80,0.3);
+      color: #c8e6c9;
+    }
+    
+    .feedback.incorrecto {
+      background: rgba(244,67,54,0.3);
+      color: #ffcdd2;
+    }
+    
+    .btn-quiz {
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      margin: 10px;
+    }
+    
+    .btn-quiz:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255,214,0,0.4);
+    }
+    
+    .btn-secundario {
+      background: white;
+      color: #01579b;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+    
+    .progreso-quiz {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+    }
+    
+    .punto {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .punto.respondido {
+      background: #ffd600;
+    }
+    
+    .punto.activo {
+      background: white;
+      transform: scale(1.3);
+    }
+    
+    .resultado {
+      text-align: center;
+      padding: 30px;
+      display: none;
+    }
+    
+    .resultado.visible {
+      display: block;
+    }
+    
+    .resultado-emoji {
+      font-size: 5rem;
+    }
+    
+    .resultado-puntaje {
+      font-size: 4rem;
+      font-weight: 900;
+      color: #ffd600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <i class="fas fa-star fa-3x" style="color: #ffd600;"></i>
+    <h1>Mini-Quiz</h1>
+    <p>La Tierra · Nivel Fácil</p>
+  </div>
+  
+  <!-- Puntos de progreso -->
+  <div class="progreso-quiz" id="progresoQuiz">
+    <div class="punto activo" data-i="0"></div>
+    <div class="punto" data-i="1"></div>
+    <div class="punto" data-i="2"></div>
+    <div class="punto" data-i="3"></div>
+    <div class="punto" data-i="4"></div>
+  </div>
+  
+  <!-- Preguntas -->
+  <div id="preguntasContainer"></div>
+  
+  <!-- Botones de navegación -->
+  <div class="text-center" id="navBotones">
+    <button class="btn-secundario" onclick="anteriorPregunta()" id="btnAnterior" style="display: none;">
+      <i class="fas fa-arrow-left me-2"></i> Anterior
+    </button>
+    <button class="btn-quiz" onclick="siguientePregunta()" id="btnSiguiente">
+      Siguiente <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+    <button class="btn-quiz" onclick="enviarQuiz()" id="btnEnviar" style="display: none;">
+      Enviar respuestas
+    </button>
+  </div>
+  
+  <!-- Resultado -->
+  <div class="resultado" id="resultado">
+    <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+    <div class="resultado-titulo h2" id="resultadoTitulo">¡Lo lograste!</div>
+    <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
+    <p class="mb-4" id="resultadoMensaje"></p>
+    <button class="btn-quiz" onclick="volverAlContenido()">
+      <i class="fas fa-arrow-left me-2"></i> Volver al contenido
+    </button>
+    <button class="btn-quiz mt-3" style="background: white;" id="btnSiguienteNivel" onclick="irSiguienteNivel()">
+      Siguiente nivel <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+  </div>
+  
+</div>
+
+<script>
+  // Preguntas del nivel fácil
+  const preguntas = [
+    {
+      texto: "¿Qué línea imaginaria divide la Tierra en hemisferio norte y hemisferio sur?",
+      opciones: ["Meridiano de Greenwich", "Ecuador", "Trópico de Cáncer", "Círculo Polar Ártico"],
+      correcta: 1, // índice 1 = "Ecuador"
+      explicacion: "El Ecuador es la línea que divide la Tierra en dos mitades iguales: el hemisferio norte y el hemisferio sur."
+    },
+    {
+      texto: "¿Cuál es la forma de la Tierra?",
+      opciones: ["Esfera perfecta", "Esfera achatada en los polos", "Plana", "Cúbica"],
+      correcta: 1,
+      explicacion: "La Tierra no es una esfera perfecta. Está ligeramente achatada en los polos y abultada en el Ecuador."
+    },
+    {
+      texto: "¿Cuántos puntos cardinales principales existen?",
+      opciones: ["2", "3", "4", "6"],
+      correcta: 2,
+      explicacion: "Los cuatro puntos cardinales son: Norte, Sur, Este y Oeste."
+    },
+    {
+      texto: "¿En qué zona térmica se encuentra la mayor parte de México?",
+      opciones: ["Zona cálida", "Zona templada", "Zona fría", "Zona polar"],
+      correcta: 1,
+      explicacion: "México se encuentra en la zona templada del hemisferio norte, aunque también tiene zonas cálidas en el sur."
+    },
+    {
+      texto: "¿Qué porcentaje de la superficie terrestre está cubierta por agua?",
+      opciones: ["29%", "51%", "71%", "90%"],
+      correcta: 2,
+      explicacion: "El 71% de la superficie de la Tierra está cubierta por agua, principalmente océanos."
+    }
+  ];
+  
+  let preguntaActual = 0;
+  let respuestasUsuario = new Array(preguntas.length).fill(null); // null = no respondida
+  let respuestasCorrectas = new Array(preguntas.length).fill(false);
+  let aciertos = 0;
+  const TOTAL = preguntas.length;
+  const MINIMO = 4; // 4 de 5 para aprobar
+  
+  function mostrarPregunta() {
+    const container = document.getElementById('preguntasContainer');
+    container.innerHTML = '';
+    
+    const p = preguntas[preguntaActual];
+    const respondida = respuestasUsuario[preguntaActual] !== null;
+    
+    const div = document.createElement('div');
+    div.className = 'pregunta-card';
+    
+    // Texto de la pregunta
+    div.innerHTML = `
+      <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+      <div class="pregunta-texto">${p.texto}</div>
+      <div class="opciones" id="opciones-${preguntaActual}"></div>
+      <div class="feedback ${respondida ? 'visible' : ''} ${respuestasCorrectas[preguntaActual] ? 'correcto' : 'incorrecto'}" 
+           id="feedback-${preguntaActual}">
+        ${respondida ? (respuestasCorrectas[preguntaActual] ? '✓ ¡Correcto! ' + p.explicacion : '✗ ' + p.explicacion) : ''}
+      </div>
+    `;
+    container.appendChild(div);
+    
+    // Opciones
+    const opcionesDiv = document.getElementById(`opciones-${preguntaActual}`);
+    p.opciones.forEach((opcion, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opcion-btn';
+      if (respondida) {
+        btn.disabled = true;
+        if (idx === respuestasUsuario[preguntaActual]) {
+          btn.classList.add(respuestasCorrectas[preguntaActual] ? 'correcta' : 'incorrecta');
+        }
+        if (idx === p.correcta) {
+          btn.classList.add('correcta');
+        }
+      }
+      btn.innerHTML = `<i class="fas fa-circle me-2" style="color: #ffd600; font-size: 10px;"></i> ${opcion}`;
+      btn.onclick = () => seleccionarRespuesta(preguntaActual, idx);
+      opcionesDiv.appendChild(btn);
+    });
+    
+    // Actualizar puntos de progreso
+    actualizarPuntos();
+    
+    // Actualizar botones de navegación
+    actualizarBotones();
+  }
+  
+  function seleccionarRespuesta(idxPregunta, idxOpcion) {
+    // Guardar respuesta
+    respuestasUsuario[idxPregunta] = idxOpcion;
+    const esCorrecta = idxOpcion === preguntas[idxPregunta].correcta;
+    respuestasCorrectas[idxPregunta] = esCorrecta;
+    
+    // Recalcular aciertos
+    aciertos = respuestasCorrectas.filter(v => v === true).length;
+    
+    // Recargar la pregunta para mostrar feedback
+    mostrarPregunta();
+  }
+  
+  function anteriorPregunta() {
+    if (preguntaActual > 0) {
+      preguntaActual--;
+      mostrarPregunta();
+    }
+  }
+  
+  function siguientePregunta() {
+    if (preguntaActual < TOTAL - 1) {
+      preguntaActual++;
+      mostrarPregunta();
+    }
+  }
+  
+  function actualizarPuntos() {
+    const puntos = document.querySelectorAll('.punto');
+    puntos.forEach((punto, i) => {
+      punto.classList.remove('activo', 'respondido');
+      if (respuestasUsuario[i] !== null) {
+        punto.classList.add('respondido');
+      }
+      if (i === preguntaActual) {
+        punto.classList.add('activo');
+      }
+    });
+  }
+  
+  function actualizarBotones() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const btnEnviar = document.getElementById('btnEnviar');
+    
+    // Botón anterior
+    if (preguntaActual > 0) {
+      btnAnterior.style.display = 'inline-block';
+    } else {
+      btnAnterior.style.display = 'none';
+    }
+    
+    // Botón siguiente / enviar
+    if (preguntaActual === TOTAL - 1) {
+      btnSiguiente.style.display = 'none';
+      btnEnviar.style.display = 'inline-block';
+    } else {
+      btnSiguiente.style.display = 'inline-block';
+      btnEnviar.style.display = 'none';
+    }
+  }
+  
+  function enviarQuiz() {
+    // Verificar que todas las preguntas están respondidas
+    const sinResponder = respuestasUsuario.filter(r => r === null).length;
+    if (sinResponder > 0) {
+      alert(`Te faltan ${sinResponder} preguntas por responder`);
+      return;
+    }
+    
+    // Ocultar preguntas y mostrar resultado
+    document.getElementById('preguntasContainer').style.display = 'none';
+    document.getElementById('progresoQuiz').style.display = 'none';
+    document.getElementById('navBotones').style.display = 'none';
+    
+    const resultado = document.getElementById('resultado');
+    resultado.classList.add('visible');
+    
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
+    
+    document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
+    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
+    document.getElementById('resultadoTitulo').innerHTML = aprobado ? '¡Lo lograste!' : 'Sigue practicando';
+    
+    if (aprobado) {
+      document.getElementById('resultadoMensaje').innerHTML = 
+        `Obtuviste ${pct}%. ¡Excelente! Has comprendido los conceptos básicos de la Tierra. El nivel normal está desbloqueado.`;
+      document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
+      guardarProgreso(aciertos, TOTAL);
+    } else {
+      document.getElementById('resultadoMensaje').innerHTML = 
+        `Obtuviste ${pct}%. Necesitas al menos 4 de 5 para avanzar. Vuelve a leer el contenido e inténtalo de nuevo.`;
+      document.getElementById('btnSiguienteNivel').style.display = 'none';
+    }
+  }
+  
+  async function guardarProgreso(aciertos, total) {
+    try {
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 1,
+          nivel_completado: 'facil',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: true,
+          aciertos: aciertos,
+          total_preguntas: total
+        })
+      });
+    } catch(e) {
+      console.error('Error guardando progreso:', e);
+    }
+  }
+  
+  function volverAlContenido() {
+    window.location.href = 'visual_verbal.html';
+  }
+  
+  function irSiguienteNivel() {
+    window.location.href = '../normal/visual_verbal.html';
+  }
+  
+  // Inicializar
+  mostrarPregunta();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

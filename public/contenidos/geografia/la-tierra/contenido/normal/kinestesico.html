@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra · Nivel Normal · Kinestésico</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #e3f2fd;
+      color: #01579b;
+      min-height: 100vh;
+    }
+
+    .cabecera-kine {
+      background: #1976d2;
+      padding: 30px 20px;
+      border-bottom: 6px solid #ffd600;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .cabecera-kine h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 3px 3px 0 #01579b;
+    }
+
+    .badge-estilo {
+      background: #ffd600;
+      color: #01579b;
+      padding: 12px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: inline-block;
+      border: 4px solid white;
+      margin-top: 10px;
+    }
+
+    .badge-nivel {
+      background: #01579b;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      margin-left: 15px;
+      border: 2px solid #ffd600;
+    }
+
+    .barra-progreso {
+      background: white;
+      border-radius: 60px;
+      margin: 25px auto;
+      max-width: 800px;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 5px 0 #0d47a1;
+    }
+
+    .puntos-progreso {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .punto {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #bbdefb;
+      border: 3px solid #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #01579b;
+      transition: all 0.3s;
+    }
+
+    .punto.activo {
+      background: #ffd600;
+      border-color: #1976d2;
+      color: #01579b;
+      transform: scale(1.2);
+    }
+
+    .punto.completado {
+      background: #4caf50;
+      border-color: white;
+      color: white;
+    }
+
+    .contenedor-paginas {
+      max-width: 1000px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .pagina {
+      display: none;
+      animation: aparecer 0.5s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta-contenido {
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 8px 0 #0d47a1;
+    }
+
+    .titulo-pagina {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: #01579b;
+      margin-bottom: 20px;
+      border-left: 8px solid #ffd600;
+      padding-left: 20px;
+    }
+
+    .imagen-geo {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      background: #e3f2fd;
+      border-radius: 15px;
+      padding: 10px;
+      border: 3px solid #1976d2;
+    }
+
+    .pie-imagen {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #546e7a;
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    .recuadro-datos {
+      background: #e3f2fd;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 6px solid #ffd600;
+    }
+
+    /* ===== ACTIVIDADES KINESTÉSICAS ===== */
+    .actividad-kine {
+      background: #fff3e0;
+      border-radius: 30px;
+      padding: 25px;
+      margin-top: 30px;
+      border: 4px dashed #ffd600;
+    }
+
+    .actividad-titulo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #01579b;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .elemento-arrastrable {
+      background: #ffd600;
+      color: #01579b;
+      padding: 12px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: grab;
+      border: 3px solid #1976d2;
+      box-shadow: 0 4px 0 #b26a00;
+      display: inline-block;
+      margin: 8px;
+    }
+
+    .elemento-arrastrable.oculto {
+      display: none;
+    }
+
+    .zona-soltar {
+      background: #e3f2fd;
+      border: 3px dashed #1976d2;
+      border-radius: 20px;
+      padding: 15px;
+      min-height: 120px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .zona-soltar.correcta {
+      background: #c8e6c9;
+      border-color: #4caf50;
+    }
+
+    .elemento-colocado {
+      background: #4caf50;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 2px solid white;
+      display: inline-block;
+      margin: 3px;
+    }
+
+    .mensaje-feedback {
+      background: #4caf50;
+      color: white;
+      padding: 12px;
+      border-radius: 30px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .mensaje-feedback.visible {
+      display: block;
+    }
+
+    .navegador {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 40px 0 20px;
+      background: white;
+      padding: 15px 30px;
+      border-radius: 60px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 5px 0 #0d47a1;
+    }
+
+    .btn-nav {
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      border: 3px solid #1976d2;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: white;
+      transform: scale(1.05);
+    }
+
+    .btn-nav:disabled {
+      background: #e0e0e0;
+      color: #9e9e9e;
+      border-color: #bdbdbd;
+    }
+
+    .indicador-pagina {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: #bbdefb;
+      color: #01579b;
+      padding: 8px 30px;
+      border-radius: 40px;
+      border: 3px solid #1976d2;
+    }
+
+    .boton-quiz {
+      display: block;
+      width: fit-content;
+      margin: 30px auto 0;
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 18px 50px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.6rem;
+      text-decoration: none;
+      border: 4px solid #1976d2;
+      box-shadow: 0 8px 0 #0d47a1;
+      transition: all 0.2s;
+    }
+
+    .boton-quiz:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 0 #0d47a1;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cabecera-kine">
+  <h1>👐 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I · Nivel Normal</p>
+  <div>
+    <span class="badge-estilo">✋ Kinestésico</span>
+    <span class="badge-nivel">⚡ Intermedio</span>
+  </div>
+</div>
+
+<div class="barra-progreso">
+  <i class="fas fa-hand-paper fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos-progreso" id="puntosProgreso">
+    <div class="punto activo" data-pagina="1">1</div>
+    <div class="punto" data-pagina="2">2</div>
+    <div class="punto" data-pagina="3">3</div>
+    <div class="punto" data-pagina="4">4</div>
+  </div>
+  <span class="badge" style="background: #1976d2; color: white; font-size: 1.2rem; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor-paginas">
+
+  <!-- ===== PÁGINA 1: ROTACIÓN ===== -->
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-contenido">
+      <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotación</h2>
+      
+      <p>La Tierra gira sobre sí misma como un trompo. Este movimiento se llama <strong>rotación</strong> y dura 24 horas, un día completo.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
+               alt="Rotación" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+          <div class="pie-imagen">La Tierra gira sobre su eje</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro-datos">
+            <p><strong>Día:</strong> Cuando miramos al Sol</p>
+            <p><strong>Noche:</strong> Cuando quedamos de espaldas</p>
+            <p><strong>Dirección:</strong> Oeste a Este</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVIDAD KINESTÉSICA 1: Ordenar el ciclo día/noche -->
+      <div class="actividad-kine">
+        <h3 class="actividad-titulo"><i class="fas fa-sun me-2"></i> Ordena el ciclo del día y la noche</h3>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="zona-soltar" id="zonaDia" data-tipo="dia">
+              <strong>☀️ DÍA</strong><br>
+              <div class="mt-2" id="contenedorDia"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="zona-soltar" id="zonaNoche" data-tipo="noche">
+              <strong>🌙 NOCHE</strong><br>
+              <div class="mt-2" id="contenedorNoche"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4" id="elementosPagina1">
+          <span class="elemento-arrastrable" draggable="true" data-tipo="dia" data-texto="Mirando al Sol">Mirando al Sol</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="noche" data-texto="Espaldas al Sol">Espaldas al Sol</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="dia" data-texto="Luz solar">Luz solar</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="noche" data-texto="Oscuridad">Oscuridad</span>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina1">
+          ✅ ¡Correcto! Has ordenado el ciclo del día y la noche.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PÁGINA 2: TRASLACIÓN ===== -->
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-contenido">
+      <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslación</h2>
+      
+      <p>La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>órbita</strong>. Este movimiento dura 365 días y 6 horas.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
+               alt="Traslación" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
+          <div class="pie-imagen">La Tierra orbita alrededor del Sol</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro-datos">
+            <p><strong>365 días:</strong> Una vuelta completa</p>
+            <p><strong>+6 horas:</strong> Se acumulan cada año</p>
+            <p><strong>Año bisiesto:</strong> Cada 4 años, febrero tiene 29 días</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVIDAD KINESTÉSICA 2: Completar años bisiestos -->
+      <div class="actividad-kine">
+        <h3 class="actividad-titulo"><i class="fas fa-calendar-alt me-2"></i> ¿Qué años son bisiestos?</h3>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="zona-soltar" id="zonaBisiesto" data-tipo="bisiesto">
+              <strong>📅 AÑOS BISIESTO</strong><br>
+              <div class="mt-2" id="contenedorBisiesto"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="zona-soltar" id="zonaNoBisiesto" data-tipo="nobisiesto">
+              <strong>📆 AÑOS NORMALES</strong><br>
+              <div class="mt-2" id="contenedorNoBisiesto"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4" id="elementosPagina2">
+          <span class="elemento-arrastrable" draggable="true" data-tipo="bisiesto" data-texto="2020">2020</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="nobisiesto" data-texto="2021">2021</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="bisiesto" data-texto="2024">2024</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="nobisiesto" data-texto="2023">2023</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="bisiesto" data-texto="2028">2028</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="nobisiesto" data-texto="2025">2025</span>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina2">
+          ✅ ¡Correcto! Los años bisiestos son divisibles entre 4.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PÁGINA 3: ESTACIONES ===== -->
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-contenido">
+      <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del año</h2>
+      
+      <p>La inclinación de la Tierra y su movimiento alrededor del Sol crean las cuatro estaciones.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
+               alt="Estaciones" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
+          <div class="pie-imagen">Primavera, verano, otoño, invierno</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro-datos">
+            <p><strong>Primavera:</strong> 21 mar - 20 jun</p>
+            <p><strong>Verano:</strong> 21 jun - 22 sep</p>
+            <p><strong>Otoño:</strong> 23 sep - 20 dic</p>
+            <p><strong>Invierno:</strong> 21 dic - 20 mar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVIDAD KINESTÉSICA 3: Ordenar las estaciones -->
+      <div class="actividad-kine">
+        <h3 class="actividad-titulo"><i class="fas fa-sort-amount-down me-2"></i> Ordena las estaciones</h3>
+        
+        <div class="row">
+          <div class="col-3">
+            <div class="zona-soltar" id="zonaEstacion1" data-tipo="estacion1">
+              <strong>1°</strong><br>
+              <div class="mt-2" id="contenedorEstacion1"></div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="zona-soltar" id="zonaEstacion2" data-tipo="estacion2">
+              <strong>2°</strong><br>
+              <div class="mt-2" id="contenedorEstacion2"></div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="zona-soltar" id="zonaEstacion3" data-tipo="estacion3">
+              <strong>3°</strong><br>
+              <div class="mt-2" id="contenedorEstacion3"></div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="zona-soltar" id="zonaEstacion4" data-tipo="estacion4">
+              <strong>4°</strong><br>
+              <div class="mt-2" id="contenedorEstacion4"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4" id="elementosPagina3">
+          <span class="elemento-arrastrable" draggable="true" data-tipo="estacion1" data-texto="PRIMAVERA">🌼 PRIMAVERA</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="estacion2" data-texto="VERANO">☀️ VERANO</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="estacion3" data-texto="OTOÑO">🍂 OTOÑO</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="estacion4" data-texto="INVIERNO">❄️ INVIERNO</span>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina3">
+          ✅ ¡Correcto! El orden es: Primavera, Verano, Otoño, Invierno.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PÁGINA 4: ELEMENTOS DE MAPAS ===== -->
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-contenido">
+      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
+      
+      <p>Los mapas tienen elementos que nos ayudan a entenderlos y usarlos correctamente.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
+               alt="Elementos de mapa" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
+          <div class="pie-imagen">Partes de un mapa</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro-datos">
+            <p><strong>Orientación:</strong> Puntos cardinales</p>
+            <p><strong>Escala:</strong> Distancia real</p>
+            <p><strong>Simbología:</strong> Símbolos explicativos</p>
+            <p><strong>Coordenadas:</strong> Latitud y longitud</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVIDAD KINESTÉSICA 4: Relacionar elemento con su función -->
+      <div class="actividad-kine">
+        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> Relaciona cada elemento</h3>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="text-center">ELEMENTO</h5>
+            <div class="zona-soltar mb-2" id="zonaOrientacion" data-tipo="orientacion">
+              <strong>🧭 ORIENTACIÓN</strong><br>
+              <div class="mt-2" id="contenedorOrientacion"></div>
+            </div>
+            <div class="zona-soltar mb-2" id="zonaEscala" data-tipo="escala">
+              <strong>📏 ESCALA</strong><br>
+              <div class="mt-2" id="contenedorEscala"></div>
+            </div>
+            <div class="zona-soltar mb-2" id="zonaSimbologia" data-tipo="simbologia">
+              <strong>🔣 SIMBOLOGÍA</strong><br>
+              <div class="mt-2" id="contenedorSimbologia"></div>
+            </div>
+            <div class="zona-soltar" id="zonaCoordenadas" data-tipo="coordenadas">
+              <strong>📍 COORDENADAS</strong><br>
+              <div class="mt-2" id="contenedorCoordenadas"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5 class="text-center">FUNCIÓN</h5>
+            <div class="text-center" id="elementosPagina4">
+              <span class="elemento-arrastrable" draggable="true" data-tipo="orientacion" data-texto="Señala el Norte">Señala el Norte</span>
+              <span class="elemento-arrastrable" draggable="true" data-tipo="escala" data-texto="1cm = 10km">1cm = 10km</span>
+              <span class="elemento-arrastrable" draggable="true" data-tipo="simbologia" data-texto="🏠 = ciudad">🏠 = ciudad</span>
+              <span class="elemento-arrastrable" draggable="true" data-tipo="coordenadas" data-texto="Latitud 19°N">Latitud 19°N</span>
+              <span class="elemento-arrastrable" draggable="true" data-tipo="orientacion" data-texto="Rosa de los vientos">Rosa de los vientos</span>
+              <span class="elemento-arrastrable" draggable="true" data-tipo="escala" data-texto="Distancia real">Distancia real</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina4">
+          ✅ ¡Excelente! Conoces los elementos de los mapas.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVEGADOR -->
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
+    <span class="indicador-pagina" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
+  </div>
+
+  <a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+<script>
+  let paginaActual = 1;
+  const totalPaginas = 4;
+  let colocados = {};
+
+  function cambiarPagina(direccion) {
+    document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+    paginaActual += direccion;
+    document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    actualizarUI();
+    localStorage.setItem('progreso_normal_kinestesico', paginaActual);
+  }
+
+  function actualizarUI() {
+    document.querySelectorAll('.punto').forEach((punto, index) => {
+      const numPagina = index + 1;
+      punto.classList.remove('activo', 'completado');
+      if (numPagina === paginaActual) punto.classList.add('activo');
+      else if (numPagina < paginaActual) punto.classList.add('completado');
+    });
+    
+    document.getElementById('paginaActualNum').innerText = paginaActual;
+    document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+  }
+
+  // Sistema de arrastre
+  document.querySelectorAll('.elemento-arrastrable').forEach(item => {
+    item.addEventListener('dragstart', function(e) {
+      e.dataTransfer.setData('text/plain', this.innerText);
+      e.dataTransfer.setData('tipo', this.dataset.tipo);
+      e.dataTransfer.setData('texto', this.dataset.texto);
+    });
+  });
+
+  document.querySelectorAll('.zona-soltar').forEach(zona => {
+    zona.addEventListener('dragover', e => e.preventDefault());
+    
+    zona.addEventListener('drop', function(e) {
+      e.preventDefault();
+      
+      const tipoElemento = e.dataTransfer.getData('tipo');
+      const tipoZona = this.dataset.tipo;
+      const textoElemento = e.dataTransfer.getData('texto');
+      
+      if (tipoElemento === tipoZona) {
+        const elementos = document.querySelectorAll('.elemento-arrastrable');
+        for (let el of elementos) {
+          if (el.innerText.includes(textoElemento) && !el.classList.contains('oculto')) {
+            el.classList.add('oculto');
+            
+            const contenedor = this.querySelector('div[id^="contenedor"]');
+            if (contenedor) {
+              const nuevoSpan = document.createElement('span');
+              nuevoSpan.className = 'elemento-colocado';
+              nuevoSpan.innerText = textoElemento;
+              contenedor.appendChild(nuevoSpan);
+            }
+            
+            this.classList.add('correcta');
+            
+            // Verificar página completada
+            if (paginaActual === 1) {
+              if (document.querySelectorAll('#contenedorDia .elemento-colocado').length === 2 &&
+                  document.querySelectorAll('#contenedorNoche .elemento-colocado').length === 2) {
+                document.getElementById('feedbackPagina1').classList.add('visible');
+              }
+            }
+            else if (paginaActual === 2) {
+              if (document.querySelectorAll('#contenedorBisiesto .elemento-colocado').length === 3 &&
+                  document.querySelectorAll('#contenedorNoBisiesto .elemento-colocado').length === 3) {
+                document.getElementById('feedbackPagina2').classList.add('visible');
+              }
+            }
+            else if (paginaActual === 3) {
+              if (document.querySelectorAll('#contenedorEstacion1 .elemento-colocado').length === 1 &&
+                  document.querySelectorAll('#contenedorEstacion2 .elemento-colocado').length === 1 &&
+                  document.querySelectorAll('#contenedorEstacion3 .elemento-colocado').length === 1 &&
+                  document.querySelectorAll('#contenedorEstacion4 .elemento-colocado').length === 1) {
+                document.getElementById('feedbackPagina3').classList.add('visible');
+              }
+            }
+            else if (paginaActual === 4) {
+              if (document.querySelectorAll('#contenedorOrientacion .elemento-colocado').length === 2 &&
+                  document.querySelectorAll('#contenedorEscala .elemento-colocado').length === 2 &&
+                  document.querySelectorAll('#contenedorSimbologia .elemento-colocado').length === 1 &&
+                  document.querySelectorAll('#contenedorCoordenadas .elemento-colocado').length === 1) {
+                document.getElementById('feedbackPagina4').classList.add('visible');
+              }
+            }
+            break;
+          }
+        }
+      }
+    });
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const guardado = localStorage.getItem('progreso_normal_kinestesico');
+    if (guardado) {
+      const pag = parseInt(guardado);
+      if (pag >= 1 && pag <= totalPaginas) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual = pag;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+      }
+    }
+    actualizarUI();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

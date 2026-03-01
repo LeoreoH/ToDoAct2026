@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f9;
+}
+
+.geo-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #2e7d32; /* Verde para geografía */
+    color: white;
+    position: relative;
+}
+
+.geo-header h1 {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+.boton-volver {
+    position: absolute;
+    left: 20px;
+    background: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.contenedor-actividad {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.contenedor-niveles {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedor-niveles button {
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #2e7d32;
+    background: white;
+    color: #2e7d32;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.contenedor-niveles button:hover {
+    background: #e8f5e9;
+}
+
+.descripcion-nivel{
+    display:block;
+    font-size: 0.8em;
+    margin-top: 5px;
+    color: #555;
+}
