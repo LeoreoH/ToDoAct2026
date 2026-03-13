@@ -17,15 +17,14 @@
 
     body {
       font-family: 'Nunito', sans-serif;
-      background: #e3f2fd;  /* Azul muy claro */
+      background: #e3f2fd;
       min-height: 100vh;
-      color: #01579b;  /* Azul oscuro para texto */
+      color: #01579b;
     }
 
-    /* Cabecera - Azul rey */
     .cabecera-auditivo {
       background: #1976d2;
-      padding: 30px 20px;
+      padding: 25px 20px;
       border-bottom: 6px solid #ffd600;
       text-align: center;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -36,12 +35,6 @@
       font-size: 3rem;
       color: white;
       text-shadow: 3px 3px 0 #01579b;
-      margin-bottom: 5px;
-    }
-
-    .cabecera-auditivo .lead {
-      color: white !important;
-      font-weight: 600;
     }
 
     .badge-estilo {
@@ -57,30 +50,29 @@
       box-shadow: 0 4px 0 #b26a00;
     }
 
-    /* Barra de progreso */
-    .progreso-auditivo {
+    .progreso-contenedor {
       background: white;
       border-radius: 60px;
-      margin: 25px auto;
-      max-width: 800px;
-      padding: 15px 30px;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 12px 25px;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
       border: 3px solid #1976d2;
-      box-shadow: 0 5px 15px rgba(25,118,210,0.2);
+      box-shadow: 0 5px 0 #0d47a1;
     }
 
-    .puntos-progreso {
+    .puntos {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex: 1;
       justify-content: center;
     }
 
     .punto {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       background: #bbdefb;
       border: 3px solid #1976d2;
@@ -88,26 +80,22 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 1.2rem;
       color: #01579b;
       transition: all 0.3s;
     }
 
     .punto.activo {
       background: #ffd600;
-      border-color: #1976d2;
-      color: #01579b;
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
 
     .punto.completado {
       background: #4caf50;
-      border-color: white;
       color: white;
+      border-color: white;
     }
 
-    /* Contenedor principal */
-    .contenedor-paginas {
+    .contenedor {
       max-width: 900px;
       margin: 0 auto 40px;
       padding: 0 20px;
@@ -115,32 +103,30 @@
 
     .pagina {
       display: none;
-      animation: aparecer 0.5s ease;
+      animation: fadeIn 0.4s ease;
     }
 
     .pagina.activa {
       display: block;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(20px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Tarjeta de audio - BLANCA con bordes azules */
     .tarjeta-audio {
       background: white;
       border-radius: 30px;
       padding: 25px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       border: 3px solid #1976d2;
       box-shadow: 0 8px 0 #0d47a1;
-      transition: transform 0.3s;
+      transition: all 0.3s;
     }
 
     .tarjeta-audio:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 0 #0d47a1;
+      transform: translateY(-3px);
     }
 
     .audio-header {
@@ -161,6 +147,7 @@
       justify-content: center;
       font-size: 2rem;
       border: 3px solid #1976d2;
+      box-shadow: 0 4px 0 #b26a00;
     }
 
     .audio-titulo {
@@ -180,129 +167,183 @@
       border: 2px solid #1976d2;
     }
 
-    /* Contenedor de imagen - AZUL CLARO */
-    .contenedor-imagen {
+    /* IMAGEN GRANDE CON ANIMACIÓN */
+    .imagen-grande {
       background: #e3f2fd;
       border-radius: 20px;
-      padding: 15px;
+      padding: 20px;
       margin: 15px 0;
       text-align: center;
-      border: 2px dashed #1976d2;
+      border: 3px dashed #1976d2;
+      transition: all 0.3s ease;
+    }
+
+    .imagen-grande:hover {
+      transform: scale(1.02) rotate(1deg);
+      box-shadow: 0 10px 20px rgba(25,118,210,0.3);
     }
 
     .imagen-geo {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 10px;
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 15px;
       border: 3px solid white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .pie-imagen {
       color: #01579b;
-      font-size: 0.9rem;
-      margin-top: 8px;
-      font-style: italic;
-      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 10px;
+      font-weight: 700;
+      text-align: center;
     }
 
-    /* Transcripción del audio */
-    .transcripcion {
-      background: #e3f2fd;
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 15px;
-      border-left: 4px solid #ffd600;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #01579b;
-      font-weight: 600;
+    /* MINI PREGUNTA (estilo visual no verbal) */
+    .mini-pregunta {
+      background: #283593;
+      border: 4px solid #ffd600;
+      border-radius: 30px;
+      padding: 25px;
+      margin: 30px 0 20px;
+      text-align: center;
     }
 
-    .transcripcion i {
-      color: #1976d2;
-      margin-right: 8px;
+    .mini-pregunta p {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffd600;
+      margin-bottom: 20px;
     }
 
-    /* Navegación */
-    .navegador-auditivo {
+    .opciones-mini {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      background: #ffd600;
+      color: #0d47a1;
+      border: 4px solid white;
+      padding: 12px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-mini:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+
+    .btn-mini.correcto {
+      background: #4caf50;
+      color: white;
+    }
+
+    .navegador {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 40px 0 20px;
       background: white;
-      padding: 15px 30px;
+      padding: 15px 25px;
       border-radius: 60px;
       border: 3px solid #1976d2;
       box-shadow: 0 5px 0 #0d47a1;
+      margin: 30px 0;
     }
 
     .btn-nav {
       background: #ffd600;
       color: #01579b;
       border: none;
-      padding: 12px 30px;
+      padding: 10px 25px;
       border-radius: 40px;
       font-weight: 800;
-      font-size: 1.2rem;
       border: 3px solid #1976d2;
       transition: all 0.2s;
     }
 
     .btn-nav:hover:not(:disabled) {
       background: white;
-      transform: scale(1.05);
-      border-color: #ffd600;
+      transform: translateY(-2px);
     }
 
     .btn-nav:disabled {
       background: #e0e0e0;
       color: #9e9e9e;
       border-color: #bdbdbd;
-      opacity: 0.7;
     }
 
-    .indicador-pagina {
-      font-size: 1.5rem;
-      font-weight: 800;
+    .indicador {
       background: #e3f2fd;
       color: #01579b;
       padding: 8px 30px;
       border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.3rem;
       border: 3px solid #1976d2;
     }
 
-    /* Botón quiz */
-    .boton-quiz {
+    .btn-quiz {
       display: block;
       width: fit-content;
-      margin: 30px auto 0;
+      margin: 0 auto;
       background: #ffd600;
       color: #01579b;
       border: none;
-      padding: 18px 50px;
+      padding: 15px 45px;
       border-radius: 60px;
       font-weight: 800;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       text-decoration: none;
       border: 4px solid #1976d2;
-      box-shadow: 0 8px 0 #0d47a1;
+      box-shadow: 0 6px 0 #0d47a1;
       transition: all 0.2s;
     }
 
-    .boton-quiz:hover {
+    .btn-quiz:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 0 #0d47a1;
+      box-shadow: 0 10px 0 #0d47a1;
       background: white;
     }
 
-    @media (max-width: 768px) {
-      .cabecera-auditivo h1 { font-size: 2rem; }
-      .navegador-auditivo { flex-direction: column; gap: 15px; }
+    .btn-subir {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #ffd600;
+      color: #01579b;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 3px solid #1976d2;
+      box-shadow: 0 4px 0 #0d47a1;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 1000;
+    }
+
+    .btn-subir:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 0 #0d47a1;
     }
   </style>
 </head>
 <body>
+
+<!-- BOTÓN PARA SUBIR -->
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
 
 <!-- CABECERA -->
 <div class="cabecera-auditivo">
@@ -312,43 +353,52 @@
 </div>
 
 <!-- PROGRESO -->
-<div class="progreso-auditivo">
+<div class="progreso-contenedor">
   <i class="fas fa-headphones fa-2x" style="color: #1976d2;"></i>
-  <div class="puntos-progreso" id="puntosProgreso">
-    <div class="punto activo" data-pagina="1">1</div>
-    <div class="punto" data-pagina="2">2</div>
-    <div class="punto" data-pagina="3">3</div>
-    <div class="punto" data-pagina="4">4</div>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
   </div>
-  <span class="badge" style="background: #1976d2; color: white; font-size: 1.2rem; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
 </div>
 
-<!-- CONTENIDO -->
-<div class="contenedor-paginas">
+<div class="contenedor">
 
-  <!-- PÁGINA 1: INTRODUCCIÓN Y LA TIERRA -->
+  <!-- PÁGINA 1: LA TIERRA -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-audio">
       <div class="audio-header">
         <div class="audio-icono"><i class="fas fa-globe-americas"></i></div>
-        <div class="audio-titulo">Nuestro planeta: La Tierra</div>
+        <div class="audio-titulo">Nuestro planeta</div>
       </div>
       <div class="audio-control">
         <audio controls><source src="audios/01-introduccion.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="contenedor-imagen">
+      <div class="imagen-grande">
         <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" alt="Tierra" class="imagen-geo" onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
-        <div class="pie-imagen">🌍 La Tierra vista desde el espacio</div>
+        <div class="pie-imagen">🌍 Vista desde el espacio</div>
       </div>
     </div>
+
     <div class="tarjeta-audio">
       <div class="audio-header">
         <div class="audio-icono"><i class="fas fa-ruler"></i></div>
         <div class="audio-titulo">Forma de la Tierra</div>
       </div>
-      <div class="contenedor-imagen">
+      <div class="imagen-grande">
         <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" alt="Forma" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
-        <div class="pie-imagen">📐 La Tierra está achatada en los polos</div>
+        <div class="pie-imagen">📐 Achatada en los polos</div>
+      </div>
+    </div>
+
+    <!-- MINI PREGUNTA -->
+    <div class="mini-pregunta">
+      <p><i class="fas fa-question-circle me-2"></i> ¿La Tierra es redonda perfecta?</p>
+      <div class="opciones-mini">
+        <span class="btn-mini" onclick="responderMini(this, false)">Sí</span>
+        <span class="btn-mini" onclick="responderMini(this, true)">No, es achatada</span>
       </div>
     </div>
   </div>
@@ -363,13 +413,22 @@
       <div class="audio-control">
         <audio controls><source src="audios/02-lineas.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="contenedor-imagen">
+      <div class="imagen-grande">
         <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" alt="Paralelos" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
         <div class="pie-imagen">🗺️ Paralelos y meridianos</div>
       </div>
-      <div class="contenedor-imagen mt-3">
+      <div class="imagen-grande mt-3">
         <img src="/contenidos/geografia/recursos/imagenes/libro/globo-lineas.jpg" alt="Globo" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/8d/Globo_terrestre.svg'">
-        <div class="pie-imagen">🌐 Globo terráqueo con líneas</div>
+        <div class="pie-imagen">🌐 Globo terráqueo</div>
+      </div>
+    </div>
+
+    <!-- MINI PREGUNTA -->
+    <div class="mini-pregunta">
+      <p><i class="fas fa-question-circle me-2"></i> ¿El Ecuador divide la Tierra en?</p>
+      <div class="opciones-mini">
+        <span class="btn-mini" onclick="responderMini(this, true)">Norte y Sur</span>
+        <span class="btn-mini" onclick="responderMini(this, false)">Este y Oeste</span>
       </div>
     </div>
   </div>
@@ -384,9 +443,18 @@
       <div class="audio-control">
         <audio controls><source src="audios/03-orientacion.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="contenedor-imagen">
+      <div class="imagen-grande">
         <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" alt="Rosa" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
         <div class="pie-imagen">🧭 Rosa de los vientos</div>
+      </div>
+    </div>
+
+    <!-- MINI PREGUNTA -->
+    <div class="mini-pregunta">
+      <p><i class="fas fa-question-circle me-2"></i> ¿Por dónde sale el Sol?</p>
+      <div class="opciones-mini">
+        <span class="btn-mini" onclick="responderMini(this, true)">Este</span>
+        <span class="btn-mini" onclick="responderMini(this, false)">Oeste</span>
       </div>
     </div>
   </div>
@@ -401,61 +469,123 @@
       <div class="audio-control">
         <audio controls><source src="audios/04-zonas.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="contenedor-imagen">
+      <div class="imagen-grande">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" alt="Zonas" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
-        <div class="pie-imagen">🌡️ Las 5 zonas térmicas</div>
+        <div class="pie-imagen">🌡️ 5 zonas térmicas</div>
       </div>
-      <div class="contenedor-imagen mt-3">
+      <div class="imagen-grande mt-3">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" alt="Zona fría" class="imagen-geo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
-        <div class="pie-imagen">❄️ Zona fría: hielo y nieve</div>
+        <div class="pie-imagen">❄️ Zona fría</div>
       </div>
     </div>
+
     <div class="tarjeta-audio" style="background: #ffd600; border-color: #01579b;">
       <div class="text-center">
         <i class="fas fa-map-pin fa-3x" style="color: #01579b;"></i>
         <h3 class="fw-bold" style="color: #01579b;">¡México está en la zona templada!</h3>
       </div>
     </div>
+
+    <!-- MINI PREGUNTA -->
+    <div class="mini-pregunta">
+      <p><i class="fas fa-question-circle me-2"></i> ¿México está en la zona?</p>
+      <div class="opciones-mini">
+        <span class="btn-mini" onclick="responderMini(this, false)">Cálida</span>
+        <span class="btn-mini" onclick="responderMini(this, true)">Templada</span>
+        <span class="btn-mini" onclick="responderMini(this, false)">Fría</span>
+      </div>
+    </div>
   </div>
 
   <!-- NAVEGADOR -->
-  <div class="navegador-auditivo">
+  <div class="navegador">
     <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
-    <span class="indicador-pagina" id="contadorPagina">1/4</span>
+    <span class="indicador" id="contadorPagina">1/4</span>
     <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
   </div>
 
-  <!-- BOTÓN QUIZ -->
-  <a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
 
 </div>
 
 <script>
+  // ===== SISTEMA DE SONIDOS =====
+  const sonidos = {
+    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
+    click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+    completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+  };
+
+  Object.values(sonidos).forEach(s => {
+    if (s.src) s.volume = 0.2;
+  });
+
+  function reproducirSonido(nombre) {
+    if (sonidos[nombre] && sonidos[nombre].src) {
+      sonidos[nombre].currentTime = 0;
+      sonidos[nombre].play().catch(() => {});
+    }
+  }
+
+  // ===== NAVEGACIÓN =====
   let paginaActual = 1;
   const totalPaginas = 4;
 
   function cambiarPagina(direccion) {
+    reproducirSonido('pasarPagina');
+    
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
     paginaActual += direccion;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     localStorage.setItem('progreso_auditivo_facil', paginaActual);
   }
 
   function actualizarUI() {
     document.querySelectorAll('.punto').forEach((punto, index) => {
-      const numPagina = index + 1;
       punto.classList.remove('activo', 'completado');
-      if (numPagina === paginaActual) punto.classList.add('activo');
-      else if (numPagina < paginaActual) punto.classList.add('completado');
+      if (index + 1 === paginaActual) punto.classList.add('activo');
+      else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
+    
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
     document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
   }
 
-  function cargarProgreso() {
+  // ===== MINI PREGUNTAS =====
+  function responderMini(boton, esCorrecto) {
+    reproducirSonido('click');
+    
+    const opciones = boton.parentElement.querySelectorAll('.btn-mini');
+    opciones.forEach(opt => opt.classList.remove('correcto'));
+    
+    if (esCorrecto) {
+      boton.classList.add('correcto');
+      reproducirSonido('completar');
+    } else {
+      boton.style.background = '#f44336';
+      boton.style.color = 'white';
+      setTimeout(() => {
+        boton.style.background = '#ffd600';
+        boton.style.color = '#01579b';
+      }, 500);
+    }
+  }
+
+  // ===== CONTROL DE AUDIOS =====
+  document.addEventListener('play', function(e) {
+    if (e.target.tagName === 'AUDIO') {
+      document.querySelectorAll('audio').forEach(audio => {
+        if (audio !== e.target && !audio.paused) audio.pause();
+      });
+    }
+  }, true);
+
+  // ===== CARGAR PROGRESO =====
+  window.addEventListener('DOMContentLoaded', () => {
     const guardado = localStorage.getItem('progreso_auditivo_facil');
     if (guardado) {
       const pag = parseInt(guardado);
@@ -466,18 +596,9 @@
       }
     }
     actualizarUI();
-  }
-
-  document.addEventListener('play', function(e) {
-    if (e.target.tagName === 'AUDIO') {
-      document.querySelectorAll('audio').forEach(audio => {
-        if (audio !== e.target && !audio.paused) audio.pause();
-      });
-    }
-  }, true);
-
-  window.addEventListener('DOMContentLoaded', cargarProgreso);
+  });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

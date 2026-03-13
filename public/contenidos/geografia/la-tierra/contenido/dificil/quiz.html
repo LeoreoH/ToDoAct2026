@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · La Tierra · Nivel Normal</title>
+  <title>Quiz · La Tierra · Nivel Difícil</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
 
     body {
       font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      background: linear-gradient(135deg, #0d47a1, #01579b);
       min-height: 100vh;
       color: white;
     }
@@ -36,7 +36,7 @@
     }
 
     .quiz-container::before {
-      content: "⚡";
+      content: "🔥";
       position: absolute;
       top: 10px;
       left: 10px;
@@ -441,10 +441,10 @@
 
 <div class="quiz-container">
   <div class="quiz-header">
-    <i class="fas fa-star fa-3x" style="color: #ffd600;"></i>
+    <i class="fas fa-crown fa-3x" style="color: #ffd600;"></i>
     <h1>Mini-Quiz</h1>
-    <p class="lead">La Tierra · Nivel Normal</p>
-    <span class="badge-nivel">⚡ Intermedio</span>
+    <p class="lead">La Tierra · Nivel Difícil</p>
+    <span class="badge-nivel">🔥 Avanzado</span>
     <div class="badge-intentos mt-3">
       <i class="fas fa-trophy me-2"></i> 4/5 para ganar
     </div>
@@ -489,7 +489,7 @@
       <i class="fas fa-arrow-left me-2"></i> Volver
     </button>
     <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
-      Siguiente nivel <i class="fas fa-arrow-right ms-2"></i>
+      ¡Completado! <i class="fas fa-check ms-2"></i>
     </button>
     <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
       <i class="fas fa-redo me-2"></i> Reintentar
@@ -522,37 +522,37 @@
     }
   }
 
-  // ===== PREGUNTAS DEL NIVEL NORMAL =====
+  // ===== PREGUNTAS DEL NIVEL DIFÍCIL =====
   const preguntas = [
     {
-      texto: "¿Cuánto dura el movimiento de rotación de la Tierra?",
-      opciones: ["12 horas", "24 horas", "365 días", "30 días"],
+      texto: "¿Qué coordenada geográfica mide la distancia desde el Ecuador hacia el Norte o Sur?",
+      opciones: ["Longitud", "Latitud", "Altitud", "Meridiano"],
       correcta: 1,
-      explicacion: "La rotación dura 24 horas exactas, que es lo que tarda la Tierra en dar una vuelta sobre sí misma."
+      explicacion: "La latitud mide la distancia desde el Ecuador (0°) hasta los polos (90° N o S)."
     },
     {
-      texto: "¿Qué movimiento de la Tierra causa las estaciones del año?",
-      opciones: ["La rotación", "La traslación", "La inclinación del eje y la traslación", "La distancia al Sol"],
+      texto: "¿Cuál es el paralelo ubicado a 23°27' en el hemisferio norte?",
+      opciones: ["Ecuador", "Trópico de Capricornio", "Trópico de Cáncer", "Círculo Polar Ártico"],
       correcta: 2,
-      explicacion: "Las estaciones se deben a la combinación de la traslación y la inclinación del eje terrestre."
+      explicacion: "El Trópico de Cáncer está a 23°27' N. El Trópico de Capricornio está a 23°27' S."
     },
     {
-      texto: "¿Cada cuántos años tenemos un año bisiesto?",
-      opciones: ["Cada 2 años", "Cada 4 años", "Cada 6 años", "Cada 10 años"],
+      texto: "¿Cada cuántos grados de longitud cambia la hora en los husos horarios?",
+      opciones: ["10°", "15°", "20°", "30°"],
       correcta: 1,
-      explicacion: "Cada 4 años sumamos las 6 horas extras de la traslación y tenemos un año bisiesto con 366 días."
+      explicacion: "Cada 15° de longitud equivale a 1 hora de diferencia. La Tierra gira 360° en 24 horas (360/24 = 15° por hora)."
     },
     {
-      texto: "¿Qué elemento de un mapa indica la relación entre la distancia en el mapa y la distancia real?",
-      opciones: ["La orientación", "La simbología", "La escala", "Las coordenadas"],
+      texto: "¿Qué meridiano marca la Línea Internacional de Cambio de Fecha?",
+      opciones: ["Meridiano de Greenwich (0°)", "Meridiano 90°", "Meridiano 180°", "Meridiano 360°"],
       correcta: 2,
-      explicacion: "La escala nos dice cuántos kilómetros reales representa cada centímetro en el mapa."
+      explicacion: "La Línea Internacional de Cambio de Fecha está aproximadamente en el meridiano 180°, opuesto a Greenwich."
     },
     {
-      texto: "Si en México es verano, ¿qué estación es en Argentina?",
-      opciones: ["Verano", "Primavera", "Otoño", "Invierno"],
-      correcta: 3,
-      explicacion: "Las estaciones son opuestas entre hemisferios. México está en el norte y Argentina en el sur."
+      texto: "¿Qué proyección cartográfica conserva las formas pero distorsiona el tamaño de los polos?",
+      opciones: ["Peters", "Robinson", "Mercator", "Goode"],
+      correcta: 2,
+      explicacion: "La proyección de Mercator conserva las formas (útil para navegación) pero hace que los polos se vean más grandes de lo que son."
     }
   ];
 
@@ -691,13 +691,13 @@
 
       if (aprobado) {
         document.getElementById('resultadoMensaje').innerHTML = 
-          `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has desbloqueado el nivel difícil.`;
+          `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has completado el nivel difícil.`;
         document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
         document.getElementById('btnReintentar').style.display = 'none';
         guardarProgreso(aciertos, TOTAL);
       } else {
         document.getElementById('resultadoMensaje').innerHTML = 
-          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para avanzar. ¡Inténtalo de nuevo!`;
+          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para aprobar. ¡Inténtalo de nuevo!`;
         document.getElementById('btnSiguienteNivel').style.display = 'none';
         document.getElementById('btnReintentar').style.display = 'inline-block';
       }
@@ -731,7 +731,7 @@
         credentials: 'include',
         body: JSON.stringify({
           contenido_id: 1,
-          nivel_completado: 'normal',
+          nivel_completado: 'dificil',
           puntaje: Math.round((aciertos / total) * 100),
           aprobado: true,
           aciertos: aciertos,
@@ -748,7 +748,8 @@
   }
 
   function irSiguienteNivel() {
-    window.location.href = '../dificil/visual_verbal.html';
+    alert('¡Felicidades! Has completado todos los niveles de este bloque.');
+    window.location.href = '../../menu.html';
   }
 
   mostrarPregunta();
