@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz · Fracciones · Nivel Normal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #8e24aa, #5e35b1);
+      min-height: 100vh;
+      color: white;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 4px solid #ffd54f;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .quiz-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 3rem;
+      color: #ffd54f;
+      text-shadow: 3px 3px 0 #4a148c;
+    }
+
+    .badge-nivel {
+      background: #4a148c;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      border: 2px solid #ffd54f;
+    }
+
+    .progreso-quiz {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .punto {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 3px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: white;
+      transition: all 0.3s;
+    }
+
+    .punto.activo {
+      background: #ffd54f;
+      border-color: white;
+      color: #4a148c;
+      transform: scale(1.2);
+    }
+
+    .punto.respondido {
+      background: #4caf50;
+      border-color: white;
+      color: white;
+    }
+
+    .tarjeta-pregunta {
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 4px solid #ffd54f;
+      box-shadow: 0 8px 0 #d39e00;
+      color: #4a148c;
+    }
+
+    .pregunta-numero {
+      font-size: 1rem;
+      color: #7b1fa2;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .pregunta-texto {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .opciones {
+      display: grid;
+      gap: 12px;
+    }
+
+    .opcion-btn {
+      background: #f3e5f5;
+      border: 3px solid #7b1fa2;
+      border-radius: 20px;
+      padding: 15px 20px;
+      color: #4a148c;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .opcion-btn:hover:not(:disabled) {
+      background: #ffd54f;
+      transform: scale(1.02);
+      border-color: #4a148c;
+    }
+
+    .opcion-btn.correcta {
+      background: #4caf50;
+      color: white;
+      border-color: white;
+    }
+
+    .opcion-btn.incorrecta {
+      background: #f44336;
+      color: white;
+      border-color: white;
+    }
+
+    .opcion-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.95;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 15px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .feedback.visible {
+      display: block;
+    }
+
+    .feedback.correcto {
+      background: #c8e6c9;
+      color: #2e7d32;
+      border-left: 8px solid #2e7d32;
+    }
+
+    .feedback.incorrecto {
+      background: #ffcdd2;
+      color: #c62828;
+      border-left: 8px solid #c62828;
+    }
+
+    .navegador-quiz {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      background: #ffd54f;
+      color: #4a148c;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      border: 3px solid white;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: white;
+      transform: scale(1.05);
+    }
+
+    .btn-nav:disabled {
+      background: #b0bec5;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .contador {
+      background: #4a148c;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 2px solid #ffd54f;
+    }
+
+    .resultado {
+      text-align: center;
+      padding: 30px;
+      display: none;
+    }
+
+    .resultado.visible {
+      display: block;
+    }
+
+    .resultado-emoji {
+      font-size: 5rem;
+      margin-bottom: 15px;
+    }
+
+    .resultado-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: #ffd54f;
+      margin-bottom: 15px;
+    }
+
+    .resultado-puntaje {
+      font-size: 4rem;
+      font-weight: 900;
+      color: white;
+      background: #4a148c;
+      display: inline-block;
+      padding: 20px 50px;
+      border-radius: 60px;
+      margin: 20px 0;
+      border: 4px solid #ffd54f;
+    }
+
+    .btn-accion {
+      background: #ffd54f;
+      color: #4a148c;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin: 10px;
+      border: 4px solid white;
+      transition: all 0.2s;
+    }
+
+    .btn-accion:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-container {
+        margin: 20px;
+        padding: 25px;
+      }
+
+      .quiz-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .navegador-quiz {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
+    <h1>Mini-Quiz</h1>
+    <p class="lead">Fracciones · Nivel Normal</p>
+    <span class="badge-nivel">⭐ 6 preguntas</span>
+  </div>
+
+  <div class="progreso-quiz" id="progresoQuiz">
+    <div class="punto activo" data-i="0">1</div>
+    <div class="punto" data-i="1">2</div>
+    <div class="punto" data-i="2">3</div>
+    <div class="punto" data-i="3">4</div>
+    <div class="punto" data-i="4">5</div>
+    <div class="punto" data-i="5">6</div>
+  </div>
+
+  <div id="preguntasContainer"></div>
+
+  <div class="navegador-quiz" id="navBotones">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>← Anterior</button>
+    <span class="contador" id="contadorPregunta">1/6</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)">Siguiente →</button>
+    <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;">Enviar</button>
+  </div>
+
+  <div class="resultado" id="resultado">
+    <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+    <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
+    <div class="resultado-puntaje" id="resultadoPuntaje">6/6</div>
+    <p class="mb-4" id="resultadoMensaje"></p>
+    <button class="btn-accion" onclick="volverAlContenido()">
+      <i class="fas fa-arrow-left me-2"></i> Volver
+    </button>
+    <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
+      Nivel difícil <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+    <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+      <i class="fas fa-redo me-2"></i> Reintentar
+    </button>
+  </div>
+</div>
+
+<script>
+  const preguntas = [
+    {
+      texto: "Si una figura tiene 2 partes coloreadas de un total de 5 partes iguales, la fracción correcta es:",
+      opciones: ["2/5", "5/2", "3/5"],
+      correcta: 0,
+      explicacion: "El numerador indica las partes coloreadas y el denominador el total de partes: 2/5."
+    },
+    {
+      texto: "¿Cuál fracción es mayor?",
+      opciones: ["1/4", "3/4", "Son iguales"],
+      correcta: 1,
+      explicacion: "Cuando las fracciones tienen el mismo denominador, es mayor la que tiene el numerador más grande."
+    },
+    {
+      texto: "Si coloreas 4 de 6 partes iguales, la fracción formada es:",
+      opciones: ["6/4", "4/6", "4/4"],
+      correcta: 1,
+      explicacion: "Se toman 4 partes de un total de 6, por eso la fracción correcta es 4/6."
+    },
+    {
+      texto: "¿Qué fracción es equivalente a 2/4?",
+      opciones: ["1/2", "2/2", "3/4"],
+      correcta: 0,
+      explicacion: "2/4 y 1/2 representan la misma cantidad."
+    },
+    {
+      texto: "Ordena de menor a mayor estas fracciones con el mismo denominador: 1/5, 3/5 y 4/5. ¿Cuál va al final?",
+      opciones: ["1/5", "3/5", "4/5"],
+      correcta: 2,
+      explicacion: "Con el mismo denominador, la fracción mayor es la que tiene el numerador mayor: 4/5."
+    },
+    {
+      texto: "Si hay 3 partes coloreadas de 6 partes iguales, la fracción correcta es:",
+      opciones: ["3/6", "6/3", "2/6"],
+      correcta: 0,
+      explicacion: "Tres partes coloreadas de un total de seis se escriben como 3/6."
+    }
+  ];
+
+  let preguntaActual = 0;
+  let respuestas = new Array(preguntas.length).fill(null);
+  let aciertos = 0;
+  const TOTAL = preguntas.length;
+  const MINIMO = 5;
+
+  function mostrarPregunta() {
+    const container = document.getElementById('preguntasContainer');
+    const p = preguntas[preguntaActual];
+    const respondida = respuestas[preguntaActual] !== null;
+    const esCorrecta = respondida ? respuestas[preguntaActual] === p.correcta : false;
+
+    let opcionesHTML = '';
+    p.opciones.forEach((opcion, idx) => {
+      let claseBtn = 'opcion-btn';
+      if (respondida) {
+        if (idx === p.correcta) claseBtn += ' correcta';
+        if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
+      }
+
+      opcionesHTML += `
+        <button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>
+          ${String.fromCharCode(65 + idx)}) ${opcion}
+        </button>
+      `;
+    });
+
+    container.innerHTML = `
+      <div class="tarjeta-pregunta">
+        <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+        <div class="pregunta-texto">${p.texto}</div>
+        <div class="opciones">${opcionesHTML}</div>
+        <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
+          ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
+        </div>
+      </div>
+    `;
+
+    actualizarPuntos();
+    document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
+    actualizarBotones();
+  }
+
+  function seleccionarRespuesta(idxPregunta, idxOpcion) {
+    if (respuestas[idxPregunta] !== null) return;
+
+    respuestas[idxPregunta] = idxOpcion;
+    if (idxOpcion === preguntas[idxPregunta].correcta) aciertos++;
+
+    document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
+    mostrarPregunta();
+  }
+
+  function cambiarPregunta(direccion) {
+    if (direccion === -1 && preguntaActual > 0) {
+      preguntaActual--;
+      mostrarPregunta();
+    } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
+      preguntaActual++;
+      mostrarPregunta();
+    }
+  }
+
+  function actualizarPuntos() {
+    document.querySelectorAll('.punto').forEach((punto, i) => {
+      punto.classList.remove('activo');
+      if (i === preguntaActual) punto.classList.add('activo');
+    });
+  }
+
+  function actualizarBotones() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const btnEnviar = document.getElementById('btnEnviar');
+
+    btnAnterior.disabled = (preguntaActual === 0);
+
+    if (preguntaActual === TOTAL - 1) {
+      btnSiguiente.style.display = 'none';
+      btnEnviar.style.display = 'inline-block';
+    } else {
+      btnSiguiente.style.display = 'inline-block';
+      btnEnviar.style.display = 'none';
+    }
+  }
+
+  function enviarQuiz() {
+    const sinResponder = respuestas.filter(r => r === null).length;
+    if (sinResponder > 0) {
+      alert(`Te faltan ${sinResponder} preguntas por responder`);
+      return;
+    }
+
+    document.getElementById('preguntasContainer').style.display = 'none';
+    document.getElementById('progresoQuiz').style.display = 'none';
+    document.getElementById('navBotones').style.display = 'none';
+
+    const resultado = document.getElementById('resultado');
+    resultado.classList.add('visible');
+
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
+
+    document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
+    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
+
+    if (aprobado) {
+      document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
+      document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
+      document.getElementById('btnReintentar').style.display = 'none';
+      guardarProgreso(aciertos, TOTAL);
+    } else {
+      document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. Necesitas al menos 5 de 6 para avanzar.`;
+      document.getElementById('btnSiguienteNivel').style.display = 'none';
+      document.getElementById('btnReintentar').style.display = 'inline-block';
+    }
+  }
+
+  async function guardarProgreso(aciertos, total) {
+    try {
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 4,
+          nivel_completado: 'normal',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: true,
+          aciertos: aciertos,
+          total_preguntas: total
+        })
+      });
+    } catch (e) {
+      console.error('Error guardando progreso:', e);
+    }
+  }
+
+  function reiniciarQuiz() {
+    preguntaActual = 0;
+    respuestas = new Array(preguntas.length).fill(null);
+    aciertos = 0;
+
+    document.querySelectorAll('.punto').forEach((punto, i) => {
+      punto.classList.remove('respondido', 'activo');
+      if (i === 0) punto.classList.add('activo');
+    });
+
+    document.getElementById('preguntasContainer').style.display = 'block';
+    document.getElementById('progresoQuiz').style.display = 'flex';
+    document.getElementById('navBotones').style.display = 'flex';
+    document.getElementById('resultado').classList.remove('visible');
+
+    mostrarPregunta();
+  }
+
+  function volverAlContenido() {
+    window.location.href = 'kinestesico.html';
+  }
+
+  function irSiguienteNivel() {
+    window.location.href = '../dificil/kinestesico.html';
+  }
+
+  mostrarPregunta();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
