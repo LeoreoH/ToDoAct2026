@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="styles-inicio-perfil.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body class="perfil-page">
@@ -17,42 +18,49 @@
         <div id="perfil">
             <h2>Perfil</h2>
 
-            <div class="imagen-mascota">
-                <img src="recursos/mascota.jpg" alt="Mi mascota">
-            </div>
+            <div class="perfil-layout">
 
-            <div class="info-perfil">
-                <div class="campo-perfil">
-                    <strong>Usuario:</strong>
-                    <span id="usuario"></span>
-                </div>
-                <div class="campo-perfil">
-                    <strong>Nombre completo:</strong>
-                    <span id="nombrecompleto"></span>
-                </div>
-                <div class="campo-perfil">
-                    <strong>Fecha de nacimiento:</strong>
-                    <span id="fechanacimiento"></span>
-                </div>
-                <div class="campo-perfil">
-                    <strong>Género:</strong>
-                    <span id="genero"></span>
-                </div>
                 
-                <div class="campo-perfil">
-                   <strong>Estilo de aprendizaje:</strong><br>
-
-                <select id="estilo">
-                    <option value="">Selecciona un estilo</option>
-                    <option value="visual_verbal">Visual verbal</option>
-                    <option value="visual_no_verbal">Visual no verbal</option>
-                    <option value="auditivo">Auditivo</option>
-                    <option value="kinestesico">Kinestésico</option>
-                </select>
-
-                    <br><br>
-                    <button id="guardarEstilo">Guardar estilo</button>
+                <div class="perfil-izquierda">
+                    <div class="imagen-mascota">
+                        <img src="recursos/mascota.jpeg" alt="Mi mascota">
+                    </div>
+                    <div class="perfil-xp-badge">XP: <span id="xp-side">0</span></div>
                 </div>
+
+                
+                <div class="perfil-derecha">
+                    <div class="info-perfil">
+                        <div class="campo-perfil">
+                            <span class="campo-label">Usuario</span>
+                            <span class="campo-valor" id="usuario"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Nombre completo</span>
+                            <span class="campo-valor" id="nombrecompleto"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Fecha de nacimiento</span>
+                            <span class="campo-valor" id="fechanacimiento"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Género</span>
+                            <span class="campo-valor" id="genero"></span>
+                        </div>
+                        <div class="campo-perfil campo-estilo">
+                            <span class="campo-label">Estilo de aprendizaje</span>
+                            <select id="estilo">
+                                <option value="">Selecciona un estilo</option>
+                                <option value="visual_verbal">Visual verbal</option>
+                                <option value="visual_no_verbal">Visual no verbal</option>
+                                <option value="auditivo">Auditivo</option>
+                                <option value="kinestesico">Kinestésico</option>
+                            </select>
+                            <button id="guardarEstilo">Guardar estilo</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

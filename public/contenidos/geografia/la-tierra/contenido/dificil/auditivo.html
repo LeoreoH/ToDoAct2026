@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra · Nivel Difícil · Auditivo</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #e3f2fd;
+      color: #01579b;
+      min-height: 100vh;
+    }
+
+    .cabecera {
+      background: #1976d2;
+      padding: 25px 20px;
+      border-bottom: 6px solid #ffd600;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .cabecera h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 3px 3px 0 #01579b;
+    }
+
+    .badge-estilo {
+      background: #ffd600;
+      color: #01579b;
+      padding: 12px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: inline-block;
+      border: 4px solid white;
+      margin-top: 10px;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .badge-nivel {
+      background: #b71c1c;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      margin-left: 15px;
+      border: 2px solid #ffd600;
+    }
+
+    .progreso-contenedor {
+      background: white;
+      border-radius: 60px;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 12px 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 5px 0 #0d47a1;
+    }
+
+    .puntos {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .punto {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #bbdefb;
+      border: 3px solid #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #01579b;
+      transition: all 0.3s;
+    }
+
+    .punto.activo {
+      background: #ffd600;
+      transform: scale(1.15);
+    }
+
+    .punto.completado {
+      background: #4caf50;
+      color: white;
+      border-color: white;
+    }
+
+    .contenedor {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .pagina {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta-audio {
+      background: white;
+      border-radius: 30px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 8px 0 #0d47a1;
+    }
+
+    .audio-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .audio-icono {
+      background: #ffd600;
+      color: #01579b;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 3px solid #1976d2;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .audio-titulo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #01579b;
+    }
+
+    .audio-control {
+      width: 100%;
+      margin: 15px 0;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 30px;
+      border: 2px solid #1976d2;
+    }
+
+    /* IMÁGENES GRANDES */
+    .imagen-grande {
+      background: #e3f2fd;
+      border: 3px dashed #1976d2;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 15px 0;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .imagen-grande:hover {
+      transform: scale(1.02) rotate(1deg);
+      box-shadow: 0 10px 20px rgba(25,118,210,0.3);
+    }
+
+    .imagen-geo {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 15px;
+      border: 3px solid white;
+    }
+
+    .pie-imagen {
+      color: #01579b;
+      font-size: 1rem;
+      margin-top: 10px;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    /* GRID PARA 3 IMÁGENES */
+    .grid-3-imagenes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .imagen-pequena {
+      background: #e3f2fd;
+      border: 3px dashed #1976d2;
+      border-radius: 15px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .imagen-pequena .imagen-geo {
+      max-height: 120px;
+    }
+
+    .imagen-pequena .pie-imagen {
+      font-size: 0.85rem;
+      margin-top: 5px;
+    }
+
+    /* MINI PREGUNTAS */
+    .mini-pregunta {
+      background: #fff3e0;
+      border: 4px solid #ffd600;
+      border-radius: 30px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .mini-pregunta p {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #01579b;
+      margin-bottom: 15px;
+    }
+
+    .opciones-mini {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      background: #ffd600;
+      color: #01579b;
+      border: 4px solid #1976d2;
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .btn-mini:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+
+    .btn-mini.correcto {
+      background: #4caf50;
+      color: white;
+      border-color: white;
+      box-shadow: 0 4px 0 #1b5e20;
+    }
+
+    .navegador {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 60px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 5px 0 #0d47a1;
+      margin: 30px 0;
+    }
+
+    .btn-nav {
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 40px;
+      font-weight: 800;
+      border: 3px solid #1976d2;
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-nav:disabled {
+      background: #e0e0e0;
+      color: #9e9e9e;
+      border-color: #bdbdbd;
+      box-shadow: none;
+    }
+
+    .indicador {
+      background: #bbdefb;
+      color: #01579b;
+      padding: 8px 30px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      border: 3px solid #1976d2;
+    }
+
+    .btn-quiz {
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 15px 45px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      border: 4px solid #1976d2;
+      box-shadow: 0 6px 0 #0d47a1;
+      transition: all 0.2s;
+    }
+
+    .btn-quiz:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 0 #0d47a1;
+      background: white;
+    }
+
+    .btn-subir {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #ffd600;
+      color: #01579b;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 3px solid #1976d2;
+      box-shadow: 0 4px 0 #0d47a1;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 1000;
+    }
+
+    .btn-subir:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 0 #0d47a1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- BOTÓN PARA SUBIR -->
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera">
+  <h1>🎧 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I · Nivel Difícil</p>
+  <div>
+    <span class="badge-estilo">🎵 Auditivo</span>
+    <span class="badge-nivel">🔥 Avanzado</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-headphones fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor">
+
+  <!-- PÁGINA 1: COORDENADAS GEOGRÁFICAS -->
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-globe-americas"></i></div>
+        <div class="audio-titulo">Coordenadas geográficas</div>
+      </div>
+      
+      <div class="audio-control">
+        <audio controls>
+          <source src="audios/01-coordenadas.mp3" type="audio/mpeg">
+          Tu navegador no soporta audio.
+        </audio>
+      </div>
+
+      <div class="imagen-grande">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" 
+             alt="Coordenadas" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
+        <div class="pie-imagen">🌐 Latitud y longitud</div>
+      </div>
+
+      <!-- MINI PREGUNTA -->
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle me-2"></i> ¿Qué coordenada mide la distancia al Ecuador?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, true)">Latitud</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Longitud</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 2: LATITUD Y PARALELOS -->
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-arrows-alt-h"></i></div>
+        <div class="audio-titulo">Latitud y paralelos</div>
+      </div>
+      
+      <div class="audio-control">
+        <audio controls>
+          <source src="audios/02-paralelos.mp3" type="audio/mpeg">
+          Tu navegador no soporta audio.
+        </audio>
+      </div>
+
+      <div class="imagen-grande">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg" 
+             alt="Paralelos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
+        <div class="pie-imagen">📏 Principales paralelos</div>
+      </div>
+
+      <!-- MINI PREGUNTA -->
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle me-2"></i> ¿Qué paralelo está a 23°27'N?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, false)">Ecuador</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Trópico de Cáncer</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Trópico de Capricornio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 3: LONGITUD Y MERIDIANOS -->
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-arrows-alt-v"></i></div>
+        <div class="audio-titulo">Longitud y meridianos</div>
+      </div>
+      
+      <div class="audio-control">
+        <audio controls>
+          <source src="audios/03-meridianos.mp3" type="audio/mpeg">
+          Tu navegador no soporta audio.
+        </audio>
+      </div>
+
+      <div class="imagen-grande">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg" 
+             alt="Meridianos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
+        <div class="pie-imagen">📍 Meridianos y husos horarios</div>
+      </div>
+
+      <!-- MINI PREGUNTA -->
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle me-2"></i> ¿Cada cuántos grados cambia la hora?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, true)">15°</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">30°</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">10°</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÁGINA 4: PROYECCIONES CARTOGRÁFICAS -->
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-map"></i></div>
+        <div class="audio-titulo">Proyecciones cartográficas</div>
+      </div>
+      
+      <div class="audio-control">
+        <audio controls>
+          <source src="audios/04-proyecciones.mp3" type="audio/mpeg">
+          Tu navegador no soporta audio.
+        </audio>
+      </div>
+
+      <!-- Grid de 3 imágenes -->
+      <div class="grid-3-imagenes">
+        <div class="imagen-pequena">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg" 
+               alt="Mercator" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mercator_projection_SW.jpg/800px-Mercator_projection_SW.jpg'">
+          <div class="pie-imagen">Mercator</div>
+        </div>
+        <div class="imagen-pequena">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg" 
+               alt="Robinson" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Robinson_projection_SW.jpg/800px-Robinson_projection_SW.jpg'">
+          <div class="pie-imagen">Robinson</div>
+        </div>
+        <div class="imagen-pequena">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg" 
+               alt="Peters" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Peters_projection%2C_Japan.jpg/800px-Peters_projection%2C_Japan.jpg'">
+          <div class="pie-imagen">Peters</div>
+        </div>
+      </div>
+
+      <!-- MINI PREGUNTA -->
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle me-2"></i> ¿Qué proyección conserva áreas pero deforma formas?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, false)">Mercator</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Peters</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+<script>
+  // ===== SISTEMA DE SONIDOS =====
+  const sonidos = {
+    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
+    click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+    completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+  };
+
+  Object.values(sonidos).forEach(s => {
+    if (s.src) s.volume = 0.2;
+  });
+
+  function reproducirSonido(nombre) {
+    if (sonidos[nombre] && sonidos[nombre].src) {
+      sonidos[nombre].currentTime = 0;
+      sonidos[nombre].play().catch(() => {});
+    }
+  }
+
+  // ===== NAVEGACIÓN =====
+  let paginaActual = 1;
+  const totalPaginas = 4;
+
+  function cambiarPagina(direccion) {
+    reproducirSonido('pasarPagina');
+    
+    document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+    paginaActual += direccion;
+    document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    actualizarUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    localStorage.setItem('progreso_dificil_auditivo', paginaActual);
+  }
+
+  function actualizarUI() {
+    document.querySelectorAll('.punto').forEach((punto, index) => {
+      punto.classList.remove('activo', 'completado');
+      if (index + 1 === paginaActual) punto.classList.add('activo');
+      else if (index + 1 < paginaActual) punto.classList.add('completado');
+    });
+    
+    document.getElementById('paginaActualNum').innerText = paginaActual;
+    document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+  }
+
+  // ===== MINI PREGUNTAS =====
+  function responderMini(boton, esCorrecto) {
+    reproducirSonido('click');
+    
+    const opciones = boton.parentElement.querySelectorAll('.btn-mini');
+    opciones.forEach(opt => opt.classList.remove('correcto'));
+    
+    if (esCorrecto) {
+      boton.classList.add('correcto');
+      reproducirSonido('completar');
+    } else {
+      boton.style.background = '#f44336';
+      boton.style.color = 'white';
+      setTimeout(() => {
+        boton.style.background = '#ffd600';
+        boton.style.color = '#01579b';
+      }, 500);
+    }
+  }
+
+  // ===== CONTROL DE AUDIOS =====
+  document.addEventListener('play', function(e) {
+    if (e.target.tagName === 'AUDIO') {
+      document.querySelectorAll('audio').forEach(audio => {
+        if (audio !== e.target && !audio.paused) {
+          audio.pause();
+        }
+      });
+    }
+  }, true);
+
+  // ===== CARGAR PROGRESO =====
+  window.addEventListener('DOMContentLoaded', () => {
+    const guardado = localStorage.getItem('progreso_dificil_auditivo');
+    if (guardado) {
+      const pag = parseInt(guardado);
+      if (pag >= 1 && pag <= totalPaginas) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual = pag;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+      }
+    }
+    actualizarUI();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
