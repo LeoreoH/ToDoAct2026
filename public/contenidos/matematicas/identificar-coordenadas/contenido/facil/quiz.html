@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz · Coordenadas · Nivel Fácil</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f97316, #c2410c);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 4px solid #fde68a;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3rem;
+            color: #fde68a;
+            text-shadow: 3px 3px 0 #9a3412;
+        }
+
+        .badge-nivel {
+            background: #9a3412;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            border: 2px solid #fde68a;
+        }
+
+        .progreso-quiz {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .punto {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .punto.activo {
+            background: #fde68a;
+            border-color: white;
+            color: #9a3412;
+            transform: scale(1.2);
+        }
+
+        .punto.respondido {
+            background: #4caf50;
+            border-color: white;
+            color: white;
+        }
+
+        .tarjeta-pregunta {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 4px solid #fde68a;
+            box-shadow: 0 8px 0 #fdba74;
+            color: #9a3412;
+        }
+
+        .pregunta-numero {
+            font-size: 1rem;
+            color: #f97316;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .pregunta-texto {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .contexto-ejercicio {
+            background: #fff3e0;
+            border-left: 8px solid #f97316;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .opciones {
+            display: grid;
+            gap: 12px;
+        }
+
+        .opcion-btn {
+            background: #fff7e6;
+            border: 3px solid #f97316;
+            border-radius: 20px;
+            padding: 15px 20px;
+            color: #9a3412;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .opcion-btn:hover:not(:disabled) {
+            background: #fde68a;
+            transform: scale(1.02);
+            border-color: #c2410c;
+        }
+
+        .opcion-btn.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .opcion-btn.incorrecta {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        .opcion-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.95;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.visible {
+            display: block;
+        }
+
+        .feedback.correcto {
+            background: #c8e6c9;
+            color: #2e7d32;
+            border-left: 8px solid #2e7d32;
+        }
+
+        .feedback.incorrecto {
+            background: #ffcdd2;
+            color: #c62828;
+            border-left: 8px solid #c62828;
+        }
+
+        .navegador-quiz {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            border: 3px solid white;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .btn-nav:disabled {
+            background: #b0bec5;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .contador {
+            background: #9a3412;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid #fde68a;
+        }
+
+        .resultado {
+            text-align: center;
+            padding: 30px;
+            display: none;
+        }
+
+        .resultado.visible {
+            display: block;
+        }
+
+        .resultado-emoji {
+            font-size: 5rem;
+            margin-bottom: 15px;
+        }
+
+        .resultado-titulo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            color: #fde68a;
+            margin-bottom: 15px;
+        }
+
+        .resultado-puntaje {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            background: #9a3412;
+            display: inline-block;
+            padding: 20px 50px;
+            border-radius: 60px;
+            margin: 20px 0;
+            border: 4px solid #fde68a;
+        }
+
+        .btn-accion {
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin: 10px;
+            border: 4px solid white;
+            transition: all 0.2s;
+        }
+
+        .btn-accion:hover {
+            transform: scale(1.05);
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .quiz-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .navegador-quiz {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUDIOS -->
+<audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <i class="fas fa-star fa-3x" style="color: #fde68a;"></i>
+        <h1>Mini-Quiz</h1>
+        <p class="lead">Coordenadas · Nivel Fácil</p>
+        <span class="badge-nivel">⭐ 5 preguntas · 4 correctas para avanzar</span>
+    </div>
+
+    <div class="progreso-quiz" id="progresoQuiz">
+        <div class="punto activo" data-i="0">1</div>
+        <div class="punto" data-i="1">2</div>
+        <div class="punto" data-i="2">3</div>
+        <div class="punto" data-i="3">4</div>
+        <div class="punto" data-i="4">5</div>
+    </div>
+
+    <div id="preguntasContainer"></div>
+
+    <div class="navegador-quiz" id="navBotones">
+        <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>← Anterior</button>
+        <span class="contador" id="contadorPregunta">1/5</span>
+        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)">Siguiente →</button>
+        <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;">Enviar</button>
+    </div>
+
+    <div class="resultado" id="resultado">
+        <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+        <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
+        <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
+        <p class="mb-4" id="resultadoMensaje"></p>
+        <button class="btn-accion" onclick="volverAlContenido()">
+            <i class="fas fa-arrow-left me-2"></i> Volver
+        </button>
+        <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
+            Nivel normal <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+        <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+            <i class="fas fa-redo me-2"></i> Reintentar
+        </button>
+    </div>
+</div>
+
+<script>
+    const preguntas = [
+        {
+            texto: "Para ubicar una casa en un mapa de una colonia, ¿qué datos necesitas?",
+            contexto: "En una ciudad, las calles suelen ser verticales (norte-sur) y las avenidas horizontales (este-oeste).",
+            opciones: [
+                "A) Solo el nombre de la calle",
+                "B) El número de la calle y el nombre de la avenida",
+                "C) Solo el color de la casa",
+                "D) El número de la avenida y el nombre de la calle"
+            ],
+            correcta: 1,
+            explicacion: "Para ubicar una casa necesitas dos referencias: la calle (generalmente con número) y la avenida (generalmente con nombre)."
+        },
+        {
+            texto: "¿Qué significa la coordenada (B, 3) en una cuadrícula donde las letras son columnas y los números son filas?",
+            contexto: "Las columnas van de izquierda a derecha (A, B, C...) y las filas van de arriba a abajo (1, 2, 3...).",
+            opciones: [
+                "A) Columna 3, fila B",
+                "B) Columna B, fila 3",
+                "C) Fila B, columna 3",
+                "D) No se puede saber"
+            ],
+            correcta: 1,
+            explicacion: "Primero se indica la columna (letra) y luego la fila (número). (B, 3) significa columna B, fila 3."
+        },
+        {
+            texto: "Si caminas 3 cuadras hacia el norte, ¿en qué dirección te estás moviendo?",
+            contexto: "Las direcciones cardinales son: norte (arriba), sur (abajo), este (derecha), oeste (izquierda).",
+            opciones: [
+                "A) Hacia arriba",
+                "B) Hacia abajo",
+                "C) Hacia la derecha",
+                "D) Hacia la izquierda"
+            ],
+            correcta: 0,
+            explicacion: "Norte significa hacia arriba en un mapa convencional. Si caminas al norte, te mueves hacia arriba."
+        },
+        {
+            texto: "Un robot avanza 2 unidades por cada paso. Si da 4 pasos, ¿cuántas unidades avanza en total?",
+            contexto: "Para calcular la distancia total, multiplica los pasos por las unidades por paso.",
+            opciones: [
+                "A) 6 unidades",
+                "B) 8 unidades",
+                "C) 10 unidades",
+                "D) 12 unidades"
+            ],
+            correcta: 1,
+            explicacion: "4 pasos × 2 unidades por paso = 8 unidades en total."
+        },
+        {
+            texto: "Para describir una ruta de un punto A a un punto B, ¿qué necesitas saber?",
+            contexto: "Una ruta completa tiene un inicio y un final, y se describe con movimientos.",
+            opciones: [
+                "A) Solo el punto de partida",
+                "B) Solo el punto de llegada",
+                "C) El punto de partida y el punto de llegada",
+                "D) La distancia total sin importar la dirección"
+            ],
+            correcta: 2,
+            explicacion: "Para describir una ruta necesitas saber dónde empiezas (punto A) y dónde terminas (punto B)."
+        }
+    ];
+
+    let preguntaActual = 0;
+    let respuestas = new Array(preguntas.length).fill(null);
+    let aciertos = 0;
+    const TOTAL = preguntas.length;
+    const MINIMO = 4;
+    
+    const audioClick = document.getElementById('audioClick');
+    const audioDing = document.getElementById('audioDing');
+    const audioError = document.getElementById('audioError');
+    const audioTada = document.getElementById('audioTada');
+
+    function mostrarPregunta() {
+        const container = document.getElementById('preguntasContainer');
+        const p = preguntas[preguntaActual];
+        const respondida = respuestas[preguntaActual] !== null;
+        const esCorrecta = respondida ? respuestas[preguntaActual] === p.correcta : false;
+
+        let opcionesHTML = '';
+        p.opciones.forEach((opcion, idx) => {
+            let claseBtn = 'opcion-btn';
+            if (respondida) {
+                if (idx === p.correcta) claseBtn += ' correcta';
+                if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
+            }
+
+            opcionesHTML += `
+                <button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>
+                    ${opcion}
+                </button>
+            `;
+        });
+
+        container.innerHTML = `
+            <div class="tarjeta-pregunta">
+                <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+                <div class="pregunta-texto">${p.texto}</div>
+                <div class="contexto-ejercicio">${p.contexto}</div>
+                <div class="opciones">${opcionesHTML}</div>
+                <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
+                    ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
+                </div>
+            </div>
+        `;
+
+        actualizarPuntos();
+        document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
+        actualizarBotones();
+    }
+
+    function seleccionarRespuesta(idxPregunta, idxOpcion) {
+        if (respuestas[idxPregunta] !== null) return;
+
+        audioClick.play();
+        
+        respuestas[idxPregunta] = idxOpcion;
+        if (idxOpcion === preguntas[idxPregunta].correcta) {
+            aciertos++;
+            audioDing.play();
+        } else {
+            audioError.play();
+        }
+
+        document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
+        mostrarPregunta();
+    }
+
+    function cambiarPregunta(direccion) {
+        if (direccion === -1 && preguntaActual > 0) {
+            preguntaActual--;
+            mostrarPregunta();
+        } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
+            preguntaActual++;
+            mostrarPregunta();
+        }
+    }
+
+    function actualizarPuntos() {
+        document.querySelectorAll('.punto').forEach((punto, i) => {
+            punto.classList.remove('activo');
+            if (i === preguntaActual) punto.classList.add('activo');
+        });
+    }
+
+    function actualizarBotones() {
+        const btnAnterior = document.getElementById('btnAnterior');
+        const btnSiguiente = document.getElementById('btnSiguiente');
+        const btnEnviar = document.getElementById('btnEnviar');
+
+        btnAnterior.disabled = (preguntaActual === 0);
+
+        if (preguntaActual === TOTAL - 1) {
+            btnSiguiente.style.display = 'none';
+            btnEnviar.style.display = 'inline-block';
+        } else {
+            btnSiguiente.style.display = 'inline-block';
+            btnEnviar.style.display = 'none';
+        }
+    }
+
+    async function enviarQuiz() {
+        const sinResponder = respuestas.filter(r => r === null).length;
+        if (sinResponder > 0) {
+            alert(`Te faltan ${sinResponder} preguntas por responder`);
+            return;
+        }
+
+        document.getElementById('preguntasContainer').style.display = 'none';
+        document.getElementById('progresoQuiz').style.display = 'none';
+        document.getElementById('navBotones').style.display = 'none';
+
+        const resultado = document.getElementById('resultado');
+        resultado.classList.add('visible');
+
+        const aprobado = aciertos >= MINIMO;
+        const pct = Math.round((aciertos / TOTAL) * 100);
+
+        document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
+        document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
+
+        if (aprobado) {
+            audioTada.play();
+            document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
+            document.getElementById('resultadoMensaje').innerHTML =
+                `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
+            document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
+            document.getElementById('btnReintentar').style.display = 'none';
+            guardarProgreso(aciertos, TOTAL);
+        } else {
+            audioError.play();
+            document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
+            document.getElementById('resultadoMensaje').innerHTML =
+                `Obtuviste ${pct}%. Necesitas al menos 4 de 5 para avanzar.`;
+            document.getElementById('btnSiguienteNivel').style.display = 'none';
+            document.getElementById('btnReintentar').style.display = 'inline-block';
+        }
+    }
+
+    async function guardarProgreso(aciertos, total) {
+        try {
+            await fetch('/api/progreso/nivel', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    contenido_id: 5,
+                    nivel_completado: 'facil',
+                    puntaje: Math.round((aciertos / total) * 100),
+                    aprobado: true,
+                    aciertos: aciertos,
+                    total_preguntas: total
+                })
+            });
+        } catch (e) {
+            console.error('Error guardando progreso:', e);
+        }
+    }
+
+    function reiniciarQuiz() {
+        preguntaActual = 0;
+        respuestas = new Array(preguntas.length).fill(null);
+        aciertos = 0;
+
+        document.querySelectorAll('.punto').forEach((punto, i) => {
+            punto.classList.remove('respondido', 'activo');
+            if (i === 0) punto.classList.add('activo');
+        });
+
+        document.getElementById('preguntasContainer').style.display = 'block';
+        document.getElementById('progresoQuiz').style.display = 'flex';
+        document.getElementById('navBotones').style.display = 'flex';
+        document.getElementById('resultado').classList.remove('visible');
+
+        mostrarPregunta();
+    }
+
+    function volverAlContenido() {
+        window.location.href = 'visual_verbal.html';
+    }
+
+    function irSiguienteNivel() {
+        window.location.href = '../normal/visual_verbal.html';
+    }
+
+    mostrarPregunta();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
