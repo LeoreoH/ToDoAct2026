@@ -3,11 +3,15 @@ const area = "matematicas";
 
 let preguntas = [];
 let contenidoId = null;
+let fechaInicio = null;
 
 async function cargarPreguntas() {
     try {
         document.getElementById("formulario").innerHTML =
             '<p style="text-align: center;">Cargando preguntas...</p>';
+
+        // Registrar fecha de inicio del diagnóstico
+        fechaInicio = new Date().toISOString();
 
         const contenidoRes = await fetch(`/api/contenido/${area}/${slug}`, {
             credentials: 'include'
@@ -94,6 +98,10 @@ async function enviarDiagnostico() {
         return;
     }
 
+    // Calcular tiempo transcurrido
+    const fechaFin = new Date();
+    const tiempoSegundos = fechaInicio ? Math.round((fechaFin - new Date(fechaInicio)) / 1000) : 0;
+
     const respuestas = {};
     preguntas.forEach(p => {
         const seleccion = document.querySelector(`input[name="p${p.id}"]:checked`);
@@ -113,7 +121,9 @@ async function enviarDiagnostico() {
             credentials: 'include',
             body: JSON.stringify({
                 contenido_id: contenidoId,
-                respuestas: respuestas
+                respuestas: respuestas,
+                tiempo_segundos: tiempoSegundos,
+                fecha_inicio: fechaInicio
             })
         });
 
@@ -135,7 +145,8 @@ async function enviarDiagnostico() {
                 <p style="font-size: 18px;">Puntaje: <strong>${data.correctas}/${data.total}</strong></p>
                 <p style="font-size: 18px; color: #f57c00;">Nivel asignado: <strong>${data.nivel_asignado}</strong></p>
                 <p style="margin-top: 15px;">${mensajesNivel[data.nivel_asignado] || ""}</p>
-                <p style="margin-top: 20px; font-size: 14px; color: #666;">Redirigiendo al menú...</p>
+                <p style="margin-top: 20px; font-size: 14px; color: #666;">Tiempo: ${tiempoSegundos} segundos</p>
+                <p style="margin-top: 10px; font-size: 14px; color: #666;">Redirigiendo al menú...</p>
             </div>
         `;
 

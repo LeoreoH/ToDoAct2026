@@ -358,6 +358,29 @@
       50% { transform: scale(1.5); color: white; }
       100% { transform: scale(1); }
     }
+
+    .timer-container {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid #ffd600;
+    }
+
+    .timer-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .timer-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffd600;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
@@ -370,6 +393,12 @@
     <div class="badge-intentos">
       <i class="fas fa-trophy me-2"></i> 4/5 para ganar
     </div>
+  </div>
+  
+  <!-- Timer -->
+  <div class="timer-container">
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
+    <span class="timer-value" id="timerDisplay">00:00</span>
   </div>
   
   <!-- Puntos de progreso -->
@@ -412,6 +441,7 @@
     <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
     <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
     <p class="mb-4" id="resultadoMensaje"></p>
+    <p class="text-white-50" id="resultadoTiempo"></p>
     <div class="d-flex justify-content-center gap-3 flex-wrap">
       <button class="btn-quiz" onclick="volverAlContenido()">
         <i class="fas fa-arrow-left me-2"></i> Volver
@@ -428,6 +458,10 @@
 </div>
 
 <script>
+  // ===== VARIABLES DE TIEMPO =====
+  let fechaInicio = new Date();
+  let timerInterval = null;
+  
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
@@ -449,6 +483,16 @@
       sonidos[nombre].currentTime = 0;
       sonidos[nombre].play().catch(() => {});
     }
+  }
+
+  // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
+  function actualizarTimer() {
+    const ahora = new Date();
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+    const minutos = Math.floor(diferencia / 60);
+    const segundos = diferencia % 60;
+    document.getElementById('timerDisplay').innerText = 
+      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
   // ===== PREGUNTAS =====
@@ -538,6 +582,7 @@
   function seleccionarRespuesta(idxPregunta, idxOpcion) {
     if (respuestasUsuario[idxPregunta] !== null) return;
     
+    reproducirSonido('click');
     respuestasUsuario[idxPregunta] = idxOpcion;
     const esCorrecta = idxOpcion === preguntas[idxPregunta].correcta;
     respuestasCorrectas[idxPregunta] = esCorrecta;
@@ -623,6 +668,15 @@
       return;
     }
     
+    // Detener el timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    
+    // Calcular tiempo total en segundos
+    const fechaFin = new Date();
+    const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
+    
     reproducirSonido('completar');
     
     document.getElementById('preguntasContainer').style.display = 'none';
@@ -642,13 +696,14 @@
       document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
       document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
       document.getElementById('resultadoTitulo').innerHTML = aprobado ? '¡Lo lograste!' : 'Sigue practicando';
+      document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
       
       if (aprobado) {
         document.getElementById('resultadoMensaje').innerHTML = 
           `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has desbloqueado el siguiente nivel.`;
         document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
         document.getElementById('btnReintentar').style.display = 'none';
-        guardarProgreso(aciertos, TOTAL);
+        guardarProgreso(aciertos, TOTAL, tiempoSegundos);
       } else {
         document.getElementById('resultadoMensaje').innerHTML = 
           `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para avanzar. ¡Inténtalo de nuevo!`;
@@ -663,6 +718,13 @@
     respuestasUsuario = new Array(preguntas.length).fill(null);
     respuestasCorrectas = new Array(preguntas.length).fill(false);
     aciertos = 0;
+    fechaInicio = new Date();
+    
+    // Reiniciar timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    timerInterval = setInterval(actualizarTimer, 1000);
     
     document.getElementById('preguntasContainer').style.display = 'block';
     document.getElementById('progresoQuiz').style.display = 'flex';
@@ -673,7 +735,7 @@
     mostrarPregunta();
   }
   
-  async function guardarProgreso(aciertos, total) {
+  async function guardarProgreso(aciertos, total, tiempoSegundos) {
     try {
       await fetch('/api/progreso/nivel', {
         method: 'POST',
@@ -685,7 +747,8 @@
           puntaje: Math.round((aciertos / total) * 100),
           aprobado: true,
           aciertos: aciertos,
-          total_preguntas: total
+          total_preguntas: total,
+          tiempo_segundos: tiempoSegundos
         })
       });
     } catch(e) {
@@ -703,6 +766,9 @@
   
   // Inicializar
   mostrarPregunta();
+  
+  // Iniciar timer
+  timerInterval = setInterval(actualizarTimer, 1000);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

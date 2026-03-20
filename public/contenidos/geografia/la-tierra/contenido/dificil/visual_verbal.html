@@ -161,6 +161,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      cursor: pointer;
     }
 
     .imagen-marco:hover {
@@ -172,6 +173,34 @@
       width: 100%;
       max-height: 200px;
       object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
     }
 
     .pie-imagen {
@@ -460,7 +489,7 @@
 
 <div class="contenedor">
 
-  <!-- ===== PÁGINA 1: COORDENADAS GEOGRÁFICAS (CORREGIDA) ===== -->
+  <!-- ===== PÁGINA 1: COORDENADAS GEOGRÁFICAS ===== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Coordenadas geográficas</h2>
@@ -471,7 +500,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" 
                  alt="Coordenadas geográficas" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
@@ -518,7 +547,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg" 
                  alt="Paralelos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
@@ -555,7 +584,7 @@
     </div>
   </div>
 
-  <!-- ===== PÁGINA 3: LONGITUD Y MERIDIANOS (CORREGIDA) ===== -->
+  <!-- ===== PÁGINA 3: LONGITUD Y MERIDIANOS ===== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-v me-3"></i>Longitud y meridianos</h2>
@@ -566,7 +595,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg" 
                  alt="Meridianos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
@@ -612,7 +641,7 @@
 
       <div class="row">
         <div class="col-md-4 mb-3">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg" 
                  alt="Mercator" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mercator_projection_SW.jpg/800px-Mercator_projection_SW.jpg'">
@@ -623,7 +652,7 @@
           </div>
         </div>
         <div class="col-md-4 mb-3">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg" 
                  alt="Robinson" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Robinson_projection_SW.jpg/800px-Robinson_projection_SW.jpg'">
@@ -634,7 +663,7 @@
           </div>
         </div>
         <div class="col-md-4 mb-3">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg" 
                  alt="Peters" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Peters_projection%2C_Japan.jpg/800px-Peters_projection%2C_Japan.jpg'">
@@ -683,6 +712,30 @@
 </div>
 
 <script>
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (!img) return;
+    
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),

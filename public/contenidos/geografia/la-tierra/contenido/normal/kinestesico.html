@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Tierra · Nivel Normal · Kinestésico</title>
 
   <!-- Bootstrap 5 -->
@@ -158,6 +158,7 @@
       border: 3px solid #1976d2;
       transition: all 0.3s ease;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .imagen-marco:hover {
@@ -169,6 +170,34 @@
       width: 100%;
       max-height: 220px;
       object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
     }
 
     .pie-imagen {
@@ -560,7 +589,7 @@
       display: none;
     }
 
-    /* ACTIVIDAD 4: MAPA DE MÉXICO - CORREGIDA (SIMPLE) */
+    /* ACTIVIDAD 4: MAPA DE MÉXICO - CORREGIDA (CON IMAGEN AMPLIABLE) */
     .mapa-mexico-container {
       background: #e3f2fd;
       border: 4px solid #1976d2;
@@ -579,6 +608,7 @@
       border-radius: 15px;
       border: 3px solid #1976d2;
       display: block;
+      cursor: pointer;
     }
 
     .drop-zone {
@@ -839,7 +869,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
                  alt="Rotación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
@@ -922,7 +952,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
                  alt="Traslación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
@@ -979,7 +1009,7 @@
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina2">
-          🎼 ¡Encontraste todos los años bisiestos!
+          🎉 ¡Encontraste todos los años bisiestos!
         </div>
       </div>
     </div>
@@ -994,7 +1024,7 @@
         La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
       </p>
 
-      <div class="imagen-marco">
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
              alt="Estaciones del año" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
@@ -1060,7 +1090,7 @@
     </div>
   </div>
 
-  <!-- ===== PÁGINA 4: ELEMENTOS DE MAPAS (CORREGIDA - SIMPLE) ===== -->
+  <!-- ===== PÁGINA 4: ELEMENTOS DE MAPAS ===== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
@@ -1071,7 +1101,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
                  alt="Elementos de un mapa" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
@@ -1117,14 +1147,14 @@
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÉSICA 4: IDENTIFICA LOS ELEMENTOS DEL MAPA (SIMPLIFICADA) -->
+      <!-- ACTIVIDAD KINESTÉSICA 4: IDENTIFICA LOS ELEMENTOS DEL MAPA -->
       <div class="zona-actividad">
         <h3 class="actividad-titulo"><i class="fas fa-map-pin me-2"></i> Identifica los elementos del mapa</h3>
         
         <div class="mapa-mexico-container">
           <div class="mapa-contenedor">
             <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-mexico.png" 
-                 alt="Mapa de México" class="mapa-base-img"
+                 alt="Mapa de México" class="mapa-base-img" onclick="ampliarImagen(this)"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg/800px-Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg.png'">
             
             <!-- Zonas de drop - solo 4 elementos -->
@@ -1168,6 +1198,30 @@
 </div>
 
 <script>
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (!img) return;
+    
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco') && !event.target.closest('.mapa-base-img')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
@@ -1423,7 +1477,7 @@
     });
   });
 
-  // ===== ACTIVIDAD 4: MAPA DE MÉXICO (FUNCIONAL - SIMPLIFICADA) =====
+  // ===== ACTIVIDAD 4: MAPA DE MÉXICO (FUNCIONAL) =====
   let elementosColocadosMapa = 0;
   const totalElementosMapa = 4; // norte, escala, estado, oceano
 

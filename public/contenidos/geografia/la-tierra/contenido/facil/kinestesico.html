@@ -145,6 +145,7 @@
       border: 3px solid #1976d2;
       transition: all 0.3s ease;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .imagen-marco:hover {
@@ -156,6 +157,34 @@
       width: 100%;
       max-height: 200px;
       object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
     }
 
     .pie-imagen {
@@ -335,7 +364,7 @@
       margin: 5px;
     }
 
-    /* ACTIVIDAD 2: MEMORAMA (CORREGIDO - solo conceptos básicos) */
+    /* ACTIVIDAD 2: MEMORAMA */
     .memorama-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -445,7 +474,7 @@
       flex-wrap: wrap;
     }
 
-    /* ACTIVIDAD 4: LABERINTO (sin pistas en los botones) */
+    /* ACTIVIDAD 4: LABERINTO */
     .laberinto-container {
       background: #e3f2fd;
       border: 4px solid #1976d2;
@@ -676,7 +705,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
                  alt="Tierra desde el espacio" class="imagen-geo"
                  onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
@@ -684,7 +713,7 @@
           <div class="pie-imagen">🌍 Vista satelital</div>
         </div>
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" 
                  alt="Forma de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
@@ -763,7 +792,7 @@
         Para ubicarnos, inventamos <strong>líneas imaginarias</strong>: paralelos (horizontales) y meridianos (verticales).
       </p>
       
-      <div class="imagen-marco">
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" 
              alt="Paralelos y meridianos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
@@ -787,7 +816,7 @@
         </div>
       </div>
 
-      <!-- ACTIVIDAD 2: MEMORAMA (solo conceptos básicos) -->
+      <!-- ACTIVIDAD 2: MEMORAMA -->
       <div class="zona-actividad">
         <h4 class="actividad-titulo"><i class="fas fa-brain me-2"></i> Encuentra las parejas</h4>
         
@@ -811,7 +840,7 @@
         Los <strong>puntos cardinales</strong> son las cuatro direcciones: Norte, Sur, Este y Oeste.
       </p>
       
-      <div class="imagen-marco">
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" 
              alt="Rosa de los vientos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
@@ -886,7 +915,7 @@
         Los rayos del Sol no calientan igual toda la Tierra. Hay <strong>5 zonas térmicas</strong>.
       </p>
       
-      <div class="imagen-marco">
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" 
              alt="Zonas térmicas" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
@@ -911,14 +940,14 @@
         </div>
       </div>
 
-      <div class="imagen-marco mt-3">
+      <div class="imagen-marco mt-3" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" 
              alt="Zona fría" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
       </div>
       <div class="pie-imagen">❄️ Paisaje de zona fría</div>
 
-      <!-- ACTIVIDAD 4: LABERINTO (sin pistas en los botones) -->
+      <!-- ACTIVIDAD 4: LABERINTO -->
       <div class="zona-actividad">
         <h4 class="actividad-titulo"><i class="fas fa-road me-2"></i> Encuentra la salida</h4>
         
@@ -975,6 +1004,30 @@
 </div>
 
 <script>
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (!img) return;
+    
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
@@ -1073,7 +1126,7 @@
     });
   });
 
-  // ===== ACTIVIDAD 2: MEMORAMA (conceptos básicos) =====
+  // ===== ACTIVIDAD 2: MEMORAMA =====
   const paresMemorama = [
     { id: 1, texto: 'PARALELO', parejaId: 2 },
     { id: 2, texto: 'Horizontal', parejaId: 1 },
@@ -1230,7 +1283,7 @@
     });
   });
 
-  // ===== ACTIVIDAD 4: LABERINTO (sin pistas en botones) =====
+  // ===== ACTIVIDAD 4: LABERINTO =====
   let nivelActualLaberinto = 1;
   const nivelesSuperados = { 1: false, 2: false, 3: false };
 

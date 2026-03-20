@@ -145,6 +145,7 @@
       border: 3px solid #1976d2;
       transition: all 0.3s ease;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .imagen-marco:hover {
@@ -156,6 +157,23 @@
       width: 100%;
       max-height: 200px;
       object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
     }
 
     .pie-imagen {
@@ -402,6 +420,17 @@
       transform: translateY(-5px);
       box-shadow: 0 8px 0 #0d47a1;
     }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -444,7 +473,7 @@
         <div class="col-md-6">
           <div class="imagen-marco">
             <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
-                 alt="Tierra desde el espacio" class="imagen-geo"
+                 alt="Tierra desde el espacio" class="imagen-geo" onclick="ampliarImagen(this)"
                  onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
           </div>
           <div class="pie-imagen">🌍 Vista satelital de la Tierra</div>
@@ -452,7 +481,7 @@
         <div class="col-md-6">
           <div class="imagen-marco">
             <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" 
-                 alt="Forma de la Tierra" class="imagen-geo"
+                 alt="Forma de la Tierra" class="imagen-geo" onclick="ampliarImagen(this)"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
           </div>
           <div class="pie-imagen">📐 Forma achatada en los polos</div>
@@ -504,7 +533,7 @@
       
       <div class="imagen-marco">
         <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" 
-             alt="Paralelos y meridianos" class="imagen-geo"
+             alt="Paralelos y meridianos" class="imagen-geo" onclick="ampliarImagen(this)"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
       </div>
       <div class="pie-imagen">🗺️ Paralelos (horizontales) y meridianos (verticales)</div>
@@ -548,7 +577,7 @@
       
       <div class="imagen-marco">
         <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" 
-             alt="Rosa de los vientos" class="imagen-geo"
+             alt="Rosa de los vientos" class="imagen-geo" onclick="ampliarImagen(this)"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
       </div>
       <div class="pie-imagen">🧭 Rosa de los vientos</div>
@@ -588,7 +617,7 @@
       
       <div class="imagen-marco">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" 
-             alt="Zonas térmicas" class="imagen-geo"
+             alt="Zonas térmicas" class="imagen-geo" onclick="ampliarImagen(this)"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
       </div>
       <div class="pie-imagen">🌡️ Las 5 zonas térmicas de la Tierra</div>
@@ -613,7 +642,7 @@
 
       <div class="imagen-marco mt-3">
         <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" 
-             alt="Zona fría" class="imagen-geo"
+             alt="Zona fría" class="imagen-geo" onclick="ampliarImagen(this)"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
       </div>
       <div class="pie-imagen">❄️ Paisaje de zona fría</div>
@@ -658,6 +687,28 @@
       sonidos[nombre].play().catch(() => {});
     }
   }
+
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
 
   // ===== NAVEGACIÓN =====
   let paginaActual = 1;

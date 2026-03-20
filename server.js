@@ -370,7 +370,7 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
         return res.status(401).json({ error: 'No autenticado' });
     }
 
-    const { contenido_id, respuestas, tiempo_segundos } = req.body;
+    const { contenido_id, respuestas, tiempo_segundos, fecha_inicio } = req.body;
     const usuario = req.session.usuario;
 
     if (!contenido_id || !respuestas || typeof respuestas !== 'object') {
@@ -438,15 +438,16 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
         // 6. Guardar nivel asignado en progreso_contenido_usuario
         await client.query(`
             INSERT INTO progreso_contenido_usuario
-                (usuario, contenido_id, diagnostico_realizado, nivel_asignado, contenido_completado, fecha, tiempo_total_diagnostico, fecha_fin_diagnostico)
-            VALUES ($1, $2, true, $3, false, CURRENT_TIMESTAMP, $4, CURRENT_TIMESTAMP)
+                (usuario, contenido_id, diagnostico_realizado, nivel_asignado, contenido_completado, fecha, tiempo_total_diagnostico, fecha_inicio_diagnostico, fecha_fin_diagnostico)
+            VALUES ($1, $2, true, $3, false, CURRENT_TIMESTAMP, $4, $5, CURRENT_TIMESTAMP)
             ON CONFLICT (usuario, contenido_id)
             DO UPDATE SET
                 diagnostico_realizado = true,
                 nivel_asignado        = $3,
                 tiempo_total_diagnostico = $4,
+                fecha_inicio_diagnostico = $5,
                 fecha_fin_diagnostico = CURRENT_TIMESTAMP
-        `, [usuario, contenido_id, nivel_asignado, tiempo_segundos || 0]);
+        `, [usuario, contenido_id, nivel_asignado, tiempo_segundos || 0, fecha_inicio]);
 
         // 7. Guardar puntaje general en puntuaciones
         await client.query(`
@@ -493,7 +494,7 @@ app.post('/api/progreso/nivel', async (req, res) => {
         return res.status(401).json({ error: 'No autenticado' });
     }
 
-    const { contenido_id, nivel_completado, puntaje, aprobado, tiempo_segundos, aciertos, total_preguntas } = req.body;
+    const { contenido_id, nivel_completado, puntaje, aprobado, tiempo_segundos, aciertos, total_preguntas, fecha_inicio } = req.body;
     const usuario = req.session.usuario;
 
     if (!contenido_id || !nivel_completado || puntaje === undefined) {
@@ -576,10 +577,10 @@ app.post('/api/progreso/nivel', async (req, res) => {
         if (aciertos !== undefined && total_preguntas !== undefined) {
             await client.query(`
                 INSERT INTO resultados_quiz
-                    (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, aprobado, fecha)
-                SELECT $1, $2, $3, u.estilo_aprendizaje, $4, $5, $6, $7, $8, CURRENT_TIMESTAMP
+                    (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, aprobado, fecha_inicio, fecha_fin, fecha)
+                SELECT $1, $2, $3, u.estilo_aprendizaje, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
                 FROM usuarios u WHERE u.usuario = $1
-            `, [usuario, contenido_id, nivel_completado, aciertos, total_preguntas, puntaje, tiempo_segundos || 0, aprobado]);
+            `, [usuario, contenido_id, nivel_completado, aciertos, total_preguntas, puntaje, tiempo_segundos || 0, aprobado, fecha_inicio]);
         }
 
         res.json({

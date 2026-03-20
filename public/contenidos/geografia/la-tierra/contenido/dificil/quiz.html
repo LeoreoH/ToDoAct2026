@@ -90,6 +90,29 @@
       margin-top: 10px;
     }
 
+    .timer-container {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid #ffd600;
+    }
+
+    .timer-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .timer-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffd600;
+      font-family: monospace;
+    }
+
     .progreso-quiz {
       display: flex;
       justify-content: center;
@@ -450,6 +473,12 @@
     </div>
   </div>
 
+  <!-- Timer -->
+  <div class="timer-container">
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
+    <span class="timer-value" id="timerDisplay">00:00</span>
+  </div>
+
   <!-- Puntos de progreso -->
   <div class="progreso-quiz" id="progresoQuiz">
     <div class="punto activo" data-i="0">1</div>
@@ -485,6 +514,7 @@
     <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
     <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
     <p class="mb-4" id="resultadoMensaje"></p>
+    <p class="text-white-50" id="resultadoTiempo"></p>
     <button class="btn-accion" onclick="volverAlContenido()">
       <i class="fas fa-arrow-left me-2"></i> Volver
     </button>
@@ -499,6 +529,10 @@
 </div>
 
 <script>
+  // ===== VARIABLES DE TIEMPO =====
+  let fechaInicio = new Date();
+  let timerInterval = null;
+
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
@@ -520,6 +554,16 @@
       sonidos[nombre].currentTime = 0;
       sonidos[nombre].play().catch(() => {});
     }
+  }
+
+  // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
+  function actualizarTimer() {
+    const ahora = new Date();
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+    const minutos = Math.floor(diferencia / 60);
+    const segundos = diferencia % 60;
+    document.getElementById('timerDisplay').innerText = 
+      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
   // ===== PREGUNTAS DEL NIVEL DIFÍCIL =====
@@ -601,6 +645,7 @@
   function seleccionarRespuesta(idxPregunta, idxOpcion) {
     if (respuestas[idxPregunta] !== null) return;
 
+    reproducirSonido('click');
     respuestas[idxPregunta] = idxOpcion;
     if (idxOpcion === preguntas[idxPregunta].correcta) {
       aciertos++;
@@ -669,6 +714,15 @@
       return;
     }
 
+    // Detener el timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+
+    // Calcular tiempo total en segundos
+    const fechaFin = new Date();
+    const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
+
     reproducirSonido('completar');
 
     document.getElementById('preguntasContainer').style.display = 'none';
@@ -688,13 +742,14 @@
       document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
       document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
       document.getElementById('resultadoTitulo').innerHTML = aprobado ? '¡Lo lograste!' : 'Sigue practicando';
+      document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
 
       if (aprobado) {
         document.getElementById('resultadoMensaje').innerHTML = 
           `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has completado el nivel difícil.`;
         document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
         document.getElementById('btnReintentar').style.display = 'none';
-        guardarProgreso(aciertos, TOTAL);
+        guardarProgreso(aciertos, TOTAL, tiempoSegundos);
       } else {
         document.getElementById('resultadoMensaje').innerHTML = 
           `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para aprobar. ¡Inténtalo de nuevo!`;
@@ -708,6 +763,13 @@
     preguntaActual = 0;
     respuestas = new Array(preguntas.length).fill(null);
     aciertos = 0;
+    fechaInicio = new Date();
+
+    // Reiniciar timer
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    timerInterval = setInterval(actualizarTimer, 1000);
 
     document.querySelectorAll('.punto').forEach((punto, i) => {
       punto.classList.remove('respondido', 'activo');
@@ -723,7 +785,7 @@
     mostrarPregunta();
   }
 
-  async function guardarProgreso(aciertos, total) {
+  async function guardarProgreso(aciertos, total, tiempoSegundos) {
     try {
       await fetch('/api/progreso/nivel', {
         method: 'POST',
@@ -735,7 +797,8 @@
           puntaje: Math.round((aciertos / total) * 100),
           aprobado: true,
           aciertos: aciertos,
-          total_preguntas: total
+          total_preguntas: total,
+          tiempo_segundos: tiempoSegundos
         })
       });
     } catch(e) {
@@ -752,7 +815,11 @@
     window.location.href = '../../menu.html';
   }
 
+  // Inicializar
   mostrarPregunta();
+
+  // Iniciar timer
+  timerInterval = setInterval(actualizarTimer, 1000);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

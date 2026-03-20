@@ -158,6 +158,7 @@
       border: 3px solid #1976d2;
       transition: all 0.3s ease;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .imagen-marco:hover {
@@ -169,6 +170,34 @@
       width: 100%;
       max-height: 220px;
       object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
     }
 
     .pie-imagen {
@@ -455,7 +484,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
                  alt="Rotación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
@@ -513,7 +542,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
                  alt="Traslación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
@@ -557,7 +586,7 @@
         La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
       </p>
 
-      <div class="imagen-marco">
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
         <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
              alt="Estaciones del año" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
@@ -614,7 +643,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
             <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
                  alt="Elementos de un mapa" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
@@ -673,6 +702,30 @@
 </div>
 
 <script>
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (!img) return;
+    
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),

@@ -237,3 +237,163 @@ INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (3, 'dificil', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/dificil/visual_no_verbal.html'),
 (3, 'dificil', 'auditivo', '/contenidos/geografia/poblacion-mundial/contenido/dificil/auditivo.html'),
 (3, 'dificil', 'kinestesico', '/contenidos/geografia/poblacion-mundial/contenido/dificil/kinestesico.html');
+
+-- ============================================
+-- INSERTS DE MATEMÁTICAS - AMBOS SUBTEMAS
+-- KC 2.1 Fracciones y decimales - "Reconocer fracciones"
+-- KC 1.1 Ubicación en planos y mapas - "Identificar coordenadas"
+-- ============================================
+
+-- ============================================
+-- CONTENIDO 4: RECONOCER FRACCIONES (YA EXISTENTE)
+-- ============================================
+
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
+(4, 'matematicas', 'reconocer-fracciones', 'Fracciones: reconocer partes', 1, true)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
+(4, 'facil'), (4, 'normal'), (4, 'dificil')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
+(4, 4, true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Archivos de contenido - Reconocer fracciones
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(4, 'facil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_verbal.html'),
+(4, 'facil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_no_verbal.html'),
+(4, 'facil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/auditivo.html'),
+(4, 'facil', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/kinestesico.html'),
+-- NIVEL NORMAL
+(4, 'normal', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_verbal.html'),
+(4, 'normal', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_no_verbal.html'),
+(4, 'normal', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/auditivo.html'),
+(4, 'normal', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/kinestesico.html'),
+-- NIVEL DIFÍCIL
+(4, 'dificil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_verbal.html'),
+(4, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_no_verbal.html'),
+(4, 'dificil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/auditivo.html'),
+(4, 'dificil', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/kinestesico.html')
+ON CONFLICT (contenido_id, nivel, estilo) DO NOTHING;
+
+-- Preguntas de diagnóstico - Reconocer fracciones
+INSERT INTO preguntas_diagnostico
+(examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta)
+VALUES
+(4, 'En la fraccion 3/4, que numero indica cuantas partes se toman?',
+'4', '3', '7', '1', 'B'),
+
+(4, 'En la fraccion 3/4, que numero indica en cuantas partes iguales se divide el todo?',
+'3', '4', '1', '7', 'B'),
+
+(4, 'Si una pizza se divide en 4 partes iguales y se colorea 1 parte, que fraccion representa la parte coloreada?',
+'1/4', '4/1', '1/3', '3/4', 'A'),
+
+(4, 'Si una barra se divide en 2 partes iguales y se colorea 1 parte, que fraccion representa la parte coloreada?',
+'2/1', '1/3', '1/2', '2/2', 'C'),
+
+(4, 'Que fraccion representa 2 partes coloreadas de un total de 3 partes iguales?',
+'3/2', '2/3', '1/3', '2/2', 'B'),
+
+(4, 'Cual de las siguientes fracciones representa la mitad de un entero?',
+'1/2', '1/4', '2/3', '3/4', 'A'),
+
+(4, 'Si un rectangulo esta dividido en 8 partes iguales y se colorean 4, que fraccion representa la parte coloreada?',
+'4/8', '8/4', '4/4', '2/8', 'A'),
+
+(4, 'En la fraccion 5/6, el numero 6 representa:',
+'Las partes que se toman', 'Las partes que faltan', 'El total de partes iguales', 'El numero de figuras', 'C'),
+
+(4, 'Que fraccion representa tres partes tomadas de un total de cuatro partes iguales?',
+'4/3', '3/4', '1/4', '2/4', 'B'),
+
+(4, 'Si una figura esta dividida en 5 partes iguales y solo 1 parte esta coloreada, que fraccion la representa?',
+'5/1', '1/5', '4/5', '1/4', 'B')
+ON CONFLICT DO NOTHING;
+
+-- ============================================
+-- CONTENIDO 5: IDENTIFICAR COORDENADAS (NUEVO)
+-- ============================================
+
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
+(5, 'matematicas', 'identificar-coordenadas', 'Ubicacion en planos y mapas: identificar coordenadas', 2, true)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
+(5, 'facil'), (5, 'normal'), (5, 'dificil')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
+(5, 5, true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Archivos de contenido - Identificar coordenadas
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FACIL
+(5, 'facil', 'visual_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/facil/visual_verbal.html'),
+(5, 'facil', 'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/facil/visual_no_verbal.html'),
+(5, 'facil', 'auditivo', '/contenidos/matematicas/identificar-coordenadas/contenido/facil/auditivo.html'),
+(5, 'facil', 'kinestesico', '/contenidos/matematicas/identificar-coordenadas/contenido/facil/kinestesico.html'),
+-- NIVEL NORMAL
+(5, 'normal', 'visual_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/normal/visual_verbal.html'),
+(5, 'normal', 'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/normal/visual_no_verbal.html'),
+(5, 'normal', 'auditivo', '/contenidos/matematicas/identificar-coordenadas/contenido/normal/auditivo.html'),
+(5, 'normal', 'kinestesico', '/contenidos/matematicas/identificar-coordenadas/contenido/normal/kinestesico.html'),
+-- NIVEL DIFICIL
+(5, 'dificil', 'visual_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/visual_verbal.html'),
+(5, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/visual_no_verbal.html'),
+(5, 'dificil', 'auditivo', '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/auditivo.html'),
+(5, 'dificil', 'kinestesico', '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/kinestesico.html')
+ON CONFLICT (contenido_id, nivel, estilo) DO NOTHING;
+
+-- ============================================
+-- PREGUNTAS DE DIAGNOSTICO - IDENTIFICAR COORDENADAS
+-- Basadas en el libro Desafios Matematicos 5° grado
+-- ============================================
+
+INSERT INTO preguntas_diagnostico
+(examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta)
+VALUES
+-- 1. Basado en Desafio 10
+(5, 'En el mapa de una colonia, las calles que van de norte a sur se llaman "calles" y estan numeradas (Calle 1, Calle 2...). Las que van de este a oeste se llaman "avenidas" y tienen nombres (Reforma, Insurgentes...). Para ubicar una casa en el mapa, que informacion es suficiente?',
+'El nombre de la avenida y el color de la casa', 'El numero de la calle y el nombre de la avenida', 'El numero de la calle y la distancia al parque', 'El nombre de la avenida y el numero de la cuadra', 'B'),
+
+-- 2. Basado en Desafio 10
+(5, 'Isabel vive en la calle Revolucion, entre las calles 5 y 6. Minerva vive en la calle 12, entre Insurgentes y Reforma. Para ir de la casa de Isabel a la de Minerva, primero debe caminar 7 cuadras hacia el sur. Que instruccion falta para completar el camino?',
+'Caminar 5 cuadras hacia el norte', 'Caminar 3 cuadras hacia el este', 'Caminar 2 cuadras hacia el oeste', 'Caminar 4 cuadras hacia el sur', 'C'),
+
+-- 3. Basado en Desafio 11
+(5, 'Las instrucciones para ir de la escuela al parque son: "Sal de la escuela, camina 3 cuadras hacia el norte, dobla a la derecha y camina 2 cuadras mas". Si al salir de la escuela estas viendo hacia el norte, en que direccion quedara el parque respecto a la escuela?',
+'Al noroeste de la escuela', 'Al noreste de la escuela', 'Al suroeste de la escuela', 'Al sureste de la escuela', 'B'),
+
+-- 4. Basado en Desafio 48
+(5, 'En el Metro de la CDMX, la Linea 2 (azul) va de Tasquena (sur) a Cuatro Caminos (norte). La Linea 3 (verde) va de Universidad (sur) a Indios Verdes (norte). Si estas en Zocalo (Linea 2) y quieres ir a Copilco (Linea 3), en que estacion debes hacer transbordo?',
+'En Balderas', 'En Hidalgo', 'En Tacuba', 'En Pantitlan', 'B'),
+
+-- 5. Basado en Desafio 48
+(5, 'Observa este mapa simple del Metro: Linea 1: Observatorio - Pantitlan (oeste a este) Linea 2: Tasquena - Cuatro Caminos (sur a norte) Linea 3: Universidad - Indios Verdes (sur a norte) Si viajas de la estacion "Zocalo" (Linea 2) hacia el norte, cual sera la siguiente estacion despues de Hidalgo?',
+'Guerrero', 'Balderas', 'Juarez', 'Bellas Artes', 'A'),
+
+-- 6. Basado en Desafio 81
+(5, 'Un robot avanza en linea recta. En su programacion, cada paso que da lo mueve 2 unidades. Si el robot da 5 pasos, luego retrocede 3 pasos y luego avanza 4 pasos, a que distancia del punto de partida se encuentra?',
+'6 unidades', '8 unidades', '10 unidades', '12 unidades', 'D'),
+
+-- 7. Basado en Desafio 91
+(5, 'En un teatro, las filas se numeran del 1 al 20 (cerca del escenario son las filas bajas). Los asientos en cada fila se numeran del 1 al 15 (el 1 es el pasillo izquierdo, el 15 el pasillo derecho). Si tienes el boleto "Fila 8, Asiento 12", donde estas ubicado?',
+'Fila 8, del lado izquierdo, atras del teatro', 'Fila 8, del lado derecho, en medio del teatro', 'Fila 12, del lado izquierdo, adelante del teatro', 'Fila 12, del lado derecho, en medio del teatro', 'B'),
+
+-- 8. Basado en Desafio 91
+(5, 'En el mismo teatro, tu amigo tiene el boleto "Fila 14, Asiento 4". Cual de las siguientes afirmaciones es correcta comparando sus lugares?',
+'Tu amigo esta 6 filas mas atras y 8 asientos mas a la izquierda', 'Tu amigo esta 6 filas mas atras y 8 asientos mas a la derecha', 'Tu amigo esta 6 filas mas adelante y 8 asientos mas a la izquierda', 'Tu amigo esta 6 filas mas adelante y 8 asientos mas a la derecha', 'A'),
+
+-- 9. Basado en Desafio 92
+(5, 'En el juego "Batalla aerea" se usa un tablero con filas numeradas (1 al 10) y columnas con letras (A a la J). Las coordenadas se dan diciendo primero la letra y luego el numero. Si dices "E,7", en que casilla estas?',
+'Columna E, fila 7', 'Columna 7, fila E', 'Columna 5, fila 7', 'Columna 7, fila 5', 'A'),
+
+-- 10. Basado en Desafio 92
+(5, 'En el mismo juego, tu oponente tiene un avion en "C,5". Tu disparas primero a "C,6" y luego a "D,5". Cual de estas afirmaciones es correcta?',
+'Ambos disparos fallaron porque el avion esta en C5', 'El primer disparo acerto, el segundo fallo', 'El primer disparo fallo, el segundo acerto', 'Ambos disparos acertaron porque estan cerca', 'A')
+ON CONFLICT DO NOTHING;
