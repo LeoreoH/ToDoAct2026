@@ -1,0 +1,180 @@
+-- ============================================
+-- INSERTS DE CONTENIDOS DE MATEMÁTICAS
+-- KC 2.1 Fracciones y decimales
+-- Contenido 1: Reconocer fracciones
+-- ============================================
+
+-- Contenido
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
+(4, 'matematicas', 'reconocer-fracciones', 'Fracciones: reconocer partes', 1, true);
+
+-- Niveles por contenido
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
+(4, 'facil'),
+(4, 'normal'),
+(4, 'dificil');
+
+-- Examen diagnóstico
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
+(4, 4, true);
+
+-- ============================================
+-- ARCHIVOS DE CONTENIDO
+-- RECONOCER FRACCIONES
+-- ============================================
+
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(4, 'facil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_verbal.html'),
+(4, 'facil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_no_verbal.html'),
+(4, 'facil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/auditivo.html'),
+(4, 'facil', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/kinestesico.html'),
+
+-- NIVEL NORMAL
+(4, 'normal', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_verbal.html'),
+(4, 'normal', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_no_verbal.html'),
+(4, 'normal', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/auditivo.html'),
+(4, 'normal', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/kinestesico.html'),
+
+-- NIVEL DIFÍCIL
+(4, 'dificil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_verbal.html'),
+(4, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_no_verbal.html'),
+(4, 'dificil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/auditivo.html'),
+(4, 'dificil', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/kinestesico.html');
+
+-- ============================================
+-- INSERTAR PREGUNTAS DE DIAGNÓSTICO - MATEMÁTICAS
+-- KC 2.1 Fracciones y decimales
+-- Contenido: Reconocer fracciones
+-- contenido_id = 4, examen_id = 4
+-- ============================================
+
+SET client_encoding TO 'UTF8';
+
+INSERT INTO preguntas_diagnostico
+(examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta)
+VALUES
+
+(4, 'En la fraccion 3/4, que numero indica cuantas partes se toman?', 
+ '4', '3', '7', '1', 'B'),
+
+(4, 'En la fraccion 3/4, que numero indica en cuantas partes iguales se divide el todo?', 
+ '3', '4', '1', '7', 'B'),
+
+(4, 'Si una pizza se divide en 4 partes iguales y se colorea 1 parte, que fraccion representa la parte coloreada?', 
+ '1/4', '4/1', '1/3', '3/4', 'A'),
+
+(4, 'Si una barra se divide en 2 partes iguales y se colorea 1 parte, que fraccion representa la parte coloreada?', 
+ '2/1', '1/3', '1/2', '2/2', 'C'),
+
+(4, 'Que fraccion representa 2 partes coloreadas de un total de 3 partes iguales?', 
+ '3/2', '2/3', '1/3', '2/2', 'B'),
+
+(4, 'Cual de las siguientes fracciones representa la mitad de un entero?', 
+ '1/2', '1/4', '2/3', '3/4', 'A'),
+
+(4, 'Si un rectangulo esta dividido en 8 partes iguales y se colorean 4, que fraccion representa la parte coloreada?', 
+ '4/8', '8/4', '4/4', '2/8', 'A'),
+
+(4, 'En la fraccion 5/6, el numero 6 representa:', 
+ 'Las partes que se toman', 'Las partes que faltan', 'El total de partes iguales', 'El numero de figuras', 'C'),
+
+(4, 'Que fraccion representa tres partes tomadas de un total de cuatro partes iguales?', 
+ '4/3', '3/4', '1/4', '2/4', 'B'),
+
+(4, 'Si una figura esta dividida en 5 partes iguales y solo 1 parte esta coloreada, que fraccion la representa?', 
+ '5/1', '1/5', '4/5', '1/4', 'B');
+
+ -- ============================================
+-- MATEMÁTICAS - KC 2.1 Fracciones y decimales
+-- Contenido 2: Equivalencias numéricas
+-- slug: equivalencias-fraccion-decimal-porcentaje
+-- contenido_id = 5
+-- examen_id = 5
+-- ============================================
+
+SET client_encoding TO 'UTF8';
+
+-- CONTENIDO
+INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
+(5, 'matematicas', 'equivalencias-numericas', 'KC 2.1: Equivalencias numéricas', 2, true);
+
+-- NIVELES
+INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
+(5, 'facil'),
+(5, 'normal'),
+(5, 'dificil');
+
+-- EXAMEN DIAGNÓSTICO
+INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
+(5, 5, true);
+
+-- ============================================
+-- ARCHIVOS DE CONTENIDO
+-- EQUIVALENCIAS NUMÉRICAS
+-- ============================================
+
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
+-- NIVEL FÁCIL
+(5, 'facil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_verbal.html'),
+(5, 'facil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_no_verbal.html'),
+(5, 'facil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/auditivo.html'),
+(5, 'facil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/kinestesico.html'),
+
+-- NIVEL NORMAL
+(5, 'normal', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_verbal.html'),
+(5, 'normal', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_no_verbal.html'),
+(5, 'normal', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/auditivo.html'),
+(5, 'normal', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/kinestesico.html'),
+
+-- NIVEL DIFÍCIL
+(5, 'dificil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_verbal.html'),
+(5, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_no_verbal.html'),
+(5, 'dificil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/auditivo.html'),
+(5, 'dificil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/kinestesico.html');
+
+-- ============================================
+-- PREGUNTAS DE DIAGNÓSTICO
+-- MATEMÁTICAS - EQUIVALENCIAS NUMÉRICAS
+-- examen_id = 5
+-- ============================================
+
+SET client_encoding TO 'UTF8';
+
+INSERT INTO preguntas_diagnostico
+(examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta)
+VALUES
+
+(5, 'Que decimal es equivalente a 1/2?',
+ '0.2', '0.5', '0.25', '0.75', 'B'),
+
+(5, 'Que porcentaje es equivalente a 1/4?',
+ '75%', '50%', '25%', '10%', 'C'),
+
+(5, 'Que fraccion es equivalente a 0.75?',
+ '1/4', '1/2', '3/4', '2/4', 'C'),
+
+(5, 'Que decimal representa 25%?',
+ '0.25', '0.5', '0.75', '0.2', 'A'),
+
+(5, 'Que porcentaje representa 0.5?',
+ '5%', '25%', '50%', '75%', 'C'),
+
+(5, 'Cual grupo muestra cantidades equivalentes?',
+ '1/2, 0.25, 50%',
+ '1/4, 0.25, 25%',
+ '3/4, 0.5, 75%',
+ '1/2, 0.75, 25%',
+ 'B'),
+
+(5, 'Que fraccion equivale a 50%?',
+ '1/4', '2/4', '3/4', '1/3', 'B'),
+
+(5, 'Cual de estos valores representa tres cuartos?',
+ '25%', '0.5', '75%', '0.2', 'C'),
+
+(5, 'Si marcas 0.25 en una recta numerica, que valor cae en el mismo lugar?',
+ '1/2', '25%', '3/4', '50%', 'B'),
+
+(5, 'Cual NO es equivalente a 1/2?',
+ '0.5', '50%', '2/4', '0.25', 'D');
