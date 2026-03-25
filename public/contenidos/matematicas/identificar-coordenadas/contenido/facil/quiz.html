@@ -37,7 +37,7 @@
 
         .quiz-header h1 {
             font-family: 'Fredoka One', cursive;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #fde68a;
             text-shadow: 3px 3px 0 #9a3412;
         }
@@ -48,7 +48,7 @@
             padding: 8px 25px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: inline-block;
             border: 2px solid #fde68a;
         }
@@ -65,12 +65,12 @@
         }
 
         .timer-label {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
         .timer-value {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: #fde68a;
             font-family: monospace;
@@ -123,7 +123,7 @@
         }
 
         .pregunta-numero {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #f97316;
             font-weight: 800;
             letter-spacing: 1px;
@@ -131,20 +131,10 @@
         }
 
         .pregunta-texto {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 25px;
             line-height: 1.4;
-        }
-
-        .contexto-ejercicio {
-            background: #fff3e0;
-            border-left: 8px solid #f97316;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            line-height: 1.6;
         }
 
         .opciones {
@@ -156,10 +146,10 @@
             background: #fff7e6;
             border: 3px solid #f97316;
             border-radius: 20px;
-            padding: 15px 20px;
+            padding: 12px 18px;
             color: #9a3412;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s;
@@ -226,10 +216,10 @@
             background: #fde68a;
             color: #9a3412;
             border: none;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1rem;
             border: 3px solid white;
             transition: all 0.2s;
         }
@@ -248,10 +238,10 @@
         .contador {
             background: #9a3412;
             color: white;
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border: 2px solid #fde68a;
         }
 
@@ -266,24 +256,24 @@
         }
 
         .resultado-emoji {
-            font-size: 5rem;
+            font-size: 4rem;
             margin-bottom: 15px;
         }
 
         .resultado-titulo {
             font-family: 'Fredoka One', cursive;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #fde68a;
             margin-bottom: 15px;
         }
 
         .resultado-puntaje {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 900;
             color: white;
             background: #9a3412;
             display: inline-block;
-            padding: 20px 50px;
+            padding: 15px 40px;
             border-radius: 60px;
             margin: 20px 0;
             border: 4px solid #fde68a;
@@ -293,11 +283,11 @@
             background: #fde68a;
             color: #9a3412;
             border: none;
-            padding: 15px 40px;
+            padding: 12px 35px;
             border-radius: 60px;
             font-weight: 800;
-            font-size: 1.3rem;
-            margin: 10px;
+            font-size: 1.1rem;
+            margin: 8px;
             border: 4px solid white;
             transition: all 0.2s;
         }
@@ -312,11 +302,12 @@
                 margin: 20px;
                 padding: 25px;
             }
-
             .quiz-header h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-
+            .pregunta-texto {
+                font-size: 1.1rem;
+            }
             .navegador-quiz {
                 flex-direction: column;
             }
@@ -325,7 +316,6 @@
 </head>
 <body>
 
-<!-- AUDIOS -->
 <audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
 <audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
 <audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
@@ -333,13 +323,12 @@
 
 <div class="quiz-container">
     <div class="quiz-header">
-        <i class="fas fa-star fa-3x" style="color: #fde68a;"></i>
+        <i class="fas fa-star fa-2x" style="color: #fde68a;"></i>
         <h1>Mini-Quiz</h1>
-        <p class="lead">Coordenadas · Nivel Fácil</p>
+        <p class="lead">Identificar coordenadas · Nivel Fácil</p>
         <span class="badge-nivel">⭐ 5 preguntas · 4 correctas para avanzar</span>
     </div>
 
-    <!-- Timer -->
     <div class="timer-container">
         <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
         <span class="timer-value" id="timerDisplay">00:00</span>
@@ -381,14 +370,13 @@
 </div>
 
 <script>
-    // ===== VARIABLES DE TIEMPO =====
     let fechaInicio = new Date();
     let timerInterval = null;
+    let estiloUsuario = null;
 
     const preguntas = [
         {
             texto: "Para ubicar una casa en un mapa de una colonia, ¿qué datos necesitas?",
-            contexto: "En una ciudad, las calles suelen ser verticales (norte-sur) y las avenidas horizontales (este-oeste).",
             opciones: [
                 "A) Solo el nombre de la calle",
                 "B) El número de la calle y el nombre de la avenida",
@@ -399,8 +387,7 @@
             explicacion: "Para ubicar una casa necesitas dos referencias: la calle (generalmente con número) y la avenida (generalmente con nombre)."
         },
         {
-            texto: "¿Qué significa la coordenada (B, 3) en una cuadrícula donde las letras son columnas y los números son filas?",
-            contexto: "Las columnas van de izquierda a derecha (A, B, C...) y las filas van de arriba a abajo (1, 2, 3...).",
+            texto: "En una cuadrícula donde las letras son columnas y los números son filas, ¿qué significa la coordenada (B, 3)?",
             opciones: [
                 "A) Columna 3, fila B",
                 "B) Columna B, fila 3",
@@ -411,8 +398,7 @@
             explicacion: "Primero se indica la columna (letra) y luego la fila (número). (B, 3) significa columna B, fila 3."
         },
         {
-            texto: "Si caminas 3 cuadras hacia el norte, ¿en qué dirección te estás moviendo?",
-            contexto: "Las direcciones cardinales son: norte (arriba), sur (abajo), este (derecha), oeste (izquierda).",
+            texto: "Si caminas 3 cuadras hacia el norte, ¿en qué dirección te estás moviendo en un mapa convencional?",
             opciones: [
                 "A) Hacia arriba",
                 "B) Hacia abajo",
@@ -420,11 +406,10 @@
                 "D) Hacia la izquierda"
             ],
             correcta: 0,
-            explicacion: "Norte significa hacia arriba en un mapa convencional. Si caminas al norte, te mueves hacia arriba."
+            explicacion: "Norte significa hacia arriba en un mapa convencional."
         },
         {
             texto: "Un robot avanza 2 unidades por cada paso. Si da 4 pasos, ¿cuántas unidades avanza en total?",
-            contexto: "Para calcular la distancia total, multiplica los pasos por las unidades por paso.",
             opciones: [
                 "A) 6 unidades",
                 "B) 8 unidades",
@@ -436,7 +421,6 @@
         },
         {
             texto: "Para describir una ruta de un punto A a un punto B, ¿qué necesitas saber?",
-            contexto: "Una ruta completa tiene un inicio y un final, y se describe con movimientos.",
             opciones: [
                 "A) Solo el punto de partida",
                 "B) Solo el punto de llegada",
@@ -453,20 +437,28 @@
     let aciertos = 0;
     const TOTAL = preguntas.length;
     const MINIMO = 4;
-    
+
     const audioClick = document.getElementById('audioClick');
     const audioDing = document.getElementById('audioDing');
     const audioError = document.getElementById('audioError');
     const audioTada = document.getElementById('audioTada');
 
-    // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
+    async function obtenerEstiloUsuario() {
+        try {
+            const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+            const data = await res.json();
+            estiloUsuario = data.estilo || 'visual_verbal';
+        } catch (e) {
+            estiloUsuario = 'visual_verbal';
+        }
+    }
+
     function actualizarTimer() {
         const ahora = new Date();
-        const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+        const diferencia = Math.floor((ahora - fechaInicio) / 1000);
         const minutos = Math.floor(diferencia / 60);
         const segundos = diferencia % 60;
-        document.getElementById('timerDisplay').innerText = 
-            `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
     }
 
     function mostrarPregunta() {
@@ -482,21 +474,15 @@
                 if (idx === p.correcta) claseBtn += ' correcta';
                 if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
             }
-
-            opcionesHTML += `
-                <button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>
-                    ${opcion}
-                </button>
-            `;
+            opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${opcion}</button>`;
         });
 
         container.innerHTML = `
             <div class="tarjeta-pregunta">
                 <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
                 <div class="pregunta-texto">${p.texto}</div>
-                <div class="contexto-ejercicio">${p.contexto}</div>
                 <div class="opciones">${opcionesHTML}</div>
-                <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
+                <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
                     ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
                 </div>
             </div>
@@ -509,9 +495,7 @@
 
     function seleccionarRespuesta(idxPregunta, idxOpcion) {
         if (respuestas[idxPregunta] !== null) return;
-
         audioClick.play();
-        
         respuestas[idxPregunta] = idxOpcion;
         if (idxOpcion === preguntas[idxPregunta].correcta) {
             aciertos++;
@@ -519,7 +503,6 @@
         } else {
             audioError.play();
         }
-
         document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
         mostrarPregunta();
     }
@@ -547,7 +530,6 @@
         const btnEnviar = document.getElementById('btnEnviar');
 
         btnAnterior.disabled = (preguntaActual === 0);
-
         if (preguntaActual === TOTAL - 1) {
             btnSiguiente.style.display = 'none';
             btnEnviar.style.display = 'inline-block';
@@ -564,12 +546,7 @@
             return;
         }
 
-        // Detener el timer
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
-
-        // Calcular tiempo total en segundos
+        if (timerInterval) clearInterval(timerInterval);
         const fechaFin = new Date();
         const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
 
@@ -590,22 +567,21 @@
         if (aprobado) {
             audioTada.play();
             document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-            document.getElementById('resultadoMensaje').innerHTML =
-                `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
+            document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
             document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
             document.getElementById('btnReintentar').style.display = 'none';
-            guardarProgreso(aciertos, TOTAL, tiempoSegundos);
+            await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
         } else {
             audioError.play();
             document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
-            document.getElementById('resultadoMensaje').innerHTML =
-                `Obtuviste ${pct}%. Necesitas al menos 4 de 5 para avanzar.`;
+            document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
             document.getElementById('btnSiguienteNivel').style.display = 'none';
             document.getElementById('btnReintentar').style.display = 'inline-block';
+            await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
         }
     }
 
-    async function guardarProgreso(aciertos, total, tiempoSegundos) {
+    async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
         try {
             await fetch('/api/progreso/nivel', {
                 method: 'POST',
@@ -615,10 +591,11 @@
                     contenido_id: 5,
                     nivel_completado: 'facil',
                     puntaje: Math.round((aciertos / total) * 100),
-                    aprobado: true,
+                    aprobado: aprobado,
                     aciertos: aciertos,
                     total_preguntas: total,
-                    tiempo_segundos: tiempoSegundos
+                    tiempo_segundos: tiempoSegundos,
+                    fecha_inicio: fechaInicio.toISOString()
                 })
             });
         } catch (e) {
@@ -632,10 +609,7 @@
         aciertos = 0;
         fechaInicio = new Date();
 
-        // Reiniciar timer
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
+        if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(actualizarTimer, 1000);
 
         document.querySelectorAll('.punto').forEach((punto, i) => {
@@ -652,17 +626,19 @@
     }
 
     function volverAlContenido() {
-        window.location.href = 'visual_verbal.html';
+        window.location.href = '../menu.html';
     }
 
-    function irSiguienteNivel() {
-        window.location.href = '../normal/visual_verbal.html';
+    async function irSiguienteNivel() {
+        if (!estiloUsuario) await obtenerEstiloUsuario();
+        window.location.href = `../normal/${estiloUsuario}.html`;
     }
 
-    mostrarPregunta();
-
-    // Iniciar timer
-    timerInterval = setInterval(actualizarTimer, 1000);
+    (async function init() {
+        await obtenerEstiloUsuario();
+        mostrarPregunta();
+        timerInterval = setInterval(actualizarTimer, 1000);
+    })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

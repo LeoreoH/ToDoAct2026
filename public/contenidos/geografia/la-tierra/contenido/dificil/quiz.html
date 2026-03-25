@@ -184,6 +184,17 @@
       line-height: 1.4;
     }
 
+    .contexto-ejercicio {
+      background: #e3f2fd;
+      border-left: 8px solid #ffd600;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #01579b;
+    }
+
     .opciones {
       display: grid;
       gap: 12px;
@@ -469,7 +480,7 @@
     <p class="lead">La Tierra · Nivel Difícil</p>
     <span class="badge-nivel">🔥 Avanzado</span>
     <div class="badge-intentos mt-3">
-      <i class="fas fa-trophy me-2"></i> 4/5 para ganar
+      <i class="fas fa-trophy me-2"></i> 4/5 para completar
     </div>
   </div>
 
@@ -529,9 +540,10 @@
 </div>
 
 <script>
-  // ===== VARIABLES DE TIEMPO =====
+  // ===== VARIABLES =====
   let fechaInicio = new Date();
   let timerInterval = null;
+  let estiloUsuario = null;
 
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
@@ -541,7 +553,6 @@
     completar: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
   };
 
-  // Configurar volumen y manejo de errores
   Object.values(sonidos).forEach(s => {
     if (s.src) {
       s.volume = 0.3;
@@ -556,44 +567,61 @@
     }
   }
 
+  // ===== OBTENER ESTILO DEL USUARIO =====
+  async function obtenerEstiloUsuario() {
+    try {
+      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+      const data = await res.json();
+      estiloUsuario = data.estilo || 'visual_verbal';
+    } catch (e) {
+      console.error('Error al obtener estilo:', e);
+      estiloUsuario = 'visual_verbal';
+    }
+  }
+
   // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
   function actualizarTimer() {
     const ahora = new Date();
-    const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000);
     const minutos = Math.floor(diferencia / 60);
     const segundos = diferencia % 60;
     document.getElementById('timerDisplay').innerText = 
       `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
-  // ===== PREGUNTAS DEL NIVEL DIFÍCIL =====
+  // ===== PREGUNTAS CON CONTEXTO NEUTRO =====
   const preguntas = [
     {
       texto: "¿Qué coordenada geográfica mide la distancia desde el Ecuador hacia el Norte o Sur?",
+      contexto: "",
       opciones: ["Longitud", "Latitud", "Altitud", "Meridiano"],
       correcta: 1,
       explicacion: "La latitud mide la distancia desde el Ecuador (0°) hasta los polos (90° N o S)."
     },
     {
       texto: "¿Cuál es el paralelo ubicado a 23°27' en el hemisferio norte?",
+      contexto: "",
       opciones: ["Ecuador", "Trópico de Capricornio", "Trópico de Cáncer", "Círculo Polar Ártico"],
       correcta: 2,
       explicacion: "El Trópico de Cáncer está a 23°27' N. El Trópico de Capricornio está a 23°27' S."
     },
     {
       texto: "¿Cada cuántos grados de longitud cambia la hora en los husos horarios?",
+      contexto: "La Tierra gira 360° en 24 horas.",
       opciones: ["10°", "15°", "20°", "30°"],
       correcta: 1,
       explicacion: "Cada 15° de longitud equivale a 1 hora de diferencia. La Tierra gira 360° en 24 horas (360/24 = 15° por hora)."
     },
     {
       texto: "¿Qué meridiano marca la Línea Internacional de Cambio de Fecha?",
+      contexto: "Es el meridiano opuesto al Meridiano de Greenwich.",
       opciones: ["Meridiano de Greenwich (0°)", "Meridiano 90°", "Meridiano 180°", "Meridiano 360°"],
       correcta: 2,
       explicacion: "La Línea Internacional de Cambio de Fecha está aproximadamente en el meridiano 180°, opuesto a Greenwich."
     },
     {
       texto: "¿Qué proyección cartográfica conserva las formas pero distorsiona el tamaño de los polos?",
+      contexto: "Cada proyección cartográfica tiene ventajas y desventajas. Algunas conservan formas, otras áreas.",
       opciones: ["Peters", "Robinson", "Mercator", "Goode"],
       correcta: 2,
       explicacion: "La proyección de Mercator conserva las formas (útil para navegación) pero hace que los polos se vean más grandes de lo que son."
@@ -630,6 +658,7 @@
       <div class="tarjeta-pregunta">
         <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
+        <div class="contexto-ejercicio"><i class="fas fa-info-circle me-2"></i> ${p.contexto}</div>
         <div class="opciones">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
           ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
@@ -707,19 +736,15 @@
     }
   }
 
-  function enviarQuiz() {
+  async function enviarQuiz() {
     const sinResponder = respuestas.filter(r => r === null).length;
     if (sinResponder > 0) {
       alert(`⚠️ Te faltan ${sinResponder} preguntas por responder`);
       return;
     }
 
-    // Detener el timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
 
-    // Calcular tiempo total en segundos
     const fechaFin = new Date();
     const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
 
@@ -732,7 +757,7 @@
 
     mostrarEstrellas();
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const resultado = document.getElementById('resultado');
       resultado.classList.add('visible');
 
@@ -749,14 +774,37 @@
           `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has completado el nivel difícil.`;
         document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
         document.getElementById('btnReintentar').style.display = 'none';
-        guardarProgreso(aciertos, TOTAL, tiempoSegundos);
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
       } else {
         document.getElementById('resultadoMensaje').innerHTML = 
-          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para aprobar. ¡Inténtalo de nuevo!`;
+          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos ${MINIMO} de ${TOTAL} para aprobar. ¡Inténtalo de nuevo!`;
         document.getElementById('btnSiguienteNivel').style.display = 'none';
         document.getElementById('btnReintentar').style.display = 'inline-block';
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
       }
     }, 1500);
+  }
+
+  async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
+    try {
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 1,
+          nivel_completado: 'dificil',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: aprobado,
+          aciertos: aciertos,
+          total_preguntas: total,
+          tiempo_segundos: tiempoSegundos,
+          fecha_inicio: fechaInicio.toISOString()
+        })
+      });
+    } catch(e) {
+      console.error('Error guardando progreso:', e);
+    }
   }
 
   function reiniciarQuiz() {
@@ -765,10 +813,7 @@
     aciertos = 0;
     fechaInicio = new Date();
 
-    // Reiniciar timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(actualizarTimer, 1000);
 
     document.querySelectorAll('.punto').forEach((punto, i) => {
@@ -785,41 +830,21 @@
     mostrarPregunta();
   }
 
-  async function guardarProgreso(aciertos, total, tiempoSegundos) {
-    try {
-      await fetch('/api/progreso/nivel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          contenido_id: 1,
-          nivel_completado: 'dificil',
-          puntaje: Math.round((aciertos / total) * 100),
-          aprobado: true,
-          aciertos: aciertos,
-          total_preguntas: total,
-          tiempo_segundos: tiempoSegundos
-        })
-      });
-    } catch(e) {
-      console.error('Error guardando progreso:', e);
-    }
-  }
-
   function volverAlContenido() {
-    window.location.href = 'visual_verbal.html';
+    window.location.href = '/contenidos/geografia/la-tierra/menu.html';
   }
 
-  function irSiguienteNivel() {
+  async function irSiguienteNivel() {
     alert('¡Felicidades! Has completado todos los niveles de este bloque.');
-    window.location.href = '../../menu.html';
+    window.location.href = '/contenidos/geografia/menu.html';
   }
 
-  // Inicializar
-  mostrarPregunta();
-
-  // Iniciar timer
-  timerInterval = setInterval(actualizarTimer, 1000);
+  // INICIALIZAR
+  (async function init() {
+    await obtenerEstiloUsuario();
+    mostrarPregunta();
+    timerInterval = setInterval(actualizarTimer, 1000);
+  })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

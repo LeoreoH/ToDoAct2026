@@ -193,6 +193,35 @@ app.post('/actualizar-estilo', async (req, res) => {
 });
 
 // ============================================
+// =====  ENDPOINT PARA OBTENER ESTILO DEL USUARIO  =====
+// ============================================
+
+app.get('/api/usuario/estilo', async (req, res) => {
+    if (!req.session?.usuario) {
+        return res.status(401).json({ error: 'No autenticado' });
+    }
+
+    try {
+        const result = await client.query(
+            'SELECT estilo_aprendizaje FROM usuarios WHERE usuario = $1',
+            [req.session.usuario]
+        );
+
+        if (result.rows.length > 0) {
+            res.json({
+                success: true,
+                estilo: result.rows[0].estilo_aprendizaje
+            });
+        } else {
+            res.json({ success: false, error: 'Usuario no encontrado' });
+        }
+    } catch (e) {
+        console.error('Error al obtener estilo:', e);
+        res.status(500).json({ error: 'Error interno' });
+    }
+});
+
+// ============================================
 // =====  ENDPOINTS GENÉRICOS PARA CONTENIDOS  =====
 // ============================================
 
@@ -573,14 +602,20 @@ app.post('/api/progreso/nivel', async (req, res) => {
             WHERE u.usuario = $1
         `, [usuario, contenido_id, nivel_completado, nivel_completado, puntaje, tiempo_segundos || 0]);
 
-        // 5. Guardar en resultados_quiz si se proporcionan aciertos y total
+        // 5. Guardar en resultados_quiz si se proporcionan aciertos y total (CORREGIDO)
         if (aciertos !== undefined && total_preguntas !== undefined) {
+            // Primero obtener el estilo del usuario
+            const estiloResult = await client.query(
+                'SELECT estilo_aprendizaje FROM usuarios WHERE usuario = $1',
+                [usuario]
+            );
+            const estilo = estiloResult.rows[0]?.estilo_aprendizaje || 'visual_verbal';
+            
             await client.query(`
                 INSERT INTO resultados_quiz
-                    (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, aprobado, fecha_inicio, fecha_fin, fecha)
-                SELECT $1, $2, $3, u.estilo_aprendizaje, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-                FROM usuarios u WHERE u.usuario = $1
-            `, [usuario, contenido_id, nivel_completado, aciertos, total_preguntas, puntaje, tiempo_segundos || 0, aprobado, fecha_inicio]);
+                    (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, aprobado, fecha_inicio, fecha_fin)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP)
+            `, [usuario, contenido_id, nivel_completado, estilo, aciertos, total_preguntas, puntaje, tiempo_segundos || 0, aprobado, fecha_inicio]);
         }
 
         res.json({
@@ -632,8 +667,6 @@ app.get('/api/progreso/contenido/:contenidoId', async (req, res) => {
 
         const p = progreso.rows[0];
 
-        // Si tiene 'normal', puede ver 'facil' y 'normal'
-        // Si tiene 'dificil', puede ver los 3 niveles
         const todosLosNiveles = ['facil', 'normal', 'dificil'];
         const idxActual = todosLosNiveles.indexOf(p.nivel_asignado);
         const nivelesDesbloqueados = idxActual >= 0

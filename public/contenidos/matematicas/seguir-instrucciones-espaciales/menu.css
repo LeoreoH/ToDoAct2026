@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #fff4e6;
+}
+
+.bloque-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #E67E22, #D35400);
+    color: white;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.bloque-header h1 {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: 24px;
+}
+
+.boton-volver {
+    position: absolute;
+    left: 20px;
+    background: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #D35400;
+    transition: all 0.3s;
+}
+
+.boton-volver:hover {
+    background: #ffe0b2;
+    transform: scale(1.05);
+}
+
+.contenedor-actividad {
+    max-width: 700px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #E67E22;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+h3 {
+    color: #E67E22;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffb74d;
+    padding-bottom: 8px;
+}
+
+.contenedor-niveles {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedor-niveles button {
+    padding: 18px;
+    border-radius: 12px;
+    border: 2px solid #E67E22;
+    background: white;
+    color: #D35400;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.contenedor-niveles button:hover:not(:disabled) {
+    background: #fff3e0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.25);
+}
+
+.contenedor-niveles button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+.descripcion-nivel {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 8px;
+    color: #5f6368;
+    font-weight: normal;
+}
+
+#bloque-contenidos {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed #ffb74d;
+}

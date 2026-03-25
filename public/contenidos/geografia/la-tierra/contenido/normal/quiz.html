@@ -184,6 +184,17 @@
       line-height: 1.4;
     }
 
+    .contexto-ejercicio {
+      background: #e3f2fd;
+      border-left: 8px solid #ffd600;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #01579b;
+    }
+
     .opciones {
       display: grid;
       gap: 12px;
@@ -469,7 +480,7 @@
     <p class="lead">La Tierra · Nivel Normal</p>
     <span class="badge-nivel">⚡ Intermedio</span>
     <div class="badge-intentos mt-3">
-      <i class="fas fa-trophy me-2"></i> 4/5 para ganar
+      <i class="fas fa-trophy me-2"></i> 4/5 para avanzar
     </div>
   </div>
 
@@ -529,9 +540,10 @@
 </div>
 
 <script>
-  // ===== VARIABLES DE TIEMPO =====
+  // ===== VARIABLES =====
   let fechaInicio = new Date();
   let timerInterval = null;
+  let estiloUsuario = null;
 
   // ===== SISTEMA DE SONIDOS =====
   const sonidos = {
@@ -541,7 +553,6 @@
     completar: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
   };
 
-  // Configurar volumen y manejo de errores
   Object.values(sonidos).forEach(s => {
     if (s.src) {
       s.volume = 0.3;
@@ -556,44 +567,61 @@
     }
   }
 
+  // ===== OBTENER ESTILO DEL USUARIO =====
+  async function obtenerEstiloUsuario() {
+    try {
+      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+      const data = await res.json();
+      estiloUsuario = data.estilo || 'visual_verbal';
+    } catch (e) {
+      console.error('Error al obtener estilo:', e);
+      estiloUsuario = 'visual_verbal';
+    }
+  }
+
   // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
   function actualizarTimer() {
     const ahora = new Date();
-    const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000);
     const minutos = Math.floor(diferencia / 60);
     const segundos = diferencia % 60;
     document.getElementById('timerDisplay').innerText = 
       `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
-  // ===== PREGUNTAS DEL NIVEL NORMAL =====
+  // ===== PREGUNTAS CON CONTEXTO NEUTRO =====
   const preguntas = [
     {
       texto: "¿Cuánto dura el movimiento de rotación de la Tierra?",
+      contexto: "La Tierra gira sobre su propio eje.",
       opciones: ["12 horas", "24 horas", "365 días", "30 días"],
       correcta: 1,
       explicacion: "La rotación dura 24 horas exactas, que es lo que tarda la Tierra en dar una vuelta sobre sí misma."
     },
     {
       texto: "¿Qué movimiento de la Tierra causa las estaciones del año?",
+      contexto: "La Tierra orbita alrededor del Sol y su eje está inclinado.",
       opciones: ["La rotación", "La traslación", "La inclinación del eje y la traslación", "La distancia al Sol"],
       correcta: 2,
       explicacion: "Las estaciones se deben a la combinación de la traslación y la inclinación del eje terrestre."
     },
     {
       texto: "¿Cada cuántos años tenemos un año bisiesto?",
+      contexto: "El año tiene aproximadamente 365 días y 6 horas.",
       opciones: ["Cada 2 años", "Cada 4 años", "Cada 6 años", "Cada 10 años"],
       correcta: 1,
       explicacion: "Cada 4 años sumamos las 6 horas extras de la traslación y tenemos un año bisiesto con 366 días."
     },
     {
       texto: "¿Qué elemento de un mapa indica la relación entre la distancia en el mapa y la distancia real?",
+      contexto: "En un mapa, las distancias no son iguales a las reales.",
       opciones: ["La orientación", "La simbología", "La escala", "Las coordenadas"],
       correcta: 2,
       explicacion: "La escala nos dice cuántos kilómetros reales representa cada centímetro en el mapa."
     },
     {
       texto: "Si en México es verano, ¿qué estación es en Argentina?",
+      contexto: "Los hemisferios norte y sur tienen estaciones opuestas.",
       opciones: ["Verano", "Primavera", "Otoño", "Invierno"],
       correcta: 3,
       explicacion: "Las estaciones son opuestas entre hemisferios. México está en el norte y Argentina en el sur."
@@ -630,6 +658,7 @@
       <div class="tarjeta-pregunta">
         <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
+        <div class="contexto-ejercicio"><i class="fas fa-info-circle me-2"></i> ${p.contexto}</div>
         <div class="opciones">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
           ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
@@ -707,19 +736,15 @@
     }
   }
 
-  function enviarQuiz() {
+  async function enviarQuiz() {
     const sinResponder = respuestas.filter(r => r === null).length;
     if (sinResponder > 0) {
       alert(`⚠️ Te faltan ${sinResponder} preguntas por responder`);
       return;
     }
 
-    // Detener el timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
 
-    // Calcular tiempo total en segundos
     const fechaFin = new Date();
     const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
 
@@ -732,7 +757,7 @@
 
     mostrarEstrellas();
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const resultado = document.getElementById('resultado');
       resultado.classList.add('visible');
 
@@ -749,14 +774,37 @@
           `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has desbloqueado el nivel difícil.`;
         document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
         document.getElementById('btnReintentar').style.display = 'none';
-        guardarProgreso(aciertos, TOTAL, tiempoSegundos);
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
       } else {
         document.getElementById('resultadoMensaje').innerHTML = 
-          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos 4 de 5 para avanzar. ¡Inténtalo de nuevo!`;
+          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar. ¡Inténtalo de nuevo!`;
         document.getElementById('btnSiguienteNivel').style.display = 'none';
         document.getElementById('btnReintentar').style.display = 'inline-block';
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
       }
     }, 1500);
+  }
+
+  async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
+    try {
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 1,
+          nivel_completado: 'normal',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: aprobado,
+          aciertos: aciertos,
+          total_preguntas: total,
+          tiempo_segundos: tiempoSegundos,
+          fecha_inicio: fechaInicio.toISOString()
+        })
+      });
+    } catch(e) {
+      console.error('Error guardando progreso:', e);
+    }
   }
 
   function reiniciarQuiz() {
@@ -765,10 +813,7 @@
     aciertos = 0;
     fechaInicio = new Date();
 
-    // Reiniciar timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(actualizarTimer, 1000);
 
     document.querySelectorAll('.punto').forEach((punto, i) => {
@@ -785,40 +830,21 @@
     mostrarPregunta();
   }
 
-  async function guardarProgreso(aciertos, total, tiempoSegundos) {
-    try {
-      await fetch('/api/progreso/nivel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          contenido_id: 1,
-          nivel_completado: 'normal',
-          puntaje: Math.round((aciertos / total) * 100),
-          aprobado: true,
-          aciertos: aciertos,
-          total_preguntas: total,
-          tiempo_segundos: tiempoSegundos
-        })
-      });
-    } catch(e) {
-      console.error('Error guardando progreso:', e);
-    }
-  }
-
   function volverAlContenido() {
-    window.location.href = 'visual_verbal.html';
+    window.location.href = '/contenidos/geografia/la-tierra/menu.html';
   }
 
-  function irSiguienteNivel() {
-    window.location.href = '../dificil/visual_verbal.html';
+  async function irSiguienteNivel() {
+    if (!estiloUsuario) await obtenerEstiloUsuario();
+    window.location.href = `../dificil/${estiloUsuario}.html`;
   }
 
-  // Inicializar
-  mostrarPregunta();
-
-  // Iniciar timer
-  timerInterval = setInterval(actualizarTimer, 1000);
+  // INICIALIZAR
+  (async function init() {
+    await obtenerEstiloUsuario();
+    mostrarPregunta();
+    timerInterval = setInterval(actualizarTimer, 1000);
+  })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

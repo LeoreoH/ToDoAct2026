@@ -37,7 +37,7 @@
 
         .quiz-header h1 {
             font-family: 'Fredoka One', cursive;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #fde68a;
             text-shadow: 3px 3px 0 #9a3412;
         }
@@ -48,7 +48,7 @@
             padding: 8px 25px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: inline-block;
             border: 2px solid #fde68a;
         }
@@ -65,12 +65,12 @@
         }
 
         .timer-label {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
         .timer-value {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: #fde68a;
             font-family: monospace;
@@ -123,7 +123,7 @@
         }
 
         .pregunta-numero {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #f97316;
             font-weight: 800;
             letter-spacing: 1px;
@@ -131,20 +131,20 @@
         }
 
         .pregunta-texto {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             line-height: 1.4;
         }
 
         .contexto-ejercicio {
             background: #fff3e0;
             border-left: 8px solid #f97316;
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
             margin-bottom: 25px;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.5;
         }
 
         .opciones {
@@ -156,10 +156,10 @@
             background: #fff7e6;
             border: 3px solid #f97316;
             border-radius: 20px;
-            padding: 15px 20px;
+            padding: 12px 18px;
             color: #9a3412;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s;
@@ -226,10 +226,10 @@
             background: #fde68a;
             color: #9a3412;
             border: none;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1rem;
             border: 3px solid white;
             transition: all 0.2s;
         }
@@ -248,10 +248,10 @@
         .contador {
             background: #9a3412;
             color: white;
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             border: 2px solid #fde68a;
         }
 
@@ -266,24 +266,24 @@
         }
 
         .resultado-emoji {
-            font-size: 5rem;
+            font-size: 4rem;
             margin-bottom: 15px;
         }
 
         .resultado-titulo {
             font-family: 'Fredoka One', cursive;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #fde68a;
             margin-bottom: 15px;
         }
 
         .resultado-puntaje {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 900;
             color: white;
             background: #9a3412;
             display: inline-block;
-            padding: 20px 50px;
+            padding: 15px 40px;
             border-radius: 60px;
             margin: 20px 0;
             border: 4px solid #fde68a;
@@ -293,11 +293,11 @@
             background: #fde68a;
             color: #9a3412;
             border: none;
-            padding: 15px 40px;
+            padding: 12px 35px;
             border-radius: 60px;
             font-weight: 800;
-            font-size: 1.3rem;
-            margin: 10px;
+            font-size: 1.1rem;
+            margin: 8px;
             border: 4px solid white;
             transition: all 0.2s;
         }
@@ -312,11 +312,12 @@
                 margin: 20px;
                 padding: 25px;
             }
-
             .quiz-header h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-
+            .pregunta-texto {
+                font-size: 1.1rem;
+            }
             .navegador-quiz {
                 flex-direction: column;
             }
@@ -325,7 +326,6 @@
 </head>
 <body>
 
-<!-- AUDIOS -->
 <audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
 <audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
 <audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
@@ -333,13 +333,12 @@
 
 <div class="quiz-container">
     <div class="quiz-header">
-        <i class="fas fa-star fa-3x" style="color: #fde68a;"></i>
+        <i class="fas fa-star fa-2x" style="color: #fde68a;"></i>
         <h1>Mini-Quiz</h1>
-        <p class="lead">Coordenadas · Nivel Normal</p>
-        <span class="badge-nivel">⭐ 5 preguntas · 4 correctas para avanzar</span>
+        <p class="lead">Identificar coordenadas · Nivel Normal</p>
+        <span class="badge-nivel">⭐⭐ 5 preguntas · 4 correctas para avanzar</span>
     </div>
 
-    <!-- Timer -->
     <div class="timer-container">
         <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
         <span class="timer-value" id="timerDisplay">00:00</span>
@@ -381,14 +380,14 @@
 </div>
 
 <script>
-    // ===== VARIABLES DE TIEMPO =====
     let fechaInicio = new Date();
     let timerInterval = null;
+    let estiloUsuario = null;
 
     const preguntas = [
         {
             texto: "Si tienes que describir una ruta que tiene varios giros, ¿qué es más importante incluir?",
-            contexto: "Una ruta puede tener varios cambios de dirección. Piensa en cómo le explicarías el camino a alguien que no conoce la zona.",
+            contexto: "Para dar indicaciones precisas, debes considerar que la persona que escucha no conoce el camino.",
             opciones: [
                 "A) Solo los nombres de las calles al inicio y al final",
                 "B) Cada cambio de dirección con su orientación (norte, sur, este, oeste)",
@@ -400,7 +399,7 @@
         },
         {
             texto: "En un mapa de metro, ¿qué es una estación de transbordo?",
-            contexto: "Cuando viajas en metro, a veces necesitas cambiar de línea para llegar a tu destino.",
+            contexto: "En el sistema de metro, algunas estaciones conectan con más de una línea.",
             opciones: [
                 "A) La estación donde termina la línea",
                 "B) La estación donde puedes cambiar de una línea a otra",
@@ -411,8 +410,8 @@
             explicacion: "Una estación de transbordo (o de correspondencia) es donde coinciden dos o más líneas y los pasajeros pueden cambiar de una a otra sin salir del sistema."
         },
         {
-            texto: "Si un robot avanza 3 unidades por paso y da 6 pasos, ¿cuántas unidades avanza en total?",
-            contexto: "La distancia total se calcula multiplicando las unidades por paso por la cantidad de pasos.",
+            texto: "Un robot avanza 3 unidades por cada paso. Si da 6 pasos, ¿cuántas unidades avanza en total?",
+            contexto: "La distancia que recorre el robot depende de cuántos pasos da.",
             opciones: [
                 "A) 9 unidades",
                 "B) 12 unidades",
@@ -423,28 +422,28 @@
             explicacion: "6 pasos × 3 unidades por paso = 18 unidades en total."
         },
         {
-            texto: "En un teatro, los asientos se numeran desde el pasillo central. ¿Qué significa que el asiento 8 sea par?",
-            contexto: "Los impares están a la izquierda del pasillo y los pares a la derecha.",
+            texto: "En una cuadrícula, la fila 1 está arriba y la fila 5 está abajo. La columna A está a la izquierda y la columna E a la derecha. Si el punto A está en (C, 5) y el punto B está en (C, 2), ¿cuántas filas se debe mover para ir de A a B?",
+            contexto: "Las coordenadas se escriben (columna, fila). En esta cuadrícula, las filas aumentan de arriba a abajo.",
             opciones: [
-                "A) Que está del lado izquierdo del pasillo",
-                "B) Que está del lado derecho del pasillo",
-                "C) Que está en el pasillo mismo",
-                "D) Que está en la fila 8"
+                "A) 3 filas hacia arriba",
+                "B) 3 filas hacia abajo",
+                "C) 2 filas hacia arriba",
+                "D) 2 filas hacia abajo"
             ],
-            correcta: 1,
-            explicacion: "Los asientos pares (2, 4, 6, 8...) están siempre del lado derecho del pasillo central."
+            correcta: 0,
+            explicacion: "A está en (C, 5) y B en (C, 2). Para ir de fila 5 a fila 2, debes moverte 3 filas hacia arriba (porque la fila 2 está más arriba que la fila 5)."
         },
         {
-            texto: "Para ir de un punto a otro en una ciudad con calles y avenidas, ¿qué es más eficiente?",
-            contexto: "En las ciudades, las calles y avenidas forman una cuadrícula. Piensa en la forma más directa de llegar.",
+            texto: "En un mapa, la panadería está en la coordenada (D, 4) y la escuela está en (G, 4). ¿En qué dirección debe moverse para ir de la panadería a la escuela?",
+            contexto: "Las coordenadas se escriben (columna, fila). Las columnas aumentan de izquierda a derecha. Las filas aumentan de arriba a abajo.",
             opciones: [
-                "A) Ir primero todo al norte y luego todo al este",
-                "B) Ir primero todo al este y luego todo al norte",
-                "C) Cualquier ruta que tenga la misma cantidad de movimientos en total",
-                "D) Siempre es mejor dar vueltas para evitar el tráfico"
+                "A) Hacia la izquierda",
+                "B) Hacia la derecha",
+                "C) Hacia arriba",
+                "D) Hacia abajo"
             ],
-            correcta: 2,
-            explicacion: "En una cuadrícula, cualquier ruta que respete los movimientos necesarios (por ejemplo, 3 norte y 2 este) llegará al mismo destino, sin importar el orden en que se hagan los movimientos. Ambas opciones A y B son igualmente eficientes si tienen la misma cantidad de movimientos."
+            correcta: 1,
+            explicacion: "La panadería está en columna D y la escuela en columna G. Para ir de D a G, debes moverte hacia la derecha. Las filas son iguales (4), por lo que no hay movimiento vertical."
         }
     ];
 
@@ -453,20 +452,28 @@
     let aciertos = 0;
     const TOTAL = preguntas.length;
     const MINIMO = 4;
-    
+
     const audioClick = document.getElementById('audioClick');
     const audioDing = document.getElementById('audioDing');
     const audioError = document.getElementById('audioError');
     const audioTada = document.getElementById('audioTada');
 
-    // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
+    async function obtenerEstiloUsuario() {
+        try {
+            const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+            const data = await res.json();
+            estiloUsuario = data.estilo || 'visual_verbal';
+        } catch (e) {
+            estiloUsuario = 'visual_verbal';
+        }
+    }
+
     function actualizarTimer() {
         const ahora = new Date();
-        const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+        const diferencia = Math.floor((ahora - fechaInicio) / 1000);
         const minutos = Math.floor(diferencia / 60);
         const segundos = diferencia % 60;
-        document.getElementById('timerDisplay').innerText = 
-            `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
     }
 
     function mostrarPregunta() {
@@ -482,12 +489,7 @@
                 if (idx === p.correcta) claseBtn += ' correcta';
                 if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
             }
-
-            opcionesHTML += `
-                <button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>
-                    ${opcion}
-                </button>
-            `;
+            opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${opcion}</button>`;
         });
 
         container.innerHTML = `
@@ -496,7 +498,7 @@
                 <div class="pregunta-texto">${p.texto}</div>
                 <div class="contexto-ejercicio">${p.contexto}</div>
                 <div class="opciones">${opcionesHTML}</div>
-                <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
+                <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
                     ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
                 </div>
             </div>
@@ -509,9 +511,7 @@
 
     function seleccionarRespuesta(idxPregunta, idxOpcion) {
         if (respuestas[idxPregunta] !== null) return;
-
         audioClick.play();
-        
         respuestas[idxPregunta] = idxOpcion;
         if (idxOpcion === preguntas[idxPregunta].correcta) {
             aciertos++;
@@ -519,7 +519,6 @@
         } else {
             audioError.play();
         }
-
         document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
         mostrarPregunta();
     }
@@ -547,7 +546,6 @@
         const btnEnviar = document.getElementById('btnEnviar');
 
         btnAnterior.disabled = (preguntaActual === 0);
-
         if (preguntaActual === TOTAL - 1) {
             btnSiguiente.style.display = 'none';
             btnEnviar.style.display = 'inline-block';
@@ -564,12 +562,7 @@
             return;
         }
 
-        // Detener el timer
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
-
-        // Calcular tiempo total en segundos
+        if (timerInterval) clearInterval(timerInterval);
         const fechaFin = new Date();
         const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
 
@@ -590,22 +583,21 @@
         if (aprobado) {
             audioTada.play();
             document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-            document.getElementById('resultadoMensaje').innerHTML =
-                `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
+            document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
             document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
             document.getElementById('btnReintentar').style.display = 'none';
-            guardarProgreso(aciertos, TOTAL, tiempoSegundos);
+            await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
         } else {
             audioError.play();
             document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
-            document.getElementById('resultadoMensaje').innerHTML =
-                `Obtuviste ${pct}%. Necesitas al menos 4 de 5 para avanzar.`;
+            document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
             document.getElementById('btnSiguienteNivel').style.display = 'none';
             document.getElementById('btnReintentar').style.display = 'inline-block';
+            await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
         }
     }
 
-    async function guardarProgreso(aciertos, total, tiempoSegundos) {
+    async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
         try {
             await fetch('/api/progreso/nivel', {
                 method: 'POST',
@@ -615,10 +607,11 @@
                     contenido_id: 5,
                     nivel_completado: 'normal',
                     puntaje: Math.round((aciertos / total) * 100),
-                    aprobado: true,
+                    aprobado: aprobado,
                     aciertos: aciertos,
                     total_preguntas: total,
-                    tiempo_segundos: tiempoSegundos
+                    tiempo_segundos: tiempoSegundos,
+                    fecha_inicio: fechaInicio.toISOString()
                 })
             });
         } catch (e) {
@@ -632,10 +625,7 @@
         aciertos = 0;
         fechaInicio = new Date();
 
-        // Reiniciar timer
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
+        if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(actualizarTimer, 1000);
 
         document.querySelectorAll('.punto').forEach((punto, i) => {
@@ -652,17 +642,19 @@
     }
 
     function volverAlContenido() {
-        window.location.href = 'visual_verbal.html';
+        window.location.href = '../menu.html';
     }
 
-    function irSiguienteNivel() {
-        window.location.href = '../dificil/visual_verbal.html';
+    async function irSiguienteNivel() {
+        if (!estiloUsuario) await obtenerEstiloUsuario();
+        window.location.href = `../dificil/${estiloUsuario}.html`;
     }
 
-    mostrarPregunta();
-
-    // Iniciar timer
-    timerInterval = setInterval(actualizarTimer, 1000);
+    (async function init() {
+        await obtenerEstiloUsuario();
+        mostrarPregunta();
+        timerInterval = setInterval(actualizarTimer, 1000);
+    })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

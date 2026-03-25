@@ -320,10 +320,9 @@
     <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
     <h1>Mini-Quiz</h1>
     <p class="lead">Fracciones · Nivel Normal</p>
-    <span class="badge-nivel">⭐ 6 preguntas · 5 correctas para avanzar</span>
+    <span class="badge-nivel">⭐⭐ 6 preguntas · 5 correctas para avanzar</span>
   </div>
 
-  <!-- Timer -->
   <div class="timer-container">
     <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
     <span class="timer-value" id="timerDisplay">00:00</span>
@@ -366,9 +365,9 @@
 </div>
 
 <script>
-  // ===== VARIABLES DE TIEMPO =====
   let fechaInicio = new Date();
   let timerInterval = null;
+  let estiloUsuario = null;
 
   const preguntas = [
     {
@@ -415,14 +414,22 @@
   const TOTAL = preguntas.length;
   const MINIMO = 5;
 
-  // ===== FUNCIÓN PARA ACTUALIZAR EL TIMER =====
+  async function obtenerEstiloUsuario() {
+    try {
+      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+      const data = await res.json();
+      estiloUsuario = data.estilo || 'visual_verbal';
+    } catch (e) {
+      estiloUsuario = 'visual_verbal';
+    }
+  }
+
   function actualizarTimer() {
     const ahora = new Date();
-    const diferencia = Math.floor((ahora - fechaInicio) / 1000); // en segundos
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000);
     const minutos = Math.floor(diferencia / 60);
     const segundos = diferencia % 60;
-    document.getElementById('timerDisplay').innerText = 
-      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+    document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
   function mostrarPregunta() {
@@ -438,12 +445,7 @@
         if (idx === p.correcta) claseBtn += ' correcta';
         if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
       }
-
-      opcionesHTML += `
-        <button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>
-          ${String.fromCharCode(65 + idx)}) ${opcion}
-        </button>
-      `;
+      opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${String.fromCharCode(65 + idx)}) ${opcion}</button>`;
     });
 
     container.innerHTML = `
@@ -451,7 +453,7 @@
         <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
         <div class="opciones">${opcionesHTML}</div>
-        <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}" id="feedback-${preguntaActual}">
+        <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
           ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
         </div>
       </div>
@@ -464,10 +466,8 @@
 
   function seleccionarRespuesta(idxPregunta, idxOpcion) {
     if (respuestas[idxPregunta] !== null) return;
-
     respuestas[idxPregunta] = idxOpcion;
     if (idxOpcion === preguntas[idxPregunta].correcta) aciertos++;
-
     document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
     mostrarPregunta();
   }
@@ -495,7 +495,6 @@
     const btnEnviar = document.getElementById('btnEnviar');
 
     btnAnterior.disabled = (preguntaActual === 0);
-
     if (preguntaActual === TOTAL - 1) {
       btnSiguiente.style.display = 'none';
       btnEnviar.style.display = 'inline-block';
@@ -505,19 +504,15 @@
     }
   }
 
-  function enviarQuiz() {
+  async function enviarQuiz() {
     const sinResponder = respuestas.filter(r => r === null).length;
     if (sinResponder > 0) {
       alert(`Te faltan ${sinResponder} preguntas por responder`);
       return;
     }
 
-    // Detener el timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
 
-    // Calcular tiempo total en segundos
     const fechaFin = new Date();
     const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
 
@@ -537,21 +532,20 @@
 
     if (aprobado) {
       document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-      document.getElementById('resultadoMensaje').innerHTML =
-        `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
+      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
       document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
       document.getElementById('btnReintentar').style.display = 'none';
-      guardarProgreso(aciertos, TOTAL, tiempoSegundos);
+      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
     } else {
       document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
-      document.getElementById('resultadoMensaje').innerHTML =
-        `Obtuviste ${pct}%. Necesitas al menos 5 de 6 para avanzar.`;
+      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
       document.getElementById('btnSiguienteNivel').style.display = 'none';
       document.getElementById('btnReintentar').style.display = 'inline-block';
+      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
     }
   }
 
-  async function guardarProgreso(aciertos, total, tiempoSegundos) {
+  async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
     try {
       await fetch('/api/progreso/nivel', {
         method: 'POST',
@@ -561,10 +555,11 @@
           contenido_id: 4,
           nivel_completado: 'normal',
           puntaje: Math.round((aciertos / total) * 100),
-          aprobado: true,
+          aprobado: aprobado,
           aciertos: aciertos,
           total_preguntas: total,
-          tiempo_segundos: tiempoSegundos
+          tiempo_segundos: tiempoSegundos,
+          fecha_inicio: fechaInicio.toISOString()
         })
       });
     } catch (e) {
@@ -578,10 +573,7 @@
     aciertos = 0;
     fechaInicio = new Date();
 
-    // Reiniciar timer
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(actualizarTimer, 1000);
 
     document.querySelectorAll('.punto').forEach((punto, i) => {
@@ -598,17 +590,19 @@
   }
 
   function volverAlContenido() {
-    window.location.href = 'kinestesico.html';
+    window.location.href = '/contenidos/matematicas/reconocer-fracciones/menu.html';
   }
 
-  function irSiguienteNivel() {
-    window.location.href = '../dificil/kinestesico.html';
+  async function irSiguienteNivel() {
+    if (!estiloUsuario) await obtenerEstiloUsuario();
+    window.location.href = `../dificil/${estiloUsuario}.html`;
   }
 
-  mostrarPregunta();
-
-  // Iniciar timer
-  timerInterval = setInterval(actualizarTimer, 1000);
+  (async function init() {
+    await obtenerEstiloUsuario();
+    mostrarPregunta();
+    timerInterval = setInterval(actualizarTimer, 1000);
+  })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

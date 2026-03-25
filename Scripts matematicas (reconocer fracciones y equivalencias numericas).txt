@@ -89,25 +89,25 @@ VALUES
 -- MATEMÁTICAS - KC 2.1 Fracciones y decimales
 -- Contenido 2: Equivalencias numéricas
 -- slug: equivalencias-fraccion-decimal-porcentaje
--- contenido_id = 5
--- examen_id = 5
+-- contenido_id = 6
+-- examen_id = 6
 -- ============================================
 
 SET client_encoding TO 'UTF8';
 
 -- CONTENIDO
 INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
-(5, 'matematicas', 'equivalencias-numericas', 'KC 2.1: Equivalencias numéricas', 2, true);
+(6, 'matematicas', 'equivalencias-numericas', 'KC 2.1: Equivalencias numericas', 2, true);
 
 -- NIVELES
 INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
-(5, 'facil'),
-(5, 'normal'),
-(5, 'dificil');
+(6, 'facil'),
+(6, 'normal'),
+(6, 'dificil');
 
 -- EXAMEN DIAGNÓSTICO
 INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
-(5, 5, true);
+(6, 6, true);
 
 -- ============================================
 -- ARCHIVOS DE CONTENIDO
@@ -115,28 +115,26 @@ INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
 -- ============================================
 
 INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
--- NIVEL FÁCIL
-(5, 'facil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_verbal.html'),
-(5, 'facil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_no_verbal.html'),
-(5, 'facil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/auditivo.html'),
-(5, 'facil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/kinestesico.html'),
-
+-- NIVEL FACIL
+(6, 'facil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_verbal.html'),
+(6, 'facil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_no_verbal.html'),
+(6, 'facil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/auditivo.html'),
+(6, 'facil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/kinestesico.html'),
 -- NIVEL NORMAL
-(5, 'normal', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_verbal.html'),
-(5, 'normal', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_no_verbal.html'),
-(5, 'normal', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/auditivo.html'),
-(5, 'normal', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/kinestesico.html'),
-
--- NIVEL DIFÍCIL
-(5, 'dificil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_verbal.html'),
-(5, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_no_verbal.html'),
-(5, 'dificil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/auditivo.html'),
-(5, 'dificil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/kinestesico.html');
+(6, 'normal', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_verbal.html'),
+(6, 'normal', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_no_verbal.html'),
+(6, 'normal', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/auditivo.html'),
+(6, 'normal', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/kinestesico.html'),
+-- NIVEL DIFICIL
+(6, 'dificil', 'visual_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_verbal.html'),
+(6, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_no_verbal.html'),
+(6, 'dificil', 'auditivo', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/auditivo.html'),
+(6, 'dificil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/kinestesico.html');
 
 -- ============================================
 -- PREGUNTAS DE DIAGNÓSTICO
 -- MATEMÁTICAS - EQUIVALENCIAS NUMÉRICAS
--- examen_id = 5
+-- examen_id = 6
 -- ============================================
 
 SET client_encoding TO 'UTF8';
@@ -145,36 +143,36 @@ INSERT INTO preguntas_diagnostico
 (examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta)
 VALUES
 
-(5, 'Que decimal es equivalente a 1/2?',
+(6, 'Que decimal es equivalente a 1/2?',
  '0.2', '0.5', '0.25', '0.75', 'B'),
 
-(5, 'Que porcentaje es equivalente a 1/4?',
+(6, 'Que porcentaje es equivalente a 1/4?',
  '75%', '50%', '25%', '10%', 'C'),
 
-(5, 'Que fraccion es equivalente a 0.75?',
+(6, 'Que fraccion es equivalente a 0.75?',
  '1/4', '1/2', '3/4', '2/4', 'C'),
 
-(5, 'Que decimal representa 25%?',
+(6, 'Que decimal representa 25%?',
  '0.25', '0.5', '0.75', '0.2', 'A'),
 
-(5, 'Que porcentaje representa 0.5?',
+(6, 'Que porcentaje representa 0.5?',
  '5%', '25%', '50%', '75%', 'C'),
 
-(5, 'Cual grupo muestra cantidades equivalentes?',
+(6, 'Cual grupo muestra cantidades equivalentes?',
  '1/2, 0.25, 50%',
  '1/4, 0.25, 25%',
  '3/4, 0.5, 75%',
  '1/2, 0.75, 25%',
  'B'),
 
-(5, 'Que fraccion equivale a 50%?',
+(6, 'Que fraccion equivale a 50%?',
  '1/4', '2/4', '3/4', '1/3', 'B'),
 
-(5, 'Cual de estos valores representa tres cuartos?',
+(6, 'Cual de estos valores representa tres cuartos?',
  '25%', '0.5', '75%', '0.2', 'C'),
 
-(5, 'Si marcas 0.25 en una recta numerica, que valor cae en el mismo lugar?',
+(6, 'Si marcas 0.25 en una recta numerica, que valor cae en el mismo lugar?',
  '1/2', '25%', '3/4', '50%', 'B'),
 
-(5, 'Cual NO es equivalente a 1/2?',
+(6, 'Cual NO es equivalente a 1/2?',
  '0.5', '50%', '2/4', '0.25', 'D');
