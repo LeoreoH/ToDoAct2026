@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · Fracciones · Nivel Normal</title>
+  <title>Quiz · Reconocer fracciones · Nivel Normal</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     }
 
     .quiz-container {
-      max-width: 800px;
+      max-width: 930px;
       margin: 50px auto;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
@@ -28,6 +28,7 @@
       padding: 40px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       border: 4px solid #ffd54f;
+      position: relative;
     }
 
     .quiz-header {
@@ -48,7 +49,7 @@
       padding: 8px 25px;
       border-radius: 40px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       display: inline-block;
       border: 2px solid #ffd54f;
     }
@@ -103,7 +104,7 @@
       background: #ffd54f;
       border-color: white;
       color: #4a148c;
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
 
     .punto.respondido {
@@ -131,10 +132,138 @@
     }
 
     .pregunta-texto {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      margin-bottom: 25px;
-      line-height: 1.4;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .figura-wrap {
+      margin: 0 0 22px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .figura-col {
+      width: min(280px, 100%);
+    }
+
+    .etiqueta-figura {
+      text-align: center;
+      font-weight: 800;
+      color: #6a1b9a;
+      margin-top: 8px;
+    }
+
+    .barra-fraccion {
+      width: min(620px, 100%);
+      height: 74px;
+      border: 4px solid #7b1fa2;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      background: white;
+      box-shadow: 0 6px 0 #d1c4e9;
+    }
+
+    .parte {
+      flex: 1;
+      height: 100%;
+      background: white;
+    }
+
+    .parte + .parte {
+      border-left: 4px solid #7b1fa2;
+    }
+
+    .parte.pintada {
+      background: linear-gradient(135deg, #ba68c8, #7e57c2);
+    }
+
+    .barra-fraccion.desigual .parte {
+      flex: unset;
+    }
+
+    .barra-fraccion.desigual .parte:nth-child(1) { width: 18%; }
+    .barra-fraccion.desigual .parte:nth-child(2) { width: 32%; }
+    .barra-fraccion.desigual .parte:nth-child(3) { width: 20%; }
+    .barra-fraccion.desigual .parte:nth-child(4) { width: 30%; }
+
+    .fraccion-panel {
+      background: #f7f1ff;
+      border: 3px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .fraccion-grande {
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #5e35b1;
+      line-height: 1.1;
+      min-width: 90px;
+    }
+
+    .fraccion-grande .linea {
+      display: block;
+      height: 4px;
+      background: #5e35b1;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    .recta-wrap {
+      width: min(640px, 100%);
+      position: relative;
+      height: 110px;
+      margin: 0 auto;
+    }
+
+    .linea-recta {
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      top: 48px;
+      height: 6px;
+      background: #7b1fa2;
+      border-radius: 999px;
+    }
+
+    .marca {
+      position: absolute;
+      top: 24px;
+      width: 0;
+      height: 42px;
+      border-left: 4px solid #7b1fa2;
+      transform: translateX(-50%);
+    }
+
+    .marca span {
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 800;
+      color: #6a1b9a;
+      white-space: nowrap;
+      font-size: 0.95rem;
+    }
+
+    .punto-fraccion {
+      position: absolute;
+      top: 5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ffd54f;
+      border: 3px solid #7b1fa2;
+      transform: translateX(-50%);
+      box-shadow: 0 4px 0 #d39e00;
     }
 
     .opciones {
@@ -148,8 +277,8 @@
       border-radius: 20px;
       padding: 15px 20px;
       color: #4a148c;
-      font-weight: 600;
-      font-size: 1.1rem;
+      font-weight: 700;
+      font-size: 1.05rem;
       text-align: left;
       cursor: pointer;
       transition: all 0.2s;
@@ -183,8 +312,9 @@
       margin-top: 20px;
       padding: 15px;
       border-radius: 15px;
-      font-weight: 600;
+      font-weight: 700;
       display: none;
+      line-height: 1.5;
     }
 
     .feedback.visible {
@@ -219,7 +349,7 @@
       padding: 12px 30px;
       border-radius: 40px;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       border: 3px solid white;
       transition: all 0.2s;
     }
@@ -286,7 +416,7 @@
       padding: 15px 40px;
       border-radius: 60px;
       font-weight: 800;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin: 10px;
       border: 4px solid white;
       transition: all 0.2s;
@@ -310,6 +440,10 @@
       .navegador-quiz {
         flex-direction: column;
       }
+
+      .pregunta-texto {
+        font-size: 1.16rem;
+      }
     }
   </style>
 </head>
@@ -319,12 +453,12 @@
   <div class="quiz-header">
     <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
     <h1>Mini-Quiz</h1>
-    <p class="lead">Fracciones · Nivel Normal</p>
-    <span class="badge-nivel">⭐⭐ 6 preguntas · 5 correctas para avanzar</span>
+    <p class="lead">Reconocer fracciones · Nivel Normal</p>
+    <span class="badge-nivel">⭐⭐ 6 preguntas · necesitas al menos 5 correctas</span>
   </div>
 
   <div class="timer-container">
-    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i>Tiempo:</span>
     <span class="timer-value" id="timerDisplay">00:00</span>
   </div>
 
@@ -352,14 +486,17 @@
     <div class="resultado-puntaje" id="resultadoPuntaje">6/6</div>
     <p class="mb-4" id="resultadoMensaje"></p>
     <p class="text-white-50" id="resultadoTiempo"></p>
+
     <button class="btn-accion" onclick="volverAlContenido()">
-      <i class="fas fa-arrow-left me-2"></i> Volver
+      <i class="fas fa-arrow-left me-2"></i>Volver
     </button>
+
     <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
       Nivel difícil <i class="fas fa-arrow-right ms-2"></i>
     </button>
+
     <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
-      <i class="fas fa-redo me-2"></i> Reintentar
+      <i class="fas fa-redo me-2"></i>Reintentar
     </button>
   </div>
 </div>
@@ -371,40 +508,53 @@
 
   const preguntas = [
     {
-      texto: "Si una figura tiene 2 partes coloreadas de un total de 5 partes iguales, la fracción correcta es:",
-      opciones: ["2/5", "5/2", "3/5"],
+      texto: "Observa las tres figuras. ¿Cuál representa correctamente 4/6?",
+      figura: "triple_barras",
+      opciones: ["Solo la figura A", "Solo la figura B", "Las figuras A y C", "Las figuras B y C"],
       correcta: 0,
-      explicacion: "El numerador indica las partes coloreadas y el denominador el total de partes: 2/5."
+      explicacion: "La figura A muestra 4 partes coloreadas de 6 partes iguales. En B las partes no son iguales y en C la unidad está dividida en 5 partes."
     },
     {
-      texto: "¿Cuál fracción es mayor?",
-      opciones: ["1/4", "3/4", "Son iguales"],
-      correcta: 1,
-      explicacion: "Cuando las fracciones tienen el mismo denominador, es mayor la que tiene el numerador más grande."
-    },
-    {
-      texto: "Si coloreas 4 de 6 partes iguales, la fracción formada es:",
-      opciones: ["6/4", "4/6", "4/4"],
-      correcta: 1,
-      explicacion: "Se toman 4 partes de un total de 6, por eso la fracción correcta es 4/6."
-    },
-    {
-      texto: "¿Qué fracción es equivalente a 2/4?",
-      opciones: ["1/2", "2/2", "3/4"],
+      texto: "¿Cuál afirmación es correcta sobre la fracción 5/8?",
+      figura: "fraccion_panel",
+      numerador: 5,
+      denominador: 8,
+      opciones: [
+        "El numerador indica 5 partes tomadas y el denominador 8 partes iguales de la unidad",
+        "El denominador indica 5 partes tomadas y el numerador 8 partes iguales",
+        "El numerador y el denominador indican lo mismo",
+        "No se puede relacionar con una unidad"
+      ],
       correcta: 0,
-      explicacion: "2/4 y 1/2 representan la misma cantidad."
+      explicacion: "En 5/8, el numerador indica las partes tomadas y el denominador en cuántas partes iguales se dividió la unidad."
     },
     {
-      texto: "Ordena de menor a mayor estas fracciones con el mismo denominador: 1/5, 3/5 y 4/5. ¿Cuál va al final?",
-      opciones: ["1/5", "3/5", "4/5"],
+      texto: "¿Qué figura corresponde al nombre 'dos tercios'?",
+      figura: "nombre_figuras",
+      opciones: ["Figura A", "Figura B", "Figura C", "Ninguna"],
+      correcta: 1,
+      explicacion: "La figura B representa 2 partes coloreadas de 3 partes iguales. Eso es dos tercios."
+    },
+    {
+      texto: "Si comparas 3/4, 2/3 y 5/6, ¿cuál es la fracción mayor?",
+      opciones: ["2/3", "3/4", "5/6", "Todas son iguales"],
       correcta: 2,
-      explicacion: "Con el mismo denominador, la fracción mayor es la que tiene el numerador mayor: 4/5."
+      explicacion: "5/6 está más cerca del entero completo que 3/4 y que 2/3."
     },
     {
-      texto: "Si hay 3 partes coloreadas de 6 partes iguales, la fracción correcta es:",
-      opciones: ["3/6", "6/3", "2/6"],
-      correcta: 0,
-      explicacion: "Tres partes coloreadas de un total de seis se escriben como 3/6."
+      texto: "Observa la recta numérica. ¿Qué fracción marca el punto amarillo?",
+      figura: "recta_normal",
+      puntoPosicion: 79.5,
+      opciones: ["4/6", "5/6", "2/3", "1"],
+      correcta: 1,
+      explicacion: "La unidad está dividida en 6 partes iguales y el punto está en la quinta marca interior. Corresponde a 5/6."
+    },
+    {
+      texto: "¿Qué opción muestra una pareja que representa la misma cantidad?",
+      figura: "parejas_equivalentes",
+      opciones: ["Solo la pareja A", "Solo la pareja B", "Las parejas A y C", "Las parejas B y C"],
+      correcta: 2,
+      explicacion: "La pareja A muestra 2/4 y 1/2. La pareja C muestra 3/6 y 1/2. Ambas representan la misma cantidad."
     }
   ];
 
@@ -429,7 +579,119 @@
     const diferencia = Math.floor((ahora - fechaInicio) / 1000);
     const minutos = Math.floor(diferencia / 60);
     const segundos = diferencia % 60;
-    document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+    document.getElementById('timerDisplay').innerText =
+      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+  }
+
+  function renderBarra(partes, pintadas, desigual = false) {
+    let partesHTML = '';
+    for (let i = 0; i < partes; i++) {
+      partesHTML += `<div class="parte ${i < pintadas ? 'pintada' : ''}"></div>`;
+    }
+    return `<div class="barra-fraccion ${desigual ? 'desigual' : ''}">${partesHTML}</div>`;
+  }
+
+  function renderFigura(p) {
+    if (!p.figura) return '';
+
+    if (p.figura === 'triple_barras') {
+      return `
+        <div class="figura-wrap">
+          <div class="figura-col">
+            ${renderBarra(6, 4, false)}
+            <div class="etiqueta-figura">Figura A</div>
+          </div>
+          <div class="figura-col">
+            ${renderBarra(4, 3, true)}
+            <div class="etiqueta-figura">Figura B</div>
+          </div>
+          <div class="figura-col">
+            ${renderBarra(5, 4, false)}
+            <div class="etiqueta-figura">Figura C</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (p.figura === 'fraccion_panel') {
+      return `
+        <div class="fraccion-panel">
+          <div class="fraccion-grande">
+            <span>${p.numerador}</span>
+            <span class="linea"></span>
+            <span>${p.denominador}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (p.figura === 'nombre_figuras') {
+      return `
+        <div class="figura-wrap">
+          <div class="figura-col">
+            ${renderBarra(4, 3, false)}
+            <div class="etiqueta-figura">Figura A</div>
+          </div>
+          <div class="figura-col">
+            ${renderBarra(3, 2, false)}
+            <div class="etiqueta-figura">Figura B</div>
+          </div>
+          <div class="figura-col">
+            ${renderBarra(5, 1, false)}
+            <div class="etiqueta-figura">Figura C</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (p.figura === 'recta_normal') {
+      return `
+        <div class="figura-wrap">
+          <div class="recta-wrap">
+            <div class="linea-recta"></div>
+
+            <div class="marca" style="left: 6%;"><span>0</span></div>
+            <div class="marca" style="left: 20.7%;"></div>
+            <div class="marca" style="left: 35.4%;"></div>
+            <div class="marca" style="left: 50.1%;"></div>
+            <div class="marca" style="left: 64.8%;"></div>
+            <div class="marca" style="left: 79.5%;"></div>
+            <div class="marca" style="left: 94%;"><span>1</span></div>
+
+            <div class="punto-fraccion" style="left: ${p.puntoPosicion}%;"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (p.figura === 'parejas_equivalentes') {
+      return `
+        <div class="figura-wrap">
+          <div class="figura-col">
+            ${renderBarra(4, 2, false)}
+            <div class="etiqueta-figura">Pareja A · 2/4</div>
+            ${renderBarra(2, 1, false)}
+            <div class="etiqueta-figura">1/2</div>
+          </div>
+
+          <div class="figura-col">
+            ${renderBarra(3, 2, false)}
+            <div class="etiqueta-figura">Pareja B · 2/3</div>
+            ${renderBarra(3, 1, false)}
+            <div class="etiqueta-figura">1/3</div>
+          </div>
+
+          <div class="figura-col">
+            ${renderBarra(6, 3, false)}
+            <div class="etiqueta-figura">Pareja C · 3/6</div>
+            ${renderBarra(2, 1, false)}
+            <div class="etiqueta-figura">1/2</div>
+          </div>
+        </div>
+      `;
+    }
+
+    return '';
   }
 
   function mostrarPregunta() {
@@ -445,13 +707,21 @@
         if (idx === p.correcta) claseBtn += ' correcta';
         if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
       }
-      opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${String.fromCharCode(65 + idx)}) ${opcion}</button>`;
+
+      opcionesHTML += `
+        <button class="${claseBtn}"
+                onclick="seleccionarRespuesta(${preguntaActual}, ${idx})"
+                ${respondida ? 'disabled' : ''}>
+          ${String.fromCharCode(65 + idx)}) ${opcion}
+        </button>
+      `;
     });
 
     container.innerHTML = `
       <div class="tarjeta-pregunta">
         <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
+        ${renderFigura(p)}
         <div class="opciones">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
           ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
@@ -477,8 +747,10 @@
       preguntaActual--;
       mostrarPregunta();
     } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
-      preguntaActual++;
-      mostrarPregunta();
+      if (respuestas[preguntaActual] !== null) {
+        preguntaActual++;
+        mostrarPregunta();
+      }
     }
   }
 
@@ -495,6 +767,7 @@
     const btnEnviar = document.getElementById('btnEnviar');
 
     btnAnterior.disabled = (preguntaActual === 0);
+
     if (preguntaActual === TOTAL - 1) {
       btnSiguiente.style.display = 'none';
       btnEnviar.style.display = 'inline-block';
@@ -507,7 +780,7 @@
   async function enviarQuiz() {
     const sinResponder = respuestas.filter(r => r === null).length;
     if (sinResponder > 0) {
-      alert(`Te faltan ${sinResponder} preguntas por responder`);
+      alert(`Aún te faltan ${sinResponder} pregunta(s) por responder.`);
       return;
     }
 
@@ -532,13 +805,15 @@
 
     if (aprobado) {
       document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. ¡Muy bien! El nivel difícil está desbloqueado.`;
       document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
       document.getElementById('btnReintentar').style.display = 'none';
       await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
     } else {
       document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
       document.getElementById('btnSiguienteNivel').style.display = 'none';
       document.getElementById('btnReintentar').style.display = 'inline-block';
       await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
@@ -552,7 +827,7 @@
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          contenido_id: 4,
+          contenido_id: 6,
           nivel_completado: 'normal',
           puntaje: Math.round((aciertos / total) * 100),
           aprobado: aprobado,

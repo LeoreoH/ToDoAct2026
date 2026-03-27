@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reconocer fracciones · Nivel Fácil · Kinestésico</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,483 +12,807 @@
   <style>
     * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #f3e5f5, #ede7f6);
-      color: #4a148c;
-      min-height: 100vh;
+    :root{
+      --morado:#7b1fa2;
+      --morado2:#5e35b1;
+      --lila:#ede7f6;
+      --lila2:#f7f1ff;
+      --amarillo:#ffd54f;
+      --verde:#43a047;
+      --rojo:#e53935;
+      --texto:#4a148c;
+      --sombra:#d1c4e9;
+      --choco1:#6d4c41;
+      --choco2:#8d6e63;
+      --choco3:#5d4037;
+      --crema:#fff8e1;
+      --pan:#f4c67d;
+      --pan2:#e2a95a;
+      --relleno:#ff7043;
+      --pastel:#ffb74d;
+      --pastel2:#ff8a65;
+      --fresa:#ef5350;
     }
 
-    .cabecera {
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-      border-bottom: 6px solid #ffd54f;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Nunito',sans-serif;
+      background:linear-gradient(135deg,#f3e5f5,#ede7f6);
+      color:var(--texto);
     }
 
-    .cabecera h1 {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.7rem;
-      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    .cabecera{
+      position:relative;
+      text-align:center;
+      color:#fff;
+      padding:28px 18px;
+      background:linear-gradient(135deg,#8e24aa,#5e35b1);
+      border-bottom:6px solid var(--amarillo);
+      box-shadow:0 10px 24px rgba(0,0,0,.16);
     }
 
-    .cabecera .subtitulo {
-      margin-top: 8px;
-      font-size: 1.1rem;
-      font-weight: 700;
+    .cabecera h1{
+      margin:0;
+      font-family:'Fredoka One',cursive;
+      font-size:2.55rem;
+      text-shadow:3px 3px 0 rgba(0,0,0,.14);
     }
 
-    .badge-estilo {
-      display: inline-block;
-      margin-top: 12px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid white;
-      border-radius: 999px;
-      padding: 10px 24px;
-      font-weight: 800;
-      font-size: 1rem;
-      box-shadow: 0 4px 0 #d39e00;
+    .subtitulo{
+      margin-top:8px;
+      font-size:1.08rem;
+      font-weight:800;
     }
 
-    .progreso {
-      max-width: 900px;
-      margin: 24px auto 0;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      flex-wrap: wrap;
+    .badge-estilo{
+      display:inline-block;
+      margin-top:12px;
+      padding:10px 22px;
+      border-radius:999px;
+      background:var(--amarillo);
+      color:var(--texto);
+      border:3px solid white;
+      font-weight:800;
+      box-shadow:0 4px 0 #d39e00;
     }
 
-    .progreso .texto {
-      font-weight: 800;
-      color: #6a1b9a;
-      white-space: nowrap;
+    .btn-volver-menu{
+      position:absolute;
+      top:16px;
+      left:16px;
+      width:54px;
+      height:54px;
+      border:3px solid white;
+      border-radius:50%;
+      background:var(--amarillo);
+      color:var(--texto);
+      font-size:1.2rem;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 0 #d39e00;
+      transition:.2s;
+      z-index:10;
     }
 
-    .barra-fondo {
-      flex: 1;
-      min-width: 150px;
-      height: 14px;
-      background: #ede7f6;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #d1c4e9;
+    .btn-volver-menu:hover{
+      transform:translateY(-2px);
+      background:#fff3c4;
     }
 
-    .barra-relleno {
-      height: 100%;
-      width: 25%;
-      background: linear-gradient(90deg, #ab47bc, #7e57c2);
-      transition: width 0.3s;
+    .progreso{
+      max-width:1020px;
+      margin:22px auto 0;
+      padding:12px 16px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:white;
+      border:3px solid var(--morado);
+      border-radius:999px;
+      box-shadow:0 6px 0 var(--sombra);
     }
 
-    .porcentaje {
-      background: #7b1fa2;
-      color: white;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.95rem;
+    .progreso-texto{
+      font-weight:800;
+      color:#6a1b9a;
+      white-space:nowrap;
     }
 
-    .contenedor {
-      max-width: 1000px;
-      margin: 25px auto 40px;
-      padding: 0 18px;
+    .barra-fondo{
+      flex:1;
+      min-width:160px;
+      height:14px;
+      background:var(--lila);
+      border-radius:999px;
+      overflow:hidden;
+      border:2px solid var(--sombra);
     }
 
-    .pagina {
-      display: none;
-      animation: aparecer .35s ease;
+    .barra-relleno{
+      width:14.28%;
+      height:100%;
+      background:linear-gradient(90deg,#ab47bc,#7e57c2);
+      transition:width .3s;
     }
 
-    .pagina.activa {
-      display: block;
+    .progreso-num{
+      padding:7px 14px;
+      border-radius:999px;
+      background:var(--morado);
+      color:white;
+      font-weight:800;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    .contenedor{
+      max-width:1080px;
+      margin:24px auto 42px;
+      padding:0 16px;
     }
 
-    .tarjeta {
-      background: white;
-      border-radius: 28px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 10px 0 #d1c4e9;
-      padding: 24px;
-      margin-bottom: 22px;
+    .pagina{
+      display:none;
+      animation:aparecer .3s ease;
     }
 
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      color: #6a1b9a;
-      font-size: 2rem;
-      margin-bottom: 14px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 18px;
+    .pagina.activa{
+      display:block;
     }
 
-    .intro {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #5e35b1;
-      background: #f7f1ff;
-      padding: 14px 18px;
-      border-radius: 18px;
-      border: 2px dashed #ce93d8;
-      margin-bottom: 18px;
+    @keyframes aparecer{
+      from{opacity:0;transform:translateY(10px);}
+      to{opacity:1;transform:translateY(0);}
     }
 
-    .frase-ayuda {
-      background: #fff8e1;
-      border: 2px solid #ffd54f;
-      color: #6a1b9a;
-      border-radius: 16px;
-      padding: 12px 16px;
-      font-weight: 700;
-      margin-top: 14px;
+    .tarjeta{
+      background:white;
+      border-radius:28px;
+      border:3px solid var(--morado);
+      box-shadow:0 10px 0 var(--sombra);
+      padding:26px;
     }
 
-    .actividad {
-      background: #faf5ff;
-      border: 3px dashed #ba68c8;
-      border-radius: 24px;
-      padding: 20px;
-      margin-top: 18px;
+    .titulo-pagina{
+      margin-bottom:14px;
+      padding-left:18px;
+      border-left:8px solid var(--amarillo);
+      font-family:'Fredoka One',cursive;
+      font-size:1.95rem;
+      color:#6a1b9a;
     }
 
-    .actividad h3 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #6a1b9a;
-      text-align: center;
-      margin-bottom: 16px;
+    .texto-destacado{
+      margin-bottom:18px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:#faf5ff;
+      border:2px dashed #ce93d8;
+      color:#5e35b1;
+      font-weight:700;
+      line-height:1.6;
     }
 
-    .zona-piezas, .zona-respuesta {
-      background: white;
-      border-radius: 20px;
-      padding: 16px;
-      min-height: 90px;
-      border: 2px solid #d1c4e9;
+    .actividad{
+      margin-top:20px;
+      padding:20px;
+      border-radius:24px;
+      background:#faf5ff;
+      border:3px dashed #ba68c8;
     }
 
-    .zona-respuesta {
-      border-style: dashed;
-      background: #fdfbff;
-      text-align: center;
+    .actividad h3{
+      margin-bottom:16px;
+      text-align:center;
+      color:#6a1b9a;
+      font-size:1.34rem;
+      font-weight:900;
     }
 
-    .zona-respuesta.sobre {
-      background: #f3e5f5;
-      border-color: #8e24aa;
+    .mini-etiqueta{
+      display:inline-block;
+      margin-bottom:12px;
+      padding:7px 14px;
+      border-radius:999px;
+      background:var(--lila);
+      border:2px solid var(--sombra);
+      color:#6a1b9a;
+      font-weight:800;
+      font-size:.94rem;
     }
 
-    .zona-respuesta.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
+    .texto-centro{ text-align:center; }
+
+    .tip{
+      margin-top:14px;
+      padding:12px 16px;
+      border-radius:16px;
+      background:var(--crema);
+      border:2px solid var(--amarillo);
+      color:#7b1fa2;
+      font-weight:800;
     }
 
-    .pieza-fraccion {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 94px;
-      padding: 12px 18px;
-      margin: 8px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      font-weight: 800;
-      cursor: grab;
-      box-shadow: 0 4px 0 #d39e00;
-      user-select: none;
+    .modelo{
+      background:white;
+      border:2px solid var(--sombra);
+      border-radius:22px;
+      padding:18px;
+      margin:18px 0 10px;
+      text-align:center;
     }
 
-    .pieza-fraccion.oculta {
-      display: none;
+    .modelo h4{
+      color:#6a1b9a;
+      font-weight:900;
+      margin-bottom:14px;
+      font-size:1.08rem;
     }
 
-    .pieza-colocada {
-      display: inline-block;
-      background: #43a047;
-      color: white;
-      border-radius: 999px;
-      padding: 8px 14px;
-      margin: 6px;
-      font-weight: 800;
-      border: 2px solid white;
+    .contexto-mini{
+      margin-top:10px;
+      font-size:.98rem;
+      color:#7b1fa2;
+      font-weight:700;
     }
 
-    .barra-modelo {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin: 16px 0;
-      flex-wrap: wrap;
+    .escena{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      margin:10px 0 4px;
     }
 
-    .parte {
-      width: 80px;
-      height: 80px;
-      border-radius: 14px;
-      border: 3px solid #7b1fa2;
-      background: white;
+    .mensaje-feedback{
+      display:none;
+      margin-top:16px;
+      padding:12px 16px;
+      border-radius:16px;
+      text-align:center;
+      font-weight:800;
     }
 
-    .parte.coloreada {
-      background: linear-gradient(135deg, #ab47bc, #7e57c2);
+    .mensaje-feedback.visible{ display:block; }
+
+    .mensaje-ok{
+      background:#e8f5e9;
+      border:2px solid var(--verde);
+      color:#2e7d32;
     }
 
-    .parte.circulo {
-      border-radius: 50%;
+    .mensaje-warn{
+      background:#fff8e1;
+      border:2px solid var(--amarillo);
+      color:#8d6e00;
     }
 
-    .selector-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-      margin-top: 16px;
+    .botones-corte,
+    .numero-opciones,
+    .zona-piezas,
+    .fila-slots,
+    .fila-orden{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    .opcion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      cursor: pointer;
-      transition: .2s;
-      box-shadow: 0 5px 0 #d1c4e9;
+    .boton-corte,
+    .chip-numero,
+    .pieza,
+    .etiqueta-arrastre,
+    .tarjeta-orden{
+      padding:12px 16px;
+      border-radius:18px;
+      border:3px solid var(--morado);
+      background:white;
+      color:#6a1b9a;
+      font-weight:900;
+      box-shadow:0 5px 0 var(--sombra);
+      user-select:none;
+      transition:.2s;
+      cursor:pointer;
     }
 
-    .opcion:hover {
-      transform: translateY(-2px);
-      background: #f7f1ff;
+    .boton-corte:hover,
+    .chip-numero:hover,
+    .pieza:hover,
+    .etiqueta-arrastre:hover,
+    .tarjeta-orden:hover{
+      transform:translateY(-2px);
     }
 
-    .opcion.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
+    .boton-corte.activo{
+      background:var(--verde);
+      border-color:#2e7d32;
+      color:white;
     }
 
-    .opcion.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
+    .chip-numero.correcto{
+      background:var(--verde);
+      border-color:#2e7d32;
+      color:white;
     }
 
-    .zona-dibujo {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 18px 0 10px;
+    .chip-numero.incorrecto{
+      background:#ef5350;
+      border-color:#c62828;
+      color:white;
     }
 
-    .cuadro-tocable {
-      width: 78px;
-      height: 78px;
-      border-radius: 14px;
-      border: 3px solid #7b1fa2;
-      background: white;
-      cursor: pointer;
-      transition: .2s;
+    .pieza{
+      background:var(--amarillo);
+      color:var(--texto);
+      border-radius:999px;
+      box-shadow:0 4px 0 #d39e00;
     }
 
-    .cuadro-tocable.activo {
-      background: linear-gradient(135deg, #ba68c8, #7e57c2);
+    .zona-respuesta{
+      min-height:106px;
+      padding:18px;
+      border-radius:22px;
+      background:#fdfbff;
+      border:3px dashed #ba68c8;
+      text-align:center;
     }
 
-    .numero-opciones {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 14px;
+    .zona-respuesta.sobre{
+      background:#f3e5f5;
+      border-color:#8e24aa;
     }
 
-    .chip-numero {
-      min-width: 60px;
-      padding: 12px 16px;
-      text-align: center;
-      border-radius: 999px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      color: #6a1b9a;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #d1c4e9;
-      transition: .2s;
+    .zona-respuesta.correcta{
+      background:#e8f5e9;
+      border-color:var(--verde);
     }
 
-    .chip-numero:hover {
-      transform: translateY(-2px);
-      background: #f7f1ff;
+    .respuesta-colocada{
+      display:inline-block;
+      margin-top:10px;
+      padding:9px 14px;
+      border-radius:999px;
+      background:var(--verde);
+      color:white;
+      font-weight:900;
     }
 
-    .chip-numero.correcto {
-      background: #43a047;
-      color: white;
-      border-color: #2e7d32;
+    .slot-palabra,
+    .slot-orden{
+      min-width:140px;
+      min-height:64px;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:18px;
+      border:3px dashed #ba68c8;
+      background:#fdfbff;
+      color:#8e24aa;
+      font-weight:900;
+      text-align:center;
     }
 
-    .chip-numero.incorrecto {
-      background: #ef5350;
-      color: white;
-      border-color: #c62828;
+    .slot-palabra.correcto,
+    .slot-orden.correcto{
+      background:#e8f5e9;
+      border-color:var(--verde);
+      color:#2e7d32;
     }
 
-    .panel-fraccion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 22px;
-      padding: 18px;
-      text-align: center;
-      margin-top: 18px;
+    .panel-fraccion{
+      margin-top:18px;
+      padding:18px;
+      background:white;
+      border:3px solid var(--morado);
+      border-radius:22px;
+      text-align:center;
     }
 
-    .fraccion-grande {
-      display: inline-block;
-      font-size: 2rem;
-      font-weight: 800;
-      color: #5e35b1;
-      line-height: 1.1;
-      min-width: 90px;
+    .fraccion-grande{
+      display:inline-block;
+      min-width:88px;
+      font-size:2rem;
+      font-weight:900;
+      line-height:1.08;
+      color:#5e35b1;
     }
 
-    .fraccion-grande .linea {
-      display: block;
-      height: 4px;
-      background: #5e35b1;
-      margin: 5px 0;
-      border-radius: 2px;
+    .fraccion-grande .linea{
+      display:block;
+      height:4px;
+      margin:4px 0;
+      border-radius:2px;
+      background:#5e35b1;
     }
 
-    .mensaje-feedback {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      text-align: center;
-      display: none;
+    .subtexto-fraccion{
+      margin-top:10px;
+      color:#6a1b9a;
+      font-weight:800;
+      font-size:.98rem;
     }
 
-    .mensaje-feedback.visible {
-      display: block;
+    .comparacion-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:18px;
     }
 
-    .mensaje-ok {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 2px solid #43a047;
+    .mini-modelo{
+      background:white;
+      border:2px solid var(--sombra);
+      border-radius:18px;
+      padding:14px;
+      text-align:center;
     }
 
-    .mensaje-warn {
-      background: #fff8e1;
-      color: #8d6e00;
-      border: 2px solid #ffd54f;
+    .mini-modelo h5{
+      font-weight:900;
+      color:#6a1b9a;
+      margin-bottom:10px;
     }
 
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 14px 20px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      margin-top: 16px;
-      flex-wrap: wrap;
+    .navegador{
+      margin-top:16px;
+      padding:14px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+      background:white;
+      border:3px solid var(--morado);
+      border-radius:999px;
+      box-shadow:0 6px 0 var(--sombra);
     }
 
-    .btn-nav {
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-weight: 800;
-      transition: .2s;
+    .btn-nav{
+      padding:12px 24px;
+      border:none;
+      border-radius:999px;
+      background:var(--morado);
+      color:white;
+      font-weight:900;
+      transition:.2s;
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: #5e35b1;
-      transform: translateY(-2px);
+    .btn-nav:hover:not(:disabled){
+      transform:translateY(-2px);
+      background:var(--morado2);
     }
 
-    .btn-nav:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+    .btn-nav:disabled{
+      opacity:.55;
+      cursor:not-allowed;
     }
 
-    .contador {
-      font-weight: 800;
-      color: #6a1b9a;
-      background: #f3e5f5;
-      border: 2px solid #ce93d8;
-      padding: 8px 16px;
-      border-radius: 999px;
+    .contador{
+      padding:8px 16px;
+      border-radius:999px;
+      background:#f3e5f5;
+      border:2px solid #ce93d8;
+      color:#6a1b9a;
+      font-weight:900;
     }
 
-    .boton-quiz {
-      display: inline-block;
-      margin: 26px auto 0;
-      text-decoration: none;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 4px solid #7b1fa2;
-      padding: 16px 34px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      box-shadow: 0 7px 0 #d39e00;
-      transition: .2s;
+    .boton-quiz{
+      display:inline-block;
+      margin:26px auto 0;
+      padding:16px 34px;
+      text-decoration:none;
+      border-radius:999px;
+      background:var(--amarillo);
+      color:var(--texto);
+      border:4px solid var(--morado);
+      font-weight:900;
+      font-size:1.18rem;
+      box-shadow:0 7px 0 #d39e00;
+      transition:.2s;
     }
 
-    .boton-quiz:hover {
-      transform: translateY(-3px);
-      background: #fff3c4;
+    .boton-quiz:hover{
+      transform:translateY(-3px);
+      background:#fff3c4;
     }
 
-    @media (max-width: 768px) {
-      .cabecera h1 { font-size: 2rem; }
-      .titulo-pagina { font-size: 1.5rem; }
-      .parte, .cuadro-tocable { width: 62px; height: 62px; }
+    .boton-quiz.bloqueado{
+      opacity:.55;
+      cursor:not-allowed;
+      background:#e0e0e0;
+      color:#777;
+      border-color:#bdbdbd;
+      box-shadow:0 7px 0 #9e9e9e;
+    }
+
+    .boton-quiz.bloqueado:hover{
+      transform:none;
+      background:#e0e0e0;
+    }
+
+    /* ILUSTRACIONES */
+    .objeto{
+      position:relative;
+      user-select:none;
+    }
+
+    /* Chocolate */
+    .chocolate{
+      width:min(760px,95%);
+      height:120px;
+      border-radius:26px;
+      border:4px solid #4e342e;
+      background:linear-gradient(180deg,#8d6e63,#6d4c41);
+      box-shadow:0 8px 0 #4e342e;
+      overflow:hidden;
+      display:flex;
+    }
+
+    .choco-piece{
+      flex:1;
+      position:relative;
+      border-right:3px solid rgba(78,52,46,.85);
+      background:linear-gradient(180deg,var(--choco2),var(--choco1));
+      transition:.2s;
+    }
+
+    .choco-piece:last-child{ border-right:none; }
+
+    .choco-piece::before{
+      content:"";
+      position:absolute;
+      inset:12px 10px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#9c7b71,#6d4c41);
+      box-shadow:inset 0 4px 0 rgba(255,255,255,.18), inset 0 -4px 0 rgba(0,0,0,.12);
+    }
+
+    .choco-piece.selected{
+      background:linear-gradient(180deg,#b39ddb,#7e57c2);
+    }
+
+    .choco-piece.selected::before{
+      background:linear-gradient(180deg,#c5b4f2,#8e7cc3);
+    }
+
+    .choco-piece.touchable{ cursor:pointer; }
+
+    .choco-piece.touchable:hover{ filter:brightness(1.05); }
+
+    .choco-whole-label{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      color:#fff8e1;
+      text-shadow:1px 1px 0 rgba(0,0,0,.35);
+      pointer-events:none;
+      font-size:1.15rem;
+    }
+
+    /* Sandwhich / barra */
+    .sandwich{
+      width:min(760px,95%);
+      height:110px;
+      border-radius:24px;
+      overflow:hidden;
+      border:4px solid #b26a24;
+      box-shadow:0 8px 0 #d9a25d;
+      display:flex;
+      position:relative;
+      background:linear-gradient(180deg,var(--pan),var(--pan2));
+    }
+
+    .sandwich-piece{
+      flex:1;
+      position:relative;
+      transition:.2s;
+      border-right:3px solid rgba(178,106,36,.7);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.15), rgba(0,0,0,.04)),
+        linear-gradient(180deg,var(--pan),var(--pan2));
+    }
+
+    .sandwich-piece:last-child{ border-right:none; }
+
+    .sandwich-piece::before{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      top:32%;
+      height:16px;
+      background:linear-gradient(90deg,#ff8a65,#ff7043,#ef5350);
+    }
+
+    .sandwich-piece.selected{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.15), rgba(0,0,0,.04)),
+        linear-gradient(180deg,#d1c4e9,#9575cd);
+    }
+
+    .sandwich-piece.touchable{ cursor:pointer; }
+
+    /* Pastel */
+    .cake-wrap{
+      width:280px;
+      height:280px;
+      position:relative;
+      margin:0 auto;
+    }
+
+    .cake-svg{
+      width:100%;
+      height:100%;
+      display:block;
+      filter:drop-shadow(0 8px 0 #e6b36b);
+    }
+
+    .cake-slice{
+      cursor:pointer;
+      transition:.2s;
+      transform-origin:140px 140px;
+    }
+
+    .cake-slice:hover{
+      filter:brightness(1.05);
+    }
+
+    .cake-slice.selected{
+      transform:translateY(-8px);
+      filter:brightness(1.08);
+    }
+
+    .cake-label{
+      margin-top:12px;
+      text-align:center;
+      font-weight:800;
+      color:#7b1fa2;
+    }
+
+    /* Tira simple */
+    .tira{
+      width:min(760px,95%);
+      height:82px;
+      border-radius:22px;
+      overflow:hidden;
+      border:4px solid var(--morado);
+      display:flex;
+      background:white;
+      box-shadow:0 8px 0 var(--sombra);
+    }
+
+    .tira-piece{
+      flex:1;
+      border-right:3px solid var(--morado);
+      background:#fff;
+    }
+
+    .tira-piece:last-child{ border-right:none; }
+    .tira-piece.fill{ background:linear-gradient(135deg,#ba68c8,#7e57c2); }
+
+    .recta-wrap{
+      margin-top:18px;
+      padding:18px;
+      border-radius:22px;
+      background:white;
+      border:3px solid var(--morado);
+    }
+
+    .recta{
+      position:relative;
+      max-width:760px;
+      height:136px;
+      margin:12px auto 0;
+    }
+
+    .linea-recta{
+      position:absolute;
+      left:6%;
+      right:6%;
+      top:62px;
+      height:6px;
+      border-radius:999px;
+      background:var(--morado);
+    }
+
+    .marca{
+      position:absolute;
+      top:36px;
+      width:0;
+      height:48px;
+      border-left:4px solid var(--morado);
+      transform:translateX(-50%);
+    }
+
+    .marca span{
+      position:absolute;
+      top:48px;
+      left:50%;
+      transform:translateX(-50%);
+      white-space:nowrap;
+      font-weight:900;
+      color:#6a1b9a;
+    }
+
+    .zona-punto{
+      position:absolute;
+      top:10px;
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      border:3px dashed #ba68c8;
+      background:rgba(255,255,255,.7);
+      transform:translateX(-50%);
+    }
+
+    .zona-punto.correcta{
+      background:#e8f5e9;
+      border-color:var(--verde);
+    }
+
+    .ficha-punto{
+      position:absolute;
+      top:10px;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--amarillo);
+      border:3px solid var(--morado);
+      color:var(--texto);
+      font-weight:900;
+      box-shadow:0 4px 0 #d39e00;
+      cursor:grab;
+      transform:translateX(-50%);
+      user-select:none;
+    }
+
+    @media (max-width:920px){
+      .comparacion-grid{ grid-template-columns:1fr; }
+    }
+
+    @media (max-width:768px){
+      .cabecera h1{ font-size:2rem; }
+      .titulo-pagina{ font-size:1.55rem; }
+      .btn-volver-menu{
+        width:46px;
+        height:46px;
+        top:12px;
+        left:12px;
+        font-size:1.08rem;
+      }
+      .chocolate{ height:96px; }
+      .sandwich{ height:92px; }
+      .cake-wrap{ width:230px; height:230px; }
     }
   </style>
 </head>
 <body>
 
   <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú">
+      <i class="fas fa-arrow-left"></i>
+    </button>
     <h1>🟣 FRACCIONES</h1>
     <div class="subtitulo">Reconocer fracciones · Nivel Fácil</div>
     <div class="badge-estilo">✋ Estilo Kinestésico</div>
   </header>
 
   <div class="progreso">
-    <span class="texto" id="progresoTexto">Página 1 de 4</span>
+    <span class="progreso-texto" id="progresoTexto">Página 1 de 7</span>
     <div class="barra-fondo">
       <div class="barra-relleno" id="barraRelleno"></div>
     </div>
-    <span class="porcentaje" id="progresoPorcentaje">25%</span>
+    <span class="progreso-num" id="progresoNum">14%</span>
   </div>
 
   <div class="contenedor">
@@ -496,44 +820,40 @@
     <!-- PAGINA 1 -->
     <section class="pagina activa" id="pagina1">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-puzzle-piece me-2"></i>Una fracción muestra partes de un todo</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-candy-cane me-2"></i>Primero vemos la unidad</h2>
 
-        <div class="intro">
-          Una fracción nos dice cuántas partes tomamos de un objeto que fue dividido en partes iguales.
+        <div class="texto-destacado">
+          Antes de hablar de fracciones, primero vemos el objeto completo.  
+          Ese objeto completo vale <strong>1 unidad</strong>.
         </div>
 
-        <div class="barra-modelo">
-          <div class="parte coloreada"></div>
-          <div class="parte"></div>
-          <div class="parte"></div>
-          <div class="parte"></div>
-        </div>
-
-        <div class="frase-ayuda">
-          Aquí hay <strong>1 parte coloreada</strong> de un total de <strong>4 partes iguales</strong>.
+        <div class="modelo">
+          <h4>Esta barra de chocolate completa vale 1</h4>
+          <div class="escena">
+            <div class="objeto chocolate" id="chocoDemoP1">
+              <div class="choco-piece"></div>
+              <div class="choco-whole-label">1 unidad completa</div>
+            </div>
+          </div>
+          <div class="contexto-mini">Todavía no está partida: sigue siendo una sola unidad.</div>
         </div>
 
         <div class="actividad">
-          <h3>Arrastra la fracción correcta</h3>
+          <h3>Toca la barra completa</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Paso 1: reconocer el entero</span></div>
 
-          <div class="row g-3">
-            <div class="col-md-6">
-              <div class="zona-piezas text-center" id="zonaPiezas1">
-                <div class="pieza-fraccion" draggable="true" data-tipo="correcta" data-texto="1/4">1/4</div>
-                <div class="pieza-fraccion" draggable="true" data-tipo="incorrecta" data-texto="4/1">4/1</div>
-                <div class="pieza-fraccion" draggable="true" data-tipo="incorrecta" data-texto="2/4">2/4</div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="zona-respuesta" id="respuesta1" data-correcto="1/4">
-                <strong>🎯 Suelta aquí la respuesta correcta</strong>
-                <div id="respuesta1Contenido" class="mt-2"></div>
-              </div>
+          <div class="escena">
+            <div class="objeto chocolate" id="chocoInteractP1" style="cursor:pointer;">
+              <div class="choco-piece"></div>
             </div>
           </div>
 
-          <div id="feedback1" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Muy bien! 1 de 4 partes es <strong>1/4</strong>.
+          <div class="tip">
+            Una fracción siempre sale de una <strong>unidad</strong>. Primero vemos el todo; luego lo dividimos.
+          </div>
+
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">
+            ✅ Muy bien. Reconociste la <strong>unidad completa</strong>.
           </div>
         </div>
       </div>
@@ -542,34 +862,37 @@
     <!-- PAGINA 2 -->
     <section class="pagina" id="pagina2">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-hand-pointer me-2"></i>Cuenta las partes coloreadas</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-cut me-2"></i>La misma unidad se puede dividir</h2>
 
-        <div class="intro">
-          Toca las partes coloreadas y luego elige la fracción correcta.
-        </div>
-
-        <div class="barra-modelo">
-          <div class="parte circulo coloreada"></div>
-          <div class="parte circulo coloreada"></div>
-          <div class="parte circulo"></div>
+        <div class="texto-destacado">
+          Ahora usaremos la misma barra de chocolate.  
+          Queremos dividirla en <strong>4 partes iguales</strong>.
         </div>
 
         <div class="actividad">
-          <h3>¿Qué fracción representa esta figura?</h3>
+          <h3>Elige cómo partir la barra</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Paso 2: dividir el entero</span></div>
 
-          <div class="selector-grid" id="opcionesPagina2">
-            <div class="opcion" data-correcta="false">1/3</div>
-            <div class="opcion" data-correcta="true">2/3</div>
-            <div class="opcion" data-correcta="false">3/2</div>
-            <div class="opcion" data-correcta="false">2/2</div>
+          <div class="escena">
+            <div class="objeto chocolate" id="chocoP2"></div>
+          </div>
+
+          <div class="botones-corte">
+            <button class="boton-corte" data-corte="2">2 partes</button>
+            <button class="boton-corte" data-corte="3">3 partes</button>
+            <button class="boton-corte" data-corte="4">4 partes</button>
+          </div>
+
+          <div class="tip">
+            La barra sigue siendo la misma unidad; solo cambia la forma de dividirla.
           </div>
 
           <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Correcto! Hay <strong>2 partes coloreadas</strong> de <strong>3 partes iguales</strong>: <strong>2/3</strong>.
+            ✅ Exacto. Ahora la unidad quedó dividida en <strong>4 partes iguales</strong>.
           </div>
 
           <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Intenta otra vez. Primero cuenta cuántas partes están coloreadas y luego cuántas hay en total.
+            ⚠️ Esa división no muestra 4 partes iguales. Intenta otra vez.
           </div>
         </div>
       </div>
@@ -578,52 +901,43 @@
     <!-- PAGINA 3 -->
     <section class="pagina" id="pagina3">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-fill-drip me-2"></i>Colorea con clic y descubre la fracción</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-bread-slice me-2"></i>Tomamos partes del todo</h2>
 
-        <div class="intro">
-          Haz clic en los cuadros para colorearlos. Después identifica el numerador y el denominador.
+        <div class="texto-destacado">
+          Ahora la unidad será un sándwich largo dividido en 4 partes iguales.  
+          Toca exactamente <strong>2 partes</strong>.
         </div>
 
         <div class="actividad">
-          <h3>Colorea exactamente 3 de 4 cuadros</h3>
+          <h3>Toca 2 partes del sándwich</h3>
 
-          <div class="zona-dibujo" id="zonaDibujo">
-            <div class="cuadro-tocable" data-index="1"></div>
-            <div class="cuadro-tocable" data-index="2"></div>
-            <div class="cuadro-tocable" data-index="3"></div>
-            <div class="cuadro-tocable" data-index="4"></div>
-          </div>
-
-          <div class="row g-4 mt-2">
-            <div class="col-md-6 text-center">
-              <p class="fw-bold">¿Cuál es el numerador?</p>
-              <div class="numero-opciones" id="numeradorOpciones">
-                <div class="chip-numero" data-tipo="num" data-valor="2">2</div>
-                <div class="chip-numero" data-tipo="num" data-valor="3">3</div>
-                <div class="chip-numero" data-tipo="num" data-valor="4">4</div>
-              </div>
-            </div>
-            <div class="col-md-6 text-center">
-              <p class="fw-bold">¿Cuál es el denominador?</p>
-              <div class="numero-opciones" id="denominadorOpciones">
-                <div class="chip-numero" data-tipo="den" data-valor="3">3</div>
-                <div class="chip-numero" data-tipo="den" data-valor="4">4</div>
-                <div class="chip-numero" data-tipo="den" data-valor="5">5</div>
-              </div>
+          <div class="escena">
+            <div class="sandwich" id="sandwichP3">
+              <div class="sandwich-piece touchable" data-p3="1"></div>
+              <div class="sandwich-piece touchable" data-p3="2"></div>
+              <div class="sandwich-piece touchable" data-p3="3"></div>
+              <div class="sandwich-piece touchable" data-p3="4"></div>
             </div>
           </div>
 
           <div class="panel-fraccion">
-            <div class="fw-bold mb-2">Fracción formada:</div>
+            <div class="fw-bold mb-2">Partes tomadas</div>
             <div class="fraccion-grande">
-              <span id="valorNumerador">?</span>
+              <span id="numP3">?</span>
               <span class="linea"></span>
-              <span id="valorDenominador">?</span>
+              <span>4</span>
+            </div>
+            <div class="subtexto-fraccion">
+              Abajo está el total de partes iguales. Arriba aparecerán las partes que tomaste.
             </div>
           </div>
 
-          <div id="feedback3" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! Si se colorean <strong>3</strong> de <strong>4</strong> partes, la fracción es <strong>3/4</strong>.
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
+            ✅ Muy bien. Tomaste <strong>2 partes</strong> de <strong>4 partes iguales</strong>.
+          </div>
+
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
+            ⚠️ Deben quedar marcadas exactamente <strong>2 partes</strong>.
           </div>
         </div>
       </div>
@@ -632,43 +946,229 @@
     <!-- PAGINA 4 -->
     <section class="pagina" id="pagina4">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-arrows-to-circle me-2"></i>Construye la fracción correcta</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-cake-candles me-2"></i>Arriba y abajo en la fracción</h2>
 
-        <div class="intro">
-          Arrastra la fracción que representa la mitad. Recuerda: la mitad significa una parte de dos iguales.
+        <div class="texto-destacado">
+          En una fracción, el número de arriba se llama <strong>numerador</strong> y el de abajo se llama <strong>denominador</strong>.  
+          Vamos a relacionarlos con un pastel.
         </div>
 
-        <div class="barra-modelo">
-          <div class="parte coloreada"></div>
-          <div class="parte"></div>
+        <div class="modelo">
+          <h4>El pastel está dividido en 4 rebanadas iguales y 3 están marcadas</h4>
+
+          <div class="cake-wrap">
+            <svg class="cake-svg" viewBox="0 0 280 280" aria-label="Pastel dividido en 4 partes">
+              <circle cx="140" cy="140" r="120" fill="#ffe0b2" stroke="#d84315" stroke-width="8"/>
+              <path d="M140 140 L140 20 A120 120 0 0 1 260 140 Z" fill="#ff8a65" opacity="0.95"></path>
+              <path d="M140 140 L260 140 A120 120 0 0 1 140 260 Z" fill="#ff8a65" opacity="0.95"></path>
+              <path d="M140 140 L140 260 A120 120 0 0 1 20 140 Z" fill="#ff8a65" opacity="0.95"></path>
+              <path d="M140 140 L20 140 A120 120 0 0 1 140 20 Z" fill="#ffe0b2" opacity="1"></path>
+              <circle cx="140" cy="140" r="16" fill="#fff3e0"/>
+              <line x1="140" y1="140" x2="140" y2="20" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="260" y2="140" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="140" y2="260" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="20" y2="140" stroke="#d84315" stroke-width="6"/>
+            </svg>
+          </div>
+
+          <div class="panel-fraccion">
+            <div class="fraccion-grande">
+              <span>3</span>
+              <span class="linea"></span>
+              <span>4</span>
+            </div>
+          </div>
         </div>
 
         <div class="actividad">
-          <h3>¿Cuál representa la mitad?</h3>
+          <h3>Arrastra cada palabra al lugar correcto</h3>
+
+          <div class="fila-slots mb-3">
+            <div class="slot-palabra" data-esperado="numerador">Va con el número de arriba</div>
+            <div class="slot-palabra" data-esperado="denominador">Va con el número de abajo</div>
+          </div>
+
+          <div class="fila-slots" id="listaEtiquetasP4">
+            <div class="etiqueta-arrastre" draggable="true" data-palabra="numerador">Numerador</div>
+            <div class="etiqueta-arrastre" draggable="true" data-palabra="denominador">Denominador</div>
+          </div>
+
+          <div class="tip">
+            Numerador = partes tomadas.  
+            Denominador = en cuántas partes iguales se dividió la unidad.
+          </div>
+
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
+            ✅ Excelente. <strong>Numerador</strong> va arriba y <strong>denominador</strong> va abajo.
+          </div>
+
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
+            ⚠️ Piensa cuál palabra corresponde al número de arriba y cuál al de abajo.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 5 -->
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-puzzle-piece me-2"></i>Construimos la fracción</h2>
+
+        <div class="texto-destacado">
+          Ahora observa la tira y construye la fracción correcta.  
+          Ya debes fijarte en dos cosas: <strong>cuántas partes hay en total</strong> y <strong>cuántas están marcadas</strong>.
+        </div>
+
+        <div class="modelo">
+          <h4>¿Qué fracción representa esta tira?</h4>
+          <div class="escena">
+            <div class="tira">
+              <div class="tira-piece fill"></div>
+              <div class="tira-piece fill"></div>
+              <div class="tira-piece fill"></div>
+              <div class="tira-piece"></div>
+            </div>
+          </div>
+          <div class="contexto-mini">Hay 3 partes pintadas de un total de 4 partes iguales.</div>
+        </div>
+
+        <div class="actividad">
+          <h3>Arrastra la tarjeta correcta</h3>
 
           <div class="row g-3">
             <div class="col-md-6">
-              <div class="zona-piezas text-center" id="zonaPiezas4">
-                <div class="pieza-fraccion" draggable="true" data-tipo="incorrecta" data-texto="1/3">1/3</div>
-                <div class="pieza-fraccion" draggable="true" data-tipo="correcta" data-texto="1/2">1/2</div>
-                <div class="pieza-fraccion" draggable="true" data-tipo="incorrecta" data-texto="2/1">2/1</div>
+              <div class="zona-piezas text-center" id="zonaPiezas5">
+                <div class="pieza" draggable="true" data-texto="3/4">3/4</div>
+                <div class="pieza" draggable="true" data-texto="4/3">4/3</div>
+                <div class="pieza" draggable="true" data-texto="2/4">2/4</div>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="zona-respuesta" id="respuesta4" data-correcto="1/2">
+              <div class="zona-respuesta" id="respuesta5" data-correcto="3/4">
                 <strong>🎯 Suelta aquí la fracción correcta</strong>
-                <div id="respuesta4Contenido" class="mt-2"></div>
+                <div id="respuesta5Contenido"></div>
               </div>
             </div>
           </div>
 
-          <div id="feedback4" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Genial! La mitad se representa con <strong>1/2</strong>.
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">
+            ✅ Perfecto. Es <strong>3/4</strong>: 3 partes tomadas de 4 partes iguales.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 6 -->
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-sort-amount-down me-2"></i>Comparamos con la misma unidad</h2>
+
+        <div class="texto-destacado">
+          Cuando las fracciones usan la <strong>misma unidad</strong> y la misma división, se pueden ordenar mirando cuántas partes están coloreadas.
+        </div>
+
+        <div class="comparacion-grid">
+          <div class="mini-modelo">
+            <h5>A</h5>
+            <div class="escena">
+              <div class="tira" style="height:64px;">
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece"></div>
+                <div class="tira-piece"></div>
+                <div class="tira-piece"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-modelo">
+            <h5>B</h5>
+            <div class="escena">
+              <div class="tira" style="height:64px;">
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece"></div>
+                <div class="tira-piece"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-modelo">
+            <h5>C</h5>
+            <div class="escena">
+              <div class="tira" style="height:64px;">
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece fill"></div>
+                <div class="tira-piece"></div>
+              </div>
+            </div>
           </div>
         </div>
 
+        <div class="actividad">
+          <h3>Arrastra las tarjetas en orden: menor → mayor</h3>
+
+          <div class="fila-orden mb-3" id="poolOrden">
+            <div class="tarjeta-orden" draggable="true" data-orden="2">2/4</div>
+            <div class="tarjeta-orden" draggable="true" data-orden="3">3/4</div>
+            <div class="tarjeta-orden" draggable="true" data-orden="1">1/4</div>
+          </div>
+
+          <div class="fila-orden">
+            <div class="slot-orden" data-esperado="1">1° lugar</div>
+            <div class="slot-orden" data-esperado="2">2° lugar</div>
+            <div class="slot-orden" data-esperado="3">3° lugar</div>
+          </div>
+
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">
+            ✅ Muy bien. El orden correcto es <strong>1/4, 2/4, 3/4</strong>.
+          </div>
+
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">
+            ⚠️ Observa cuál tira tiene menos partes pintadas y cuál tiene más.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 7 -->
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-road me-2"></i>La fracción en la recta numérica</h2>
+
+        <div class="texto-destacado">
+          Entre <strong>0</strong> y <strong>1</strong> hay una unidad completa.  
+          Si esa unidad se divide en 4 partes iguales, aparecen <strong>1/4</strong>, <strong>2/4</strong> y <strong>3/4</strong>.
+        </div>
+
+        <div class="recta-wrap">
+          <div class="texto-centro"><span class="mini-etiqueta">Último paso: ubicar una fracción entre 0 y 1</span></div>
+
+          <div class="recta">
+            <div class="linea-recta"></div>
+
+            <div class="marca" style="left:6%;"><span>0</span></div>
+            <div class="marca" style="left:28%;"><span>1/4</span></div>
+            <div class="marca" style="left:50%;"><span>2/4</span></div>
+            <div class="marca" style="left:72%;"><span>3/4</span></div>
+            <div class="marca" style="left:94%;"><span>1</span></div>
+
+            <div class="zona-punto" id="zonaPunto7" style="left:72%;"></div>
+            <div class="ficha-punto" id="fichaPunto7" draggable="true" style="left:14%;">3/4</div>
+          </div>
+
+          <div class="tip">
+            Arrastra la ficha <strong>3/4</strong> al lugar correcto.  
+            Va entre 0 y 1, casi llegando al 1.
+          </div>
+        </div>
+
+        <div id="feedback7ok" class="mensaje-feedback mensaje-ok">
+          ✅ Excelente. <strong>3/4</strong> está casi llegando al <strong>1</strong>, porque son 3 de 4 partes de la unidad.
+        </div>
+
         <div class="text-center">
-          <a href="quiz.html" class="boton-quiz">
+          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarMiniQuiz(event)">
             <i class="fas fa-star me-2"></i>Ir al Mini-Quiz
           </a>
         </div>
@@ -679,24 +1179,32 @@
       <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
         ← Anterior
       </button>
-      <span class="contador" id="contadorPagina">1/4</span>
-      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+
+      <span class="contador" id="contadorPagina">1/7</span>
+
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>
         Siguiente →
       </button>
     </div>
-
   </div>
 
   <script>
     let paginaActual = 1;
-    const totalPaginas = 4;
+    const totalPaginas = 7;
+
+    const actividadesResueltas = {
+      1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false
+    };
+
+    function volverAlMenu() {
+      window.location.href = '../../menu.html';
+    }
 
     function cambiarPagina(direccion) {
       document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
       paginaActual += direccion;
       document.getElementById(`pagina${paginaActual}`).classList.add('activa');
       actualizarNavegacion();
-      localStorage.setItem('mate_fracciones_kine_facil', paginaActual);
     }
 
     function actualizarNavegacion() {
@@ -705,152 +1213,286 @@
 
       const porcentaje = (paginaActual / totalPaginas) * 100;
       document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
-      document.getElementById('progresoPorcentaje').innerText = `${Math.round(porcentaje)}%`;
+      document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
 
       document.getElementById('btnAnterior').disabled = paginaActual === 1;
-      document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas;
+      document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !actividadesResueltas[paginaActual]);
     }
 
-    function cargarProgreso() {
-      const guardado = localStorage.getItem('mate_fracciones_kine_facil');
-      if (guardado) {
-        const pag = parseInt(guardado, 10);
-        if (pag >= 1 && pag <= totalPaginas) {
-          document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-          paginaActual = pag;
-          document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        }
-      }
+    function resolverPagina(numero) {
+      actividadesResueltas[numero] = true;
+      if (numero === 7) desbloquearMiniQuiz();
       actualizarNavegacion();
     }
 
-    function prepararDragDrop(respuestaId, feedbackId) {
-      const zona = document.getElementById(respuestaId);
-      const feedback = document.getElementById(feedbackId);
+    function validarMiniQuiz(event) {
+      if (!actividadesResueltas[7]) {
+        event.preventDefault();
+        return false;
+      }
+      return true;
+    }
 
-      zona.addEventListener('dragover', (e) => {
+    function desbloquearMiniQuiz() {
+      document.getElementById('btnMiniQuiz').classList.remove('bloqueado');
+    }
+
+    function resetEstado() {
+      paginaActual = 1;
+      Object.keys(actividadesResueltas).forEach(k => actividadesResueltas[k] = false);
+      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
+      document.getElementById('pagina1').classList.add('activa');
+      actualizarNavegacion();
+    }
+
+    function renderChocolate(id, pieces = 1, selectedCount = 0, showWholeLabel = false, touchable = false, dataPrefix = '') {
+      const el = document.getElementById(id);
+      el.className = 'objeto chocolate';
+      el.innerHTML = '';
+
+      for (let i = 0; i < pieces; i++) {
+        const div = document.createElement('div');
+        div.className = 'choco-piece' + (i < selectedCount ? ' selected' : '') + (touchable ? ' touchable' : '');
+        if (touchable) div.dataset[dataPrefix || 'x'] = i + 1;
+        el.appendChild(div);
+      }
+
+      if (showWholeLabel) {
+        const label = document.createElement('div');
+        label.className = 'choco-whole-label';
+        label.textContent = '1 unidad completa';
+        el.appendChild(label);
+      }
+    }
+
+    function initPagina1() {
+      renderChocolate('chocoDemoP1', 1, 0, true, false);
+      renderChocolate('chocoInteractP1', 1, 0, false, false);
+
+      const barra = document.getElementById('chocoInteractP1');
+      const ok = document.getElementById('feedback1ok');
+
+      barra.addEventListener('click', () => {
+        if (actividadesResueltas[1]) return;
+        renderChocolate('chocoInteractP1', 1, 1, true, false);
+        ok.classList.add('visible');
+        resolverPagina(1);
+      });
+    }
+
+    function initPagina2() {
+      renderChocolate('chocoP2', 1, 0, true, false);
+
+      const botones = document.querySelectorAll('.boton-corte');
+      const ok = document.getElementById('feedback2ok');
+      const warn = document.getElementById('feedback2warn');
+
+      botones.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (actividadesResueltas[2]) return;
+
+          botones.forEach(b => b.classList.remove('activo'));
+          btn.classList.add('activo');
+
+          const corte = parseInt(btn.dataset.corte, 10);
+          renderChocolate('chocoP2', corte, 0, false, false);
+
+          if (corte === 4) {
+            warn.classList.remove('visible');
+            ok.classList.add('visible');
+            resolverPagina(2);
+          } else {
+            ok.classList.remove('visible');
+            warn.classList.add('visible');
+          }
+        });
+      });
+    }
+
+    function initPagina3() {
+      const piezas = document.querySelectorAll('#sandwichP3 .sandwich-piece');
+      const num = document.getElementById('numP3');
+      const ok = document.getElementById('feedback3ok');
+      const warn = document.getElementById('feedback3warn');
+
+      piezas.forEach(p => {
+        p.addEventListener('click', () => {
+          if (actividadesResueltas[3]) return;
+
+          p.classList.toggle('selected');
+          const seleccionadas = document.querySelectorAll('#sandwichP3 .sandwich-piece.selected').length;
+          num.textContent = seleccionadas;
+
+          if (seleccionadas === 2) {
+            warn.classList.remove('visible');
+            ok.classList.add('visible');
+            resolverPagina(3);
+          } else {
+            ok.classList.remove('visible');
+            warn.classList.add('visible');
+          }
+        });
+      });
+    }
+
+    function initPagina4() {
+      const etiquetas = document.querySelectorAll('.etiqueta-arrastre');
+      const slots = document.querySelectorAll('.slot-palabra');
+      const ok = document.getElementById('feedback4ok');
+      const warn = document.getElementById('feedback4warn');
+
+      etiquetas.forEach(et => {
+        et.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('palabra', et.dataset.palabra);
+          e.dataTransfer.setData('texto', et.textContent.trim());
+        });
+      });
+
+      slots.forEach(slot => {
+        slot.addEventListener('dragover', e => e.preventDefault());
+
+        slot.addEventListener('drop', e => {
+          e.preventDefault();
+          if (slot.dataset.lleno === 'true') return;
+
+          const palabra = e.dataTransfer.getData('palabra');
+          const texto = e.dataTransfer.getData('texto');
+
+          if (palabra === slot.dataset.esperado) {
+            slot.textContent = texto;
+            slot.classList.add('correcto');
+            slot.dataset.lleno = 'true';
+
+            document.querySelectorAll('.etiqueta-arrastre').forEach(et => {
+              if (et.dataset.palabra === palabra) et.style.display = 'none';
+            });
+
+            const completos = [...slots].filter(s => s.dataset.lleno === 'true').length;
+            if (completos === 2) {
+              warn.classList.remove('visible');
+              ok.classList.add('visible');
+              resolverPagina(4);
+            }
+          } else {
+            warn.classList.add('visible');
+          }
+        });
+      });
+    }
+
+    function initPagina5() {
+      document.querySelectorAll('#zonaPiezas5 .pieza').forEach(pieza => {
+        pieza.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('texto', pieza.dataset.texto);
+        });
+      });
+
+      const zona = document.getElementById('respuesta5');
+      const contenido = document.getElementById('respuesta5Contenido');
+      const ok = document.getElementById('feedback5ok');
+
+      zona.addEventListener('dragover', e => {
         e.preventDefault();
         zona.classList.add('sobre');
       });
 
-      zona.addEventListener('dragleave', () => {
-        zona.classList.remove('sobre');
-      });
+      zona.addEventListener('dragleave', () => zona.classList.remove('sobre'));
 
-      zona.addEventListener('drop', (e) => {
+      zona.addEventListener('drop', e => {
         e.preventDefault();
         zona.classList.remove('sobre');
 
+        if (actividadesResueltas[5]) return;
+
         const texto = e.dataTransfer.getData('texto');
-        const correcto = zona.dataset.correcto;
-
-        if (texto === correcto) {
+        if (texto === '3/4') {
           zona.classList.add('correcta');
-          const contenido = zona.querySelector('div[id$="Contenido"]');
-          contenido.innerHTML = `<span class="pieza-colocada">${texto}</span>`;
-          feedback.classList.add('visible');
-
-          document.querySelectorAll(`.pieza-fraccion[data-texto="${texto}"]`).forEach(el => {
-            el.classList.add('oculta');
-          });
+          contenido.innerHTML = `<div class="respuesta-colocada">${texto}</div>`;
+          ok.classList.add('visible');
+          resolverPagina(5);
         }
       });
     }
 
-    function inicializarPiezas() {
-      document.querySelectorAll('.pieza-fraccion').forEach(pieza => {
-        pieza.addEventListener('dragstart', function(e) {
-          e.dataTransfer.setData('texto', this.dataset.texto);
+    function initPagina6() {
+      const tarjetas = document.querySelectorAll('#poolOrden .tarjeta-orden');
+      const slots = document.querySelectorAll('.slot-orden');
+      const ok = document.getElementById('feedback6ok');
+      const warn = document.getElementById('feedback6warn');
+
+      tarjetas.forEach(card => {
+        card.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('orden', card.dataset.orden);
+          e.dataTransfer.setData('texto', card.textContent.trim());
         });
       });
-    }
 
-    function inicializarPagina2() {
-      const opciones = document.querySelectorAll('#opcionesPagina2 .opcion');
-      const ok = document.getElementById('feedback2ok');
-      const warn = document.getElementById('feedback2warn');
+      slots.forEach(slot => {
+        slot.addEventListener('dragover', e => e.preventDefault());
 
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (op.dataset.correcta === 'true') {
-            opciones.forEach(x => x.style.pointerEvents = 'none');
-            op.classList.add('correcta');
-            warn.classList.remove('visible');
-            ok.classList.add('visible');
+        slot.addEventListener('drop', e => {
+          e.preventDefault();
+          if (slot.dataset.lleno === 'true') return;
+
+          const orden = e.dataTransfer.getData('orden');
+          const texto = e.dataTransfer.getData('texto');
+
+          if (orden === slot.dataset.esperado) {
+            slot.textContent = texto;
+            slot.classList.add('correcto');
+            slot.dataset.lleno = 'true';
+
+            tarjetas.forEach(card => {
+              if (card.textContent.trim() === texto) card.style.display = 'none';
+            });
+
+            const completos = [...slots].filter(s => s.dataset.lleno === 'true').length;
+            if (completos === 3) {
+              warn.classList.remove('visible');
+              ok.classList.add('visible');
+              resolverPagina(6);
+            }
           } else {
-            op.classList.add('incorrecta');
             warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
           }
         });
       });
     }
 
-    function inicializarPagina3() {
-      const cuadros = document.querySelectorAll('.cuadro-tocable');
-      const numerador = document.querySelectorAll('#numeradorOpciones .chip-numero');
-      const denominador = document.querySelectorAll('#denominadorOpciones .chip-numero');
-      const valorNum = document.getElementById('valorNumerador');
-      const valorDen = document.getElementById('valorDenominador');
-      const feedback = document.getElementById('feedback3');
+    function initPagina7() {
+      const ficha = document.getElementById('fichaPunto7');
+      const zona = document.getElementById('zonaPunto7');
+      const ok = document.getElementById('feedback7ok');
 
-      let seleccionNum = null;
-      let seleccionDen = null;
-
-      cuadros.forEach(c => {
-        c.addEventListener('click', () => {
-          c.classList.toggle('activo');
-        });
+      ficha.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('punto', '3/4');
       });
 
-      numerador.forEach(chip => {
-        chip.addEventListener('click', () => {
-          numerador.forEach(x => x.classList.remove('correcto', 'incorrecto'));
-          const activos = document.querySelectorAll('.cuadro-tocable.activo').length;
-          seleccionNum = chip.dataset.valor;
-          valorNum.innerText = seleccionNum;
+      zona.addEventListener('dragover', e => e.preventDefault());
 
-          if (parseInt(seleccionNum, 10) === activos && activos === 3) {
-            chip.classList.add('correcto');
-          } else {
-            chip.classList.add('incorrecto');
-          }
+      zona.addEventListener('drop', e => {
+        e.preventDefault();
+        if (actividadesResueltas[7]) return;
 
-          revisarFraccionFinal();
-        });
-      });
-
-      denominador.forEach(chip => {
-        chip.addEventListener('click', () => {
-          denominador.forEach(x => x.classList.remove('correcto', 'incorrecto'));
-          seleccionDen = chip.dataset.valor;
-          valorDen.innerText = seleccionDen;
-
-          if (parseInt(seleccionDen, 10) === 4) {
-            chip.classList.add('correcto');
-          } else {
-            chip.classList.add('incorrecto');
-          }
-
-          revisarFraccionFinal();
-        });
-      });
-
-      function revisarFraccionFinal() {
-        const activos = document.querySelectorAll('.cuadro-tocable.activo').length;
-        if (activos === 3 && seleccionNum === '3' && seleccionDen === '4') {
-          feedback.classList.add('visible');
+        const punto = e.dataTransfer.getData('punto');
+        if (punto === '3/4') {
+          ficha.style.left = '72%';
+          zona.classList.add('correcta');
+          ok.classList.add('visible');
+          resolverPagina(7);
         }
-      }
+      });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      cargarProgreso();
-      inicializarPiezas();
-      prepararDragDrop('respuesta1', 'feedback1');
-      prepararDragDrop('respuesta4', 'feedback4');
-      inicializarPagina2();
-      inicializarPagina3();
+      resetEstado();
+      initPagina1();
+      initPagina2();
+      initPagina3();
+      initPagina4();
+      initPagina5();
+      initPagina6();
+      initPagina7();
     });
   </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · Fracciones · Nivel Fácil</title>
+  <title>Quiz · Reconocer fracciones · Nivel Fácil</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     }
 
     .quiz-container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 50px auto;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
@@ -28,6 +28,7 @@
       padding: 40px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       border: 4px solid #ffd54f;
+      position: relative;
     }
 
     .quiz-header {
@@ -48,7 +49,7 @@
       padding: 8px 25px;
       border-radius: 40px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       display: inline-block;
       border: 2px solid #ffd54f;
     }
@@ -81,6 +82,7 @@
       justify-content: center;
       gap: 10px;
       margin: 30px 0;
+      flex-wrap: wrap;
     }
 
     .punto {
@@ -102,7 +104,7 @@
       background: #ffd54f;
       border-color: white;
       color: #4a148c;
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
 
     .punto.respondido {
@@ -130,10 +132,139 @@
     }
 
     .pregunta-texto {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      margin-bottom: 25px;
-      line-height: 1.4;
+      margin-bottom: 22px;
+      line-height: 1.45;
+    }
+
+    .figura-wrap {
+      margin: 0 0 22px 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .barra-fraccion {
+      width: min(620px, 100%);
+      height: 72px;
+      border: 4px solid #7b1fa2;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      background: white;
+      box-shadow: 0 6px 0 #d1c4e9;
+    }
+
+    .parte {
+      flex: 1;
+      height: 100%;
+      background: white;
+      position: relative;
+    }
+
+    .parte + .parte {
+      border-left: 4px solid #7b1fa2;
+    }
+
+    .parte.pintada {
+      background: linear-gradient(135deg, #ba68c8, #7e57c2);
+    }
+
+    .barra-fraccion.desigual .parte {
+      flex: unset;
+    }
+
+    .barra-fraccion.desigual .parte:nth-child(1) { width: 16%; }
+    .barra-fraccion.desigual .parte:nth-child(2) { width: 34%; }
+    .barra-fraccion.desigual .parte:nth-child(3) { width: 20%; }
+    .barra-fraccion.desigual .parte:nth-child(4) { width: 30%; }
+
+    .etiqueta-figura {
+      text-align: center;
+      font-weight: 800;
+      color: #6a1b9a;
+      margin-top: 8px;
+    }
+
+    .figura-col {
+      width: min(320px, 100%);
+    }
+
+    .fraccion-panel {
+      background: #f7f1ff;
+      border: 3px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .fraccion-grande {
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #5e35b1;
+      line-height: 1.1;
+      min-width: 90px;
+    }
+
+    .fraccion-grande .linea {
+      display: block;
+      height: 4px;
+      background: #5e35b1;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    .recta-wrap {
+      width: min(640px, 100%);
+      position: relative;
+      height: 110px;
+      margin: 0 auto;
+    }
+
+    .linea-recta {
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      top: 48px;
+      height: 6px;
+      background: #7b1fa2;
+      border-radius: 999px;
+    }
+
+    .marca {
+      position: absolute;
+      top: 24px;
+      width: 0;
+      height: 42px;
+      border-left: 4px solid #7b1fa2;
+      transform: translateX(-50%);
+    }
+
+    .marca span {
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 800;
+      color: #6a1b9a;
+      white-space: nowrap;
+      font-size: 0.95rem;
+    }
+
+    .punto-fraccion {
+      position: absolute;
+      top: 5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ffd54f;
+      border: 3px solid #7b1fa2;
+      transform: translateX(-50%);
+      box-shadow: 0 4px 0 #d39e00;
     }
 
     .opciones {
@@ -147,8 +278,8 @@
       border-radius: 20px;
       padding: 15px 20px;
       color: #4a148c;
-      font-weight: 600;
-      font-size: 1.1rem;
+      font-weight: 700;
+      font-size: 1.05rem;
       text-align: left;
       cursor: pointer;
       transition: all 0.2s;
@@ -182,8 +313,9 @@
       margin-top: 20px;
       padding: 15px;
       border-radius: 15px;
-      font-weight: 600;
+      font-weight: 700;
       display: none;
+      line-height: 1.5;
     }
 
     .feedback.visible {
@@ -218,7 +350,7 @@
       padding: 12px 30px;
       border-radius: 40px;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       border: 3px solid white;
       transition: all 0.2s;
     }
@@ -285,7 +417,7 @@
       padding: 15px 40px;
       border-radius: 60px;
       font-weight: 800;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin: 10px;
       border: 4px solid white;
       transition: all 0.2s;
@@ -309,6 +441,10 @@
       .navegador-quiz {
         flex-direction: column;
       }
+
+      .pregunta-texto {
+        font-size: 1.16rem;
+      }
     }
   </style>
 </head>
@@ -318,12 +454,12 @@
   <div class="quiz-header">
     <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
     <h1>Mini-Quiz</h1>
-    <p class="lead">Fracciones · Nivel Fácil</p>
-    <span class="badge-nivel">⭐ 5 preguntas · 4 correctas para avanzar</span>
+    <p class="lead">Reconocer fracciones · Nivel Fácil</p>
+    <span class="badge-nivel">⭐ 5 preguntas · necesitas al menos 4 correctas</span>
   </div>
 
   <div class="timer-container">
-    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i>Tiempo:</span>
     <span class="timer-value" id="timerDisplay">00:00</span>
   </div>
 
@@ -350,14 +486,17 @@
     <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
     <p class="mb-4" id="resultadoMensaje"></p>
     <p class="text-white-50" id="resultadoTiempo"></p>
+
     <button class="btn-accion" onclick="volverAlContenido()">
-      <i class="fas fa-arrow-left me-2"></i> Volver
+      <i class="fas fa-arrow-left me-2"></i>Volver
     </button>
+
     <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
       Nivel normal <i class="fas fa-arrow-right ms-2"></i>
     </button>
+
     <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
-      <i class="fas fa-redo me-2"></i> Reintentar
+      <i class="fas fa-redo me-2"></i>Reintentar
     </button>
   </div>
 </div>
@@ -369,40 +508,58 @@
 
   const preguntas = [
     {
-      texto: "Si un pastel se divide en 4 partes iguales y te comes 1 parte, ¿qué fracción del pastel comiste?",
-      opciones: ["1/4", "4/1", "1/3", "3/4"],
+      texto: "Observa la unidad. ¿Qué fracción representa la parte coloreada?",
+      figura: "barra",
+      partes: 5,
+      pintadas: 3,
+      opciones: ["3/5", "5/3", "2/5", "3/4"],
       correcta: 0,
-      explicacion: "Te comiste 1 parte de 4, por lo tanto la fracción es 1/4."
+      explicacion: "La unidad se dividió en 5 partes iguales y 3 están coloreadas. Por eso representa 3/5."
     },
     {
-      texto: "En una caja hay 5 lápices de color rojo y 5 lápices azules. ¿Qué fracción del total son los lápices rojos?",
-      opciones: ["5/10", "10/5", "5/5", "1/2"],
+      texto: "Dos estudiantes quisieron representar 2/4. ¿En cuál figura sí está bien representada esa fracción?",
+      figura: "comparacionDivision",
+      opciones: ["Solo en la figura A", "Solo en la figura B", "En las dos figuras", "En ninguna figura"],
       correcta: 0,
-      explicacion: "Hay 5 lápices rojos de un total de 10, la fracción es 5/10."
+      explicacion: "La fracción debe representarse con una unidad dividida en partes iguales. En la figura A sí ocurre eso."
     },
     {
-      texto: "Una pizza se corta en 8 rebanadas iguales. Si te comes 3 rebanadas, ¿qué fracción de la pizza te comiste?",
-      opciones: ["3/8", "8/3", "5/8", "3/5"],
+      texto: "¿Cuál afirmación describe correctamente a 3/4?",
+      figura: "fraccionPanel",
+      numerador: 3,
+      denominador: 4,
+      opciones: [
+        "El numerador es 3 y el denominador es 4",
+        "El denominador es 3 y el numerador es 4",
+        "El numerador y el denominador valen 3",
+        "No se puede saber cuál es cuál"
+      ],
       correcta: 0,
-      explicacion: "Te comiste 3 rebanadas de 8, la fracción es 3/8."
+      explicacion: "En 3/4, el numerador es 3 y el denominador es 4."
     },
     {
-      texto: "¿Qué fracción representa la mitad de un entero?",
-      opciones: ["1/2", "2/1", "1/4", "3/4"],
+      texto: "Si una unidad está dividida en 6 partes iguales y se toman 4 partes, ¿cuál es la fracción correcta?",
+      figura: "barra",
+      partes: 6,
+      pintadas: 4,
+      opciones: ["4/6", "6/4", "2/6", "4/5"],
       correcta: 0,
-      explicacion: "La mitad significa una de dos partes iguales, es decir, 1/2."
+      explicacion: "Se toman 4 partes de un total de 6 partes iguales. Eso representa 4/6."
     },
     {
-      texto: "En la fracción 3/5, ¿qué número representa el denominador?",
-      opciones: ["3", "5", "8", "2"],
-      correcta: 1,
-      explicacion: "El denominador es el número de abajo, en este caso 5, que indica en cuántas partes se divide el entero."
+      texto: "Observa la recta numérica. ¿Qué fracción señala el punto amarillo?",
+      figura: "rectaSinPista",
+      puntoPosicion: 72,
+      opciones: ["1/4", "2/4", "3/4", "1"],
+      correcta: 2,
+      explicacion: "La unidad va de 0 a 1 y está dividida en 4 partes iguales. El punto está en la tercera marca interior: 3/4."
     }
   ];
 
   let preguntaActual = 0;
   let respuestas = new Array(preguntas.length).fill(null);
   let aciertos = 0;
+
   const TOTAL = preguntas.length;
   const MINIMO = 4;
 
@@ -421,7 +578,75 @@
     const diferencia = Math.floor((ahora - fechaInicio) / 1000);
     const minutos = Math.floor(diferencia / 60);
     const segundos = diferencia % 60;
-    document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+    document.getElementById('timerDisplay').innerText =
+      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+  }
+
+  function renderBarra(partes, pintadas, desigual = false) {
+    let partesHTML = '';
+    for (let i = 0; i < partes; i++) {
+      partesHTML += `<div class="parte ${i < pintadas ? 'pintada' : ''}"></div>`;
+    }
+    return `<div class="barra-fraccion ${desigual ? 'desigual' : ''}">${partesHTML}</div>`;
+  }
+
+  function renderFigura(pregunta) {
+    if (!pregunta.figura) return '';
+
+    if (pregunta.figura === 'barra') {
+      return `
+        <div class="figura-wrap">
+          ${renderBarra(pregunta.partes, pregunta.pintadas)}
+        </div>
+      `;
+    }
+
+    if (pregunta.figura === 'comparacionDivision') {
+      return `
+        <div class="figura-wrap">
+          <div class="figura-col">
+            ${renderBarra(4, 2, false)}
+            <div class="etiqueta-figura">Figura A</div>
+          </div>
+          <div class="figura-col">
+            ${renderBarra(4, 2, true)}
+            <div class="etiqueta-figura">Figura B</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (pregunta.figura === 'fraccionPanel') {
+      return `
+        <div class="fraccion-panel">
+          <div class="fraccion-grande">
+            <span>${pregunta.numerador}</span>
+            <span class="linea"></span>
+            <span>${pregunta.denominador}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (pregunta.figura === 'rectaSinPista') {
+      return `
+        <div class="figura-wrap">
+          <div class="recta-wrap">
+            <div class="linea-recta"></div>
+
+            <div class="marca" style="left: 6%;"><span>0</span></div>
+            <div class="marca" style="left: 28%;"></div>
+            <div class="marca" style="left: 50%;"></div>
+            <div class="marca" style="left: 72%;"></div>
+            <div class="marca" style="left: 94%;"><span>1</span></div>
+
+            <div class="punto-fraccion" style="left: ${pregunta.puntoPosicion}%;"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    return '';
   }
 
   function mostrarPregunta() {
@@ -437,13 +662,21 @@
         if (idx === p.correcta) claseBtn += ' correcta';
         if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
       }
-      opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${String.fromCharCode(65 + idx)}) ${opcion}</button>`;
+
+      opcionesHTML += `
+        <button class="${claseBtn}"
+                onclick="seleccionarRespuesta(${preguntaActual}, ${idx})"
+                ${respondida ? 'disabled' : ''}>
+          ${String.fromCharCode(65 + idx)}) ${opcion}
+        </button>
+      `;
     });
 
     container.innerHTML = `
       <div class="tarjeta-pregunta">
         <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
+        ${renderFigura(p)}
         <div class="opciones">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
           ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
@@ -458,8 +691,12 @@
 
   function seleccionarRespuesta(idxPregunta, idxOpcion) {
     if (respuestas[idxPregunta] !== null) return;
+
     respuestas[idxPregunta] = idxOpcion;
-    if (idxOpcion === preguntas[idxPregunta].correcta) aciertos++;
+    if (idxOpcion === preguntas[idxPregunta].correcta) {
+      aciertos++;
+    }
+
     document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
     mostrarPregunta();
   }
@@ -469,8 +706,10 @@
       preguntaActual--;
       mostrarPregunta();
     } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
-      preguntaActual++;
-      mostrarPregunta();
+      if (respuestas[preguntaActual] !== null) {
+        preguntaActual++;
+        mostrarPregunta();
+      }
     }
   }
 
@@ -487,6 +726,7 @@
     const btnEnviar = document.getElementById('btnEnviar');
 
     btnAnterior.disabled = (preguntaActual === 0);
+
     if (preguntaActual === TOTAL - 1) {
       btnSiguiente.style.display = 'none';
       btnEnviar.style.display = 'inline-block';
@@ -499,7 +739,7 @@
   async function enviarQuiz() {
     const sinResponder = respuestas.filter(r => r === null).length;
     if (sinResponder > 0) {
-      alert(`Te faltan ${sinResponder} preguntas por responder`);
+      alert(`Aún te faltan ${sinResponder} pregunta(s) por responder.`);
       return;
     }
 
@@ -524,13 +764,15 @@
 
     if (aprobado) {
       document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
       document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
       document.getElementById('btnReintentar').style.display = 'none';
       await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
     } else {
       document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
+      document.getElementById('resultadoMensaje').innerHTML =
+        `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
       document.getElementById('btnSiguienteNivel').style.display = 'none';
       document.getElementById('btnReintentar').style.display = 'inline-block';
       await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
@@ -544,7 +786,7 @@
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          contenido_id: 4,
+          contenido_id: 6,
           nivel_completado: 'facil',
           puntaje: Math.round((aciertos / total) * 100),
           aprobado: aprobado,
