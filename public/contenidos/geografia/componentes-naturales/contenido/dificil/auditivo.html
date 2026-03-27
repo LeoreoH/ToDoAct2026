@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Agua en el Planeta · Nivel Difícil · Auditivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --vd1:#1b5e20;--vd2:#2e7d32;--vd3:#43a047;--vd4:#66bb6a;--vd5:#c8e6c9;
+      --am1:#f57f17;--am2:#f9a825;--am3:#fdd835;--am4:#fff176;--am5:#fffde7;
+      --ro:#c62828;--ro2:#ffebee;--bl:#ffffff;--tx:#1b3a1c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,var(--vd5) 0%,var(--vd4) 60%,var(--vd3) 100%);min-height:100vh;color:var(--tx);}
+
+    /* ── CABECERA ── */
+    .cab{background:linear-gradient(135deg,var(--vd1),var(--vd2));padding:30px 20px;border-bottom:6px solid var(--am3);text-align:center;box-shadow:0 10px 20px rgba(27,94,32,.4);}
+    .cab h1{font-family:'Fredoka One',cursive;font-size:2.8rem;color:var(--bl);text-shadow:3px 3px 0 var(--vd1);margin-bottom:5px;}
+    .cab .sub{color:var(--am4);font-weight:700;margin-top:4px;}
+    .badge-e{background:var(--am3);color:var(--vd1);padding:11px 32px;border-radius:50px;font-weight:800;font-size:1.2rem;display:inline-block;border:4px solid var(--bl);margin-top:10px;box-shadow:0 4px 0 var(--am1);}
+    .badge-n{background:var(--vd1);color:var(--am3);padding:8px 20px;border-radius:30px;font-weight:800;font-size:.95rem;display:inline-block;border:3px solid var(--am3);margin-top:8px;margin-left:8px;}
+
+    /* ── PROGRESO ── */
+    .progreso{background:var(--bl);border-radius:60px;margin:22px auto;max-width:900px;padding:14px 28px;display:flex;align-items:center;gap:18px;border:3px solid var(--vd2);box-shadow:0 5px 15px rgba(27,94,32,.2);}
+    .puntos{display:flex;gap:10px;flex:1;justify-content:center;flex-wrap:wrap;}
+    .punto{width:40px;height:40px;border-radius:50%;background:var(--vd5);border:3px solid var(--vd2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--tx);transition:all .3s;cursor:pointer;}
+    .punto.activo{background:var(--am3);border-color:var(--vd1);transform:scale(1.2);}
+    .punto.completado{background:var(--vd2);border-color:var(--bl);color:var(--bl);}
+    .pag-label{background:var(--vd2);color:var(--bl);font-size:1rem;padding:7px 18px;border-radius:28px;font-weight:800;white-space:nowrap;}
+
+    /* ── CONTENEDOR ── */
+    .cont{max-width:960px;margin:0 auto 40px;padding:0 18px;}
+    .pagina{display:none;animation:ap .5s ease;}
+    .pagina.activa{display:block;}
+    @keyframes ap{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── TARJETA BASE ── */
+    .t{background:var(--bl);border-radius:28px;padding:24px;margin-bottom:22px;border:3px solid var(--vd2);box-shadow:0 8px 0 var(--vd1);}
+    .t-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+    .t-icon{background:var(--am3);color:var(--vd1);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid var(--vd2);flex-shrink:0;}
+    .t-titulo{font-size:1.4rem;font-weight:800;color:var(--tx);}
+    .seccion{background:var(--vd2);color:var(--bl);border-radius:18px;padding:11px 22px;margin-bottom:18px;font-family:'Fredoka One',cursive;font-size:1.5rem;text-align:center;border:3px solid var(--vd3);box-shadow:0 5px 0 var(--vd1);}
+    .inst{background:var(--am5);border:3px solid var(--am3);border-radius:18px;padding:13px 18px;margin-bottom:16px;font-size:1rem;font-weight:700;color:var(--tx);text-align:center;}
+    .juego-num{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--vd1);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+    audio{width:100%;border-radius:28px;border:2px solid var(--vd2);margin:8px 0;}
+    audio.mini{height:34px;width:100%;border-radius:18px;border:2px solid var(--vd2);}
+
+    /* ── AUDIOS GRID ── */
+    .ag{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px;}
+    .ai{background:var(--vd5);border:3px solid var(--vd2);border-radius:18px;padding:14px;text-align:center;}
+    .ai label{font-weight:800;font-size:.95rem;color:var(--tx);display:block;margin-bottom:6px;}
+
+    /* ── FOTOS CLIC ── */
+    .fg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;}
+    .fo{border:4px solid var(--vd2);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s;background:var(--bl);}
+    .fo:hover{transform:scale(1.04);box-shadow:0 8px 20px rgba(27,94,32,.3);}
+    .fo img{width:100%;height:148px;object-fit:cover;display:block;}
+    .fo .fn{background:var(--vd2);color:var(--bl);font-weight:800;font-size:.95rem;text-align:center;padding:9px;}
+    .fo.sel{border-color:var(--am3);box-shadow:0 0 0 4px var(--am3);}
+    .fo.ok{border-color:var(--vd3)!important;box-shadow:0 0 0 4px var(--vd3)!important;}
+    .fo.mal{border-color:var(--ro)!important;box-shadow:0 0 0 4px var(--ro)!important;opacity:.6;}
+
+    /* ── MATCH ── */
+    .mw{display:flex;gap:18px;align-items:flex-start;margin-bottom:14px;}
+    .mc{flex:1;display:flex;flex-direction:column;gap:9px;}
+    .mi{background:var(--vd5);border:3px solid var(--vd2);border-radius:13px;padding:11px 13px;cursor:pointer;transition:all .2s;font-weight:700;font-size:.9rem;line-height:1.4;}
+    .mi:hover{background:var(--vd4);}
+    .mi.sel{background:var(--am3);border-color:var(--vd1);}
+    .mi.ok{background:var(--vd5);border-color:var(--vd3);opacity:.7;pointer-events:none;}
+    .md{background:var(--am5);border:3px solid var(--am2);border-radius:13px;padding:11px 13px;cursor:pointer;transition:all .2s;font-weight:700;font-size:.9rem;line-height:1.4;}
+    .md:hover{border-color:var(--vd2);background:var(--vd5);}
+    .md.sel{background:var(--am3);border-color:var(--vd1);}
+    .md.ok{border-color:var(--vd3);opacity:.7;pointer-events:none;}
+    .md.mal{border-color:var(--ro);background:var(--ro2);animation:shake .4s;}
+    @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+    .match-pts{text-align:center;margin-bottom:12px;font-size:1.05rem;font-weight:800;color:var(--vd1);}
+
+    /* ── ORDENAR ── */
+    .ord-banco{display:flex;flex-wrap:wrap;gap:10px;padding:14px;background:var(--vd5);border-radius:16px;border:2px dashed var(--vd2);margin-bottom:12px;min-height:54px;}
+    .ord-item{background:var(--vd2);color:var(--am3);padding:9px 16px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;user-select:none;}
+    .ord-item:hover{transform:scale(1.07);background:var(--vd1);}
+    .ord-item.usado{opacity:.4;pointer-events:none;}
+    .ord-secuencia{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px;background:var(--am5);border-radius:14px;border:2px solid var(--am2);margin-bottom:10px;min-height:50px;}
+    .ord-paso{background:var(--am2);color:var(--vd1);padding:8px 14px;border-radius:10px;font-weight:800;font-size:.88rem;}
+    .ord-flecha{color:var(--vd1);font-weight:900;font-size:1.1rem;}
+
+    /* ── COMPLETAR FRASE ── */
+    .frase-wrap{background:var(--vd5);border-radius:16px;padding:16px;border:2px solid var(--vd2);margin-bottom:12px;font-size:1.05rem;font-weight:700;line-height:2.4;color:var(--tx);}
+    .blank{display:inline-block;border-bottom:3.5px solid var(--vd2);min-width:110px;text-align:center;padding:0 6px;cursor:pointer;color:var(--vd2);font-weight:900;transition:all .2s;}
+    .blank.fill{border-color:var(--vd3);color:var(--vd1);}
+    .blank.wrong{border-color:var(--ro);color:var(--ro);}
+    .banco-palabras{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;}
+    .palabra{background:var(--vd1);color:var(--am3);padding:8px 16px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;}
+    .palabra:hover{background:var(--vd2);transform:scale(1.06);}
+    .palabra.usada{background:#bdbdbd;color:#777;pointer-events:none;}
+
+    /* ── V/F ── */
+    .vf-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:12px;}
+    .vf-btn{border-radius:18px;padding:20px 10px;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;border:3px solid;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .vf-v{background:#e8f5e9;color:var(--vd1);border-color:var(--vd2);}
+    .vf-v:hover:not(:disabled){background:var(--vd2);color:var(--bl);transform:scale(1.05);}
+    .vf-f{background:var(--ro2);color:var(--ro);border-color:var(--ro);}
+    .vf-f:hover:not(:disabled){background:var(--ro);color:var(--bl);transform:scale(1.05);}
+    .vf-sub{font-size:.78rem;font-weight:800;font-family:'Nunito',sans-serif;opacity:.85;}
+    .vf-btn.acierto{box-shadow:0 5px 16px rgba(46,125,50,.4);transform:scale(1.07);}
+    .vf-btn.fallo{opacity:.5;}
+    .vf-btn:disabled{cursor:not-allowed;}
+    .vf-enunciado{background:var(--am5);border:2px solid var(--am2);border-radius:14px;padding:13px 16px;font-weight:700;font-size:1rem;color:var(--tx);margin-bottom:12px;line-height:1.55;}
+
+    /* ── SLIDER ── */
+    .slider-box{background:var(--vd5);border-radius:16px;padding:18px;border:2px solid var(--vd2);margin-bottom:12px;}
+    .slider-preg{font-weight:800;color:var(--tx);margin-bottom:12px;font-size:1rem;}
+    input[type=range]{width:100%;accent-color:var(--vd2);margin:8px 0;}
+    .slider-val{text-align:center;font-family:'Fredoka One',cursive;font-size:3.2rem;color:var(--vd2);margin:4px 0;}
+    .slider-labels{display:flex;justify-content:space-between;font-size:.82rem;color:#607d8b;font-weight:700;}
+
+    /* ── VOCAB CARDS ── */
+    .vc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+    .vc{background:var(--bl);border:3px solid var(--vd2);border-radius:20px;overflow:hidden;box-shadow:0 5px 0 var(--vd3);transition:transform .3s;}
+    .vc:hover{transform:translateY(-4px);}
+    .vc img{width:100%;height:130px;object-fit:cover;}
+    .vc .vb{padding:11px 14px;}
+    .vc .vt{font-weight:800;font-size:1.05rem;color:var(--tx);margin-bottom:7px;}
+
+    /* ── REPASO ── */
+    .rc{background:var(--bl);border:3px solid var(--vd2);border-radius:24px;padding:18px;box-shadow:0 6px 0 var(--vd3);display:flex;gap:18px;align-items:center;transition:transform .3s;margin-bottom:16px;}
+    .rc:hover{transform:translateY(-4px);}
+    .rc img{width:120px;height:90px;object-fit:cover;border-radius:13px;border:3px solid var(--vd5);flex-shrink:0;}
+    .rc .rt{font-weight:800;font-size:1.1rem;color:var(--tx);margin-bottom:8px;}
+
+    /* ── RETRO ── */
+    .fb{text-align:center;font-size:1.2rem;font-weight:800;padding:13px 16px;border-radius:14px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px;}
+    .fb.ok{background:var(--vd5);color:var(--vd1);border:2px solid var(--vd2);display:flex;}
+    .fb.mal{background:var(--ro2);color:var(--ro);border:2px solid var(--ro);display:flex;}
+    .pts-lbl{text-align:center;margin-top:12px;font-size:1rem;font-weight:800;color:var(--vd1);}
+    .pts-ganados{display:none;background:linear-gradient(135deg,var(--am3),var(--am2));color:var(--vd1);border-radius:12px;padding:7px 16px;font-weight:900;font-size:.95rem;text-align:center;margin-top:8px;animation:pop .4s ease;}
+    @keyframes pop{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+    /* ── BOTONES ── */
+    .btn-j{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:11px 30px;border-radius:38px;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;margin:6px 5px 0;display:inline-block;}
+    .btn-j:hover{background:var(--bl);transform:scale(1.05);}
+    .btn-j:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+    .btn-j.sec{background:var(--vd5);color:var(--vd1);border-color:var(--vd2);}
+
+    /* ── NAV ── */
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:38px 0 18px;background:var(--bl);padding:14px 28px;border-radius:60px;border:3px solid var(--vd2);box-shadow:0 5px 0 var(--vd3);}
+    .btn-nav{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:12px 28px;border-radius:38px;font-weight:800;font-size:1.15rem;transition:all .2s;cursor:pointer;}
+    .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
+    .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+    .ind-pag{font-size:1.4rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:8px 28px;border-radius:38px;border:3px solid var(--vd2);}
+    .btn-quiz{display:block;width:fit-content;margin:28px auto 0;background:var(--am3);color:var(--vd1);border:4px solid var(--vd1);padding:17px 48px;border-radius:58px;font-weight:800;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 0 var(--vd1);transition:all .2s;text-align:center;}
+    .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);color:var(--vd1);}
+
+    /* QUIZ RÁPIDO */
+    .qr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px;}
+    .qr-btn{background:var(--am5);border:3px solid var(--vd2);border-radius:14px;padding:14px 10px;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;color:var(--tx);font-family:'Nunito',sans-serif;text-align:center;}
+    .qr-btn:hover:not(:disabled){background:var(--vd5);border-color:var(--vd1);transform:scale(1.04);}
+    .qr-btn:disabled{cursor:not-allowed;}
+
+
+    /* Dificil: banco de palabras tapado */
+    .banco-tapado .palabra{filter:blur(3px);transition:filter .3s;}
+    .banco-tapado .palabra:hover{filter:none;}
+    .banco-tapado .palabra:focus{filter:none;}
+
+    .tarjeta-fin{background:var(--am3)!important;border-color:var(--vd1)!important;text-align:center;}
+
+    @media(max-width:768px){
+      .cab h1{font-size:2rem;}
+      .nav-bar{flex-direction:column;gap:14px;}
+      .ag,.fg,.vc-grid{grid-template-columns:1fr;}
+      .mw{flex-direction:column;}
+      .rc{flex-direction:column;}
+      .rc img{width:100%;height:150px;}
+      .vf-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<div class="cab">
+  <h1>💧 EL AGUA EN EL PLANETA</h1>
+  <p class="sub">Bloque II · Geografía · 5to Primaria</p>
+  <div class="badge-e">🎵 Estilo Auditivo</div>
+  <div class="badge-n">🔥 Nivel Difícil</div>
+</div>
+<div class="progreso">
+  <i class="fas fa-headphones fa-2x" style="color:var(--vd2);"></i>
+  <div class="puntos" id="puntosP">
+    <div class="punto activo" data-p="1">1</div>
+    <div class="punto" data-p="2">2</div>
+    <div class="punto" data-p="3">3</div>
+    <div class="punto" data-p="4">4</div>
+    <div class="punto" data-p="5">5</div>
+  </div>
+  <div class="pag-label">Pág <span id="nPag">1</span>/5</div>
+</div>
+<div class="cont">
+
+<!-- ══ PÁG 1: EL CICLO DEL AGUA ══ -->
+<div class="pagina activa" id="pagina1">
+  <div class="seccion">♻️ El ciclo del agua</div>
+
+  <!-- J1: Selección múltiple con audio — 4 preguntas generadas por JS -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-bolt"></i></div>
+      <div class="t-titulo">Juego 1 — Quiz auditivo: El ciclo del agua</div>
+    </div>
+    <div class="juego-num">🔥 Escucha cada audio y elige la única respuesta correcta. Sin pistas visuales.</div>
+    <div id="smContainer1"></div>
+    <div class="pts-lbl">⭐ Puntaje: <span id="ptsSM1">0</span>/<span id="totSM1">4</span></div>
+  </div>
+
+  <!-- J2: Ordenar las etapas del ciclo del agua -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-sync-alt"></i></div>
+      <div class="t-titulo">Juego 2 — Ordena las etapas del ciclo del agua</div>
+    </div>
+    <div class="juego-num">🔥 Escucha el audio. Ordena las 6 etapas del ciclo del agua sin guía de emojis.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — El ciclo del agua completo</label><audio controls><source src="audios/ciclo_completo.mp3" type="audio/mpeg"></audio></div>
+    <div class="ord-banco" id="bancoC1">
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Evaporación del agua en mares y ríos">Evaporación del agua en mares y ríos</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Precipitación en forma de lluvia o nieve">Precipitación en forma de lluvia o nieve</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Formación de nubes por condensación">Formación de nubes por condensación</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Escorrentía hacia ríos y cuencas">Escorrentía hacia ríos y cuencas</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Infiltración al suelo y acuíferos">Infiltración al suelo y acuíferos</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secC1')" data-txt="Retorno al mar cerrando el ciclo">Retorno al mar cerrando el ciclo</div>
+    </div>
+    <div class="ord-secuencia" id="secC1"><span style="color:#607d8b;font-weight:700;">Toca las etapas en el orden correcto →</span></div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verOrden('secC1',['Evaporación del agua en mares y ríos','Formación de nubes por condensación','Precipitación en forma de lluvia o nieve','Escorrentía hacia ríos y cuencas','Infiltración al suelo y acuíferos','Retorno al mar cerrando el ciclo'],'fbC1','ptsC1')">✅ Verificar</button>
+      <button class="btn-j sec" onclick="reinOrden('bancoC1','secC1','fbC1')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fbC1"></div>
+    <div class="pts-ganados" id="ptsC1"></div>
+  </div>
+</div>
+
+<!-- ══ PÁG 2: DISTRIBUCIÓN DEL AGUA EN EL MUNDO ══ -->
+<div class="pagina" id="pagina2">
+  <div class="seccion">🌍 Distribución del agua en el mundo</div>
+
+  <!-- J1: Completar frases (banco tapado) -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-pencil-alt"></i></div>
+      <div class="t-titulo">Juego 1 — Completa los datos de distribución</div>
+    </div>
+    <div class="juego-num">🔥 Escucha el audio. Las palabras del banco están ocultas — pasa el dedo para verlas.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — Distribución del agua</label><audio controls><source src="audios/distribucion_agua.mp3" type="audio/mpeg"></audio></div>
+    <div class="banco-palabras banco-tapado" id="bancoD2">
+      <span class="palabra" onclick="usarPalabra(this,'97','d1')">97%</span>
+      <span class="palabra" onclick="usarPalabra(this,'3','d2')">3%</span>
+      <span class="palabra" onclick="usarPalabra(this,'glaciares','d3')">glaciares</span>
+      <span class="palabra" onclick="usarPalabra(this,'acuiferos','d4')">acuíferos</span>
+      <span class="palabra" onclick="usarPalabra(this,'salada','d5')">salada</span>
+    </div>
+    <div class="frase-wrap">
+      El <span class="blank" id="d1" data-resp="97">___</span>% del agua del planeta es <span class="blank" id="d5" data-resp="salada">_______</span>.<br>
+      Solo el <span class="blank" id="d2" data-resp="3">___</span>% es agua dulce, gran parte congelada en <span class="blank" id="d3" data-resp="glaciares">__________</span>.<br>
+      El agua dulce subterránea se almacena en <span class="blank" id="d4" data-resp="acuiferos">___________</span>.
+    </div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verFrases(['d1','d2','d3','d4','d5'],'fbD2','ptsD2')">✅ Verificar</button>
+      <button class="btn-j sec" onclick="reinFrases('bancoD2',['d1','d2','d3','d4','d5'],'fbD2')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fbD2"></div>
+    <div class="pts-ganados" id="ptsD2"></div>
+  </div>
+
+  <!-- J2: V/F sobre distribución del agua -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="t-titulo">Juego 2 — Verdadero o Falso: Distribución</div>
+    </div>
+    <div class="juego-num">🔥 Escucha cada afirmación y decide. Preguntas de nivel avanzado.</div>
+    <div id="vfD2Container"></div>
+    <div class="pts-lbl">⭐ Aciertos: <span id="ptsVFD2">0</span>/<span id="totVFD2">4</span></div>
+  </div>
+</div>
+
+<!-- ══ PÁG 3: CUENCAS HIDROGRÁFICAS ══ -->
+<div class="pagina" id="pagina3">
+  <div class="seccion">🗺️ Cuencas hidrográficas</div>
+
+  <!-- J1: Match cuenca — característica -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-link"></i></div>
+      <div class="t-titulo">Juego 1 — Une el concepto con su definición</div>
+    </div>
+    <div class="juego-num">🔥 Escucha los audios. Empareja cada término de cuenca hidrográfica con su definición exacta.</div>
+    <div class="match-pts">🔗 Pares: <span id="ptsMC3">0</span>/5</div>
+    <div class="mw">
+      <div class="mc" id="miC3">
+        <div class="mi" data-id="cuenca" onclick="selMI(this,'C3')">Cuenca hidrográfica<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cuenca_def.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="afluente" onclick="selMI(this,'C3')">Afluente<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/afluente_def.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="cauce" onclick="selMI(this,'C3')">Cauce<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cauce_def.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="nacimiento" onclick="selMI(this,'C3')">Nacimiento<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/nacimiento_def.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="desembocadura" onclick="selMI(this,'C3')">Desembocadura<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/desembocadura_def.mp3" type="audio/mpeg"></audio></div>
+      </div>
+      <div class="mc" id="mdC3">
+        <div class="md" data-id="cuenca" onclick="selMD(this,'C3')">Territorio donde toda el agua superficial drena hacia un mismo río principal</div>
+        <div class="md" data-id="afluente" onclick="selMD(this,'C3')">Río secundario que desemboca en otro río de mayor caudal</div>
+        <div class="md" data-id="cauce" onclick="selMD(this,'C3')">Canal natural por donde corre el agua de un río</div>
+        <div class="md" data-id="nacimiento" onclick="selMD(this,'C3')">Punto de origen de un río, generalmente en zonas montañosas</div>
+        <div class="md" data-id="desembocadura" onclick="selMD(this,'C3')">Lugar donde un río vierte sus aguas al mar, lago u otro río</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch('C3')">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbMC3"></div>
+  </div>
+
+  <!-- J2: Quiz selección múltiple sobre cuencas -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-question-circle"></i></div>
+      <div class="t-titulo">Juego 2 — Quiz: Cuencas del mundo</div>
+    </div>
+    <div class="juego-num">🔥 Escucha cada audio y elige la respuesta correcta de las 4 opciones.</div>
+    <div id="smContainerC3"></div>
+    <div class="pts-lbl">⭐ Puntaje: <span id="ptsSMC3">0</span>/<span id="totSMC3">4</span></div>
+  </div>
+</div>
+
+<!-- ══ PÁG 4: IMPACTO HUMANO EN EL AGUA ══ -->
+<div class="pagina" id="pagina4">
+  <div class="seccion">⚠️ Impacto humano en el agua</div>
+
+  <!-- J1: Ordenar consecuencias del impacto humano -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-sort-amount-down"></i></div>
+      <div class="t-titulo">Juego 1 — Ordena las consecuencias de contaminar un río</div>
+    </div>
+    <div class="juego-num">🔥 Escucha el audio. Ordena las 5 etapas del proceso de contaminación de un río.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — Contaminación de ríos</label><audio controls><source src="audios/impacto_rio.mp3" type="audio/mpeg"></audio></div>
+    <div class="ord-banco" id="bancoI4">
+      <div class="ord-item" onclick="agregarOrden(this,'secI4')" data-txt="Vertido de residuos al río">Vertido de residuos al río</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secI4')" data-txt="Muerte de especies acuáticas">Muerte de especies acuáticas</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secI4')" data-txt="Contaminación llega al agua potable">Contaminación llega al agua potable</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secI4')" data-txt="El agua pierde oxígeno y se vuelve tóxica">El agua pierde oxígeno y se vuelve tóxica</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secI4')" data-txt="Enfermedades en la población">Enfermedades en la población</div>
+    </div>
+    <div class="ord-secuencia" id="secI4"><span style="color:#607d8b;font-weight:700;">Toca las etapas en orden →</span></div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verOrden('secI4',['Vertido de residuos al río','El agua pierde oxígeno y se vuelve tóxica','Muerte de especies acuáticas','Contaminación llega al agua potable','Enfermedades en la población'],'fbI4','ptsI4')">✅ Verificar</button>
+      <button class="btn-j sec" onclick="reinOrden('bancoI4','secI4','fbI4')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fbI4"></div>
+    <div class="pts-ganados" id="ptsI4"></div>
+  </div>
+
+  <!-- J2: V/F sobre impacto humano -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="t-titulo">Juego 2 — Verdadero o Falso: Impacto humano</div>
+    </div>
+    <div class="juego-num">🔥 Escucha cada afirmación sobre el impacto humano en el agua y decide.</div>
+    <div id="vfI4Container"></div>
+    <div class="pts-lbl">⭐ Aciertos: <span id="ptsVFI4">0</span>/<span id="totVFI4">4</span></div>
+  </div>
+</div>
+
+<!-- ══ PÁG 5: CONSERVACIÓN DEL AGUA ══ -->
+<div class="pagina" id="pagina5">
+  <div class="seccion">💧 Conservación del agua</div>
+
+  <!-- J1: Match acción — tipo de conservación -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-leaf"></i></div>
+      <div class="t-titulo">Juego 1 — Une la acción con su categoría</div>
+    </div>
+    <div class="juego-num">🔥 Escucha los audios. Une cada acción con la categoría de conservación que le corresponde.</div>
+    <div class="match-pts">🔗 Pares: <span id="ptsMK5">0</span>/4</div>
+    <div class="mw">
+      <div class="mc" id="miK5">
+        <div class="mi" data-id="reusar" onclick="selMI(this,'K5')">Usar el agua de lluvia para regar<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cons_reusar.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="reducir" onclick="selMI(this,'K5')">Cerrar la llave al cepillarse<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cons_reducir.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="reciclar" onclick="selMI(this,'K5')">Tratar aguas residuales para reutilizarlas<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cons_reciclar.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="proteger" onclick="selMI(this,'K5')">Prohibir vertidos industriales en ríos<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cons_proteger.mp3" type="audio/mpeg"></audio></div>
+      </div>
+      <div class="mc" id="mdK5">
+        <div class="md" data-id="reducir" onclick="selMD(this,'K5')">♻️ Reducir — disminuir el consumo innecesario</div>
+        <div class="md" data-id="reusar" onclick="selMD(this,'K5')">🔁 Reusar — aprovechar el agua sin tratar</div>
+        <div class="md" data-id="reciclar" onclick="selMD(this,'K5')">🔄 Reciclar — limpiar para volver a usar</div>
+        <div class="md" data-id="proteger" onclick="selMD(this,'K5')">🛡️ Proteger — medidas legales para cuidar fuentes</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch('K5')">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbMK5"></div>
+  </div>
+
+  <!-- J2: Quiz selección múltiple conservación -->
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-question-circle"></i></div>
+      <div class="t-titulo">Juego 2 — Quiz final: Conservación del agua</div>
+    </div>
+    <div class="juego-num">🔥 Escucha cada audio y elige la respuesta correcta. ¡Demuestra lo que aprendiste!</div>
+    <div id="smContainerK5"></div>
+    <div class="pts-lbl">⭐ Puntaje: <span id="ptsSMK5">0</span>/<span id="totSMK5">4</span></div>
+  </div>
+
+  <div class="t tarjeta-fin">
+    <i class="fas fa-star fa-3x" style="color:var(--vd1);display:block;text-align:center;margin-bottom:10px;"></i>
+    <h3 style="font-family:'Fredoka One',cursive;color:var(--vd1);text-align:center;">¡Nivel Difícil Completado! 🏆</h3>
+    <p style="color:var(--vd1);font-weight:700;text-align:center;margin-top:8px;">Dominaste El Agua en el Planeta</p>
+  </div>
+</div>
+
+  <div class="nav-bar">
+    <button class="btn-nav" id="btnAnt" onclick="cambiar(-1)" disabled>← ANTERIOR</button>
+    <span class="ind-pag" id="indPag">1/5</span>
+    <button class="btn-nav" id="btnSig" onclick="cambiar(1)">SIGUIENTE →</button>
+  </div>
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-2"></i>IR AL QUIZ</a>
+</div>
+
+
+<script>
+let pag=1;const tot=5;
+function cambiar(d){
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag+=d;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
+}
+function actualizarUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    const n=i+1;p.classList.remove('activo','completado');
+    if(n===pag)p.classList.add('activo');else if(n<pag)p.classList.add('completado');
+  });
+  document.getElementById('nPag').innerText=pag;
+  document.getElementById('indPag').innerText=pag+'/'+tot;
+  document.getElementById('btnAnt').disabled=pag===1;
+  document.getElementById('btnSig').disabled=pag===tot;
+}
+document.querySelectorAll('.punto').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.getElementById('pagina'+pag).classList.remove('activa');
+    pag=parseInt(p.dataset.p);
+    document.getElementById('pagina'+pag).classList.add('activa');
+    actualizarUI();
+  });
+});
+document.addEventListener('play',e=>{
+  if(e.target.tagName==='AUDIO')document.querySelectorAll('audio').forEach(a=>{if(a!==e.target&&!a.paused)a.pause();});
+},true);
+
+// ── COMPLETAR FRASES ──────────────────────────────────────────────
+const blanks_usados={};
+function usarPalabra(el,palabra,blankId){
+  if(el.classList.contains('usada'))return;
+  const blank=document.getElementById(blankId);
+  if(!blank)return;
+  if(blanks_usados[blankId]){blanks_usados[blankId].classList.remove('usada');}
+  blanks_usados[blankId]=el;
+  el.classList.add('usada');
+  blank.innerText=palabra;blank.classList.add('fill');blank.classList.remove('wrong');
+}
+function verFrases(ids,fbId,ptsId){
+  let ok=true;
+  ids.forEach(id=>{
+    const b=document.getElementById(id);if(!b)return;
+    const val=(b.innerText||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const resp=b.dataset.resp.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    b.classList.remove('fill','wrong');
+    if(val===resp)b.classList.add('fill');
+    else{b.classList.add('wrong');ok=false;}
+  });
+  const fb=document.getElementById(fbId);fb.style.display='flex';
+  if(ok){fb.className='fb ok';fb.innerHTML='✅ ¡Todas correctas!';const p=document.getElementById(ptsId);if(p){p.innerText='+20 puntos 🎉';p.style.display='block';}}
+  else{fb.className='fb mal';fb.innerHTML='❌ Hay errores. Revisa las marcadas en rojo.';}
+}
+function reinFrases(bancoId,ids,fbId){
+  ids.forEach(id=>{
+    const b=document.getElementById(id);
+    if(b){b.innerText='___';b.classList.remove('fill','wrong');}
+    if(blanks_usados[id]){blanks_usados[id].classList.remove('usada');delete blanks_usados[id];}
+  });
+  document.querySelectorAll('#'+bancoId+' .palabra').forEach(p=>p.classList.remove('usada'));
+  const fb=document.getElementById(fbId);if(fb)fb.style.display='none';
+}
+
+// ── ORDENAR PASOS ─────────────────────────────────────────────────
+const ordState={};
+function agregarOrden(el,secId){
+  if(el.classList.contains('usado'))return;
+  el.classList.add('usado');
+  if(!ordState[secId])ordState[secId]=[];
+  ordState[secId].push(el.dataset.txt);
+  const sec=document.getElementById(secId);
+  const ph=sec.querySelector('span');if(ph)ph.remove();
+  if(ordState[secId].length>1){const fl=document.createElement('span');fl.className='ord-flecha';fl.innerText='→';sec.appendChild(fl);}
+  const si=document.createElement('div');si.className='ord-paso';si.innerText=el.dataset.txt;sec.appendChild(si);
+}
+function verOrden(secId,correcto,fbId,ptsId){
+  const est=ordState[secId]||[];
+  const fb=document.getElementById(fbId);fb.style.display='flex';
+  if(JSON.stringify(est)===JSON.stringify(correcto)){
+    fb.className='fb ok';fb.innerHTML='✅ ¡Orden perfecto!';
+    const p=document.getElementById(ptsId);if(p){p.innerText='+25 puntos 🎉';p.style.display='block';}
+  }else{
+    fb.className='fb mal';fb.innerHTML='❌ Orden incorrecto. Escucha el audio de nuevo y reintenta.';
+  }
+}
+function reinOrden(bancoId,secId,fbId){
+  ordState[secId]=[];
+  const sec=document.getElementById(secId);
+  sec.innerHTML='<span style="color:#607d8b;font-weight:700;">Toca las etapas en el orden correcto →</span>';
+  document.querySelectorAll('#'+bancoId+' .ord-item').forEach(b=>b.classList.remove('usado'));
+  const fb=document.getElementById(fbId);if(fb)fb.style.display='none';
+}
+
+// ── MATCH GENÉRICO ────────────────────────────────────────────────
+const matchState={};
+function selMI(el,gid){
+  if(el.classList.contains('ok'))return;
+  document.querySelectorAll('#mi'+gid+' .mi').forEach(x=>x.classList.remove('sel'));
+  matchState['izq'+gid]=el;el.classList.add('sel');tentarMatch(gid);
+}
+function selMD(el,gid){
+  if(el.classList.contains('ok'))return;
+  document.querySelectorAll('#md'+gid+' .md').forEach(x=>x.classList.remove('sel'));
+  matchState['der'+gid]=el;el.classList.add('sel');tentarMatch(gid);
+}
+function tentarMatch(gid){
+  const iz=matchState['izq'+gid],de=matchState['der'+gid];
+  if(!iz||!de)return;
+  if(iz.dataset.id===de.dataset.id){
+    iz.classList.add('ok');iz.classList.remove('sel');
+    de.classList.add('ok');de.classList.remove('sel');
+    const cur=parseInt(document.getElementById('ptsMC'+gid||'ptsM'+gid||'ptsMK'+gid||'0').textContent||'0')+1;
+    // buscar el contador correcto
+    ['ptsMC'+gid,'ptsM'+gid,'ptsMK'+gid].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=parseInt(el.textContent)+1;});
+    const tot=document.querySelectorAll('#mi'+gid+' .mi').length;
+    const done=document.querySelectorAll('#mi'+gid+' .mi.ok').length;
+    if(done===tot){const fb=document.getElementById('fbM'+gid);if(fb){fb.className='fb ok';fb.innerHTML='🎉 ¡Todo emparejado correctamente!';fb.style.display='flex';}}
+  }else{
+    de.classList.add('mal');
+    setTimeout(()=>{de.classList.remove('mal','sel');iz.classList.remove('sel');matchState['izq'+gid]=null;matchState['der'+gid]=null;},800);
+    return;
+  }
+  matchState['izq'+gid]=null;matchState['der'+gid]=null;
+}
+function reinMatch(gid){
+  document.querySelectorAll('#mi'+gid+' .mi,#md'+gid+' .md').forEach(x=>x.classList.remove('sel','ok','mal'));
+  ['ptsMC'+gid,'ptsM'+gid,'ptsMK'+gid].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=0;});
+  const fb=document.getElementById('fbM'+gid);if(fb)fb.style.display='none';
+  matchState['izq'+gid]=null;matchState['der'+gid]=null;
+  mezclar('md'+gid);
+}
+function mezclar(id){
+  const c=document.getElementById(id);if(!c)return;
+  Array.from(c.children).sort(()=>Math.random()-.5).forEach(e=>c.appendChild(e));
+}
+
+// ── VERDADERO / FALSO ────────────────────────────────────────────
+const vfDataD={
+  vfD2:[
+    {audio:'audios/dist_vf1.mp3',txt:'El 97% del agua del planeta es salada y no apta para consumo directo.',resp:true},
+    {audio:'audios/dist_vf2.mp3',txt:'Los glaciares contienen más del 60% de toda el agua dulce disponible del planeta.',resp:true},
+    {audio:'audios/dist_vf3.mp3',txt:'El agua subterránea es inaccesible para el ser humano.',resp:false},
+    {audio:'audios/dist_vf4.mp3',txt:'El agua de los océanos puede usarse directamente para el riego agrícola.',resp:false},
+  ],
+  vfI4:[
+    {audio:'audios/imp_vf1.mp3',txt:'La deforestación reduce la capacidad de retención de agua en el suelo.',resp:true},
+    {audio:'audios/imp_vf2.mp3',txt:'Las presas no tienen ningún efecto sobre los ecosistemas río abajo.',resp:false},
+    {audio:'audios/imp_vf3.mp3',txt:'El riego agrícola es la actividad humana que consume más agua dulce en el mundo.',resp:true},
+    {audio:'audios/imp_vf4.mp3',txt:'La contaminación del agua afecta solo a los animales, no a las personas.',resp:false},
+  ]
+};
+const vfScore={};
+function buildVF(containerId,data,ptsId,totId){
+  const cont=document.getElementById(containerId);if(!cont)return;
+  vfScore[containerId]={pts:0};
+  document.getElementById(totId).textContent=data.length;
+  data.forEach((q,i)=>{
+    const div=document.createElement('div');div.style.marginBottom='18px';
+    div.innerHTML=`
+      <div class="vf-enunciado">
+        <audio controls style="margin-bottom:8px;"><source src="${q.audio}" type="audio/mpeg"></audio>
+        ${q.txt}
+      </div>
+      <div class="vf-grid">
+        <button class="vf-btn vf-v" onclick="respVF(this,${q.resp},true,'${containerId}','${ptsId}',${i})">✅<span class="vf-sub">VERDADERO</span></button>
+        <button class="vf-btn vf-f" onclick="respVF(this,${q.resp},false,'${containerId}','${ptsId}',${i})">❌<span class="vf-sub">FALSO</span></button>
+      </div>
+      <div class="fb" id="vffb_${containerId}_${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+function respVF(btn,correcto,resp,cid,ptsId,idx){
+  btn.closest('.vf-grid').querySelectorAll('.vf-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('vffb_'+cid+'_'+idx);
+  const ok=(correcto===resp);
+  if(ok){
+    btn.classList.add('acierto');
+    if(fb){fb.className='fb ok';fb.innerHTML='✅ ¡Correcto!';fb.style.display='flex';}
+    vfScore[cid].pts++;
+    document.getElementById(ptsId).textContent=vfScore[cid].pts;
+  }else{
+    btn.classList.add('fallo');
+    const correctBtn=correcto?btn.closest('.vf-grid').querySelector('.vf-v'):btn.closest('.vf-grid').querySelector('.vf-f');
+    if(correctBtn)correctBtn.classList.add('acierto');
+    if(fb){fb.className='fb mal';fb.innerHTML='❌ Incorrecto. Escucha de nuevo el audio.';fb.style.display='flex';}
+  }
+}
+
+// ── SELECCIÓN MÚLTIPLE (generada por JS) ─────────────────────────
+const smData={
+  sm1:[
+    {audio:'audios/ciclo_q1.mp3',preg:'¿Qué proceso convierte el agua líquida en vapor?',opc:['Condensación','Precipitación','Evaporación','Infiltración'],c:'Evaporación'},
+    {audio:'audios/ciclo_q2.mp3',preg:'¿Cómo se llama el proceso en que el vapor forma nubes?',opc:['Evaporación','Condensación','Escorrentía','Transpiración'],c:'Condensación'},
+    {audio:'audios/ciclo_q3.mp3',preg:'¿Qué es la escorrentía?',opc:['Agua que se evapora','Agua que cae como lluvia','Agua que fluye por la superficie hacia ríos','Agua que se infiltra al suelo'],c:'Agua que fluye por la superficie hacia ríos'},
+    {audio:'audios/ciclo_q4.mp3',preg:'¿Qué proceso ocurre cuando el agua penetra el suelo?',opc:['Condensación','Precipitación','Evaporación','Infiltración'],c:'Infiltración'},
+  ],
+  smC3:[
+    {audio:'audios/cuenca_q1.mp3',preg:'¿Cuál es el río con mayor caudal del mundo?',opc:['Nilo','Yangtze','Amazonas','Mississippi'],c:'Amazonas'},
+    {audio:'audios/cuenca_q2.mp3',preg:'¿Cómo se llama el río secundario que desemboca en otro principal?',opc:['Cauce','Afluente','Cuenca','Delta'],c:'Afluente'},
+    {audio:'audios/cuenca_q3.mp3',preg:'¿Dónde nace generalmente un río?',opc:['En el mar','En zonas montañosas','En los valles planos','En los deltas'],c:'En zonas montañosas'},
+    {audio:'audios/cuenca_q4.mp3',preg:'¿Cómo se llama el lugar donde el río llega al mar?',opc:['Nacimiento','Cauce','Afluente','Desembocadura'],c:'Desembocadura'},
+  ],
+  smK5:[
+    {audio:'audios/cons_q1.mp3',preg:'¿Cuál acción ahorra más agua en el hogar?',opc:['Bañarse en tina','Ducharse en 5 minutos','Lavar el coche a manguera','Regar el jardín al mediodía'],c:'Ducharse en 5 minutos'},
+    {audio:'audios/cons_q2.mp3',preg:'¿Qué significa reutilizar el agua?',opc:['Botar el agua sin usar','Usar el agua dos veces para distintos fines','Comprar agua embotellada','Contaminar y limpiar el agua'],c:'Usar el agua dos veces para distintos fines'},
+    {audio:'audios/cons_q3.mp3',preg:'¿Qué actividad contamina más el agua dulce a nivel mundial?',opc:['Uso doméstico','Agricultura e industria','Transporte','Turismo'],c:'Agricultura e industria'},
+    {audio:'audios/cons_q4.mp3',preg:'¿Por qué es importante tratar las aguas residuales?',opc:['Para venderla','Para evitar contaminar ríos y mares','Para producir electricidad','Para hacer lluvia artificial'],c:'Para evitar contaminar ríos y mares'},
+  ]
+};
+const smScore={};
+function buildSM(containerId,data,ptsId,totId){
+  const cont=document.getElementById(containerId);if(!cont)return;
+  smScore[containerId]=0;
+  document.getElementById(totId).textContent=data.length;
+  data.forEach((q,i)=>{
+    const div=document.createElement('div');div.style.marginBottom='20px';
+    const opcs=q.opc.map(o=>`<button class="qr-btn" onclick="respSM(this,'${o.replace(/'/g,"\\'")}','${q.c.replace(/'/g,"\\'")}','${containerId}','${ptsId}')">${o}</button>`).join('');
+    div.innerHTML=`
+      <div class="ai" style="margin-bottom:10px;">
+        <label style="font-weight:800;color:var(--tx);">🔊 Pregunta ${i+1} — ${q.preg}</label>
+        <audio controls><source src="${q.audio}" type="audio/mpeg"></audio>
+      </div>
+      <div class="qr-grid" id="smg_${containerId}_${i}">${opcs}</div>
+      <div class="fb" id="smfb_${containerId}_${i}"></div>`;
+    cont.appendChild(div);
+  });
+}
+function respSM(btn,resp,correcto,cid,ptsId){
+  btn.closest('.qr-grid').querySelectorAll('.qr-btn').forEach(b=>b.disabled=true);
+  const fb=btn.closest('div').querySelector('.fb');
+  if(resp===correcto){
+    btn.style.background='var(--vd2)';btn.style.color='var(--am3)';btn.style.borderColor='var(--vd1)';
+    if(fb){fb.className='fb ok';fb.innerHTML='✅ ¡Correcto!';fb.style.display='flex';}
+    smScore[cid]++;document.getElementById(ptsId).textContent=smScore[cid];
+  }else{
+    btn.style.background='var(--ro)';btn.style.color='#fff';
+    if(fb){fb.className='fb mal';fb.innerHTML='❌ Incorrecto. La respuesta correcta es: <strong>'+correcto+'</strong>.';fb.style.display='flex';}
+    btn.closest('.qr-grid').querySelectorAll('.qr-btn').forEach(b=>{if(b.textContent===correcto){b.style.background='var(--vd2)';b.style.color='var(--am3)';}});
+  }
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  mezclar('mdC3');mezclar('mdK5');
+  buildVF('vfD2Container',  vfDataD.vfD2,  'ptsVFD2','totVFD2');
+  buildVF('vfI4Container',  vfDataD.vfI4,  'ptsVFI4','totVFI4');
+  buildSM('smContainer1',   smData.sm1,    'ptsSM1', 'totSM1');
+  buildSM('smContainerC3',  smData.smC3,   'ptsSMC3','totSMC3');
+  buildSM('smContainerK5',  smData.smK5,   'ptsSMK5','totSMK5');
+  actualizarUI();
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

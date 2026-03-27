@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Países Poblados · Visual Verbal · Nivel Fácil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --guindo:#7b1d2e;
+      --guindo-dark:#5a1320;
+      --guindo-light:#a63248;
+      --gris:#4a4a5a;
+      --gris-light:#6b6b80;
+      --gris-pale:#e8e8ef;
+      --gris-bg:#f2f2f6;
+      --blanco:#fff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
+
+    .cabecera{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));padding:28px 20px;border-bottom:6px solid var(--gris-pale);text-align:center;box-shadow:0 10px 24px rgba(90,19,32,.35);}
+    .cabecera h1{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;color:#fff;font-weight:900;letter-spacing:1px;}
+    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:1rem;margin-top:4px;}
+    .badge-estilo{background:var(--gris-pale);color:var(--guindo);padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.05rem;display:inline-block;border:3px solid #fff;margin-top:10px;}
+
+    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
+    .punto{width:38px;height:38px;border-radius:50%;background:var(--gris-pale);border:3px solid var(--guindo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--guindo);transition:all .3s;}
+    .punto.activo{background:var(--guindo);color:#fff;transform:scale(1.2);}
+    .punto.completado{background:var(--gris-light);border-color:#fff;color:#fff;}
+
+    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
+    .pagina{display:none;animation:aparecer .45s ease;}
+    .pagina.activa{display:block;}
+    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    .card-vv{background:#fff;border-radius:24px;padding:24px;margin-bottom:20px;border:3px solid var(--guindo);box-shadow:0 8px 0 var(--guindo-dark);}
+    .titulo-pag{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;color:var(--guindo);margin-bottom:8px;border-left:8px solid var(--gris-pale);padding-left:16px;font-weight:800;}
+    .subtitulo-tema{background:var(--gris-pale);border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--guindo);margin-bottom:14px;display:inline-block;border:2px solid #d0d0de;}
+
+    .dato-box{background:var(--gris-bg);border-radius:14px;padding:12px 16px;border-left:6px solid var(--guindo);margin:8px 0;font-size:.92rem;}
+    .dato-box strong{color:var(--guindo);}
+
+    .actividad{background:#fdf5f6;border-radius:24px;padding:20px;margin-top:16px;border:4px dashed var(--guindo-light);}
+    .act-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--guindo);margin-bottom:12px;text-align:center;}
+    .pista-banner{background:linear-gradient(135deg,var(--guindo),var(--guindo-light));color:#fff;border-radius:16px;padding:13px 18px;margin:0 0 12px;text-align:center;}
+    .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
+
+    /* RELACIONAR COLUMNAS */
+    .col-item{background:#fff;border:3px solid var(--guindo);border-radius:14px;padding:12px 16px;font-weight:700;text-align:center;cursor:pointer;transition:all .2s;font-size:.88rem;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+    .col-item img{width:28px;height:20px;object-fit:cover;border-radius:3px;flex-shrink:0;}
+    .col-item:hover:not(.emparejado){background:var(--gris-pale);transform:translateX(3px);}
+    .col-item.sel{background:var(--guindo);color:#fff;border-color:var(--guindo-dark);}
+    .col-item.emparejado{background:var(--gris-pale);color:var(--gris-light);cursor:default;opacity:.55;border-style:dashed;}
+    .col-item.flash-err{background:#fde8e8 !important;border-color:#e74c3c !important;}
+
+    /* COMPLETAR ORACIONES */
+    .oracion-box{background:var(--gris-bg);border-radius:14px;padding:14px 16px;margin-bottom:12px;border:2px solid #d0d0de;}
+    .oracion-txt{font-size:.95rem;font-weight:600;line-height:2;margin-bottom:8px;}
+    .input-blank{border:none;border-bottom:3px solid var(--guindo);background:transparent;font-family:'Barlow',sans-serif;font-weight:700;font-size:.95rem;color:var(--guindo);width:140px;text-align:center;padding:2px 6px;outline:none;}
+    .input-blank.ok{border-color:#27ae60;color:#27ae60;}
+    .input-blank.err{border-color:#e74c3c;color:#e74c3c;}
+    .palabras-banco{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+    .palabra-chip{background:var(--guindo);color:#fff;padding:6px 14px;border-radius:26px;font-weight:700;font-size:.85rem;cursor:pointer;border:2px solid var(--guindo-dark);box-shadow:0 3px 0 var(--guindo-dark);transition:all .15s;user-select:none;}
+    .palabra-chip:hover:not(.usada){transform:translateY(-2px);}
+    .palabra-chip.usada{background:var(--gris-light);border-color:var(--gris);box-shadow:none;cursor:default;opacity:.5;}
+
+    /* SOPA DE LETRAS */
+    .sopa-grid{display:inline-grid;gap:2px;margin:0 auto;width:fit-content;}
+    .sopa-cell{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--gris);cursor:pointer;border-radius:6px;background:var(--gris-bg);border:2px solid #d0d0de;transition:all .15s;user-select:none;}
+    .sopa-cell:hover{background:var(--gris-pale);}
+    .sopa-cell.sel{background:var(--guindo-light);color:#fff;border-color:var(--guindo-dark);}
+    .sopa-cell.encontrada{background:var(--guindo);color:#fff;border-color:var(--guindo-dark);cursor:default;}
+    .palabras-buscar{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+    .pal-buscar{padding:5px 12px;border-radius:20px;font-weight:700;font-size:.82rem;background:var(--gris-bg);border:2px solid #d0d0de;color:var(--gris);}
+    .pal-buscar.hallada{background:var(--guindo);color:#fff;border-color:var(--guindo-dark);text-decoration:line-through;}
+
+    /* REPASO TEXTO */
+    .rep-section{border-radius:16px;overflow:hidden;border:3px solid var(--guindo);box-shadow:0 4px 0 var(--guindo-dark);margin-bottom:16px;}
+    .rep-section img{width:100%;height:140px;object-fit:cover;display:block;}
+    .rep-body{padding:14px 16px;background:#fff;}
+    .rep-body h5{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--guindo);font-size:1.2rem;margin-bottom:6px;}
+    .rep-body p{font-size:.85rem;line-height:1.6;color:var(--gris);}
+    .rep-body ul{font-size:.85rem;line-height:1.8;padding-left:18px;color:var(--gris);}
+
+    /* FEEDBACK */
+    .fb-ok{background:var(--guindo);color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
+    .fb-ok.on{display:block;animation:aparecer .4s ease;}
+    .fb-err{background:#e74c3c;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
+    .fb-err.on{display:block;}
+
+    /* NAV */
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .btn-nav{background:var(--guindo);color:#fff;border:3px solid var(--guindo-dark);padding:10px 24px;border-radius:38px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;}
+    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 var(--guindo-dark);}
+    .btn-nav:disabled{background:#ccc;color:#999;border-color:#bbb;box-shadow:none;cursor:default;}
+    .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
+    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
+    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
+    .btn-verificar{background:var(--guindo);color:#fff;border:none;padding:11px 26px;border-radius:26px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);display:block;margin:12px auto 0;transition:all .2s;}
+    .btn-verificar:hover{transform:translateY(-2px);}
+
+    @media(max-width:576px){
+      .sopa-cell{width:26px;height:26px;font-size:.85rem;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="cabecera">
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="sub">Bloque · Nivel Fácil · Geografía 5°</div>
+  <div class="badge-estilo"><i class="fas fa-book-open me-2"></i>Estilo Visual Verbal</div>
+</div>
+
+<!-- PROGRESO -->
+<div class="progreso">
+  <i class="fas fa-book-open fa-2x" style="color:var(--guindo);"></i>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
+    Página <span id="numActual">1</span>/4
+  </span>
+</div>
+
+<div class="contenedor">
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 1 · DISTRIBUCIÓN DE LA POBLACIÓN
+     JUEGO: Relacionar columnas País ↔ Nivel de población
+     ═══════════════════════════════════════ -->
+<div class="pagina activa" id="pagina1">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
+    <span class="subtitulo-tema">Subtema 1 de 3</span>
+
+    <p class="mb-2">La población mundial se distribuye de manera <strong>desigual</strong>. Algunos países concentran cientos de millones de personas mientras otros apenas superan los 10,000 habitantes. Los <strong>factores geográficos</strong> como el clima, el relieve y los recursos naturales determinan esta distribución.</p>
+
+    <div class="dato-box"><strong>5 más poblados:</strong> China (1,400M) · India (1,400M) · EE.UU. (330M) · Indonesia (280M) · Brasil (215M)</div>
+    <div class="dato-box"><strong>5 menos poblados:</strong> Nauru (≈12,000) · Tuvalu (≈11,000) · Palau (≈18,000) · San Marino (≈34,000) · Liechtenstein (≈38,000)</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Relaciona cada país con su nivel de población</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-link me-2"></i>Relacionar Columnas</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Toca un país (izquierda) → luego su nivel de población correcto (derecha)</p>
+
+      <div class="row g-2">
+        <div class="col-6">
+          <h6 class="text-center fw-bold mb-2" style="color:var(--guindo);">País</h6>
+          <div id="colPaises">
+            <div class="col-item" data-par="c1" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/cn.svg" alt="China"> China
+            </div>
+            <div class="col-item" data-par="c2" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+            </div>
+            <div class="col-item" data-par="c3" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/in.svg" alt="India"> India
+            </div>
+            <div class="col-item" data-par="c4" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/sm.svg" alt="San Marino"> San Marino
+            </div>
+            <div class="col-item" data-par="c5" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/br.svg" alt="Brasil"> Brasil
+            </div>
+            <div class="col-item" data-par="c6" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/tv.svg" alt="Tuvalu"> Tuvalu
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h6 class="text-center fw-bold mb-2" style="color:var(--guindo);">Nivel de Población</h6>
+          <div id="colNiveles">
+            <div class="col-item" data-par="c1" onclick="parear(this,'col2')">Más de 1,400 millones</div>
+            <div class="col-item" data-par="c5" onclick="parear(this,'col2')">Más de 215 millones</div>
+            <div class="col-item" data-par="c2" onclick="parear(this,'col2')">Menos de 15,000 hab.</div>
+            <div class="col-item" data-par="c3" onclick="parear(this,'col2')">Segundo más poblado</div>
+            <div class="col-item" data-par="c6" onclick="parear(this,'col2')">Isla con ~11,000 hab.</div>
+            <div class="col-item" data-par="c4" onclick="parear(this,'col2')">República con 34,000 hab.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fb-ok" id="fbPag1">¡Excelente! Relacionaste correctamente todos los países con su nivel de población.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 2 · CONCENTRACIÓN Y DISPERSIÓN
+     JUEGO: Completar oraciones
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina2">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
+    <span class="subtitulo-tema">Subtema 2 de 3</span>
+
+    <p class="mb-2">La <strong>densidad de población</strong> indica cuántas personas viven en un kilómetro cuadrado. Permite comparar qué tan concentrada o dispersa está la población en un territorio. Zonas costeras y valles fértiles tienden a ser más habitados.</p>
+
+    <div class="dato-box"><strong>Concentración:</strong> Bangladesh ~1,100 hab/km². Las ciudades grandes son megalópolis.</div>
+    <div class="dato-box"><strong>Dispersión:</strong> Mongolia ~2 hab/km². Desiertos, selvas y zonas polares tienen pocos habitantes.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Completa las oraciones con las palabras del banco</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-fill-drip me-2"></i>Completar Oraciones</h3>
+
+      <div class="palabras-banco" id="bancoPalabras">
+        <span class="palabra-chip" onclick="usarPalabra(this,'densidad')">densidad</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'concentración')">concentración</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'dispersión')">dispersión</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'megalópolis')">megalópolis</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'kilómetro')">kilómetro</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'Bangladesh')">Bangladesh</span>
+      </div>
+
+      <div id="oraciones">
+        <div class="oracion-box" id="orac1">
+          <div class="oracion-txt">
+            1. La <input type="text" class="input-blank" id="b1" placeholder="___" data-ans="densidad" readonly> de población mide cuántas personas viven en un kilómetro cuadrado.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac2">
+          <div class="oracion-txt">
+            2. Cuando muchas personas viven en poco espacio se llama <input type="text" class="input-blank" id="b2" placeholder="___" data-ans="concentración" readonly> de población.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac3">
+          <div class="oracion-txt">
+            3. La <input type="text" class="input-blank" id="b3" placeholder="___" data-ans="dispersión"> ocurre cuando la población está repartida en grandes territorios con pocos habitantes.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac4">
+          <div class="oracion-txt">
+            4. Una <input type="text" class="input-blank" id="b4" placeholder="___" data-ans="megalópolis" readonly> es una ciudad enorme con millones y millones de habitantes.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac5">
+          <div class="oracion-txt">
+            5. <input type="text" class="input-blank" id="b5" placeholder="___" data-ans="Bangladesh" readonly> es uno de los países con mayor densidad de población del mundo.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-verificar" onclick="verificarOraciones()">Verificar respuestas</button>
+      <div class="fb-ok" id="fbPag2">¡Perfecto! Completaste todas las oraciones correctamente.</div>
+      <div class="fb-err" id="errPag2">Hay respuestas incorrectas. Revisa los blancos en rojo e inténtalo de nuevo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 3 · PROBLEMAS DE CONCENTRACIÓN
+     JUEGO: Sopa de Letras
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina3">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
+    <span class="subtitulo-tema">Subtema 3 de 3</span>
+
+    <p class="mb-2">La <strong>superpoblación</strong> en zonas urbanas genera serios problemas sociales y ambientales. Los gobiernos deben crear políticas para distribuir mejor la población y los servicios a lo largo del territorio.</p>
+
+    <div class="dato-box"><strong>Palabras clave:</strong> VIVIENDA — TRAFICO — BASURA — SMOG — POBREZA — AGUA — CIUDAD — CHINA</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Encuentra las palabras clave del tema</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-search me-2"></i>Sopa de Letras</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Toca la primera letra → luego la última letra de cada palabra (horizontal o vertical)</p>
+
+      <div class="text-center mb-2">
+        <div class="sopa-grid" id="sopaGrid" style="grid-template-columns:repeat(10,32px);">
+          <!-- generado por JS -->
+        </div>
+      </div>
+
+      <div class="palabras-buscar" id="palabrasBuscar">
+        <span class="pal-buscar" data-word="VIVIENDA">VIVIENDA</span>
+        <span class="pal-buscar" data-word="TRAFICO">TRAFICO</span>
+        <span class="pal-buscar" data-word="BASURA">BASURA</span>
+        <span class="pal-buscar" data-word="SMOG">SMOG</span>
+        <span class="pal-buscar" data-word="POBREZA">POBREZA</span>
+        <span class="pal-buscar" data-word="AGUA">AGUA</span>
+        <span class="pal-buscar" data-word="CIUDAD">CIUDAD</span>
+        <span class="pal-buscar" data-word="CHINA">CHINA</span>
+      </div>
+
+      <p class="text-center mt-2" style="color:var(--guindo);font-weight:700;font-size:.9rem;" id="sopaMsg"></p>
+      <div class="fb-ok" id="fbPag3">¡Encontraste todas las palabras! Eres un experto en el tema.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 4 · REPASO VISUAL VERBAL
+     3 fotos + texto de repaso
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina4">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
+    <span class="subtitulo-tema">Retroalimentación Visual-Verbal · Los 3 subtemas</span>
+
+    <p class="mb-3">Lee con atención cada subtema. Las imágenes y el texto te ayudarán a recordar todo lo aprendido.</p>
+
+    <div class="rep-section">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Distribución mundial">
+      <div class="rep-body">
+        <h5>Subtema 1: Distribución de la Población en el Mundo</h5>
+        <p>La población mundial supera los 8,000 millones de personas y no está repartida de forma uniforme. Factores como el <strong>clima</strong> (zonas templadas atraen más población), el <strong>relieve</strong> (llanuras y valles son más habitados), la <strong>disponibilidad de agua</strong> y las <strong>oportunidades económicas</strong> determinan dónde vive la gente.</p>
+        <ul>
+          <li><strong>5 países más poblados:</strong> China, India, EE.UU., Indonesia, Brasil</li>
+          <li><strong>5 países menos poblados:</strong> Nauru, Tuvalu, Palau, San Marino, Liechtenstein</li>
+          <li>China e India juntas superan los 2,800 millones de habitantes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rep-section">
+      <img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentración urbana">
+      <div class="rep-body">
+        <h5>Subtema 2: Concentración y Dispersión de la Población</h5>
+        <p>La <strong>densidad de población</strong> mide el número de habitantes por kilómetro cuadrado (hab/km²). Es el indicador principal para conocer si una zona está concentrada o dispersa.</p>
+        <ul>
+          <li><strong>Concentración:</strong> muchas personas en poco espacio. Ej: Bangladesh (~1,100 hab/km²)</li>
+          <li><strong>Dispersión:</strong> pocas personas en gran territorio. Ej: Mongolia (~2 hab/km²)</li>
+          <li><strong>Megalópolis:</strong> ciudades gigantes como Tokio, Shanghái o Ciudad de México</li>
+          <li>Las zonas costeras y los valles fértiles tienden a tener más población</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rep-section">
+      <img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Problemas de concentración">
+      <div class="rep-body">
+        <h5>Subtema 3: Problemas de la Concentración de Población</h5>
+        <p>Cuando demasiada gente se concentra en una zona, los recursos y servicios se saturan. Esto genera graves problemas sociales y ambientales que afectan la calidad de vida de millones de personas.</p>
+        <ul>
+          <li>Escasez de <strong>vivienda</strong> y asentamientos irregulares</li>
+          <li><strong>Contaminación</strong> del aire, agua y suelo</li>
+          <li><strong>Desempleo</strong> y pobreza urbana</li>
+          <li>Saturación de <strong>servicios</strong> (salud, educación, transporte)</li>
+          <li>Congestión <strong>vial</strong> y exceso de basura</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGADOR -->
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/4</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="boton-quiz text-center">
+  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
+</a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ══════════ PAGINACIÓN ══════════ */
+let pag=1; const TOTAL=4;
+function cambiarPag(d){
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag+=d;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  syncUI(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function syncUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    p.classList.remove('activo','completado');
+    if(i+1===pag) p.classList.add('activo');
+    else if(i+1<pag) p.classList.add('completado');
+  });
+  document.getElementById('numActual').innerText=pag;
+  document.getElementById('indPag').innerText=pag+'/'+TOTAL;
+  document.getElementById('btnAnt').disabled=(pag===1);
+  document.getElementById('btnSig').disabled=(pag===TOTAL);
+}
+function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+function showClass(id){const e=document.getElementById(id);if(e)e.classList.add('on');}
+
+/* ══════════ PÁG 1 — RELACIONAR COLUMNAS ══════════ */
+let selPar=null; let paresOk=0; const TOTAL_PARES=6;
+function parear(el, col){
+  if(el.classList.contains('emparejado')) return;
+  if(!selPar){
+    // Primera selección
+    document.querySelectorAll('.col-item.sel').forEach(e=>e.classList.remove('sel'));
+    el.classList.add('sel');
+    selPar={el,col};
+  } else {
+    // Segunda selección
+    if(selPar.el===el){el.classList.remove('sel');selPar=null;return;}
+    if(selPar.col===col){
+      // misma columna — cambiar selección
+      selPar.el.classList.remove('sel');
+      el.classList.add('sel');
+      selPar={el,col};
+      return;
+    }
+    // columnas distintas — verificar
+    if(selPar.el.dataset.par===el.dataset.par){
+      selPar.el.classList.remove('sel'); selPar.el.classList.add('emparejado');
+      el.classList.add('emparejado');
+      paresOk++;
+      if(paresOk===TOTAL_PARES) showClass('fbPag1');
+    } else {
+      selPar.el.classList.remove('sel');
+      el.classList.add('flash-err');
+      setTimeout(()=>el.classList.remove('flash-err'),500);
+    }
+    selPar=null;
+  }
+}
+
+/* ══════════ PÁG 2 — COMPLETAR ORACIONES ══════════ */
+let selectedBlank = null;
+function usarPalabra(chip, palabra){
+  if(chip.classList.contains('usada')) return;
+  // Buscar el primer blank vacío
+  const blanks=['b1','b2','b3','b4','b5'];
+  for(const id of blanks){
+    const inp=document.getElementById(id);
+    if(inp && inp.value===''){
+      inp.value=palabra;
+      chip.classList.add('usada');
+      inp.classList.remove('ok','err');
+      break;
+    }
+  }
+}
+function verificarOraciones(){
+  const blanks=['b1','b2','b3','b4','b5'];
+  let allOk=true;
+  let allFilled=true;
+  blanks.forEach(id=>{
+    const inp=document.getElementById(id);
+    if(!inp) return;
+    inp.classList.remove('ok','err');
+    if(!inp.value){allFilled=false;return;}
+    if(inp.value.toLowerCase()===inp.dataset.ans.toLowerCase()){
+      inp.classList.add('ok');
+    } else {
+      inp.classList.add('err'); allOk=false;
+    }
+  });
+  if(!allFilled){show('errPag2');hide('fbPag2');document.getElementById('errPag2').innerText='Completa todos los espacios antes de verificar.';return;}
+  if(allOk){showClass('fbPag2');hide('errPag2');}
+  else{show('errPag2');hide('fbPag2');document.getElementById('errPag2').innerText='Hay respuestas incorrectas. Revisa los espacios en rojo.';}
+}
+
+/* ══════════ PÁG 3 — SOPA DE LETRAS ══════════ */
+// Cuadrícula 10x10
+const SOPA_BASE = [
+  ['V','I','V','I','E','N','D','A','B','R'],
+  ['P','O','B','R','E','Z','A','L','A','M'],
+  ['T','R','A','F','I','C','O','S','S','K'],
+  ['C','I','U','D','A','D','V','M','U','A'],
+  ['X','S','M','O','G','T','W','O','R','Y'],
+  ['A','G','U','A','F','B','H','G','A','Z'],
+  ['C','H','I','N','A','L','N','P','Q','T'],
+  ['D','E','N','S','I','D','A','D','W','X'],
+  ['C','O','N','C','E','N','T','R','A','R'],
+  ['D','I','S','P','E','R','S','I','O','N'],
+];
+const PALABRAS_SOPA=[
+  {word:'VIVIENDA',cells:[[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7]]},
+  {word:'TRAFICO',cells:[[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6]]},
+  {word:'BASURA',cells:[[0,8],[1,8],[2,8],[3,8],[4,8],[5,8]]},
+  {word:'SMOG',cells:[[4,1],[4,2],[4,3],[4,4]]},
+  {word:'POBREZA',cells:[[1,0],[1,1],[1,2],[1,3],[1,4],[1,5],[1,6]]},
+  {word:'AGUA',cells:[[5,0],[5,1],[5,2],[5,3]]},
+  {word:'CIUDAD',cells:[[3,0],[3,1],[3,2],[3,3],[3,4],[3,5]]},
+  {word:'CHINA',cells:[[6,0],[6,1],[6,2],[6,3],[6,4]]},
+];
+
+let primeraCelda=null; let encontradas=0;
+function initSopa(){
+  const grid=document.getElementById('sopaGrid');
+  grid.innerHTML='';
+  SOPA_BASE.forEach((row,r)=>{
+    row.forEach((letter,c)=>{
+      const cell=document.createElement('div');
+      cell.className='sopa-cell';
+      cell.innerText=letter;
+      cell.dataset.r=r; cell.dataset.c=c;
+      cell.addEventListener('click',()=>clickCelda(cell,r,c));
+      grid.appendChild(cell);
+    });
+  });
+}
+function clickCelda(cell,r,c){
+  if(cell.classList.contains('encontrada')) return;
+  if(!primeraCelda){
+    cell.classList.add('sel');
+    primeraCelda={cell,r,c};
+    document.getElementById('sopaMsg').innerText='Selecciona la última letra de la palabra...';
+  } else {
+    // verificar si forman una palabra
+    const r1=primeraCelda.r, c1=primeraCelda.c, r2=r, c2=c;
+    const word=obtenerPalabra(r1,c1,r2,c2);
+    const match=PALABRAS_SOPA.find(p=>p.word===word||p.word===word.split('').reverse().join(''));
+    primeraCelda.cell.classList.remove('sel');
+    primeraCelda=null;
+    if(match){
+      // marcar celdas
+      match.cells.forEach(([mr,mc])=>{
+        const idx=mr*10+mc;
+        document.getElementById('sopaGrid').children[idx].classList.add('encontrada');
+      });
+      // marcar palabra en lista
+      const chip=document.querySelector(`.pal-buscar[data-word="${match.word}"]`);
+      if(chip) chip.classList.add('hallada');
+      encontradas++;
+      document.getElementById('sopaMsg').innerText='¡Palabra encontrada: '+match.word+'!';
+      if(encontradas>=8) showClass('fbPag3');
+    } else {
+      document.getElementById('sopaMsg').innerText='No es una palabra. Intenta de nuevo.';
+      setTimeout(()=>{document.getElementById('sopaMsg').innerText='';},1200);
+    }
+  }
+}
+function obtenerPalabra(r1,c1,r2,c2){
+  let palabra='';
+  // horizontal
+  if(r1===r2){
+    const minC=Math.min(c1,c2), maxC=Math.max(c1,c2);
+    for(let c=minC;c<=maxC;c++) palabra+=SOPA_BASE[r1][c];
+  } else if(c1===c2){
+    // vertical
+    const minR=Math.min(r1,r2), maxR=Math.max(r1,r2);
+    for(let r=minR;r<=maxR;r++) palabra+=SOPA_BASE[r][c1];
+  }
+  return palabra;
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  initSopa();
+  syncUI();
+});
+</script>
+</body>
+</html>

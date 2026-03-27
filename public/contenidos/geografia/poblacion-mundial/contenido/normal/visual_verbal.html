@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprendizaje Visual Verbal 📖</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --guindo: #6B0F2B;
+    --guindo-dark: #4A0A1E;
+    --guindo-light: #8B1A3A;
+    --guindo-mid: #7A1230;
+    --gris: #4A4A5A;
+    --gris-light: #6E6E80;
+    --gris-pale: #C8C8D4;
+    --gris-dark: #2A2A3A;
+    --gold: #F4C842;
+    --accent: #E85D8A;
+    --white: #F5F0F2;
+    --success: #2ECC71;
+    --bg: #3A0A1A;
+    --info: #3498DB;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, var(--bg) 0%, #2A2A3A 50%, var(--guindo-dark) 100%);
+    min-height: 100vh;
+    color: var(--white);
+  }
+
+  /* ── TOP HEADER ── */
+  .top-header {
+    background: linear-gradient(135deg, var(--guindo-dark) 0%, var(--gris-dark) 50%, var(--guindo-dark) 100%);
+    text-align: center;
+    padding: 22px 20px 14px;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+  }
+  .top-header-icon { font-size: 1.6rem; }
+  .top-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(244,200,66,0.4);
+    margin: 4px 0;
+  }
+  .top-header-sub {
+    font-size: 0.8rem;
+    color: var(--gris-pale);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .header-badges {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .header-badge {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One';
+    font-size: 0.85rem;
+    padding: 6px 18px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-badge.secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+  }
+
+  /* ── HUD BAR ── */
+  .hud-bar {
+    background: rgba(74,10,30,0.85);
+    border-bottom: 2px solid rgba(244,200,66,0.25);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hud-left { display: flex; align-items: center; gap: 10px; }
+  .hud-icon {
+    width: 38px; height: 38px;
+    background: var(--guindo);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .page-dots { display: flex; gap: 6px; align-items: center; }
+  .page-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--guindo);
+    border: 2px solid rgba(244,200,66,0.4);
+    color: var(--gris-pale);
+    font-family: 'Fredoka One';
+    font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .page-dot.active {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(244,200,66,0.5);
+  }
+  .page-dot:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+  .hud-pag { font-family: 'Fredoka One'; color: var(--gold); font-size: 0.9rem; letter-spacing: 1px; }
+  .hud-pts-group { display: flex; gap: 8px; }
+  .hud-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(244,200,66,0.35);
+    border-radius: 15px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  /* ── SECTION TITLE BAR ── */
+  .section-title-bar {
+    background: linear-gradient(90deg, var(--guindo-mid), var(--gris), var(--guindo-mid));
+    padding: 10px 24px;
+    display: flex; align-items: center; gap: 10px;
+    border-top: 1px solid rgba(244,200,66,0.2);
+    border-bottom: 1px solid rgba(244,200,66,0.2);
+    margin: 0 0 16px 0;
+  }
+  .section-title-bar .sicon { font-size: 1.1rem; }
+  .section-title-bar span { font-family: 'Fredoka One'; font-size: 1rem; color: var(--gold); letter-spacing: 0.5px; }
+
+  /* ── MAIN LAYOUT ── */
+  .main-wrap { max-width: 780px; margin: 0 auto; padding: 0 14px 100px; }
+
+  /* ── PAGE SECTIONS ── */
+  .page { display: none; animation: fadeIn 0.35s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── GAME CARD ── */
+  .game-card {
+    background: linear-gradient(145deg, rgba(90,20,40,0.6), rgba(60,60,80,0.5));
+    border: 1.5px solid rgba(244,200,66,0.25);
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+  }
+  .game-card-header {
+    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark));
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 2px solid rgba(244,200,66,0.3);
+  }
+  .game-number {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One';
+    font-size: 0.78rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .game-title { font-family: 'Fredoka One'; font-size: 1.05rem; color: var(--white); flex: 1; }
+  .game-instruction {
+    padding: 10px 18px 6px;
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.88rem; color: var(--gris-pale);
+    background: rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .instr-icon { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+  .game-body { padding: 16px 18px; }
+
+  /* ── SCORE COUNTER ── */
+  .score-counter {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(244,200,66,0.12);
+    border: 1px solid rgba(244,200,66,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.82rem; color: var(--gold); font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  /* ── INFOGRAPHIC TABLE ── */
+  .info-table { width:100%; border-collapse:collapse; margin:10px 0; }
+  .info-table th { background:var(--guindo); color:var(--gold); padding:10px 14px; text-align:left; font-family:'Fredoka One'; font-size:0.9rem; }
+  .info-table td { padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.08); color:var(--white); font-size:0.88rem; line-height:1.5; }
+  .info-table tr:hover td { background:rgba(255,255,255,0.04); }
+  .num { color:var(--gold); font-weight:800; }
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.75rem; font-weight:700; }
+  .tag-red { background:rgba(231,76,60,0.2); color:#E74C3C; border:1px solid #E74C3C; }
+  .tag-blue { background:rgba(52,152,219,0.2); color:#3498DB; border:1px solid #3498DB; }
+
+  /* ── MIND MAP ── */
+  .mind-map { background:rgba(0,0,0,0.2); border-radius:12px; padding:18px; }
+  .mm-center {
+    background: var(--guindo); border: 2px solid var(--gold); border-radius:12px;
+    padding:10px 20px; font-family:'Fredoka One'; font-size:1rem; color:var(--gold);
+    text-align:center; display:block; width:fit-content; margin:0 auto 14px;
+  }
+  .mm-branches { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mm-branch { background:rgba(107,15,43,0.4); border:1px solid rgba(244,200,66,0.2); border-radius:10px; padding:12px 14px; }
+  .mm-branch-title { color:var(--gold); font-weight:800; font-size:0.88rem; margin-bottom:6px; }
+  .mm-branch ul { list-style:none; padding:0; }
+  .mm-branch li { color:var(--gris-pale); font-size:0.83rem; padding:3px 0 3px 14px; position:relative; line-height:1.5; }
+  .mm-branch li::before { content:'▸'; position:absolute; left:0; color:var(--accent); }
+
+  /* ── TIMELINE ── */
+  .timeline { position:relative; padding-left:28px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, var(--gold), var(--accent)); }
+  .tl-item { position:relative; margin-bottom:14px; padding:12px 14px; background:rgba(107,15,43,0.35); border-radius:10px; border:1px solid rgba(244,200,66,0.15); }
+  .tl-item::before { content:''; position:absolute; left:-22px; top:16px; width:12px; height:12px; background:var(--gold); border-radius:50%; border:2px solid var(--guindo-dark); }
+  .tl-title { color:var(--gold); font-weight:800; font-size:0.9rem; margin-bottom:4px; }
+  .tl-text { color:var(--gris-pale); font-size:0.85rem; line-height:1.6; }
+
+  /* ── VENN ── */
+  .venn-container { display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch; margin:12px 0; }
+  .venn-col { background:rgba(107,15,43,0.3); border:1px solid rgba(244,200,66,0.2); border-radius:10px; padding:12px; min-height:170px; }
+  .venn-center { background:rgba(74,74,90,0.4); border-top:1px solid rgba(244,200,66,0.2); border-bottom:1px solid rgba(244,200,66,0.2); padding:12px; display:flex; flex-direction:column; justify-content:center; align-items:center; min-width:80px; }
+  .venn-title { color:var(--gold); font-weight:800; text-align:center; margin-bottom:6px; font-size:0.88rem; }
+  .venn-item { color:var(--gris-pale); font-size:0.8rem; padding:2px 0 2px 12px; position:relative; line-height:1.5; }
+  .venn-item::before { content:'•'; position:absolute; left:0; color:var(--accent); }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:12px 0; }
+  .compare-col { display:flex; flex-direction:column; gap:5px; }
+  .compare-header { background:var(--guindo); color:var(--gold); font-family:'Fredoka One'; padding:9px; border-radius:8px; text-align:center; font-size:0.9rem; }
+  .compare-cell { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:7px; padding:7px 9px; font-size:0.83rem; color:var(--gris-pale); text-align:center; min-height:38px; display:flex; align-items:center; justify-content:center; }
+  .compare-cell.city { border-color:rgba(52,152,219,0.35); }
+  .compare-cell.campo { border-color:rgba(46,204,113,0.35); }
+  .compare-cell.asp { color:var(--gold); font-weight:700; background:rgba(107,15,43,0.3); }
+
+  /* ── FILL FORM ── */
+  .fill-form { display:grid; gap:10px; }
+  .form-row { display:grid; grid-template-columns:1fr 2fr; gap:10px; align-items:center; }
+  .form-label { color:var(--gold); font-weight:700; font-size:0.88rem; line-height:1.4; }
+  .form-input {
+    background:rgba(255,255,255,0.07);
+    border:2px solid rgba(255,255,255,0.15);
+    border-radius:8px; color:var(--white);
+    padding:8px 12px; font-family:'Nunito'; font-size:0.88rem; outline:none;
+    transition:border 0.2s; width:100%;
+  }
+  .form-input:focus { border-color:var(--gold); }
+  .form-input.correct { border-color:var(--success); background:rgba(46,204,113,0.1); }
+  .form-input.wrong { border-color:var(--accent); background:rgba(232,93,138,0.1); }
+
+  /* ── TEXT FILL INLINE ── */
+  .text-fill-para { color:var(--white); line-height:2.3; font-size:0.92rem; background:rgba(0,0,0,0.2); border-radius:10px; padding:14px 16px; }
+  .inline-input {
+    display:inline-block; background:rgba(255,255,255,0.07);
+    border:none; border-bottom:2px solid var(--gold);
+    border-radius:4px; color:var(--white);
+    padding:1px 8px; font-family:'Nunito'; font-size:0.88rem; outline:none;
+    transition:border-color 0.2s; min-width:80px; text-align:center;
+    vertical-align:baseline;
+  }
+  .inline-input:focus { border-bottom-color: var(--accent); }
+  .inline-input.correct { border-bottom-color:var(--success); color:var(--success); }
+  .inline-input.wrong { border-bottom-color:var(--accent); color:var(--accent); }
+
+  /* ── QUIZ OPTIONS ── */
+  .quiz-opts-list { display:grid; gap:8px; }
+  .q-opt {
+    background:rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.14);
+    border-radius:9px; padding:11px 14px; cursor:pointer;
+    font-weight:600; font-size:0.9rem; color:var(--white); text-align:left;
+    transition:all 0.22s;
+  }
+  .q-opt:hover { border-color:var(--gold); background:rgba(244,200,66,0.1); }
+  .q-opt.correct { border-color:var(--success); background:rgba(46,204,113,0.18); color:var(--success); }
+  .q-opt.wrong { border-color:var(--accent); background:rgba(232,93,138,0.18); color:var(--accent); }
+
+  /* ── CULTURA CARD ── */
+  .cultura-display { background:rgba(0,0,0,0.25); border:1px solid rgba(244,200,66,0.2); border-radius:12px; padding:14px; margin-bottom:12px; }
+
+  /* ── REPASO PROGRESS ── */
+  .rep-pbar-wrap { width:100%; background:rgba(255,255,255,0.1); border-radius:6px; height:8px; margin:10px 0; overflow:hidden; }
+  .rep-pbar-fill { height:100%; background:linear-gradient(90deg, var(--gold), var(--accent)); border-radius:6px; transition:width 0.5s; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background:rgba(0,0,0,0.2);
+    border:1px solid rgba(244,200,66,0.15);
+    border-radius:10px; padding:14px;
+    font-size:0.9rem; color:var(--gris-pale); line-height:1.75;
+  }
+  .info-box p { margin-bottom:4px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    background:linear-gradient(135deg, var(--guindo), var(--gris));
+    border:2px solid var(--gold); border-radius:10px;
+    color:var(--gold); font-family:'Fredoka One'; font-size:0.9rem;
+    padding:9px 22px; cursor:pointer; transition:all 0.25s; letter-spacing:0.5px;
+  }
+  .btn:hover { background:var(--gold); color:var(--guindo-dark); transform:translateY(-1px); box-shadow:0 4px 14px rgba(244,200,66,0.3); }
+  .btn-green { background:linear-gradient(135deg,#1a5a2a,#2a3a2a); border-color:var(--success); color:var(--success); }
+  .btn-green:hover { background:var(--success); color:#fff; }
+  .btn-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; align-items:center; }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    padding:9px 14px; border-radius:9px; font-weight:700; font-size:0.88rem;
+    margin-top:10px; display:none; text-align:center;
+  }
+  .feedback.show { display:block; animation:fadeIn 0.3s; }
+  .feedback.ok { background:rgba(46,204,113,0.18); color:var(--success); border:1px solid var(--success); }
+  .feedback.fail { background:rgba(232,93,138,0.18); color:var(--accent); border:1px solid var(--accent); }
+
+  /* ── SCORE POPUP ── */
+  .score-popup {
+    position:fixed; top:80px; right:18px;
+    background:linear-gradient(135deg, var(--guindo), var(--gris));
+    border:2px solid var(--gold); border-radius:12px;
+    padding:8px 18px; color:var(--gold); font-family:'Fredoka One'; font-size:1rem;
+    z-index:9999; opacity:0; transform:translateY(-10px);
+    pointer-events:none; transition:all 0.4s;
+  }
+  .score-popup.show { opacity:1; transform:translateY(0); }
+
+  /* ── BADGE ── */
+  .badge { display:inline-flex; align-items:center; gap:5px; background:rgba(244,200,66,0.14); border:1px solid var(--gold); border-radius:20px; padding:4px 12px; font-size:0.8rem; color:var(--gold); font-weight:700; }
+
+  /* ── REPASO END ── */
+  .repaso-end { text-align:center; padding:30px 20px; }
+
+  /* ── FOOTER NAV ── */
+  .footer-nav {
+    position:fixed; bottom:0; left:0; right:0;
+    background:linear-gradient(90deg, var(--guindo-dark), var(--gris-dark), var(--guindo-dark));
+    border-top:2px solid rgba(244,200,66,0.3);
+    padding:10px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+    z-index:200;
+    box-shadow:0 -4px 20px rgba(0,0,0,0.4);
+  }
+  .nav-prev-btn, .nav-next-btn {
+    background:rgba(107,15,43,0.7);
+    border:2px solid rgba(244,200,66,0.4);
+    border-radius:8px; color:var(--gris-pale);
+    font-family:'Fredoka One'; font-size:0.9rem;
+    padding:9px 22px; cursor:pointer; transition:all 0.25s;
+  }
+  .nav-prev-btn:hover, .nav-next-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .nav-prev-btn:disabled { opacity:0.3; cursor:default; }
+  .nav-next-btn { background:var(--gold); color:var(--guindo-dark); border-color:var(--gold); }
+  .nav-next-btn:hover { background:#fff; }
+  .footer-center { font-family:'Fredoka One'; color:var(--gold); font-size:0.95rem; }
+  .quiz-btn-footer {
+    background:linear-gradient(135deg, var(--guindo), var(--gris));
+    border:2px solid var(--gold); border-radius:22px;
+    color:var(--gold); font-family:'Fredoka One'; font-size:0.9rem;
+    padding:9px 20px; cursor:pointer; transition:all 0.25s;
+    display:flex; align-items:center; gap:6px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.3);
+  }
+  .quiz-btn-footer:hover { background:var(--gold); color:var(--guindo-dark); }
+
+  @media(max-width:540px){
+    .mm-branches { grid-template-columns:1fr; }
+    .venn-container { grid-template-columns:1fr; }
+    .compare-table { grid-template-columns:1fr; }
+    .form-row { grid-template-columns:1fr; }
+    .footer-nav { padding:8px 12px; gap:6px; }
+    .nav-prev-btn, .nav-next-btn { padding:8px 14px; font-size:0.82rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="score-popup" id="scorePopup">+10 ⭐</div>
+
+<!-- ══════════ TOP HEADER ══════════ -->
+<div class="top-header">
+  <div class="top-header-icon">📖</div>
+  <h1>Aprendo Leyendo</h1>
+  <div class="top-header-sub">Bloque II — Geografía · 5to Primaria</div>
+  <div class="header-badges">
+    <div class="header-badge">📖 Estilo Visual Verbal</div>
+    <div class="header-badge secondary">🟢 Nivel Normal</div>
+  </div>
+</div>
+
+<!-- ══════════ HUD BAR ══════════ -->
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-icon">👁️</div>
+    <div class="page-dots">
+      <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
+      <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
+      <div class="page-dot" id="dot-2" onclick="goToPage(2)">3</div>
+      <div class="page-dot" id="dot-3" onclick="goToPage(3)">4</div>
+    </div>
+  </div>
+  <div class="hud-pts-group">
+    <div class="hud-chip">⭐ <span id="pts">0</span></div>
+    <div class="hud-chip">🏆 <span id="insig">0</span></div>
+  </div>
+  <div class="hud-pag" id="pagLabel">Pág 1/4</div>
+</div>
+
+<!-- ══════════ SECTION TITLE BAR ══════════ -->
+<div class="section-title-bar" id="sectionBar">
+  <span class="sicon">🌐</span>
+  <span id="sectionTitle">Países Más y Menos Poblados</span>
+</div>
+
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<div class="main-wrap">
+
+  <!-- ── PÁGINA 1: PAÍSES ── -->
+  <div class="page active" id="page-0">
+
+    <!-- MAPA MENTAL -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Mapa Mental: Distribución de la Población</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🧠</span>
+        <span>Lee y estudia este mapa mental antes de hacer los juegos.</span>
+      </div>
+      <div class="game-body">
+        <div class="mind-map">
+          <div class="mm-center">🌍 Distribución de la Población Mundial</div>
+          <div class="mm-branches">
+            <div class="mm-branch">
+              <div class="mm-branch-title">🔴 Países Más Poblados</div>
+              <ul>
+                <li>India (~1,430 millones)</li>
+                <li>China (~1,400 millones)</li>
+                <li>EE.UU (~335 millones)</li>
+                <li>Indonesia (~275 millones)</li>
+                <li>Pakistán (~230 millones)</li>
+              </ul>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-branch-title">🔵 Países Menos Poblados</div>
+              <ul>
+                <li>Vaticano (~800 hab.)</li>
+                <li>Nauru (~10,000 hab.)</li>
+                <li>Tuvalu (~11,000 hab.)</li>
+                <li>Palau (~18,000 hab.)</li>
+                <li>San Marino (~34,000 hab.)</li>
+              </ul>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-branch-title">✅ Factores de Concentración</div>
+              <ul>
+                <li>Clima templado favorable</li>
+                <li>Recursos hídricos abundantes</li>
+                <li>Suelos fértiles para cultivo</li>
+                <li>Oportunidades económicas</li>
+                <li>Acceso a servicios básicos</li>
+              </ul>
+            </div>
+            <div class="mm-branch">
+              <div class="mm-branch-title">⚠️ Problemas de Concentración</div>
+              <ul>
+                <li>Hacinamiento urbano</li>
+                <li>Contaminación ambiental</li>
+                <li>Desempleo y pobreza</li>
+                <li>Tráfico y transporte saturado</li>
+                <li>Déficit de servicios públicos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA COMPARATIVA -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Tabla Comparativa de Países</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📊</span>
+        <span>Observa los datos de población y densidad de cada país.</span>
+      </div>
+      <div class="game-body">
+        <div style="overflow-x:auto;">
+          <table class="info-table">
+            <tr><th>País</th><th>Población aprox.</th><th>Densidad/km²</th><th>Categoría</th></tr>
+            <tr><td>🇮🇳 India</td><td class="num">1,430 millones</td><td class="num">~480</td><td><span class="tag tag-red">Más poblado</span></td></tr>
+            <tr><td>🇨🇳 China</td><td class="num">1,400 millones</td><td class="num">~148</td><td><span class="tag tag-red">Más poblado</span></td></tr>
+            <tr><td>🇺🇸 EE.UU</td><td class="num">335 millones</td><td class="num">~36</td><td><span class="tag tag-red">Más poblado</span></td></tr>
+            <tr><td>🇻🇦 Vaticano</td><td class="num">~800</td><td class="num">~1,800</td><td><span class="tag tag-blue">Menos poblado</span></td></tr>
+            <tr><td>🇳🇷 Nauru</td><td class="num">~10,000</td><td class="num">~500</td><td><span class="tag tag-blue">Menos poblado</span></td></tr>
+            <tr><td>🇹🇻 Tuvalu</td><td class="num">~11,000</td><td class="num">~430</td><td><span class="tag tag-blue">Menos poblado</span></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUEGO 1: COMPLETA EL ESQUEMA -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 1</span>
+        <span class="game-title">Completa el Esquema</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📝</span>
+        <span>Escribe la información correcta en cada campo del esquema. Usa el mapa mental como guía.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Correctas: <span id="f1-score">0/5</span></div>
+        <div class="fill-form">
+          <div class="form-row">
+            <div class="form-label">País más poblado (2024):</div>
+            <input class="form-input" id="f1_1" placeholder="Escribe el país..." data-answer="india">
+          </div>
+          <div class="form-row">
+            <div class="form-label">País menos poblado:</div>
+            <input class="form-input" id="f1_2" placeholder="Escribe el país..." data-answer="vaticano">
+          </div>
+          <div class="form-row">
+            <div class="form-label">Problema #1 de concentración:</div>
+            <input class="form-input" id="f1_3" placeholder="Escribe un problema..." data-answer="hacinamiento">
+          </div>
+          <div class="form-row">
+            <div class="form-label">Factor que atrae población:</div>
+            <input class="form-input" id="f1_4" placeholder="Escribe un factor..." data-answer="clima">
+          </div>
+          <div class="form-row">
+            <div class="form-label">Continente más poblado:</div>
+            <input class="form-input" id="f1_5" placeholder="Escribe el continente..." data-answer="asia">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkForm(1,'f1-score')">✅ Verificar</button>
+          <button class="btn" onclick="resetForm(1,'f1-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-f1"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 2: QUIZ DE CONCEPTOS -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 2</span>
+        <span class="game-title">Quiz de Conceptos</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">❓</span>
+        <span>Lee la pregunta y selecciona la respuesta correcta.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Aciertos: <span id="q1-hits">0</span>/4</div>
+        <div style="margin-bottom:12px;font-size:1rem;font-weight:700;color:var(--white);line-height:1.55;" id="q1-text"></div>
+        <div class="quiz-opts-list" id="q1-opts"></div>
+        <div class="feedback" id="fb-q1"></div>
+        <div class="btn-row">
+          <button class="btn" onclick="nextQ1()">▶ Siguiente pregunta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPASO P1 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">¿Qué aprendiste? — Población</span>
+      </div>
+      <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave de este tema.</span></div>
+      <div class="game-body">
+        <div class="info-box">
+          <p>🌍 <strong style="color:var(--gold)">Países más poblados:</strong> China (~1,400M), India (~1,430M), EE.UU (~335M), Indonesia (~275M), Pakistán (~230M).</p>
+          <p>🏝️ <strong style="color:var(--gold)">Países menos poblados:</strong> Vaticano (~800), Nauru (~10,000), Tuvalu (~11,000).</p>
+          <p>📍 <strong style="color:var(--gold)">Concentración:</strong> ocurre en zonas con clima favorable, agua, suelos fértiles y empleo.</p>
+          <p>⚠️ <strong style="color:var(--gold)">Problemas:</strong> hacinamiento, contaminación, desempleo, falta de servicios y tráfico.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-0 -->
+
+  <!-- ── PÁGINA 2: CIUDAD Y CAMPO ── -->
+  <div class="page" id="page-1">
+
+    <!-- DIAGRAMA DE VENN -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Diagrama de Venn: Ciudad vs Campo</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">⭕</span>
+        <span>Observa las diferencias y similitudes entre el espacio urbano y rural.</span>
+      </div>
+      <div class="game-body">
+        <div class="venn-container">
+          <div class="venn-col">
+            <div class="venn-title">🏙️ Solo Ciudad</div>
+            <div class="venn-item">Rascacielos y edificios</div>
+            <div class="venn-item">Metro y transporte masivo</div>
+            <div class="venn-item">Industria manufacturera</div>
+            <div class="venn-item">Bancos y finanzas</div>
+            <div class="venn-item">Alta densidad poblacional</div>
+            <div class="venn-item">Contaminación alta</div>
+          </div>
+          <div class="venn-center">
+            <div class="venn-title" style="font-size:0.72rem">🤝 Compartido</div>
+            <div class="venn-item" style="font-size:0.75rem">Familias</div>
+            <div class="venn-item" style="font-size:0.75rem">Escuelas</div>
+            <div class="venn-item" style="font-size:0.75rem">Comercios</div>
+            <div class="venn-item" style="font-size:0.75rem">Cultura</div>
+          </div>
+          <div class="venn-col">
+            <div class="venn-title">🌾 Solo Campo</div>
+            <div class="venn-item">Agricultura y ganadería</div>
+            <div class="venn-item">Tractores y maquinaria</div>
+            <div class="venn-item">Baja densidad poblacional</div>
+            <div class="venn-item">Naturaleza y bosques</div>
+            <div class="venn-item">Pesca y silvicultura</div>
+            <div class="venn-item">Ritmo de vida lento</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA COMPARATIVA -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Tabla Comparativa Ciudad vs Campo</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📊</span>
+        <span>Compara ambos espacios geográficos por aspecto.</span>
+      </div>
+      <div class="game-body">
+        <div class="compare-table">
+          <div class="compare-col">
+            <div class="compare-header">Aspecto</div>
+            <div class="compare-cell asp">Densidad</div>
+            <div class="compare-cell asp">Economía</div>
+            <div class="compare-cell asp">Servicios</div>
+            <div class="compare-cell asp">Transporte</div>
+            <div class="compare-cell asp">Naturaleza</div>
+          </div>
+          <div class="compare-col">
+            <div class="compare-header">🏙️ Ciudad</div>
+            <div class="compare-cell city">Alta: miles/km²</div>
+            <div class="compare-cell city">Industria y servicios</div>
+            <div class="compare-cell city">Hospitales, universidades</div>
+            <div class="compare-cell city">Metro, buses, autos</div>
+            <div class="compare-cell city">Parques limitados</div>
+          </div>
+          <div class="compare-col">
+            <div class="compare-header">🌾 Campo</div>
+            <div class="compare-cell campo">Baja: pocos/km²</div>
+            <div class="compare-cell campo">Agricultura, pesca</div>
+            <div class="compare-cell campo">Servicios básicos</div>
+            <div class="compare-cell campo">Caminos y bestias</div>
+            <div class="compare-cell campo">Abundante</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUEGO 3: CLASIFICA -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 3</span>
+        <span class="game-title">Clasifica Ciudad o Campo</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📝</span>
+        <span>Escribe "ciudad" o "campo" según corresponda a cada característica.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Correctas: <span id="f2-score">0/5</span></div>
+        <div class="fill-form">
+          <div class="form-row"><div class="form-label">🚇 Metro subterráneo</div><input class="form-input" id="f2_1" placeholder="ciudad o campo" data-answer="ciudad"></div>
+          <div class="form-row"><div class="form-label">🌽 Cultivo de maíz</div><input class="form-input" id="f2_2" placeholder="ciudad o campo" data-answer="campo"></div>
+          <div class="form-row"><div class="form-label">🏥 Hospital especializado</div><input class="form-input" id="f2_3" placeholder="ciudad o campo" data-answer="ciudad"></div>
+          <div class="form-row"><div class="form-label">🐄 Ganadería extensiva</div><input class="form-input" id="f2_4" placeholder="ciudad o campo" data-answer="campo"></div>
+          <div class="form-row"><div class="form-label">🏭 Zona industrial</div><input class="form-input" id="f2_5" placeholder="ciudad o campo" data-answer="ciudad"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkForm(2,'f2-score')">✅ Verificar</button>
+          <button class="btn" onclick="resetForm(2,'f2-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-f2"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 4: COMPLETA EL TEXTO ACADÉMICO -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 4</span>
+        <span class="game-title">Completa el Texto Académico</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📖</span>
+        <span>Completa el párrafo con los términos geográficos correctos.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Correctas: <span id="tf-score">0/5</span></div>
+        <div class="text-fill-para">
+          El <input class="inline-input" id="ft1" data-answer="éxodo rural" style="width:110px"> es el fenómeno por el cual la población migra del campo hacia la ciudad. La ciudad se caracteriza por su alta <input class="inline-input" id="ft2" data-answer="densidad" style="width:90px"> poblacional y sus actividades <input class="inline-input" id="ft3" data-answer="terciarias" style="width:100px"> (comercio, servicios). El campo, en cambio, se basa en actividades <input class="inline-input" id="ft4" data-answer="primarias" style="width:90px"> como la agricultura. La relación entre ambos espacios es de <input class="inline-input" id="ft5" data-answer="interdependencia" style="width:130px">.
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkTextFill()">✅ Verificar</button>
+          <button class="btn" onclick="resetTextFill()">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-tf"></div>
+      </div>
+    </div>
+
+    <!-- REPASO P2 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">¿Qué aprendiste? — Ciudad y Campo</span>
+      </div>
+      <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave del tema.</span></div>
+      <div class="game-body">
+        <div class="info-box">
+          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
+          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
+          <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
+          <p>🚶 <strong style="color:var(--gold)">Migración:</strong> éxodo rural = movimiento campo → ciudad en busca de mejores oportunidades.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-1 -->
+
+  <!-- ── PÁGINA 3: CULTURAS ── -->
+  <div class="page" id="page-2">
+
+    <!-- LÍNEA DEL TIEMPO -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Línea del Tiempo: Hitos Culturales</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📅</span>
+        <span>Lee los eventos históricos relacionados con la protección cultural.</span>
+      </div>
+      <div class="game-body">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-title">1948 – Declaración Universal de DD.HH</div><div class="tl-text">Se reconoce el derecho de todos los pueblos a su identidad cultural, lengua y tradiciones.</div></div>
+          <div class="tl-item"><div class="tl-title">1972 – UNESCO: Patrimonio Mundial</div><div class="tl-text">Se establece la Convención del Patrimonio Mundial Cultural y Natural para proteger bienes culturales.</div></div>
+          <div class="tl-item"><div class="tl-title">1992 – Diversidad reconocida en ONU</div><div class="tl-text">La ONU reconoce la diversidad cultural como un valor fundamental de la civilización humana.</div></div>
+          <div class="tl-item"><div class="tl-title">2003 – Patrimonio Inmaterial UNESCO</div><div class="tl-text">Se protegen tradiciones orales, artes escénicas, saberes artesanales y rituales culturales.</div></div>
+          <div class="tl-item"><div class="tl-title">2005 – Convención Diversidad Cultural</div><div class="tl-text">UNESCO aprueba la convención para promover y proteger la diversidad cultural global.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLA DE CULTURAS -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Info</span>
+        <span class="game-title">Tabla de Diversidad Cultural</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🌍</span>
+        <span>Estudia las características de las principales culturas del mundo.</span>
+      </div>
+      <div class="game-body">
+        <div style="overflow-x:auto;">
+          <table class="info-table">
+            <tr><th>Cultura</th><th>Idioma</th><th>Tradición destacada</th><th>Aporte al mundo</th></tr>
+            <tr><td>🇲🇽 Mexicana</td><td>Español + indígenas</td><td>Día de Muertos</td><td>Gastronomía, arte maya</td></tr>
+            <tr><td>🇨🇳 China</td><td>Mandarín</td><td>Año Nuevo Lunar</td><td>Papel, brújula, seda</td></tr>
+            <tr><td>🇮🇳 India</td><td>Hindi + 21 más</td><td>Diwali</td><td>Matemáticas, yoga</td></tr>
+            <tr><td>🇯🇵 Japonesa</td><td>Japonés</td><td>Festival Hanami</td><td>Tecnología, anime</td></tr>
+            <tr><td>🌍 Africana</td><td>+2,000 idiomas</td><td>Danzas tribales</td><td>Música, humanidad</td></tr>
+            <tr><td>🕌 Árabe</td><td>Árabe</td><td>Ramadán</td><td>Álgebra, astronomía</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUEGO 5: ADIVINA LA CULTURA -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 5</span>
+        <span class="game-title">Adivina la Cultura</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎭</span>
+        <span>Lee la pista y selecciona de qué cultura se trata. Aciertos: <strong id="cultura-score" style="color:var(--gold)">0</strong>/6</span>
+      </div>
+      <div class="game-body">
+        <div class="cultura-display">
+          <div id="cultura-pista" style="font-size:0.95rem;color:var(--white);line-height:1.7;margin-bottom:14px;">Presiona "Siguiente Pista" para comenzar</div>
+          <div class="quiz-opts-list" id="cultura-opciones"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="nextCultura()">▶ Siguiente Pista</button>
+        </div>
+        <div class="feedback" id="fb-cultura"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 6: COMPLETA EL ESQUEMA CULTURAL -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 6</span>
+        <span class="game-title">Completa el Esquema Cultural</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📝</span>
+        <span>Usa la información de las tablas y la línea del tiempo para completar el esquema.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Correctas: <span id="f3-score">0/5</span></div>
+        <div class="fill-form">
+          <div class="form-row"><div class="form-label">Idiomas en el mundo (aprox.):</div><input class="form-input" id="f3_1" placeholder="número" data-answer="7000"></div>
+          <div class="form-row"><div class="form-label">Organismo que protege la cultura:</div><input class="form-input" id="f3_2" placeholder="nombre del organismo" data-answer="unesco"></div>
+          <div class="form-row"><div class="form-label">¿Qué es el multiculturalismo?</div><input class="form-input" id="f3_3" placeholder="convivencia de..." data-answer="culturas"></div>
+          <div class="form-row"><div class="form-label">Patrimonio cultural inmaterial incluye:</div><input class="form-input" id="f3_4" placeholder="ej: tradiciones, danzas..." data-answer="tradiciones"></div>
+          <div class="form-row"><div class="form-label">Lo opuesto al respeto cultural:</div><input class="form-input" id="f3_5" placeholder="actitud negativa" data-answer="discriminación"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkForm(3,'f3-score')">✅ Verificar</button>
+          <button class="btn" onclick="resetForm(3,'f3-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-f3"></div>
+      </div>
+    </div>
+
+    <!-- REPASO P3 -->
+    <div class="game-card">
+      <div class="game-card-header"><span class="game-number">Repaso</span><span class="game-title">¿Qué aprendiste? — Culturas</span></div>
+      <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave de diversidad cultural.</span></div>
+      <div class="game-body">
+        <div class="info-box">
+          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
+          <p>🗣️ <strong style="color:var(--gold)">Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
+          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
+          <p>🤝 <strong style="color:var(--gold)">Interculturalidad:</strong> respeto, diálogo e intercambio entre culturas.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-2 -->
+
+  <!-- ── PÁGINA 4: REPASO FINAL ── -->
+  <div class="page" id="page-3">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">🎮 Reto Final</span>
+        <span class="game-title">Examen de Repaso Visual Verbal</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🏆</span>
+        <span>Pon a prueba todo lo que leíste y aprendiste. ¡10 preguntas de todos los temas!</span>
+      </div>
+      <div class="game-body">
+        <div id="repaso-container">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <div class="hud-chip">⭐ Puntos del repaso: <span id="repaso-pts">0</span></div>
+            <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 10</div>
+          </div>
+          <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:10%"></div></div>
+          <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.55;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:12px;border-radius:0 8px 8px 0;" id="rep-q"></div>
+          <div class="quiz-opts-list" id="rep-opts"></div>
+          <div class="feedback" id="fb-rep"></div>
+        </div>
+        <div id="repaso-end" style="display:none;" class="repaso-end">
+          <div style="font-family:'Fredoka One';font-size:2.2rem;color:var(--gold);">🏆 ¡Excelente!</div>
+          <div style="font-size:1.1rem;margin:14px 0;color:var(--white);">Puntuación: <span id="rep-final" style="color:var(--gold);font-weight:800;"></span>/100</div>
+          <div id="rep-badge" style="margin:10px 0;"></div>
+          <button class="btn" onclick="restartRepaso()">🔄 Jugar de nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-3 -->
+
+</div><!-- /main-wrap -->
+
+<!-- ══════════ FOOTER NAV ══════════ -->
+<div class="footer-nav">
+  <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div class="footer-center" id="footerPageNum">1/4</div>
+    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL QUIZ</button>
+  </div>
+  <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
+</div>
+
+<script>
+// ───── STATE ─────
+let totalPts = 0, totalInsig = 0;
+let currentPage = 0;
+const TOTAL_PAGES = 4;
+
+const PAGE_LABELS = [
+  { icon:'🌐', title:'Países Más y Menos Poblados' },
+  { icon:'🏙️', title:'Ciudad y Campo' },
+  { icon:'🌍', title:'Las Culturas del Mundo' },
+  { icon:'🎮', title:'Repaso Final' },
+];
+
+// ───── POINTS ─────
+function addPoints(n) {
+  totalPts += n;
+  document.getElementById('pts').textContent = totalPts;
+  if (totalPts >= 50 && totalInsig === 0) { totalInsig=1; document.getElementById('insig').textContent=1; }
+  if (totalPts >= 120 && totalInsig === 1) { totalInsig=2; document.getElementById('insig').textContent=2; }
+  if (totalPts >= 200 && totalInsig < 3) { totalInsig=3; document.getElementById('insig').textContent=3; }
+  const pop = document.getElementById('scorePopup');
+  pop.textContent = '+' + n + ' ⭐';
+  pop.classList.add('show');
+  setTimeout(() => pop.classList.remove('show'), 1400);
+}
+
+// ───── PAGE NAVIGATION ─────
+function goToPage(n) {
+  currentPage = n;
+  document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
+  document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
+  document.getElementById('pagLabel').textContent = `Pág ${n+1}/${TOTAL_PAGES}`;
+  document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
+  document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
+  document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[n].icon;
+  document.getElementById('prevBtn').disabled = (n === 0);
+  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
+
+// ───── FORM SYSTEM ─────
+const formData = {
+  1: { ids:['f1_1','f1_2','f1_3','f1_4','f1_5'] },
+  2: { ids:['f2_1','f2_2','f2_3','f2_4','f2_5'] },
+  3: { ids:['f3_1','f3_2','f3_3','f3_4','f3_5'] }
+};
+
+function checkForm(n, scoreId) {
+  const ids = formData[n].ids;
+  let ok = 0;
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    const val = el.value.toLowerCase().trim();
+    const ans = el.dataset.answer.toLowerCase();
+    el.classList.remove('correct','wrong');
+    if (val.length > 1 && (val.includes(ans) || ans.includes(val))) {
+      el.classList.add('correct'); ok++;
+    } else {
+      el.classList.add('wrong');
+    }
+  });
+  if (scoreId) document.getElementById(scoreId).textContent = `${ok}/${ids.length}`;
+  const fb = document.getElementById('fb-f' + n);
+  fb.className = 'feedback show ' + (ok === ids.length ? 'ok' : 'fail');
+  fb.textContent = ok === ids.length
+    ? '🎉 ¡Perfecto! Completaste toda la actividad. +20 pts'
+    : `✏️ Tuviste ${ok}/${ids.length} correctas. ¡Revisa las marcadas en rojo!`;
+  if (ok === ids.length) addPoints(20);
+}
+
+function resetForm(n, scoreId) {
+  formData[n].ids.forEach(id => {
+    const el = document.getElementById(id);
+    el.value = ''; el.classList.remove('correct','wrong');
+  });
+  if (scoreId) document.getElementById(scoreId).textContent = `0/${formData[n].ids.length}`;
+  document.getElementById('fb-f' + n).className = 'feedback';
+}
+
+// ───── TEXT FILL ─────
+function checkTextFill() {
+  const fields = [
+    {id:'ft1', ans:'éxodo rural'},
+    {id:'ft2', ans:'densidad'},
+    {id:'ft3', ans:'terciarias'},
+    {id:'ft4', ans:'primarias'},
+    {id:'ft5', ans:'interdependencia'}
+  ];
+  let ok = 0;
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const val = el.value.toLowerCase().trim();
+    el.classList.remove('correct','wrong');
+    if (val.length > 2 && (val.includes(f.ans.split(' ')[0]) || f.ans.includes(val))) {
+      el.classList.add('correct'); ok++;
+    } else { el.classList.add('wrong'); }
+  });
+  document.getElementById('tf-score').textContent = `${ok}/5`;
+  const fb = document.getElementById('fb-tf');
+  fb.className = 'feedback show ' + (ok === 5 ? 'ok' : 'fail');
+  fb.textContent = ok === 5 ? '📚 ¡Excelente! +20 pts' : `✏️ ${ok}/5 correctos. ¡Sigue intentando!`;
+  if (ok === 5) addPoints(20);
+}
+function resetTextFill() {
+  ['ft1','ft2','ft3','ft4','ft5'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = ''; el.classList.remove('correct','wrong');
+  });
+  document.getElementById('tf-score').textContent = '0/5';
+  document.getElementById('fb-tf').className = 'feedback';
+}
+
+// ───── QUIZ P1 ─────
+const q1data = [
+  {q:'¿Qué mide la DENSIDAD POBLACIONAL?', opts:['Idiomas por país','Habitantes por km²','Alimentos producidos','Edad promedio'], a:1},
+  {q:'¿Cuál es el factor que MÁS atrae población a un lugar?', opts:['Terremotos frecuentes','Clima extremo','Recursos económicos y servicios','Poca agua'], a:2},
+  {q:'¿Qué son las ZONAS DE DISPERSIÓN?', opts:['Ciudades con millones','Áreas con poca gente dispersa','Países con mucho calor','Zonas sin países'], a:1},
+  {q:'La CONCENTRACIÓN de población genera:', opts:['Solo ventajas','Solo desventajas','Ventajas y problemas','Ningún cambio'], a:2},
+];
+let q1idx = 0, q1hits = 0;
+function loadQ1() {
+  const d = q1data[q1idx];
+  document.getElementById('q1-text').textContent = '❓ ' + d.q;
+  const c = document.getElementById('q1-opts'); c.innerHTML = '';
+  d.opts.forEach((o,i) => {
+    const b = document.createElement('button');
+    b.className = 'q-opt'; b.textContent = o;
+    b.onclick = () => {
+      document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
+        if(j===d.a) btn.classList.add('correct');
+        else if(j===i) btn.classList.add('wrong');
+        btn.disabled = true;
+      });
+      const fb = document.getElementById('fb-q1');
+      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; q1hits++; document.getElementById('q1-hits').textContent=q1hits; addPoints(10); }
+      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta correcta está en verde.'; }
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-q1').className = 'feedback';
+}
+function nextQ1() { q1idx = (q1idx+1) % q1data.length; loadQ1(); }
+loadQ1();
+
+// ───── CULTURAS ─────
+const culturas = [
+  {pista:'🎎 Sus habitantes celebran el Año Nuevo Lunar, conocidos por la Gran Muralla y el té. ¿De qué cultura?', opts:['Japonesa','India','China','Árabe'], a:2},
+  {pista:'🎪 Esta cultura venera las vacas, celebra Diwali y tiene más de 22 idiomas oficiales.', opts:['Brasil','India','México','Egipto'], a:1},
+  {pista:'🎭 Su carnaval es famoso en el mundo, mezcla culturas europeas, africanas e indígenas.', opts:['Argentina','Brasil','Colombia','Perú'], a:1},
+  {pista:'🌙 Esta cultura tiene como lengua el árabe, el Islam es central y el desierto es su paisaje típico.', opts:['Cultura árabe','Cultura judía','Cultura persa','Cultura turca'], a:0},
+  {pista:'🎵 Famosa por el jazz, hip hop, la hamburguesa y el inglés. Es la mayor economía del mundo.', opts:['Reino Unido','Canadá','EE.UU','Australia'], a:2},
+  {pista:'🌮 Esta cultura mezcla raíces indígenas, españolas y africanas. El mariachi y los mayas son parte de ella.', opts:['Colombia','Venezuela','México','Guatemala'], a:2},
+];
+let cultIdx = 0, cultScore = 0;
+function nextCultura() {
+  if (cultIdx >= culturas.length) {
+    document.getElementById('cultura-pista').textContent = '🏆 ¡Terminaste todas las pistas!';
+    document.getElementById('cultura-opciones').innerHTML = ''; return;
+  }
+  const d = culturas[cultIdx];
+  document.getElementById('cultura-pista').textContent = d.pista;
+  const c = document.getElementById('cultura-opciones'); c.innerHTML = '';
+  d.opts.forEach((o,i) => {
+    const b = document.createElement('button'); b.className = 'q-opt'; b.textContent = o;
+    b.onclick = () => {
+      document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j) => {
+        if(j===d.a) btn.classList.add('correct'); else if(j===i) btn.classList.add('wrong'); btn.disabled=true;
+      });
+      const fb = document.getElementById('fb-cultura');
+      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; cultScore++; document.getElementById('cultura-score').textContent=cultScore; addPoints(10); }
+      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta está en verde.'; }
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-cultura').className = 'feedback';
+  cultIdx++;
+}
+
+// ───── REPASO FINAL ─────
+const repasoQ = [
+  {q:'¿Cuál es el país más poblado del mundo en 2024?', opts:['China','India','EE.UU','Indonesia'], a:1},
+  {q:'¿Qué significa "dispersión de la población"?', opts:['Concentración máxima','Poca gente en grandes territorios','Solo en ciudades','En zonas costeras'], a:1},
+  {q:'El espacio urbano se caracteriza por:', opts:['Baja densidad y agricultura','Alta densidad e industria','Sólo naturaleza','Pocos servicios'], a:1},
+  {q:'¿Qué es el éxodo rural?', opts:['Llegada de extranjeros','Migración campo→ciudad','Turismo internacional','Reforestación'], a:1},
+  {q:'La interculturalidad promueve:', opts:['Eliminar culturas menores','Imponer una cultura','Diálogo y respeto entre culturas','Separar comunidades'], a:2},
+  {q:'Un PROBLEMA de la concentración urbana es:', opts:['Abundancia de agua','Hacinamiento y contaminación','Bajo tráfico','Muchos empleos para todos'], a:1},
+  {q:'¿Qué organismo protege el patrimonio cultural?', opts:['OMS','UNICEF','UNESCO','FMI'], a:2},
+  {q:'La relación campo-ciudad es de:', opts:['Independencia total','Competencia','Interdependencia','Conflicto permanente'], a:2},
+  {q:'¿Cuál es el territorio con MENOR población?', opts:['Mónaco','Vaticano','Andorra','San Marino'], a:1},
+  {q:'El multiculturalismo es la convivencia de:', opts:['Una sola religión','Varias culturas en un espacio','Países con el mismo idioma','Personas del mismo origen'], a:1},
+];
+let repIdx = 0, repPts = 0;
+function initRepaso(){ repIdx=0; repPts=0; loadRep(); }
+function loadRep() {
+  if (repIdx >= repasoQ.length) { showRepasoEnd(); return; }
+  const d = repasoQ[repIdx];
+  document.getElementById('rep-q').textContent = '❓ ' + d.q;
+  const c = document.getElementById('rep-opts'); c.innerHTML = '';
+  d.opts.forEach((o,i) => {
+    const b = document.createElement('button'); b.className = 'q-opt'; b.textContent = o;
+    b.onclick = () => {
+      document.querySelectorAll('#rep-opts .q-opt').forEach((btn,j) => {
+        if(j===d.a) btn.classList.add('correct'); else if(j===i) btn.classList.add('wrong'); btn.disabled=true;
+      });
+      const fb = document.getElementById('fb-rep');
+      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; repPts+=10; addPoints(10); }
+      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto.'; }
+      document.getElementById('repaso-pts').textContent = repPts;
+      repIdx++;
+      document.getElementById('rep-num').textContent = Math.min(repIdx+1, 10);
+      document.getElementById('repaso-prog').style.width = ((repIdx/10)*100) + '%';
+      setTimeout(loadRep, 1200);
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-rep').className = 'feedback';
+}
+function showRepasoEnd() {
+  document.getElementById('repaso-container').style.display = 'none';
+  document.getElementById('repaso-end').style.display = 'block';
+  document.getElementById('rep-final').textContent = repPts;
+  const badge = repPts>=80 ? '🥇 Lector Experto' : repPts>=50 ? '🥈 Estudiante Aplicado' : '🥉 Sigue Leyendo';
+  document.getElementById('rep-badge').innerHTML = `<span class="badge">${badge}</span>`;
+}
+function restartRepaso() {
+  document.getElementById('repaso-container').style.display = 'block';
+  document.getElementById('repaso-end').style.display = 'none';
+  initRepaso();
+}
+initRepaso();
+</script>
+</body>
+</html>

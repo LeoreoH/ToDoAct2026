@@ -1,0 +1,1673 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprendizaje Auditivo 🎵</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --guindo: #6B0F2B;
+    --guindo-dark: #4A0A1E;
+    --guindo-light: #8B1A3A;
+    --guindo-mid: #7A1230;
+    --gris: #4A4A5A;
+    --gris-light: #6E6E80;
+    --gris-pale: #C8C8D4;
+    --gris-dark: #2A2A3A;
+    --gold: #F4C842;
+    --accent: #E85D8A;
+    --white: #F5F0F2;
+    --success: #2ECC71;
+    --bg: #3A0A1A;
+    --card-bg: #F0EAE8;
+    --card-border: #D4B8B8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, var(--bg) 0%, #2A2A3A 50%, var(--guindo-dark) 100%);
+    min-height: 100vh;
+    color: var(--white);
+  }
+
+  /* ── TOP HEADER ── */
+  .top-header {
+    background: linear-gradient(135deg, var(--guindo-dark) 0%, var(--gris-dark) 50%, var(--guindo-dark) 100%);
+    text-align: center;
+    padding: 22px 20px 14px;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+  }
+  .top-header-icon { font-size: 1.6rem; }
+  .top-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(244,200,66,0.4);
+    margin: 4px 0;
+  }
+  .top-header-sub {
+    font-size: 0.8rem;
+    color: var(--gris-pale);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .header-badges {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .header-badge {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One';
+    font-size: 0.85rem;
+    padding: 6px 18px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-badge.secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+  }
+
+  /* ── HUD BAR ── */
+  .hud-bar {
+    background: rgba(74,10,30,0.85);
+    border-bottom: 2px solid rgba(244,200,66,0.25);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hud-left { display: flex; align-items: center; gap: 10px; }
+  .hud-icon {
+    width: 38px; height: 38px;
+    background: var(--guindo);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .page-dots { display: flex; gap: 6px; align-items: center; }
+  .page-dot {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--guindo);
+    border: 2px solid rgba(244,200,66,0.4);
+    color: var(--gris-pale);
+    font-family: 'Fredoka One';
+    font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .page-dot.active {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(244,200,66,0.5);
+  }
+  .page-dot:hover:not(.active) {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .hud-pag {
+    font-family: 'Fredoka One';
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+  .hud-pts-group { display: flex; gap: 8px; }
+  .hud-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(244,200,66,0.35);
+    border-radius: 15px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  /* ── SECTION TITLE BAR ── */
+  .section-title-bar {
+    background: linear-gradient(90deg, var(--guindo-mid), var(--gris), var(--guindo-mid));
+    padding: 10px 24px;
+    display: flex; align-items: center; gap: 10px;
+    border-top: 1px solid rgba(244,200,66,0.2);
+    border-bottom: 1px solid rgba(244,200,66,0.2);
+    margin: 0 0 16px 0;
+  }
+  .section-title-bar .sicon { font-size: 1.1rem; }
+  .section-title-bar span {
+    font-family: 'Fredoka One';
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 14px 100px;
+  }
+
+  /* ── PAGE SECTIONS ── */
+  .page { display: none; animation: fadeIn 0.35s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── GAME CARD ── */
+  .game-card {
+    background: linear-gradient(145deg, rgba(90,20,40,0.6), rgba(60,60,80,0.5));
+    border: 1.5px solid rgba(244,200,66,0.25);
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+  }
+
+  .game-card-header {
+    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark));
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid rgba(244,200,66,0.3);
+  }
+  .game-number {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One';
+    font-size: 0.78rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .game-title {
+    font-family: 'Fredoka One';
+    font-size: 1.05rem;
+    color: var(--white);
+    flex: 1;
+  }
+
+  /* ── INSTRUCCIÓN CON AUDIO ── */
+  .game-instruction {
+    padding: 10px 18px 0px;
+    background: rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .instr-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--gris-pale);
+    padding-bottom: 10px;
+  }
+  .instr-icon { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+
+  /* ── AUDIO PLAYER ZONE ── */
+  .audio-zone {
+    border-top: 1px dashed rgba(244,200,66,0.2);
+    padding: 10px 0 12px;
+  }
+
+  /* Estado: sin audio cargado */
+  .audio-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .audio-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(107,15,43,0.5);
+    border: 1.5px dashed rgba(244,200,66,0.5);
+    border-radius: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--gold);
+    transition: all 0.22s;
+    white-space: nowrap;
+  }
+  .audio-upload-label:hover {
+    background: rgba(244,200,66,0.15);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+  .audio-upload-label input[type="file"] { display: none; }
+
+  .audio-no-file {
+    font-size: 0.78rem;
+    color: rgba(200,200,212,0.5);
+    font-style: italic;
+  }
+
+  /* Estado: audio cargado → reproductor */
+  .audio-player-row {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(244,200,66,0.25);
+    border-radius: 10px;
+    padding: 9px 14px;
+    flex-wrap: wrap;
+  }
+  .audio-player-row.visible { display: flex; }
+
+  .ap-play-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--guindo);
+    color: var(--gold);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .ap-play-btn:hover { background: var(--gold); color: var(--guindo-dark); }
+  .ap-play-btn.playing { background: var(--gold); color: var(--guindo-dark); }
+
+  .ap-info { flex: 1; min-width: 120px; }
+  .ap-filename {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    margin-bottom: 4px;
+  }
+  .ap-bar-wrap {
+    width: 100%;
+    height: 5px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .ap-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+    border-radius: 3px;
+    transition: width 0.25s linear;
+    pointer-events: none;
+  }
+
+  .ap-time {
+    font-size: 0.72rem;
+    color: var(--gris-pale);
+    white-space: nowrap;
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+
+  .ap-vol {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .ap-vol-icon { font-size: 0.85rem; color: var(--gris-pale); cursor: pointer; }
+  .ap-vol-slider {
+    width: 55px;
+    height: 4px;
+    appearance: none;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+  }
+  .ap-vol-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .ap-remove-btn {
+    background: none;
+    border: 1px solid rgba(232,93,138,0.4);
+    border-radius: 6px;
+    color: var(--accent);
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .ap-remove-btn:hover { background: rgba(232,93,138,0.15); }
+
+  /* wave indicator when playing */
+  .ap-wave {
+    display: none;
+    align-items: flex-end;
+    gap: 2px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  .ap-wave.active { display: flex; }
+  .ap-wave-bar {
+    width: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: apwave 0.8s infinite ease-in-out;
+  }
+  .ap-wave-bar:nth-child(1){animation-delay:0s;height:5px}
+  .ap-wave-bar:nth-child(2){animation-delay:.13s;height:12px}
+  .ap-wave-bar:nth-child(3){animation-delay:.26s;height:18px}
+  .ap-wave-bar:nth-child(4){animation-delay:.13s;height:12px}
+  .ap-wave-bar:nth-child(5){animation-delay:0s;height:5px}
+  @keyframes apwave { 0%,100%{transform:scaleY(0.4)} 50%{transform:scaleY(1)} }
+
+  /* ── GAME BODY ── */
+  .game-body { padding: 16px 18px; }
+
+  /* ── SCORE COUNTER ── */
+  .score-counter {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(244,200,66,0.12);
+    border: 1px solid rgba(244,200,66,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  /* ── CLOZE ── */
+  .cloze-area {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .cloze-sentence { font-size: 0.95rem; line-height: 2.3; color: var(--white); }
+  .cloze-blank {
+    display: inline-block;
+    background: rgba(255,255,255,0.07);
+    border-bottom: 2px solid var(--gold);
+    min-width: 90px;
+    text-align: center;
+    border-radius: 4px;
+    padding: 1px 8px;
+    color: var(--gold);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0 3px;
+  }
+  .cloze-blank:hover { background: rgba(244,200,66,0.12); }
+  .cloze-blank.filled { background: rgba(244,200,66,0.1); }
+  .cloze-blank.correct-blank { border-color: var(--success); color: var(--success); }
+  .cloze-blank.wrong-blank { border-color: var(--accent); color: var(--accent); }
+
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 12px 0 4px;
+  }
+  .word-chip {
+    background: var(--guindo);
+    border: 1.5px solid rgba(244,200,66,0.5);
+    border-radius: 20px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--gold);
+    transition: all 0.2s;
+    font-size: 0.87rem;
+  }
+  .word-chip:hover { background: var(--gold); color: var(--guindo-dark); transform: translateY(-1px); }
+  .word-chip.used { opacity: 0.3; pointer-events: none; text-decoration: line-through; }
+  .word-chip.selected-chip {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    outline: 2px solid var(--white);
+  }
+
+  /* ── QUIZ OPTIONS ── */
+  .quiz-opts-list { display: grid; gap: 8px; }
+  .q-opt {
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.14);
+    border-radius: 9px;
+    padding: 11px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+    text-align: left;
+    transition: all 0.22s;
+  }
+  .q-opt:hover { border-color: var(--gold); background: rgba(244,200,66,0.1); }
+  .q-opt.correct { border-color: var(--success); background: rgba(46,204,113,0.18); color: var(--success); }
+  .q-opt.wrong { border-color: var(--accent); background: rgba(232,93,138,0.18); color: var(--accent); }
+
+  /* ── RITMO ── */
+  .ritmo-display {
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(244,200,66,0.25);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    min-height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    color: var(--white);
+  }
+  .ritmo-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
+  .ritmo-btn {
+    padding: 11px 26px;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Fredoka One';
+    font-size: 1rem;
+    transition: all 0.2s;
+    color: var(--white);
+  }
+  .ritmo-btn.ciudad { background: linear-gradient(135deg, #1a3a6B, var(--gris)); }
+  .ritmo-btn.campo { background: linear-gradient(135deg, #1a4a1a, var(--gris)); }
+  .ritmo-btn:hover { transform: scale(1.04); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    background: linear-gradient(135deg, var(--guindo), var(--gris));
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    color: var(--gold);
+    font-family: 'Fredoka One';
+    font-size: 0.9rem;
+    padding: 9px 22px;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.5px;
+  }
+  .btn:hover { background: var(--gold); color: var(--guindo-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(244,200,66,0.3); }
+  .btn-green { background: linear-gradient(135deg, #1a5a2a, #2a3a2a); border-color: var(--success); color: var(--success); }
+  .btn-green:hover { background: var(--success); color: #fff; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    padding: 9px 14px; border-radius: 9px;
+    font-weight: 700; font-size: 0.88rem;
+    margin-top: 10px; display: none; text-align: center;
+  }
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.ok { background: rgba(46,204,113,0.18); color: var(--success); border: 1px solid var(--success); }
+  .feedback.fail { background: rgba(232,93,138,0.18); color: var(--accent); border: 1px solid var(--accent); }
+
+  /* ── SCORE POPUP ── */
+  .score-popup {
+    position: fixed; top: 80px; right: 18px;
+    background: linear-gradient(135deg, var(--guindo), var(--gris));
+    border: 2px solid var(--gold); border-radius: 12px;
+    padding: 8px 18px; color: var(--gold);
+    font-family: 'Fredoka One'; font-size: 1rem;
+    z-index: 9999; opacity: 0; transform: translateY(-10px);
+    pointer-events: none; transition: all 0.4s;
+  }
+  .score-popup.show { opacity: 1; transform: translateY(0); }
+
+  /* ── FOOTER NAVIGATION ── */
+  .footer-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark), var(--guindo-dark));
+    border-top: 2px solid rgba(244,200,66,0.3);
+    padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+  }
+  .nav-prev-btn, .nav-next-btn {
+    background: rgba(107,15,43,0.7);
+    border: 2px solid rgba(244,200,66,0.4);
+    border-radius: 8px;
+    color: var(--gris-pale);
+    font-family: 'Fredoka One';
+    font-size: 0.9rem;
+    padding: 9px 22px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .nav-prev-btn:hover, .nav-next-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .nav-prev-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-next-btn {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    border-color: var(--gold);
+  }
+  .nav-next-btn:hover { background: #fff; }
+  .footer-center { font-family: 'Fredoka One'; color: var(--gold); font-size: 0.95rem; }
+  .quiz-btn-footer {
+    background: linear-gradient(135deg, var(--guindo), var(--gris));
+    border: 2px solid var(--gold);
+    border-radius: 22px;
+    color: var(--gold);
+    font-family: 'Fredoka One';
+    font-size: 0.9rem;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .quiz-btn-footer:hover { background: var(--gold); color: var(--guindo-dark); }
+
+  .rep-pbar-wrap { width: 100%; background: rgba(255,255,255,0.1); border-radius: 6px; height: 8px; margin: 10px 0; overflow: hidden; }
+  .rep-pbar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--accent)); border-radius: 6px; transition: width 0.5s; }
+
+  .cultura-display { background: rgba(0,0,0,0.25); border: 1px solid rgba(244,200,66,0.2); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(244,200,66,0.14); border: 1px solid var(--gold); border-radius: 20px; padding: 4px 12px; font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+
+  .repaso-end { text-align: center; padding: 30px 20px; }
+
+  @media(max-width:540px){
+    .match-container { grid-template-columns: 1fr; }
+    .ritmo-btns { flex-direction: column; align-items: center; }
+    .footer-nav { padding: 8px 12px; gap: 6px; }
+    .nav-prev-btn, .nav-next-btn { padding: 8px 14px; font-size: 0.82rem; }
+    .ap-filename { max-width: 120px; }
+    .ap-vol { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="score-popup" id="scorePopup">+10 ⭐</div>
+
+<!-- ══════════ TOP HEADER ══════════ -->
+<div class="top-header">
+  <div class="top-header-icon">🎵</div>
+  <h1>Aprendo Escuchando</h1>
+  <div class="top-header-sub">Bloque III — Geografía · 5to Primaria</div>
+  <div class="header-badges">
+    <div class="header-badge">🎵 Estilo Auditivo</div>
+    <div class="header-badge secondary">🟢 Nivel Normal</div>
+  </div>
+</div>
+
+<!-- ══════════ HUD BAR ══════════ -->
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-icon">🎧</div>
+    <div class="page-dots">
+      <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
+      <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
+      <div class="page-dot" id="dot-2" onclick="goToPage(2)">3</div>
+      <div class="page-dot" id="dot-3" onclick="goToPage(3)">4</div>
+    </div>
+  </div>
+  <div class="hud-pts-group">
+    <div class="hud-chip">⭐ <span id="pts">0</span></div>
+    <div class="hud-chip">🏆 <span id="insig">0</span></div>
+  </div>
+  <div class="hud-pag" id="pagLabel">Pág 1/4</div>
+</div>
+
+<!-- ══════════ SECTION TITLE BAR ══════════ -->
+<div class="section-title-bar" id="sectionBar">
+  <span class="sicon">🌐</span>
+  <span id="sectionTitle">Países Más y Menos Poblados</span>
+</div>
+
+<!-- ══════════ MAIN CONTENT ══════════ -->
+<div class="main-wrap">
+
+  <!-- ── PÁGINA 1: PAÍSES ── -->
+  <div class="page active" id="page-0">
+
+    <!-- JUEGO 1 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 1</span>
+        <span class="game-title">Completa la Canción de la Población</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🎵</span>
+          <span>Selecciona una palabra del banco y luego haz clic en el espacio donde va.</span>
+        </div>
+        <div class="audio-zone" id="az-1">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/juego1.mp3" onchange="loadAudio(this, 'ap-1')">
+            </label>
+            <span class="audio-no-file" id="no-file-1">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-1">
+            <button class="ap-play-btn" id="play-btn-1" onclick="togglePlay('player-1','play-btn-1','bar-1','time-1','wave-1')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-1">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-1','bar-1')">
+                <div class="ap-bar-fill" id="bar-1"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-1">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-1">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-1',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-1',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-1','no-file-1','player-1','play-btn-1','bar-1','time-1','wave-1')">✕ Quitar</button>
+          </div>
+          <audio id="player-1" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Pares correctos: <span id="c1-score">0/6</span></div>
+        <div class="cloze-area">
+          <div class="cloze-sentence">
+            China e India, las más <span class="cloze-blank" data-answer="pobladas" onclick="fillBlank(this,'wb1')">___</span>,<br>
+            millones y millones de almas <span class="cloze-blank" data-answer="agrupadas" onclick="fillBlank(this,'wb1')">___</span>,<br>
+            el Vaticano es pequeño, poca <span class="cloze-blank" data-answer="gente" onclick="fillBlank(this,'wb1')">___</span>,<br>
+            ¡la distribución del mundo es <span class="cloze-blank" data-answer="diferente" onclick="fillBlank(this,'wb1')">___</span>!<br><br>
+            Concentración causa <span class="cloze-blank" data-answer="problemas" onclick="fillBlank(this,'wb1')">___</span> en la ciudad,<br>
+            tráfico y ruido sin mucha <span class="cloze-blank" data-answer="calidad" onclick="fillBlank(this,'wb1')">___</span>.
+          </div>
+        </div>
+        <div class="word-bank" id="wb1">
+          <span class="word-chip" onclick="selectWord(this,'wb1')">pobladas</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">agrupadas</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">gente</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">diferente</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">problemas</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">calidad</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">vacía</span>
+          <span class="word-chip" onclick="selectWord(this,'wb1')">personas</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(1,'c1-score')">✅ Verificar frases</button>
+          <button class="btn" onclick="resetCloze(1,'c1-score')">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-c1"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 2 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 2</span>
+        <span class="game-title">Quiz del Escucha</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🎙️</span>
+          <span>Lee la pregunta y selecciona la respuesta correcta.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/juego2.mp3" onchange="loadAudio(this, 'ap-2')">
+            </label>
+            <span class="audio-no-file" id="no-file-2">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-2">
+            <button class="ap-play-btn" id="play-btn-2" onclick="togglePlay('player-2','play-btn-2','bar-2','time-2','wave-2')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-2">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-2','bar-2')">
+                <div class="ap-bar-fill" id="bar-2"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-2">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-2">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-2',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-2',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-2','no-file-2','player-2','play-btn-2','bar-2','time-2','wave-2')">✕ Quitar</button>
+          </div>
+          <audio id="player-2" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Aciertos: <span id="q1-hits">0</span>/6</div>
+        <div style="margin-bottom:12px;font-size:1rem;font-weight:700;color:var(--white);line-height:1.55;" id="q1-text"></div>
+        <div class="quiz-opts-list" id="q1-opts"></div>
+        <div class="feedback" id="fb-q1"></div>
+        <div class="btn-row">
+          <button class="btn" onclick="nextQ1()">▶️ Siguiente pregunta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPASO P1 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">¿Qué aprendiste? — Población</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">📖</span>
+          <span>Refuerza los conceptos clave de este tema.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/repaso1.mp3" onchange="loadAudio(this, 'ap-r1')">
+            </label>
+            <span class="audio-no-file" id="no-file-r1">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-r1">
+            <button class="ap-play-btn" id="play-btn-r1" onclick="togglePlay('player-r1','play-btn-r1','bar-r1','time-r1','wave-r1')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-r1">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-r1','bar-r1')">
+                <div class="ap-bar-fill" id="bar-r1"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-r1">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-r1">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-r1',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-r1',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-r1','no-file-r1','player-r1','play-btn-r1','bar-r1','time-r1','wave-r1')">✕ Quitar</button>
+          </div>
+          <audio id="player-r1" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🌍 <strong style="color:var(--gold)">Países más poblados:</strong> China (~1,400M), India (~1,400M), EE.UU (~335M), Indonesia (~275M), Pakistán (~230M).</p>
+          <p>🏝️ <strong style="color:var(--gold)">Países menos poblados:</strong> Vaticano (~800), Nauru (~10,000), Tuvalu (~11,000).</p>
+          <p>📍 <strong style="color:var(--gold)">Concentración:</strong> ocurre en zonas con clima favorable, agua, suelos fértiles y empleo.</p>
+          <p>⚠️ <strong style="color:var(--gold)">Problemas:</strong> hacinamiento, contaminación, desempleo, falta de servicios y tráfico.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-0 -->
+
+  <!-- ── PÁGINA 2: CIUDAD Y CAMPO ── -->
+  <div class="page" id="page-1">
+
+    <!-- JUEGO 3 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 3</span>
+        <span class="game-title">El Ritmo Clasificador</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🥁</span>
+          <span>Escucha la pista y elige si pertenece a la <strong>Ciudad</strong> 🏙️ o al <strong>Campo</strong> 🌾. ¡Haz clic rápido!</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/juego3.mp3" onchange="loadAudio(this, 'ap-3')">
+            </label>
+            <span class="audio-no-file" id="no-file-3">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-3">
+            <button class="ap-play-btn" id="play-btn-3" onclick="togglePlay('player-3','play-btn-3','bar-3','time-3','wave-3')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-3">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-3','bar-3')">
+                <div class="ap-bar-fill" id="bar-3"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-3">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-3">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-3',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-3',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-3','no-file-3','player-3','play-btn-3','bar-3','time-3','wave-3')">✕ Quitar</button>
+          </div>
+          <audio id="player-3" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;">
+          <div class="hud-chip">Aciertos: <span id="ritmo-score">0</span></div>
+          <div class="hud-chip">Ronda: <span id="ritmo-round">0</span>/8</div>
+        </div>
+        <div class="ritmo-display" id="ritmo-display">Presiona "Iniciar" para comenzar 🎵</div>
+        <div class="ritmo-btns">
+          <button class="btn" onclick="initRitmo()">▶️ Iniciar</button>
+          <button class="ritmo-btn ciudad" onclick="answerRitmo('ciudad')">🏙️ Ciudad</button>
+          <button class="ritmo-btn campo" onclick="answerRitmo('campo')">🌾 Campo</button>
+        </div>
+        <div class="feedback" id="fb-ritmo"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 4 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 4</span>
+        <span class="game-title">El Diálogo del Migrante</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">💬</span>
+          <span>Completa el diálogo entre Carlos (campo) y Ana (ciudad). Selecciona y coloca las palabras.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/juego4.mp3" onchange="loadAudio(this, 'ap-4')">
+            </label>
+            <span class="audio-no-file" id="no-file-4">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-4">
+            <button class="ap-play-btn" id="play-btn-4" onclick="togglePlay('player-4','play-btn-4','bar-4','time-4','wave-4')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-4">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-4','bar-4')">
+                <div class="ap-bar-fill" id="bar-4"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-4">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-4">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-4',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-4',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-4','no-file-4','player-4','play-btn-4','bar-4','time-4','wave-4')">✕ Quitar</button>
+          </div>
+          <audio id="player-4" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Pares correctos: <span id="c2-score">0/5</span></div>
+        <div class="cloze-area">
+          <div class="cloze-sentence">
+            Ana: <em>"En la ciudad hay muchos <span class="cloze-blank" data-answer="servicios" onclick="fillBlank(this,'wb2')">___</span> y trabajo."</em><br><br>
+            Carlos: <em>"En el campo producimos los <span class="cloze-blank" data-answer="alimentos" onclick="fillBlank(this,'wb2')">___</span> que ustedes comen."</em><br><br>
+            Ana: <em>"Sí, pero aquí la <span class="cloze-blank" data-answer="densidad" onclick="fillBlank(this,'wb2')">___</span> de población es muy alta."</em><br><br>
+            Carlos: <em>"Allá la vida es más <span class="cloze-blank" data-answer="tranquila" onclick="fillBlank(this,'wb2')">___</span> y cerca de la naturaleza."</em><br><br>
+            Ana: <em>"La <span class="cloze-blank" data-answer="migración" onclick="fillBlank(this,'wb2')">___</span> del campo a la ciudad ha crecido mucho."</em>
+          </div>
+        </div>
+        <div class="word-bank" id="wb2">
+          <span class="word-chip" onclick="selectWord(this,'wb2')">servicios</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">alimentos</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">densidad</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">tranquila</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">migración</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">ruidosa</span>
+          <span class="word-chip" onclick="selectWord(this,'wb2')">edificios</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(2,'c2-score')">✅ Verificar frases</button>
+          <button class="btn" onclick="resetCloze(2,'c2-score')">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-c2"></div>
+      </div>
+    </div>
+
+    <!-- REPASO P2 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">¿Qué aprendiste? — Ciudad y Campo</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">📖</span>
+          <span>Conceptos clave del tema.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/repaso2.mp3" onchange="loadAudio(this, 'ap-r2')">
+            </label>
+            <span class="audio-no-file" id="no-file-r2">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-r2">
+            <button class="ap-play-btn" id="play-btn-r2" onclick="togglePlay('player-r2','play-btn-r2','bar-r2','time-r2','wave-r2')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-r2">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-r2','bar-r2')">
+                <div class="ap-bar-fill" id="bar-r2"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-r2">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-r2">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-r2',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-r2',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-r2','no-file-r2','player-r2','play-btn-r2','bar-r2','time-r2','wave-r2')">✕ Quitar</button>
+          </div>
+          <audio id="player-r2" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
+          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
+          <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
+          <p>🚶 <strong style="color:var(--gold)">Migración:</strong> movimiento campo → ciudad en busca de mejores oportunidades.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-1 -->
+
+  <!-- ── PÁGINA 3: CULTURAS ── -->
+  <div class="page" id="page-2">
+
+    <!-- JUEGO 5 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 5</span>
+        <span class="game-title">Adivina la Cultura</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🎭</span>
+          <span>Lee la pista y selecciona de qué cultura se trata. Aciertos: <strong id="cultura-score" style="color:var(--gold)">0</strong>/6</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audio/juego5.mp3*" onchange="loadAudio(this, 'ap-5')">
+            </label>
+            <span class="audio-no-file" id="no-file-5">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-5">
+            <button class="ap-play-btn" id="play-btn-5" onclick="togglePlay('player-5','play-btn-5','bar-5','time-5','wave-5')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-5">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-5','bar-5')">
+                <div class="ap-bar-fill" id="bar-5"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-5">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-5">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-5',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-5',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-5','no-file-5','player-5','play-btn-5','bar-5','time-5','wave-5')">✕ Quitar</button>
+          </div>
+          <audio id="player-5" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="cultura-display">
+          <div id="cultura-pista" style="font-size:1rem;color:var(--white);line-height:1.7;margin-bottom:14px;">Presiona "Siguiente Pista" para comenzar</div>
+          <div class="quiz-opts-list" id="cultura-opciones"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="nextCultura()">▶️ Siguiente Pista</button>
+        </div>
+        <div class="feedback" id="fb-cultura"></div>
+      </div>
+    </div>
+
+    <!-- JUEGO 6 -->
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 6</span>
+        <span class="game-title">El Rap de la Diversidad</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🎤</span>
+          <span>Selecciona las palabras y completa el rap sobre la diversidad cultural.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audio/juego6.mp3" onchange="loadAudio(this, 'ap-6')">
+            </label>
+            <span class="audio-no-file" id="no-file-6">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-6">
+            <button class="ap-play-btn" id="play-btn-6" onclick="togglePlay('player-6','play-btn-6','bar-6','time-6','wave-6')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-6">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-6','bar-6')">
+                <div class="ap-bar-fill" id="bar-6"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-6">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-6">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-6',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-6',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-6','no-file-6','player-6','play-btn-6','bar-6','time-6','wave-6')">✕ Quitar</button>
+          </div>
+          <audio id="player-6" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Pares correctos: <span id="c3-score">0/6</span></div>
+        <div class="cloze-area">
+          <div class="cloze-sentence">
+            Siete mil <span class="cloze-blank" data-answer="idiomas" onclick="fillBlank(this,'wb3')">___</span> en el mundo hay,<br>
+            cada uno es un tesoro sin igual,<br>
+            las <span class="cloze-blank" data-answer="tradiciones" onclick="fillBlank(this,'wb3')">___</span> nos cuentan de dónde venimos,<br>
+            con <span class="cloze-blank" data-answer="respeto" onclick="fillBlank(this,'wb3')">___</span> y amor nos enriquecemos.<br><br>
+            La <span class="cloze-blank" data-answer="UNESCO" onclick="fillBlank(this,'wb3')">___</span> cuida lo que es nuestro,<br>
+            el <span class="cloze-blank" data-answer="multiculturalismo" onclick="fillBlank(this,'wb3')">___</span> es un maestro,<br>
+            juntos somos más, diferente es mejor,<br>
+            la <span class="cloze-blank" data-answer="diversidad" onclick="fillBlank(this,'wb3')">___</span> llena el mundo de color.
+          </div>
+        </div>
+        <div class="word-bank" id="wb3">
+          <span class="word-chip" onclick="selectWord(this,'wb3')">idiomas</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">tradiciones</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">respeto</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">UNESCO</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">multiculturalismo</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">diversidad</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">religiones</span>
+          <span class="word-chip" onclick="selectWord(this,'wb3')">arte</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(3,'c3-score')">✅ Verificar frases</button>
+          <button class="btn" onclick="resetCloze(3,'c3-score')">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-c3"></div>
+      </div>
+    </div>
+
+    <!-- REPASO P3 -->
+    <div class="game-card">
+      <div class="game-card-header"><span class="game-number">Repaso</span><span class="game-title">¿Qué aprendiste? — Culturas</span></div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">📖</span>
+          <span>Conceptos clave de diversidad cultural.</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/repasoculturas.mp3" onchange="loadAudio(this, 'ap-r3')">
+            </label>
+            <span class="audio-no-file" id="no-file-r3">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-r3">
+            <button class="ap-play-btn" id="play-btn-r3" onclick="togglePlay('player-r3','play-btn-r3','bar-r3','time-r3','wave-r3')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-r3">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-r3','bar-r3')">
+                <div class="ap-bar-fill" id="bar-r3"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-r3">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-r3">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-r3',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-r3',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-r3','no-file-r3','player-r3','play-btn-r3','bar-r3','time-r3','wave-r3')">✕ Quitar</button>
+          </div>
+          <audio id="player-r3" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
+          <p>🗣️ <strong style="color:var(--gold)">Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
+          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
+          <p>🤝 <strong style="color:var(--gold)">Interculturalidad:</strong> respeto, diálogo e intercambio entre culturas.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-2 -->
+
+  <!-- ── PÁGINA 4: REPASO FINAL ── -->
+  <div class="page" id="page-3">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">🎮 Reto Final</span>
+        <span class="game-title">Escucha y Responde</span>
+      </div>
+      <div class="game-instruction">
+        <div class="instr-top">
+          <span class="instr-icon">🏆</span>
+          <span>Pon a prueba todo lo que aprendiste. ¡9 preguntas de todos los temas!</span>
+        </div>
+        <div class="audio-zone">
+          <div class="audio-upload-row">
+            <label class="audio-upload-label">
+              🎵 Subir audio
+              <input type="file" accept="Audios/repasofinal.mp3" onchange="loadAudio(this, 'ap-final')">
+            </label>
+            <span class="audio-no-file" id="no-file-final">Sin audio cargado</span>
+          </div>
+          <div class="audio-player-row" id="ap-final">
+            <button class="ap-play-btn" id="play-btn-final" onclick="togglePlay('player-final','play-btn-final','bar-final','time-final','wave-final')">▶</button>
+            <div class="ap-info">
+              <div class="ap-filename" id="fname-final">—</div>
+              <div class="ap-bar-wrap" onclick="seekAudio(event,'player-final','bar-final')">
+                <div class="ap-bar-fill" id="bar-final"></div>
+              </div>
+            </div>
+            <span class="ap-time" id="time-final">0:00 / 0:00</span>
+            <div class="ap-wave" id="wave-final">
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div><div class="ap-wave-bar"></div>
+              <div class="ap-wave-bar"></div>
+            </div>
+            <div class="ap-vol">
+              <span class="ap-vol-icon" onclick="toggleMute('player-final',this)">🔊</span>
+              <input type="range" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" oninput="setVolume('player-final',this.value)">
+            </div>
+            <button class="ap-remove-btn" onclick="removeAudio('ap-final','no-file-final','player-final','play-btn-final','bar-final','time-final','wave-final')">✕ Quitar</button>
+          </div>
+          <audio id="player-final" preload="none"></audio>
+        </div>
+      </div>
+      <div class="game-body">
+        <div id="repaso-container">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <div class="hud-chip">⭐ Puntos del repaso: <span id="repaso-pts">0</span></div>
+            <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 9</div>
+          </div>
+          <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:11%"></div></div>
+          <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.55;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:12px;border-radius:0 8px 8px 0;" id="rep-q"></div>
+          <div class="quiz-opts-list" id="rep-opts"></div>
+          <div class="feedback" id="fb-rep"></div>
+        </div>
+        <div id="repaso-end" style="display:none;" class="repaso-end">
+          <div style="font-family:'Fredoka One';font-size:2.2rem;color:var(--gold);">🏆 ¡Excelente!</div>
+          <div style="font-size:1.1rem;margin:14px 0;color:var(--white);">Puntuación: <span id="rep-final" style="color:var(--gold);font-weight:800;"></span>/90</div>
+          <div id="rep-badge" style="margin:10px 0;"></div>
+          <button class="btn" onclick="restartRepaso()">🔄 Jugar de nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-3 -->
+
+</div><!-- /main-wrap -->
+
+<!-- ══════════ FOOTER NAV ══════════ -->
+<div class="footer-nav">
+  <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div class="footer-center" id="footerPageNum">1/4</div>
+    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL QUIZ</button>
+  </div>
+  <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
+</div>
+
+<script>
+// ───── STATE ─────
+let totalPts = 0, totalInsig = 0;
+let currentPage = 0;
+const TOTAL_PAGES = 4;
+
+const PAGE_LABELS = [
+  { icon:'🌐', title:'Países Más y Menos Poblados' },
+  { icon:'🏙️', title:'Ciudad y Campo' },
+  { icon:'🌍', title:'Las Culturas del Mundo' },
+  { icon:'🎮', title:'Repaso Final' },
+];
+
+// ───── AUDIO PLAYER SYSTEM ─────
+// Track intervals for each player
+const playerIntervals = {};
+// Track active player to pause others
+let activePlayerId = null;
+
+function fmtTime(s) {
+  if (isNaN(s) || !isFinite(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function loadAudio(input, playerId) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const noFileId = 'no-file-' + playerId.replace('ap-', '');
+  const audioId = 'player-' + playerId.replace('ap-', '');
+  const fnameId = 'fname-' + playerId.replace('ap-', '');
+  const timeId = 'time-' + playerId.replace('ap-', '');
+  const barId = 'bar-' + playerId.replace('ap-', '');
+
+  const url = URL.createObjectURL(file);
+  const audio = document.getElementById(audioId);
+  audio.src = url;
+  audio.load();
+
+  // Show filename truncated
+  const maxLen = 28;
+  const displayName = file.name.length > maxLen ? file.name.substring(0, maxLen) + '…' : file.name;
+  document.getElementById(fnameId).textContent = displayName;
+
+  // Once metadata loaded, show duration
+  audio.addEventListener('loadedmetadata', function onMeta() {
+    document.getElementById(timeId).textContent = '0:00 / ' + fmtTime(audio.duration);
+    audio.removeEventListener('loadedmetadata', onMeta);
+  });
+
+  // Show player, hide upload row
+  document.getElementById(playerId).classList.add('visible');
+  const noFileEl = document.getElementById(noFileId);
+  if (noFileEl) noFileEl.style.display = 'none';
+  // Hide the upload label within same audio-zone
+  const zone = document.getElementById(playerId).closest('.audio-zone');
+  if (zone) {
+    const uploadRow = zone.querySelector('.audio-upload-row');
+    if (uploadRow) uploadRow.style.display = 'none';
+  }
+
+  // Progress update
+  audio.addEventListener('timeupdate', function() {
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById(barId).style.width = pct + '%';
+    document.getElementById(timeId).textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(audio.duration);
+  });
+
+  // Reset on end
+  const playBtnId = 'play-btn-' + playerId.replace('ap-', '');
+  const waveId = 'wave-' + playerId.replace('ap-', '');
+  audio.addEventListener('ended', function() {
+    document.getElementById(barId).style.width = '0%';
+    document.getElementById(playBtnId).textContent = '▶';
+    document.getElementById(playBtnId).classList.remove('playing');
+    document.getElementById(waveId).classList.remove('active');
+    activePlayerId = null;
+  });
+}
+
+function togglePlay(audioId, playBtnId, barId, timeId, waveId) {
+  const audio = document.getElementById(audioId);
+  if (!audio.src || audio.src === window.location.href) return;
+
+  // Pause any currently playing audio
+  if (activePlayerId && activePlayerId !== audioId) {
+    const prevAudio = document.getElementById(activePlayerId);
+    if (prevAudio) prevAudio.pause();
+    // Reset prev button UI
+    const prevSuffix = activePlayerId.replace('player-', '');
+    const prevBtn = document.getElementById('play-btn-' + prevSuffix);
+    const prevWave = document.getElementById('wave-' + prevSuffix);
+    if (prevBtn) { prevBtn.textContent = '▶'; prevBtn.classList.remove('playing'); }
+    if (prevWave) prevWave.classList.remove('active');
+  }
+
+  const btn = document.getElementById(playBtnId);
+  const wave = document.getElementById(waveId);
+
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸';
+    btn.classList.add('playing');
+    wave.classList.add('active');
+    activePlayerId = audioId;
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    wave.classList.remove('active');
+    activePlayerId = null;
+  }
+}
+
+function seekAudio(event, audioId, barId) {
+  const audio = document.getElementById(audioId);
+  if (!audio.duration) return;
+  const wrap = event.currentTarget;
+  const rect = wrap.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const pct = Math.max(0, Math.min(1, x / rect.width));
+  audio.currentTime = pct * audio.duration;
+  document.getElementById(barId).style.width = (pct * 100) + '%';
+}
+
+function setVolume(audioId, val) {
+  document.getElementById(audioId).volume = parseFloat(val);
+}
+
+function toggleMute(audioId, iconEl) {
+  const audio = document.getElementById(audioId);
+  audio.muted = !audio.muted;
+  iconEl.textContent = audio.muted ? '🔇' : '🔊';
+}
+
+function removeAudio(playerId, noFileId, audioId, playBtnId, barId, timeId, waveId) {
+  const audio = document.getElementById(audioId);
+  audio.pause();
+  audio.src = '';
+  activePlayerId = null;
+
+  // Reset UI
+  document.getElementById(playBtnId).textContent = '▶';
+  document.getElementById(playBtnId).classList.remove('playing');
+  document.getElementById(barId).style.width = '0%';
+  document.getElementById(waveId).classList.remove('active');
+
+  // Hide player, show upload
+  document.getElementById(playerId).classList.remove('visible');
+  const noFileEl = document.getElementById(noFileId);
+  if (noFileEl) noFileEl.style.display = '';
+  const zone = document.getElementById(playerId).closest('.audio-zone');
+  if (zone) {
+    const uploadRow = zone.querySelector('.audio-upload-row');
+    if (uploadRow) uploadRow.style.display = '';
+    // Reset file input
+    const fileInput = uploadRow ? uploadRow.querySelector('input[type="file"]') : null;
+    if (fileInput) fileInput.value = '';
+  }
+}
+
+// ───── POINTS ─────
+function addPoints(n) {
+  totalPts += n;
+  document.getElementById('pts').textContent = totalPts;
+  if (totalPts >= 50 && totalInsig === 0) { totalInsig=1; document.getElementById('insig').textContent=1; }
+  if (totalPts >= 120 && totalInsig === 1) { totalInsig=2; document.getElementById('insig').textContent=2; }
+  if (totalPts >= 200 && totalInsig < 3) { totalInsig=3; document.getElementById('insig').textContent=3; }
+  const pop = document.getElementById('scorePopup');
+  pop.textContent = '+' + n + ' ⭐';
+  pop.classList.add('show');
+  setTimeout(() => pop.classList.remove('show'), 1400);
+}
+
+// ───── PAGE NAVIGATION ─────
+function goToPage(n) {
+  currentPage = n;
+  document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
+  document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
+  document.getElementById('pagLabel').textContent = `Pág ${n+1}/${TOTAL_PAGES}`;
+  document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
+  document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
+  document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[n].icon;
+  document.getElementById('prevBtn').disabled = (n === 0);
+  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
+
+// ───── CLOZE SYSTEM ─────
+let selectedWord = null;
+let selectedWordEl = null;
+let selectedBank = null;
+
+function selectWord(el, bankId) {
+  if (selectedWordEl) selectedWordEl.classList.remove('selected-chip');
+  selectedWord = el.textContent.trim();
+  selectedWordEl = el;
+  selectedBank = bankId;
+  el.classList.add('selected-chip');
+}
+
+function fillBlank(el, bankId) {
+  if (!selectedWord) return;
+  if (selectedBank !== bankId) return;
+  el.textContent = selectedWord;
+  el.dataset.filled = selectedWord;
+  el.classList.add('filled');
+  if (selectedWordEl) { selectedWordEl.classList.add('used'); selectedWordEl.classList.remove('selected-chip'); }
+  selectedWord = null; selectedWordEl = null; selectedBank = null;
+}
+
+const clozeAnswers = {
+  1: ['pobladas','agrupadas','gente','diferente','problemas','calidad'],
+  2: ['servicios','alimentos','densidad','tranquila','migración'],
+  3: ['idiomas','tradiciones','respeto','UNESCO','multiculturalismo','diversidad']
+};
+const clozePages = { 1:'page-0', 2:'page-1', 3:'page-2' };
+
+function checkCloze(n, scoreId) {
+  const page = document.getElementById(clozePages[n]);
+  const blanks = page.querySelectorAll('.cloze-blank');
+  const answers = clozeAnswers[n];
+  let correct = 0;
+  blanks.forEach((b, i) => {
+    const filled = (b.dataset.filled || '').toLowerCase().trim();
+    const expected = (answers[i] || '').toLowerCase().trim();
+    b.classList.remove('correct-blank','wrong-blank');
+    if (filled === expected) { b.classList.add('correct-blank'); correct++; }
+    else { b.classList.add('wrong-blank'); }
+  });
+  if (scoreId) document.getElementById(scoreId).textContent = `${correct}/${answers.length}`;
+  const fb = document.getElementById('fb-c' + n);
+  fb.className = 'feedback show ' + (correct === answers.length ? 'ok' : 'fail');
+  fb.textContent = correct === answers.length
+    ? '🎉 ¡Perfecto! Completaste toda la actividad. +20 pts'
+    : `✏️ Tuviste ${correct}/${answers.length} correctas. ¡Intenta de nuevo!`;
+  if (correct === answers.length) addPoints(20);
+}
+
+function resetCloze(n, scoreId) {
+  const page = document.getElementById(clozePages[n]);
+  page.querySelectorAll('.cloze-blank').forEach(b => {
+    b.textContent = '___'; b.dataset.filled = '';
+    b.classList.remove('filled','correct-blank','wrong-blank');
+  });
+  const wbId = 'wb' + n;
+  document.querySelectorAll('#' + wbId + ' .word-chip').forEach(c => {
+    c.classList.remove('used','selected-chip'); c.style.outline = '';
+  });
+  if (scoreId) document.getElementById(scoreId).textContent = `0/${clozeAnswers[n].length}`;
+  document.getElementById('fb-c' + n).className = 'feedback';
+  selectedWord = null; selectedWordEl = null; selectedBank = null;
+}
+
+// ───── QUIZ P1 ─────
+const q1data = [
+  { q:'¿Cuál es el país más poblado del mundo ?', opts:['India','China','EE.UU','Indonesia'], a:0 },
+  { q:'¿Cuál es el territorio menos poblado del mundo?', opts:['Vaticano','Nauru','Mónaco','Andorra'], a:0 },
+  { q:'¿Qué factores FAVORECEN la concentración de población?', opts:['Clima frío extremo','Recursos hídricos y suelo fértil','Desiertos','Alta altitud'], a:1 },
+  { q:'Un PROBLEMA de la alta concentración urbana es:', opts:['Mucha vegetación','Agua limpia en abundancia','Hacinamiento y contaminación','Bajo desempleo'], a:2 },
+  { q:'¿Qué significa "dispersión de la población"?', opts:['Toda la gente vive en ciudades','Poca gente distribuida en grandes territorios','Solo agricultores','Concentración máxima'], a:1 },
+  { q:'¿Cuáles son regiones con ALTA densidad de población?', opts:['Sahara y Siberia','Asia del Este y Europa Occidental','Amazonia y Antártida','Desierto de Gobi'], a:1 },
+];
+let q1idx = 0, q1hits = 0;
+function loadQ1() {
+  const d = q1data[q1idx];
+  document.getElementById('q1-text').textContent = '❓ ' + d.q;
+  const c = document.getElementById('q1-opts'); c.innerHTML = '';
+  d.opts.forEach((o,i) => {
+    const b = document.createElement('button');
+    b.className = 'q-opt'; b.textContent = o;
+    b.onclick = () => {
+      document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
+        if(j===d.a) btn.classList.add('correct');
+        else if(j===i) btn.classList.add('wrong');
+        btn.disabled = true;
+      });
+      const fb = document.getElementById('fb-q1');
+      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; q1hits++; document.getElementById('q1-hits').textContent=q1hits; addPoints(10); }
+      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta correcta está en verde.'; }
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-q1').className = 'feedback';
+}
+function nextQ1() { q1idx = (q1idx+1) % q1data.length; loadQ1(); }
+loadQ1();
+
+// ───── RITMO ─────
+const ritmoItems = [
+  {text:'🏗️ Fábricas y rascacielos', ans:'ciudad'},
+  {text:'🌽 Cosecha de maíz', ans:'campo'},
+  {text:'🚇 Metro subterráneo', ans:'ciudad'},
+  {text:'🐄 Ganadería extensiva', ans:'campo'},
+  {text:'🏪 Centro comercial gigante', ans:'ciudad'},
+  {text:'🚜 Tractor arando la tierra', ans:'campo'},
+  {text:'🏥 Hospital con especialistas', ans:'ciudad'},
+  {text:'🌾 Cultivo de trigo', ans:'campo'},
+];
+let ritmoIdx=0, ritmoScore=0, ritmoActive=false;
+function initRitmo() { ritmoIdx=0; ritmoScore=0; ritmoActive=true; document.getElementById('ritmo-score').textContent=0; document.getElementById('ritmo-round').textContent=0; showRitmoItem(); }
+function showRitmoItem() {
+  if(ritmoIdx>=ritmoItems.length){ document.getElementById('ritmo-display').textContent=`🎉 ¡Terminaste! Aciertos: ${ritmoScore}/8`; ritmoActive=false; return; }
+  document.getElementById('ritmo-round').textContent=ritmoIdx+1;
+  document.getElementById('ritmo-display').textContent=ritmoItems[ritmoIdx].text;
+  document.getElementById('fb-ritmo').className='feedback';
+}
+function answerRitmo(choice) {
+  if(!ritmoActive) return;
+  const correct=ritmoItems[ritmoIdx].ans;
+  const fb=document.getElementById('fb-ritmo');
+  if(choice===correct){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto!'; ritmoScore++; addPoints(8); }
+  else{ fb.className='feedback show fail'; fb.textContent=`❌ Era ${correct==='ciudad'?'🏙️ Ciudad':'🌾 Campo'}`; }
+  document.getElementById('ritmo-score').textContent=ritmoScore;
+  ritmoIdx++;
+  setTimeout(showRitmoItem, 900);
+}
+
+// ───── CULTURAS ─────
+const culturas = [
+  {pista:'🎎 Sus habitantes celebran el Año Nuevo Lunar, conocidos por la Gran Muralla y el té. ¿De qué cultura?', opts:['Japonesa','India','China','Árabe'], a:2},
+  {pista:'🎪 Esta cultura venera las vacas, celebra Diwali y tiene más de 22 idiomas oficiales.', opts:['Brasil','India','México','Egipto'], a:1},
+  {pista:'🎭 Su carnaval es famoso en el mundo, mezcla culturas europeas, africanas e indígenas.', opts:['Argentina','Brasil','Colombia','Perú'], a:1},
+  {pista:'🌙 Esta cultura tiene como lengua el árabe, el Islam es central y el desierto es su paisaje típico.', opts:['Cultura árabe','Cultura judía','Cultura persa','Cultura turca'], a:0},
+  {pista:'🎵 Famosa por el jazz, hip hop, la hamburguesa y el inglés. Es la mayor economía del mundo.', opts:['Reino Unido','Canadá','EE.UU','Australia'], a:2},
+  {pista:'🌮 Esta cultura mezcla raíces indígenas, españolas y africanas. El mariachi y los mayas son parte de ella.', opts:['Colombia','Venezuela','México','Guatemala'], a:2},
+];
+let cultIdx=0, cultScore=0;
+function nextCultura() {
+  if(cultIdx>=culturas.length){ document.getElementById('cultura-pista').textContent='🏆 ¡Terminaste todas las pistas!'; document.getElementById('cultura-opciones').innerHTML=''; return; }
+  const d=culturas[cultIdx];
+  document.getElementById('cultura-pista').textContent=d.pista;
+  const c=document.getElementById('cultura-opciones'); c.innerHTML='';
+  d.opts.forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
+    b.onclick=()=>{
+      document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j)=>{ if(j===d.a)btn.classList.add('correct'); else if(j===i)btn.classList.add('wrong'); btn.disabled=true; });
+      const fb=document.getElementById('fb-cultura');
+      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';cultScore++;document.getElementById('cultura-score').textContent=cultScore;addPoints(10);}
+      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto. La respuesta está en verde.';}
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-cultura').className='feedback';
+  cultIdx++;
+}
+
+// ───── REPASO FINAL ─────
+const repasoQ = [
+  {q:'¿Cuál es el continente más poblado del mundo?', opts:['África','Europa','Asia','América'], a:2},
+  {q:'La migración del campo a la ciudad se llama:', opts:['Emigración rural','Éxodo rural','Nomadismo','Turismo'], a:1},
+  {q:'¿Qué es la interculturalidad?', opts:['Eliminar culturas','Respetar e intercambiar entre culturas','Imponer una sola cultura','Aislar comunidades'], a:1},
+  {q:'¿Qué actividades son RURALES?', opts:['Banca y finanzas','Agricultura, ganadería y pesca','Tecnología e industria','Comercio y servicios'], a:1},
+  {q:'La UNESCO protege el patrimonio cultural:', opts:['Solo material','Solo inmaterial','Material e inmaterial','Solo artístico'], a:2},
+  {q:'¿Qué problema causa la ALTA concentración urbana?', opts:['Mucho espacio verde','Tráfico, contaminación y hacinamiento','Bajo costo de vida','Abundancia de recursos'], a:1},
+  {q:'El país con menor población del mundo es:', opts:['Mónaco','San Marino','Vaticano','Liechtenstein'], a:2},
+  {q:'¿Cuántos idiomas existen aproximadamente en el mundo?', opts:['500','2,000','7,000','15,000'], a:2},
+  {q:'La diferencia entre ciudad y campo se basa principalmente en:', opts:['Color del suelo','Densidad poblacional y actividades económicas','Idioma','Temperatura'], a:1},
+];
+let repIdx=0, repPts=0;
+function initRepaso(){ repIdx=0; repPts=0; loadRep(); }
+function loadRep(){
+  if(repIdx>=repasoQ.length){ showRepasoEnd(); return; }
+  const d=repasoQ[repIdx];
+  document.getElementById('rep-q').textContent='❓ '+d.q;
+  const c=document.getElementById('rep-opts'); c.innerHTML='';
+  d.opts.forEach((o,i)=>{
+    const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
+    b.onclick=()=>{
+      document.querySelectorAll('#rep-opts .q-opt').forEach((btn,j)=>{ if(j===d.a)btn.classList.add('correct'); else if(j===i)btn.classList.add('wrong'); btn.disabled=true; });
+      const fb=document.getElementById('fb-rep');
+      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';repPts+=10;addPoints(10);}
+      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
+      document.getElementById('repaso-pts').textContent=repPts;
+      repIdx++;
+      document.getElementById('rep-num').textContent=Math.min(repIdx+1,9);
+      document.getElementById('repaso-prog').style.width=((repIdx/9)*100)+'%';
+      setTimeout(loadRep,1200);
+    };
+    c.appendChild(b);
+  });
+  document.getElementById('fb-rep').className='feedback';
+}
+function showRepasoEnd(){
+  document.getElementById('repaso-container').style.display='none';
+  document.getElementById('repaso-end').style.display='block';
+  document.getElementById('rep-final').textContent=repPts;
+  const badge=repPts>=80?'🥇 Maestro Auditivo':repPts>=50?'🥈 Oyente Experto':'🥉 En Aprendizaje';
+  document.getElementById('rep-badge').innerHTML=`<span class="badge">${badge}</span>`;
+}
+function restartRepaso(){
+  document.getElementById('repaso-container').style.display='block';
+  document.getElementById('repaso-end').style.display='none';
+  initRepaso();
+}
+initRepaso();
+</script>
+</body>
+</html>

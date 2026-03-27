@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrucciones Espaciales · Normal · Auditivo</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --verde:        #15803d;
+      --verde-med:    #16a34a;
+      --verde-pale:   #dcfce7;
+      --verde-oscuro: #14532d;
+      --dorado:       #b45309;
+      --dorado-claro: #fde68a;
+      --dorado-med:   #f59e0b;
+      --dorado-pale:  #fef3c7;
+      --texto:        #14532d;
+      --rojo-err:     #b91c1c;
+      --rojo-pale:    #fee2e2;
+      --azul-audio:   #3b82f6;
+      --azul-pale:    #dbeafe;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 50%, #d1fae5 100%);
+      color: var(--texto); 
+      min-height: 100vh;
+      padding: 8px 0;
+    }
+
+    .cabecera {
+      background: linear-gradient(135deg, #166534 0%, #14532d 60%, #052e16 100%);
+      padding: 6px 20px 4px;
+      border-bottom: 3px solid var(--dorado-claro);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(20,83,45,.4);
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto 8px auto;
+      border-radius: 16px;
+    }
+    .cabecera::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,222,128,.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(253,230,138,.05) 0%, transparent 50%),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 14px);
+    }
+    .magia-particle { position:absolute; width:3px; height:3px; border-radius:50%; background:var(--dorado-claro); opacity:0; pointer-events:none; animation: particleFloat 4s ease-in-out infinite; }
+    @keyframes particleFloat { 0%{ opacity:0; transform:translateY(0) scale(0); } 20%{ opacity:.9; } 80%{ opacity:.5; } 100%{ opacity:0; transform:translateY(-60px) scale(1.2); } }
+    .cabecera h1 { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--dorado-claro); text-shadow: 0 0 20px rgba(253,230,138,.4), 1px 1px 0 rgba(0,0,0,.4); position: relative; letter-spacing: .05em; margin: 0; }
+    .cabecera p  { color:rgba(255,255,255,.75); font-weight:600; margin: 2px 0 2px; position:relative; font-size: 0.75rem; }
+    .badge-estilo { background: var(--dorado-claro); color: var(--texto); padding: 2px 14px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: 2px solid rgba(255,255,255,.6); display: inline-block; margin: 2px; box-shadow: 0 1px 0 var(--dorado); position: relative; }
+    .badge-nivel  { background: rgba(255,255,255,.12); color: var(--dorado-claro); padding: 2px 14px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; border: 2px solid var(--dorado-claro); display: inline-block; margin: 2px; position: relative; }
+
+    .layout { 
+      max-width: 1280px; 
+      margin: 0 auto; 
+      padding: 5px 18px 10px; 
+      display: grid; 
+      grid-template-columns: 1fr 360px; 
+      gap: 16px; 
+      align-items: start;
+      width: 100%;
+    }
+    @media(max-width:960px){ .layout { grid-template-columns: 1fr; } }
+
+    .jardin-wrap { background: white; border-radius: 20px; border: 3px solid #86efac; box-shadow: 0 6px 0 #bbf7d0, 0 10px 24px rgba(20,83,45,.12); overflow: hidden; position: sticky; top: 10px; }
+    .jardin-titulo { background: linear-gradient(135deg, var(--verde-med), var(--verde-oscuro)); color: var(--dorado-claro); font-family: 'Cinzel', serif; font-size: 0.8rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px; letter-spacing: .04em; }
+    .jardin-svg-wrap { width:100%; aspect-ratio:1/1; position:relative; max-height: 460px; }
+    .jardin-svg-wrap svg { width:100%; height:100%; display:block; }
+
+    @keyframes floresBrillan { 0%,100%{ opacity:.5; filter:brightness(1); } 50%{ opacity:1; filter:brightness(1.4) drop-shadow(0 0 3px #fde68a); } }
+    .flor-camino { animation: floresBrillan 1.8s ease-in-out infinite; }
+
+    .leyenda { background: linear-gradient(135deg,#052e16,#14532d); border-top: 2px solid var(--dorado-claro); padding: 6px 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .leyenda-titulo { font-family:'Cinzel',serif; font-size:.7rem; color:var(--dorado-claro); width:100%; margin-bottom:2px; letter-spacing:.06em; }
+    .ley-item { display:flex; align-items:center; gap:4px; font-size:.65rem; font-weight:700; color:rgba(255,255,255,.8); background:rgba(255,255,255,.07); padding:2px 8px; border-radius:16px; }
+    .ley-dot { width:8px; height:8px; border-radius:50%; }
+
+    .panel { display: flex; flex-direction: column; gap: 8px; }
+
+    .btn-audio {
+      background: var(--azul-audio);
+      border: none;
+      border-radius: 40px;
+      padding: 6px 14px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-audio:hover { background: #2563eb; transform: scale(1.02); }
+
+    .intro-card {
+      background: linear-gradient(135deg, #1e3a8a, #1e40af);
+      border-radius: 14px;
+      border: 2px solid var(--dorado-claro);
+      padding: 10px 12px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .intro-card span { font-family: 'Cinzel', serif; font-size: 0.75rem; }
+
+    .brujula-card {
+      background: linear-gradient(135deg,#052e16,#166534);
+      border-radius: 12px;
+      border: 2px solid var(--dorado-claro);
+      box-shadow: 0 3px 0 #052e16;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brujula-svg-wrap { width:60px; height:60px; flex-shrink:0; }
+    .brujula-svg-wrap svg { width:100%; height:100%; }
+    .direccion-info { flex:1; }
+    .dir-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.08em; }
+    .dir-valor { font-family:'Cinzel',serif; font-size:.85rem; color:var(--dorado-claro); font-weight:600; }
+
+    .instrucciones-card {
+      background: white;
+      border-radius: 14px;
+      border: 3px solid #86efac;
+      box-shadow: 0 4px 0 #bbf7d0;
+      overflow: hidden;
+    }
+    .instrucciones-header {
+      background: linear-gradient(135deg, var(--verde-med), var(--verde));
+      padding: 6px 12px;
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-size: .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .instrucciones-body { padding: 8px 12px; }
+
+    .ruta-chips { display:flex; gap:5px; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
+    .chip-ruta { background:var(--verde-pale); border:1.5px solid #86efac; border-radius:6px; padding:2px 8px; font-size:.65rem; font-weight:700; color:var(--verde-oscuro); display:flex; align-items:center; gap:3px; }
+    .chip-ruta.dest { background:#f1f5f9; border-color:#cbd5e1; color:#475569; }
+
+    .nota-cuadras { background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 5px 10px; font-size:.65rem; font-weight:700; color:#1e40af; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 6px; line-height:1.35; }
+
+    .pasos-lista { display: flex; flex-direction: column; gap: 6px; }
+    .paso-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .paso-item.activo {
+      border-color: var(--dorado-med);
+      background: var(--dorado-pale);
+      animation: pulso 1.2s ease-in-out infinite;
+    }
+    @keyframes pulso {
+      0%,100%{ box-shadow: 0 0 0 2px rgba(245,158,11,.2); }
+      50%{ box-shadow: 0 0 0 5px rgba(245,158,11,.4); }
+    }
+    .paso-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--verde-med);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .paso-item.activo .paso-num { background: var(--dorado); }
+    .paso-iconos {
+      flex: 1;
+      display: flex;
+      gap: 8px;
+      font-size: 1.2rem;
+    }
+    .nav-btns { display:flex; gap:6px; margin-top:12px; }
+    .btn-nav { flex:1; padding:5px 8px; border-radius:30px; font-weight:800; font-size:.7rem; cursor:pointer; transition:all .2s; border:none; }
+    .btn-nav.ant { background:var(--verde-pale); color:var(--verde-oscuro); border:1.5px solid #86efac; }
+    .btn-nav.sig { background:var(--verde-med); color:white; box-shadow:0 2px 0 var(--verde-oscuro); }
+    .btn-nav:disabled { opacity:.35; cursor:not-allowed; box-shadow:none; }
+    .contador { text-align:center; font-size:.6rem; font-weight:800; color:#94a3b8; margin-top:5px; }
+
+    .tarjeta-pregunta { background: white; border-radius: 14px; border: 3px solid #86efac; box-shadow: 0 4px 0 #bbf7d0; padding: 10px; text-align: center; }
+    .pregunta-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pregunta-titulo { font-family:'Cinzel',serif; font-size:.8rem; color:var(--verde); margin:0; }
+
+    .destinos-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+    .destino-btn { background:var(--verde-pale); border:2px solid #86efac; border-radius:12px; padding:8px 6px; cursor:pointer; transition:all .2s; text-align:center; font-weight:700; font-size:.7rem; color:var(--texto); box-shadow:0 2px 0 #bbf7d0; }
+    .destino-btn .dest-emoji { font-size:1.4rem; display:block; margin-bottom:2px; }
+    .destino-btn:disabled { cursor:not-allowed; opacity:.8; }
+    .destino-btn.correcta  { background:var(--verde-pale); border-color:var(--verde-med); }
+    .destino-btn.incorrecta { background:var(--rojo-pale); border-color:var(--rojo-err); }
+
+    .feedback-box { border-radius:10px; padding:8px 10px; font-weight:700; font-size:.7rem; line-height:1.4; display:none; margin-top:8px; }
+    .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
+    .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
+
+    .btn-quiz-wrap { margin-top:8px; display:none; }
+    .btn-quiz-wrap.visible { display:block; }
+    .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:8px 20px; border-radius:40px; font-family:'Cinzel',serif; font-size:.85rem; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
+    .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 16px; font-weight:800; font-size:.7rem; cursor:pointer; margin-top:6px; transition:all .2s; display:none; }
+    .btn-reintentar.visible { display:inline-block; }
+
+    .confeti { position:fixed; pointer-events:none; z-index:9999; border-radius:2px; }
+    @keyframes confetiFall { 0%{ transform:translateY(-10px) rotate(0deg); opacity:1; } 100%{ transform:translateY(100vh) rotate(800deg); opacity:0; } }
+  </style>
+</head>
+<body>
+
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing"  src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada"  src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+<!-- AUDIOS DEL ESTILO AUDITIVO - COLOCAR AQUÍ LOS ARCHIVOS -->
+<audio id="audioIntro" src="audios/intro.mp3"></audio>
+<audio id="audioBrujula" src="audios/brujula.mp3"></audio>
+<audio id="audioInstrucciones" src="audios/instrucciones.mp3"></audio>
+<audio id="audioPaso1" src="audios/paso1.mp3"></audio>
+<audio id="audioPaso2" src="audios/paso2.mp3"></audio>
+<audio id="audioPaso3" src="audios/paso3.mp3"></audio>
+<audio id="audioPaso4" src="audios/paso4.mp3"></audio>
+<audio id="audioPaso5" src="audios/paso5.mp3"></audio>
+<audio id="audioPregunta" src="audios/pregunta.mp3"></audio>
+<audio id="audioCorrecto" src="audios/correcto.mp3"></audio>
+<audio id="audioIncorrecto" src="audios/incorrecto.mp3"></audio>
+
+<div class="cabecera">
+  <div class="magia-particle" style="left:8%;top:25%;animation-delay:0s;"></div>
+  <div class="magia-particle" style="left:22%;top:60%;animation-delay:.9s;"></div>
+  <div class="magia-particle" style="left:50%;top:35%;animation-delay:1.5s;"></div>
+  <div class="magia-particle" style="left:72%;top:65%;animation-delay:.4s;"></div>
+  <div class="magia-particle" style="left:88%;top:20%;animation-delay:1.1s;"></div>
+  <h1>🌿 Instrucciones espaciales</h1>
+  <p>El jardín encantado · Orientación relativa</p>
+  <div>
+    <span class="badge-estilo">🎧 Auditivo</span>
+    <span class="badge-nivel">🍃 Nivel Normal</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- JARDÍN SVG COMPLETO -->
+  <div class="jardin-wrap">
+    <div class="jardin-titulo">
+      <i class="fas fa-compass"></i> El jardín encantado — sigue la ruta de Mateo
+    </div>
+    <div class="jardin-svg-wrap">
+      <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gCielo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#bbf7d0"/><stop offset="100%" stop-color="#dcfce7"/>
+          </linearGradient>
+          <filter id="sombra"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.2)"/></filter>
+          <filter id="sombra-s"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.12)"/></filter>
+          <filter id="brillo-agua">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+            <feColorMatrix in="b" type="matrix" values="0 0 1 0 0  0 .4 1 0 0  0 0 1 0 .1  0 0 0 14 -6" result="g"/>
+            <feComposite in="SourceGraphic" in2="g" operator="over"/>
+          </filter>
+          <pattern id="cesped" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#22c55e" opacity=".18"/>
+            <line x1="0" y1="10" x2="20" y2="10" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+          </pattern>
+          <pattern id="seto" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#15803d"/>
+            <circle cx="3" cy="3" r="3" fill="#16a34a"/>
+            <circle cx="9" cy="3" r="3" fill="#15803d"/>
+            <circle cx="3" cy="9" r="3" fill="#166534"/>
+            <circle cx="9" cy="9" r="3" fill="#16a34a"/>
+          </pattern>
+          <pattern id="camino" x="0" y="0" width="28" height="20" patternUnits="userSpaceOnUse">
+            <rect width="28" height="20" fill="#a8996a"/>
+            <rect x="1" y="1" width="12" height="8" rx="2" fill="#c2b280"/>
+            <rect x="15" y="1" width="11" height="8" rx="2" fill="#b8a870"/>
+            <rect x="1" y="11" width="7" height="7" rx="2" fill="#bfb07a"/>
+            <rect x="10" y="11" width="16" height="7" rx="2" fill="#c8b880"/>
+          </pattern>
+        </defs>
+        <rect width="700" height="700" fill="url(#gCielo)"/>
+        <rect width="700" height="700" fill="url(#cesped)"/>
+        <rect x="0"   y="330" width="700" height="40"  fill="url(#camino)"/>
+        <rect x="330" y="0"   width="40"  height="700" fill="url(#camino)"/>
+        <rect x="140" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="524" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="150" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="518" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+        <rect x="0" y="0" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="670" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="670" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="30"  y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="80"  y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="600" y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="628" y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="60"  y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="618" y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+        <g filter="url(#sombra-s)">
+          <polygon points="92,120 112,106 132,106 148,120 148,144 132,158 112,158 92,144" fill="#bfdbfe" stroke="#60a5fa" stroke-width="2"/>
+          <polygon points="97,122 110,110 130,110 143,122 143,142 130,154 110,154 97,142" fill="#dbeafe"/>
+          <ellipse cx="120" cy="132" rx="22" ry="14" fill="#3b82f6" opacity=".6" filter="url(#brillo-agua)"/>
+          <ellipse cx="120" cy="132" rx="16" ry="9"  fill="#60a5fa" opacity=".5"/>
+          <rect x="116" y="96" width="8" height="38" rx="3" fill="#93c5fd"/>
+          <ellipse cx="120" cy="96" rx="10" ry="6"  fill="#bfdbfe"/>
+          <ellipse cx="120" cy="85" rx="3"  ry="8"  fill="#93c5fd" opacity=".9"/>
+          <ellipse cx="114" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(-22,114,93)"/>
+          <ellipse cx="126" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(22,126,93)"/>
+          <circle  cx="120" cy="84" r="5"   fill="#e0f2fe" opacity=".8"/>
+          <text x="99"  y="100" font-size="11">✨</text>
+          <text x="127" y="97"  font-size="9">💫</text>
+          <text x="120" y="168" font-family="Cinzel,serif" font-size="9" fill="#1e3a8a" text-anchor="middle" font-weight="700">⛲ Fuente Mágica</text>
+        </g>
+        <g filter="url(#sombra)">
+          <ellipse cx="600" cy="145" rx="46" ry="14" fill="#86efac" opacity=".7"/>
+          <rect x="597" y="68" width="6" height="78" rx="2" fill="#7c3aed"/>
+          <polygon points="600,55 648,115 552,115" fill="#f43f5e"/>
+          <polygon points="600,55 640,105 560,105" fill="#fb7185"/>
+          <line x1="600" y1="55" x2="560" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="640" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="600" y2="115" stroke="#fde68a" stroke-width="2"/>
+          <circle cx="600" cy="54" r="7" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <g transform="translate(570,112)"><text x="-7" y="5" font-size="12">🐴</text></g>
+          <g transform="translate(628,112)"><text x="-7" y="5" font-size="12">🦄</text></g>
+          <circle cx="556" cy="112" r="6" fill="#ec4899" opacity=".9"/>
+          <circle cx="644" cy="112" r="6" fill="#a78bfa" opacity=".9"/>
+          <circle cx="600" cy="115" r="5" fill="#fbbf24"/>
+          <text x="553" y="78" font-size="10">⭐</text>
+          <text x="638" y="78" font-size="10">✨</text>
+          <text x="600" y="152" font-family="Cinzel,serif" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">🎠 Carrusel</text>
+        </g>
+        <g filter="url(#sombra-s)">
+          <ellipse cx="88" cy="420" rx="58" ry="40" fill="#60a5fa" opacity=".75"/>
+          <ellipse cx="88" cy="420" rx="50" ry="33" fill="#93c5fd" opacity=".65"/>
+          <ellipse cx="88" cy="420" rx="38" ry="24" fill="#bfdbfe" opacity=".5"/>
+          <ellipse cx="80" cy="420" rx="22" ry="8"  fill="none" stroke="#60a5fa" stroke-width="1.5" opacity=".6"/>
+          <ellipse cx="96" cy="428" rx="16" ry="5"  fill="none" stroke="#93c5fd" stroke-width="1"   opacity=".5"/>
+          <text x="64" y="415" font-size="18">🦆</text>
+          <text x="88" y="430" font-size="15">🦆</text>
+          <text x="74" y="433" font-size="12">🐣</text>
+          <ellipse cx="122" cy="408" rx="10" ry="6" fill="#4ade80" opacity=".8"/>
+          <circle  cx="122" cy="408" r="4" fill="#f43f5e" opacity=".7"/>
+          <ellipse cx="57"  cy="436" rx="8"  ry="5" fill="#4ade80" opacity=".7"/>
+          <circle  cx="57"  cy="436" r="3"  fill="#ec4899" opacity=".6"/>
+          <text x="88" y="468" font-family="Cinzel,serif" font-size="9" fill="#1e40af" text-anchor="middle" font-weight="700">🦆 Estanque</text>
+        </g>
+        <g filter="url(#sombra)">
+          <rect x="570" y="440" width="60" height="44" rx="4" fill="#94a3b8"/>
+          <rect x="566" y="436" width="68" height="10" rx="3" fill="#cbd5e1"/>
+          <rect x="560" y="482" width="80" height="8"  rx="2" fill="#94a3b8"/>
+          <rect x="556" y="488" width="88" height="8"  rx="2" fill="#e2e8f0"/>
+          <ellipse cx="600" cy="410" rx="14" ry="20" fill="#cbd5e1"/>
+          <circle  cx="600" cy="395" r="11" fill="#e2e8f0"/>
+          <polygon points="592,386 596,380 600,386 604,380 608,386" fill="#fbbf24"/>
+          <rect x="576" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(-15,576,405)"/>
+          <rect x="610" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(15,610,405)"/>
+          <text x="584" y="383" font-size="10">✨</text>
+          <text x="603" y="388" font-size="9">⭐</text>
+          <rect x="572" y="450" width="56" height="16" rx="3" fill="#64748b"/>
+          <text x="600" y="462" font-family="Cinzel,serif" font-size="7" fill="#fde68a" text-anchor="middle">ESTATUA</text>
+          <text x="600" y="504" font-family="Cinzel,serif" font-size="9" fill="#475569" text-anchor="middle" font-weight="700">💃 Estatua</text>
+        </g>
+        <g filter="url(#sombra-s)">
+          <rect x="145" y="328" width="42" height="44" rx="3" fill="#92400e"/>
+          <rect x="145" y="333" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="342" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="351" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="360" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="181" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="148" y="328" width="36" height="5"  rx="2" fill="#57534e"/>
+          <rect x="148" y="367" width="36" height="5"  rx="2" fill="#57534e"/>
+          <text x="163" y="322" font-family="Cinzel,serif" font-size="8" fill="#78716c" text-anchor="middle">🌉 Puente</text>
+        </g>
+        <g filter="url(#sombra)">
+          <rect x="298" y="370" width="104" height="80"  rx="4" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="285" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="381" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="320" y="300" width="60"  height="152" rx="4" fill="#cffafe" stroke="#67e8f9" stroke-width="2"/>
+          <polygon points="350,272 390,302 310,302" fill="#0ea5e9"/>
+          <circle  cx="350" cy="272" r="6" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <polygon points="302,322 319,340 285,340" fill="#38bdf8"/>
+          <polygon points="398,322 415,340 381,340" fill="#38bdf8"/>
+          <rect x="320" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="332" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="344" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="356" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="368" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="335" y="315" width="30" height="26" rx="14" fill="#7dd3fc" opacity=".8"/>
+          <rect x="341" y="319" width="18" height="18" rx="9"  fill="#bae6fd"/>
+          <rect x="333" y="400" width="34" height="52" rx="17" fill="#0c4a6e"/>
+          <rect x="339" y="406" width="22" height="14" rx="7"  fill="#7dd3fc" opacity=".6"/>
+          <rect x="293" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="391" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="327" y="305" width="8"  height="40" rx="4" fill="white" opacity=".35"/>
+          <rect x="340" y="370" width="6"  height="50" rx="3" fill="white" opacity=".25"/>
+          <rect x="319" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="321,258 337,264 321,270" fill="#fde68a"/>
+          <rect x="379" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="381,258 397,264 381,270" fill="#f43f5e"/>
+          <text x="283" y="308" font-size="12">✨</text>
+          <text x="407" y="308" font-size="12">✨</text>
+          <text x="350" y="294" font-size="11">💎</text>
+          <text x="350" y="464" font-family="Cinzel,serif" font-size="9" fill="#0c4a6e" text-anchor="middle" font-weight="700">💎 Castillo de Cristal</text>
+        </g>
+        <g opacity=".9"><ellipse cx="220" cy="100" rx="28" ry="34" fill="#15803d"/><ellipse cx="208" cy="108" rx="20" ry="24" fill="#22c55e"/><ellipse cx="224" cy="104" rx="16" ry="20" fill="#15803d"/><rect x="217" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="100" rx="28" ry="34" fill="#166534"/><ellipse cx="468" cy="108" rx="20" ry="24" fill="#22c55e"/><rect x="477" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="220" cy="580" rx="26" ry="30" fill="#15803d"/><ellipse cx="210" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="217" y="604" width="6" height="16" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="580" rx="26" ry="30" fill="#166534"/><ellipse cx="470" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="477" y="604" width="6" height="16" fill="#92400e"/></g>
+        <g class="flor-camino" style="animation-delay:0s;">  <text x="183" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.35s;"><text x="238" y="348" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.7s;"> <text x="295" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.2s;"> <text x="348" y="248" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.55s;"><text x="348" y="190" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.9s;"> <text x="348" y="140" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.4s;"> <text x="432" y="168" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.75s;"><text x="492" y="168" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.1s;"> <text x="544" y="168" font-size="13">🌟</text></g>
+        <text x="198" y="240" font-size="13">🌺</text><text x="228" y="200" font-size="11">🌸</text>
+        <text x="450" y="240" font-size="13">🌺</text><text x="478" y="200" font-size="11">🌸</text>
+        <text x="198" y="490" font-size="13">🌼</text><text x="238" y="452" font-size="11">🌸</text>
+        <text x="450" y="490" font-size="13">🌼</text><text x="478" y="452" font-size="11">🌸</text>
+        <text x="170" y="132" font-size="14">🦋</text>
+        <text x="508" y="492" font-size="14">🦋</text>
+        <text x="418" y="432" font-size="12">🦋</text>
+        <g id="marcadorDestino" opacity="0">
+          <circle cx="600" cy="100" r="26" fill="none" stroke="#fde68a" stroke-width="3" stroke-dasharray="9,5"/>
+          <circle cx="600" cy="100" r="16" fill="rgba(253,230,138,.15)"/>
+          <text x="600" y="104" font-size="18" text-anchor="middle">🏁</text>
+        </g>
+        <g id="marcadorInicio">
+          <circle cx="158" cy="350" r="20" fill="#fde68a" opacity=".4" stroke="#f59e0b" stroke-width="2"/>
+          <text x="158" y="344" font-size="7.5" text-anchor="middle" font-family="Cinzel,serif" fill="#78350f" font-weight="700">INICIO</text>
+          <text x="158" y="357" font-size="10"  text-anchor="middle">⭐</text>
+        </g>
+        <g id="rastroSVG"></g>
+        <g id="flechaDireccion" transform="translate(158,315)">
+          <polygon points="0,-15 8,0 0,-5 -8,0" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+        </g>
+        <g id="mateo" transform="translate(158,315)">
+          <rect x="-28" y="-22" width="56" height="14" rx="4" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="0" y="-11" font-family="Cinzel,serif" font-size="7.5" fill="#78350f" text-anchor="middle" font-weight="700">MATEO</text>
+          <ellipse cx="0" cy="52" rx="16" ry="5" fill="rgba(0,0,0,.18)"/>
+          <rect x="-12" y="20" width="24" height="23" rx="5" fill="#15803d"/>
+          <rect x="-8"  y="20" width="16" height="10" rx="3" fill="#22c55e"/>
+          <rect x="-12" y="38" width="24" height="5"  rx="2" fill="#92400e"/>
+          <rect x="-3"  y="39" width="6"  height="3"  rx="1" fill="#fde68a"/>
+          <rect x="-4" y="14" width="8" height="7" rx="2" fill="#fbbf24"/>
+          <ellipse cx="0" cy="7" rx="12" ry="13" fill="#fbbf24"/>
+          <ellipse cx="0" cy="-3" rx="14" ry="5" fill="#92400e"/>
+          <rect x="-10" y="-9" width="20" height="8" rx="3" fill="#a16207"/>
+          <rect x="-5"  y="-12" width="10" height="5" rx="2" fill="#b45309"/>
+          <rect x="-10" y="-3" width="20" height="3"  rx="1" fill="#fde68a"/>
+          <circle cx="-4" cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="4"  cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="-3" cy="6"  r="1"   fill="white"/>
+          <circle cx="5"  cy="6"  r="1"   fill="white"/>
+          <path d="M-3.5,12 Q0,16 3.5,12" fill="none" stroke="#c2410c" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="17" cy="28" r="6"   fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <line x1="17" y1="23" x2="17" y2="33" stroke="#dc2626" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="12" y1="28" x2="22" y2="28" stroke="#1c1917" stroke-width="1"   stroke-linecap="round"/>
+          <circle cx="17" cy="28" r="2"   fill="white" opacity=".5"/>
+          <rect x="-22" y="20" width="11" height="18" rx="3" fill="#16a34a"/>
+          <rect x="-20" y="24" width="7"  height="5"  rx="1" fill="#4ade80"/>
+          <rect x="-20" y="31" width="7"  height="3"  rx="1" fill="#4ade80"/>
+          <rect x="-10" y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <rect x="2"   y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <rect x="-12" y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <rect x="2"   y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <rect x="-22" y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(14,-22,20)"/>
+          <rect x="12"  y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(-14,12,20)"/>
+          <circle cx="-20" cy="30" r="4" fill="#fbbf24"/>
+        </g>
+      </svg>
+    </div>
+    <div class="leyenda">
+      <div class="leyenda-titulo"><i class="fas fa-map-pin me-1"></i> ELEMENTOS DEL JARDÍN ENCANTADO</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#3b82f6;"></div> ⛲ Fuente Mágica</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#f43f5e;"></div> 🎠 Carrusel</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#60a5fa;"></div> 🦆 Estanque</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#94a3b8;"></div> 💃 Estatua</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#92400e;"></div> 🌉 Puente</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#0ea5e9;"></div> 💎 Castillo de Cristal</div>
+    </div>
+  </div>
+
+  <!-- PANEL DERECHO - AUDITIVO SOLO BOTONES -->
+  <div class="panel">
+
+    <!-- Intro -->
+    <div class="intro-card">
+      <span><i class="fas fa-headphones"></i> Escucha la introducción</span>
+      <button class="btn-audio" id="btnIntro">🔊 Reproducir</button>
+    </div>
+
+    <!-- Brújula -->
+    <div class="brujula-card">
+      <div class="brujula-svg-wrap">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <defs><radialGradient id="gbrAud" cx="50%" cy="30%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="70%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/></radialGradient></defs>
+          <circle cx="40" cy="40" r="38" fill="url(#gbrAud)" id="aroDoradoAud"/>
+          <circle cx="40" cy="40" r="32" fill="#1c1917"/>
+          <circle cx="40" cy="40" r="37" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,4" opacity=".5"/>
+          <text x="40" y="16" font-family="Cinzel,serif" font-size="11" fill="#fde68a" text-anchor="middle" font-weight="700">N</text>
+          <text x="40" y="71" font-family="Cinzel,serif" font-size="11" fill="rgba(255,255,255,.5)" text-anchor="middle">S</text>
+          <text x="9"  y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">O</text>
+          <text x="71" y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">E</text>
+          <line x1="40" y1="20" x2="40" y2="60" stroke="#57534e" stroke-width=".8"/>
+          <line x1="20" y1="40" x2="60" y2="40" stroke="#57534e" stroke-width=".8"/>
+          <g id="agujaGrandeAud" style="transform-origin:40px 40px;" transform="rotate(0)">
+            <polygon points="40,14 43.5,40 40,36 36.5,40" fill="#dc2626"/>
+            <polygon points="40,66 43.5,40 40,44 36.5,40" fill="white" opacity=".8"/>
+          </g>
+          <circle cx="40" cy="40" r="8" fill="url(#gbrAud)" stroke="white" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="3" fill="#1c1917"/>
+          <circle cx="40" cy="40" r="1.5" fill="#fde68a"/>
+        </svg>
+      </div>
+      <div class="direccion-info">
+        <div class="dir-label"><i class="fas fa-compass"></i> Dirección actual</div>
+        <div class="dir-valor" id="dirTextoAud">Norte ↑</div>
+      </div>
+      <button class="btn-audio" id="btnBrujula">🔊 Escuchar</button>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="instrucciones-card">
+      <div class="instrucciones-header">
+        <span><i class="fas fa-scroll"></i> Instrucciones de Mateo</span>
+        <button class="btn-audio" id="btnInstrucciones" style="background:#16a34a;">🔊 Escuchar todas</button>
+      </div>
+      <div class="instrucciones-body">
+        <div class="ruta-chips">
+          <div class="chip-ruta">🦆 <strong>Estanque</strong> — Inicio</div>
+          <div style="font-size:.78rem;color:#64748b;font-weight:800;">➜ ❓</div>
+          <div class="chip-ruta dest">🏁 Destino: ¿?</div>
+        </div>
+
+        <div class="nota-cuadras">
+          <span style="font-size:1.1rem;flex-shrink:0;">📐</span>
+          <span>Cada <strong>cuadra</strong> = el tramo entre dos intersecciones. Horizontal: <strong>2 cuadras</strong> (izq→central→der). Vertical: <strong>1 cuadra</strong> (media→superior).</span>
+        </div>
+
+        <div class="pasos-lista">
+          <div class="paso-item activo" id="paso1Aud">
+            <div class="paso-num">1</div>
+            <div class="paso-iconos">🔄 ➡️</div>
+            <button class="btn-audio" data-audio="paso1">🔊 Escuchar paso 1</button>
+          </div>
+          <div class="paso-item inactivo" id="paso2Aud">
+            <div class="paso-num">2</div>
+            <div class="paso-iconos">👣 ➡️ ×2 &nbsp; 🌉 💎</div>
+            <button class="btn-audio" data-audio="paso2">🔊 Escuchar paso 2</button>
+          </div>
+          <div class="paso-item inactivo" id="paso3Aud">
+            <div class="paso-num">3</div>
+            <div class="paso-iconos">🔄 ↺ ⬆️</div>
+            <button class="btn-audio" data-audio="paso3">🔊 Escuchar paso 3</button>
+          </div>
+          <div class="paso-item inactivo" id="paso4Aud">
+            <div class="paso-num">4</div>
+            <div class="paso-iconos">👣 ⬆️ ×1 &nbsp; 🌸</div>
+            <button class="btn-audio" data-audio="paso4">🔊 Escuchar paso 4</button>
+          </div>
+          <div class="paso-item inactivo" id="paso5Aud">
+            <div class="paso-num">5</div>
+            <div class="paso-iconos">🔄 ➡️ 👣 ×1 &nbsp; 🎯</div>
+            <button class="btn-audio" data-audio="paso5">🔊 Escuchar paso 5</button>
+          </div>
+        </div>
+
+        <div class="nav-btns">
+          <button class="btn-nav ant" id="btnAnt" onclick="irAnterior()" disabled>← Anterior</button>
+          <button class="btn-nav sig" id="btnSig" onclick="irSiguiente()">Siguiente →</button>
+        </div>
+        <div class="contador" id="contadorAud">Paso 1 de 5</div>
+      </div>
+    </div>
+
+    <!-- Pregunta -->
+    <div class="tarjeta-pregunta">
+      <div class="pregunta-header">
+        <div class="pregunta-titulo">🌿 ¿A qué lugar llegó Mateo?</div>
+        <button class="btn-audio" id="btnPregunta" style="background:#16a34a;">🔊 Escuchar pregunta</button>
+      </div>
+      <div class="destinos-grid">
+        <button class="destino-btn" onclick="responder('fuente')" id="dest-fuente"><span class="dest-emoji">⛲</span> Fuente Mágica</button>
+        <button class="destino-btn" onclick="responder('carrusel')" id="dest-carrusel"><span class="dest-emoji">🎠</span> Carrusel</button>
+        <button class="destino-btn" onclick="responder('castillo')" id="dest-castillo"><span class="dest-emoji">💎</span> Castillo de Cristal</button>
+        <button class="destino-btn" onclick="responder('estatua')" id="dest-estatua"><span class="dest-emoji">💃</span> Estatua</button>
+      </div>
+      <div class="feedback-box" id="feedbackBox"></div>
+      <div class="btn-quiz-wrap" id="btnQuizWrap">
+        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!</a>
+      </div>
+      <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()"><i class="fas fa-redo-alt me-1"></i> Reintentar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var DESTINO = 'carrusel';
+  var respondido = false;
+  var pasoActual = 1;
+  var TOTAL = 5;
+
+  var ESTADOS = [
+    { x:158, y:315, rot:0,  dir:'Norte ↑', sub:'Mateo mira hacia la Fuente Mágica ⛲' },
+    { x:158, y:315, rot:90, dir:'Este →',  sub:'Giró a la derecha. Mira al este 🌿' },
+    { x:542, y:315, rot:90, dir:'Este →',  sub:'Avanzó 2 cuadras: cruzó el puente y el Castillo' },
+    { x:542, y:315, rot:0,  dir:'Norte ↑', sub:'Giró a la izquierda. Mira al norte ⬆️' },
+    { x:542, y:130, rot:0,  dir:'Norte ↑', sub:'Subió 1 cuadra. Llegó al camino superior 🌸' },
+  ];
+  var ESTADO_FINAL = { x:618, y:88, rot:90, dir:'Este →', sub:'¡Llegó a su destino! 🎯✨' };
+
+  function playAudio(id) {
+    var audio = document.getElementById(id);
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(function(e) { console.log('Error:', e); });
+    }
+  }
+
+  function playClick(){ try{ var s=document.getElementById('sndClick'); s.currentTime=0; s.play(); }catch(e){} }
+
+  function actualizarBrujula(rot, dir, sub, anim) {
+    var ag = document.getElementById('agujaGrandeAud');
+    if (ag) {
+      ag.style.transition = anim ? 'transform .6s cubic-bezier(.34,1.56,.64,1)' : 'none';
+      ag.setAttribute('transform','rotate('+rot+')');
+    }
+    document.getElementById('dirTextoAud').innerHTML = dir;
+  }
+
+  function moverMateo(x, y, rot, anim) {
+    var m = document.getElementById('mateo');
+    var f = document.getElementById('flechaDireccion');
+    if (m) { m.style.transition = anim ? 'transform .7s cubic-bezier(.34,1.2,.64,1)' : 'none'; m.setAttribute('transform','translate('+x+','+y+')'); }
+    if (f) { f.style.transition = anim ? 'transform .7s' : 'none'; f.setAttribute('transform','translate('+x+','+(y-33)+') rotate('+rot+')'); }
+    if (anim) ponerRastro(x, y);
+  }
+
+  function ponerRastro(x, y) {
+    var g = document.getElementById('rastroSVG');
+    var c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','5');
+    c.setAttribute('fill','#f59e0b'); c.setAttribute('opacity','.35');
+    c.style.animation = 'rastroDesv 1.6s forwards';
+    g.appendChild(c);
+    if (g.childNodes.length > 80) g.removeChild(g.firstChild);
+  }
+
+  var kfAdded = false;
+  function ensureKF() {
+    if (kfAdded) return;
+    var s = document.createElement('style');
+    s.textContent = '@keyframes rastroDesv{0%{opacity:.35}100%{opacity:0;r:0}}';
+    document.head.appendChild(s); kfAdded = true;
+  }
+
+  function aplicarEstado(e, anim) {
+    moverMateo(e.x, e.y, e.rot, anim);
+    actualizarBrujula(e.rot, e.dir, e.sub, anim);
+  }
+
+  function resaltarPaso(n) {
+    for (var i=1; i<=TOTAL; i++) {
+      var el = document.getElementById('paso'+i+'Aud');
+      if (!el) continue;
+      el.classList.remove('activo','completado','inactivo');
+      if      (i < n)  el.classList.add('completado');
+      else if (i === n) el.classList.add('activo');
+      else              el.classList.add('inactivo');
+    }
+    document.getElementById('contadorAud').textContent = 'Paso '+n+' de '+TOTAL;
+    document.getElementById('btnAnt').disabled = (n===1);
+    var bs = document.getElementById('btnSig');
+    if (n===TOTAL) { bs.textContent='✓ Listo'; bs.style.opacity='.5'; bs.disabled=true; }
+    else           { bs.textContent='Siguiente →'; bs.style.opacity='1'; bs.disabled=false; }
+  }
+
+  function irSiguiente() {
+    if (pasoActual >= TOTAL) return;
+    playClick(); pasoActual++;
+    aplicarEstado(ESTADOS[pasoActual-1], true);
+    resaltarPaso(pasoActual);
+    playAudio('audioPaso'+pasoActual);
+  }
+
+  function irAnterior() {
+    if (pasoActual <= 1) return;
+    playClick(); pasoActual--;
+    aplicarEstado(ESTADOS[pasoActual-1], true);
+    resaltarPaso(pasoActual);
+    playAudio('audioPaso'+pasoActual);
+  }
+
+  function responder(id) {
+    if (respondido) return;
+    respondido = true;
+    playClick();
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled=true; });
+    var fb = document.getElementById('feedbackBox');
+
+    if (id === DESTINO) {
+      playAudio('audioCorrecto');
+      playAudio('sndTada');
+      aplicarEstado(ESTADO_FINAL, true);
+      var md = document.getElementById('marcadorDestino');
+      if (md) md.setAttribute('opacity','1');
+      document.getElementById('dest-carrusel').classList.add('correcta');
+      ['fuente','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).classList.add('incorrecta'); });
+      fb.className = 'feedback-box ok';
+      fb.innerHTML = '🎠 ¡Correcto! Mateo llegó al Carrusel. ¡Excelente! ✨';
+      document.getElementById('btnQuizWrap').classList.add('visible');
+      lanzarConfeti();
+      localStorage.setItem('progreso_normal_aud_instrucciones','ok');
+    } else {
+      playAudio('audioIncorrecto');
+      playAudio('sndError');
+      document.getElementById('dest-'+id).classList.add('incorrecta');
+      respondido = false;
+      var mensajes = {
+        fuente:   '❌ La Fuente está arriba a la izquierda. Mateo giró al este y se alejó. Escucha los pasos nuevamente.',
+        castillo: '❌ El Castillo es un lugar por el que Mateo pasa en el paso 2, pero no es su destino final.',
+        estatua:  '❌ La Estatua está abajo a la derecha. Los pasos llevan a Mateo hacia el norte.'
+      };
+      fb.className = 'feedback-box err';
+      fb.innerHTML = mensajes[id] || '❌ No es ese lugar. Escucha los pasos nuevamente.';
+      document.getElementById('btnReintentar').classList.add('visible');
+    }
+  }
+
+  function reintentar() {
+    respondido = false; pasoActual = 1;
+    aplicarEstado(ESTADOS[0], false); resaltarPaso(1);
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){
+      var b=document.getElementById('dest-'+d); b.disabled=false; b.className='destino-btn';
+    });
+    document.getElementById('feedbackBox').className='feedback-box';
+    document.getElementById('btnReintentar').classList.remove('visible');
+    document.getElementById('btnQuizWrap').classList.remove('visible');
+    var md=document.getElementById('marcadorDestino'); if(md) md.setAttribute('opacity','0');
+    var g=document.getElementById('rastroSVG'); while(g.firstChild) g.removeChild(g.firstChild);
+  }
+
+  function lanzarConfeti() {
+    var cols=['#16a34a','#4ade80','#fde68a','#f59e0b','#7c3aed','#0ea5e9','#22c55e','#86efac'];
+    for (var i=0;i<55;i++) { (function(idx){ setTimeout(function(){
+      var el=document.createElement('div'); el.className='confeti';
+      el.style.left=(Math.random()*100)+'vw'; el.style.top='-10px';
+      el.style.background=cols[Math.floor(Math.random()*cols.length)];
+      el.style.width=(6+Math.random()*8)+'px'; el.style.height=(6+Math.random()*8)+'px';
+      el.style.borderRadius=Math.random()>.5?'50%':'2px';
+      var dur=(1.8+Math.random()*1.6).toFixed(2);
+      el.style.animation='confetiFall '+dur+'s '+(Math.random()*.4)+'s linear forwards';
+      document.body.appendChild(el);
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },(parseFloat(dur)+.5)*1000);
+    },idx*28); })(i); }
+  }
+
+  window.addEventListener('DOMContentLoaded', function(){
+    ensureKF();
+    aplicarEstado(ESTADOS[0], false);
+    resaltarPaso(1);
+    if (localStorage.getItem('progreso_normal_aud_instrucciones')==='ok') {
+      document.getElementById('btnQuizWrap').classList.add('visible');
+    }
+
+    document.getElementById('btnIntro').onclick = function() { playAudio('audioIntro'); };
+    document.getElementById('btnBrujula').onclick = function() { playAudio('audioBrujula'); };
+    document.getElementById('btnInstrucciones').onclick = function() { playAudio('audioInstrucciones'); };
+    document.getElementById('btnPregunta').onclick = function() { playAudio('audioPregunta'); };
+    document.querySelectorAll('.btn-audio[data-audio]').forEach(function(btn) {
+      var paso = btn.getAttribute('data-audio');
+      btn.onclick = function() { playAudio('audio' + paso.charAt(0).toUpperCase() + paso.slice(1)); };
+    });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

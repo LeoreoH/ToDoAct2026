@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrucciones Espaciales · Normal · Visual Verbal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --verde:        #15803d;
+      --verde-med:    #16a34a;
+      --verde-pale:   #dcfce7;
+      --verde-oscuro: #14532d;
+      --dorado:       #b45309;
+      --dorado-claro: #fde68a;
+      --dorado-med:   #f59e0b;
+      --dorado-pale:  #fef3c7;
+      --texto:        #14532d;
+      --rojo-err:     #b91c1c;
+      --rojo-pale:    #fee2e2;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 50%, #d1fae5 100%);
+      color: var(--texto); 
+      min-height: 100vh;
+      padding: 8px 0;
+    }
+
+    /* ══ CABECERA REDUCIDA ══ */
+    .cabecera {
+      background: linear-gradient(135deg, #166534 0%, #14532d 60%, #052e16 100%);
+      padding: 6px 20px 4px;
+      border-bottom: 3px solid var(--dorado-claro);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(20,83,45,.4);
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto 8px auto;
+      border-radius: 16px;
+    }
+    .cabecera::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,222,128,.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(253,230,138,.05) 0%, transparent 50%),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 14px);
+    }
+    .magia-particle { position:absolute; width:3px; height:3px; border-radius:50%; background:var(--dorado-claro); opacity:0; pointer-events:none; animation: particleFloat 4s ease-in-out infinite; }
+    @keyframes particleFloat { 0%{ opacity:0; transform:translateY(0) scale(0); } 20%{ opacity:.9; } 80%{ opacity:.5; } 100%{ opacity:0; transform:translateY(-60px) scale(1.2); } }
+    .cabecera h1 { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--dorado-claro); text-shadow: 0 0 20px rgba(253,230,138,.4), 1px 1px 0 rgba(0,0,0,.4); position: relative; letter-spacing: .05em; margin: 0; }
+    .cabecera p  { color:rgba(255,255,255,.75); font-weight:600; margin: 2px 0 2px; position:relative; font-size: 0.75rem; }
+    .badge-estilo { background: var(--dorado-claro); color: var(--texto); padding: 2px 14px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: 2px solid rgba(255,255,255,.6); display: inline-block; margin: 2px; box-shadow: 0 1px 0 var(--dorado); position: relative; }
+    .badge-nivel  { background: rgba(255,255,255,.12); color: var(--dorado-claro); padding: 2px 14px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; border: 2px solid var(--dorado-claro); display: inline-block; margin: 2px; position: relative; }
+
+    /* ══ LAYOUT AJUSTADO ══ */
+    .layout { 
+      max-width: 1280px; 
+      margin: 0 auto; 
+      padding: 5px 18px 10px; 
+      display: grid; 
+      grid-template-columns: 1fr 360px; 
+      gap: 16px; 
+      align-items: start;
+      width: 100%;
+    }
+    @media(max-width:960px){ .layout { grid-template-columns: 1fr; } }
+
+    /* ══ JARDÍN - MAPA CON ALTURA CONTROLADA ══ */
+    .jardin-wrap { background: white; border-radius: 20px; border: 3px solid #86efac; box-shadow: 0 6px 0 #bbf7d0, 0 10px 24px rgba(20,83,45,.12); overflow: hidden; position: sticky; top: 10px; }
+    .jardin-titulo { background: linear-gradient(135deg, var(--verde-med), var(--verde-oscuro)); color: var(--dorado-claro); font-family: 'Cinzel', serif; font-size: 0.8rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px; letter-spacing: .04em; }
+    .jardin-svg-wrap { width:100%; aspect-ratio:1/1; position:relative; max-height: 460px; }
+    .jardin-svg-wrap svg { width:100%; height:100%; display:block; }
+
+    @keyframes floresBrillan { 0%,100%{ opacity:.5; filter:brightness(1); } 50%{ opacity:1; filter:brightness(1.4) drop-shadow(0 0 3px #fde68a); } }
+    .flor-camino { animation: floresBrillan 1.8s ease-in-out infinite; }
+
+    .leyenda { background: linear-gradient(135deg,#052e16,#14532d); border-top: 2px solid var(--dorado-claro); padding: 6px 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .leyenda-titulo { font-family:'Cinzel',serif; font-size:.7rem; color:var(--dorado-claro); width:100%; margin-bottom:2px; letter-spacing:.06em; }
+    .ley-item { display:flex; align-items:center; gap:4px; font-size:.65rem; font-weight:700; color:rgba(255,255,255,.8); background:rgba(255,255,255,.07); padding:2px 8px; border-radius:16px; }
+    .ley-dot { width:8px; height:8px; border-radius:50%; }
+
+    /* ══ PANEL DERECHO - TODO REDUCIDO PERO COMPLETO ══ */
+    .panel { display: flex; flex-direction: column; gap: 8px; }
+
+    .tarjeta-narrativa { background: linear-gradient(135deg, var(--verde-oscuro), #166534); border-radius: 12px; border: 2px solid var(--dorado-claro); box-shadow: 0 3px 0 #14532d; padding: 8px 12px; color: white; position: relative; overflow: hidden; }
+    .tarjeta-narrativa::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 10px); }
+    .narrativa-titulo { font-family:'Cinzel',serif; font-size:.8rem; color:var(--dorado-claro); margin-bottom:4px; display:flex; align-items:center; gap:6px; position:relative; }
+    .narrativa-texto { font-size:.7rem; line-height:1.4; color:rgba(255,255,255,.85); position:relative; }
+    .narrativa-texto strong { color:var(--dorado-claro); }
+
+    .brujula-card { background: linear-gradient(135deg,#052e16,#166534); border-radius: 12px; border: 2px solid var(--dorado-claro); box-shadow: 0 3px 0 #052e16; padding: 8px 12px; display: flex; align-items: center; gap: 10px; }
+    .brujula-svg-wrap { width:60px; height:60px; flex-shrink:0; }
+    .brujula-svg-wrap svg { width:100%; height:100%; }
+    .brujula-info { flex:1; }
+    .brujula-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.08em; margin-bottom:1px; }
+    .direccion-actual { font-family:'Cinzel',serif; font-size:.85rem; color:var(--dorado-claro); font-weight:600; line-height:1.2; }
+    .direccion-sub { font-size:.6rem; color:rgba(255,255,255,.55); margin-top:1px; font-weight:600; }
+
+    .tarjeta-instrucciones { background: white; border-radius: 14px; border: 3px solid #86efac; box-shadow: 0 4px 0 #bbf7d0; overflow: hidden; }
+    .instrucciones-header { background: linear-gradient(135deg, var(--verde-med), var(--verde)); padding: 6px 12px; color: white; font-family:'Cinzel',serif; font-size: .75rem; display: flex; align-items: center; gap: 6px; letter-spacing:.04em; }
+    .instrucciones-body { padding: 8px 12px; }
+
+    .ruta-chips { display:flex; gap:5px; align-items:center; margin-bottom:6px; flex-wrap:wrap; }
+    .chip-ruta { background:var(--verde-pale); border:1.5px solid #86efac; border-radius:6px; padding:2px 8px; font-size:.65rem; font-weight:700; color:var(--verde-oscuro); display:flex; align-items:center; gap:3px; }
+    .chip-ruta.dest { background:#f1f5f9; border-color:#cbd5e1; color:#475569; }
+
+    .nota-cuadras { background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 5px 10px; font-size:.65rem; font-weight:700; color:#1e40af; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height:1.35; }
+
+    .pasos-lista { display:flex; flex-direction:column; gap:0; }
+    .paso-item { display:flex; gap:8px; align-items:flex-start; padding:5px 6px 5px 10px; border-left: 3px solid #e2e8f0; margin-left:10px; position:relative; transition:all .2s; }
+    .paso-item::before { content:''; position:absolute; left:-6px; top:9px; width:8px; height:8px; border-radius:50%; background:#cbd5e1; border:2px solid white; box-shadow:0 0 0 1.5px #cbd5e1; transition:all .2s; }
+    .paso-item.activo     { border-left-color:var(--verde-med); background:linear-gradient(90deg,rgba(22,163,74,.05),transparent); }
+    .paso-item.activo::before { background:var(--verde-med); box-shadow:0 0 0 2px rgba(22,163,74,.3); }
+    .paso-item.completado { border-left-color:#86efac; opacity:.6; }
+    .paso-item.completado::before { background:#4ade80; }
+    .paso-item.inactivo   { opacity:.3; }
+
+    .paso-icono { font-size:.9rem; flex-shrink:0; width:24px; height:24px; background:var(--verde-pale); border-radius:50%; display:flex; align-items:center; justify-content:center; border:1.5px solid #86efac; transition:all .2s; }
+    .paso-item.activo .paso-icono { background:var(--dorado-pale); border-color:var(--dorado-med); animation:iconoBrilla 1.5s ease-in-out infinite; }
+    @keyframes iconoBrilla { 0%,100%{ box-shadow:0 0 4px rgba(245,158,11,.3); } 50%{ box-shadow:0 0 12px rgba(245,158,11,.6); } }
+
+    .paso-contenido { flex:1; min-width:0; }
+    .paso-num-label { font-size:.55rem; font-weight:800; color:var(--verde-med); letter-spacing:.08em; text-transform:uppercase; margin-bottom:0px; }
+    .paso-item.activo .paso-num-label { color:var(--dorado); }
+    .paso-principal { font-size:.7rem; font-weight:700; color:var(--texto); line-height:1.3; margin-bottom:1px; }
+    .paso-principal em { color:var(--verde-med); font-style:normal; font-weight:800; }
+    .paso-item.activo .paso-principal em { color:var(--dorado); }
+    .paso-contexto { font-size:.6rem; font-weight:600; color:#64748b; line-height:1.3; border-left:1.5px solid #e2e8f0; padding-left:4px; margin-top:2px; }
+    .paso-item.activo .paso-contexto { border-left-color:var(--dorado-med); color:#92400e; }
+    .tag-paso { display:inline-flex; align-items:center; gap:2px; background:var(--verde-pale); border:1px solid #86efac; border-radius:16px; padding:0px 5px; font-size:.55rem; font-weight:800; color:var(--verde-oscuro); margin-top:2px; }
+    .tag-paso.girar { background:var(--dorado-pale); border-color:var(--dorado-med); color:var(--dorado); }
+    .sep-paso { width:1.5px; height:6px; background:linear-gradient(180deg,#e2e8f0,#86efac); margin:0 0 0 12px; border-radius:1px; }
+
+    .nav-btns { display:flex; gap:6px; margin-top:8px; }
+    .btn-nav-paso { flex:1; padding:5px 8px; border-radius:30px; font-weight:800; font-size:.7rem; cursor:pointer; transition:all .2s; border:none; }
+    .btn-nav-paso.ant { background:var(--verde-pale); color:var(--verde-oscuro); border:1.5px solid #86efac; }
+    .btn-nav-paso.sig { background:var(--verde-med); color:white; box-shadow:0 2px 0 var(--verde-oscuro); }
+    .btn-nav-paso:disabled { opacity:.35; cursor:not-allowed; box-shadow:none; }
+    .btn-nav-paso:not(:disabled):hover { transform:translateY(-1px); }
+    .contador-paso { text-align:center; font-size:.6rem; font-weight:800; color:#94a3b8; margin-top:3px; }
+
+    .tarjeta-pregunta { background: white; border-radius: 14px; border: 3px solid #86efac; box-shadow: 0 4px 0 #bbf7d0; padding: 10px; text-align: center; }
+    .pregunta-titulo { font-family:'Cinzel',serif; font-size:.8rem; color:var(--verde); margin-bottom:3px; letter-spacing:.04em; }
+    .pregunta-sub { font-size:.65rem; font-weight:600; color:#64748b; margin-bottom:8px; }
+
+    .destinos-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px; }
+    .destino-btn { background:var(--verde-pale); border:2px solid #86efac; border-radius:12px; padding:8px 6px; cursor:pointer; transition:all .2s; text-align:center; font-weight:700; font-size:.7rem; color:var(--texto); box-shadow:0 2px 0 #bbf7d0; }
+    .destino-btn:hover:not(:disabled) { border-color:var(--verde-med); background:white; transform:translateY(-2px); box-shadow:0 4px 0 #86efac; }
+    .destino-btn .dest-emoji { font-size:1.4rem; display:block; margin-bottom:2px; }
+    .destino-btn:disabled { cursor:not-allowed; opacity:.8; }
+    .destino-btn.correcta  { background:var(--verde-pale); border-color:var(--verde-med); }
+    .destino-btn.incorrecta { background:var(--rojo-pale); border-color:var(--rojo-err); }
+
+    .feedback-box { border-radius:10px; padding:8px 10px; font-weight:700; font-size:.7rem; line-height:1.4; display:none; }
+    .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
+    .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
+
+    .btn-quiz-wrap { margin-top:8px; display:none; }
+    .btn-quiz-wrap.visible { display:block; }
+    .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:8px 20px; border-radius:40px; font-family:'Cinzel',serif; font-size:.85rem; letter-spacing:.05em; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
+    .btn-quiz:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--verde-oscuro); color:white; }
+    .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 16px; font-weight:800; font-size:.7rem; cursor:pointer; margin-top:6px; transition:all .2s; display:none; }
+    .btn-reintentar.visible { display:inline-block; }
+    .btn-reintentar:hover { background:var(--verde-med); color:white; }
+
+    .confeti { position:fixed; pointer-events:none; z-index:9999; border-radius:2px; }
+    @keyframes confetiFall { 0%{ transform:translateY(-10px) rotate(0deg); opacity:1; } 100%{ transform:translateY(100vh) rotate(800deg); opacity:0; } }
+  </style>
+</head>
+<body>
+
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing"  src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada"  src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+<!-- ══ CABECERA REDUCIDA ══ -->
+<div class="cabecera">
+  <div class="magia-particle" style="left:8%;top:25%;animation-delay:0s;"></div>
+  <div class="magia-particle" style="left:22%;top:60%;animation-delay:.9s;"></div>
+  <div class="magia-particle" style="left:50%;top:35%;animation-delay:1.5s;"></div>
+  <div class="magia-particle" style="left:72%;top:65%;animation-delay:.4s;"></div>
+  <div class="magia-particle" style="left:88%;top:20%;animation-delay:1.1s;"></div>
+  <h1>🌿 Instrucciones espaciales</h1>
+  <p>El jardín encantado · Orientación relativa</p>
+  <div>
+    <span class="badge-estilo">📖 Visual / Verbal</span>
+    <span class="badge-nivel">🍃 Nivel Normal</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- ══ JARDÍN SVG (COMPLETO) ══ -->
+  <div class="jardin-wrap">
+    <div class="jardin-titulo">
+      <i class="fas fa-compass"></i> El jardín encantado — sigue la ruta de Mateo
+    </div>
+
+    <div class="jardin-svg-wrap">
+      <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gCielo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#bbf7d0"/><stop offset="100%" stop-color="#dcfce7"/>
+          </linearGradient>
+          <filter id="sombra"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.2)"/></filter>
+          <filter id="sombra-s"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.12)"/></filter>
+          <filter id="brillo-agua">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+            <feColorMatrix in="b" type="matrix" values="0 0 1 0 0  0 .4 1 0 0  0 0 1 0 .1  0 0 0 14 -6" result="g"/>
+            <feComposite in="SourceGraphic" in2="g" operator="over"/>
+          </filter>
+          <pattern id="cesped" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#22c55e" opacity=".18"/>
+            <line x1="0" y1="10" x2="20" y2="10" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+          </pattern>
+          <pattern id="seto" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#15803d"/>
+            <circle cx="3" cy="3" r="3" fill="#16a34a"/>
+            <circle cx="9" cy="3" r="3" fill="#15803d"/>
+            <circle cx="3" cy="9" r="3" fill="#166534"/>
+            <circle cx="9" cy="9" r="3" fill="#16a34a"/>
+          </pattern>
+          <pattern id="camino" x="0" y="0" width="28" height="20" patternUnits="userSpaceOnUse">
+            <rect width="28" height="20" fill="#a8996a"/>
+            <rect x="1" y="1" width="12" height="8" rx="2" fill="#c2b280"/>
+            <rect x="15" y="1" width="11" height="8" rx="2" fill="#b8a870"/>
+            <rect x="1" y="11" width="7" height="7" rx="2" fill="#bfb07a"/>
+            <rect x="10" y="11" width="16" height="7" rx="2" fill="#c8b880"/>
+          </pattern>
+        </defs>
+
+        <rect width="700" height="700" fill="url(#gCielo)"/>
+        <rect width="700" height="700" fill="url(#cesped)"/>
+
+        <!-- CALLES:
+             Horizontal media:   y=330-370 (centro y=350)
+             Vertical izq:       x=140-176 (centro x=158)   ← Mateo empieza aquí
+             Vertical central:   x=330-370 (centro x=350)   ← 1 cuadra al este
+             Vertical derecha:   x=524-560 (centro x=542)   ← 2 cuadras al este
+             Horizontal superior: y=150-182 (centro y=166)  ← 1 cuadra al norte
+             El Carrusel está a la DERECHA de la intersecc. der×superior (542,166)
+        -->
+        <rect x="0"   y="330" width="700" height="40"  fill="url(#camino)"/>
+        <rect x="330" y="0"   width="40"  height="700" fill="url(#camino)"/>
+        <rect x="140" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="524" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="150" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="518" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+
+        <!-- Setos -->
+        <rect x="0" y="0" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="670" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="670" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="30"  y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="80"  y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="600" y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="628" y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="60"  y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="618" y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+
+        <!-- ══ FUENTE MÁGICA ⛲ — cx=120, cy=132 ══ -->
+        <g filter="url(#sombra-s)">
+          <polygon points="92,120 112,106 132,106 148,120 148,144 132,158 112,158 92,144" fill="#bfdbfe" stroke="#60a5fa" stroke-width="2"/>
+          <polygon points="97,122 110,110 130,110 143,122 143,142 130,154 110,154 97,142" fill="#dbeafe"/>
+          <ellipse cx="120" cy="132" rx="22" ry="14" fill="#3b82f6" opacity=".6" filter="url(#brillo-agua)"/>
+          <ellipse cx="120" cy="132" rx="16" ry="9"  fill="#60a5fa" opacity=".5"/>
+          <rect x="116" y="96" width="8" height="38" rx="3" fill="#93c5fd"/>
+          <ellipse cx="120" cy="96" rx="10" ry="6"  fill="#bfdbfe"/>
+          <ellipse cx="120" cy="85" rx="3"  ry="8"  fill="#93c5fd" opacity=".9"/>
+          <ellipse cx="114" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(-22,114,93)"/>
+          <ellipse cx="126" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(22,126,93)"/>
+          <circle  cx="120" cy="84" r="5"   fill="#e0f2fe" opacity=".8"/>
+          <text x="99"  y="100" font-size="11">✨</text>
+          <text x="127" y="97"  font-size="9">💫</text>
+          <text x="120" y="168" font-family="Cinzel,serif" font-size="9" fill="#1e3a8a" text-anchor="middle" font-weight="700">⛲ Fuente Mágica</text>
+        </g>
+
+        <!-- ══ CARRUSEL 🎠 — cx=600, cy≈100 — DESTINO FINAL ══ -->
+        <g filter="url(#sombra)">
+          <ellipse cx="600" cy="145" rx="46" ry="14" fill="#86efac" opacity=".7"/>
+          <rect x="597" y="68" width="6" height="78" rx="2" fill="#7c3aed"/>
+          <polygon points="600,55 648,115 552,115" fill="#f43f5e"/>
+          <polygon points="600,55 640,105 560,105" fill="#fb7185"/>
+          <line x1="600" y1="55" x2="560" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="640" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="600" y2="115" stroke="#fde68a" stroke-width="2"/>
+          <circle cx="600" cy="54" r="7" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <g transform="translate(570,112)"><text x="-7" y="5" font-size="12">🐴</text></g>
+          <g transform="translate(628,112)"><text x="-7" y="5" font-size="12">🦄</text></g>
+          <circle cx="556" cy="112" r="6" fill="#ec4899" opacity=".9"/>
+          <circle cx="644" cy="112" r="6" fill="#a78bfa" opacity=".9"/>
+          <circle cx="600" cy="115" r="5" fill="#fbbf24"/>
+          <text x="553" y="78" font-size="10">⭐</text>
+          <text x="638" y="78" font-size="10">✨</text>
+          <text x="600" y="152" font-family="Cinzel,serif" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">🎠 Carrusel</text>
+        </g>
+
+        <!-- ══ ESTANQUE 🦆 — cx=88, cy=420 ══ -->
+        <g filter="url(#sombra-s)">
+          <ellipse cx="88" cy="420" rx="58" ry="40" fill="#60a5fa" opacity=".75"/>
+          <ellipse cx="88" cy="420" rx="50" ry="33" fill="#93c5fd" opacity=".65"/>
+          <ellipse cx="88" cy="420" rx="38" ry="24" fill="#bfdbfe" opacity=".5"/>
+          <ellipse cx="80" cy="420" rx="22" ry="8"  fill="none" stroke="#60a5fa" stroke-width="1.5" opacity=".6"/>
+          <ellipse cx="96" cy="428" rx="16" ry="5"  fill="none" stroke="#93c5fd" stroke-width="1"   opacity=".5"/>
+          <text x="64" y="415" font-size="18">🦆</text>
+          <text x="88" y="430" font-size="15">🦆</text>
+          <text x="74" y="433" font-size="12">🐣</text>
+          <ellipse cx="122" cy="408" rx="10" ry="6" fill="#4ade80" opacity=".8"/>
+          <circle  cx="122" cy="408" r="4" fill="#f43f5e" opacity=".7"/>
+          <ellipse cx="57"  cy="436" rx="8"  ry="5" fill="#4ade80" opacity=".7"/>
+          <circle  cx="57"  cy="436" r="3"  fill="#ec4899" opacity=".6"/>
+          <text x="88" y="468" font-family="Cinzel,serif" font-size="9" fill="#1e40af" text-anchor="middle" font-weight="700">🦆 Estanque</text>
+        </g>
+
+        <!-- ══ ESTATUA 💃 — cx=600, cy=440 ══ -->
+        <g filter="url(#sombra)">
+          <rect x="570" y="440" width="60" height="44" rx="4" fill="#94a3b8"/>
+          <rect x="566" y="436" width="68" height="10" rx="3" fill="#cbd5e1"/>
+          <rect x="560" y="482" width="80" height="8"  rx="2" fill="#94a3b8"/>
+          <rect x="556" y="488" width="88" height="8"  rx="2" fill="#e2e8f0"/>
+          <ellipse cx="600" cy="410" rx="14" ry="20" fill="#cbd5e1"/>
+          <circle  cx="600" cy="395" r="11" fill="#e2e8f0"/>
+          <polygon points="592,386 596,380 600,386 604,380 608,386" fill="#fbbf24"/>
+          <rect x="576" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(-15,576,405)"/>
+          <rect x="610" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(15,610,405)"/>
+          <text x="584" y="383" font-size="10">✨</text>
+          <text x="603" y="388" font-size="9">⭐</text>
+          <rect x="572" y="450" width="56" height="16" rx="3" fill="#64748b"/>
+          <text x="600" y="462" font-family="Cinzel,serif" font-size="7" fill="#fde68a" text-anchor="middle">ESTATUA</text>
+          <text x="600" y="504" font-family="Cinzel,serif" font-size="9" fill="#475569" text-anchor="middle" font-weight="700">💃 Estatua</text>
+        </g>
+
+        <!-- ══ PUENTE 🌉 — sobre la intersecc. izq×media ══ -->
+        <g filter="url(#sombra-s)">
+          <rect x="145" y="328" width="42" height="44" rx="3" fill="#92400e"/>
+          <rect x="145" y="333" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="342" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="351" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="360" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="181" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="148" y="328" width="36" height="5"  rx="2" fill="#57534e"/>
+          <rect x="148" y="367" width="36" height="5"  rx="2" fill="#57534e"/>
+          <text x="163" y="322" font-family="Cinzel,serif" font-size="8" fill="#78716c" text-anchor="middle">🌉 Puente</text>
+        </g>
+
+        <!-- ══ CASTILLO DE CRISTAL 💎 — cx=350, cy=390 ══ -->
+        <g filter="url(#sombra)">
+          <rect x="298" y="370" width="104" height="80"  rx="4" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="285" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="381" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="320" y="300" width="60"  height="152" rx="4" fill="#cffafe" stroke="#67e8f9" stroke-width="2"/>
+          <polygon points="350,272 390,302 310,302" fill="#0ea5e9"/>
+          <circle  cx="350" cy="272" r="6" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <polygon points="302,322 319,340 285,340" fill="#38bdf8"/>
+          <polygon points="398,322 415,340 381,340" fill="#38bdf8"/>
+          <rect x="320" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="332" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="344" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="356" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="368" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="335" y="315" width="30" height="26" rx="14" fill="#7dd3fc" opacity=".8"/>
+          <rect x="341" y="319" width="18" height="18" rx="9"  fill="#bae6fd"/>
+          <rect x="333" y="400" width="34" height="52" rx="17" fill="#0c4a6e"/>
+          <rect x="339" y="406" width="22" height="14" rx="7"  fill="#7dd3fc" opacity=".6"/>
+          <rect x="293" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="391" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="327" y="305" width="8"  height="40" rx="4" fill="white" opacity=".35"/>
+          <rect x="340" y="370" width="6"  height="50" rx="3" fill="white" opacity=".25"/>
+          <rect x="319" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="321,258 337,264 321,270" fill="#fde68a"/>
+          <rect x="379" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="381,258 397,264 381,270" fill="#f43f5e"/>
+          <text x="283" y="308" font-size="12">✨</text>
+          <text x="407" y="308" font-size="12">✨</text>
+          <text x="350" y="294" font-size="11">💎</text>
+          <text x="350" y="464" font-family="Cinzel,serif" font-size="9" fill="#0c4a6e" text-anchor="middle" font-weight="700">💎 Castillo de Cristal</text>
+        </g>
+
+        <!-- Árboles -->
+        <g opacity=".9"><ellipse cx="220" cy="100" rx="28" ry="34" fill="#15803d"/><ellipse cx="208" cy="108" rx="20" ry="24" fill="#22c55e"/><ellipse cx="224" cy="104" rx="16" ry="20" fill="#15803d"/><rect x="217" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="100" rx="28" ry="34" fill="#166534"/><ellipse cx="468" cy="108" rx="20" ry="24" fill="#22c55e"/><rect x="477" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="220" cy="580" rx="26" ry="30" fill="#15803d"/><ellipse cx="210" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="217" y="604" width="6" height="16" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="580" rx="26" ry="30" fill="#166534"/><ellipse cx="470" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="477" y="604" width="6" height="16" fill="#92400e"/></g>
+
+        <!-- Flores en caminos -->
+        <g class="flor-camino" style="animation-delay:0s;">  <text x="183" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.35s;"><text x="238" y="348" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.7s;"> <text x="295" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.2s;"> <text x="348" y="248" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.55s;"><text x="348" y="190" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.9s;"> <text x="348" y="140" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.4s;"> <text x="432" y="168" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.75s;"><text x="492" y="168" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.1s;"> <text x="544" y="168" font-size="13">🌟</text></g>
+        <!-- Decorativos -->
+        <text x="198" y="240" font-size="13">🌺</text><text x="228" y="200" font-size="11">🌸</text>
+        <text x="450" y="240" font-size="13">🌺</text><text x="478" y="200" font-size="11">🌸</text>
+        <text x="198" y="490" font-size="13">🌼</text><text x="238" y="452" font-size="11">🌸</text>
+        <text x="450" y="490" font-size="13">🌼</text><text x="478" y="452" font-size="11">🌸</text>
+        <text x="170" y="132" font-size="14">🦋</text>
+        <text x="508" y="492" font-size="14">🦋</text>
+        <text x="418" y="432" font-size="12">🦋</text>
+
+        <!-- Marcador DESTINO oculto — se muestra al acertar -->
+        <g id="marcadorDestino" opacity="0">
+          <circle cx="600" cy="100" r="26" fill="none" stroke="#fde68a" stroke-width="3" stroke-dasharray="9,5"/>
+          <circle cx="600" cy="100" r="16" fill="rgba(253,230,138,.15)"/>
+          <text x="600" y="104" font-size="18" text-anchor="middle">🏁</text>
+        </g>
+
+        <!-- Marcador inicio -->
+        <g id="marcadorInicio">
+          <circle cx="158" cy="350" r="20" fill="#fde68a" opacity=".4" stroke="#f59e0b" stroke-width="2"/>
+          <text x="158" y="344" font-size="7.5" text-anchor="middle" font-family="Cinzel,serif" fill="#78350f" font-weight="700">INICIO</text>
+          <text x="158" y="357" font-size="10"  text-anchor="middle">⭐</text>
+        </g>
+
+        <!-- Rastro -->
+        <g id="rastroSVG"></g>
+
+        <!-- Flecha dirección -->
+        <g id="flechaDireccion" transform="translate(158,315)">
+          <polygon points="0,-15 8,0 0,-5 -8,0" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+        </g>
+
+        <!-- MATEO — inicio en intersecc. calle izq (x=158) × horizontal media (y=350) -->
+        <g id="mateo" transform="translate(158,315)">
+          <rect x="-28" y="-22" width="56" height="14" rx="4" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="0" y="-11" font-family="Cinzel,serif" font-size="7.5" fill="#78350f" text-anchor="middle" font-weight="700">MATEO</text>
+          <ellipse cx="0" cy="52" rx="16" ry="5" fill="rgba(0,0,0,.18)"/>
+          <!-- Chaqueta verde -->
+          <rect x="-12" y="20" width="24" height="23" rx="5" fill="#15803d"/>
+          <rect x="-8"  y="20" width="16" height="10" rx="3" fill="#22c55e"/>
+          <rect x="-12" y="38" width="24" height="5"  rx="2" fill="#92400e"/>
+          <rect x="-3"  y="39" width="6"  height="3"  rx="1" fill="#fde68a"/>
+          <!-- Cuello -->
+          <rect x="-4" y="14" width="8" height="7" rx="2" fill="#fbbf24"/>
+          <!-- Cabeza -->
+          <ellipse cx="0" cy="7" rx="12" ry="13" fill="#fbbf24"/>
+          <!-- Sombrero explorador -->
+          <ellipse cx="0" cy="-3" rx="14" ry="5" fill="#92400e"/>
+          <rect x="-10" y="-9" width="20" height="8" rx="3" fill="#a16207"/>
+          <rect x="-5"  y="-12" width="10" height="5" rx="2" fill="#b45309"/>
+          <rect x="-10" y="-3" width="20" height="3"  rx="1" fill="#fde68a"/>
+          <!-- Ojos -->
+          <circle cx="-4" cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="4"  cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="-3" cy="6"  r="1"   fill="white"/>
+          <circle cx="5"  cy="6"  r="1"   fill="white"/>
+          <path d="M-3.5,12 Q0,16 3.5,12" fill="none" stroke="#c2410c" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Brújula en mano -->
+          <circle cx="17" cy="28" r="6"   fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <line x1="17" y1="23" x2="17" y2="33" stroke="#dc2626" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="12" y1="28" x2="22" y2="28" stroke="#1c1917" stroke-width="1"   stroke-linecap="round"/>
+          <circle cx="17" cy="28" r="2"   fill="white" opacity=".5"/>
+          <!-- Mochila -->
+          <rect x="-22" y="20" width="11" height="18" rx="3" fill="#16a34a"/>
+          <rect x="-20" y="24" width="7"  height="5"  rx="1" fill="#4ade80"/>
+          <rect x="-20" y="31" width="7"  height="3"  rx="1" fill="#4ade80"/>
+          <!-- Piernas -->
+          <rect x="-10" y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <rect x="2"   y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <!-- Botas -->
+          <rect x="-12" y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <rect x="2"   y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <!-- Brazos -->
+          <rect x="-22" y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(14,-22,20)"/>
+          <rect x="12"  y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(-14,12,20)"/>
+          <circle cx="-20" cy="30" r="4" fill="#fbbf24"/>
+        </g>
+
+      </svg>
+    </div><!-- /jardin-svg-wrap -->
+
+    <div class="leyenda">
+      <div class="leyenda-titulo"><i class="fas fa-map-pin me-1"></i> ELEMENTOS DEL JARDÍN ENCANTADO</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#3b82f6;"></div> ⛲ Fuente Mágica</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#f43f5e;"></div> 🎠 Carrusel</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#60a5fa;"></div> 🦆 Estanque</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#94a3b8;"></div> 💃 Estatua</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#92400e;"></div> 🌉 Puente</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#0ea5e9;"></div> 💎 Castillo de Cristal</div>
+    </div>
+  </div><!-- /jardin-wrap -->
+
+
+  <!-- ══ PANEL DERECHO REDUCIDO ══ -->
+  <div class="panel">
+
+    <!-- Narrativa breve -->
+    <div class="tarjeta-narrativa">
+      <div class="narrativa-titulo"><span style="font-size:1.1rem;">🌿</span> El jardín encantado</div>
+      <p class="narrativa-texto">
+        En este jardín mágico las instrucciones usan <strong>orientación relativa</strong>: "derecha" e
+        "izquierda" dependen de hacia dónde mira Mateo <em>en ese momento</em>, no del norte del mapa.
+        Su <strong>brújula mágica</strong> siempre muestra la dirección actual.
+      </p>
+    </div>
+
+    <!-- Brújula horizontal compacta -->
+    <div class="brujula-card">
+      <div class="brujula-svg-wrap">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="gbrV" cx="50%" cy="30%">
+              <stop offset="0%" stop-color="#fef3c7"/>
+              <stop offset="70%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#b45309"/>
+            </radialGradient>
+          </defs>
+          <circle cx="40" cy="40" r="38" fill="url(#gbrV)" id="aroDorado"/>
+          <circle cx="40" cy="40" r="32" fill="#1c1917"/>
+          <circle cx="40" cy="40" r="37" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,4" opacity=".5"/>
+          <text x="40" y="16" font-family="Cinzel,serif" font-size="11" fill="#fde68a" text-anchor="middle" font-weight="700">N</text>
+          <text x="40" y="71" font-family="Cinzel,serif" font-size="11" fill="rgba(255,255,255,.5)" text-anchor="middle">S</text>
+          <text x="9"  y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">O</text>
+          <text x="71" y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">E</text>
+          <line x1="40" y1="20" x2="40" y2="60" stroke="#57534e" stroke-width=".8"/>
+          <line x1="20" y1="40" x2="60" y2="40" stroke="#57534e" stroke-width=".8"/>
+          <g id="agujaGrande" style="transform-origin:40px 40px;" transform="rotate(0)">
+            <polygon points="40,14 43.5,40 40,36 36.5,40" fill="#dc2626"/>
+            <polygon points="40,66 43.5,40 40,44 36.5,40" fill="white" opacity=".8"/>
+          </g>
+          <circle cx="40" cy="40" r="8"   fill="url(#gbrV)" stroke="white" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="3"   fill="#1c1917"/>
+          <circle cx="40" cy="40" r="1.5" fill="#fde68a"/>
+        </svg>
+      </div>
+      <div class="brujula-info">
+        <div class="brujula-label"><i class="fas fa-compass me-1"></i> BRÚJULA DE MATEO</div>
+        <div class="direccion-actual" id="dirActual">Norte ↑</div>
+        <div class="direccion-sub"   id="dirSub">Mateo mira hacia la Fuente Mágica ⛲</div>
+      </div>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="tarjeta-instrucciones">
+      <div class="instrucciones-header">
+        <i class="fas fa-scroll"></i> Instrucciones de Mateo
+      </div>
+      <div class="instrucciones-body">
+
+        <!-- Chips — destino oculto a propósito -->
+        <div class="ruta-chips">
+          <div class="chip-ruta">🦆 <strong>Estanque</strong> — Inicio</div>
+          <div style="font-size:.78rem;color:#64748b;font-weight:800;">➜ ❓</div>
+          <div class="chip-ruta dest">🏁 Destino: ¿?</div>
+        </div>
+
+        <!-- Nota cuadras -->
+        <div class="nota-cuadras">
+          <span style="font-size:1.1rem;flex-shrink:0;">📐</span>
+          <span>Cada <strong>cuadra</strong> = el tramo entre dos intersecciones del jardín. De una calle a la siguiente son exactamente <strong>2 cuadras</strong> (izq→central→der) en horizontal, y <strong>1 cuadra</strong> en vertical (media→superior).</span>
+        </div>
+
+        <div class="pasos-lista">
+
+          <!-- P1 -->
+          <div class="paso-item activo" id="paso1">
+            <div class="paso-icono">🔄</div>
+            <div class="paso-contenido">
+              <div class="paso-num-label">PASO 1</div>
+              <div class="paso-principal">Gira a la <em>derecha</em></div>
+              <div class="paso-contexto">Mateo mira al norte. Al girar a su derecha queda mirando al <strong>este</strong> — hacia el interior del jardín.</div>
+              <span class="tag-paso girar">🔄 Norte → Este</span>
+            </div>
+          </div>
+          <div class="sep-paso"></div>
+
+          <!-- P2 -->
+          <div class="paso-item inactivo" id="paso2">
+            <div class="paso-icono">👣</div>
+            <div class="paso-contenido">
+              <div class="paso-num-label">PASO 2</div>
+              <div class="paso-principal">Avanza <em>2 cuadras</em> al este</div>
+              <div class="paso-contexto">1ª cuadra: cruza el puente 🌉 y llega a la intersección central. 2ª cuadra: pasa frente al Castillo 💎 y llega a la intersección de la calle derecha.</div>
+              <span class="tag-paso">👣 Este · 2 cuadras</span>
+            </div>
+          </div>
+          <div class="sep-paso"></div>
+
+          <!-- P3 -->
+          <div class="paso-item inactivo" id="paso3">
+            <div class="paso-icono">🔄</div>
+            <div class="paso-contenido">
+              <div class="paso-num-label">PASO 3</div>
+              <div class="paso-principal">Gira a la <em>izquierda</em></div>
+              <div class="paso-contexto">Mateo mira al este. Al girar a su izquierda queda mirando al <strong>norte</strong> — hacia el camino superior del jardín.</div>
+              <span class="tag-paso girar">🔄 Este → Norte</span>
+            </div>
+          </div>
+          <div class="sep-paso"></div>
+
+          <!-- P4 -->
+          <div class="paso-item inactivo" id="paso4">
+            <div class="paso-icono">👣</div>
+            <div class="paso-contenido">
+              <div class="paso-num-label">PASO 4</div>
+              <div class="paso-principal">Avanza <em>1 cuadra</em> al norte</div>
+              <div class="paso-contexto">Sube desde la calle horizontal media hasta el camino horizontal superior 🌸. Las flores brillan a su paso.</div>
+              <span class="tag-paso">👣 Norte · 1 cuadra</span>
+            </div>
+          </div>
+          <div class="sep-paso"></div>
+
+          <!-- P5 -->
+          <div class="paso-item inactivo" id="paso5">
+            <div class="paso-icono">🎯</div>
+            <div class="paso-contenido">
+              <div class="paso-num-label">PASO 5</div>
+              <div class="paso-principal">Gira a la <em>derecha</em> y avanza <em>1 cuadra</em></div>
+              <div class="paso-contexto">Desde el norte gira a la derecha: ahora mira al <strong>este</strong>. Da 1 último paso y llega a su destino final ✨.</div>
+              <span class="tag-paso girar">🔄 Norte → Este · +1 cuadra</span>
+            </div>
+          </div>
+
+        </div><!-- /pasos-lista -->
+
+        <div class="nav-btns">
+          <button class="btn-nav-paso ant" id="btnAnt" onclick="irAnterior()" disabled>← Anterior</button>
+          <button class="btn-nav-paso sig" id="btnSig" onclick="irSiguiente()">Siguiente →</button>
+        </div>
+        <div class="contador-paso" id="contadorPaso">Paso 1 de 5</div>
+
+      </div>
+    </div>
+
+    <!-- Pregunta — destino no revelado en instrucciones -->
+    <div class="tarjeta-pregunta">
+      <div class="pregunta-titulo">🌿 ¿A qué lugar llegó Mateo?</div>
+      <div class="pregunta-sub">Lee los 5 pasos con atención y selecciona el destino correcto.</div>
+      <div class="destinos-grid">
+        <button class="destino-btn" onclick="responder('fuente')"   id="dest-fuente"><span class="dest-emoji">⛲</span> Fuente Mágica</button>
+        <button class="destino-btn" onclick="responder('carrusel')" id="dest-carrusel"><span class="dest-emoji">🎠</span> Carrusel</button>
+        <button class="destino-btn" onclick="responder('castillo')" id="dest-castillo"><span class="dest-emoji">💎</span> Castillo de Cristal</button>
+        <button class="destino-btn" onclick="responder('estatua')"  id="dest-estatua"><span class="dest-emoji">💃</span> Estatua</button>
+      </div>
+      <div class="feedback-box" id="feedbackBox"></div>
+      <div class="btn-quiz-wrap" id="btnQuizWrap">
+        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!</a>
+      </div>
+      <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">
+        <i class="fas fa-redo-alt me-1"></i> Intentar de nuevo
+      </button>
+    </div>
+
+  </div><!-- /panel -->
+
+</div><!-- /layout -->
+
+<script>
+/* ══════════════════════════════════════════════════════
+   RUTA CORRECTA VERIFICADA (SVG 700×700):
+
+   Intersecciones del mapa:
+     Calle izq vertical:     x = 158  (centro de x=140-176)
+     Calle central vertical: x = 350  (centro de x=330-370)
+     Calle derecha vertical: x = 542  (centro de x=524-560)
+     Calle horiz. media:     y = 350  (centro de y=330-370)
+     Calle horiz. superior:  y = 166  (centro de y=150-182)
+
+   "1 cuadra" horizontal = de x=158 a x=350 = 192px
+                          O de x=350 a x=542 = 192px
+   "1 cuadra" vertical   = de y=350 a y=166 = 184px
+
+   ESTADOS de Mateo (lo que se muestra al llegar a cada paso):
+   P1 (antes de ejecutar): x=158, y=315, rot=0°  (norte)
+   Tras P1 (giró derecha): x=158, y=315, rot=90° (este)
+   Tras P2 (avanzó 2):     x=542, y=315, rot=90° (este)
+   Tras P3 (giró izq):     x=542, y=315, rot=0°  (norte)
+   Tras P4 (avanzó 1):     x=542, y=130, rot=0°  (norte)
+   FINAL (giró+avanzó 1):  x=618, y=90,  rot=90° (en el carrusel) ✓
+
+   DESTINO CORRECTO: 'carrusel'
+══════════════════════════════════════════════════════ */
+
+  var DESTINO = 'carrusel';
+  var respondido = false;
+  var pasoActual = 1;
+  var TOTAL = 5;
+
+  var ESTADOS = [
+    { x:158, y:315, rot:0,  dir:'Norte ↑', sub:'Mateo mira hacia la Fuente Mágica ⛲' },
+    { x:158, y:315, rot:90, dir:'Este →',  sub:'Giró a la derecha. Mira al este 🌿' },
+    { x:542, y:315, rot:90, dir:'Este →',  sub:'Avanzó 2 cuadras: cruzó el puente y el Castillo' },
+    { x:542, y:315, rot:0,  dir:'Norte ↑', sub:'Giró a la izquierda. Mira al norte ⬆️' },
+    { x:542, y:130, rot:0,  dir:'Norte ↑', sub:'Subió 1 cuadra. Llegó al camino superior 🌸' },
+  ];
+  var ESTADO_FINAL = { x:618, y:88, rot:90, dir:'Este →', sub:'¡Llegó a su destino! 🎯✨' };
+  var estadoActual = ESTADOS[0];
+
+  function play(id){ try{ var s=document.getElementById(id); s.currentTime=0; s.play(); }catch(e){} }
+
+  function actualizarBrujula(rot, dir, sub, anim) {
+    var ag = document.getElementById('agujaGrande');
+    if (ag) {
+      ag.style.transition = anim ? 'transform .6s cubic-bezier(.34,1.56,.64,1)' : 'none';
+      ag.setAttribute('transform','rotate('+rot+')');
+      if (anim) {
+        var aro = document.getElementById('aroDorado');
+        if (aro) { aro.style.filter='drop-shadow(0 0 14px #fde68a)'; setTimeout(function(){ aro.style.filter=''; }, 700); }
+      }
+    }
+    document.getElementById('dirActual').textContent = dir;
+    document.getElementById('dirSub').textContent    = sub;
+  }
+
+  function moverMateo(x, y, rot, anim) {
+    var m = document.getElementById('mateo');
+    var f = document.getElementById('flechaDireccion');
+    if (m) { m.style.transition = anim ? 'transform .7s cubic-bezier(.34,1.2,.64,1)' : 'none'; m.setAttribute('transform','translate('+x+','+y+')'); }
+    if (f) { f.style.transition = anim ? 'transform .7s' : 'none'; f.setAttribute('transform','translate('+x+','+(y-33)+') rotate('+rot+')'); }
+    if (anim) ponerRastro(x, y);
+  }
+
+  function ponerRastro(x, y) {
+    var g = document.getElementById('rastroSVG');
+    var c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','5');
+    c.setAttribute('fill','#f59e0b'); c.setAttribute('opacity','.35');
+    c.style.animation = 'rastroDesv 1.6s forwards';
+    g.appendChild(c);
+    if (g.childNodes.length > 80) g.removeChild(g.firstChild);
+  }
+  var kfAdded = false;
+  function ensureKF() {
+    if (kfAdded) return;
+    var s = document.createElement('style');
+    s.textContent = '@keyframes rastroDesv{0%{opacity:.35}100%{opacity:0;r:0}}';
+    document.head.appendChild(s); kfAdded = true;
+  }
+
+  function aplicarEstado(e, anim) {
+    estadoActual = e;
+    moverMateo(e.x, e.y, e.rot, anim);
+    actualizarBrujula(e.rot, e.dir, e.sub, anim);
+  }
+
+  function resaltarPaso(n) {
+    for (var i=1; i<=TOTAL; i++) {
+      var el = document.getElementById('paso'+i);
+      if (!el) continue;
+      el.classList.remove('activo','completado','inactivo');
+      if      (i < n)  el.classList.add('completado');
+      else if (i === n) el.classList.add('activo');
+      else              el.classList.add('inactivo');
+    }
+    document.getElementById('contadorPaso').textContent = 'Paso '+n+' de '+TOTAL;
+    document.getElementById('btnAnt').disabled = (n===1);
+    var bs = document.getElementById('btnSig');
+    if (n===TOTAL) { bs.textContent='✓ Todos leídos'; bs.style.opacity='.5'; bs.disabled=true; }
+    else           { bs.textContent='Siguiente →';    bs.style.opacity='1';  bs.disabled=false; }
+  }
+
+  function irSiguiente() {
+    if (pasoActual >= TOTAL) return;
+    play('sndClick'); pasoActual++;
+    aplicarEstado(ESTADOS[pasoActual-1], true);
+    resaltarPaso(pasoActual);
+  }
+  function irAnterior() {
+    if (pasoActual <= 1) return;
+    play('sndClick'); pasoActual--;
+    aplicarEstado(ESTADOS[pasoActual-1], true);
+    resaltarPaso(pasoActual);
+  }
+
+  function responder(id) {
+    if (respondido) return;
+    respondido = true;
+    play('sndClick');
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled=true; });
+    var fb = document.getElementById('feedbackBox');
+
+    if (id === DESTINO) {
+      play('sndTada');
+      aplicarEstado(ESTADO_FINAL, true);
+      /* Mostrar marcador destino en mapa */
+      var md = document.getElementById('marcadorDestino');
+      if (md) md.setAttribute('opacity','1');
+      document.getElementById('dest-carrusel').classList.add('correcta');
+      ['fuente','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).classList.add('incorrecta'); });
+      fb.className = 'feedback-box ok';
+      fb.innerHTML = '🎠 ¡Correcto! Siguiendo los 5 pasos con orientación relativa, Mateo llegó al <strong>Carrusel</strong>. Giró al este (P1), avanzó 2 cuadras pasando el puente y el castillo (P2), giró al norte (P3), subió 1 cuadra (P4) y con un último giro + 1 cuadra al este llegó al destino (P5). ¡Excelente! ✨';
+      document.getElementById('btnQuizWrap').classList.add('visible');
+      lanzarConfeti();
+      localStorage.setItem('progreso_normal_vv_instrucciones','ok');
+    } else {
+      play('sndError');
+      document.getElementById('dest-'+id).classList.add('incorrecta');
+      respondido = false;
+      var exp = {
+        fuente:   'La Fuente ⛲ está arriba a la izquierda. Mateo giró al este y se alejó de ella desde el primer paso.',
+        castillo: 'El Castillo 💎 es un lugar por el que Mateo <em>pasa</em> en el paso 2, pero no es su destino final — continúa avanzando.',
+        estatua:  'La Estatua 💃 está abajo a la derecha. Los pasos 3 y 4 llevan a Mateo hacia el norte, no hacia abajo.'
+      };
+      fb.className = 'feedback-box err';
+      fb.innerHTML = '❌ No es ese lugar. ' + (exp[id]||'') + ' Vuelve a leer los 5 pasos con cuidado.';
+      document.getElementById('btnReintentar').classList.add('visible');
+    }
+  }
+
+  function reintentar() {
+    respondido = false; pasoActual = 1;
+    aplicarEstado(ESTADOS[0], false); resaltarPaso(1);
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){
+      var b=document.getElementById('dest-'+d); b.disabled=false; b.className='destino-btn';
+    });
+    document.getElementById('feedbackBox').className='feedback-box';
+    document.getElementById('btnReintentar').classList.remove('visible');
+    document.getElementById('btnQuizWrap').classList.remove('visible');
+    var md=document.getElementById('marcadorDestino'); if(md) md.setAttribute('opacity','0');
+    var g=document.getElementById('rastroSVG'); while(g.firstChild) g.removeChild(g.firstChild);
+  }
+
+  function lanzarConfeti() {
+    var cols=['#16a34a','#4ade80','#fde68a','#f59e0b','#7c3aed','#0ea5e9','#22c55e','#86efac'];
+    for (var i=0;i<55;i++) { (function(idx){ setTimeout(function(){
+      var el=document.createElement('div'); el.className='confeti';
+      el.style.left=(Math.random()*100)+'vw'; el.style.top='-10px';
+      el.style.background=cols[Math.floor(Math.random()*cols.length)];
+      el.style.width=(6+Math.random()*8)+'px'; el.style.height=(6+Math.random()*8)+'px';
+      el.style.borderRadius=Math.random()>.5?'50%':'2px';
+      var dur=(1.8+Math.random()*1.6).toFixed(2);
+      el.style.animation='confetiFall '+dur+'s '+(Math.random()*.4)+'s linear forwards';
+      document.body.appendChild(el);
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },(parseFloat(dur)+.5)*1000);
+    },idx*28); })(i); }
+  }
+
+  var estiloUsuario = null;
+  async function obtenerEstiloUsuario() {
+    try { var r=await fetch('/api/usuario/estilo',{credentials:'include'}); var d=await r.json(); estiloUsuario=d.estilo||'visual_verbal'; } catch(e){ estiloUsuario='visual_verbal'; }
+  }
+  function volverAlContenido() { window.location.href='../menu.html'; }
+  async function irSiguienteNivel() {
+    if(!estiloUsuario) await obtenerEstiloUsuario();
+    window.location.href='../dificil/'+estiloUsuario+'.html';
+  }
+
+  window.addEventListener('DOMContentLoaded', function(){
+    ensureKF();
+    aplicarEstado(ESTADOS[0], false);
+    resaltarPaso(1);
+    if (localStorage.getItem('progreso_normal_vv_instrucciones')==='ok') {
+      document.getElementById('btnQuizWrap').classList.add('visible');
+    }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

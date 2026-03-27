@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Final 🏆</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --guindo: #6B0F2B;
+    --guindo-dark: #4A0A1E;
+    --guindo-light: #8B1A3A;
+    --guindo-mid: #7A1230;
+    --gris: #4A4A5A;
+    --gris-light: #6E6E80;
+    --gris-pale: #C8C8D4;
+    --gris-dark: #2A2A3A;
+    --gold: #F4C842;
+    --accent: #E85D8A;
+    --white: #F5F0F2;
+    --success: #2ECC71;
+    --bg: #3A0A1A;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, var(--bg) 0%, #2A2A3A 50%, var(--guindo-dark) 100%);
+    min-height: 100vh;
+    color: var(--white);
+  }
+
+  /* ── TOP HEADER ── */
+  .top-header {
+    background: linear-gradient(135deg, var(--guindo-dark) 0%, var(--gris-dark) 50%, var(--guindo-dark) 100%);
+    text-align: center;
+    padding: 22px 20px 14px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .top-header-icon { font-size: 1.6rem; }
+  .top-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(244,200,66,0.4);
+    margin: 4px 0;
+  }
+  .top-header-sub { font-size: 0.8rem; color: var(--gris-pale); margin-bottom: 14px; letter-spacing: 1px; }
+  .header-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .header-badge {
+    background: var(--gold); color: var(--guindo-dark);
+    font-family: 'Fredoka One'; font-size: 0.85rem;
+    padding: 6px 18px; border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-badge.secondary { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+
+  /* ── HUD BAR ── */
+  .hud-bar {
+    background: rgba(74,10,30,0.85);
+    border-bottom: 2px solid rgba(244,200,66,0.25);
+    padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .hud-left { display: flex; align-items: center; gap: 10px; }
+  .hud-icon {
+    width: 38px; height: 38px; background: var(--guindo);
+    border: 2px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .hud-pts-group { display: flex; gap: 8px; }
+  .hud-chip {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(244,200,66,0.35);
+    border-radius: 15px; padding: 5px 12px; font-size: 0.82rem;
+    font-weight: 700; color: var(--gold); display: flex; align-items: center; gap: 5px;
+  }
+  .hud-timer {
+    background: rgba(232,93,138,0.15); border: 1px solid var(--accent);
+    border-radius: 15px; padding: 5px 14px; font-size: 0.9rem;
+    font-weight: 800; color: var(--accent); font-family: 'Fredoka One';
+    display: flex; align-items: center; gap: 6px; transition: all 0.3s;
+  }
+  .hud-timer.urgent { color: #ff3a3a; border-color: #ff3a3a; background: rgba(255,58,58,0.2); animation: pulse 0.6s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+  /* ── SECTION TITLE BAR ── */
+  .section-title-bar {
+    background: linear-gradient(90deg, var(--guindo-mid), var(--gris), var(--guindo-mid));
+    padding: 10px 24px; display: flex; align-items: center; gap: 10px;
+    border-top: 1px solid rgba(244,200,66,0.2); border-bottom: 1px solid rgba(244,200,66,0.2);
+    margin: 0 0 16px 0;
+  }
+  .section-title-bar .sicon { font-size: 1.1rem; }
+  .section-title-bar span { font-family: 'Fredoka One'; font-size: 1rem; color: var(--gold); letter-spacing: 0.5px; }
+
+  /* ── MAIN ── */
+  .main-wrap { max-width: 780px; margin: 0 auto; padding: 0 14px 40px; }
+
+  /* ── SCREENS ── */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── GAME CARD ── */
+  .game-card {
+    background: linear-gradient(145deg, rgba(90,20,40,0.6), rgba(60,60,80,0.5));
+    border: 1.5px solid rgba(244,200,66,0.25); border-radius: 14px;
+    margin-bottom: 18px; overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35); backdrop-filter: blur(4px);
+  }
+  .game-card-header {
+    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark));
+    padding: 12px 18px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 2px solid rgba(244,200,66,0.3);
+  }
+  .game-number {
+    background: var(--gold); color: var(--guindo-dark);
+    font-family: 'Fredoka One'; font-size: 0.78rem;
+    padding: 2px 10px; border-radius: 12px; white-space: nowrap;
+  }
+  .game-title { font-family: 'Fredoka One'; font-size: 1.05rem; color: var(--white); flex: 1; }
+  .game-body { padding: 20px 18px; }
+
+  /* ── SCORE POPUP ── */
+  .score-popup {
+    position: fixed; top: 80px; right: 18px;
+    background: linear-gradient(135deg, var(--guindo), var(--gris));
+    border: 2px solid var(--gold); border-radius: 12px;
+    padding: 8px 18px; color: var(--gold); font-family: 'Fredoka One'; font-size: 1rem;
+    z-index: 9999; opacity: 0; transform: translateY(-10px);
+    pointer-events: none; transition: all 0.4s;
+  }
+  .score-popup.show { opacity: 1; transform: translateY(0); }
+
+  /* ── INICIO ── */
+  .start-screen { text-align: center; padding: 30px 10px; }
+  .start-title { font-family: 'Fredoka One'; font-size: 2rem; color: var(--gold); margin-bottom: 8px; }
+  .start-sub { color: var(--gris-pale); font-size: 0.95rem; margin-bottom: 28px; line-height: 1.7; }
+  .topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .topic-card {
+    background: rgba(107,15,43,0.4); border: 1.5px solid rgba(244,200,66,0.25);
+    border-radius: 12px; padding: 16px; text-align: center; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .topic-card:hover, .topic-card.selected {
+    border-color: var(--gold); background: rgba(107,15,43,0.7); transform: translateY(-2px);
+  }
+  .topic-card.selected { background: rgba(244,200,66,0.12); }
+  .topic-card .t-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .topic-card .t-label { font-family: 'Fredoka One'; font-size: 0.9rem; color: var(--gold); }
+  .topic-card .t-count { font-size: 0.75rem; color: var(--gris-pale); margin-top: 3px; }
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .mode-card {
+    background: rgba(74,74,90,0.4); border: 1.5px solid rgba(200,200,212,0.2);
+    border-radius: 12px; padding: 14px; cursor: pointer; transition: all 0.25s; text-align: center;
+  }
+  .mode-card:hover, .mode-card.selected { border-color: var(--gold); background: rgba(244,200,66,0.1); }
+  .mode-card .m-icon { font-size: 1.4rem; margin-bottom: 4px; }
+  .mode-card .m-label { font-family: 'Fredoka One'; font-size: 0.88rem; color: var(--white); }
+  .mode-card .m-desc { font-size: 0.75rem; color: var(--gris-pale); margin-top: 3px; }
+  .config-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; justify-content: center; }
+  .config-label { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
+  .config-select {
+    background: rgba(107,15,43,0.5); border: 1.5px solid rgba(244,200,66,0.35);
+    border-radius: 8px; color: var(--white); padding: 6px 12px;
+    font-family: 'Nunito'; font-size: 0.88rem; outline: none; cursor: pointer;
+  }
+  .config-select option { background: var(--guindo-dark); }
+
+  /* ── PROGRESS BAR ── */
+  .prog-wrap {
+    background: rgba(255,255,255,0.1); border-radius: 8px; height: 10px;
+    margin-bottom: 18px; overflow: hidden; position: relative;
+  }
+  .prog-fill {
+    height: 100%; border-radius: 8px;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+    transition: width 0.5s ease;
+  }
+  .prog-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.78rem; color: var(--gris-pale); margin-bottom: 6px;
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-number-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(244,200,66,0.12); border: 1px solid rgba(244,200,66,0.3);
+    border-radius: 20px; padding: 4px 12px; font-size: 0.82rem; color: var(--gold); font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .q-category-tag {
+    display: inline-block; background: var(--guindo); border-radius: 20px;
+    padding: 3px 12px; font-size: 0.75rem; color: var(--gold); font-weight: 700;
+    margin-bottom: 10px; margin-left: 8px;
+  }
+  .q-text {
+    font-size: 1.05rem; font-weight: 700; color: var(--white);
+    line-height: 1.6; background: rgba(0,0,0,0.2);
+    border-left: 3px solid var(--accent);
+    padding: 14px 16px; border-radius: 0 10px 10px 0;
+    margin-bottom: 18px;
+  }
+  .opts-grid { display: grid; gap: 10px; }
+  .opt-btn {
+    background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.14);
+    border-radius: 10px; padding: 12px 16px; cursor: pointer;
+    font-weight: 700; font-size: 0.92rem; color: var(--white);
+    text-align: left; transition: all 0.22s; display: flex; align-items: center; gap: 10px;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--gold); background: rgba(244,200,66,0.1); }
+  .opt-btn .opt-letter {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--guindo); border: 1.5px solid rgba(244,200,66,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One'; font-size: 0.78rem; color: var(--gold); flex-shrink: 0;
+  }
+  .opt-btn.correct { border-color: var(--success); background: rgba(46,204,113,0.18); color: var(--success); }
+  .opt-btn.correct .opt-letter { background: var(--success); color: #fff; border-color: var(--success); }
+  .opt-btn.wrong { border-color: var(--accent); background: rgba(232,93,138,0.18); color: var(--accent); }
+  .opt-btn.wrong .opt-letter { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .opt-btn:disabled { cursor: default; }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    padding: 11px 16px; border-radius: 10px; font-weight: 700; font-size: 0.9rem;
+    margin-top: 14px; display: none; text-align: center;
+  }
+  .feedback.show { display: block; animation: fadeIn 0.3s; }
+  .feedback.ok { background: rgba(46,204,113,0.18); color: var(--success); border: 1px solid var(--success); }
+  .feedback.fail { background: rgba(232,93,138,0.18); color: var(--accent); border: 1px solid var(--accent); }
+  .explain-box {
+    background: rgba(0,0,0,0.25); border: 1px solid rgba(244,200,66,0.2);
+    border-radius: 8px; padding: 10px 14px; margin-top: 10px;
+    font-size: 0.85rem; color: var(--gris-pale); line-height: 1.6;
+    display: none;
+  }
+  .explain-box.show { display: block; animation: fadeIn 0.3s; }
+
+  /* ── NEXT BTN ── */
+  .btn {
+    background: linear-gradient(135deg, var(--guindo), var(--gris));
+    border: 2px solid var(--gold); border-radius: 10px;
+    color: var(--gold); font-family: 'Fredoka One'; font-size: 0.95rem;
+    padding: 10px 26px; cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px;
+  }
+  .btn:hover { background: var(--gold); color: var(--guindo-dark); transform: translateY(-1px); }
+  .btn-big {
+    padding: 13px 36px; font-size: 1.1rem;
+    box-shadow: 0 4px 18px rgba(244,200,66,0.25);
+  }
+  .btn-accent { background: linear-gradient(135deg, var(--accent), #a0205a); border-color: var(--accent); color: #fff; }
+  .btn-accent:hover { background: var(--accent); color: #fff; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; justify-content: center; }
+
+  /* ── STREAK ── */
+  .streak-bar { display: flex; gap: 5px; margin-bottom: 14px; }
+  .streak-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+    transition: all 0.3s;
+  }
+  .streak-dot.hit { background: var(--success); border-color: var(--success); }
+  .streak-dot.miss { background: var(--accent); border-color: var(--accent); }
+
+  /* ── RESULTADO FINAL ── */
+  .result-screen { text-align: center; padding: 24px 10px; }
+  .result-trophy { font-size: 4rem; margin-bottom: 10px; animation: bounce 0.8s ease; }
+  @keyframes bounce { 0%{transform:scale(0)} 60%{transform:scale(1.15)} 100%{transform:scale(1)} }
+  .result-title { font-family: 'Fredoka One'; font-size: 2rem; color: var(--gold); margin-bottom: 6px; }
+  .result-score { font-size: 1.3rem; color: var(--white); margin-bottom: 18px; }
+  .result-score span { color: var(--gold); font-family: 'Fredoka One'; font-size: 2rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 20px 0; }
+  .stat-card {
+    background: rgba(107,15,43,0.4); border: 1px solid rgba(244,200,66,0.2);
+    border-radius: 12px; padding: 14px 10px; text-align: center;
+  }
+  .stat-num { font-family: 'Fredoka One'; font-size: 1.6rem; color: var(--gold); }
+  .stat-label { font-size: 0.75rem; color: var(--gris-pale); margin-top: 3px; }
+  .badge-display {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(244,200,66,0.12); border: 2px solid var(--gold);
+    border-radius: 24px; padding: 8px 22px;
+    font-family: 'Fredoka One'; font-size: 1.1rem; color: var(--gold);
+    margin: 14px 0; box-shadow: 0 0 20px rgba(244,200,66,0.2);
+  }
+  .cat-breakdown { margin: 16px 0; text-align: left; }
+  .cat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .cat-name { color: var(--gris-pale); font-size: 0.85rem; width: 140px; flex-shrink: 0; }
+  .cat-bar-wrap { flex: 1; background: rgba(255,255,255,0.1); border-radius: 6px; height: 10px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold), var(--accent)); }
+  .cat-pct { color: var(--gold); font-weight: 800; font-size: 0.85rem; width: 36px; text-align: right; }
+
+  /* ── REVIEW MODE ── */
+  .review-item {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px; margin-bottom: 10px;
+  }
+  .review-item.hit { border-left: 3px solid var(--success); }
+  .review-item.miss { border-left: 3px solid var(--accent); }
+  .review-q { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .review-ans { font-size: 0.84rem; color: var(--gris-pale); }
+  .review-ans .correct-ans { color: var(--success); font-weight: 700; }
+  .review-ans .your-ans { color: var(--accent); }
+
+  @media(max-width:540px){
+    .topic-grid { grid-template-columns: 1fr 1fr; }
+    .mode-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .cat-name { width: 100px; font-size:0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="score-popup" id="scorePopup">+10 ⭐</div>
+
+<!-- ══════════ TOP HEADER ══════════ -->
+<div class="top-header">
+  <div class="top-header-icon">🏆</div>
+  <h1>Quiz Final</h1>
+  <div class="top-header-sub">Bloque II — Geografía · 5to Primaria</div>
+  <div class="header-badges">
+    <div class="header-badge">🎮 Modo Quiz</div>
+    <div class="header-badge secondary">⭐ Pon a prueba tu conocimiento</div>
+  </div>
+</div>
+
+<!-- ══════════ HUD BAR ══════════ -->
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-icon">🎯</div>
+  </div>
+  <div class="hud-pts-group">
+    <div class="hud-chip">⭐ <span id="pts">0</span></div>
+    <div class="hud-chip">🔥 Racha: <span id="streak">0</span></div>
+    <div class="hud-timer" id="timerDisplay" style="display:none;">⏱ <span id="timerVal">30</span>s</div>
+  </div>
+  <div class="hud-chip">✅ <span id="correctCount">0</span> / <span id="totalCount">0</span></div>
+</div>
+
+<!-- ══════════ SECTION TITLE BAR ══════════ -->
+<div class="section-title-bar">
+  <span class="sicon" id="sectionIcon">🎮</span>
+  <span id="sectionTitle">Elige tu modo de juego</span>
+</div>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="main-wrap">
+
+  <!-- ── PANTALLA INICIO ── -->
+  <div class="screen active" id="screen-start">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Paso 1</span>
+        <span class="game-title">Elige el tema</span>
+      </div>
+      <div class="game-body">
+        <div class="topic-grid" id="topicGrid">
+          <div class="topic-card selected" data-topic="all" onclick="selectTopic(this)">
+            <div class="t-icon">🌐</div>
+            <div class="t-label">Todos los temas</div>
+            <div class="t-count">30 preguntas</div>
+          </div>
+          <div class="topic-card" data-topic="poblacion" onclick="selectTopic(this)">
+            <div class="t-icon">👥</div>
+            <div class="t-label">Países Poblados</div>
+            <div class="t-count">10 preguntas</div>
+          </div>
+          <div class="topic-card" data-topic="ciudad" onclick="selectTopic(this)">
+            <div class="t-icon">🏙️</div>
+            <div class="t-label">Ciudad y Campo</div>
+            <div class="t-count">10 preguntas</div>
+          </div>
+          <div class="topic-card" data-topic="culturas" onclick="selectTopic(this)">
+            <div class="t-icon">🌍</div>
+            <div class="t-label">Culturas del Mundo</div>
+            <div class="t-count">10 preguntas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Paso 2</span>
+        <span class="game-title">Elige el modo</span>
+      </div>
+      <div class="game-body">
+        <div class="mode-grid">
+          <div class="mode-card selected" data-mode="normal" onclick="selectMode(this)">
+            <div class="m-icon">📖</div>
+            <div class="m-label">Normal</div>
+            <div class="m-desc">Sin tiempo, aprende a tu ritmo</div>
+          </div>
+          <div class="mode-card" data-mode="timed" onclick="selectMode(this)">
+            <div class="m-icon">⏱️</div>
+            <div class="m-label">Contrarreloj</div>
+            <div class="m-desc">30 segundos por pregunta</div>
+          </div>
+          <div class="mode-card" data-mode="sudden" onclick="selectMode(this)">
+            <div class="m-icon">💀</div>
+            <div class="m-label">Muerte Súbita</div>
+            <div class="m-desc">Un error y termina el juego</div>
+          </div>
+          <div class="mode-card" data-mode="repaso" onclick="selectMode(this)">
+            <div class="m-icon">🔄</div>
+            <div class="m-label">Repaso</div>
+            <div class="m-desc">Solo las que fallaste antes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Paso 3</span>
+        <span class="game-title">Cantidad de preguntas</span>
+      </div>
+      <div class="game-body">
+        <div class="config-row">
+          <span class="config-label">Número de preguntas:</span>
+          <select class="config-select" id="qCount">
+            <option value="5">5 preguntas</option>
+            <option value="10" selected>10 preguntas</option>
+            <option value="15">15 preguntas</option>
+            <option value="20">20 preguntas</option>
+            <option value="30">Todas (30)</option>
+          </select>
+          <span class="config-label">Orden:</span>
+          <select class="config-select" id="qOrder">
+            <option value="random">Aleatorio</option>
+            <option value="fixed">En orden</option>
+          </select>
+        </div>
+        <div style="text-align:center;margin-top:10px;">
+          <button class="btn btn-big" onclick="startQuiz()">🚀 ¡Comenzar Quiz!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANTALLA QUIZ ── -->
+  <div class="screen" id="screen-quiz">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number" id="q-mode-label">Quiz Normal</span>
+        <span class="game-title" id="q-header-title">Pregunta</span>
+      </div>
+      <div class="game-body">
+        <div class="prog-label">
+          <span id="prog-text">Pregunta 1 de 10</span>
+          <span id="prog-pct">0%</span>
+        </div>
+        <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+        <div class="streak-bar" id="streakBar"></div>
+
+        <div>
+          <span class="q-number-badge">❓ Pregunta <span id="qNum">1</span></span>
+          <span class="q-category-tag" id="qCat">Población</span>
+        </div>
+        <div class="q-text" id="qText">Cargando...</div>
+        <div class="opts-grid" id="optsGrid"></div>
+        <div class="feedback" id="quizFb"></div>
+        <div class="explain-box" id="explainBox"></div>
+        <div class="btn-row" style="margin-top:18px;">
+          <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display:none;">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANTALLA RESULTADO ── -->
+  <div class="screen" id="screen-result">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">🏆 Resultado</span>
+        <span class="game-title">Quiz Completado</span>
+      </div>
+      <div class="game-body">
+        <div class="result-screen">
+          <div class="result-trophy" id="resTrophy">🏆</div>
+          <div class="result-title" id="resTitle">¡Excelente!</div>
+          <div class="result-score">Obtuviste <span id="resFinal">0</span> / <span id="resTotal">0</span></div>
+          <div class="badge-display" id="resBadge">🥇 Campeón</div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-num" id="statCorrect">0</div><div class="stat-label">✅ Correctas</div></div>
+            <div class="stat-card"><div class="stat-num" id="statWrong">0</div><div class="stat-label">❌ Incorrectas</div></div>
+            <div class="stat-card"><div class="stat-num" id="statStreak">0</div><div class="stat-label">🔥 Racha máx.</div></div>
+          </div>
+          <div class="cat-breakdown" id="catBreakdown"></div>
+          <div class="btn-row">
+            <button class="btn btn-big" onclick="restartQuiz()">🔄 Jugar de nuevo</button>
+            <button class="btn btn-accent" onclick="showReview()">📋 Ver respuestas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANTALLA REVISIÓN ── -->
+  <div class="screen" id="screen-review">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">📋 Revisión</span>
+        <span class="game-title">Todas tus respuestas</span>
+      </div>
+      <div class="game-body">
+        <div id="reviewList"></div>
+        <div class="btn-row">
+          <button class="btn" onclick="showScreen('screen-result')">← Volver al resultado</button>
+          <button class="btn" onclick="restartQuiz()">🔄 Jugar de nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANTALLA MUERTE SÚBITA ── -->
+  <div class="screen" id="screen-dead">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">💀 Muerte Súbita</span>
+        <span class="game-title">¡Juego Terminado!</span>
+      </div>
+      <div class="game-body" style="text-align:center;padding:30px;">
+        <div style="font-size:3.5rem;margin-bottom:14px;">💀</div>
+        <div style="font-family:'Fredoka One';font-size:1.6rem;color:var(--accent);margin-bottom:10px;">¡Fallaste!</div>
+        <div style="color:var(--gris-pale);margin-bottom:16px;line-height:1.7;">
+          Llegaste a la pregunta <span id="deadQ" style="color:var(--gold);font-weight:800;">0</span> con
+          <span id="deadCorrect" style="color:var(--success);font-weight:800;">0</span> aciertos consecutivos.
+        </div>
+        <div class="badge-display" id="deadBadge">🥉 Sigue practicando</div>
+        <div class="btn-row">
+          <button class="btn btn-big" onclick="restartQuiz()">🔄 Intentar de nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-wrap -->
+
+<script>
+// ══════════ BANCO DE PREGUNTAS ══════════
+const allQuestions = [
+  // POBLACIÓN (10)
+  { cat:'Población', q:'¿Cuál es el país más poblado del mundo en 2024?', opts:['China','India','EE.UU','Indonesia'], a:1, exp:'India superó a China en 2023 con aproximadamente 1,430 millones de habitantes.' },
+  { cat:'Población', q:'¿Cuál es el territorio MENOS poblado del mundo?', opts:['Mónaco','Nauru','Vaticano','Tuvalu'], a:2, exp:'El Vaticano tiene apenas ~800 habitantes en poco más de 0.4 km².' },
+  { cat:'Población', q:'¿Qué mide la densidad poblacional?', opts:['Kilos de alimento por persona','Habitantes por km²','Temperaturas promedio','Idiomas por país'], a:1, exp:'La densidad poblacional = número de habitantes ÷ superficie en km².' },
+  { cat:'Población', q:'¿Qué factor FAVORECE la concentración de población?', opts:['Clima extremo','Alta altitud','Recursos hídricos y suelos fértiles','Desiertos extensos'], a:2, exp:'Las zonas con agua, tierra fértil y empleo atraen mayor población.' },
+  { cat:'Población', q:'Un problema de la ALTA concentración urbana es:', opts:['Mucha vegetación','Hacinamiento y contaminación','Abundancia de empleos','Agua limpia en exceso'], a:1, exp:'La concentración excesiva genera hacinamiento, tráfico y contaminación.' },
+  { cat:'Población', q:'¿Qué significa "dispersión de la población"?', opts:['Todos viven en ciudades','Poca gente distribuida en grandes territorios','Migración masiva','Concentración máxima'], a:1, exp:'Dispersión = poca población repartida en territorios muy amplios.' },
+  { cat:'Población', q:'¿Cuál es el continente más poblado del mundo?', opts:['África','Europa','América','Asia'], a:3, exp:'Asia alberga más del 60% de la población mundial.' },
+  { cat:'Población', q:'¿Cuántos habitantes aproximados tiene China?', opts:['500 millones','800 millones','1,400 millones','2,000 millones'], a:2, exp:'China tiene aproximadamente 1,400 millones de habitantes (2024).' },
+  { cat:'Población', q:'¿Cuál es el tercer país más poblado del mundo?', opts:['Brasil','Rusia','EE.UU','Nigeria'], a:2, exp:'EE.UU tiene ~335 millones de habitantes, ocupando el tercer lugar mundial.' },
+  { cat:'Población', q:'Las regiones de ALTA densidad de población se ubican principalmente en:', opts:['Sahara y Siberia','Asia del Este y Europa Occidental','Amazonia y Antártida','Desierto de Gobi'], a:1, exp:'Asia del Este (China, India, Japón) y Europa occidental concentran alta densidad.' },
+
+  // CIUDAD Y CAMPO (10)
+  { cat:'Ciudad y Campo', q:'¿Qué es el "éxodo rural"?', opts:['Llegada de turistas al campo','Migración del campo hacia la ciudad','Regreso a zonas rurales','Construcción de granjas'], a:1, exp:'El éxodo rural es el movimiento de personas del campo a la ciudad en busca de oportunidades.' },
+  { cat:'Ciudad y Campo', q:'¿Cuáles son actividades económicas RURALES?', opts:['Banca y finanzas','Tecnología e industria','Agricultura, ganadería y pesca','Comercio y servicios'], a:2, exp:'Las actividades rurales son primarias: agricultura, ganadería, pesca y silvicultura.' },
+  { cat:'Ciudad y Campo', q:'La relación entre ciudad y campo es de:', opts:['Competencia','Independencia total','Interdependencia','Conflicto permanente'], a:2, exp:'El campo provee alimentos y la ciudad provee tecnología y servicios al campo: son interdependientes.' },
+  { cat:'Ciudad y Campo', q:'El espacio URBANO se caracteriza por:', opts:['Baja densidad y agricultura','Alta densidad e industria','Sólo naturaleza','Pocos servicios'], a:1, exp:'Las ciudades tienen alta densidad, industria, comercio, servicios y transporte masivo.' },
+  { cat:'Ciudad y Campo', q:'¿Qué actividades son propias del espacio URBANO?', opts:['Pesca y minería','Metro, bancos y hospitales especializados','Tractores y cosechas','Ganadería extensiva'], a:1, exp:'Los espacios urbanos concentran servicios como hospitales, bancos, universidades y transporte masivo.' },
+  { cat:'Ciudad y Campo', q:'La baja densidad poblacional es característica del:', opts:['Centro de una metrópoli','Espacio rural','Barrio industrial','Puerto marítimo'], a:1, exp:'Las zonas rurales tienen poca gente distribuida en grandes superficies.' },
+  { cat:'Ciudad y Campo', q:'¿Qué son las actividades TERCIARIAS?', opts:['Minería y pesca','Agricultura y ganadería','Comercio, servicios y transporte','Industria manufacturera'], a:2, exp:'Las actividades terciarias son las de servicios: educación, salud, comercio, turismo.' },
+  { cat:'Ciudad y Campo', q:'¿Cuál es una VENTAJA de vivir en la ciudad?', opts:['Ritmo de vida tranquilo','Contacto directo con la naturaleza','Acceso a educación y servicios especializados','Bajo costo de vida'], a:2, exp:'Las ciudades concentran hospitales, universidades, empleos y servicios de calidad.' },
+  { cat:'Ciudad y Campo', q:'¿Cuál es una VENTAJA de vivir en el campo?', opts:['Muchos hospitales','Transporte masivo eficiente','Vida tranquila y contacto con la naturaleza','Alta contaminación'], a:2, exp:'El campo ofrece aire puro, menor estrés, naturaleza y comunidades unidas.' },
+  { cat:'Ciudad y Campo', q:'¿Qué problema ocasiona el crecimiento urbano descontrolado?', opts:['Mayor producción agrícola','Zonas marginales y déficit de servicios','Más agua disponible','Menor contaminación'], a:1, exp:'El crecimiento sin planificación genera asentamientos irregulares y falta de servicios básicos.' },
+
+  // CULTURAS (10)
+  { cat:'Culturas', q:'¿Cuántos idiomas existen aproximadamente en el mundo?', opts:['500','2,000','7,000','15,000'], a:2, exp:'Se estiman más de 7,000 idiomas vivos en el mundo, muchos en peligro de extinción.' },
+  { cat:'Culturas', q:'¿Qué organismo internacional protege el patrimonio cultural?', opts:['OMS','UNICEF','UNESCO','FMI'], a:2, exp:'La UNESCO (Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura) protege el patrimonio.' },
+  { cat:'Culturas', q:'¿Qué es la INTERCULTURALIDAD?', opts:['Imponer una sola cultura','Eliminar tradiciones antiguas','Diálogo y respeto mutuo entre culturas','Separar a las comunidades'], a:2, exp:'La interculturalidad promueve el diálogo, el respeto y el enriquecimiento mutuo entre culturas.' },
+  { cat:'Culturas', q:'El patrimonio cultural INMATERIAL incluye:', opts:['Solo edificios históricos','Tradiciones, danzas, saberes y rituales','Solo objetos de museos','Monedas antiguas'], a:1, exp:'El patrimonio inmaterial abarca danzas, músicas, tradiciones orales, gastronomía y rituales.' },
+  { cat:'Culturas', q:'¿Qué significa el MULTICULTURALISMO?', opts:['Una sola religión en un país','Un solo idioma oficial','Varias culturas conviviendo en un mismo espacio','Imponer valores extranjeros'], a:2, exp:'El multiculturalismo es la coexistencia de diferentes culturas en un mismo territorio.' },
+  { cat:'Culturas', q:'¿Cuál es la tradición más conocida de la cultura mexicana a nivel mundial?', opts:['Carnaval de Río','Día de Muertos','Festival Hanami','Diwali'], a:1, exp:'El Día de Muertos mexicano fue declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO.' },
+  { cat:'Culturas', q:'¿Qué cultura inventó el papel, la brújula y la seda?', opts:['India','Egipto','China','Grecia'], a:2, exp:'China realizó inventos fundamentales: papel, pólvora, brújula, seda e imprenta.' },
+  { cat:'Culturas', q:'¿Cuántos idiomas oficiales tiene India?', opts:['1','5','22','50'], a:2, exp:'India reconoce 22 idiomas oficiales, siendo el hindi y el inglés los más utilizados.' },
+  { cat:'Culturas', q:'¿Qué es el "Diwali"?', opts:['Festival de la cultura árabe','Celebración religiosa y cultural de India','Carnaval de Brasil','Año Nuevo Chino'], a:1, exp:'Diwali es el Festival de las Luces de India, celebra la victoria del bien sobre el mal.' },
+  { cat:'Culturas', q:'La aportación más importante de la cultura árabe a las matemáticas fue:', opts:['El teorema de Pitágoras','La geometría euclidiana','El álgebra','La trigonometría moderna'], a:2, exp:'El álgebra fue desarrollada principalmente por matemáticos árabes como Al-Juarismi en el siglo IX.' },
+];
+
+// ══════════ STATE ══════════
+let totalPts = 0;
+let selectedTopic = 'all';
+let selectedMode = 'normal';
+let quizQuestions = [];
+let qIdx = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let currentStreak = 0;
+let maxStreak = 0;
+let userAnswers = [];
+let timerInterval = null;
+let timerVal = 30;
+let failedQuestions = [];
+let catStats = {};
+
+const LETTERS = ['A','B','C','D'];
+
+// ══════════ UI HELPERS ══════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function addPoints(n) {
+  totalPts += n;
+  document.getElementById('pts').textContent = totalPts;
+  const pop = document.getElementById('scorePopup');
+  pop.textContent = '+' + n + ' ⭐';
+  pop.classList.add('show');
+  setTimeout(() => pop.classList.remove('show'), 1300);
+}
+
+function selectTopic(el) {
+  document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTopic = el.dataset.topic;
+}
+
+function selectMode(el) {
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMode = el.dataset.mode;
+}
+
+// ══════════ QUIZ INIT ══════════
+function startQuiz() {
+  // build question pool
+  let pool = allQuestions;
+  if (selectedTopic !== 'all') {
+    const map = { poblacion:'Población', ciudad:'Ciudad y Campo', culturas:'Culturas' };
+    pool = allQuestions.filter(q => q.cat === map[selectedTopic]);
+  }
+  if (selectedMode === 'repaso' && failedQuestions.length > 0) {
+    pool = failedQuestions;
+  }
+
+  const maxQ = parseInt(document.getElementById('qCount').value);
+  const order = document.getElementById('qOrder').value;
+
+  if (order === 'random') pool = [...pool].sort(() => Math.random() - 0.5);
+  quizQuestions = pool.slice(0, Math.min(maxQ, pool.length));
+
+  // reset state
+  qIdx = 0; correctCount = 0; wrongCount = 0; currentStreak = 0; maxStreak = 0;
+  userAnswers = []; catStats = {};
+  document.getElementById('pts').textContent = totalPts;
+  document.getElementById('streak').textContent = 0;
+  document.getElementById('correctCount').textContent = 0;
+  document.getElementById('totalCount').textContent = quizQuestions.length;
+
+  // mode label
+  const modeLabels = { normal:'Quiz Normal', timed:'⏱ Contrarreloj', sudden:'💀 Muerte Súbita', repaso:'🔄 Repaso' };
+  document.getElementById('q-mode-label').textContent = modeLabels[selectedMode] || 'Quiz';
+
+  // timer visibility
+  document.getElementById('timerDisplay').style.display = selectedMode === 'timed' ? 'flex' : 'none';
+
+  // build streak bar
+  const sb = document.getElementById('streakBar');
+  sb.innerHTML = '';
+  for (let i = 0; i < quizQuestions.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'streak-dot'; d.id = 'sd-' + i;
+    sb.appendChild(d);
+  }
+
+  showScreen('screen-quiz');
+  document.getElementById('sectionTitle').textContent = 'Respondiendo el Quiz';
+  document.getElementById('sectionIcon').textContent = '❓';
+  loadQuestion();
+}
+
+// ══════════ LOAD QUESTION ══════════
+function loadQuestion() {
+  if (qIdx >= quizQuestions.length) { endQuiz(); return; }
+  const q = quizQuestions[qIdx];
+  const total = quizQuestions.length;
+
+  // progress
+  const pct = Math.round((qIdx / total) * 100);
+  document.getElementById('prog-text').textContent = `Pregunta ${qIdx+1} de ${total}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('q-header-title').textContent = `Pregunta ${qIdx+1} de ${total}`;
+
+  // category
+  document.getElementById('qCat').textContent = q.cat;
+  document.getElementById('qText').textContent = q.q;
+
+  // options
+  const grid = document.getElementById('optsGrid');
+  grid.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>`;
+    btn.onclick = () => answer(i);
+    grid.appendChild(btn);
+  });
+
+  // reset feedback
+  document.getElementById('quizFb').className = 'feedback';
+  document.getElementById('explainBox').className = 'explain-box';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  // timer
+  if (selectedMode === 'timed') startTimer();
+}
+
+// ══════════ TIMER ══════════
+function startTimer() {
+  clearInterval(timerInterval);
+  timerVal = 30;
+  document.getElementById('timerVal').textContent = timerVal;
+  document.getElementById('timerDisplay').classList.remove('urgent');
+  timerInterval = setInterval(() => {
+    timerVal--;
+    document.getElementById('timerVal').textContent = timerVal;
+    if (timerVal <= 10) document.getElementById('timerDisplay').classList.add('urgent');
+    if (timerVal <= 0) { clearInterval(timerInterval); timeOut(); }
+  }, 1000);
+}
+
+function timeOut() {
+  const q = quizQuestions[qIdx];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b, i) => { if (i === q.a) b.classList.add('correct'); b.disabled = true; });
+  const fb = document.getElementById('quizFb');
+  fb.className = 'feedback show fail';
+  fb.textContent = '⏰ ¡Tiempo agotado! La respuesta correcta está en verde.';
+  showExplain(q.exp);
+  registerAnswer(false, -1);
+  markStreakDot(false);
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+
+// ══════════ ANSWER ══════════
+function answer(chosen) {
+  clearInterval(timerInterval);
+  const q = quizQuestions[qIdx];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b, i) => {
+    if (i === q.a) b.classList.add('correct');
+    else if (i === chosen) b.classList.add('wrong');
+    b.disabled = true;
+  });
+
+  const isCorrect = chosen === q.a;
+  const fb = document.getElementById('quizFb');
+
+  if (isCorrect) {
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ ¡Correcto! +10 pts';
+    correctCount++;
+    currentStreak++;
+    if (currentStreak > maxStreak) maxStreak = currentStreak;
+    document.getElementById('streak').textContent = currentStreak;
+    addPoints(10 + (currentStreak > 2 ? 5 : 0)); // bonus racha
+  } else {
+    fb.className = 'feedback show fail';
+    fb.textContent = '❌ Incorrecto. La respuesta correcta está en verde.';
+    wrongCount++;
+    currentStreak = 0;
+    document.getElementById('streak').textContent = 0;
+    failedQuestions.push(q);
+  }
+
+  document.getElementById('correctCount').textContent = correctCount;
+  showExplain(q.exp);
+  registerAnswer(isCorrect, chosen);
+  markStreakDot(isCorrect);
+
+  if (selectedMode === 'sudden' && !isCorrect) {
+    setTimeout(() => {
+      document.getElementById('deadQ').textContent = qIdx + 1;
+      document.getElementById('deadCorrect').textContent = correctCount;
+      const badge = correctCount >= 5 ? '🥈 Buen intento' : '🥉 Sigue practicando';
+      document.getElementById('deadBadge').textContent = badge;
+      showScreen('screen-dead');
+    }, 1400);
+    return;
+  }
+
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+
+function showExplain(text) {
+  const box = document.getElementById('explainBox');
+  box.textContent = '💡 ' + text;
+  box.className = 'explain-box show';
+}
+
+function registerAnswer(correct, chosen) {
+  const q = quizQuestions[qIdx];
+  userAnswers.push({ q: q.q, cat: q.cat, correct, chosen, correctOpt: q.opts[q.a], yourOpt: chosen >= 0 ? q.opts[chosen] : 'Sin respuesta' });
+  catStats[q.cat] = catStats[q.cat] || { total:0, correct:0 };
+  catStats[q.cat].total++;
+  if (correct) catStats[q.cat].correct++;
+}
+
+function markStreakDot(correct) {
+  const dot = document.getElementById('sd-' + qIdx);
+  if (dot) { dot.classList.add(correct ? 'hit' : 'miss'); dot.textContent = correct ? '✓' : '✗'; }
+}
+
+// ══════════ NEXT / END ══════════
+function nextQuestion() { qIdx++; loadQuestion(); }
+
+function endQuiz() {
+  clearInterval(timerInterval);
+  document.getElementById('sectionTitle').textContent = 'Resultado del Quiz';
+  document.getElementById('sectionIcon').textContent = '🏆';
+
+  const total = quizQuestions.length;
+  const pct = Math.round((correctCount / total) * 100);
+
+  document.getElementById('resFinal').textContent = correctCount;
+  document.getElementById('resTotal').textContent = total;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount;
+  document.getElementById('statStreak').textContent = maxStreak;
+
+  let trophy, title, badge;
+  if (pct >= 90) { trophy='🥇'; title='¡Campeón!'; badge='🥇 Experto Geográfico'; }
+  else if (pct >= 70) { trophy='🥈'; title='¡Muy bien!'; badge='🥈 Conocedor Avanzado'; }
+  else if (pct >= 50) { trophy='🥉'; title='¡Buen intento!'; badge='🥉 Estudiante Aplicado'; }
+  else { trophy='📚'; title='¡Sigue estudiando!'; badge='📚 En Aprendizaje'; }
+
+  document.getElementById('resTrophy').textContent = trophy;
+  document.getElementById('resTitle').textContent = title;
+  document.getElementById('resBadge').textContent = badge;
+
+  // cat breakdown
+  const cb = document.getElementById('catBreakdown');
+  cb.innerHTML = '<div style="color:var(--gold);font-weight:800;font-size:0.9rem;margin-bottom:10px;">📊 Rendimiento por tema:</div>';
+  Object.entries(catStats).forEach(([cat, s]) => {
+    const p = Math.round((s.correct / s.total) * 100);
+    cb.innerHTML += `
+      <div class="cat-row">
+        <div class="cat-name">${cat}</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" style="width:${p}%"></div></div>
+        <div class="cat-pct">${p}%</div>
+      </div>`;
+  });
+
+  showScreen('screen-result');
+}
+
+// ══════════ REVIEW ══════════
+function showReview() {
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  userAnswers.forEach((a, i) => {
+    const cls = a.correct ? 'hit' : 'miss';
+    list.innerHTML += `
+      <div class="review-item ${cls}">
+        <div class="review-q">${i+1}. ${a.q}</div>
+        <div class="review-ans">
+          <span class="correct-ans">✅ Correcta: ${a.correctOpt}</span>
+          ${!a.correct ? `<br><span class="your-ans">❌ Tu respuesta: ${a.yourOpt}</span>` : ''}
+        </div>
+      </div>`;
+  });
+  showScreen('screen-review');
+}
+
+// ══════════ RESTART ══════════
+function restartQuiz() {
+  clearInterval(timerInterval);
+  document.getElementById('sectionTitle').textContent = 'Elige tu modo de juego';
+  document.getElementById('sectionIcon').textContent = '🎮';
+  document.getElementById('timerDisplay').style.display = 'none';
+  showScreen('screen-start');
+}
+</script>
+</body>
+</html>

@@ -821,13 +821,13 @@
             <div class="ruta-badge inicio">🚀 Inicio: <strong>Plaza central</strong></div>
           </div>
           <div class="ruta-info">
-            <div class="ruta-badge destino">🏁 Destino: <strong>Biblioteca</strong></div>
+            <div class="ruta-badge destino">🏁 Destino: <strong>???</strong></div>
           </div>
           <div style="margin:10px 0 6px;font-weight:700;font-size:.88rem;color:var(--texto-med);">Sigue estas flechas en orden:</div>
           <div class="flechas-secuencia" id="flechas1">
-            <div class="flecha-chip actual" id="f1_0">→</div>
-            <div class="flecha-chip" id="f1_1">↑</div>
-            <div class="flecha-chip" id="f1_2">→</div>
+            <div class="flecha-chip actual" id="f1_0">↓</div>
+            <div class="flecha-chip" id="f1_1">→</div>
+            <div class="flecha-chip" id="f1_2">📍</div>
           </div>
           <div style="font-size:.78rem;font-weight:700;color:var(--texto-med);text-align:center;margin-top:4px;">
             Paso <span id="pasoActual1">1</span> de 3
@@ -1336,10 +1336,10 @@
   </div>
 
   <div style="margin-top:18px;">
-    <button class="btn-accion-final" onclick="volverContenido()">
+    <button class="btn-accion-final" onclick="volverAlContenido()">
       <i class="fas fa-arrow-left"></i> Volver
     </button>
-    <button class="btn-accion-final primario" id="btnSigNivel" onclick="irNivelNormal()" style="display:none;">
+    <button class="btn-accion-final primario" id="btnSigNivel" onclick="irSiguienteNivel()" style="display:none;">
       Nivel Normal <i class="fas fa-arrow-right"></i>
     </button>
     <button class="btn-accion-final" id="btnReiniciarTodo" onclick="reiniciarTodo()" style="display:none;">
@@ -1873,9 +1873,14 @@ function volverAlContenido() {
   window.location.href = '../menu.html';
 }
 
-async function irNivelNormal() {
- if (!estiloUsuario) await obtenerEstiloUsuario();
-  window.location.href = `../normal/${estiloUsuario}.html`;
+function irSiguienteNivel() {
+  // Obtener el estilo de aprendizaje del usuario (desde localStorage o desde el backend)
+  let estilo = localStorage.getItem('estilo_aprendizaje');
+  if (!estilo) {
+    // Si no hay estilo guardado, usar visual_verbal como valor por defecto
+    estilo = 'visual_verbal';
+  }
+  window.location.href = `../normal/${estilo}.html`;
 }
 
 function reiniciarTodo() {
