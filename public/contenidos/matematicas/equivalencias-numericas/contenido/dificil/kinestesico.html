@@ -3,1087 +3,338 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equivalencias numéricas · Nivel Difícil · Kinestésico</title>
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil &middot; Kinest&eacute;sico</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #f7f1ff, #ede7f6);
-      color: #4a148c;
-      min-height: 100vh;
-    }
-
-    .cabecera {
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-      border-bottom: 6px solid #ffd54f;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-      position: relative;
-    }
-
-    .cabecera h1 {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.35rem;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
-    }
-
-    .cabecera .subtitulo {
-      margin-top: 10px;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .badge-estilo {
-      display: inline-block;
-      margin-top: 14px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid white;
-      border-radius: 999px;
-      padding: 10px 24px;
-      font-weight: 800;
-      box-shadow: 0 4px 0 #d39e00;
-    }
-
-    .btn-volver-menu {
-      position: absolute;
-      top: 18px;
-      left: 18px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 3px solid white;
-      background: #ffd54f;
-      color: #4a148c;
-      font-size: 1.35rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #d39e00;
-      transition: .2s;
-    }
-
-    .btn-volver-menu:hover {
-      transform: translateY(-2px);
-      background: #fff3c4;
-    }
-
-    .barra-progreso {
-      max-width: 980px;
-      margin: 24px auto 0;
-      background: white;
-      border-radius: 999px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 6px 0 #d1c4e9;
-      padding: 12px 18px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .progreso-texto {
-      font-weight: 800;
-      color: #6a1b9a;
-      white-space: nowrap;
-    }
-
-    .barra-fondo {
-      flex: 1;
-      min-width: 140px;
-      height: 14px;
-      background: #ede7f6;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #d1c4e9;
-    }
-
-    .barra-relleno {
-      width: 12.5%;
-      height: 100%;
-      background: linear-gradient(90deg, #ab47bc, #7e57c2);
-      transition: width .3s;
-    }
-
-    .progreso-num {
-      background: #7b1fa2;
-      color: white;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-    }
-
-    .contenedor {
-      max-width: 1000px;
-      margin: 26px auto 42px;
-      padding: 0 16px;
-    }
-
-    .pagina {
-      display: none;
-      animation: aparecer .35s ease;
-    }
-
-    .pagina.activa {
-      display: block;
-    }
-
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .tarjeta {
-      background: white;
-      border-radius: 28px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 10px 0 #d1c4e9;
-      padding: 26px;
-    }
-
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.95rem;
-      color: #6a1b9a;
-      margin-bottom: 16px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 18px;
-    }
-
-    .texto-destacado {
-      background: #faf5ff;
-      border: 2px dashed #ce93d8;
-      border-radius: 18px;
-      padding: 16px 18px;
-      color: #5e35b1;
-      font-weight: 700;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-
-    .recuadro {
-      background: #f7f1ff;
-      border-radius: 20px;
-      padding: 18px;
-      border-left: 7px solid #ffd54f;
-      margin: 18px 0;
-    }
-
-    .zona-juego {
-      background: linear-gradient(135deg, #faf5ff, #f3e5f5);
-      border: 3px dashed #ba68c8;
-      border-radius: 24px;
-      padding: 20px;
-      margin-top: 18px;
-    }
-
-    .zona-juego h3 {
-      text-align: center;
-      color: #6a1b9a;
-      font-size: 1.35rem;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .instruccion-corta {
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      margin-bottom: 14px;
-    }
-
-    .bandeja, .tablero {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      min-height: 92px;
-      padding: 14px;
-      border-radius: 20px;
-      border: 3px solid #d1c4e9;
-      background: white;
-      margin-top: 12px;
-    }
-
-    .tablero {
-      min-height: 115px;
-      background: #fffdf7;
-      border-style: dashed;
-    }
-
-    .ficha {
-      min-width: 100px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ffffff, #f7f1ff);
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 5px 0 #d1c4e9;
-      text-align: center;
-      font-weight: 800;
-      color: #5e35b1;
-      cursor: grab;
-      user-select: none;
-      transition: .2s;
-    }
-
-    .ficha:hover {
-      transform: translateY(-2px) scale(1.02);
-    }
-
-    .ficha.dragging {
-      opacity: .6;
-      transform: scale(1.05);
-    }
-
-    .ficha.bloqueada {
-      cursor: default;
-      opacity: .85;
-    }
-
-    .caja-destino {
-      width: 210px;
-      min-height: 90px;
-      border: 3px dashed #ab47bc;
-      border-radius: 20px;
-      background: #faf5ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      text-align: center;
-      font-weight: 800;
-      color: #8e24aa;
-    }
-
-    .caja-destino.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
-    }
-
-    .caja-destino.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
-    }
-
-    .drop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 14px;
-    }
-
-    .drop-card {
-      background: #fff;
-      border: 3px solid #ce93d8;
-      border-radius: 20px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .drop-card h4 {
-      margin: 0 0 12px;
-      color: #6a1b9a;
-      font-weight: 800;
-    }
-
-    .drop-zone {
-      min-height: 95px;
-      border: 3px dashed #ab47bc;
-      border-radius: 18px;
-      background: #faf5ff;
-      padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fila-retos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-
-    .reto {
-      background: white;
-      border: 3px solid #ce93d8;
-      border-radius: 22px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 5px 0 #e1bee7;
-    }
-
-    .reto-valor {
-      font-size: 1.55rem;
-      font-weight: 900;
-      color: #6a1b9a;
-      margin-bottom: 10px;
-    }
-
-    .opciones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .opcion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #d1c4e9;
-      transition: .2s;
-    }
-
-    .opcion:hover {
-      transform: translateY(-2px) scale(1.02);
-      background: #f7f1ff;
-    }
-
-    .opcion.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
-    }
-
-    .opcion.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
-    }
-
-    .matriz-cien {
-      width: 300px;
-      margin: 10px auto;
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 3px;
-      background: #fff;
-      padding: 12px;
-      border-radius: 18px;
-      border: 3px solid #d1c4e9;
-    }
-
-    .cuadro {
-      aspect-ratio: 1 / 1;
-      border-radius: 5px;
-      border: 1px solid #b39ddb;
-      background: white;
-    }
-
-    .cuadro.coloreado {
-      background: linear-gradient(135deg, #ab47bc, #7e57c2);
-    }
-
-    .mensaje-feedback {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      text-align: center;
-      display: none;
-    }
-
-    .mensaje-feedback.visible {
-      display: block;
-    }
-
-    .mensaje-ok {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 2px solid #43a047;
-    }
-
-    .mensaje-warn {
-      background: #fff8e1;
-      color: #8d6e00;
-      border: 2px solid #ffd54f;
-    }
-
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 14px 20px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-nav {
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-weight: 800;
-      transition: .2s;
-    }
-
-    .btn-nav:hover:not(:disabled) {
-      background: #5e35b1;
-      transform: translateY(-2px);
-    }
-
-    .btn-nav:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    .contador {
-      font-weight: 800;
-      color: #6a1b9a;
-      background: #f3e5f5;
-      border: 2px solid #ce93d8;
-      padding: 8px 16px;
-      border-radius: 999px;
-    }
-
-    .boton-quiz {
-      display: inline-block;
-      margin: 28px auto 0;
-      text-decoration: none;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 4px solid #7b1fa2;
-      padding: 16px 34px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      box-shadow: 0 7px 0 #d39e00;
-      transition: .2s;
-    }
-
-    .boton-quiz:hover {
-      transform: translateY(-3px);
-      background: #fff3c4;
-    }
-
-    .boton-quiz.bloqueado {
-      opacity: .55;
-      cursor: not-allowed;
-      background: #e0e0e0;
-      color: #7a7a7a;
-      border-color: #bdbdbd;
-      box-shadow: 0 7px 0 #9e9e9e;
-    }
-
-    .boton-quiz.bloqueado:hover {
-      transform: none;
-      background: #e0e0e0;
-    }
-
-    @media (max-width: 768px) {
-      .cabecera h1 { font-size: 2rem; }
-      .titulo-pagina { font-size: 1.5rem; }
-      .matriz-cien { width: 100%; }
-      .caja-destino { width: 100%; }
-      .btn-volver-menu {
-        top: 12px;
-        left: 12px;
-        width: 46px;
-        height: 46px;
-        font-size: 1.1rem;
-      }
-    }
-  </style>
+  __BLOCK_
 </head>
 <body>
-
   <header class="cabecera">
-    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <h1>🟣 EQUIVALENCIAS</h1>
-    <div class="subtitulo">Equivalencias numéricas · Nivel Difícil</div>
-    <div class="badge-estilo">✋ Kinestésico</div>
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>EQUIVALENCIAS COMPLETAS</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</div>
+    <div class="badge-estilo">Kinest&eacute;sico</div>
   </header>
 
   <div class="barra-progreso">
-    <span class="progreso-texto" id="progresoTexto">Página 1 de 8</span>
-    <div class="barra-fondo">
-      <div class="barra-relleno" id="barraRelleno"></div>
-    </div>
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
     <span class="progreso-num" id="progresoNum">13%</span>
   </div>
 
   <div class="contenedor">
-
-    <!-- PAGINA 1 -->
     <section class="pagina activa" id="pagina1">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-hand-sparkles me-2"></i>Taller difícil de equivalencias</h2>
-
-        <div class="texto-destacado">
-          En este nivel vas a arrastrar, clasificar, ordenar, comparar y detectar errores en equivalencias más retadoras.
+        <h2 class="titulo-pagina"><i class="fas fa-pizza-slice me-2"></i>Festival de pizzas equivalentes</h2>
+        <div class="texto-destacado">Una misma porci&oacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. Si las tres formas representan exactamente la misma parte del entero, entonces forman una equivalencia.</div>
+        <div class="recuadro">En el puesto principal se sirvieron <strong>3 de 4</strong> rebanadas. Esa misma porci&oacute;n tambi&eacute;n puede escribirse como <strong>0.75</strong> y como <strong>75%</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🍕 Fracci&oacute;n a decimal</div><div class="formula-line">Divide el numerador entre el denominador.<br><strong>3 &divide; 4 = 0.75</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📊 Decimal a porcentaje</div><div class="formula-line">Mueve el punto 2 lugares a la derecha y agrega %. <br><strong>0.75 = 75%</strong></div></div>
         </div>
-
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div id="demoP1Pizza"></div>
+            <div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip ticket"><span class="chip-emoji">🍕</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>4</span></div></div><span class="story-tag ticket"><span class="tag-emoji">🔢</span><span>0.75</span></span><span class="story-tag ticket"><span class="tag-emoji">📊</span><span>75%</span></span></div></div>
+          </div>
+        </div>
         <div class="zona-juego">
-          <h3>Ejemplo visual</h3>
-          <div class="instruccion-corta">Este equipo sí va junto:</div>
-
-          <div class="bandeja">
-            <div class="ficha bloqueada">2/5</div>
-            <div class="ficha bloqueada">0.4</div>
-            <div class="ficha bloqueada">40%</div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🍕 Mesa violeta</div>
+            <div id="caseP1Pizza"></div>
+            <div class="panel-note">El equipo de cocina dej&oacute; incompleto el ticket del pedido. La pizza tiene <strong>5 de 8</strong> rebanadas usadas y hay que completar la ficha.</div>
           </div>
-
-          <div class="fila-retos">
-            <div class="reto"><div class="reto-valor">2/5</div></div>
-            <div class="reto"><div class="reto-valor">0.4</div></div>
-            <div class="reto"><div class="reto-valor">40%</div></div>
+          <div class="instruccion-corta">Completa el ticket del pedido arrastrando las piezas correctas.</div>
+          <div class="bandeja bandeja-sticky" id="trayP1"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">🍕 Numerador</div><div class="rank-slot" id="zoneP1Num" data-accept-list="num_5" data-max="1"><span class="placeholder">Parte tomada</span></div></div>
+            <div class="drop-card"><div class="drop-title">📄 Denominador</div><div class="rank-slot" id="zoneP1Den" data-accept-list="den_8" data-max="1"><span class="placeholder">Partes totales</span></div></div>
+            <div class="drop-card"><div class="drop-title">🔢 Decimal</div><div class="rank-slot" id="zoneP1Dec" data-accept-list="dec_0625" data-max="1"><span class="placeholder">Escritura decimal</span></div></div>
+            <div class="drop-card"><div class="drop-title">📊 Porcentaje</div><div class="rank-slot" id="zoneP1Pct" data-accept-list="pct_625" data-max="1"><span class="placeholder">Escritura porcentual</span></div></div>
           </div>
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">Excelente. El ticket de la mesa violeta qued&oacute; completo.</div>
+          <div id="feedback1warn" class="mensaje-feedback mensaje-warn">Esa pieza no corresponde al pedido. Vuelve a pensar en 5 de 8.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 2 -->
     <section class="pagina" id="pagina2">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-truck-ramp-box me-2"></i>Lleva la ficha correcta</h2>
-
-        <div class="texto-destacado">
-          Arrastra la tarjeta correcta para completar la equivalencia.
+        <h2 class="titulo-pagina"><i class="fas fa-seedling me-2"></i>Semillero del huerto escolar</h2>
+        <div class="texto-destacado">En una cuadr&iacute;cula de 100 espacios, una coloraci&oacute;n tambi&eacute;n se puede expresar con fracci&oacute;n, decimal y porcentaje. Las tres formas deben apuntar a la misma cantidad.</div>
+        <div class="recuadro">Si hay 45 espacios marcados, esa parte puede escribirse como <strong>45%</strong>, <strong>0.45</strong> y <strong>9/20</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🌱 Porcentaje a decimal</div><div class="formula-line">Quita el signo % y recorre el punto 2 lugares a la izquierda.<br><strong>45% = 0.45</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📄 Decimal a fracci&oacute;n</div><div class="formula-line">Si tiene 2 cifras decimales, escr&iacute;belo sobre 100 y simplifica.<br><strong>0.45 = 45/100</strong><br>Como ambos se pueden dividir entre <strong>5</strong>, queda <strong>9/20</strong>.</div></div>
         </div>
-
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div id="demoP2Grid"></div>
+            <div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip garden"><span class="chip-emoji">🌱</span><div class="fraction-stack"><span>9</span><span class="fraction-bar"></span><span>20</span></div></div><span class="story-tag garden"><span class="tag-emoji">🌿</span><span>0.45</span></span><span class="story-tag garden"><span class="tag-emoji">📊</span><span>45%</span></span></div></div>
+          </div>
+        </div>
         <div class="zona-juego">
-          <h3>Misión 1</h3>
-          <div class="instruccion-corta">Completa: <strong>2/5 = 0.4 = ?</strong></div>
-
-          <div class="tablero">
-            <div class="caja-destino" id="destinoP2" data-correcta="40%">Suelta aquí</div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🌱 Charola verde</div>
+            <div id="caseP2Grid"></div>
+            <div class="panel-note">El huerto necesita separar las etiquetas que s&iacute; describen esta charola. La cuadr&iacute;cula muestra <strong>68</strong> espacios ocupados.</div>
           </div>
-
-          <div class="bandeja" id="bandejaP2">
-            <div class="ficha" draggable="true" data-valor="20%">20%</div>
-            <div class="ficha" draggable="true" data-valor="40%">40%</div>
-            <div class="ficha" draggable="true" data-valor="60%">60%</div>
-            <div class="ficha" draggable="true" data-valor="50%">50%</div>
+          <div class="instruccion-corta">Clasifica las etiquetas. Mueve a la placa oficial solo las que s&iacute; describen la charola verde y deja el resto en revisi&oacute;n.</div>
+          <div class="bandeja bandeja-sticky" id="trayP2"></div>
+          <div class="caso-grid mt-3">
+            <div class="drop-card">
+              <div class="drop-title">✅ Se queda en la etiqueta oficial</div>
+              <div class="bucket-drop" id="binP2Keep"><span class="placeholder">Suelta aqu&iacute; las etiquetas correctas</span></div>
+            </div>
+            <div class="drop-card">
+              <div class="drop-title">🔎 Va a revisi&oacute;n</div>
+              <div class="bucket-drop" id="binP2Review"><span class="placeholder">Suelta aqu&iacute; las etiquetas que no coinciden</span></div>
+            </div>
           </div>
-
-          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Correcto! 2/5 y 0.4 equivalen a 40%.
-          </div>
-
-          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Esa ficha no completa bien la equivalencia.
-          </div>
+          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">Muy bien. Separaste correctamente las equivalencias de la charola verde.</div>
+          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay etiquetas mal clasificadas. Revisa cu&aacute;les s&iacute; representan 68 de 100.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 3 -->
     <section class="pagina" id="pagina3">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-people-arrows me-2"></i>Forma dos equipos correctos</h2>
-
-        <div class="texto-destacado">
-          Arrastra las fichas a la estación correcta. Aquí hay dos equipos diferentes.
+        <h2 class="titulo-pagina"><i class="fas fa-stamp me-2"></i>Inspector de etiquetas</h2>
+        <div class="texto-destacado">Un grupo de equivalencias solo funciona si todas sus piezas representan exactamente la misma cantidad. Si una est&aacute; mal, primero se retira y luego se reemplaza.</div>
+        <div class="recuadro">Por ejemplo, <strong>2/5</strong>, <strong>0.40</strong> y <strong>40%</strong> s&iacute; forman un grupo correcto.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🖨️ Decimal a fracci&oacute;n</div><div class="formula-line">Escribe el decimal sobre 100 y simplifica.<br><strong>0.40 = 40/100</strong><br>Si divides ambos entre <strong>20</strong>, queda <strong>2/5</strong>.</div></div>
+          <div class="formula-card"><div class="formula-title">📊 Decimal a porcentaje</div><div class="formula-line">Recorre el punto 2 lugares a la derecha.<br><strong>0.40 = 40%</strong></div></div>
         </div>
-
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div class="panel-note">Aqu&iacute; se ve un grupo bien formado: misma cantidad escrita con fracci&oacute;n, decimal y porcentaje.</div>
+            <div class="pair-preview mt-3">
+              <div class="pair-row"><div class="fraction-chip stamp"><span class="chip-emoji">🖨️</span><div class="fraction-stack"><span>2</span><span class="fraction-bar"></span><span>5</span></div></div></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">🔢</span><span>0.40</span></span></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">📊</span><span>40%</span></span></div>
+            </div>
+          </div>
+        </div>
         <div class="zona-juego">
-          <h3>Misión 2</h3>
-
-          <div class="drop-grid">
-            <div class="drop-card">
-              <h4>Equipo A: 3/5</h4>
-              <div class="drop-zone" id="dropP3A" data-correcta="0.6,60%"></div>
-            </div>
-
-            <div class="drop-card">
-              <h4>Equipo B: 7/10</h4>
-              <div class="drop-zone" id="dropP3B" data-correcta="0.7,70%"></div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🖨️ Mesa de impresi&oacute;n</div>
+            <div class="panel-note">La imprenta envi&oacute; una etiqueta equivocada. Primero retira la pieza que sobra y despu&eacute;s coloca la correcta para reparar el grupo.</div>
+            <div class="pair-preview">
+              <div class="pair-row"><div class="fraction-chip stamp"><span class="chip-emoji">📄</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>8</span></div></div></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">📄</span><span>0.375</span></span></div>
+              <div class="pair-row"><div class="ficha" id="chipP3Bad" draggable="true" data-value="bad_pct35"><span class="story-tag stamp"><span class="tag-emoji">📄</span><span>35%</span></span></div></div>
             </div>
           </div>
-
-          <div class="bandeja" id="bandejaP3">
-            <div class="ficha" draggable="true" data-valor="0.6">0.6</div>
-            <div class="ficha" draggable="true" data-valor="70%">70%</div>
-            <div class="ficha" draggable="true" data-valor="60%">60%</div>
-            <div class="ficha" draggable="true" data-valor="0.7">0.7</div>
+          <div class="instruccion-corta">Lleva la pieza incorrecta a revisi&oacute;n y despu&eacute;s coloca la tarjeta correcta.</div>
+          <div class="column-board">
+            <div class="drop-card"><div class="drop-title">🧺 Bandeja de revisi&oacute;n</div><div class="rank-slot" id="zoneP3Trash" data-accept-list="bad_pct35" data-max="1"><span class="placeholder">Suelta aqu&iacute; la pieza incorrecta</span></div></div>
+            <div class="drop-card"><div class="drop-title">🩹 Espacio corregido</div><div class="rank-slot" id="zoneP3Fix" data-accept-list="good_pct375" data-max="1"><span class="placeholder">Completa el grupo</span></div></div>
           </div>
-
-          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! Formaste correctamente los dos equipos.
-          </div>
-
-          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Esa ficha no pertenece a esa estación.
-          </div>
+          <div class="bandeja" id="trayP3"></div>
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">Perfecto. Quitaste la pieza incorrecta y reparaste la etiqueta.</div>
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">Ese movimiento no repara el grupo. Revisa cu&aacute;nto representa 3/8.</div>
         </div>
       </div>
     </section>
-
-    <!-- PAGINA 4 -->
     <section class="pagina" id="pagina4">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-arrow-down-1-9 me-2"></i>Ordena de menor a mayor</h2>
-
-        <div class="texto-destacado">
-          Toca las tarjetas en el orden correcto, desde la menor cantidad hasta la mayor.
+        <h2 class="titulo-pagina"><i class="fas fa-route me-2"></i>Ruta del ciclista</h2>
+        <div class="texto-destacado">En la recta num&eacute;rica, un mismo punto tambi&eacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. Las tres formas deben marcar exactamente la misma parte del recorrido.</div>
+        <div class="recuadro">Si en una recta dividida en 4 partes llegas a la tercera marca, eso equivale a <strong>3/4</strong>, <strong>0.75</strong> y <strong>75%</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🚴 Fracci&oacute;n de la recta</div><div class="formula-line">Cuenta cu&aacute;ntas partes avanz&oacute; el punto.<br><strong>3 de 4 = 3/4</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📍 Decimal y porcentaje</div><div class="formula-line">Despu&eacute;s escribe la misma cantidad como decimal y porcentaje.<br><strong>3/4 = 0.75 = 75%</strong></div></div>
         </div>
-
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div id="demoP4Line"></div><div class="panel-note">El punto del ejemplo est&aacute; en 3 de 4 partes del recorrido.</div></div>
+        </div>
         <div class="zona-juego">
-          <h3>Misión 3</h3>
-          <div class="instruccion-corta">Ordena: <strong>1/4</strong>, <strong>2/5</strong>, <strong>1/2</strong></div>
-
-          <div class="opciones" id="opcionesPagina4">
-            <div class="opcion" data-orden="1">1/4</div>
-            <div class="opcion" data-orden="2">2/5</div>
-            <div class="opcion" data-orden="3">1/2</div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🚴 Ruta amarilla</div><div id="caseP4Line"></div><div class="panel-note">El ciclista lleg&oacute; a la marca de <strong>7 de 10</strong> partes del trayecto. Hay que separar las tarjetas que s&iacute; nombran exactamente ese mismo punto.</div></div>
+          <div class="instruccion-corta">Clasifica las tarjetas. Deja con la ruta solo las tres formas que dicen exactamente lo mismo que ese punto.</div>
+          <div class="bandeja bandeja-sticky" id="trayP4"></div>
+          <div class="caso-grid mt-3">
+            <div class="drop-card">
+              <div class="drop-title">📍 Equivale al punto</div>
+              <div class="bucket-drop" id="binP4Keep"><span class="placeholder">Suelta aqu&iacute; las tarjetas equivalentes</span></div>
+            </div>
+            <div class="drop-card">
+              <div class="drop-title">↩️ No equivale al punto</div>
+              <div class="bucket-drop" id="binP4Review"><span class="placeholder">Suelta aqu&iacute; las tarjetas equivocadas</span></div>
+            </div>
           </div>
-
-          <div class="recuadro text-center" id="ordenEstadoP4">
-            Toca primero la menor cantidad.
-          </div>
-
-          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Muy bien! El orden correcto es 1/4, 2/5 y 1/2.
-          </div>
-
-          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Ese no era el siguiente valor del orden.
-          </div>
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">Excelente. El tablero del ciclista ya qued&oacute; bien clasificado.</div>
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay tarjetas mal ubicadas. Cuenta las 7 de 10 partes de la ruta.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 5 -->
     <section class="pagina" id="pagina5">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-bullseye me-2"></i>Atrapa al intruso</h2>
-
-        <div class="texto-destacado">
-          Tres fichas sí coinciden. Una es la intrusa. Tócala.
+        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Barra de jugos</h2>
+        <div class="texto-destacado">Cuando comparas formas distintas, primero puedes convertir una cantidad a otra forma y despu&eacute;s decidir el signo. As&iacute; comparas con m&aacute;s seguridad.</div>
+        <div class="recuadro">Un medio equivale a <strong>0.50</strong>. Por eso, si lo comparas con <strong>0.40</strong>, el signo correcto es <strong>&gt;</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🥤 Fracci&oacute;n a decimal</div><div class="formula-line">Convierte la fracci&oacute;n antes de comparar.<br><strong>3/5 = 0.60</strong></div></div>
+          <div class="formula-card"><div class="formula-title">🧃 Porcentaje a decimal</div><div class="formula-line">Quita % y mueve el punto 2 lugares a la izquierda.<br><strong>58% = 0.58</strong></div></div>
         </div>
-
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div class="pair-row"><div class="fraction-chip"><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div><span class="story-tag">0.50</span><span class="story-tag">&gt;</span><span class="story-tag">0.40</span></div>
+            <div class="panel-note">Primero conviertes y luego comparas.</div>
+          </div>
+        </div>
         <div class="zona-juego">
-          <h3>Misión 4</h3>
-
-          <div class="bandeja">
-            <div class="opcion" data-correcta="false">3/5</div>
-            <div class="opcion" data-correcta="false">0.6</div>
-            <div class="opcion" data-correcta="true">30%</div>
-            <div class="opcion" data-correcta="false">60%</div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🥤 Jurado de jugos</div>
+            <div class="scene-grid">
+              <div class="scene-card scene-card-a">
+                <div class="scene-head">
+                  <div class="scene-badge">A</div>
+                  <div>
+                    <div class="scene-title">Frasco A</div>
+                    <div class="scene-sub">Receta con fracción</div>
+                  </div>
+                </div>
+                <div id="caseP5Left"></div>
+                <div class="panel-note"><div class="fraction-chip juice-a"><span class="chip-emoji">🥤</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>5</span></div></div></div>
+              </div>
+              <div class="scene-card scene-card-b">
+                <div class="scene-head">
+                  <div class="scene-badge">B</div>
+                  <div>
+                    <div class="scene-title">Frasco B</div>
+                    <div class="scene-sub">Receta con porcentaje</div>
+                  </div>
+                </div>
+                <div id="caseP5Right"></div>
+                <div class="panel-note"><span class="story-tag juice-b"><span class="tag-emoji">🧃</span><span>58%</span></span></div>
+              </div>
+            </div>
+            <div class="case-note-banner">El jurado solo acepta el resultado si conviertes ambos frascos a la misma forma antes de compararlos.</div>
           </div>
-
-          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Exacto! 30% es la intrusa.
+          <div class="instruccion-corta">Convierte los dos frascos a decimal, arma una comparaci&oacute;n verdadera entre A y B y luego decide cu&aacute;l tiene m&aacute;s jugo.</div>
+          <div class="bandeja bandeja-sticky" id="trayP5"></div>
+          <div class="compare-strip">
+            <div class="compare-slot" id="zoneP5Val1" data-max="1"><span class="placeholder">Un decimal del jurado</span></div>
+            <div class="compare-slot" id="zoneP5Sign" data-max="1"><span class="placeholder">Signo que hace verdadera la comparaci&oacute;n</span></div>
+            <div class="compare-slot" id="zoneP5Val2" data-max="1"><span class="placeholder">El otro decimal</span></div>
           </div>
-
-          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Busca la ficha que no representa 3/5.
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">🔢 Compara A y B</div><div class="panel-note">Primero convierte cada frasco a decimal. Despu&eacute;s coloca el signo que haga verdadera la comparaci&oacute;n entre <strong>Frasco A</strong> y <strong>Frasco B</strong>.</div></div>
+            <div class="drop-card"><div class="drop-title">🏆 Tiene m&aacute;s jugo</div><div class="rank-slot" id="zoneP5Winner" data-accept-list="winner_left" data-max="1"><span class="placeholder">Arrastra el frasco con mayor cantidad</span></div></div>
           </div>
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">Correcto. <strong>3/5 = 0.60</strong> y <strong>58% = 0.58</strong>, por eso el frasco A tiene m&aacute;s jugo.</div>
+          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">La ficha del jurado a&uacute;n no coincide. Primero convierte ambos frascos a decimal y luego comp&aacute;ralos.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 6 -->
     <section class="pagina" id="pagina6">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-table-cells-large me-2"></i>Lee la cuadrícula</h2>
-
-        <div class="texto-destacado">
-          Observa la cuadrícula y elige la tarjeta que coincide con la parte coloreada.
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-down-short-wide me-2"></i>Podio del laboratorio</h2>
+        <div class="texto-destacado">Para ordenar cantidades mixtas, conviene pensar todas en una misma escala. Puedes imaginar cada una como porcentaje o como decimal antes de decidir su lugar.</div>
+        <div class="recuadro">Una cantidad cercana a <strong>0.35</strong> es menor que otra cercana a <strong>0.50</strong>. El formato cambia, pero el valor es lo que importa.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🧪 Pasa todo a porcentaje</div><div class="formula-line"><strong>35% = 35%</strong><br><strong>3/8 = 37.5%</strong><br><strong>0.40 = 40%</strong><br><strong>1/2 = 50%</strong></div></div>
         </div>
-
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><span class="story-tag lab"><span class="tag-emoji">🧪</span><span>35%</span></span><span class="story-tag lab"><span class="tag-emoji">🔬</span><span>0.40</span></span><div class="fraction-chip lab"><span class="chip-emoji">📏</span><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div></div><div class="panel-note">Aqu&iacute; se ve un recorrido que va de una cantidad menor a una mayor.</div></div>
         <div class="zona-juego">
-          <h3>Misión 5</h3>
-
-          <div class="matriz-cien">
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-            <div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div><div class="cuadro coloreado"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
-            <div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div><div class="cuadro"></div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🧪 Podio del laboratorio</div><div class="micro-copy">El laboratorio quiere ordenar cuatro muestras de la menos concentrada a la m&aacute;s concentrada.</div></div>
+          <div class="instruccion-corta">Arrastra las cuatro tarjetas al podio en orden de menor a mayor.</div>
+          <div class="bandeja bandeja-sticky" id="trayP6"></div>
+          <div class="rank-board">
+            <div class="drop-card"><div class="drop-title">🥉 1. Menor</div><div class="rank-slot" id="zoneP6A" data-accept-list="pct_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3️⃣ 2.</div><div class="rank-slot" id="zoneP6B" data-accept-list="frac_3_8" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2️⃣ 3.</div><div class="rank-slot" id="zoneP6C" data-accept-list="dec_040" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">🥇 4. Mayor</div><div class="rank-slot" id="zoneP6D" data-accept-list="frac_1_2" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
           </div>
-
-          <div class="opciones" id="opcionesPagina6">
-            <div class="opcion" data-correcta="false">20%</div>
-            <div class="opcion" data-correcta="false">30%</div>
-            <div class="opcion" data-correcta="true">40%</div>
-            <div class="opcion" data-correcta="false">60%</div>
-          </div>
-
-          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">
-            ✅ Correcto. Hay 40 de 100 cuadritos coloreados, o sea 40%.
-          </div>
-
-          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Cuenta otra vez los cuadritos pintados.
-          </div>
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">Muy bien. Ordenaste las cuatro cantidades de menor a mayor.</div>
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">Esa posici&oacute;n no corresponde. Revisa cu&aacute;l cantidad est&aacute; m&aacute;s cerca de cero.</div>
         </div>
       </div>
     </section>
-
-    <!-- PAGINA 7 -->
     <section class="pagina" id="pagina7">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-shop me-2"></i>Compara descuentos</h2>
-
-        <div class="texto-destacado">
-          Toca la respuesta correcta después de comparar estas tres formas.
+        <h2 class="titulo-pagina"><i class="fas fa-store me-2"></i>Feria de descuentos</h2>
+        <div class="texto-destacado">En la feria, cada tienda escribe sus descuentos de manera distinta. Para decidir cu&aacute;l conviene m&aacute;s, primero hay que comparar todos los anuncios en una misma escala.</div>
+        <div class="recuadro">Un descuento de <strong>3/8</strong> equivale a <strong>37.5%</strong>. En cambio, <strong>0.40</strong> equivale a <strong>40%</strong>, por eso suele ser la mejor oferta del grupo.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🏷️ Fracci&oacute;n a porcentaje</div><div class="formula-line">Primero convi&eacute;rtela a decimal y luego a porcentaje.<br><strong>3/8 = 0.375 = 37.5%</strong></div></div>
+          <div class="formula-card"><div class="formula-title">💸 Decimal a porcentaje</div><div class="formula-line">Solo mueve el punto 2 lugares a la derecha.<br><strong>0.40 = 40%</strong></div></div>
         </div>
-
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><div class="fraction-chip shop"><span class="chip-emoji">🏷️</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>8</span></div></div><span class="story-tag shop"><span class="tag-emoji">⚖️</span><span>&lt;</span></span><span class="story-tag shop"><span class="tag-emoji">🏷️</span><span>0.40</span></span></div><div class="panel-note">Con una comparaci&oacute;n as&iacute; decides qu&eacute; descuento conviene m&aacute;s.</div></div>
         <div class="zona-juego">
-          <h3>Misión 6</h3>
-
-          <div class="fila-retos">
-            <div class="reto"><div class="reto-valor">40%</div></div>
-            <div class="reto"><div class="reto-valor">0.4</div></div>
-            <div class="reto"><div class="reto-valor">2/5</div></div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🛍️ Comisi&oacute;n de compras</div><div class="panel-note">Hay que ordenar las ofertas de la peor a la mejor. Para hacerlo, conviene pensar todas en porcentaje.</div></div>
+          <div class="instruccion-corta">Ordena las cuatro ofertas desde el descuento menor hasta el mayor.</div>
+          <div class="bandeja bandeja-sticky tray-drop" id="trayP7"><span class="placeholder">Toma un cup&oacute;n y su&eacute;ltalo en el ranking.</span></div>
+          <div class="rank-board offer-rank-board">
+            <div class="drop-card"><div class="drop-title">🥉 1. Menor</div><div class="rank-slot" id="rankP7A" data-accept-list="offer_quarter"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3️⃣ 2.</div><div class="rank-slot" id="rankP7B" data-accept-list="offer_30"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2️⃣ 3.</div><div class="rank-slot" id="rankP7C" data-accept-list="offer_three_eighths"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">🥇 4. Mayor</div><div class="rank-slot" id="rankP7D" data-accept-list="offer_040"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
           </div>
-
-          <div class="opciones" id="opcionesPagina7">
-            <div class="opcion" data-correcta="true">Las tres representan el mismo descuento</div>
-            <div class="opcion" data-correcta="false">Solo 40% y 0.4 coinciden</div>
-            <div class="opcion" data-correcta="false">Solo 0.4 y 2/5 coinciden</div>
-            <div class="opcion" data-correcta="false">Las tres son distintas</div>
-          </div>
-
-          <div id="feedback7ok" class="mensaje-feedback mensaje-ok">
-            ✅ Muy bien. 40%, 0.4 y 2/5 representan la misma cantidad.
-          </div>
-
-          <div id="feedback7warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Convierte una de las tres formas y compárala con las otras.
-          </div>
+          <div class="action-row"><button class="btn-accion" onclick="reiniciarPagina7()">Reiniciar orden</button></div>
+          <div id="feedback7ok" class="mensaje-feedback mensaje-ok">Excelente. Ordenaste las ofertas desde el descuento menor hasta el mayor.</div>
+          <div id="feedback7warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay algo fuera de lugar. Convierte mentalmente cada oferta a porcentaje y revisa el ranking.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 8 -->
     <section class="pagina" id="pagina8">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-crown me-2"></i>Reto final del taller</h2>
-
-        <div class="texto-destacado">
-          Última misión: completa correctamente la equivalencia final y abre el mini-quiz.
-        </div>
-
+        <h2 class="titulo-pagina"><i class="fas fa-handshake-angle me-2"></i>Centro de rescate de equivalencias</h2>
+        <div class="texto-destacado">En el panel final, cada caso necesita recuperar su tarjeta correcta. Para lograrlo, debes completar los cuatro expedientes sin equivocarte.</div>
+        <div class="recuadro">Dos representaciones solo pueden emparejarse si describen exactamente la misma cantidad, aunque una use decimal, otra porcentaje y otra fracci&oacute;n.</div>
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><div class="fraction-chip gold"><span class="chip-emoji">🗂️</span><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div><span class="story-tag gold"><span class="tag-emoji">📄</span><span>0.50</span></span><span class="story-tag gold"><span class="tag-emoji">📄</span><span>50%</span></span></div><div class="panel-note">Si las tres formas dicen lo mismo, entonces pertenecen al mismo expediente.</div></div>
         <div class="zona-juego">
-          <h3>Misión final</h3>
-          <div class="instruccion-corta">Completa: <strong>3/5 = 0.6 = ?</strong></div>
-
-          <div class="tablero">
-            <div class="caja-destino" id="destinoP8" data-correcta="60%">Suelta aquí</div>
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🗂️ Centro de rescate</div><div class="panel-note">Cada expediente perdi&oacute; su tarjeta correcta. Hay que completar los cuatro sin mezclar ninguna equivalencia.</div></div>
+          <div class="instruccion-corta">Arrastra las cuatro tarjetas doradas al expediente que les corresponde.</div>
+          <div class="bandeja bandeja-sticky" id="trayP8"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Caso A: 0.60</div><div class="rank-slot" id="zoneP8A" data-accept-list="pair_3_5" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso B: 1/8</div><div class="rank-slot" id="zoneP8B" data-accept-list="pair_125" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso C: 75%</div><div class="rank-slot" id="zoneP8C" data-accept-list="pair_075" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso D: 0.35</div><div class="rank-slot" id="zoneP8D" data-accept-list="pair_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
           </div>
-
-          <div class="bandeja" id="bandejaP8">
-            <div class="ficha" draggable="true" data-valor="30%">30%</div>
-            <div class="ficha" draggable="true" data-valor="50%">50%</div>
-            <div class="ficha" draggable="true" data-valor="60%">60%</div>
-            <div class="ficha" draggable="true" data-valor="70%">70%</div>
-          </div>
-
-          <div id="feedback8ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! 3/5 y 0.6 equivalen a 60%. Mini-quiz desbloqueado.
-          </div>
-
-          <div id="feedback8warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Esa ficha no completa la equivalencia final.
-          </div>
+          <div id="feedback8ok" class="mensaje-feedback mensaje-ok">Excelente. Rescataste las cuatro equivalencias y el mini-quiz ya est&aacute; desbloqueado.</div>
+          <div id="feedback8warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide con el caso. Revisa si ambas representan la misma cantidad.</div>
         </div>
-
-        <div class="text-center">
-          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarMiniQuiz(event)">
-            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
-          </a>
-        </div>
+        <div class="text-center"><a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz</a></div>
       </div>
     </section>
 
     <div class="navegador">
-      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
-        ← Anterior
-      </button>
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
       <span class="contador" id="contadorPagina">1/8</span>
-      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
-        Siguiente →
-      </button>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
     </div>
   </div>
 
-  <script>
-    let paginaActual = 1;
-    const totalPaginas = 8;
-
-    const paginasConActividad = [2, 3, 4, 5, 6, 7];
-    const actividadesResueltas = {
-      2: false,
-      3: false,
-      4: false,
-      5: false,
-      6: false,
-      7: false,
-      8: false
-    };
-
-    let fichaArrastrada = null;
-    let aciertosP3 = 0;
-    let ordenEsperadoP4 = 1;
-
-    function cambiarPagina(direccion) {
-      document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
-      document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      actualizarNavegacion();
-    }
-
-    function actualizarNavegacion() {
-      document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
-      document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-
-      const porcentaje = (paginaActual / totalPaginas) * 100;
-      document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
-      document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
-
-      const btnAnterior = document.getElementById('btnAnterior');
-      const btnSiguiente = document.getElementById('btnSiguiente');
-
-      btnAnterior.disabled = paginaActual === 1;
-      btnSiguiente.disabled = paginaActual === totalPaginas;
-
-      if (paginasConActividad.includes(paginaActual)) {
-        btnSiguiente.disabled = !actividadesResueltas[paginaActual];
-      }
-    }
-
-    function volverAlMenu() {
-      window.location.href = '../../menu.html';
-    }
-
-    function validarMiniQuiz(event) {
-      if (!actividadesResueltas[8]) {
-        event.preventDefault();
-        return false;
-      }
-      return true;
-    }
-
-    function desbloquearMiniQuiz() {
-      const btnMiniQuiz = document.getElementById('btnMiniQuiz');
-      if (btnMiniQuiz) btnMiniQuiz.classList.remove('bloqueado');
-    }
-
-    function marcarActividadResuelta(numeroPagina) {
-      actividadesResueltas[numeroPagina] = true;
-      if (numeroPagina === 8) desbloquearMiniQuiz();
-      actualizarNavegacion();
-    }
-
-    function inicializarActividadOpciones(selector, okId, warnId, numeroPagina) {
-      const opciones = document.querySelectorAll(selector + ' .opcion');
-      const ok = document.getElementById(okId);
-      const warn = document.getElementById(warnId);
-
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (actividadesResueltas[numeroPagina]) return;
-
-          if (op.dataset.correcta === 'true') {
-            opciones.forEach(x => x.style.pointerEvents = 'none');
-            op.classList.add('correcta');
-            warn.classList.remove('visible');
-            ok.classList.add('visible');
-            marcarActividadResuelta(numeroPagina);
-          } else {
-            op.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
-          }
-        });
-      });
-    }
-
-    function inicializarDragSimple(bandejaId, destinoId, okId, warnId, pagina) {
-      const fichas = document.querySelectorAll(`#${bandejaId} .ficha`);
-      const destino = document.getElementById(destinoId);
-      const ok = document.getElementById(okId);
-      const warn = document.getElementById(warnId);
-
-      fichas.forEach(ficha => {
-        ficha.addEventListener('dragstart', () => {
-          if (actividadesResueltas[pagina]) return;
-          fichaArrastrada = ficha;
-          ficha.classList.add('dragging');
-        });
-
-        ficha.addEventListener('dragend', () => {
-          ficha.classList.remove('dragging');
-        });
-      });
-
-      destino.addEventListener('dragover', (e) => e.preventDefault());
-
-      destino.addEventListener('drop', (e) => {
-        e.preventDefault();
-        if (!fichaArrastrada || actividadesResueltas[pagina]) return;
-
-        const valor = fichaArrastrada.dataset.valor;
-        if (valor === destino.dataset.correcta) {
-          destino.textContent = valor;
-          destino.classList.remove('incorrecta');
-          destino.classList.add('correcta');
-          fichaArrastrada.style.pointerEvents = 'none';
-          fichaArrastrada.style.opacity = '.55';
-          ok.classList.add('visible');
-          warn.classList.remove('visible');
-          marcarActividadResuelta(pagina);
-          fichas.forEach(f => f.setAttribute('draggable', 'false'));
-        } else {
-          destino.classList.add('incorrecta');
-          warn.classList.add('visible');
-          setTimeout(() => destino.classList.remove('incorrecta'), 700);
-        }
-      });
-    }
-
-    function inicializarDragClasificarP3() {
-      const fichas = document.querySelectorAll('#bandejaP3 .ficha');
-      const drops = document.querySelectorAll('#dropP3A, #dropP3B');
-      const ok = document.getElementById('feedback3ok');
-      const warn = document.getElementById('feedback3warn');
-
-      fichas.forEach(ficha => {
-        ficha.addEventListener('dragstart', () => {
-          if (actividadesResueltas[3]) return;
-          fichaArrastrada = ficha;
-          ficha.classList.add('dragging');
-        });
-
-        ficha.addEventListener('dragend', () => {
-          ficha.classList.remove('dragging');
-        });
-      });
-
-      drops.forEach(drop => {
-        drop.addEventListener('dragover', (e) => e.preventDefault());
-
-        drop.addEventListener('drop', (e) => {
-          e.preventDefault();
-          if (!fichaArrastrada || actividadesResueltas[3]) return;
-
-          const correctas = drop.dataset.correcta.split(',');
-          const valor = fichaArrastrada.dataset.valor;
-
-          if (correctas.includes(valor)) {
-            drop.appendChild(fichaArrastrada);
-            fichaArrastrada.setAttribute('draggable', 'false');
-            fichaArrastrada.classList.add('bloqueada');
-            aciertosP3++;
-            warn.classList.remove('visible');
-
-            if (aciertosP3 === 4) {
-              ok.classList.add('visible');
-              marcarActividadResuelta(3);
-            }
-          } else {
-            drop.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => drop.classList.remove('incorrecta'), 700);
-          }
-        });
-      });
-    }
-
-    function inicializarOrdenPagina4() {
-      const opciones = document.querySelectorAll('#opcionesPagina4 .opcion');
-      const ok = document.getElementById('feedback4ok');
-      const warn = document.getElementById('feedback4warn');
-      const estado = document.getElementById('ordenEstadoP4');
-
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (actividadesResueltas[4]) return;
-
-          const orden = parseInt(op.dataset.orden, 10);
-
-          if (orden === ordenEsperadoP4) {
-            op.classList.add('correcta');
-            op.style.pointerEvents = 'none';
-            ordenEsperadoP4++;
-
-            if (ordenEsperadoP4 === 2) estado.textContent = 'Bien. Ahora toca la cantidad de en medio.';
-            if (ordenEsperadoP4 === 3) estado.textContent = 'Perfecto. Ahora toca la mayor.';
-            if (ordenEsperadoP4 === 4) {
-              estado.textContent = 'Orden completado.';
-              ok.classList.add('visible');
-              warn.classList.remove('visible');
-              marcarActividadResuelta(4);
-            }
-          } else {
-            op.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
-          }
-        });
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      paginaActual = 1;
-      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
-      document.getElementById('pagina1').classList.add('activa');
-
-      actualizarNavegacion();
-      inicializarDragSimple('bandejaP2', 'destinoP2', 'feedback2ok', 'feedback2warn', 2);
-      inicializarDragClasificarP3();
-      inicializarOrdenPagina4();
-      inicializarActividadOpciones('#pagina5', 'feedback5ok', 'feedback5warn', 5);
-      inicializarActividadOpciones('#opcionesPagina6', 'feedback6ok', 'feedback6warn', 6);
-      inicializarActividadOpciones('#opcionesPagina7', 'feedback7ok', 'feedback7warn', 7);
-      inicializarDragSimple('bandejaP8', 'destinoP8', 'feedback8ok', 'feedback8warn', 8);
-    });
-  </script>
+  __BLOCK_
+  __BLOCK_
 </body>
 </html>

@@ -1,46 +1,14 @@
--- ============================================
--- TABLAS ORIGINALES
+﻿-- ============================================
+-- TABLAS ACTIVAS
 -- ============================================
 
 CREATE TABLE usuarios(
 	id SERIAL PRIMARY KEY,
 	usuario VARCHAR(50) UNIQUE NOT NULL,
-	contraseña VARCHAR(50) UNIQUE NOT NULL,
+	contraseÃ±a VARCHAR(50) UNIQUE NOT NULL,
 	nombrecompleto VARCHAR(255) NOT NULL,
 	fechanacimiento DATE NOT NULL,
 	genero VARCHAR(20) NOT NULL
-);
-
-CREATE TABLE actividades(
-	id INT PRIMARY KEY,
-	actividad VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE niveles(
-	id SERIAL NOT NULL PRIMARY KEY,
-	id_usuario INT NOT NULL,
-	id_actividad INT NOT NULL,
-	categoria TEXT DEFAULT NULL,
-	nivel INT NOT NULL,
-	desbloqueado BOOLEAN DEFAULT false,
-	FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
-	FOREIGN KEY (id_actividad) REFERENCES actividades(id)
-);
-
-CREATE INDEX niveles_idx ON niveles (id_usuario, id_actividad, categoria, nivel);
-
-CREATE TABLE puntuaciones(
-	id SERIAL PRIMARY KEY,
-	id_usuario INT NOT NULL,
-	id_actividad INT NOT NULL,
-	categoria TEXT,
-	nivel INT NOT NULL,
-	puntuacion INT NOT NULL,
-	tiempo INT NOT NULL,
-	errores INT NOT NULL,
-	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
-	FOREIGN KEY (id_actividad) REFERENCES actividades(id)
 );
 
 -- ============================================
@@ -48,7 +16,6 @@ CREATE TABLE puntuaciones(
 -- ============================================
 
 ALTER TABLE usuarios ADD COLUMN estilo_aprendizaje VARCHAR(30);
-ALTER TABLE puntuaciones ADD COLUMN estilo_mostrado VARCHAR(30);
 
 -- ============================================
 -- TABLAS DEL SISTEMA DE CONTENIDOS
@@ -62,6 +29,8 @@ CREATE TABLE contenidos (
 	orden INT DEFAULT 0,
 	activo BOOLEAN DEFAULT true
 );
+
+-- Las tablas legacy de actividades fueron eliminadas de la BD activa.
 
 CREATE TABLE niveles_contenido (
 	id SERIAL PRIMARY KEY,
@@ -133,6 +102,9 @@ CREATE TABLE resultados_quiz (
 	tiempo_total INTEGER,
 	intento INTEGER NOT NULL DEFAULT 1,
 	aprobado BOOLEAN NOT NULL DEFAULT false,
+	errores INTEGER NOT NULL DEFAULT 0,
+	tipo_resultado VARCHAR(20) NOT NULL DEFAULT 'quiz',
+	nivel_resultante VARCHAR(20),
 	fecha_inicio TIMESTAMP,
 	fecha_fin TIMESTAMP,
 	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -143,25 +115,55 @@ CREATE INDEX idx_quiz_contenido ON resultados_quiz(contenido_id);
 CREATE INDEX idx_quiz_nivel ON resultados_quiz(nivel);
 CREATE INDEX idx_quiz_aprobado ON resultados_quiz(aprobado);
 
--- ============================================
--- INSERTS DE ACTIVIDADES (originales)
--- ============================================
+CREATE TABLE resultados_reforzamiento (
+	id SERIAL PRIMARY KEY,
+	usuario VARCHAR(50) NOT NULL,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel VARCHAR(20) NOT NULL,
+	estilo VARCHAR(30) NOT NULL,
+	pagina INTEGER NOT NULL,
+	apartado_clave VARCHAR(100) NOT NULL,
+	tipo_actividad VARCHAR(50) NOT NULL,
+	aciertos INTEGER NOT NULL DEFAULT 0,
+	errores INTEGER NOT NULL DEFAULT 0,
+	intento INTEGER NOT NULL DEFAULT 1,
+	completado BOOLEAN NOT NULL DEFAULT true,
+	detalle_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-INSERT INTO actividades(id, actividad) VALUES(1, 'Planificación de una aventura');
-INSERT INTO actividades(id, actividad) VALUES(2, 'Memorama');
-INSERT INTO actividades(id, actividad) VALUES(3, 'Problemas matemáticos');
-INSERT INTO actividades(id, actividad) VALUES(4, 'Notas musicales');
-INSERT INTO actividades(id, actividad) VALUES(5, 'Sopa de letras');
+CREATE INDEX idx_reforzamiento_usuario ON resultados_reforzamiento(usuario);
+CREATE INDEX idx_reforzamiento_contenido ON resultados_reforzamiento(contenido_id);
+CREATE INDEX idx_reforzamiento_apartado ON resultados_reforzamiento(usuario, contenido_id, nivel, estilo, apartado_clave);
+
+CREATE TABLE sesiones_reforzamiento (
+	id SERIAL PRIMARY KEY,
+	usuario VARCHAR(50) NOT NULL,
+	contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+	nivel VARCHAR(20) NOT NULL,
+	estilo VARCHAR(30) NOT NULL,
+	tiempo_total INTEGER NOT NULL DEFAULT 0,
+	intento INTEGER NOT NULL DEFAULT 1,
+	evento_cierre VARCHAR(30) NOT NULL DEFAULT 'quiz',
+	fecha_inicio TIMESTAMP,
+	fecha_fin TIMESTAMP,
+	fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_sesiones_reforzamiento_usuario ON sesiones_reforzamiento(usuario);
+CREATE INDEX idx_sesiones_reforzamiento_contenido ON sesiones_reforzamiento(contenido_id);
+CREATE INDEX idx_sesiones_reforzamiento_nivel_estilo ON sesiones_reforzamiento(usuario, contenido_id, nivel, estilo);
+
 
 -- ============================================
--- INSERTS DE CONTENIDOS DE GEOGRAFÍA (BLOQUES 1-3)
+-- INSERTS DE CONTENIDOS DE GEOGRAFÃA (BLOQUES 1-3)
 -- ============================================
 
 -- Contenidos
 INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
 (1, 'geografia', 'la-tierra', 'Bloque I: La Tierra', 1, true),
 (2, 'geografia', 'componentes-naturales', 'Bloque II: Componentes naturales de la Tierra', 2, true),
-(3, 'geografia', 'poblacion-mundial', 'Bloque III: Población mundial', 3, true);
+(3, 'geografia', 'poblacion-mundial', 'Bloque III: PoblaciÃ³n mundial', 3, true);
 
 -- Niveles por contenido
 INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
@@ -169,7 +171,7 @@ INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
 (2, 'facil'), (2, 'normal'), (2, 'dificil'),
 (3, 'facil'), (3, 'normal'), (3, 'dificil');
 
--- Exámenes diagnóstico
+-- ExÃ¡menes diagnÃ³stico
 INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
 (1, 1, true),
 (2, 2, true),
@@ -205,7 +207,7 @@ INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (2, 'dificil', 'auditivo', '/contenidos/geografia/componentes-naturales/contenido/dificil/auditivo.html'),
 (2, 'dificil', 'kinestesico', '/contenidos/geografia/componentes-naturales/contenido/dificil/kinestesico.html');
 
--- Archivos de contenido - Bloque III: Población mundial
+-- Archivos de contenido - Bloque III: PoblaciÃ³n mundial
 INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (3, 'facil', 'visual_verbal', '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_verbal.html'),
 (3, 'facil', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_no_verbal.html'),
@@ -221,7 +223,7 @@ INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (3, 'dificil', 'kinestesico', '/contenidos/geografia/poblacion-mundial/contenido/dificil/kinestesico.html');
 
 -- ============================================
--- INSERTS DE MATEMÁTICAS
+-- INSERTS DE MATEMÃTICAS
 -- ============================================
 
 -- ------------------------------------------------------------
@@ -337,7 +339,7 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- ------------------------------------------------------------
--- CONTENIDO 6: Equivalencias numéricas
+-- CONTENIDO 6: Equivalencias numÃ©ricas
 -- ------------------------------------------------------------
 
 INSERT INTO contenidos (id, area, slug, nombre, orden, activo) VALUES
@@ -451,3 +453,4 @@ VALUES
 (7, 'En un mapa, el tesoro esta en la coordenada (4, 2). Tu estas en (1, 2). Cual es la instruccion mas directa para llegar?',
  '3 pasos a la derecha', '3 pasos a la izquierda', '3 pasos arriba', '3 pasos abajo', 'A')
 ON CONFLICT DO NOTHING;
+

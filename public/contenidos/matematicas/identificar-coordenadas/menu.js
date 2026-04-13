@@ -1,4 +1,4 @@
-const SLUG_CONTENIDO = 'identificar-coordenadas';
+﻿const SLUG_CONTENIDO = 'identificar-coordenadas';
 const AREA_CONTENIDO = 'matematicas';
 
 let estadoContenido = null;

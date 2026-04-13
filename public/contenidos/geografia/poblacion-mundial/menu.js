@@ -17,7 +17,7 @@ async function cargarEstadoContenido() {
         if (!res.ok) return;
 
         estadoContenido = await res.json();
-        
+
         actualizarBotones();
 
     } catch (e) {

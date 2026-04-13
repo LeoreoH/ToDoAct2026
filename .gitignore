@@ -37,3 +37,10 @@ build
 
 # archivos de configuración locales
 config.js
+
+# temporales de trabajo local
+.codex_tmp_*
+tmp_*
+*.pre_patch.bak.html
+*.rebuild.tmp.html
+*.rebuild2.tmp.html

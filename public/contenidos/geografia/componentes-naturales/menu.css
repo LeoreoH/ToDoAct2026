@@ -1,14 +1,14 @@
-body {
+﻿body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background: #f0f4fa;
+    background: #f3f7fb;
 }
 
 .bloque-header {
     display: flex;
     align-items: center;
     padding: 15px 20px;
-    background: linear-gradient(135deg, #0277bd, #01579b);
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
     color: white;
     position: relative;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
@@ -30,12 +30,12 @@ body {
     border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    color: #01579b;
+    color: #1b5e20;
     transition: all 0.3s;
 }
 
 .boton-volver:hover {
-    background: #e1f5fe;
+    background: #e8f5e9;
     transform: scale(1.05);
 }
 
@@ -49,16 +49,16 @@ body {
 }
 
 h2 {
-    color: #01579b;
+    color: #1b5e20;
     text-align: center;
     margin-bottom: 25px;
 }
 
 h3 {
-    color: #0277bd;
+    color: #2e7d32;
     margin-top: 30px;
     margin-bottom: 15px;
-    border-bottom: 2px solid #b3e5fc;
+    border-bottom: 2px solid #c8e6c9;
     padding-bottom: 8px;
 }
 
@@ -71,9 +71,9 @@ h3 {
 .contenedor-niveles button {
     padding: 18px;
     border-radius: 12px;
-    border: 2px solid #0277bd;
+    border: 2px solid #2e7d32;
     background: white;
-    color: #01579b;
+    color: #1b5e20;
     cursor: pointer;
     text-align: center;
     font-size: 16px;
@@ -82,9 +82,9 @@ h3 {
 }
 
 .contenedor-niveles button:hover:not(:disabled) {
-    background: #e1f5fe;
+    background: #e8f5e9;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(2, 119, 189, 0.3);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.25);
 }
 
 .contenedor-niveles button:disabled {

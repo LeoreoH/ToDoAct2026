@@ -9,259 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: #e3f2fd;
-      min-height: 100vh;
-      color: #01579b;
-    }
-
-    .cabecera-auditivo {
-      background: #1976d2;
-      padding: 25px 20px;
-      border-bottom: 6px solid #ffd600;
-      text-align: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    .cabecera-auditivo h1 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 3rem;
-      color: white;
-      text-shadow: 3px 3px 0 #01579b;
-    }
-
-    .badge-estilo {
-      background: #ffd600; color: #01579b;
-      padding: 12px 35px; border-radius: 50px;
-      font-weight: 800; font-size: 1.3rem;
-      display: inline-block; border: 4px solid white;
-      margin-top: 10px; box-shadow: 0 4px 0 #b26a00;
-    }
-
-    .progreso-contenedor {
-      background: white; border-radius: 60px;
-      margin: 20px auto; max-width: 700px;
-      padding: 12px 25px; display: flex; align-items: center; gap: 15px;
-      border: 3px solid #1976d2; box-shadow: 0 5px 0 #0d47a1;
-    }
-
-    .puntos { display: flex; gap: 10px; flex: 1; justify-content: center; }
-
-    .punto {
-      width: 35px; height: 35px; border-radius: 50%;
-      background: #bbdefb; border: 3px solid #1976d2;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #01579b; transition: all 0.3s;
-    }
-
-    .punto.activo    { background: #ffd600; transform: scale(1.15); }
-    .punto.completado { background: #4caf50; color: white; border-color: white; }
-
-    .contenedor { max-width: 900px; margin: 0 auto 40px; padding: 0 20px; }
-
-    .pagina { display: none; animation: fadeIn 0.4s ease; }
-    .pagina.activa { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .tarjeta-audio {
-      background: white; border-radius: 30px; padding: 25px; margin-bottom: 20px;
-      border: 3px solid #1976d2; box-shadow: 0 8px 0 #0d47a1; transition: all 0.3s;
-    }
-
-    .tarjeta-audio:hover { transform: translateY(-3px); }
-
-    .audio-header {
-      display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
-    }
-
-    .audio-icono {
-      background: #ffd600; color: #01579b;
-      width: 60px; height: 60px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; border: 3px solid #1976d2; box-shadow: 0 4px 0 #b26a00;
-      flex-shrink: 0;
-    }
-
-    .audio-titulo { font-size: 1.5rem; font-weight: 800; color: #01579b; }
-
-    .audio-control { width: 100%; margin: 15px 0; }
-
-    audio { width: 100%; border-radius: 30px; border: 2px solid #1976d2; }
-
-    /* IMAGENES */
-    .imagen-grande {
-      background: #e3f2fd; border-radius: 20px; padding: 20px;
-      margin: 15px 0; text-align: center;
-      border: 3px dashed #1976d2; transition: all 0.3s ease; cursor: pointer;
-    }
-
-    .imagen-grande:hover { transform: scale(1.02) rotate(1deg); box-shadow: 0 10px 20px rgba(25,118,210,0.3); }
-
-    .imagen-geo {
-      width: 100%; max-height: 250px; object-fit: contain;
-      border-radius: 15px; border: 3px solid white; cursor: pointer;
-    }
-
-    .imagen-geo.ampliada {
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 90vw; max-height: 90vh;
-      width: auto; height: auto; object-fit: contain;
-      z-index: 1000; border: 4px solid #ffd600;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-radius: 10px;
-    }
-
-    body.imagen-ampliada::after {
-      content: ''; position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;
-    }
-
-    .pie-imagen { color: #01579b; font-size: 1rem; margin-top: 10px; font-weight: 700; text-align: center; }
-
-    /* =====================================================
-       REFORZAMIENTO AUDITIVO
-    ===================================================== */
-    .reforzamiento-auditivo {
-      background: #1a237e;
-      border: 4px solid #ffd600;
-      border-radius: 30px;
-      padding: 28px;
-      margin-top: 30px;
-    }
-
-    .ref-titulo {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.6rem;
-      color: #ffd600;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .ref-instruccion {
-      color: #b3c5f7;
-      font-size: 1rem;
-      margin-bottom: 22px;
-      font-weight: 600;
-    }
-
-    /* Boton de play grande para la pregunta */
-    .btn-play-pregunta {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: #ffd600;
-      color: #01579b;
-      border: 4px solid white;
-      border-radius: 60px;
-      padding: 14px 28px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 5px 0 #b26a00;
-      margin: 0 auto 22px;
-      width: fit-content;
-    }
-
-    .btn-play-pregunta:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #b26a00; background: white; }
-
-    .btn-play-pregunta .icono-play {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: #01579b; color: #ffd600;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
-      transition: background 0.2s;
-    }
-
-    .btn-play-pregunta.reproduciendo .icono-play { background: #4caf50; }
-    .btn-play-pregunta.reproduciendo .icono-play i::before { content: '\f04c'; }
-
-    /* Opciones de respuesta */
-    .opciones-respuesta {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-
-    .btn-respuesta {
-      background: #283593;
-      color: white;
-      border: 3px solid #7986cb;
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 4px 0 #1a237e;
-    }
-
-    .btn-respuesta:hover { background: #3949ab; transform: translateY(-3px); border-color: #ffd600; }
-    .btn-respuesta.correcto  { background: #1b5e20; border-color: #4caf50; color: #a5d6a7; box-shadow: 0 4px 0 #0a3d12; }
-    .btn-respuesta.incorrecto { background: #7f0000; border-color: #ef5350; color: #ffcdd2; }
-
-    .feedback-auditivo {
-      margin-top: 18px; padding: 14px 20px; border-radius: 16px;
-      font-weight: 700; font-size: 1rem; display: none; text-align: center;
-    }
-
-    .feedback-auditivo.ok  { background: #1b5e20; border: 2px solid #4caf50; color: #a5d6a7; }
-    .feedback-auditivo.err { background: #7f0000; border: 2px solid #ef5350; color: #ffcdd2; }
-
-    /* NAVEGADOR */
-    .navegador {
-      display: flex; justify-content: space-between; align-items: center;
-      background: white; padding: 15px 25px; border-radius: 60px;
-      border: 3px solid #1976d2; box-shadow: 0 5px 0 #0d47a1; margin: 30px 0;
-    }
-
-    .btn-nav {
-      background: #ffd600; color: #01579b; border: none;
-      padding: 10px 25px; border-radius: 40px; font-weight: 800;
-      border: 3px solid #1976d2; transition: all 0.2s;
-    }
-
-    .btn-nav:hover:not(:disabled) { background: white; transform: translateY(-2px); }
-    .btn-nav:disabled { background: #e0e0e0; color: #9e9e9e; border-color: #bdbdbd; }
-
-    .indicador {
-      background: #e3f2fd; color: #01579b; padding: 8px 30px;
-      border-radius: 40px; font-weight: 800; font-size: 1.3rem; border: 3px solid #1976d2;
-    }
-
-    .btn-quiz {
-      display: block; width: fit-content; margin: 0 auto;
-      background: #ffd600; color: #01579b; border: none;
-      padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
-      text-decoration: none; border: 4px solid #1976d2;
-      box-shadow: 0 6px 0 #0d47a1; transition: all 0.2s;
-    }
-
-    .btn-quiz:hover { transform: translateY(-4px); box-shadow: 0 10px 0 #0d47a1; background: white; }
-
-    .btn-subir {
-      position: fixed; bottom: 80px; right: 20px;
-      background: #ffd600; color: #01579b;
-      width: 50px; height: 50px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; border: 3px solid #1976d2;
-      box-shadow: 0 4px 0 #0d47a1; cursor: pointer; transition: all 0.2s; z-index: 1000;
-    }
-
-    .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #0d47a1; }
-  </style>
+  __BLOCK_
 </head>
 <body>
 
@@ -286,7 +34,6 @@
   <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
 </div>
 
-<!-- Audio oculto de preguntas (se reproducen via JS) -->
 <audio id="audPregunta1" src="audios/01-pregunta.mp3"></audio>
 <audio id="audPregunta2" src="audios/02-pregunta.mp3"></audio>
 <audio id="audPregunta3" src="audios/03-pregunta.mp3"></audio>
@@ -294,9 +41,6 @@
 
 <div class="contenedor">
 
-  <!-- =====================================================
-       PÁGINA 1: LA TIERRA
-  ===================================================== -->
   <div class="pagina activa" id="pagina1">
 
     <div class="tarjeta-audio">
@@ -326,7 +70,6 @@
       </div>
     </div>
 
-    <!-- REFORZAMIENTO AUDITIVO P1 -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
       <p class="ref-instruccion">Escucha la pregunta y elige la respuesta correcta.</p>
@@ -345,9 +88,6 @@
 
   </div>
 
-  <!-- =====================================================
-       PÁGINA 2: LÍNEAS IMAGINARIAS
-  ===================================================== -->
   <div class="pagina" id="pagina2">
 
     <div class="tarjeta-audio">
@@ -370,7 +110,6 @@
       </div>
     </div>
 
-    <!-- REFORZAMIENTO AUDITIVO P2 -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
       <p class="ref-instruccion">Escucha la pregunta y elige la respuesta correcta.</p>
@@ -389,9 +128,6 @@
 
   </div>
 
-  <!-- =====================================================
-       PÁGINA 3: PUNTOS CARDINALES
-  ===================================================== -->
   <div class="pagina" id="pagina3">
 
     <div class="tarjeta-audio">
@@ -409,7 +145,6 @@
       </div>
     </div>
 
-    <!-- REFORZAMIENTO AUDITIVO P3 -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Responde</div>
       <p class="ref-instruccion">Escucha la pregunta con atenci&oacute;n y selecciona la opci&oacute;n correcta.</p>
@@ -429,9 +164,6 @@
 
   </div>
 
-  <!-- =====================================================
-       PÁGINA 4: ZONAS TÉRMICAS
-  ===================================================== -->
   <div class="pagina" id="pagina4">
 
     <div class="tarjeta-audio">
@@ -461,7 +193,6 @@
       </div>
     </div>
 
-    <!-- REFORZAMIENTO AUDITIVO P4 -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
       <p class="ref-instruccion">Escucha la pregunta y elige en qu&eacute; zona t&eacute;rmica se encuentra M&eacute;xico.</p>
@@ -481,171 +212,18 @@
 
   </div>
 
-  <!-- NAVEGADOR -->
   <div class="navegador">
     <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
     <span class="indicador" id="contadorPagina">1/4</span>
     <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
   </div>
 
-  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
 
 </div>
 
-<script>
-  function ampliarImagen(img) {
-    if (!img) return;
-    if (img.classList.contains('ampliada')) {
-      img.classList.remove('ampliada');
-      document.body.classList.remove('imagen-ampliada');
-    } else {
-      document.querySelectorAll('.ampliada').forEach(function(i) { i.classList.remove('ampliada'); });
-      img.classList.add('ampliada');
-      document.body.classList.add('imagen-ampliada');
-    }
-  }
+__BLOCK_
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-grande')) {
-      document.querySelectorAll('.ampliada').forEach(function(img) {
-        img.classList.remove('ampliada');
-        document.body.classList.remove('imagen-ampliada');
-      });
-    }
-  });
-
-  var sonidos = {
-    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
-    click:       new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
-    completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-    error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
-  };
-
-  function reproducirSonido(nombre) {
-    try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
-  }
-
-  var paginaActual = 1;
-  var totalPaginas = 4;
-  var respondidas = {1:false, 2:false, 3:false, 4:false};
-  var audioActivo = null;
-  var botonActivo = null;
-
-  function cambiarPagina(direccion) {
-    reproducirSonido('pasarPagina');
-    if (audioActivo) { audioActivo.pause(); audioActivo.currentTime = 0; }
-    if (botonActivo) { botonActivo.classList.remove('reproduciendo'); }
-    audioActivo = null; botonActivo = null;
-
-    document.getElementById('pagina' + paginaActual).classList.remove('activa');
-    paginaActual += direccion;
-    document.getElementById('pagina' + paginaActual).classList.add('activa');
-    actualizarUI();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_auditivo_facil', paginaActual);
-  }
-
-  function actualizarUI() {
-    document.querySelectorAll('.punto').forEach(function(punto, index) {
-      punto.classList.remove('activo', 'completado');
-      if (index + 1 === paginaActual) punto.classList.add('activo');
-      else if (respondidas[index + 1]) punto.classList.add('completado');
-    });
-    document.getElementById('paginaActualNum').innerText = paginaActual;
-    document.getElementById('contadorPagina').innerText  = paginaActual + '/' + totalPaginas;
-    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
-  }
-
-  /* REPRODUCIR PREGUNTA */
-  function reproducirPregunta(num) {
-    var audio = document.getElementById('audPregunta' + num);
-    var boton = document.getElementById('btnP' + num);
-    if (!audio) return;
-
-    if (audioActivo && audioActivo !== audio) {
-      audioActivo.pause();
-      audioActivo.currentTime = 0;
-      if (botonActivo) botonActivo.classList.remove('reproduciendo');
-    }
-
-    if (audio.paused) {
-      audio.play();
-      boton.classList.add('reproduciendo');
-      audioActivo = audio;
-      botonActivo = boton;
-      audio.onended = function() {
-        boton.classList.remove('reproduciendo');
-        audioActivo = null; botonActivo = null;
-      };
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-      boton.classList.remove('reproduciendo');
-      audioActivo = null; botonActivo = null;
-    }
-  }
-
-  /* RESPONDER */
-  function responder(pagina, esCorrecta, boton) {
-    if (respondidas[pagina]) return;
-    reproducirSonido('click');
-
-    var contenedor = boton.closest('.reforzamiento-auditivo');
-    var botones    = contenedor.querySelectorAll('.btn-respuesta');
-    var feedback   = document.getElementById('fb' + pagina);
-
-    if (esCorrecta) {
-      reproducirSonido('completar');
-      boton.classList.add('correcto');
-      botones.forEach(function(b) { if (b !== boton) b.disabled = true; });
-      feedback.className = 'feedback-auditivo ok';
-      var msgs = {
-        1: '&#10003; Correcto! La Tierra no es una esfera perfecta. Est&aacute; ligeramente achatada en los polos y abultada en el Ecuador.',
-        2: '&#10003; Correcto! El Ecuador divide la Tierra en Hemisferio Norte y Hemisferio Sur.',
-        3: '&#10003; Correcto! El Sol sale siempre por el Este y se oculta por el Oeste.',
-        4: '&#10003; Correcto! M&eacute;xico se encuentra en la zona templada del Hemisferio Norte.'
-      };
-      feedback.innerHTML = msgs[pagina];
-      feedback.style.display = 'block';
-      respondidas[pagina] = true;
-      actualizarUI();
-    } else {
-      reproducirSonido('error');
-      boton.classList.add('incorrecto');
-      feedback.className = 'feedback-auditivo err';
-      feedback.innerHTML = '&#10007; Incorrecto. Vuelve a escuchar la pregunta e int&eacute;ntalo de nuevo.';
-      feedback.style.display = 'block';
-      setTimeout(function() {
-        boton.classList.remove('incorrecto');
-        feedback.style.display = 'none';
-      }, 1600);
-    }
-  }
-
-  /* Pausar audios al cambiar de pagina con controles nativos */
-  document.addEventListener('play', function(e) {
-    if (e.target.tagName === 'AUDIO') {
-      document.querySelectorAll('audio').forEach(function(audio) {
-        if (audio !== e.target && !audio.paused) audio.pause();
-      });
-    }
-  }, true);
-
-  window.addEventListener('DOMContentLoaded', function() {
-    var guardado = localStorage.getItem('progreso_auditivo_facil');
-    if (guardado) {
-      var pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById('pagina' + paginaActual).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById('pagina' + paginaActual).classList.add('activa');
-      }
-    }
-    actualizarUI();
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+__BLOCK_
 </body>
 </html>

@@ -1,4 +1,4 @@
-const SLUG_CONTENIDO = 'reconocer-fracciones';
+﻿const SLUG_CONTENIDO = 'reconocer-fracciones';
 const AREA_CONTENIDO = 'matematicas';
 
 let estadoContenido = null;

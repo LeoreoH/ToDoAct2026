@@ -9,270 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #fff7e6, #ffedd5);
-            color: #9a3412;
-            min-height: 100vh;
-        }
-        .cabecera-normal {
-            background: linear-gradient(135deg, #f97316, #c2410c);
-            padding: 25px 20px; border-bottom: 6px solid #fde68a;
-            text-align: center; box-shadow: 0 10px 20px rgba(249,115,22,.3); color: white;
-        }
-        .cabecera-normal h1 {
-            font-family: 'Fredoka One', cursive; font-size: 2.8rem;
-            text-shadow: 3px 3px 0 #9a3412; margin-bottom: 8px;
-        }
-        .badge-estilo {
-            background: #fde68a; color: #9a3412; padding: 10px 30px; border-radius: 50px;
-            font-weight: 800; font-size: 1.1rem; display: inline-block; border: 4px solid white; margin-top: 10px;
-        }
-        .badge-nivel {
-            background: #9a3412; color: white; padding: 8px 25px; border-radius: 40px;
-            font-weight: 700; font-size: 1rem; display: inline-block; margin-left: 15px; border: 2px solid #fde68a;
-        }
-        .barra-progreso {
-            background: white; border-radius: 60px; margin: 25px auto; max-width: 950px;
-            padding: 15px 25px; display: flex; align-items: center; gap: 20px;
-            border: 3px solid #f97316; box-shadow: 0 5px 0 #fed7aa; flex-wrap: wrap;
-        }
-        .puntos-progreso { display: flex; gap: 12px; flex: 1; justify-content: center; flex-wrap: wrap; }
-        .punto {
-            width: 40px; height: 40px; border-radius: 50%; background: #ffedd5; border: 3px solid #f97316;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 1.1rem; color: #9a3412; transition: all .3s;
-        }
-        .punto.activo     { background: #fde68a; border-color: #c2410c; color: #7b341e; transform: scale(1.15); }
-        .punto.completado { background: #4caf50; border-color: white; color: white; }
-        .contenedor-paginas { max-width: 1000px; margin: 0 auto 40px; padding: 0 20px; }
-        .pagina { display: none; animation: aparecer .5s ease; }
-        .pagina.activa { display: block; }
-        @keyframes aparecer { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
-        .tarjeta-contenido {
-            background: white; border-radius: 30px; padding: 30px; margin-bottom: 25px;
-            border: 3px solid #f97316; box-shadow: 0 8px 0 #fed7aa;
-        }
-        .titulo-pagina {
-            font-family: 'Fredoka One', cursive; font-size: 2rem; color: #c2410c; margin-bottom: 22px;
-            border-left: 8px solid #fde68a; padding-left: 20px;
-        }
-        .contenedor-imagen {
-            text-align: center; margin: 25px 0; padding: 20px;
-            background: #fff7e6; border-radius: 20px; border: 2px solid #fed7aa;
-        }
-        .contenedor-imagen img {
-            max-width: 100%; height: auto; border-radius: 15px;
-            border: 3px solid #f97316; cursor: pointer; transition: all .3s;
-        }
-        .contenedor-imagen img.ampliada {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            max-width: 90vw; max-height: 90vh; width: auto; height: auto; object-fit: contain;
-            z-index: 1000; box-shadow: 0 20px 40px rgba(0,0,0,.3); border: 4px solid #fde68a;
-        }
-        .pie-imagen { margin-top: 10px; font-weight: 600; color: #9a3412; font-style: italic; font-size: .95rem; }
-        body.imagen-ampliada::after {
-            content:''; position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,.5); z-index:999;
-        }
-        .recuadro-info {
-            background: #fff7e6; border-radius: 20px; padding: 20px; margin: 20px 0; border-left: 8px solid #fde68a;
-        }
-        .recuadro-info h4 { color: #c2410c; font-weight: 800; margin-bottom: 15px; }
-        .lista-iconos { list-style: none; padding: 0; margin: 0; }
-        .lista-iconos li { padding: 8px 0; display: flex; align-items: flex-start; gap: 15px; border-bottom: 1px solid #fed7aa; }
-        .lista-iconos li:last-child { border-bottom: none; }
-        .lista-iconos i { color: #fde68a; font-size: 1.2rem; width: 28px; margin-top: 2px; flex-shrink: 0; }
-        .texto-destacado {
-            background: #fff3e0; border: 2px solid #fde68a; border-radius: 15px;
-            padding: 15px 20px; font-weight: 700; margin: 20px 0; color: #9a3412;
-        }
-        .actividad-kinestesica {
-            background: #fff3e0; border: 3px solid #f97316; border-radius: 20px; padding: 25px; margin-top: 30px;
-        }
-        .actividad-kinestesica h4 { color: #c2410c; font-weight: 800; margin-bottom: 15px; }
-        .feedback-kinestesico { margin-top: 15px; padding: 15px; border-radius: 15px; font-weight: 600; display: none; }
-        .btn-accion {
-            background: #fde68a; color: #9a3412; padding: 10px 22px; border-radius: 30px;
-            font-weight: 700; font-size: 1rem; border: 2px solid #f97316; transition: all .2s;
-            margin: 8px; cursor: pointer;
-        }
-        .btn-accion:hover { background: white; transform: translateY(-2px); }
-        .navegador {
-            display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px;
-            background: white; padding: 15px 30px; border-radius: 60px;
-            border: 3px solid #f97316; box-shadow: 0 5px 0 #fed7aa; gap: 15px; flex-wrap: wrap;
-        }
-        .btn-nav {
-            background: #fde68a; color: #9a3412; padding: 12px 30px; border-radius: 40px;
-            font-weight: 800; font-size: 1.15rem; border: 3px solid #f97316; transition: all .2s;
-        }
-        .btn-nav:hover:not(:disabled) { background: white; transform: scale(1.05); }
-        .btn-nav:disabled { background: #e0e0e0; color: #9e9e9e; border-color: #bdbdbd; }
-        .indicador-pagina {
-            font-size: 1.35rem; font-weight: 800; background: #ffedd5; color: #9a3412;
-            padding: 8px 26px; border-radius: 40px; border: 3px solid #f97316;
-        }
-        .boton-quiz {
-            display: block; width: fit-content; margin: 30px auto 0; background: #fde68a; color: #9a3412;
-            padding: 18px 42px; border-radius: 60px; font-weight: 800; font-size: 1.45rem; text-decoration: none;
-            border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all .2s;
-        }
-        .boton-quiz:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
-
-        /* P1 - flechas ruta */
-        .panel-flechas-ruta { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
-        .btn-flecha-ruta {
-            width: 72px; height: 72px; background: #fde68a; border: 3px solid #f97316; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #9a3412;
-            cursor: pointer; transition: all .2s; box-shadow: 0 5px 0 #fdba74; user-select: none;
-        }
-        .btn-flecha-ruta:hover { background: #f97316; color: white; transform: translateY(-3px); }
-        .btn-flecha-ruta:active { transform: translateY(2px); }
-        .ruta-construida {
-            display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0;
-            padding: 18px; min-height: 80px; background: #fff7e6; border-radius: 20px; border: 3px dashed #f97316;
-        }
-        .paso-ruta {
-            width: 60px; height: 60px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; font-size: 2rem;
-            font-weight: 800; color: white; animation: popIn .2s ease;
-        }
-        .paso-ruta.norte { background: #3b82f6; }
-        .paso-ruta.sur   { background: #ef4444; }
-        .paso-ruta.este  { background: #10b981; }
-        .paso-ruta.oeste { background: #f59e0b; }
-        @keyframes popIn { from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);} }
-        .contador-ruta { text-align: center; font-weight: 800; font-size: 1.1rem; color: #c2410c; margin-bottom: 10px; }
-
-        /* P2 - ordenar paradas */
-        .zona-ordenar { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
-        .banco-paradas {
-            flex: 1; min-width: 220px; background: #fff7e6; border-radius: 16px;
-            border: 2px solid #fed7aa; padding: 16px;
-        }
-        .banco-paradas h5 { font-weight: 800; color: #c2410c; margin-bottom: 12px; }
-        .secuencia-paradas {
-            flex: 2; min-width: 260px; background: #fff7e6; border-radius: 16px;
-            border: 3px dashed #f97316; padding: 16px; min-height: 280px;
-        }
-        .secuencia-paradas h5 { font-weight: 800; color: #c2410c; margin-bottom: 12px; }
-        .parada-chip {
-            display: flex; align-items: center; gap: 10px; padding: 10px 16px; margin-bottom: 8px;
-            background: white; border: 2px solid #f97316; border-radius: 30px;
-            font-weight: 700; cursor: pointer; user-select: none; transition: all .2s;
-        }
-        .parada-chip:hover { background: #fde68a; transform: scale(1.03); }
-        .parada-chip.colocada { opacity: .35; pointer-events: none; }
-        .slot-parada {
-            display: flex; align-items: center; gap: 10px; padding: 10px 16px; margin-bottom: 8px;
-            border-radius: 30px; font-weight: 700; min-height: 48px;
-            border: 2px dashed #fdba74; background: white; transition: background .2s;
-        }
-        .slot-parada.lleno { border-color: #f97316; background: #fff7e6; }
-        .slot-parada .num-slot {
-            width: 26px; height: 26px; border-radius: 50%; background: #f97316; color: white;
-            display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0;
-        }
-
-        /* P3 - metro */
-        .mapa-metro-container {
-            background: white; padding: 20px; border-radius: 20px;
-            border: 3px solid #f97316; margin: 20px 0; overflow-x: auto;
-        }
-        .metro-svg { width: 100%; min-width: 700px; height: auto; }
-        .estacion-sel { cursor: pointer; transition: filter .2s; }
-        .estacion-sel:hover { filter: brightness(1.25); }
-        .trayecto-construido {
-            display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0;
-            padding: 14px 18px; background: #fff7e6; border-radius: 16px;
-            border: 2px dashed #f97316; min-height: 56px;
-        }
-        .chip-estacion {
-            padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: .9rem;
-            color: white; animation: popIn .2s ease;
-        }
-        .chip-estacion.l1 { background: #ef4444; }
-        .chip-estacion.l2 { background: #3b82f6; }
-        .chip-estacion.l3 { background: #10b981; }
-        .chip-flecha { font-size: 1.2rem; color: #9a3412; }
-        .leyenda-metro { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 12px 0; }
-        .leyenda-item { display: flex; align-items: center; gap: 8px; font-weight: 700; }
-        .color-linea { width: 24px; height: 8px; border-radius: 4px; }
-        .color-linea.roja  { background: #ef4444; }
-        .color-linea.azul  { background: #3b82f6; }
-        .color-linea.verde { background: #10b981; }
-
-        /* P4 - robots sliders */
-        .tabla-robots-sliders {
-            width: 100%; border-collapse: collapse; margin: 20px 0; background: white;
-            border-radius: 16px; overflow: hidden; box-shadow: 0 4px 0 #fdba74;
-        }
-        .tabla-robots-sliders th { background: #f97316; color: white; padding: 12px; font-weight: 700; }
-        .tabla-robots-sliders td { padding: 10px 14px; border-bottom: 1px solid #fed7aa; color: #9a3412; font-weight: 600; }
-        .tabla-robots-sliders tr:last-child td { border-bottom: none; }
-        .slider-robot {
-            width: 100%; height: 14px; -webkit-appearance: none;
-            background: linear-gradient(90deg, #fde68a, #f97316); border-radius: 10px; outline: none; border: 2px solid #fed7aa;
-        }
-        .slider-robot::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 28px; height: 28px; background: white;
-            border-radius: 50%; border: 3px solid #f97316; cursor: grab; box-shadow: 0 3px 0 #fdba74;
-        }
-        .dist-display { font-size: 1.1rem; font-weight: 800; color: #c2410c; min-width: 50px; text-align: center; }
-        .barra-dist-wrap {
-            width: 100%; height: 12px; background: #ffedd5; border-radius: 6px; border: 1px solid #fed7aa; overflow: hidden;
-        }
-        .barra-dist-fill { height: 100%; background: #f97316; border-radius: 6px; transition: width .3s; }
-        .ganador-badge {
-            display: inline-block; background: #4caf50; color: white; padding: 2px 10px;
-            border-radius: 20px; font-size: .8rem; font-weight: 800; margin-left: 8px; opacity: 0; transition: opacity .3s;
-        }
-        .ganador-badge.visible { opacity: 1; }
-        .opciones-robots { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-
-        /* P5 - teatro */
-        .teatro-wrap { overflow-x: auto; margin: 20px 0; background: #fff7e6; border-radius: 20px; border: 2px solid #fed7aa; padding: 20px; }
-        .escenario-bar {
-            width: min(680px, 100%); margin: 0 auto 6px;
-            background: linear-gradient(90deg, #c2410c, #f97316, #c2410c);
-            border-radius: 16px 16px 0 0; height: 46px;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: 800; font-size: 1.1rem; letter-spacing: 2px;
-            box-shadow: 0 4px 12px rgba(194,65,12,.3);
-        }
-        .teatro-grid-k { min-width: 680px; }
-        .fila-teatro-k { display: flex; align-items: center; margin-bottom: 4px; gap: 4px; }
-        .fila-num-k { width: 38px; text-align: right; font-weight: 800; color: #c2410c; font-size: .8rem; flex-shrink: 0; }
-        .bloque-izq-k { display: flex; gap: 2px; flex: 1; justify-content: flex-end; }
-        .bloque-der-k { display: flex; gap: 2px; flex: 1; justify-content: flex-start; }
-        .pasillo-k {
-            width: 36px; flex-shrink: 0; text-align: center; font-weight: 800; color: #9a3412; font-size: .7rem;
-            background: #fed7aa; border-radius: 6px; padding: 2px; align-self: center; line-height: 1.3;
-        }
-        .asiento-k {
-            width: 26px; height: 26px; background: white; border: 1.5px solid #f97316;
-            border-radius: 4px 4px 2px 2px; display: flex; align-items: center; justify-content: center;
-            font-size: .58rem; font-weight: 700; color: #9a3412; cursor: pointer; transition: all .15s;
-        }
-        .asiento-k:hover { background: #fde68a; transform: scale(1.15); }
-        .asiento-k.sel-izq { background: #3b82f6; color: white; border-color: white; }
-        .asiento-k.sel-der { background: #ef4444; color: white; border-color: white; }
-        .instruccion-teatro { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
-        .badge-lado { padding: 8px 20px; border-radius: 30px; font-weight: 800; font-size: 1rem; }
-        .badge-lado.izq { background: #3b82f6; color: white; }
-        .badge-lado.der { background: #ef4444; color: white; }
-
-        @media (max-width: 768px) {
-            .cabecera-normal h1 { font-size: 2rem; }
-            .navegador { flex-direction: column; }
-            .titulo-pagina { font-size: 1.5rem; }
-            .badge-nivel { margin-left: 0; margin-top: 10px; }
-        }
-    </style>
+    __BLOCK_
 </head>
 <body>
 
@@ -306,7 +43,6 @@
 
 <div class="contenedor-paginas">
 
-<!-- PAGINA 1 - RUTA DE SEBASTIAN -->
 <div class="pagina activa" id="pagina1">
     <div class="tarjeta-contenido">
         <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta de Sebasti&aacute;n</h2>
@@ -352,7 +88,6 @@
     </div>
 </div>
 
-<!-- PAGINA 2 - CIUDAD UNIVERSITARIA -->
 <div class="pagina" id="pagina2">
     <div class="tarjeta-contenido">
         <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
@@ -394,7 +129,6 @@
     </div>
 </div>
 
-<!-- PAGINA 3 - METRO -->
 <div class="pagina" id="pagina3">
     <div class="tarjeta-contenido">
         <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
@@ -421,7 +155,6 @@
                 <line x1="50"  y1="80"  x2="650" y2="80"  stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
                 <line x1="150" y1="50"  x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
                 <line x1="400" y1="50"  x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
-                <!-- L1 -->
                 <g class="estacion-sel" onclick="seleccionarEstacion('Observatorio','l1')">
                     <circle cx="80"  cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                     <text x="80"  y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Observatorio</text>
@@ -433,7 +166,7 @@
                 <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l1')">
                     <circle cx="280" cy="80" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
                     <circle cx="280" cy="80" r="6"  fill="#ef4444"/>
-                    <text x="280" y="52" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
+                    <text x="280" y="50" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
                 </g>
                 <g class="estacion-sel" onclick="seleccionarEstacion('Pino Suarez','l1')">
                     <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
@@ -443,7 +176,6 @@
                     <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                     <text x="620" y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Pantitlan</text>
                 </g>
-                <!-- L2 -->
                 <g class="estacion-sel" onclick="seleccionarEstacion('Tasquena','l2')">
                     <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                     <text x="150" y="350" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Tasquena</text>
@@ -459,13 +191,11 @@
                 <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l2')">
                     <circle cx="150" cy="110" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
                     <circle cx="150" cy="110" r="6"  fill="#3b82f6"/>
-                    <text x="118" y="96"  text-anchor="end" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
                 </g>
                 <g class="estacion-sel" onclick="seleccionarEstacion('Cuatro Caminos','l2')">
                     <circle cx="150" cy="50"  r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                     <text x="150" y="32"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Cuatro Caminos</text>
                 </g>
-                <!-- L3 -->
                 <g class="estacion-sel" onclick="seleccionarEstacion('Universidad','l3')">
                     <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
                     <text x="400" y="350" text-anchor="middle" font-family="Nunito" font-size="10" fill="#065f46">Universidad</text>
@@ -477,7 +207,7 @@
                 <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l3')">
                     <circle cx="400" cy="180" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
                     <circle cx="400" cy="180" r="6"  fill="#10b981"/>
-                    <text x="428" y="178" text-anchor="start" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
+                    <text x="400" y="210" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
                 </g>
                 <g class="estacion-sel" onclick="seleccionarEstacion('Guerrero','l3')">
                     <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
@@ -522,7 +252,6 @@
     </div>
 </div>
 
-<!-- PAGINA 4 - ROBOTS -->
 <div class="pagina" id="pagina4">
     <div class="tarjeta-contenido">
         <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots</h2>
@@ -561,7 +290,6 @@
     </div>
 </div>
 
-<!-- PAGINA 5 - TEATRO -->
 <div class="pagina" id="pagina5">
     <div class="tarjeta-contenido">
         <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
@@ -628,477 +356,10 @@
 
 </div>
 
-<script>
-var paginaActual = 1;
-var totalPaginas = 5;
-var respuestasPagina = {1:false,2:false,3:false,4:false,5:false};
+__BLOCK_
+__BLOCK_
+__BLOCK_
 
-var audioClick  = document.getElementById('audioClick');
-var audioDing   = document.getElementById('audioDing');
-var audioError  = document.getElementById('audioError');
-var audioWhoosh = document.getElementById('audioWhoosh');
-
-function safePlay(a) { try { if (a) { a.currentTime = 0; a.play(); } } catch(e) {} }
-
-function cambiarPagina(dir) {
-    document.getElementById('pagina' + paginaActual).classList.remove('activa');
-    paginaActual += dir;
-    document.getElementById('pagina' + paginaActual).classList.add('activa');
-    safePlay(audioWhoosh);
-    actualizarUI();
-    localStorage.setItem('progreso_normal_kinestesico_coordenadas', paginaActual);
-    window.scrollTo({top:0, behavior:'smooth'});
-    if (paginaActual === 2) iniciarOrdenCU();
-    if (paginaActual === 4) iniciarRobots();
-    if (paginaActual === 5) generarTeatro();
-}
-
-function actualizarUI() {
-    var puntos = document.querySelectorAll('.punto');
-    for (var i = 0; i < puntos.length; i++) {
-        var n = i + 1;
-        puntos[i].classList.remove('activo','completado');
-        if (n === paginaActual) puntos[i].classList.add('activo');
-        else if (n < paginaActual && respuestasPagina[n]) puntos[i].classList.add('completado');
-        else if (n < paginaActual) puntos[i].classList.add('activo');
-    }
-    document.getElementById('paginaActualNum').innerText = paginaActual;
-    document.getElementById('contadorPagina').innerText  = paginaActual + '/' + totalPaginas;
-    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
-}
-
-function ampliarImagen(img) {
-    if (img.classList.contains('ampliada')) {
-        img.classList.remove('ampliada');
-        document.body.classList.remove('imagen-ampliada');
-    } else {
-        var imgs = document.querySelectorAll('.ampliada');
-        for (var i = 0; i < imgs.length; i++) imgs[i].classList.remove('ampliada');
-        img.classList.add('ampliada');
-        document.body.classList.add('imagen-ampliada');
-    }
-}
-document.addEventListener('click', function(e) {
-    if (!e.target.classList.contains('ampliada') && !e.target.closest('.contenedor-imagen')) {
-        var imgs = document.querySelectorAll('.ampliada');
-        for (var i = 0; i < imgs.length; i++) {
-            imgs[i].classList.remove('ampliada');
-            document.body.classList.remove('imagen-ampliada');
-        }
-    }
-});
-
-function mostrarFeedback(id, tipo, msg) {
-    var el = document.getElementById(id);
-    el.style.display = 'block';
-    el.className = (tipo === 'ok')
-        ? 'feedback-kinestesico bg-success text-white'
-        : 'feedback-kinestesico bg-danger text-white';
-    el.innerHTML = msg;
-}
-
-/* ============================================
-   PAGINA 1 - RUTA DE SEBASTIAN
-   Secuencia correcta: N E N E N
-============================================ */
-var RUTA_CORRECTA_1 = ['N','E','N','E','N'];
-var ruta1 = [];
-
-function agregarPaso1(letra, clase) {
-    if (respuestasPagina[1] || ruta1.length >= 5) return;
-    safePlay(audioClick);
-    ruta1.push(letra);
-
-    var cont = document.getElementById('ruta-construida1');
-    if (ruta1.length === 1) cont.innerHTML = '';
-
-    var simbolo = letra === 'N' ? '&#8593;' : letra === 'S' ? '&#8595;' : letra === 'E' ? '&#8594;' : '&#8592;';
-    var div = document.createElement('div');
-    div.className = 'paso-ruta ' + clase;
-    div.innerHTML = simbolo;
-    cont.appendChild(div);
-
-    document.getElementById('contador-ruta1').innerText = 'Pasos: ' + ruta1.length + ' / 5';
-}
-
-function verificarRuta1() {
-    if (ruta1.length < 5) {
-        mostrarFeedback('feedback1','error','Necesitas exactamente 5 pasos. Completa la ruta.');
-        return;
-    }
-    var ok = true;
-    for (var i = 0; i < ruta1.length; i++) {
-        if (ruta1[i] !== RUTA_CORRECTA_1[i]) { ok = false; break; }
-    }
-    if (ok) {
-        safePlay(audioDing);
-        mostrarFeedback('feedback1','ok','Correcto! La ruta de Sebastian es: Norte, Este, Norte, Este, Norte. Exactamente 5 pasos!');
-        respuestasPagina[1] = true; actualizarUI();
-    } else {
-        safePlay(audioError);
-        mostrarFeedback('feedback1','error','Esa no es la ruta correcta. Recuerda: Norte - Este - Norte - Este - Norte. Limpia e intentalo de nuevo.');
-    }
-}
-
-function limpiarRuta1() {
-    ruta1 = [];
-    document.getElementById('ruta-construida1').innerHTML =
-        '<span style="color:#fdba74;font-weight:600;">Toca las flechas para construir la ruta...</span>';
-    document.getElementById('contador-ruta1').innerText = 'Pasos: 0 / 5';
-    document.getElementById('feedback1').style.display = 'none';
-}
-
-/* ============================================
-   PAGINA 2 - ORDENAR PARADAS DE CU
-============================================ */
-var PARADAS_CU = [
-    { id:'estacionamiento', icono:'P', label:'Estacionamiento' },
-    { id:'estadio',         icono:'E', label:'Estadio de Practicas' },
-    { id:'trabajo-social',  icono:'T', label:'Trabajo Social' },
-    { id:'contaduria',      icono:'C', label:'Contaduria' },
-    { id:'ciencias-mar',    icono:'M', label:'Ciencias del Mar' },
-    { id:'veterinaria',     icono:'V', label:'Veterinaria' },
-];
-var ORDEN_CORRECTO_CU = ['estacionamiento','estadio','trabajo-social','contaduria','ciencias-mar','veterinaria'];
-var ordenUsuarioCU = [];
-
-function iniciarOrdenCU() {
-    ordenUsuarioCU = [];
-    var banco = document.getElementById('banco-cu');
-    var seq   = document.getElementById('secuencia-cu');
-    if (!banco || !seq) return;
-
-    // Shuffle
-    var shuffled = PARADAS_CU.slice().sort(function() { return Math.random() - 0.5; });
-    banco.innerHTML = '';
-    shuffled.forEach(function(p) {
-        var div = document.createElement('div');
-        div.className = 'parada-chip';
-        div.id = 'chip-' + p.id;
-        div.innerHTML = '<span style="font-weight:800;color:#f97316;">' + p.icono + '</span> ' + p.label;
-        div.onclick = (function(pid) { return function() { agregarParadaCU(pid); }; })(p.id);
-        banco.appendChild(div);
-    });
-
-    seq.innerHTML = '';
-    for (var i = 0; i < 6; i++) {
-        var div = document.createElement('div');
-        div.className = 'slot-parada';
-        div.id = 'slot-cu-' + i;
-        div.innerHTML = '<span class="num-slot">' + (i+1) + '</span><span style="color:#ccc;font-weight:600;">--- vacio ---</span>';
-        seq.appendChild(div);
-    }
-    document.getElementById('feedback2').style.display = 'none';
-}
-
-function agregarParadaCU(id) {
-    if (ordenUsuarioCU.length >= 6) return;
-    if (ordenUsuarioCU.indexOf(id) !== -1) return;
-    safePlay(audioClick);
-    ordenUsuarioCU.push(id);
-
-    var parada = null;
-    for (var i = 0; i < PARADAS_CU.length; i++) {
-        if (PARADAS_CU[i].id === id) { parada = PARADAS_CU[i]; break; }
-    }
-    var idx  = ordenUsuarioCU.length - 1;
-    var slot = document.getElementById('slot-cu-' + idx);
-    slot.classList.add('lleno');
-    slot.innerHTML = '<span class="num-slot">' + (idx+1) + '</span><span>' + parada.icono + ' ' + parada.label + '</span>';
-
-    var chip = document.getElementById('chip-' + id);
-    if (chip) chip.classList.add('colocada');
-    document.getElementById('feedback2').style.display = 'none';
-}
-
-function verificarOrdenCU() {
-    if (ordenUsuarioCU.length < 6) {
-        mostrarFeedback('feedback2','error','Coloca todas las paradas antes de verificar.');
-        return;
-    }
-    var ok = true;
-    for (var i = 0; i < ordenUsuarioCU.length; i++) {
-        if (ordenUsuarioCU[i] !== ORDEN_CORRECTO_CU[i]) { ok = false; break; }
-    }
-    if (ok) {
-        safePlay(audioDing);
-        mostrarFeedback('feedback2','ok','Correcto! El orden es: Estacionamiento - Estadio - Trabajo Social - Contaduria - Ciencias del Mar - Veterinaria.');
-        respuestasPagina[2] = true; actualizarUI();
-    } else {
-        safePlay(audioError);
-        mostrarFeedback('feedback2','error','El orden no es correcto. Observa el mapa y recuerda que el recorrido va hacia el este, luego al norte para llegar a Veterinaria.');
-    }
-}
-
-function reiniciarOrdenCU() {
-    iniciarOrdenCU();
-}
-
-/* ============================================
-   PAGINA 3 - METRO
-   Trayecto: Tasquena -> Balderas -> Copilco
-============================================ */
-var trayecto3 = [];
-
-function seleccionarEstacion(nombre, clase) {
-    if (respuestasPagina[3]) return;
-    if (trayecto3.length >= 3) {
-        mostrarFeedback('feedback3','error','Ya tienes 3 estaciones. Verifica o limpia para reintentar.');
-        return;
-    }
-    if (trayecto3.length > 0 && trayecto3[trayecto3.length - 1].nombre === nombre) return;
-    safePlay(audioClick);
-
-    trayecto3.push({ nombre: nombre, clase: clase });
-
-    var cont = document.getElementById('trayecto-construido');
-    if (trayecto3.length === 1) cont.innerHTML = '';
-
-    if (trayecto3.length > 1) {
-        var flecha = document.createElement('span');
-        flecha.className = 'chip-flecha';
-        flecha.innerHTML = '&#8594;';
-        cont.appendChild(flecha);
-    }
-    var chip = document.createElement('span');
-    chip.className = 'chip-estacion ' + clase;
-    chip.textContent = nombre;
-    cont.appendChild(chip);
-    document.getElementById('feedback3').style.display = 'none';
-}
-
-function verificarTrayecto() {
-    if (trayecto3.length < 3) {
-        mostrarFeedback('feedback3','error','Necesitas seleccionar 3 estaciones: Tasquena - Balderas - Copilco.');
-        return;
-    }
-    var n0 = trayecto3[0].nombre;
-    var n1 = trayecto3[1].nombre;
-    var n2 = trayecto3[2].nombre;
-    var ok = (n0 === 'Tasquena' && n1 === 'Balderas' && n2 === 'Copilco');
-    if (ok) {
-        safePlay(audioDing);
-        mostrarFeedback('feedback3','ok','Correcto! Trayecto: Tasquena (L2) -> Balderas (transbordo L2 a L3) -> Copilco (L3). Solo 1 transbordo.');
-        respuestasPagina[3] = true; actualizarUI();
-    } else {
-        safePlay(audioError);
-        mostrarFeedback('feedback3','error','Ese no es el trayecto correcto. Recuerda: empieza en Tasquena (L2 azul), cambia en Balderas y termina en Copilco (L3 verde).');
-    }
-}
-
-function limpiarTrayecto() {
-    trayecto3 = [];
-    document.getElementById('trayecto-construido').innerHTML =
-        '<span style="color:#fdba74;font-weight:600;">Toca las estaciones en el mapa...</span>';
-    document.getElementById('feedback3').style.display = 'none';
-}
-
-/* ============================================
-   PAGINA 4 - ROBOTS CON SLIDERS
-   A(1u,5p)=5  F(5u,2p)=10  G(3u,3p)=9  B(2u,7p)=14
-   Menos distancia: Robot A
-============================================ */
-var ROBOTS = [
-    { id:'A', icono:'[A]', nombre:'Robot A', uPaso:1, pasosCorrectos:5  },
-    { id:'F', icono:'[F]', nombre:'Robot F', uPaso:5, pasosCorrectos:2  },
-    { id:'G', icono:'[G]', nombre:'Robot G', uPaso:3, pasosCorrectos:3  },
-    { id:'B', icono:'[B]', nombre:'Robot B', uPaso:2, pasosCorrectos:7  },
-];
-var ROBOT_MENOS = 'A';
-
-function iniciarRobots() {
-    var tbody = document.getElementById('tbody-robots');
-    var opcDiv = document.getElementById('opciones-robots');
-    if (!tbody || !opcDiv) return;
-    tbody.innerHTML = '';
-    opcDiv.innerHTML = '';
-
-    ROBOTS.forEach(function(r) {
-        var tr = document.createElement('tr');
-        tr.innerHTML =
-            '<td><strong>' + r.nombre + '</strong>' +
-            '<span class="ganador-badge" id="badge-' + r.id + '">Menos!</span></td>' +
-            '<td style="text-align:center;">' + r.uPaso + '</td>' +
-            '<td style="min-width:160px;">' +
-              '<input type="range" min="0" max="10" value="0" class="slider-robot" id="slider-' + r.id + '" ' +
-              'oninput="actualizarRobot(\'' + r.id + '\',this.value)">' +
-              '<div style="text-align:center;font-size:.8rem;color:#9a3412;margin-top:2px;">Pasos: <span id="pasos-' + r.id + '">0</span></div>' +
-            '</td>' +
-            '<td><span class="dist-display" id="dist-' + r.id + '">0</span> u.</td>' +
-            '<td style="min-width:100px;"><div class="barra-dist-wrap"><div class="barra-dist-fill" id="barra-' + r.id + '" style="width:0%;"></div></div></td>';
-        tbody.appendChild(tr);
-
-        var btn = document.createElement('button');
-        btn.className = 'btn-accion';
-        btn.id = 'btn-robot-' + r.id;
-        btn.innerText = r.nombre;
-        btn.onclick = (function(rid) { return function() { elegirRobotMenos(rid); }; })(r.id);
-        opcDiv.appendChild(btn);
-    });
-}
-
-function actualizarRobot(id, pasos) {
-    var robot = null;
-    for (var i = 0; i < ROBOTS.length; i++) { if (ROBOTS[i].id === id) { robot = ROBOTS[i]; break; } }
-    var dist = robot.uPaso * parseInt(pasos);
-    document.getElementById('pasos-' + id).innerText  = pasos;
-    document.getElementById('dist-'  + id).innerText  = dist;
-    var pct = Math.min((dist / 14) * 100, 100);
-    document.getElementById('barra-' + id).style.width = pct + '%';
-    document.getElementById('feedback4').style.display = 'none';
-}
-
-function elegirRobotMenos(id) {
-    if (respuestasPagina[4]) return;
-    safePlay(audioClick);
-
-    var todosOk = true;
-    for (var i = 0; i < ROBOTS.length; i++) {
-        var s = document.getElementById('slider-' + ROBOTS[i].id);
-        if (parseInt(s.value) !== ROBOTS[i].pasosCorrectos) { todosOk = false; break; }
-    }
-    if (!todosOk) {
-        mostrarFeedback('feedback4','error','Primero pon cada slider en el numero de pasos correcto segun la tabla del libro antes de responder.');
-        return;
-    }
-
-    if (id === ROBOT_MENOS) {
-        safePlay(audioDing);
-        document.getElementById('badge-' + id).classList.add('visible');
-        mostrarFeedback('feedback4','ok','Correcto! Robot A avanzo solo 5 unidades (1x5). Es menos que Robot F (10), Robot G (9) y Robot B (14).');
-        respuestasPagina[4] = true; actualizarUI();
-    } else {
-        safePlay(audioError);
-        var robot = null;
-        for (var i = 0; i < ROBOTS.length; i++) { if (ROBOTS[i].id === id) { robot = ROBOTS[i]; break; } }
-        var distElegida = robot.uPaso * robot.pasosCorrectos;
-        mostrarFeedback('feedback4','error',robot.nombre + ' avanzo ' + distElegida + ' unidades. Compara todas las distancias y busca la menor.');
-    }
-}
-
-/* ============================================
-   PAGINA 5 - TEATRO
-   Fila 1, asiento 1 (izq) y asiento 2 (der)
-============================================ */
-var CAPS_TEATRO = {1:16,2:18,3:20,4:20,5:22,6:24,7:24,8:26,9:26,10:28};
-var selTeatro = { izq: null, der: null };
-
-function generarTeatro() {
-    var grid = document.getElementById('teatro-grid-k');
-    if (!grid || grid.innerHTML.trim() !== '') return;
-
-    var html = '';
-    for (var f = 1; f <= 10; f++) {
-        var cap   = CAPS_TEATRO[f];
-        var mitad = cap / 2;
-        html += '<div class="fila-teatro-k">';
-        html += '<div class="fila-num-k">F' + f + '</div>';
-
-        html += '<div class="bloque-izq-k">';
-        for (var i = mitad; i >= 1; i--) {
-            var n = (i * 2) - 1;
-            html += '<div class="asiento-k" id="a-izq-' + f + '-' + n + '" ' +
-                    'onclick="seleccionarAsiento(' + f + ',\'izq\',' + n + ')">' + n + '</div>';
-        }
-        html += '</div>';
-
-        html += '<div class="pasillo-k">F' + f + '</div>';
-
-        html += '<div class="bloque-der-k">';
-        for (var i = 1; i <= mitad; i++) {
-            var n = i * 2;
-            html += '<div class="asiento-k" id="a-der-' + f + '-' + n + '" ' +
-                    'onclick="seleccionarAsiento(' + f + ',\'der\',' + n + ')">' + n + '</div>';
-        }
-        html += '</div>';
-        html += '</div>';
-    }
-    html += '<div style="text-align:center;padding:10px;color:#9a3412;font-weight:700;">... Filas 11 a 18 (misma distribucion) ...</div>';
-    grid.innerHTML = html;
-}
-
-function seleccionarAsiento(fila, lado, num) {
-    if (respuestasPagina[5]) return;
-    safePlay(audioClick);
-
-    if (selTeatro[lado]) {
-        var prev = selTeatro[lado];
-        var prevEl = document.getElementById('a-' + lado + '-' + prev.fila + '-' + prev.num);
-        if (prevEl) prevEl.classList.remove('sel-izq', 'sel-der');
-    }
-
-    selTeatro[lado] = { fila: fila, num: num };
-    var el = document.getElementById('a-' + lado + '-' + fila + '-' + num);
-    if (el) el.classList.add(lado === 'izq' ? 'sel-izq' : 'sel-der');
-
-    var count = (selTeatro.izq ? 1 : 0) + (selTeatro.der ? 1 : 0);
-    var info  = 'Seleccionados: ' + count + ' / 2';
-    if (selTeatro.izq) info += ' | Izq: F' + selTeatro.izq.fila + ' Asiento ' + selTeatro.izq.num;
-    if (selTeatro.der) info += ' | Der: F' + selTeatro.der.fila + ' Asiento ' + selTeatro.der.num;
-    document.getElementById('info-sel-teatro').innerText = info;
-    document.getElementById('feedback5').style.display = 'none';
-}
-
-function verificarAsientos() {
-    if (!selTeatro.izq || !selTeatro.der) {
-        mostrarFeedback('feedback5','error','Debes seleccionar un asiento de cada lado (azul = izquierda, rojo = derecha).');
-        return;
-    }
-    var iz = selTeatro.izq;
-    var de = selTeatro.der;
-
-    if (iz.fila !== de.fila) {
-        safePlay(audioError);
-        mostrarFeedback('feedback5','error','Los asientos deben estar en la misma fila para que los amigos esten juntos.');
-        return;
-    }
-    if (iz.fila !== 1) {
-        safePlay(audioError);
-        mostrarFeedback('feedback5','error','Elegiste la fila ' + iz.fila + ', pero la fila mas cercana al escenario es la fila 1. Busca mas arriba!');
-        return;
-    }
-    if (iz.num !== 1 || de.num !== 2) {
-        safePlay(audioError);
-        mostrarFeedback('feedback5','error','Elegiste asientos ' + iz.num + ' (izq) y ' + de.num + ' (der) en fila 1. Para estar lo mas juntos al pasillo deben elegir el asiento 1 (izq) y el 2 (der), que son los pegados al pasillo central.');
-        return;
-    }
-
-    safePlay(audioDing);
-    mostrarFeedback('feedback5','ok','Correcto! Fila 1, asiento 1 (izquierda) y asiento 2 (derecha). Son los mas cercanos al escenario y quedan uno a cada lado del pasillo.');
-    respuestasPagina[5] = true; actualizarUI();
-}
-
-function limpiarAsientos() {
-    selTeatro = { izq: null, der: null };
-    var asientos = document.querySelectorAll('.asiento-k');
-    for (var i = 0; i < asientos.length; i++) {
-        asientos[i].classList.remove('sel-izq','sel-der');
-    }
-    document.getElementById('info-sel-teatro').innerText = 'Seleccionados: - / 2';
-    document.getElementById('feedback5').style.display = 'none';
-}
-
-/* ============================================
-   INIT
-============================================ */
-window.addEventListener('DOMContentLoaded', function() {
-    var g = localStorage.getItem('progreso_normal_kinestesico_coordenadas');
-    if (g) {
-        var p = parseInt(g, 10);
-        if (p >= 1 && p <= totalPaginas) {
-            document.getElementById('pagina' + paginaActual).classList.remove('activa');
-            paginaActual = p;
-            document.getElementById('pagina' + paginaActual).classList.add('activa');
-        }
-    }
-    actualizarUI();
-    if (paginaActual === 2) iniciarOrdenCU();
-    if (paginaActual === 4) iniciarRobots();
-    if (paginaActual === 5) generarTeatro();
-});
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+__BLOCK_
 </body>
 </html>

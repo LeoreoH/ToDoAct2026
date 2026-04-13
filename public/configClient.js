@@ -1,1 +1,1 @@
-window.servidorActivo = window.location.origin;
+﻿window.servidorActivo = window.location.origin;

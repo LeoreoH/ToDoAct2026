@@ -1,4 +1,4 @@
-const SLUG_CONTENIDO = 'equivalencias-numericas';
+﻿const SLUG_CONTENIDO = 'equivalencias-numericas';
 const AREA_CONTENIDO = 'matematicas';
 
 let estadoContenido = null;

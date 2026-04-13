@@ -7,218 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Nunito',sans-serif;background:#e8f5e9;color:#1b5e20;min-height:100vh;}
-
-.icv-img-emoji{
-  width:100%;
-  height:140px; /* altura del cuadro superior */
-  overflow:hidden;
-}
-
-.icv-img-emoji img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-    .cabecera{background:linear-gradient(135deg,#2e7d32,#1b5e20);padding:28px 20px;border-bottom:6px solid #ffea00;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,.3);}
-    .cabecera h1{font-family:'Fredoka One',cursive;font-size:2.6rem;color:#fff;text-shadow:3px 3px 0 #1b5e20;}
-    .cabecera .sub{color:#c8e6c9;font-weight:700;font-size:1rem;margin-top:4px;}
-    .badge-estilo{background:#ffea00;color:#1b5e20;padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.1rem;display:inline-block;border:4px solid #fff;margin-top:10px;}
-
-    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid #2e7d32;box-shadow:0 5px 0 #1b5e20;}
-    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
-    .punto{width:38px;height:38px;border-radius:50%;background:#c8e6c9;border:3px solid #2e7d32;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#1b5e20;transition:all .3s;}
-    .punto.activo{background:#ffea00;transform:scale(1.2);}
-    .punto.completado{background:#66bb6a;border-color:#fff;color:#fff;}
-
-    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
-    .pagina{display:none;animation:aparecer .45s ease;}
-    .pagina.activa{display:block;}
-    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-    .card-kine{background:#fff;border-radius:26px;padding:24px;margin-bottom:20px;border:3px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;}
-    .titulo-pag{font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1b5e20;margin-bottom:8px;border-left:8px solid #ffea00;padding-left:16px;}
-    .subtitulo-tema{background:#e8f5e9;border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:#2e7d32;margin-bottom:12px;display:inline-block;border:2px solid #a5d6a7;}
-    .tipo-badge{background:#ffea00;color:#1b5e20;padding:5px 16px;border-radius:30px;font-weight:800;font-size:.8rem;display:inline-block;margin-bottom:14px;border:2px solid #2e7d32;}
-
-    .dato-box{background:#f1f8e9;border-radius:14px;padding:11px 15px;border-left:6px solid #ffea00;margin:8px 0;font-size:.9rem;}
-    .dato-box strong{color:#2e7d32;}
-    .info-titulo{font-weight:800;font-size:.95rem;color:#2e7d32;margin-bottom:8px;}
-    .instruccion{background:#e8f5e9;border-radius:12px;padding:10px 15px;font-size:.9rem;color:#1b5e20;margin-bottom:14px;border-left:5px solid #ffea00;font-weight:600;}
-    .info-pill{display:inline-flex;align-items:center;gap:8px;background:#f1f8e9;border-radius:40px;padding:8px 14px;margin:4px;border:2px solid #a5d6a7;font-weight:700;font-size:.88rem;color:#1b5e20;}
-    .actividad{background:#fffde7;border-radius:26px;padding:20px;margin-top:14px;border:4px dashed #ffea00;}
-    .act-titulo{font-size:1.2rem;font-weight:800;color:#1b5e20;margin-bottom:12px;text-align:center;}
-
-    /* ══ INFO CARDS VISUALES ══ */
-    .info-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0;}
-    .info-card-v{background:#fff;border:3px solid #2e7d32;border-radius:18px;overflow:hidden;box-shadow:0 5px 0 #1b5e20;transition:transform .2s;}
-    .info-card-v:hover{transform:translateY(-3px);}
-    .info-card-v .icv-img{width:100%;height:120px;object-fit:cover;background:#c8e6c9;}
-    .info-card-v .icv-img-emoji{width:100%;height:120px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
-    .info-card-v .icv-body{padding:10px 12px;}
-    .info-card-v .icv-titulo{font-family:'Fredoka One',cursive;font-size:1rem;color:#1b5e20;margin-bottom:4px;}
-    .info-card-v .icv-desc{font-size:.78rem;color:#388e3c;font-weight:600;line-height:1.35;}
-
-    /* ══ AHORCADO (pág 1) ══ */
-    .ahorcado-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
-    .ahorcado-svg-wrap{background:#fff;border:3px solid #2e7d32;border-radius:18px;padding:10px;box-shadow:0 5px 0 #1b5e20;}
-    .ahorcado-svg{width:160px;height:180px;}
-    .ah-parte{stroke:#1b5e20;stroke-width:5;stroke-linecap:round;fill:none;transition:opacity .3s;}
-    .ah-parte.oculta{opacity:0;}
-    .ah-letras-wrap{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0;}
-    .ah-letra-caja{width:44px;height:50px;border-bottom:4px solid #2e7d32;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.6rem;color:#1b5e20;}
-    .ah-pista{background:#e8f5e9;border-radius:12px;padding:8px 14px;font-size:.88rem;font-weight:700;color:#2e7d32;text-align:center;border:2px solid #a5d6a7;margin:4px 0;}
-    .ah-categoria{background:#ffea00;border-radius:10px;padding:5px 14px;font-size:.8rem;font-weight:800;color:#1b5e20;display:inline-block;margin-bottom:6px;border:2px solid #2e7d32;}
-    .ah-errores{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;min-height:28px;margin:4px 0;}
-    .ah-err-letra{background:#ef5350;color:#fff;border-radius:8px;padding:4px 9px;font-weight:800;font-size:.9rem;}
-    .ah-teclado{display:flex;flex-direction:column;gap:5px;align-items:center;margin:10px 0;}
-    .ah-teclado-fila{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
-    .ah-tecla{min-width:33px;height:38px;padding:0 7px;background:#dcedc8;border:2px solid #2e7d32;border-radius:8px;font-weight:800;font-size:.88rem;cursor:pointer;color:#1b5e20;box-shadow:0 3px 0 #1b5e20;transition:all .15s;}
-    .ah-tecla:hover:not(:disabled){background:#c8e6c9;transform:translateY(-2px);}
-    .ah-tecla.ah-cor{background:#43a047;color:#fff;border-color:#2e7d32;box-shadow:none;}
-    .ah-tecla.ah-err-t{background:#ef5350;color:#fff;border-color:#b71c1c;box-shadow:none;}
-    .ah-tecla:disabled{cursor:default;}
-    .ah-progreso{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0;}
-    .ah-dot{width:14px;height:14px;border-radius:50%;background:#c8e6c9;border:2px solid #2e7d32;transition:all .3s;}
-    .ah-dot.ah-dot-ok{background:#43a047;}
-    .ah-dot.ah-dot-act{background:#ffea00;transform:scale(1.3);}
-
-    /* ══ 4 FOTOS 1 PALABRA (pág 2) ══ */
-    /* INFO VISTOSA */
-    .info-banner{background:linear-gradient(135deg,#1b5e20,#2e7d32);border-radius:20px;padding:18px 20px;margin-bottom:14px;color:#fff;border:3px solid #ffea00;box-shadow:0 6px 0 #1b5e20;}
-    .info-banner h3{font-family:'Fredoka One',cursive;font-size:1.3rem;color:#ffea00;margin-bottom:10px;}
-    .info-banner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
-    .info-banner-item{background:rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;border:2px solid rgba(255,255,255,.25);}
-    .info-banner-item .ib-ico{font-size:1.8rem;margin-bottom:4px;}
-    .info-banner-item .ib-tit{font-weight:800;font-size:.9rem;color:#ffea00;}
-    .info-banner-item .ib-desc{font-size:.78rem;color:#c8e6c9;margin-top:2px;line-height:1.3;}
-
-    .fotos-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;margin:0 auto 14px;}
-    .foto-c{border-radius:13px;border:3px solid #2e7d32;aspect-ratio:1;overflow:hidden;background:#c8e6c9;display:flex;align-items:center;justify-content:center;position:relative;}
-    .foto-c img{width:100%;height:100%;object-fit:cover;}
-    .foto-c .pie{position:absolute;bottom:0;left:0;right:0;background:rgba(27,94,32,.82);color:#fff;font-size:.7rem;font-weight:700;padding:4px;text-align:center;}
-    .foto-c .emoji-fb{font-size:3.2rem;}
-
-    .casillas-4f{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0;}
-    .casilla-4f{width:42px;height:50px;border:3px solid #2e7d32;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:1.3rem;color:#1b5e20;background:#fff;cursor:pointer;box-shadow:0 3px 0 #1b5e20;transition:all .15s;}
-    .casilla-4f.llena{background:#dcedc8;}
-    .casilla-4f.ok-c{background:#c8e6c9;border-color:#43a047;}
-    .letras-banco{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;}
-    .letra-b{width:40px;height:40px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .15s;}
-    .letra-b:hover:not(:disabled){transform:translateY(-2px);background:#43a047;}
-    .letra-b.usada{background:#bdbdbd;box-shadow:none;cursor:default;}
-    .btn-borrar{background:#ef5350;color:#fff;border:none;padding:8px 18px;border-radius:26px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #b71c1c;transition:all .15s;margin-top:4px;}
-    .btn-borrar:hover{transform:translateY(-2px);}
-
-    /* ══ CONTEXTO (pág 3) ══ */
-    .info-visual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0;}
-    .info-visual-item{border-radius:16px;overflow:hidden;border:3px solid #2e7d32;box-shadow:0 4px 0 #1b5e20;background:#fff;}
-    .info-visual-item img{width:100%;height:100px;object-fit:cover;display:block;}
-    .info-visual-item .ivi-label{background:#2e7d32;color:#fff;font-weight:800;font-size:.78rem;padding:6px 8px;text-align:center;}
-    .info-visual-item .ivi-desc{padding:6px 8px;font-size:.75rem;font-weight:600;color:#1b5e20;line-height:1.3;}
-
-    .ctx-input-wrap{display:flex;gap:8px;margin:12px 0;}
-    .ctx-input{flex:1;padding:11px 16px;border:3px solid #2e7d32;border-radius:12px;font-size:1rem;font-family:'Nunito',sans-serif;font-weight:700;color:#1b5e20;background:#f1f8e9;outline:none;}
-    .ctx-input:focus{border-color:#ffea00;background:#fff;}
-    .ctx-btn{background:#2e7d32;color:#fff;border:none;padding:11px 22px;border-radius:12px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;}
-    .ctx-btn:hover{transform:translateY(-2px);}
-    .ctx-historial{display:flex;flex-direction:column;gap:7px;margin:12px 0;max-height:280px;overflow-y:auto;}
-    .ctx-entry{display:flex;align-items:center;gap:10px;background:#f1f8e9;border-radius:11px;padding:9px 14px;border:2px solid #a5d6a7;}
-    .ctx-palabra{font-weight:800;font-size:.95rem;min-width:110px;color:#1b5e20;}
-    .ctx-barra-wrap{flex:1;background:#e8f5e9;border-radius:8px;height:18px;overflow:hidden;border:2px solid #a5d6a7;}
-    .ctx-barra{height:100%;border-radius:8px;transition:width .5s ease;}
-    .ctx-pct{font-weight:800;font-size:.82rem;min-width:44px;text-align:right;color:#2e7d32;}
-    .ctx-label{font-size:.75rem;font-weight:700;color:#66bb6a;min-width:56px;text-align:center;}
-    .ctx-pistas{margin:12px 0;}
-    .pista-btn{background:#ffea00;color:#1b5e20;border:3px solid #2e7d32;padding:8px 18px;border-radius:24px;font-weight:800;font-size:.88rem;cursor:pointer;box-shadow:0 3px 0 #1b5e20;margin-right:8px;margin-bottom:6px;display:inline-block;}
-    .pista-txt{background:#fff;border:2px solid #a5d6a7;border-radius:10px;padding:8px 13px;font-size:.88rem;font-weight:600;margin-top:6px;display:none;}
-    .pista-txt.vis{display:block;}
-
-    /* ══ DINGBATS (pág 4) ══ */
-    .info-dingbat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0;}
-    .info-ding-card{background:#fff;border:3px solid #2e7d32;border-radius:16px;overflow:hidden;box-shadow:0 4px 0 #1b5e20;}
-    .info-ding-card img{width:100%;height:90px;object-fit:cover;}
-    .info-ding-card .idc-body{padding:8px 10px;}
-    .info-ding-card .idc-titulo{font-weight:800;font-size:.85rem;color:#1b5e20;}
-    .info-ding-card .idc-desc{font-size:.75rem;color:#388e3c;margin-top:2px;line-height:1.3;}
-
-    .dingbat-card{background:#fff;border:3px solid #2e7d32;border-radius:20px;padding:20px;text-align:center;margin-bottom:14px;box-shadow:0 5px 0 #1b5e20;}
-    .dingbat-display{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0;}
-    .dingbat-foto{width:90px;height:90px;border-radius:12px;object-fit:cover;border:3px solid #2e7d32;box-shadow:0 4px 0 #1b5e20;}
-    .dingbat-foto-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;}
-    .dingbat-foto-label{font-size:.7rem;font-weight:800;color:#2e7d32;background:#e8f5e9;border-radius:6px;padding:2px 6px;}
-    .dingbat-num{font-size:.78rem;color:#66bb6a;font-weight:700;margin-bottom:4px;}
-    .dingbat-pista{background:#e8f5e9;border-radius:10px;padding:7px 12px;font-size:.82rem;font-weight:600;color:#2e7d32;margin-top:6px;display:none;}
-    .dingbat-pista.vis{display:block;}
-    .dingbat-opciones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
-    .dingbat-op{background:#f1f8e9;border:3px solid #2e7d32;border-radius:13px;padding:12px;font-weight:700;cursor:pointer;transition:all .2s;font-size:.9rem;box-shadow:0 4px 0 #1b5e20;}
-    .dingbat-op:hover{transform:translateY(-2px);box-shadow:0 6px 0 #1b5e20;}
-    .dingbat-op.ok-d{background:#c8e6c9;border-color:#43a047;}
-    .dingbat-op.err-d{background:#ffcdd2;border-color:#e53935;}
-    .dingbat-nav{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
-    .marcador-d{display:flex;gap:12px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
-    .marc-d{background:#fff;border:3px solid #2e7d32;border-radius:38px;padding:6px 18px;font-weight:800;font-size:.88rem;box-shadow:0 3px 0 #1b5e20;}
-    .marc-d span{color:#2e7d32;font-family:'Fredoka One',cursive;font-size:1.3rem;}
-    .btn-dingbat{background:#ffea00;color:#1b5e20;border:3px solid #2e7d32;padding:9px 20px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;}
-    .btn-dingbat:hover{transform:translateY(-2px);}
-    .btn-dingbat:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;box-shadow:none;cursor:default;}
-
-    /* ══ FLASHCARDS (pág 5) ══ */
-    .flash-wrap{perspective:900px;max-width:520px;margin:0 auto;}
-    .flash-card{width:100%;border-radius:22px;cursor:pointer;position:relative;height:320px;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);}
-    .flash-card.volteada{transform:rotateY(180deg);}
-    .flash-front,.flash-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid #2e7d32;overflow:hidden;}
-    .flash-front{background:#fff;box-shadow:0 7px 0 #1b5e20;}
-    .flash-front .f-num{position:absolute;top:12px;left:16px;font-size:.75rem;color:#66bb6a;font-weight:700;z-index:2;}
-    .flash-front .f-tap{position:absolute;top:12px;right:16px;font-size:.7rem;color:#a5d6a7;font-weight:700;}
-    .flash-front .f-img{width:100%;height:200px;object-fit:cover;display:block;}
-    .flash-front .f-img-emoji{width:100%;height:200px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);display:flex;align-items:center;justify-content:center;font-size:5rem;}
-    .flash-front .f-txt{font-family:'Fredoka One',cursive;font-size:1.2rem;color:#1b5e20;text-align:center;padding:14px 16px 10px;}
-    .flash-back{background:linear-gradient(160deg,#1b5e20,#2e7d32,#43a047);transform:rotateY(180deg);box-shadow:0 7px 0 #1b5e20;padding:20px;justify-content:flex-start;}
-    .flash-back .b-tit{font-family:'Fredoka One',cursive;font-size:1.2rem;color:#ffea00;margin-bottom:10px;text-align:center;width:100%;}
-    .flash-back .b-txt{font-size:.88rem;color:#fff;text-align:left;line-height:1.6;font-weight:600;width:100%;}
-    .flash-back .b-dato{background:rgba(255,255,255,.15);border-radius:10px;padding:7px 11px;margin-top:7px;font-size:.82rem;color:#c8e6c9;width:100%;line-height:1.4;}
-    .flash-back .b-dato strong{color:#ffea00;}
-
-    .flash-controles{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
-    .flash-btn{padding:9px 22px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;border:3px solid #2e7d32;}
-    .flash-btn:hover{transform:translateY(-2px);}
-    .flash-btn.ant{background:#fff;color:#1b5e20;}
-    .flash-btn.sig{background:#ffea00;color:#1b5e20;}
-    .flash-btn.volt{background:#2e7d32;color:#fff;}
-
-    .flash-prog{display:flex;gap:6px;justify-content:center;margin:12px 0;flex-wrap:wrap;}
-    .flash-dot{width:22px;height:22px;border-radius:50%;background:#c8e6c9;border:2px solid #2e7d32;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#1b5e20;transition:all .3s;}
-    .flash-dot.act{background:#ffea00;border-color:#2e7d32;transform:scale(1.2);}
-    .flash-dot.vis{background:#43a047;border-color:#fff;color:#fff;}
-
-    /* ══ FEEDBACK ══ */
-    .fb-ok{background:#43a047;color:#fff;padding:11px 14px;border-radius:22px;font-weight:700;text-align:center;margin-top:12px;display:none;font-size:.93rem;}
-    .fb-ok.on{display:block;animation:aparecer .4s ease;}
-    .fb-err{background:#ef5350;color:#fff;padding:9px 12px;border-radius:17px;font-weight:700;text-align:center;margin-top:8px;display:none;}
-    .fb-err.on{display:block;}
-
-    /* ══ NAV ══ */
-    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:22px 0 13px;background:#fff;padding:12px 24px;border-radius:60px;border:3px solid #2e7d32;box-shadow:0 5px 0 #1b5e20;}
-    .btn-nav{background:#ffea00;color:#1b5e20;border:3px solid #2e7d32;padding:10px 22px;border-radius:36px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;}
-    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 #1b5e20;}
-    .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;box-shadow:none;cursor:default;}
-    .ind-pag{font-size:1.22rem;font-weight:800;background:#dcedc8;color:#1b5e20;padding:8px 22px;border-radius:34px;border:3px solid #2e7d32;}
-    .boton-quiz{display:block;width:fit-content;margin:10px auto 36px;background:#ffea00;color:#1b5e20;padding:13px 44px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
-    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 #1b5e20;background:#fff;}
-
-    @media(max-width:576px){
-      .cabecera h1{font-size:1.9rem;}
-      .titulo-pag{font-size:1.4rem;}
-      .dingbat-foto{width:70px;height:70px;}
-      .flash-card{height:360px;}
-      .flash-front .f-img,.flash-front .f-img-emoji{height:180px;}
-    }
-  </style>
+  __BLOCK_
 </head>
 <body>
 
@@ -244,11 +33,6 @@
 
 <div class="contenedor">
 
-<!-- ══════════════════════════════════════════════
-  PÁG 1 · EL SUELO QUE PISAMOS
-  INFO: Tipos de relieve
-  JUEGO: AHORCADO — 5 palabras del tema
-══════════════════════════════════════════════ -->
 <div class="pagina activa" id="pagina1">
 <div class="card-kine">
   <h2 class="titulo-pag"><i class="fas fa-mountain me-2"></i>El Suelo que Pisamos</h2>
@@ -319,25 +103,15 @@
 
       <div class="ahorcado-svg-wrap">
         <svg class="ahorcado-svg" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
-          <!-- Base -->
           <line class="ah-parte" id="ahp0" x1="10" y1="170" x2="150" y2="170"/>
-          <!-- Poste vertical -->
           <line class="ah-parte oculta" id="ahp1" x1="40" y1="170" x2="40" y2="20"/>
-          <!-- Poste horizontal -->
           <line class="ah-parte oculta" id="ahp2" x1="40" y1="20" x2="110" y2="20"/>
-          <!-- Cuerda -->
           <line class="ah-parte oculta" id="ahp3" x1="110" y1="20" x1="110" y1="20" x2="110" y2="40"/>
-          <!-- Cabeza -->
           <circle class="ah-parte oculta" id="ahp4" cx="110" cy="52" r="13"/>
-          <!-- Cuerpo -->
           <line class="ah-parte oculta" id="ahp5" x1="110" y1="65" x2="110" y2="115"/>
-          <!-- Brazo izquierdo -->
           <line class="ah-parte oculta" id="ahp6" x1="110" y1="80" x2="85" y2="100"/>
-          <!-- Brazo derecho -->
           <line class="ah-parte oculta" id="ahp7" x1="110" y1="80" x2="135" y2="100"/>
-          <!-- Pierna izquierda -->
           <line class="ah-parte oculta" id="ahp8" x1="110" y1="115" x2="85" y2="145"/>
-          <!-- Pierna derecha -->
           <line class="ah-parte oculta" id="ahp9" x1="110" y1="115" x2="135" y2="145"/>
         </svg>
       </div>
@@ -358,11 +132,6 @@
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-  PÁG 2 · UNA CORTEZA QUEBRADIZA
-  INFO VISTOSA: Placas tectónicas
-  JUEGO: 4 FOTOS 1 PALABRA → 3 retos
-══════════════════════════════════════════════ -->
 <div class="pagina" id="pagina2">
 <div class="card-kine">
   <h2 class="titulo-pag"><i class="fas fa-layer-group me-2"></i>Una Corteza Quebradiza</h2>
@@ -376,12 +145,12 @@
       <div class="info-banner-item">
         <div class="ib-ico">⬅️➡️</div>
         <div class="ib-tit">Divergente</div>
-        <div class="ib-desc">Las placas se <strong>separan</strong>. Forman dorsales oceánicas y grietas (rifts).</div>
+        <div class="ib-desc">Las placas se <strong>separan</strong>. Abren grietas en el suelo o en el fondo del mar.</div>
       </div>
       <div class="info-banner-item">
         <div class="ib-ico">➡️⬅️</div>
         <div class="ib-tit">Convergente</div>
-        <div class="ib-desc">Las placas <strong>chocan</strong>. Forman montañas y fosas oceánicas. Una puede subducirse.</div>
+        <div class="ib-desc">Las placas <strong>chocan</strong>. Pueden formar montañas y volcanes. A veces una se mete debajo de la otra.</div>
       </div>
       <div class="info-banner-item">
         <div class="ib-ico">↔️</div>
@@ -400,7 +169,7 @@
       </div>
       <div class="info-banner-item">
         <div class="ib-ico">🇲🇽</div>
-        <div class="ib-tit">México</div> 
+        <div class="ib-tit">México</div>
         <div class="ib-desc">Ubicado sobre la Placa Norteamericana, con influencia de la Placa de Cocos y Rivera.</div>
       </div>
     </div>
@@ -421,11 +190,6 @@
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-  PÁG 3 · LOS SISMOS Y TEMBLORES
-  INFO CON IMÁGENES REPRESENTATIVAS
-  JUEGO: CONTEXTO
-══════════════════════════════════════════════ -->
 <div class="pagina" id="pagina3">
 <div class="card-kine">
   <h2 class="titulo-pag"><i class="fas fa-house-damage me-2"></i>Los Sismos y Temblores</h2>
@@ -439,13 +203,13 @@
   <div class="info-visual-grid">
     <div class="info-visual-item">
       <img src="https://media.giphy.com/media/RiwHi2Xyg16ik/giphy.gif" alt="Foco y epicentro" onerror="this.src='';this.style.height='100px';this.style.background='#e8f5e9';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.innerText='🔴';">
-      <div class="ivi-label">🔴 Foco / Hipocentro</div>
-      <div class="ivi-desc">Punto <strong>dentro de la Tierra</strong> donde nace el sismo. Puede estar a cientos de km de profundidad.</div>
+      <div class="ivi-label">🔴 Foco (donde empieza)</div>
+      <div class="ivi-desc">Lugar <strong>dentro de la Tierra</strong> donde empieza el sismo.</div>
     </div>
     <div class="info-visual-item">
       <img src="https://th.bing.com/th/id/R.a9d21231bb8759e423c3ac78134c19a8?rik=L3kXvcKoTKtxGw&riu=http%3a%2f%2fwww.apoioescolar24horas.com.br%2fsalaaula%2festudos%2fgeografia%2f604_terremotos%2fimages%2festudo%2fepicentro2.gif&ehk=ZvClvaVY3UZWwVieuBFv2iltReJug4nRRjuTH%2fhVYpo%3d&risl=&pid=ImgRaw&r=0" alt="Epicentro" onerror="this.style.background='#e8f5e9';">
       <div class="ivi-label">🟡 Epicentro</div>
-      <div class="ivi-desc">Punto en la <strong>superficie terrestre</strong> justo encima del foco. Donde el daño es mayor.</div>
+      <div class="ivi-desc">Punto de la <strong>superficie</strong> que está justo arriba del foco.</div>
     </div>
     <div class="info-visual-item">
       <img src="https://i.makeagif.com/media/11-08-2017/k7VYZ_.gif" alt="Ondas sísmicas" onerror="this.style.background='#e8f5e9';">
@@ -481,7 +245,7 @@
       <button class="pista-btn" onclick="mostrarPista(2)">💡 Pista 2</button>
       <button class="pista-btn" onclick="mostrarPista(3)">💡 Pista 3</button>
       <div class="pista-txt" id="pista1">🌍 Es un movimiento o vibración de la corteza terrestre.</div>
-      <div class="pista-txt" id="pista2">🔴 Se origina en un punto llamado foco o hipocentro.</div>
+      <div class="pista-txt" id="pista2">🔴 Empieza en un punto llamado foco.</div>
       <div class="pista-txt" id="pista3">〰️ Se propaga mediante ondas que viajan desde el interior.</div>
     </div>
 
@@ -495,10 +259,6 @@
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-  PÁG 4 · LOS VOLCANES
-  INFO CON CARDS + DINGBATS CON FOTOS
-══════════════════════════════════════════════ -->
 <div class="pagina" id="pagina4">
 <div class="card-kine">
   <h2 class="titulo-pag"><i class="fas fa-fire me-2"></i>Los Volcanes</h2>
@@ -557,10 +317,6 @@
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-  PÁG 5 · REPASO GENERAL BLOQUE II
-  FLASHCARDS CON FOTOS Y MÁS INFO
-══════════════════════════════════════════════ -->
 <div class="pagina" id="pagina5">
 <div class="card-kine">
   <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso Final · Flashcards</h2>
@@ -599,595 +355,20 @@
 </div>
 </div>
 
-<!-- NAV -->
 <div class="nav-bar">
   <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
   <span class="ind-pag" id="indPag">1/5</span>
   <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
 </div>
-<a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
+
+<a href="quiz.html" class="boton-quiz text-center" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-/* ═══ PAGINACIÓN ═══ */
-let pag=1;const TOTAL=5;
-function cambiarPag(d){document.getElementById('pagina'+pag).classList.remove('activa');pag+=d;document.getElementById('pagina'+pag).classList.add('activa');syncUI();window.scrollTo({top:0,behavior:'smooth'});}
-function syncUI(){document.querySelectorAll('.punto').forEach((p,i)=>{p.classList.remove('activo','completado');if(i+1===pag)p.classList.add('activo');else if(i+1<pag)p.classList.add('completado');});document.getElementById('numActual').innerText=pag;document.getElementById('indPag').innerText=pag+'/'+TOTAL;document.getElementById('btnAnt').disabled=(pag===1);document.getElementById('btnSig').disabled=(pag===TOTAL);}
-function show(id){const e=document.getElementById(id);if(e)e.classList.add('on');}
-function hide(id){const e=document.getElementById(id);if(e)e.classList.remove('on');}
-
-/* ═══════════════════════════════════════════
-   PÁG 1 · AHORCADO — 5 palabras del relieve
-═══════════════════════════════════════════ */
-const AH_PALABRAS=[
-  {palabra:'RELIEVE',   categoria:'Concepto clave',  pista:'El conjunto de todas las formas de la superficie terrestre'},
-  {palabra:'LLANURA',   categoria:'Forma del relieve',pista:'Superficie casi plana y de poca inclinación, muy fértil'},
-  {palabra:'VALLE',     categoria:'Forma del relieve',pista:'Depresión del terreno rodeada de montañas por donde corre un río'},
-];
-
-const AH_FILAS_TEC=[
-  ['Q','W','E','R','T','Y','U','I','O','P'],
-  ['A','S','D','F','G','H','J','K','L','Ñ'],
-  ['Z','X','C','V','B','N','M']
-];
-
-// partes del ahorcado: 0=base siempre, 1-9 se muestran con errores
-const AH_PARTES=[
-  'ahp1','ahp2','ahp3','ahp4','ahp5','ahp6','ahp7','ahp8','ahp9'
-];
-
-let ahIdx=0, ahErrores=0, ahLetrasUsadas=new Set(), ahPalabraActual='', ahAdivinadas=[], ahActivo=true;
-const AH_MAX_ERR=6;
-const ahProgOk=new Array(AH_PALABRAS.length).fill(false);
-
-function initAhorcado(){
-  ahIdx=0; ahProgOk.fill(false);
-  startPalabraAh();
-  renderAhProgreso();
-}
-
-function startPalabraAh(){
-  if(ahIdx>=AH_PALABRAS.length){
-    // Completó todas
-    show('ahFbOk');
-    document.getElementById('ahFbOk').innerText='🎉 ¡Completaste las 3 palabras! Conoces muy bien las formas del relieve.';
-    document.getElementById('ahFbOk').style.display='block';
-    document.getElementById('ahFbErr').style.display='none';
-    return;
-  }
-  ahPalabraActual=AH_PALABRAS[ahIdx].palabra;
-  ahErrores=0;
-  ahLetrasUsadas=new Set();
-  ahAdivinadas=new Array(ahPalabraActual.length).fill(false);
-  ahActivo=true;
-  hide('ahFbOk');hide('ahFbErr');
-  document.getElementById('ahFbOk').style.display='none';
-  document.getElementById('ahFbErr').style.display='none';
-  renderAhCategoria();
-  renderAhLetras();
-  renderAhErrLetras();
-  buildAhTeclado();
-  renderAhSvg();
-}
-
-function renderAhCategoria(){
-  document.getElementById('ahCategoria').innerText=AH_PALABRAS[ahIdx].categoria;
-  document.getElementById('ahPista').innerText='💡 '+AH_PALABRAS[ahIdx].pista;
-}
-
-function renderAhLetras(){
-  const wrap=document.getElementById('ahLetras');
-  wrap.innerHTML='';
-  for(let i=0;i<ahPalabraActual.length;i++){
-    const d=document.createElement('div');
-    d.className='ah-letra-caja';
-    d.innerText=ahAdivinadas[i]?ahPalabraActual[i]:'';
-    wrap.appendChild(d);
-  }
-}
-
-function renderAhErrLetras(){
-  const wrap=document.getElementById('ahErrores');
-  wrap.innerHTML='';
-  ahLetrasUsadas.forEach(l=>{
-    if(!ahPalabraActual.includes(l)){
-      const s=document.createElement('span');
-      s.className='ah-err-letra';s.innerText=l;
-      wrap.appendChild(s);
-    }
-  });
-}
-
-function buildAhTeclado(){
-  const wrap=document.getElementById('ahTeclado');
-  wrap.innerHTML='';
-  AH_FILAS_TEC.forEach(fila=>{
-    const row=document.createElement('div');row.className='ah-teclado-fila';
-    fila.forEach(l=>{
-      const btn=document.createElement('button');
-      btn.className='ah-tecla';btn.id='aht_'+l;btn.innerText=l;
-      btn.disabled=ahLetrasUsadas.has(l);
-      if(ahLetrasUsadas.has(l)){
-        btn.classList.add(ahPalabraActual.includes(l)?'ah-cor':'ah-err-t');
-      }
-      btn.addEventListener('click',()=>ahPulsar(l));
-      row.appendChild(btn);
-    });
-    wrap.appendChild(row);
-  });
-}
-
-function renderAhSvg(){
-  // Siempre mostrar base (ahp0)
-  AH_PARTES.forEach((id,i)=>{
-    const el=document.getElementById(id);
-    if(el){el.classList.toggle('oculta',i>=ahErrores);}
-  });
-}
-
-function ahPulsar(l){
-  if(!ahActivo||ahLetrasUsadas.has(l))return;
-  ahLetrasUsadas.add(l);
-  const btn=document.getElementById('aht_'+l);
-  if(btn)btn.disabled=true;
-
-  let acierto=false;
-  for(let i=0;i<ahPalabraActual.length;i++){
-    if(ahPalabraActual[i]===l){ahAdivinadas[i]=true;acierto=true;}
-  }
-  if(!acierto){
-    ahErrores++;
-    renderAhSvg();
-    if(btn)btn.classList.add('ah-err-t');
-  } else {
-    if(btn)btn.classList.add('ah-cor');
-  }
-  renderAhLetras();
-  renderAhErrLetras();
-
-  // ¿ganó?
-  if(ahAdivinadas.every(Boolean)){
-    ahActivo=false;
-    ahProgOk[ahIdx]=true;
-    renderAhProgreso();
-    const fb=document.getElementById('ahFbOk');
-    fb.innerText=`🎉 ¡Correcto! La palabra era ${ahPalabraActual}. ${ahIdx+1<AH_PALABRAS.length?'Siguiente palabra en 2 segundos…':'¡Completaste las 3 palabras!'}`;
-    fb.style.display='block';
-    if(ahIdx+1<AH_PALABRAS.length){setTimeout(()=>{ahIdx++;startPalabraAh();renderAhProgreso();fb.style.display='none';},2000);}
-    else{setTimeout(()=>{ahIdx++;startPalabraAh();},2000);}
-    return;
-  }
-  // ¿perdió?
-  if(ahErrores>=AH_MAX_ERR){
-    ahActivo=false;
-    // Revelar palabra
-    ahAdivinadas.fill(true);renderAhLetras();
-    const fb=document.getElementById('ahFbErr');
-    fb.innerText=`😔 La palabra era ${ahPalabraActual}. ${ahIdx+1<AH_PALABRAS.length?'Siguiente palabra en 2 segundos…':''}`;
-    fb.style.display='block';
-    if(ahIdx+1<AH_PALABRAS.length){setTimeout(()=>{ahIdx++;startPalabraAh();renderAhProgreso();fb.style.display='none';},2500);}
-    else{setTimeout(()=>{ahIdx++;startPalabraAh();},2500);}
-  }
-}
-
-function renderAhProgreso(){
-  const wrap=document.getElementById('ahProgreso');
-  wrap.innerHTML='';
-  AH_PALABRAS.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='ah-dot'+(i===ahIdx?' ah-dot-act':ahProgOk[i]?' ah-dot-ok':'');
-    wrap.appendChild(d);
-  });
-}
-
-function resetAhorcado(){
-  document.getElementById('ahFbOk').style.display='none';
-  document.getElementById('ahFbErr').style.display='none';
-  initAhorcado();
-}
-
-document.addEventListener('keydown',e=>{
-  if(pag!==1)return;
-  const k=e.key.toUpperCase();
-  if(/^[A-ZÁÉÍÓÚÜÑ]$/.test(k))ahPulsar(k);
-});
-
-/* ═══════════════════════════════════════════
-   PÁG 2 · 4 FOTOS 1 PALABRA — 3 retos
-═══════════════════════════════════════════ */
-const RETOS4F=[
-  {
-    palabra:'PLACAS',
-    fotos:[
-      {src:'https://www.ovsicori.una.ac.cr/sistemas/rompecabezas/images/popup_divergente.gif',emo:'⬅️➡️',pie:'Movimiento divergente'},
-      {src:'https://quizizz.com/media/resource/gs/quizizz-media/questions/fac88f49-8aee-48a2-b9b4-2b464662fa5a?w=900&h=900',emo:'➡️⬅️',pie:'Movimiento convergente'},
-      {src:'https://media3.giphy.com/media/Sye75bfzPZrmo/giphy.gif',emo:'⛰️',pie:'Montañas por colisión'},
-      {src:'https://imgblog.interestingfacts.com/2023/04/GettyImages-648917542.jpg',emo:'🌋',pie:'Cinturón de Fuego'},
-    ],
-    letrasExtra:['X','T','N','S']
-  },
-  {
-    palabra:'SISMO',
-    fotos:[
-      {src:'https://media.giphy.com/media/RiwHi2Xyg16ik/giphy.gif',emo:'🔴',pie:'Epicentro y foco'},
-      {src:'https://i.makeagif.com/media/11-08-2017/qE-Vz3.gif',emo:'〰️',pie:'Ondas sísmicas'},
-      {src:'https://i.gifer.com/origin/62/62172da9116643ce027f4cbc5af53f99.gif',emo:'📏',pie:'Sismógrafo Richter'},
-      {src:'https://i.pinimg.com/originals/99/85/9d/99859deaaf263a9b4386886d1a091d70.gif',emo:'🌍',pie:'Tierra temblorosa'},
-    ],
-    letrasExtra:['R','E','T','A']
-  },
-  {
-    palabra:'CORTEZA',
-    fotos:[
-      {src:'https://i.gifer.com/embedded/download/Yl4r.gif',emo:'🌍',pie:'Capas de la Tierra'},
-      {src:'https://i.pinimg.com/originals/9c/2c/91/9c2c919271f2aec9f24707f784d45480.gif',emo:'🗺️',pie:'Placas tectónicas'},
-      {src:'https://media3.giphy.com/media/fnZxMhYy7zuqvsLG4J/giphy.gif?cid=790b761155ae7ef7544add0a91529e8d0aff3c87456a6e15&rid=giphy.gif&ct=g',emo:'⬇️',pie:'Subducción'},
-      {src:'https://www.capasdelatierra.org/wp-content/uploads/2018/04/corteza-terrestre.jpg',emo:'🪨',pie:'Grieta en la corteza'},
-    ],
-    letrasExtra:['B','M','J','P']
-  },
-];
-let retoIdx=0,r4fRespuesta=[],r4fUsados=[],r4fLock=false;
-function initReto4f(){
-  if(retoIdx>=RETOS4F.length){show('fbPag2');return;}
-  const reto=RETOS4F[retoIdx];
-  const pal=reto.palabra;
-  r4fRespuesta=new Array(pal.length).fill('');
-  r4fUsados=new Array(pal.length).fill(null);
-  r4fLock=false;
-  const letras=[...pal.split(''),...reto.letrasExtra].sort(()=>Math.random()-.5);
-  const cont=document.getElementById('reto4f');
-  cont.innerHTML=`
-    <p style="text-align:center;font-weight:800;color:#2e7d32;font-size:.88rem;margin-bottom:8px;">Reto ${retoIdx+1}/${RETOS4F.length} · Forma la palabra que une las 4 imágenes</p>
-    <div class="fotos-grid-4" id="fotosGrid4"></div>
-    <div class="casillas-4f" id="casillas4"></div>
-    <div class="letras-banco" id="banco4"></div>
-  `;
-  const fg=document.getElementById('fotosGrid4');
-  reto.fotos.forEach(f=>{
-    const d=document.createElement('div');d.className='foto-c';
-    d.innerHTML=`<img src="${f.src}" alt="${f.pie}" onerror="this.outerHTML='<div class=\'emoji-fb\'>${f.emo}</div>'"><div class="pie">${f.pie}</div>`;
-    fg.appendChild(d);
-  });
-  const cs=document.getElementById('casillas4');
-  for(let i=0;i<pal.length;i++){
-    const c=document.createElement('div');c.className='casilla-4f';c.id='cas4_'+i;
-    c.addEventListener('click',()=>borrarCas4(i));cs.appendChild(c);
-  }
-  const banco=document.getElementById('banco4');
-  letras.forEach((l,idx)=>{
-    const b=document.createElement('button');b.className='letra-b';b.id='lb4_'+idx;b.innerText=l;
-    b.addEventListener('click',()=>elegirLetra4(l,idx));banco.appendChild(b);
-  });
-}
-function elegirLetra4(l,idx){
-  if(r4fLock)return;
-  const pos=r4fRespuesta.indexOf('');if(pos===-1)return;
-  r4fRespuesta[pos]=l;r4fUsados[pos]=idx;
-  const c=document.getElementById('cas4_'+pos);c.innerText=l;c.classList.add('llena');
-  const b=document.getElementById('lb4_'+idx);b.classList.add('usada');b.disabled=true;
-  if(!r4fRespuesta.includes(''))verificar4f();
-}
-function borrarCas4(pos){
-  if(!r4fRespuesta[pos])return;
-  const idx=r4fUsados[pos];
-  if(idx!==null){const b=document.getElementById('lb4_'+idx);if(b){b.classList.remove('usada');b.disabled=false;}}
-  r4fRespuesta[pos]='';r4fUsados[pos]=null;
-  const c=document.getElementById('cas4_'+pos);c.innerText='';c.classList.remove('llena','ok-c');
-}
-function resetCurrent4f(){for(let i=RETOS4F[retoIdx].palabra.length-1;i>=0;i--)borrarCas4(i);}
-function verificar4f(){
-  const pal=RETOS4F[retoIdx].palabra;
-  if(r4fRespuesta.join('')===pal){
-    r4fLock=true;
-    for(let i=0;i<pal.length;i++)document.getElementById('cas4_'+i).classList.add('ok-c');
-    setTimeout(()=>{retoIdx++;initReto4f();},1000);
-  } else {
-    setTimeout(()=>{
-      for(let i=pal.length-1;i>=0;i--)borrarCas4(i);
-      r4fLock=false;
-    },700);
-  }
-}
-
-/* ═══════════════════════════════════════════
-   PÁG 3 · CONTEXTO
-═══════════════════════════════════════════ */
-const CTX_SECRETO='SISMO';
-const CTX_DICT={
-  'SISMO':100,'TEMBLOR':92,'TERREMOTO':90,'SEÍSMO':88,'MOVIMIENTO':85,
-  'VIBRACIÓN':82,'ONDA':78,'EPICENTRO':76,'FOCO':74,'MAGNITUD':72,
-  'RICHTER':70,'HIPOCENTRO':68,'ONDAS':66,
-  'VOLCÁN':62,'TECTÓNICA':60,'PLACA':58,'CORTEZA':56,'TIERRA':54,
-  'CINTURÓN':52,'FUEGO':50,'PACÍFICO':48,'GRIETA':45,'FALLA':43,
-  'MONTAÑA':38,'LLANURA':35,'RELIEVE':32,'EROSIÓN':28,'DESTRUCCIÓN':25,
-  'DAÑO':22,'PREVENCIÓN':20,'CASA':18,'SIMULACRO':16,
-  'AGUA':12,'ÁRBOL':8,'ESCUELA':6,'LIBRO':4,'MESA':2,
-};
-function getPct(palabra){
-  const p=palabra.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  for(const [k,v] of Object.entries(CTX_DICT)){
-    const kn=k.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    if(kn===p)return v;
-  }
-  return null;
-}
-function getColor(pct){if(pct>=80)return '#43a047';if(pct>=50)return '#8bc34a';if(pct>=25)return '#ffea00';return '#bdbdbd';}
-function getLabel(pct){if(pct===100)return '🎯 ¡EXACTA!';if(pct>=80)return '🔥 Muy cerca';if(pct>=50)return '🌡️ Cerca';if(pct>=25)return '❄️ Lejos';return '🥶 Muy lejos';}
-let ctxHistorial=[];
-function intentarCtx(){
-  const inp=document.getElementById('ctxInput');
-  const palabra=inp.value.trim();if(!palabra)return;inp.value='';
-  const pct=getPct(palabra);
-  addCtxEntry(palabra.toUpperCase(),pct);
-  if(pct===100)show('ctxFbOk');
-}
-function addCtxEntry(p,pct){
-  ctxHistorial.unshift({p,pct});
-  const hist=document.getElementById('ctxHistorial');hist.innerHTML='';
-  ctxHistorial.forEach(e=>{
-    const d=document.createElement('div');d.className='ctx-entry';
-    if(e.pct===null){
-      d.innerHTML=`<span class="ctx-palabra">${e.p}</span><span style="color:#bdbdbd;font-size:.8rem;flex:1;text-align:center;">Palabra no encontrada</span>`;
-    } else {
-      const color=getColor(e.pct);
-      d.innerHTML=`
-        <span class="ctx-palabra">${e.p}</span>
-        <div class="ctx-barra-wrap"><div class="ctx-barra" style="width:${e.pct}%;background:${color};"></div></div>
-        <span class="ctx-pct">${e.pct}%</span>
-        <span class="ctx-label" style="color:${color};">${getLabel(e.pct)}</span>
-      `;
-    }
-    hist.appendChild(d);
-  });
-}
-function mostrarPista(n){document.getElementById('pista'+n).classList.toggle('vis');}
-document.addEventListener('keydown',e=>{if(pag===3&&e.key==='Enter')intentarCtx();});
-
-/* ═══════════════════════════════════════════
-   PÁG 4 · DINGBATS CON FOTOS
-═══════════════════════════════════════════ */
-const DINGBATS=[
-  {
-    fotos:[
-      {src:'https://www.bing.com/th/id/OGC.08ba8313bd4cf41d3a8baf47f1c02570?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia.tenor.com%2fuWgoUEQlby4AAAAM%2fvolcano-volc%c3%a1n.gif&ehk=FRwt579r4bF9vSIS2DBG%2b5sLuA7tQUIlC6396QAxwo8%3d',label:'Volcán activo',emo:''},
-      {src:'https://www.bing.com/th/id/OGC.bd8fbc07bd3051726c956320f1a70bf0?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fi.pinimg.com%2foriginals%2fc4%2fb4%2f1f%2fc4b41f8112df8e3670d1df0c70dd6c80.gif&ehk=Ymh4nvkiTXfXeGa7GTaNgX7X6e1WIcSAfdcyOx8Xw3s%3d',label:'Lava saliendo',emo:''},
-      {src:'https://i.gifer.com/origin/be/be26c9cb2287f9544d2af53ec9b2de82_w200.gif',label:'Abertura en cima',emo:''},
-    ],
-    pista:'Piensa en la parte de arriba del volcán por donde sale el material.',
-    opciones:['Cráter','Magma','Ceniza','Lava'],
-    correcta:'Cráter',
-    explicacion:'🔺 El CRÁTER es la abertura en la cima del volcán por donde salen lava, cenizas y gases durante una erupción.'
-  },
-  {
-    fotos:[
-      {src:'https://th.bing.com/th/id/R.175f742a336abe04412c15dd3dc0b3a9?rik=jgAelNlvdVA3aQ&pid=ImgRaw&r=0',label:'Diagrama sismo',emo:''},
-      {src:'https://th.bing.com/th/id/R.9c2c919271f2aec9f24707f784d45480?rik=uie3xne%2bgtqnvg&riu=http%3a%2f%2f4.bp.blogspot.com%2f-pEjZALUuX8k%2fVblTbzIxduI%2fAAAAAAAAE10%2fnka88YXibNU%2fs830%2fsubduccion1MOV.gif&ehk=%2bAxwPs5DrvDTy0MhLfFB2gXdtF7deGvFAswlyE%2bYV7Y%3d&risl=&pid=ImgRaw&r=0',label:'Placas tectónicas',emo:''},
-      {src:'https://i.gifer.com/embedded/download/h72.gif',label:'Ondas desde el origen',emo:'⬇'},
-    ],
-    pista:'Es el lugar DENTRO de la Tierra donde se origina el sismo.',
-    opciones:['Epicentro','Foco','Onda','Magnitud'],
-    correcta:'Foco',
-    explicacion:'🔴 El FOCO (o hipocentro) es el punto dentro de la Tierra donde se origina el sismo. Puede estar a varios kilómetros de profundidad.'
-  },
-  {
-    fotos:[
-      {src:'https://o.quizlet.com/5YGd41cogKirIQ33jNRf.w.gif',label:'Placas que chocan',emo:''},
-      {src:'https://www.bing.com/th/id/OGC.6a9c4723e7d7bea371abcbe36a8bd36a?o=7&pid=1.7&rm=3&rurl=http%3a%2f%2fbestanimations.com%2fNature%2fclouds-floating-over-himalaya-mountains-animated-gif.gif&ehk=PqbIRov1qpFS0aWiRAMcc2k1oSUZA%2bBR3XZkycZwr6o%3d',label:'Cordillera Himalaya',emo:''},
-      {src:'https://www.bing.com/th/id/OGC.9b508474b16a5254c7f69dbf4e6ba181?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fwq73n3bEsKm8E%2fgiphy.gif&ehk=mZpj%2fO%2bcMUzNQ5SCAgyHJ1vIquIT0jaF0Aj1wsQl6yQ%3d',label:'Los Alpes',emo:''},
-    ],
-    pista:'Las placas chocan y forman grandes elevaciones del terreno.',
-    opciones:['Llanura','Volcán','Montaña','Valle'],
-    correcta:'Montaña',
-    explicacion:'⛰️ El movimiento CONVERGENTE (choque de placas) origina MONTAÑAS por presión y plegamiento de la corteza terrestre.'
-  },
-  {
-    fotos:[
-      {src:'https://www.ecured.cu/images/thumb/8/87/Mapa_oceano_pacifico.gif/520px-Mapa_oceano_pacifico.gif',label:'Mapa Pacífico',emo:''},
-      {src:'https://www.bing.com/th/id/OGC.3fae59f9f4061d10c1add699d03f413f?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia1.tenor.com%2fm%2fTcakHexTk2EAAAAC%2fgifer-volcano.gif&ehk=dui4%2fIrIUci1QTDhXR9aqUnPLGjbuBMrpMvHNVB6GEI%3d',label:'Volcanes activos',emo:''},
-      {src:'https://www.bing.com/th/id/OGC.22e2eed5fe41d0a3a934e13942e08f21?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia4.giphy.com%2fmedia%2fv1.Y2lkPTc5MGI3NjExamt1aXAzbGQ5eWw5MGk2eHUzcjBncjlwbjRuOTl3ZW5nZ2ptcnc1YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n%2f9G5pUmbwBm956KkUjR%2fgiphy.gif&ehk=KByNb8dCmmjPmdCJ0wQgIHSWhG4GfSPXg3DM7dsd9Rs%3d',label:'Alta sismicidad',emo:''},
-    ],
-    pista:'Zona que rodea el océano más grande del mundo con mucha actividad sísmica y volcánica.',
-    opciones:['Cinturón de Fuego','Fosa oceánica','Dorsal marina','Zona de subducción'],
-    correcta:'Cinturón de Fuego',
-    explicacion:'🌋 El CINTURÓN DE FUEGO rodea el Océano Pacífico y concentra el 90% de los sismos y la mayoría de volcanes activos del mundo.'
-  },
-  {
-    fotos:[
-      {src:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Popocatepetl_volcano_in_Mexico.jpg/160px-Popocatepetl_volcano_in_Mexico.jpg',label:'Activo 🟢',emo:'🟢'},
-      {src:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Mount_Rainier_from_the_northwest.jpg/160px-Mount_Rainier_from_the_northwest.jpg',label:'Durmiente 💤',emo:'💤'},
-      {src:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Edinburgh_Castle_from_the_north.jpg/160px-Edinburgh_Castle_from_the_north.jpg',label:'Extinto ⚫',emo:'⚫'},
-    ],
-    pista:'Tres fotografías muestran los tres estados de actividad volcánica.',
-    opciones:['Tipos de relieve','Tipos de sismo','Tipos de volcán','Tipos de placa'],
-    correcta:'Tipos de volcán',
-    explicacion:'🌋 Los volcanes se clasifican en ACTIVO (erupciones recientes), DURMIENTE (sin erupciones pero puede reactivarse) y EXTINTO (inactivo definitivamente).'
-  },
-];
-let dIdx=0,dOkC=0,dErrC=0;
-const dResueltos=new Array(DINGBATS.length).fill(false);
-
-function renderDingbat(){
-  document.getElementById('dNum').innerText=dIdx+1;
-  document.getElementById('dOk').innerText=dOkC;
-  document.getElementById('dErr').innerText=dErrC;
-  document.getElementById('dBtnAnt').disabled=(dIdx===0);
-  document.getElementById('dBtnSig').disabled=(dIdx===DINGBATS.length-1);
-  const d=DINGBATS[dIdx];
-  const resuelto=dResueltos[dIdx];
-  const ops=[...d.opciones].sort(()=>Math.random()-.5);
-  const panel=document.getElementById('dingbatPanel');
-
-  const fotosHTML=d.fotos.map(f=>`
-    <div class="dingbat-foto-wrap">
-      <img class="dingbat-foto" src="${f.src}" alt="${f.label}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div style="width:90px;height:90px;border-radius:12px;border:3px solid #2e7d32;background:#e8f5e9;display:none;align-items:center;justify-content:center;font-size:2.5rem;box-shadow:0 4px 0 #1b5e20;">${f.emo}</div>
-      <div class="dingbat-foto-label">${f.label}</div>
-    </div>
-  `).join('');
-
-  panel.innerHTML=`
-    <div class="dingbat-card">
-      <div class="dingbat-num">Dingbat ${dIdx+1} de ${DINGBATS.length}</div>
-      <div class="dingbat-display">${fotosHTML}</div>
-      <button class="pista-btn" onclick="document.getElementById('dpista${dIdx}').classList.toggle('vis')">💡 Pista</button>
-      <div class="dingbat-pista${resuelto?' vis':''}" id="dpista${dIdx}">${resuelto?d.explicacion:d.pista}</div>
-      <div class="dingbat-opciones" id="dOps">
-        ${ops.map(o=>`<div class="dingbat-op${resuelto&&o===d.correcta?' ok-d':''}" onclick="elegirDingbat('${o.replace(/'/g,"\\'")}',this)">${o}</div>`).join('')}
-      </div>
-    </div>
-  `;
-}
-function elegirDingbat(op,el){
-  if(dResueltos[dIdx])return;
-  const d=DINGBATS[dIdx];
-  const opts=document.querySelectorAll('#dOps .dingbat-op');
-  opts.forEach(o=>{
-    if(o.innerText.trim()===d.correcta)o.classList.add('ok-d');
-    else if(o.innerText.trim()===op)o.classList.add('err-d');
-  });
-  if(op===d.correcta){dOkC++;dResueltos[dIdx]=true;}
-  else dErrC++;
-  document.getElementById('dOk').innerText=dOkC;
-  document.getElementById('dErr').innerText=dErrC;
-  setTimeout(()=>{
-    const pistaEl=document.getElementById('dpista'+dIdx);
-    if(pistaEl){pistaEl.innerText=d.explicacion;pistaEl.classList.add('vis');}
-  },600);
-  if(dResueltos.every(Boolean))setTimeout(()=>show('dFbOk'),1000);
-}
-function navDingbat(d){dIdx+=d;renderDingbat();}
-
-/* ═══════════════════════════════════════════
-   PÁG 5 · FLASHCARDS CON FOTOS
-═══════════════════════════════════════════ */
-const FLASHCARDS=[
-  {
-    img:'https://i.makeagif.com/media/5-22-2023/f9UBEi.gif',
-    emo:'',
-    preg:'¿Qué es el RELIEVE?',
-    tit:'Relieve Terrestre',
-    resp:'El conjunto de todas las formas de la superficie terrestre: montañas, llanuras, valles, mesetas, costas y formas oceánicas.',
-    dato:'Puede ser CONTINENTAL (en tierra firme) u OCEÁNICO (bajo el mar). El relieve determina el clima, la vegetación y la distribución humana.'
-  },
-  {
-    img:'https://media3.giphy.com/media/1l7GT4n3CGTzW/giphy.gif',
-    emo:'',
-    preg:'¿Qué es una LLANURA?',
-    tit:'Llanura',
-    resp:'Superficie casi plana con muy poca inclinación. Son las zonas más fértiles del planeta y donde vive la mayor parte de la humanidad.',
-    dato:'Ejemplo: La llanura del Bajío en México es una de las regiones agrícolas más productivas del país. Las grandes llanuras son ideales para cultivos.'
-  },
-  {
-    img:'https://concepto.de/wp-content/uploads/2020/02/meseta-de-Guayana-scaled.jpg',
-    emo:'',
-    preg:'¿Qué es una MESETA?',
-    tit:'Meseta o Altiplano',
-    resp:'Elevación del terreno con la parte superior plana y extensa. Se diferencia de la montaña por su cima plana. También llamada altiplano.',
-    dato:'México tiene el Altiplano Mexicano, que cubre gran parte del centro del país a más de 1,000 m de altitud. Es donde vive la mayoría de los mexicanos.'
-  },
-  {
-    img:'https://www.bing.com/th/id/OGC.9c2c919271f2aec9f24707f784d45480?o=7&pid=1.7&rm=3&rurl=http%3a%2f%2f4.bp.blogspot.com%2f-pEjZALUuX8k%2fVblTbzIxduI%2fAAAAAAAAE10%2fnka88YXibNU%2fs830%2fsubduccion1MOV.gif&ehk=%2bAxwPs5DrvDTy0MhLfFB2gXdtF7deGvFAswlyE%2bYV7Y%3d',
-    emo:'',
-    preg:'¿Qué son las PLACAS TECTÓNICAS?',
-    tit:'Placas Tectónicas',
-    resp:'Enormes bloques rígidos en que está dividida la corteza terrestre. Flotan sobre el manto y se mueven entre 2 y 10 centímetros por año.',
-    dato:'Existen 15 placas principales y más de 40 microplacas. Sus bordes son las zonas más activas sísmicamente. México está sobre la Placa Norteamericana.'
-  },
-  {
-    img:'https://www.bing.com/th/id/OGC.9d08acd625de93b6228a2be00eaad463?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fpE6AX3ZnxnAdi%2f200.gif&ehk=5O%2bZPal1i84HDMsp8amza%2bT4OK6qJbbV0qQ3IZFviNg%3d',
-    emo:'',
-    preg:'¿Qué es el movimiento DIVERGENTE?',
-    tit:'Límite Divergente',
-    resp:'Las placas tectónicas se separan. Forman dorsales oceánicas (cordilleras bajo el mar) y zonas de rift o grietas en tierra.',
-    dato:'Ejemplo: La Dorsal Mesoatlántica separa la Placa Norteamericana de la Euroasiática. En Islandia puedes ver esta grieta en tierra firme.'
-  },
-  {
-    img:'https://media.giphy.com/media/RiwHi2Xyg16ik/giphy.gif',
-    emo:'',
-    preg:'¿Qué es el FOCO o HIPOCENTRO?',
-    tit:'Foco / Hipocentro',
-    resp:'Punto dentro de la Tierra donde se origina el sismo. Puede estar a pocos kilómetros o cientos de kilómetros de profundidad.',
-    dato:'Cuanto más profundo el foco, el sismo se siente en mayor área pero con menos intensidad. Los focos superficiales (0-70 km) son los más destructivos.'
-  },
-  {
-    img:'https://th.bing.com/th/id/R.035782b838ac86541972490e328fd6cd?rik=IFi5XE5S1%2fE9Bg&pid=ImgRaw&r=0',
-    emo:'',
-    preg:'¿Qué es el EPICENTRO?',
-    tit:'Epicentro',
-    resp:'Punto en la superficie terrestre directamente sobre el foco. Es donde el sismo se siente con mayor intensidad y donde ocurren más daños.',
-    dato:'El epicentro se determina usando al menos 3 estaciones sismológicas. No siempre es el punto de mayor daño si la ciudad más cercana está lejos.'
-  },
-  {
-    img:'https://tse2.mm.bing.net/th/id/OIP.33udC-vLn8xEJ7H5gqL77wHaEJ?rs=1&pid=ImgDetMain&o=7&rm=3',
-    emo:'',
-    preg:'¿Qué es el CINTURÓN DE FUEGO?',
-    tit:'Cinturón de Fuego del Pacífico',
-    resp:'Zona que rodea el Océano Pacífico con altísima actividad sísmica y volcánica. Tiene forma de herradura y mide 40,000 km de longitud.',
-    dato:'Concentra el 90% de los sismos mundiales y el 75% de los volcanes activos. Países en él: México, Japón, Chile, Indonesia, Filipinas, EUA.'
-  },
-  {
-    img:'https://th.bing.com/th/id/R.4c92bac742088d463d9c5bdc4ea01b14?rik=KMt1K97mOiir0Q&pid=ImgRaw&r=0',
-    emo:'',
-    preg:'¿Cuáles son las PARTES del volcán?',
-    tit:'Partes del Volcán',
-    resp:'Cráter (abertura superior) · Chimenea (canal interno) · Cono volcánico (forma exterior) · Cámara magmática (depósito de magma) · Faldas o laderas.',
-    dato:'El magma es la roca fundida dentro del volcán. Cuando sale a la superficie se llama LAVA. La temperatura de la lava puede superar los 1,200°C.'
-  },
-  {
-    img:'https://concepto.de/wp-content/uploads/2019/11/volcan-extincion-inactividad-latencia-e1574428161524.jpg',
-    emo:'',
-    preg:'¿Cuáles son los TIPOS DE VOLCÁN?',
-    tit:'Tipos de Volcán según su Actividad',
-    resp:'ACTIVO: ha tenido erupciones recientemente. DURMIENTE: sin erupciones en los últimos siglos pero puede reactivarse. EXTINTO: no volverá a erupcionar.',
-    dato:'El Popocatépetl (5,426 m) es un volcán ACTIVO de México. El Xinantécatl o Nevado de Toluca es DURMIENTE. El Cofre de Perote se considera extinto.'
-  },
-];
-let fIdx=0,fVolt=false;
-const fVistos=new Array(FLASHCARDS.length).fill(false);
-
-function renderFlash(){
-  const card=FLASHCARDS[fIdx];
-  fVolt=false;
-  document.getElementById('flashCard').classList.remove('volteada');
-  document.getElementById('flashNum').innerText=`${fIdx+1}/${FLASHCARDS.length}`;
-  document.getElementById('flashIndicador').innerText=`Tarjeta ${fIdx+1} de ${FLASHCARDS.length}`;
-
-  const img=document.getElementById('flashImg');
-  const emo=document.getElementById('flashIcoEmo');
-  img.src=card.img;img.alt=card.preg;
-  img.style.display='block';
-  emo.style.display='none';
-  emo.innerText=card.emo;
-
-  document.getElementById('flashTxt').innerText=card.preg;
-  document.getElementById('flashBTit').innerText=card.tit;
-  document.getElementById('flashBTxt').innerText=card.resp;
-  document.getElementById('flashBDato').innerHTML='<strong>📌 Dato extra:</strong> '+card.dato;
-  fVistos[fIdx]=true;
-  renderFlashProg();
-  if(fVistos.every(Boolean))show('flashFbOk');
-}
-function voltearFlash(){document.getElementById('flashCard').classList.toggle('volteada');}
-function navFlash(d){fIdx=(fIdx+d+FLASHCARDS.length)%FLASHCARDS.length;renderFlash();}
-function renderFlashProg(){
-  const wrap=document.getElementById('flashProg');wrap.innerHTML='';
-  FLASHCARDS.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='flash-dot'+(i===fIdx?' act':fVistos[i]?' vis':'');
-    d.innerText=i+1;wrap.appendChild(d);
-  });
-}
-
-/* ═══ INIT ═══ */
-window.addEventListener('DOMContentLoaded',()=>{
-  syncUI();
-  initAhorcado();
-  initReto4f();
-  renderDingbat();
-  renderFlash();
-});
-</script>
+__BLOCK_
+__BLOCK_
+__BLOCK_
+__BLOCK_
+__BLOCK_
 </body>
 </html>
+

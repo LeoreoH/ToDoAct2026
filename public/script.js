@@ -11,16 +11,24 @@ function mostrarBienvenida() {
 
 async function obtenerXP () {
   const xpEl = document.getElementById('xp-total');
+  const xpSideEl = document.getElementById('xp-side');
   if (!xpEl) return;
 
   try {
     const r    = await fetch('/xp-total', { credentials:'include' });
     const data = await r.json();
+    const xp = data.success ? data.xp : 0;
 
-    xpEl.textContent = `XP: ${data.success ? data.xp : 0}`;
+    xpEl.textContent = `XP: ${xp}`;
+    if (xpSideEl) {
+        xpSideEl.textContent = xp;
+    }
   } catch (e) {
     console.error('obtenerXP:', e);
     xpEl.textContent = 'XP: 0';
+    if (xpSideEl) {
+        xpSideEl.textContent = '0';
+    }
   }
 }
 
@@ -146,10 +154,6 @@ function cerrarSesion() {
         });
 }
 
-function irAActividad(rutaActividad) {
-    window.location.href = `${rutaActividad}.html`;
-}
-
 let estiloActual = null;
 
 async function cargarContenido(tema) {
@@ -171,8 +175,6 @@ async function cargarContenido(tema) {
 
     window.location.href = '/' + data.archivo;
 }
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.split('/').pop();

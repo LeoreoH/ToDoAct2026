@@ -4,18 +4,7 @@
 
 <div id="contenedor"></div>
 
-<script>
-async function cargar() {
-
-    const resp = await fetch('/contenido/astronomia_sistema_solar');
-    const data = await resp.json();
-
-    document.getElementById('contenedor').innerHTML =
-        `<iframe src="/${data.archivo}" width="100%" height="600"></iframe>`;
-}
-
-cargar();
-</script>
+__BLOCK_
 
 </body>
 </html>
