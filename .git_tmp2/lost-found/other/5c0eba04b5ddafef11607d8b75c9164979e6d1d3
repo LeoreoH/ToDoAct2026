@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas - Nivel Normal - Kinestesico</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
+</head>
+<body>
+
+<audio id="audioClick"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing"   src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError"  src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+<div class="cabecera-normal">
+    <h1>&#9881; COORDENADAS</h1>
+    <p class="lead text-white">Nivel Normal &middot; Planos y rutas</p>
+    <div>
+        <span class="badge-estilo">&#9995; Kinest&eacute;sico</span>
+        <span class="badge-nivel">&#128202; Intermedio</span>
+    </div>
+</div>
+
+<div class="barra-progreso">
+    <i class="fas fa-map fa-2x" style="color:#f97316;"></i>
+    <div class="puntos-progreso" id="puntosProgreso">
+        <div class="punto activo" data-pagina="1">1</div>
+        <div class="punto" data-pagina="2">2</div>
+        <div class="punto" data-pagina="3">3</div>
+        <div class="punto" data-pagina="4">4</div>
+        <div class="punto" data-pagina="5">5</div>
+    </div>
+    <span class="badge" style="background:#f97316;color:white;font-size:1.1rem;padding:8px 20px;">
+        P&aacute;gina <span id="paginaActualNum">1</span>/5
+    </span>
+</div>
+
+<div class="contenedor-paginas">
+
+<div class="pagina activa" id="pagina1">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta de Sebasti&aacute;n</h2>
+        <p class="lead">
+            Sebasti&aacute;n vive en la <strong>Calle Miguel Jacintez</strong> y quiere llegar al
+            <strong>Parque Porfino Serrano</strong>. Observa el mapa y luego construye su ruta.
+        </p>
+        <div class="contenedor-imagen">
+            <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg"
+                 alt="Mapa con la ruta de Sebastian" onclick="ampliarImagen(this)">
+            <div class="pie-imagen">Mapa de la colonia con la ruta de Sebastian al parque</div>
+        </div>
+        <div class="recuadro-info">
+            <h4><i class="fas fa-route me-2"></i>Recorrido de Sebasti&aacute;n</h4>
+            <ul class="lista-iconos">
+                <li><i class="fas fa-arrow-up"></i>Norte hasta la calle <strong>Luis Preciado de la Torre</strong></li>
+                <li><i class="fas fa-arrow-right"></i>Este hasta la calle <strong>Oriente 156</strong></li>
+                <li><i class="fas fa-arrow-up"></i>Norte hasta el <strong>Eje 1 Norte</strong></li>
+                <li><i class="fas fa-arrow-right"></i>Este hasta la calle <strong>Oriente 170</strong></li>
+                <li><i class="fas fa-arrow-up"></i>Norte hasta llegar al <strong>parque</strong></li>
+            </ul>
+        </div>
+        <div class="actividad-kinestesica">
+            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Construye la ruta</h4>
+            <p>Presiona los botones de direcci&oacute;n <strong>en el orden correcto</strong> para reproducir el
+               recorrido de Sebasti&aacute;n. Son <strong>5 pasos</strong> en total.</p>
+            <div class="contador-ruta" id="contador-ruta1">Pasos: 0 / 5</div>
+            <div class="panel-flechas-ruta">
+                <div class="btn-flecha-ruta" onclick="agregarPaso1('N','norte')" title="Norte">&#8593;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1('S','sur')"   title="Sur">&#8595;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1('E','este')"  title="Este">&#8594;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1('O','oeste')" title="Oeste">&#8592;</div>
+            </div>
+            <div class="ruta-construida" id="ruta-construida1">
+                <span style="color:#fdba74;font-weight:600;">Toca las flechas para construir la ruta...</span>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarRuta1()">&#9654; Verificar ruta</button>
+                <button class="btn-accion" onclick="limpiarRuta1()">&#8635; Limpiar</button>
+            </div>
+            <div id="feedback1" class="feedback-kinestesico"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina2">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+        <p class="lead">
+            Para ir del <strong>Estacionamiento</strong> al <strong>Departamento de Veterinaria</strong>
+            se pasa por varias facultades en orden.
+        </p>
+        <div class="contenedor-imagen">
+            <img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg"
+                 alt="Mapa de Ciudad Universitaria" onclick="ampliarImagen(this)">
+            <div class="pie-imagen">Mapa de CU con facultades y edificios</div>
+        </div>
+        <div class="recuadro-info">
+            <h4><i class="fas fa-map-marked-alt me-2"></i>Recorrido</h4>
+            <ul class="lista-iconos">
+                <li><i class="fas fa-arrow-right"></i>Este: Estacionamiento &rarr; Estadio de Pr&aacute;cticas &rarr; Trabajo Social &rarr; Contadur&iacute;a &rarr; Ciencias del Mar</li>
+                <li><i class="fas fa-arrow-up"></i>Norte: Ciencias del Mar &rarr; Veterinaria</li>
+            </ul>
+        </div>
+        <div class="actividad-kinestesica">
+            <h4><i class="fas fa-sort me-2"></i>Actividad: Ordena las paradas</h4>
+            <p>Haz clic en cada parada del banco (en el <strong>orden correcto</strong> del recorrido) para a&ntilde;adirla a la ruta.</p>
+            <div class="zona-ordenar">
+                <div class="banco-paradas">
+                    <h5>&#128230; Paradas disponibles</h5>
+                    <div id="banco-cu"></div>
+                </div>
+                <div class="secuencia-paradas">
+                    <h5>&#128506; Tu ruta (de inicio a fin)</h5>
+                    <div id="secuencia-cu"></div>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarOrdenCU()">&#9654; Verificar orden</button>
+                <button class="btn-accion" onclick="reiniciarOrdenCU()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback2" class="feedback-kinestesico"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina3">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
+        <p class="lead">
+            Para ir de <strong>Tasque&ntilde;a</strong> (L&iacute;nea 2) a <strong>Copilco</strong> (L&iacute;nea 3)
+            necesitas hacer un transbordo. Toca las estaciones <strong>en orden</strong> para armar el trayecto.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;padding:12px 18px;background:#fff7e6;border-radius:14px;border:2px solid #fed7aa;">
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:32px;height:6px;background:#ef4444;border-radius:3px;"></span>L&iacute;nea 1 - Roja
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:32px;height:6px;background:#3b82f6;border-radius:3px;"></span>L&iacute;nea 2 - Azul
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:32px;height:6px;background:#10b981;border-radius:3px;"></span>L&iacute;nea 3 - Verde
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:22px;height:22px;background:#fde68a;border:3px solid #c2410c;border-radius:50%;"></span>Transbordo &#11088;
+            </span>
+        </div>
+        <div class="mapa-metro-container">
+            <svg class="metro-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50"  y1="80"  x2="650" y2="80"  stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+                <line x1="150" y1="50"  x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
+                <line x1="400" y1="50"  x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Observatorio','l1')">
+                    <circle cx="80"  cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                    <text x="80"  y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Observatorio</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Tacubaya','l1')">
+                    <circle cx="180" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                    <text x="180" y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Tacubaya</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l1')">
+                    <circle cx="280" cy="80" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="280" cy="80" r="6"  fill="#ef4444"/>
+                    <text x="280" y="50" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Pino Suarez','l1')">
+                    <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                    <text x="380" y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Pino Suarez</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Pantitlan','l1')">
+                    <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                    <text x="620" y="110" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Pantitlan</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Tasquena','l2')">
+                    <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="150" y="350" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Tasquena</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Ermita','l2')">
+                    <circle cx="150" cy="250" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="118" y="250" text-anchor="end" font-family="Nunito" font-size="10" fill="#1e3a8a">Ermita</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Chabacano','l2')">
+                    <circle cx="150" cy="180" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="118" y="180" text-anchor="end" font-family="Nunito" font-size="10" fill="#1e3a8a">Chabacano</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l2')">
+                    <circle cx="150" cy="110" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="150" cy="110" r="6"  fill="#3b82f6"/>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Cuatro Caminos','l2')">
+                    <circle cx="150" cy="50"  r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="150" y="32"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Cuatro Caminos</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Universidad','l3')">
+                    <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                    <text x="400" y="350" text-anchor="middle" font-family="Nunito" font-size="10" fill="#065f46">Universidad</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Copilco','l3')">
+                    <circle cx="400" cy="250" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                    <text x="428" y="250" text-anchor="start" font-family="Nunito" font-size="10" fill="#065f46">Copilco</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Balderas','l3')">
+                    <circle cx="400" cy="180" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="400" cy="180" r="6"  fill="#10b981"/>
+                    <text x="400" y="210" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Guerrero','l3')">
+                    <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                    <text x="428" y="110" text-anchor="start" font-family="Nunito" font-size="10" fill="#065f46">Guerrero</text>
+                </g>
+                <g class="estacion-sel" onclick="seleccionarEstacion('Indios Verdes','l3')">
+                    <circle cx="400" cy="50"  r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                    <text x="400" y="32"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#065f46">Indios Verdes</text>
+                </g>
+            </svg>
+        </div>
+        <div class="leyenda-metro">
+            <div class="leyenda-item"><div class="color-linea roja"></div>L&iacute;nea 1</div>
+            <div class="leyenda-item"><div class="color-linea azul"></div>L&iacute;nea 2</div>
+            <div class="leyenda-item"><div class="color-linea verde"></div>L&iacute;nea 3</div>
+            <div class="leyenda-item"><span style="color:gold;">&#9899;</span>Transbordo</div>
+        </div>
+        <div class="recuadro-info">
+            <h4><i class="fas fa-info-circle me-2"></i>L&iacute;neas del Metro</h4>
+            <ul class="lista-iconos">
+                <li><span style="color:#ef4444;font-weight:700;">L&iacute;nea 1 (roja):</span> Observatorio - Tacubaya - Balderas - Pino Suarez - Pantitlan</li>
+                <li><span style="color:#3b82f6;font-weight:700;">L&iacute;nea 2 (azul):</span> Tasquena - Ermita - Chabacano - Balderas - Cuatro Caminos</li>
+                <li><span style="color:#10b981;font-weight:700;">L&iacute;nea 3 (verde):</span> Universidad - Copilco - Balderas - Guerrero - Indios Verdes</li>
+                <li><span style="color:gold;font-weight:700;">Balderas</span> es donde coinciden las 3 l&iacute;neas</li>
+            </ul>
+        </div>
+        <div class="actividad-kinestesica">
+            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Arma el trayecto</h4>
+            <p>Toca las estaciones <strong>en orden</strong> para ir de
+               <strong style="color:#3b82f6;">Tasquena (L2)</strong> a
+               <strong style="color:#10b981;">Copilco (L3)</strong> haciendo transbordo en Balderas.
+               El trayecto tiene <strong>3 estaciones</strong>.</p>
+            <div class="trayecto-construido" id="trayecto-construido">
+                <span style="color:#fdba74;font-weight:600;">Toca las estaciones en el mapa...</span>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarTrayecto()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="limpiarTrayecto()">&#8635; Limpiar</button>
+            </div>
+            <div id="feedback3" class="feedback-kinestesico"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina4">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots</h2>
+        <p class="lead">
+            Cada robot avanza una cantidad de unidades por paso. Usa los controles para
+            calcular cu&aacute;nto avanzo cada uno y descubre cu&aacute;l recorri&oacute; <strong>menos distancia</strong>.
+        </p>
+        <div class="contenedor-imagen">
+            <img src="/contenidos/matematicas/recursos/imagenes/tabla-robot-avanzada.jpg"
+                 alt="Tabla de robots" onclick="ampliarImagen(this)">
+            <div class="pie-imagen">Tabla con datos de robots del libro</div>
+        </div>
+        <div class="texto-destacado">
+            <strong>Formula:</strong> Distancia total = Unidades por paso x Pasos dados
+        </div>
+        <div class="actividad-kinestesica">
+            <h4><i class="fas fa-sliders-h me-2"></i>Actividad: Mueve los pasos de cada robot</h4>
+            <p>Arrastra el control de cada robot hasta el n&uacute;mero de pasos correcto (seg&uacute;n la tabla del libro)
+               y observa la distancia total. Luego responde la pregunta.</p>
+            <table class="tabla-robots-sliders">
+                <thead>
+                    <tr>
+                        <th>Robot</th>
+                        <th>Unid./paso</th>
+                        <th>Pasos (mueve el control)</th>
+                        <th>Distancia</th>
+                        <th>Barra</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-robots"></tbody>
+            </table>
+            <p style="font-weight:700;margin:20px 0 8px;">Cual robot avanzo <strong>MENOS</strong> distancia?</p>
+            <div class="opciones-robots" id="opciones-robots"></div>
+            <div id="feedback4" class="feedback-kinestesico"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina5">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
+        <p class="lead">
+            El teatro tiene una secci&oacute;n <strong>Platea</strong> con 18 filas.
+            Los asientos <strong>impares</strong> van a la izquierda del pasillo
+            y los <strong>pares</strong> a la derecha.
+        </p>
+        <div class="contenedor-imagen">
+            <img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg"
+                 alt="Plano de teatro" onclick="ampliarImagen(this)">
+            <div class="pie-imagen">Plano del teatro con filas y asientos</div>
+        </div>
+        <div class="recuadro-info">
+            <h4><i class="fas fa-chair me-2"></i>Capacidad de asientos por fila</h4>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-weight:600;">
+                <div>Fila 1: 16 asientos</div><div>Fila 2: 18 asientos</div><div>Fila 3: 20 asientos</div>
+                <div>Fila 4: 20 asientos</div><div>Fila 5: 22 asientos</div><div>Fila 6: 24 asientos</div>
+                <div>Fila 7: 24 asientos</div><div>Fila 8: 26 asientos</div><div>Fila 9: 26 asientos</div>
+                <div>Fila 10: 28 asientos</div><div>Filas 11-17: 30 asientos</div><div>Fila 18: 28 asientos</div>
+            </div>
+        </div>
+        <div class="actividad-kinestesica">
+            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Elige los asientos</h4>
+            <p>Dos amigos quieren sentarse <strong>juntos pero en lados opuestos del pasillo</strong>,
+               lo m&aacute;s cerca posible del escenario.</p>
+            <p style="margin-top:8px;">
+                Selecciona <strong>1 asiento del lado izquierdo</strong> y
+                <strong>1 asiento del lado derecho</strong> en la misma fila,
+                eligiendo los asientos m&aacute;s cercanos al pasillo central.
+            </p>
+            <div class="instruccion-teatro">
+                <span class="badge-lado izq">Izquierda: asientos impares</span>
+                <span class="badge-lado der">Derecha: asientos pares</span>
+            </div>
+            <div style="font-weight:700;text-align:center;margin:10px 0;color:#c2410c;" id="info-sel-teatro">
+                Seleccionados: - / 2
+            </div>
+            <div class="teatro-wrap">
+                <div class="escenario-bar">&#127917; &nbsp; ESCENARIO &nbsp; &#127917;</div>
+                <div class="teatro-grid-k" id="teatro-grid-k"></div>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarAsientos()">&#9654; Verificar seleccion</button>
+                <button class="btn-accion" onclick="limpiarAsientos()">&#8635; Limpiar</button>
+            </div>
+            <div id="feedback5" class="feedback-kinestesico"></div>
+        </div>
+        <a href="quiz.html" class="boton-quiz text-center">
+            <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
+        </a>
+    </div>
+</div>
+
+<div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+        <i class="fas fa-arrow-left me-2"></i> ANTERIOR
+    </button>
+    <span class="indicador-pagina" id="contadorPagina">1/5</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+        SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+</div>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

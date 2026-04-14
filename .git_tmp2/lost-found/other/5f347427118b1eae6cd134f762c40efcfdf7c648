@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil &middot; Kinest&eacute;sico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #f7f1ff, #ede7f6); color: #4a148c; min-height: 100vh; }
+    .cabecera { background: linear-gradient(135deg, #8e24aa, #5e35b1); color: white; text-align: center; padding: 28px 20px; border-bottom: 6px solid #ffd54f; box-shadow: 0 8px 20px rgba(0,0,0,.18); position: relative; }
+    .cabecera h1 { margin: 0; font-family: 'Fredoka One', cursive; font-size: 2.35rem; text-shadow: 2px 2px 0 rgba(0,0,0,.15); }
+    .cabecera .subtitulo { margin-top: 10px; font-size: 1.05rem; font-weight: 700; }
+    .badge-estilo { display: inline-block; margin-top: 14px; background: #ffd54f; color: #4a148c; border: 3px solid white; border-radius: 999px; padding: 10px 24px; font-weight: 800; box-shadow: 0 4px 0 #d39e00; }
+    .btn-volver-menu { position: absolute; top: 18px; left: 18px; width: 54px; height: 54px; border-radius: 50%; border: 3px solid white; background: #ffd54f; color: #4a148c; font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 0 #d39e00; transition: .2s; }
+    .btn-volver-menu:hover { transform: translateY(-2px); background: #fff3c4; }
+    .barra-progreso { max-width: 980px; margin: 24px auto 0; background: white; border-radius: 999px; border: 3px solid #7b1fa2; box-shadow: 0 6px 0 #d1c4e9; padding: 12px 18px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .progreso-texto { font-weight: 800; color: #6a1b9a; white-space: nowrap; }
+    .barra-fondo { flex: 1; min-width: 140px; height: 14px; background: #ede7f6; border-radius: 999px; overflow: hidden; border: 2px solid #d1c4e9; }
+    .barra-relleno { width: 12.5%; height: 100%; background: linear-gradient(90deg, #ab47bc, #7e57c2); transition: width .3s; }
+    .progreso-num { background: #7b1fa2; color: white; padding: 7px 14px; border-radius: 999px; font-weight: 800; }
+    .contenedor { max-width: 1020px; margin: 26px auto 42px; padding: 0 16px; }
+    .pagina { display: none; animation: aparecer .35s ease; }
+    .pagina.activa { display: block; }
+    @keyframes aparecer { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .tarjeta { background: white; border-radius: 28px; border: 3px solid #7b1fa2; box-shadow: 0 10px 0 #d1c4e9; padding: 26px; }
+    .titulo-pagina { font-family: 'Fredoka One', cursive; font-size: 1.95rem; color: #6a1b9a; margin-bottom: 16px; border-left: 8px solid #ffd54f; padding-left: 18px; }
+    .texto-destacado { background: #faf5ff; border: 2px dashed #ce93d8; border-radius: 18px; padding: 16px 18px; color: #5e35b1; font-weight: 700; margin-bottom: 18px; text-align: center; line-height: 1.5; }
+    .recuadro { background: #f7f1ff; border-radius: 20px; padding: 18px; border-left: 7px solid #ffd54f; margin: 18px 0; line-height: 1.55; }
+    .caso-grid, .seleccion-grid, .column-board, .report-grid, .match-grid, .pair-preview { display: grid; gap: 16px; }
+    .caso-grid, .seleccion-grid, .report-grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .column-board { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .match-grid { grid-template-columns: 1.1fr .8fr 1.1fr; align-items: start; }
+    .panel, .option-card, .column-panel, .report-card, .match-card, .sequence-slot, .drop-card { background: white; border: 3px solid #d1a6ff; border-radius: 22px; padding: 16px; box-shadow: 0 5px 0 #e1bee7; }
+    .panel-title, .column-title, .report-title, .match-title, .drop-title { font-weight: 900; color: #6a1b9a; margin-bottom: 12px; text-align: center; }
+    .panel-note, .micro-copy, .poster-note { margin-top: 12px; color: #6a1b9a; font-weight: 700; line-height: 1.45; text-align: center; }
+    .zona-juego { background: linear-gradient(135deg, #faf5ff, #f3e5f5); border: 3px dashed #ba68c8; border-radius: 24px; padding: 20px; margin-top: 18px; }
+    .zona-juego h3 { text-align: center; color: #6a1b9a; font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; }
+    .instruccion-corta { text-align: center; font-weight: 800; color: #6a1b9a; margin-bottom: 14px; }
+    .hint-badge { display: inline-block; background: #fff3c4; color: #7b1fa2; border: 2px solid #ffca28; border-radius: 999px; padding: 6px 12px; font-size: .95rem; font-weight: 900; margin-bottom: 10px; }
+    .option-card, .column-option, .report-card, .sign-card, .match-card { cursor: pointer; transition: .18s ease; }
+    .option-card:hover, .column-option:hover, .report-card:hover, .sign-card:hover, .match-card:hover { transform: translateY(-3px) scale(1.01); border-color: #8e24aa; }
+    .option-card.selected, .column-option.selected, .report-card.selected, .sign-card.selected, .match-card.active { background: #efe0ff; border-color: #7b1fa2; box-shadow: 0 6px 0 #c7a4ea; }
+    .option-card.correcta, .column-option.correcta, .report-card.correcta, .sign-card.correcta, .match-card.matched, .sequence-slot.correcta, .rank-slot.correcta { background: #e8f5e9; border-color: #43a047; color: #2e7d32; }
+    .option-card.incorrecta, .column-option.incorrecta, .report-card.incorrecta, .sign-card.incorrecta, .match-card.incorrecta, .sequence-slot.incorrecta, .rank-slot.incorrecta, .tray-drop.incorrecta { background: #ffebee; border-color: #e53935; color: #c62828; }
+    .choice-strip { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .column-option, .sign-card { border: 3px solid #d1a6ff; border-radius: 18px; background: white; box-shadow: 0 5px 0 #e1bee7; padding: 14px; text-align: center; font-weight: 800; color: #5e35b1; }
+    .column-option { min-height: 86px; }
+    .sequence-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+    .sequence-slot { min-height: 110px; display: flex; align-items: center; justify-content: center; text-align: center; color: #7b1fa2; background: #faf5ff; border-style: dashed; }
+    .sequence-slot.has-value { border-style: solid; }
+    .bandeja { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; min-height: 92px; padding: 14px; border-radius: 20px; border: 3px solid #d1c4e9; background: white; margin-top: 12px; }
+    .bandeja-sticky { position: sticky; top: 12px; z-index: 12; }
+    .rank-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 16px; }
+    .rank-slot, .tray-drop { min-height: 150px; padding: 14px; border-radius: 22px; border: 3px dashed #ab47bc; background: #faf5ff; display: flex; align-items: center; justify-content: center; text-align: center; color: #8e24aa; font-weight: 800; }
+    .rank-slot.has-card, .tray-drop.has-card { border-style: solid; background: #fff; }
+    .ficha { min-width: 110px; padding: 14px 16px; border-radius: 18px; background: linear-gradient(135deg, #ffffff, #f7f1ff); border: 3px solid #7b1fa2; box-shadow: 0 5px 0 #d1c4e9; text-align: center; font-weight: 800; color: #5e35b1; cursor: grab; user-select: none; transition: .2s; }
+    .ficha:hover { transform: translateY(-2px) scale(1.02); }
+    .ficha.dragging { opacity: .65; transform: scale(1.04); }
+    .story-tag { display: inline-flex; align-items: center; justify-content: center; min-width: 108px; padding: 10px 16px; border-radius: 999px; border: 3px solid #7b1fa2; background: #f3e5f5; color: #5e35b1; font-size: 1.2rem; font-weight: 900; box-shadow: 0 5px 0 #d1c4e9; margin: 0 auto; }
+    .fraction-chip { min-width: 96px; padding: 8px 16px; border-radius: 20px; border: 3px solid #7b1fa2; background: #f3e5f5; box-shadow: 0 5px 0 #d1c4e9; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; }
+    .fraction-stack { display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; color: #5e35b1; line-height: 1; font-size: 1.15rem; }
+    .fraction-bar { width: 34px; border-top: 3px solid #7b1fa2; margin: 4px 0; }
+    .hundred-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; max-width: 300px; margin: 0 auto; padding: 10px; border-radius: 18px; background: white; border: 4px solid #7b1fa2; box-shadow: 0 6px 0 #d1c4e9; }
+    .grid-cell { aspect-ratio: 1 / 1; border-radius: 6px; background: #f3e5f5; border: 1px solid #d1c4e9; }
+    .grid-cell.fill { background: linear-gradient(135deg, #ba68c8, #7e57c2); border-color: #7b1fa2; }
+    .strip-box { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 4px; max-width: 360px; margin: 0 auto; padding: 10px; border-radius: 18px; background: white; border: 4px solid #7b1fa2; box-shadow: 0 6px 0 #d1c4e9; }
+    .strip-cell { aspect-ratio: 1.2 / 1; border-radius: 6px; background: #fff8e1; border: 1px solid #d1c4e9; }
+    .strip-cell.fill { background: linear-gradient(135deg, #ffca28, #ff8f00); border-color: #ef6c00; }
+    .pizza-wrap { display: flex; justify-content: center; margin: 4px auto 12px; }
+    .pizza-disc { --total: 8; --fill: 4; width: 160px; height: 160px; border-radius: 50%; border: 8px solid #ffb74d; box-shadow: 0 6px 0 #d39e00; background: repeating-conic-gradient(from -90deg, rgba(255,255,255,.18) 0 calc(360deg / var(--total) - 2deg), rgba(123,31,162,.85) calc(360deg / var(--total) - 2deg) calc(360deg / var(--total))), conic-gradient(from -90deg, #ffe082 0 calc(360deg * var(--fill) / var(--total)), #f3e5f5 calc(360deg * var(--fill) / var(--total)) 360deg); position: relative; }
+    .pizza-disc::after { content: ''; position: absolute; inset: 12px; border-radius: 50%; border: 2px dashed rgba(123,31,162,.28); }
+    .line-wrap { width: min(690px, 100%); position: relative; height: 130px; margin: 0 auto; }
+    .line-track { position: absolute; left: 6%; right: 6%; top: 58px; height: 6px; background: #7b1fa2; border-radius: 999px; }
+    .line-mark { position: absolute; top: 28px; width: 0; height: 42px; border-left: 4px solid #7b1fa2; transform: translateX(-50%); }
+    .line-mark span { position: absolute; top: 44px; left: 50%; transform: translateX(-50%); font-weight: 800; color: #6a1b9a; white-space: nowrap; font-size: .9rem; }
+    .line-point { position: absolute; top: 8px; width: 36px; height: 36px; border-radius: 50%; background: #ffd54f; border: 3px solid #7b1fa2; transform: translateX(-50%); box-shadow: 0 4px 0 #d39e00; }
+    .sign-options { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 14px; }
+    .sign-card { min-width: 110px; min-height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; }
+    .match-column { display: flex; flex-direction: column; gap: 12px; }
+    .match-card.matched { cursor: default; box-shadow: 0 5px 0 #9ccc65; }
+    .pair-preview { grid-template-columns: 1fr; min-height: 260px; align-content: start; }
+    .pair-row { background: white; border: 3px solid #c8b0ff; border-radius: 18px; padding: 12px; box-shadow: 0 4px 0 #e1bee7; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-weight: 900; color: #6a1b9a; }
+    .poster-card { min-height: 148px; display: flex; flex-direction: column; justify-content: space-between; }
+    .poster-badge { display: inline-block; background: #fff3c4; border: 2px solid #ffca28; color: #8e24aa; font-weight: 900; border-radius: 999px; padding: 6px 12px; margin-bottom: 10px; }
+    .action-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+    .btn-accion { border: none; border-radius: 999px; padding: 12px 26px; font-weight: 800; background: linear-gradient(135deg, #ab47bc, #7e57c2); color: white; box-shadow: 0 5px 0 #5e35b1; transition: .2s; }
+    .btn-accion:hover { transform: translateY(-2px); }
+    .mensaje-feedback { margin-top: 16px; padding: 14px 16px; border-radius: 16px; font-weight: 800; text-align: center; display: none; line-height: 1.45; }
+    .mensaje-ok { background: #e8f5e9; color: #2e7d32; border: 2px solid #43a047; }
+    .mensaje-warn { background: #fff3e0; color: #ef6c00; border: 2px solid #fb8c00; }
+    .navegador { display: flex; justify-content: space-between; align-items: center; gap: 15px; background: white; border: 3px solid #7b1fa2; border-radius: 999px; padding: 12px 16px; margin-top: 28px; box-shadow: 0 8px 0 #d1c4e9; position: sticky; bottom: 18px; z-index: 20; }
+    .btn-nav { border: none; border-radius: 999px; padding: 12px 22px; font-weight: 800; background: linear-gradient(135deg, #ab47bc, #7e57c2); color: white; box-shadow: 0 5px 0 #5e35b1; transition: .2s; }
+    .btn-nav:hover:not(:disabled) { transform: translateY(-2px); }
+    .btn-nav:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+    .contador { font-weight: 900; color: #6a1b9a; font-size: 1.1rem; }
+    .boton-quiz { display: inline-block; margin: 28px auto 0; text-decoration: none; background: #ffd54f; color: #4a148c; border: 4px solid #7b1fa2; padding: 16px 34px; border-radius: 999px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 7px 0 #d39e00; transition: .2s; }
+    .boton-quiz:hover { transform: translateY(-3px); background: #fff3c4; color: #4a148c; }
+    .boton-quiz.bloqueado { opacity: .55; cursor: not-allowed; background: #e0e0e0; color: #7a7a7a; border-color: #bdbdbd; box-shadow: 0 7px 0 #9e9e9e; pointer-events: none; }
+    .boton-quiz.bloqueado:hover { transform: none; background: #e0e0e0; color: #7a7a7a; }
+    @media (max-width: 860px) { .match-grid { grid-template-columns: 1fr; } .pair-preview { min-height: auto; } }
+    @media (max-width: 768px) { .cabecera h1 { font-size: 2rem; } .titulo-pagina { font-size: 1.55rem; } .btn-volver-menu { position: static; margin: 0 auto 16px; } .barra-progreso { margin-inline: 16px; } .navegador { flex-direction: column; border-radius: 24px; } .pizza-disc { width: 140px; height: 140px; } }
+  </style>
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>EQUIVALENCIAS COMPLETAS</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</div>
+    <div class="badge-estilo">Kinest&eacute;sico</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">13%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-pizza-slice me-2"></i>Festival de pizzas equivalentes</h2>
+        <div class="texto-destacado">En el festival, una misma porci&oacute;n puede describirse con fracci&oacute;n, decimal o porcentaje. Si las tres formas hablan de la misma parte del entero, entonces forman una equivalencia.</div>
+        <div class="recuadro"><strong>Contenido:</strong> el puesto central sirvi&oacute; <strong>3 de 4</strong> rebanadas. Esa misma porci&oacute;n tambi&eacute;n puede leerse como <strong>0.75</strong> y como <strong>75%</strong>.</div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">Ejemplo del puesto central</div><div id="demoP1Pizza"></div><div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip"><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>4</span></div></div><span class="story-tag">0.75</span><span class="story-tag">75%</span></div></div></div>
+          <div class="panel"><div class="panel-title">Caso ficticio</div><span class="hint-badge">Mesa violeta</span><div id="caseP1Pizza"></div><div class="panel-note">La mesa violeta recibi&oacute; una pizza en la que se usaron <strong>5 de 8</strong> rebanadas.</div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Completa la ficha del pedido arrastrando la fracci&oacute;n, el decimal y el porcentaje correctos.</div>
+          <div class="bandeja bandeja-sticky" id="trayP1"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Fracci&oacute;n del pedido</div><div class="rank-slot" id="zoneP1Frac" data-accept-list="frac_5_8" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Decimal del pedido</div><div class="rank-slot" id="zoneP1Dec" data-accept-list="dec_0625" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Porcentaje del pedido</div><div class="rank-slot" id="zoneP1Pct" data-accept-list="pct_625" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">Excelente. Completaste correctamente la ficha de la mesa violeta.</div>
+          <div id="feedback1warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no corresponde a la misma porci&oacute;n del pedido. Vuelve a comparar las tres formas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-seedling me-2"></i>Semillero del huerto escolar</h2>
+        <div class="texto-destacado">En una cuadr&iacute;cula de 100 espacios, una coloraci&oacute;n tambi&eacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. Las tres escrituras deben describir la misma parte del tablero.</div>
+        <div class="recuadro"><strong>Contenido:</strong> si hay 45 espacios marcados, esa cantidad puede expresarse como <strong>45%</strong>, <strong>0.45</strong> y <strong>9/20</strong>.</div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">Ejemplo del huerto</div><div id="demoP2Grid"></div><div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip"><div class="fraction-stack"><span>9</span><span class="fraction-bar"></span><span>20</span></div></div><span class="story-tag">0.45</span><span class="story-tag">45%</span></div></div></div>
+          <div class="panel"><div class="panel-title">Caso ficticio</div><span class="hint-badge">Charola verde</span><div id="caseP2Grid"></div><div class="panel-note">La charola verde tiene <strong>68</strong> espacios ocupados de cada 100.</div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra las tres tarjetas correctas al registro del semillero.</div>
+          <div class="bandeja bandeja-sticky" id="trayP2"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Fracci&oacute;n</div><div class="rank-slot" id="zoneP2Frac" data-accept-list="frac_17_25" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Decimal</div><div class="rank-slot" id="zoneP2Dec" data-accept-list="dec_068" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Porcentaje</div><div class="rank-slot" id="zoneP2Pct" data-accept-list="pct_68" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">Muy bien. El registro del semillero qued&oacute; completo y correcto.</div>
+          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no describe la misma parte de la charola. Revisa cu&aacute;ntos espacios hay de cada 100.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-stamp me-2"></i>Inspector de etiquetas</h2>
+        <div class="texto-destacado">Un grupo de equivalencias solo funciona si todas las tarjetas representan exactamente la misma cantidad. Si una sola falla, hay que retirarla y reemplazarla.</div>
+        <div class="recuadro"><strong>Contenido:</strong> por ejemplo, <strong>2/5</strong>, <strong>0.40</strong> y <strong>40%</strong> s&iacute; representan la misma parte del entero.</div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">Caso ficticio</div><span class="hint-badge">Mesa de impresi&oacute;n</span><div class="panel-note">La etiqueta de abajo trae una pieza incorrecta. Primero ll&eacute;vala a revisi&oacute;n y luego coloca la pieza que falta.</div></div>
+          <div class="panel"><div class="panel-title">Grupo que se va a reparar</div><div class="pair-preview"><div class="pair-row"><div class="fraction-chip"><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>8</span></div></div></div><div class="pair-row"><span class="story-tag">0.375</span></div><div class="pair-row"><div class="ficha" id="chipP3Bad" draggable="true" data-value="bad_pct35"><span class="story-tag">35%</span></div></div></div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Lleva la pieza incorrecta a revisi&oacute;n y despu&eacute;s rellena el espacio con la tarjeta correcta.</div>
+          <div class="column-board">
+            <div class="drop-card"><div class="drop-title">Bandeja de revisi&oacute;n</div><div class="rank-slot" id="zoneP3Trash" data-accept-list="bad_pct35" data-max="1"><span class="placeholder">Suelta aqu&iacute; la pieza incorrecta</span></div></div>
+            <div class="drop-card"><div class="drop-title">Espacio corregido</div><div class="rank-slot" id="zoneP3Fix" data-accept-list="good_pct375" data-max="1"><span class="placeholder">Completa el grupo</span></div></div>
+          </div>
+          <div class="bandeja" id="trayP3"></div>
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">Perfecto. Quitaste la pieza incorrecta y colocaste la equivalencia correcta.</div>
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">Ese movimiento no corrige el grupo. Revisa cu&aacute;nto representa realmente 3/8.</div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-route me-2"></i>Ruta del ciclista</h2>
+        <div class="texto-destacado">En la recta num&eacute;rica, un punto tambi&eacute;n puede leerse con fracci&oacute;n, decimal y porcentaje. Si las tres formas son equivalentes, todas deben caer exactamente en el mismo lugar del recorrido.</div>
+        <div class="recuadro"><strong>Contenido:</strong> en un trayecto dividido en 4 partes, la tercera marca equivale a <strong>3/4</strong>, <strong>0.75</strong> y <strong>75%</strong>.</div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">Ejemplo</div><div id="demoP4Line"></div></div>
+          <div class="panel"><div class="panel-title">Caso ficticio</div><span class="hint-badge">Punto amarillo</span><div id="caseP4Line"></div><div class="panel-note">El ciclista lleg&oacute; a la marca de <strong>7 de 10</strong> partes del recorrido.</div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra las tres formas equivalentes del punto amarillo a su tablero.</div>
+          <div class="bandeja bandeja-sticky" id="trayP4"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Fracci&oacute;n</div><div class="rank-slot" id="zoneP4Frac" data-accept-list="frac_7_10" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Decimal</div><div class="rank-slot" id="zoneP4Dec" data-accept-list="dec_070" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Porcentaje</div><div class="rank-slot" id="zoneP4Pct" data-accept-list="pct_70" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">Excelente. Completaste correctamente el tablero del ciclista.</div>
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide con la marca de la recta. Cuenta cu&aacute;ntas partes lleva recorridas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Barra de jugos</h2>
+        <div class="texto-destacado">Cuando comparas formas distintas, conviene transformar una representaci&oacute;n a otra antes de decidir el signo. As&iacute; puedes comprobar si una cantidad es mayor, menor o igual.</div>
+        <div class="recuadro"><strong>Contenido:</strong> un medio equivale a <strong>0.50</strong>. Por eso, si lo comparas con <strong>0.40</strong>, el signo correcto es <strong>&gt;</strong>.</div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">Modelo izquierdo</div><div id="caseP5Left"></div><div class="panel-note"><div class="fraction-chip"><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>5</span></div></div></div></div>
+          <div class="panel"><div class="panel-title">Modelo derecho</div><div id="caseP5Right"></div><div class="panel-note"><span class="story-tag">58%</span></div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Primero rellena el decimal equivalente del modelo izquierdo y luego coloca el signo correcto.</div>
+          <div class="bandeja bandeja-sticky" id="trayP5"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Decimal de 3/5</div><div class="rank-slot" id="zoneP5Dec" data-accept-list="dec_060" data-max="1"><span class="placeholder">Completa aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Signo correcto</div><div class="rank-slot" id="zoneP5Sign" data-accept-list="sign_greater" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">Correcto. <strong>3/5 = 0.60</strong>, por eso es mayor que <strong>58%</strong>.</div>
+          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a no coincide. Convierte primero 3/5 y luego compara ambas cantidades.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-down-short-wide me-2"></i>Podio del laboratorio</h2>
+        <div class="texto-destacado">Para ordenar cantidades mixtas, piensa todas en una misma escala. Puedes imaginar cada una como porcentaje o como decimal antes de acomodarlas en el podio.</div>
+        <div class="recuadro"><strong>Contenido:</strong> una cantidad cercana a <strong>0.35</strong> es menor que otra cercana a <strong>0.50</strong>. Ordenar no depende del formato, sino del valor que representan.</div>
+        <div class="panel"><div class="panel-title">Caso ficticio</div><div class="micro-copy">El laboratorio quiere ordenar cuatro muestras de la m&aacute;s peque&ntilde;a a la m&aacute;s grande.</div></div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra las cuatro tarjetas al podio en orden de menor a mayor.</div>
+          <div class="bandeja bandeja-sticky" id="trayP6"></div>
+          <div class="rank-board">
+            <div class="drop-card"><div class="drop-title">1. Menor</div><div class="rank-slot" id="zoneP6A" data-accept-list="pct_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2.</div><div class="rank-slot" id="zoneP6B" data-accept-list="frac_3_8" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3.</div><div class="rank-slot" id="zoneP6C" data-accept-list="dec_040" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">4. Mayor</div><div class="rank-slot" id="zoneP6D" data-accept-list="frac_1_2" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">Muy bien. Ordenaste las cuatro cantidades de menor a mayor.</div>
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">Esa posici&oacute;n no corresponde. Revisa cu&aacute;l cantidad est&aacute; m&aacute;s cerca de cero.</div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-store me-2"></i>Feria de descuentos</h2>
+        <div class="texto-destacado">En la feria, cada tienda escribe sus descuentos de manera distinta. Para decidir cu&aacute;l conviene m&aacute;s, primero hay que ordenar todos los anuncios en una misma escala.</div>
+        <div class="recuadro"><strong>Contenido:</strong> un descuento de <strong>1/3</strong> es un poco mayor que <strong>30%</strong>. En cambio, <strong>0.40</strong> equivale a <strong>40%</strong>, por lo que suele ser la mejor oferta del grupo.</div>
+        <div class="panel"><div class="panel-title">Caso ficticio</div><div class="panel-note">Arrastra los cuatro carteles al ranking. La bandeja se queda arriba para que el movimiento sea m&aacute;s c&oacute;modo.</div></div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Ordena las ofertas desde el descuento menor hasta el mayor.</div>
+          <div class="bandeja bandeja-sticky tray-drop" id="trayP7"><span class="placeholder">Toma un cartel y su&eacute;ltalo en el ranking.</span></div>
+          <div class="rank-board">
+            <div class="drop-card"><div class="drop-title">1. Menor</div><div class="rank-slot" id="rankP7A"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2.</div><div class="rank-slot" id="rankP7B"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3.</div><div class="rank-slot" id="rankP7C"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">4. Mayor</div><div class="rank-slot" id="rankP7D"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div class="action-row"><button class="btn-accion" onclick="reiniciarPagina7()">Reiniciar orden</button></div>
+          <div id="feedback7ok" class="mensaje-feedback mensaje-ok">Excelente. Ordenaste correctamente las ofertas de menor a mayor descuento.</div>
+          <div id="feedback7warn" class="mensaje-feedback mensaje-warn">Ese ranking todav&iacute;a no coincide. Convierte mentalmente cada oferta antes de compararla.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina8">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-handshake-angle me-2"></i>Centro de rescate de equivalencias</h2>
+        <div class="texto-destacado">En el panel final, cada ficha perdida debe volver con su equivalente. Para lograrlo, arrastra cada tarjeta dorada al caso correcto.</div>
+        <div class="recuadro"><strong>Contenido:</strong> dos representaciones solo pueden emparejarse si describen exactamente la misma cantidad, aunque una use decimal, otra porcentaje y otra fracci&oacute;n.</div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Completa los cuatro casos arrastrando el equivalente correcto a cada tarjeta morada.</div>
+          <div class="bandeja bandeja-sticky" id="trayP8"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Caso A: 0.60</div><div class="rank-slot" id="zoneP8A" data-accept-list="pair_3_5" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso B: 1/8</div><div class="rank-slot" id="zoneP8B" data-accept-list="pair_125" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso C: 75%</div><div class="rank-slot" id="zoneP8C" data-accept-list="pair_075" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso D: 0.35</div><div class="rank-slot" id="zoneP8D" data-accept-list="pair_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback8ok" class="mensaje-feedback mensaje-ok">Excelente. Rescataste las cuatro equivalencias y el mini-quiz ya est&aacute; desbloqueado.</div>
+          <div id="feedback8warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide con el caso. Revisa si ambas representan exactamente la misma cantidad.</div>
+        </div>
+        <div class="text-center"><a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz</a></div>
+      </div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/8</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script>
+    let paginaActual = 1;
+    const totalPaginas = 8;
+    let fichaArrastrada = null;
+    let dragScrollInterval = null;
+    let dragScrollSpeed = 0;
+    const actividadesResueltas = { 1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false, 8:false };
+    const paginasRegistradas = {};
+    const tracker = window.createReforzamientoTracker ? window.createReforzamientoTracker({ contenidoId: 6, nivel: 'dificil', estilo: 'kinestesico', detalleBase: { bloque: 'equivalencias_numericas', motor: 'kin_dificil_equivalencias' }, apartados: { equiv_kin_dificil_p1: { pagina: 1, apartadoClave: 'equiv_kin_dificil_p1', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p2: { pagina: 2, apartadoClave: 'equiv_kin_dificil_p2', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p3: { pagina: 3, apartadoClave: 'equiv_kin_dificil_p3', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p4: { pagina: 4, apartadoClave: 'equiv_kin_dificil_p4', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p5: { pagina: 5, apartadoClave: 'equiv_kin_dificil_p5', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p6: { pagina: 6, apartadoClave: 'equiv_kin_dificil_p6', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p7: { pagina: 7, apartadoClave: 'equiv_kin_dificil_p7', tipoActividad: 'reforzamiento' }, equiv_kin_dificil_p8: { pagina: 8, apartadoClave: 'equiv_kin_dificil_p8', tipoActividad: 'reforzamiento' } } }) : null;
+    const session = window.createSessionTracker ? window.createSessionTracker({ contenidoId: 6, nivel: 'dificil', estilo: 'kinestesico' }) : null;
+    const sonidos = { pasarPagina: new Audio('/contenidos/matematicas/recursos/sonidos/whoosh.mp3'), correcto: new Audio('/contenidos/matematicas/recursos/sonidos/ding.mp3'), incorrecto: new Audio('/contenidos/matematicas/recursos/sonidos/error.mp3') };
+    Object.values(sonidos).forEach((audio) => { audio.volume = 0.2; });
+    function storyTag(text) { return `<span class="story-tag">${text}</span>`; }
+    function fractionChip(top, bottom) { return `<div class="fraction-chip"><div class="fraction-stack"><span>${top}</span><span class="fraction-bar"></span><span>${bottom}</span></div></div>`; }
+    const strictPageState = { 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 8:{} };
+    const cardMarkup = {
+      frac_5_8: () => fractionChip(5, 8), dec_0625: () => storyTag('0.625'), pct_625: () => storyTag('62.5%'), dec_0652: () => storyTag('0.652'), pct_58: () => storyTag('58%'), frac_5_6: () => fractionChip(5, 6),
+      frac_17_25: () => fractionChip(17, 25), dec_068: () => storyTag('0.68'), pct_68: () => storyTag('68%'), frac_13_25: () => fractionChip(13, 25), dec_086: () => storyTag('0.86'), pct_86: () => storyTag('86%'),
+      good_pct375: () => storyTag('37.5%'), wrong_pct38: () => storyTag('38%'), wrong_pct30: () => storyTag('30%'),
+      frac_7_10: () => fractionChip(7, 10), dec_070: () => storyTag('0.70'), pct_70: () => storyTag('70%'), frac_7_8: () => fractionChip(7, 8), dec_007: () => storyTag('0.07'), pct_17: () => storyTag('17%'),
+      dec_060: () => storyTag('0.60'), dec_058: () => storyTag('0.58'), dec_065: () => storyTag('0.65'), sign_greater: () => storyTag('&gt;'), sign_less: () => storyTag('&lt;'), sign_equal: () => storyTag('='),
+      pct_35: () => storyTag('35%'), frac_3_8: () => fractionChip(3, 8), dec_040: () => storyTag('0.40'), frac_1_2: () => fractionChip(1, 2),
+      pair_3_5: () => fractionChip(3, 5), pair_125: () => storyTag('12.5%'), pair_075: () => storyTag('0.75'), pair_35: () => storyTag('35%')
+    };
+    const p7Offers = [{ value: 'offer_quarter', title: 'Tienda Sol', badge: 'Oferta A', body: fractionChip(1, 4), note: 'Cup&oacute;n morado' }, { value: 'offer_30', title: 'Tienda Nube', badge: 'Oferta B', body: storyTag('30%'), note: 'Cup&oacute;n azul' }, { value: 'offer_third', title: 'Tienda Luna', badge: 'Oferta C', body: fractionChip(1, 3), note: 'Cup&oacute;n rosa' }, { value: 'offer_040', title: 'Tienda Brisa', badge: 'Oferta D', body: storyTag('0.40'), note: 'Cup&oacute;n verde' }];
+    const p7State = { rankP7A: null, rankP7B: null, rankP7C: null, rankP7D: null };
+    function buildPizza(total, fill) { return `<div class="pizza-wrap"><div class="pizza-disc" style="--total:${total}; --fill:${fill}"></div></div>`; }
+    function buildGrid(fill) { let html = '<div class="hundred-grid">'; for (let i = 0; i < 100; i++) html += `<div class="grid-cell ${i < fill ? 'fill' : ''}"></div>`; html += '</div>'; return html; }
+    function buildStrip(total, fill) { let html = `<div class="strip-box" style="--cols:${Math.min(total, 10)}">`; for (let i = 0; i < total; i++) html += `<div class="strip-cell ${i < fill ? 'fill' : ''}"></div>`; html += '</div>'; return html; }
+    function buildLine(totalParts, pointIndex) { let marks = ''; for (let i = 0; i <= totalParts; i++) { const left = 6 + (88 * i / totalParts); const label = i === 0 ? '0' : i === totalParts ? '1' : ''; marks += `<div class="line-mark" style="left:${left}%"><span>${label}</span></div>`; } const pointLeft = 6 + (88 * pointIndex / totalParts); return `<div class="line-wrap"><div class="line-track"></div>${marks}<div class="line-point" style="left:${pointLeft}%"></div></div>`; }
+    function reproducirSonido(nombre) { const audio = sonidos[nombre]; if (!audio) return; audio.currentTime = 0; audio.play().catch(() => {}); }
+    function volverAlMenu() { window.location.href = '/contenidos/matematicas/equivalencias-numericas/menu.html'; }
+    function sectionKey(page) { return `equiv_kin_dificil_p${page}`; }
+    function registrarVisible() { if (tracker) tracker.markPageVisibleByNumber(paginaActual, { motor: 'kin_dificil_equivalencias' }); }
+    function registrarError(page, tipo) { if (!tracker) return; tracker.addError(sectionKey(page), 1, { ejercicio: tipo || 'principal' }); }
+    function registrarAcierto(page, tipo) { if (!tracker || paginasRegistradas[page]) return; paginasRegistradas[page] = true; tracker.addCorrect(sectionKey(page), 1, { ejercicio: tipo || 'principal' }); tracker.complete(sectionKey(page), { detalle: { motor: 'kin_dificil_equivalencias', pagina: page, ejercicio: tipo || 'principal' } }); }
+    function cambiarPagina(direccion) { document.getElementById(`pagina${paginaActual}`).classList.remove('activa'); paginaActual += direccion; document.getElementById(`pagina${paginaActual}`).classList.add('activa'); reproducirSonido('pasarPagina'); actualizarNavegacion(); registrarVisible(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function actualizarNavegacion() { document.getElementById('progresoTexto').innerText = `P\u00e1gina ${paginaActual} de ${totalPaginas}`; document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`; const porcentaje = (paginaActual / totalPaginas) * 100; document.getElementById('barraRelleno').style.width = `${porcentaje}%`; document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`; document.getElementById('btnAnterior').disabled = paginaActual === 1; document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !actividadesResueltas[paginaActual]); }
+    function resolverPagina(page) { if (actividadesResueltas[page]) return; actividadesResueltas[page] = true; reproducirSonido('correcto'); registrarAcierto(page, 'principal'); if (page === 8) document.getElementById('btnMiniQuiz').classList.remove('bloqueado'); actualizarNavegacion(); }
+    function hideFeedback(page) { const ok = document.getElementById(`feedback${page}ok`); const warn = document.getElementById(`feedback${page}warn`); if (ok) ok.style.display = 'none'; if (warn) warn.style.display = 'none'; }
+    function showFeedback(page, correct) { const ok = document.getElementById(`feedback${page}ok`); const warn = document.getElementById(`feedback${page}warn`); if (ok) ok.style.display = correct ? 'block' : 'none'; if (warn) warn.style.display = correct ? 'none' : 'block'; if (!correct) reproducirSonido('incorrecto'); }
+    function markIncorrect(elements) { elements.filter(Boolean).forEach((el) => { el.classList.add('incorrecta'); setTimeout(() => el.classList.remove('incorrecta'), 800); }); }
+    function shuffleArray(list, forbiddenOrders = []) { const original = list.map((item) => item.value || item).join('|'); const forbidden = new Set([original, ...forbiddenOrders]); let result = [...list]; let key = original; let tries = 0; while (forbidden.has(key) && tries < 20) { result = [...list]; for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]]; } key = result.map((item) => item.value || item).join('|'); tries++; } return result; }
+    function setDragScrollSpeed(speed) { if (dragScrollSpeed === speed) return; dragScrollSpeed = speed; if (!dragScrollSpeed) { if (dragScrollInterval) clearInterval(dragScrollInterval); dragScrollInterval = null; return; } if (!dragScrollInterval) { dragScrollInterval = setInterval(() => { if (!dragScrollSpeed) return; window.scrollBy(0, dragScrollSpeed * 7); }, 16); } }
+    function stopAutoScroll() { setDragScrollSpeed(0); }
+    function handleGlobalDragOver(event) { if (!fichaArrastrada) return; const threshold = 120; const topGap = event.clientY; const bottomGap = window.innerHeight - event.clientY; if (topGap < threshold) setDragScrollSpeed(-Math.max(1, Math.ceil((threshold - topGap) / 25))); else if (bottomGap < threshold) setDragScrollSpeed(Math.max(1, Math.ceil((threshold - bottomGap) / 25))); else setDragScrollSpeed(0); }
+    function attachDragCard(card) { card.addEventListener('dragstart', () => { fichaArrastrada = card; card.classList.add('dragging'); }); card.addEventListener('dragend', () => { card.classList.remove('dragging'); fichaArrastrada = null; stopAutoScroll(); }); }
+    function buildCard(value) { return `<div class="ficha" draggable="true" data-value="${value}">${cardMarkup[value]()}</div>`; }
+    function renderStrictTray(id, values, forbidden) { const tray = document.getElementById(id); const shuffled = shuffleArray(values, forbidden ? [forbidden] : []); tray.innerHTML = shuffled.map((value) => buildCard(value)).join(''); }
+    function setupStrictPage(page, sourceSelector, zoneIds, okId, warnId, errorKey) { document.querySelectorAll(sourceSelector).forEach(attachDragCard); zoneIds.forEach((id) => { const zone = document.getElementById(id); if (!zone) return; zone.addEventListener('dragover', (event) => { event.preventDefault(); handleGlobalDragOver(event); }); zone.addEventListener('drop', (event) => { event.preventDefault(); if (actividadesResueltas[page] || !fichaArrastrada || zone.querySelector('.ficha')) return; const accepted = (zone.dataset.acceptList || '').split('|').filter(Boolean); if (accepted.includes(fichaArrastrada.dataset.value)) { const oldParent = fichaArrastrada.parentElement; if (oldParent && oldParent.classList.contains('rank-slot')) { oldParent.classList.remove('has-card'); oldParent.innerHTML = '<span class="placeholder">Suelta aqu&iacute;</span>'; } const placeholder = zone.querySelector('.placeholder'); if (placeholder) placeholder.remove(); zone.classList.add('has-card'); zone.appendChild(fichaArrastrada); strictPageState[page][id] = fichaArrastrada.dataset.value; if (zoneIds.every((zoneId) => document.getElementById(zoneId).querySelector('.ficha'))) { zoneIds.forEach((zoneId) => document.getElementById(zoneId).classList.add('correcta')); showFeedback(page, true); resolverPagina(page); } } else { registrarError(page, errorKey); markIncorrect([zone]); showFeedback(page, false); } stopAutoScroll(); }); }); }
+    function renderPage1() { document.getElementById('demoP1Pizza').innerHTML = buildPizza(4, 3); document.getElementById('caseP1Pizza').innerHTML = buildPizza(8, 5); renderStrictTray('trayP1', ['frac_5_8','dec_0625','pct_625','dec_0652','pct_58','frac_5_6'], 'frac_5_8|dec_0625|pct_625|dec_0652|pct_58|frac_5_6'); }
+    function renderPage2() { document.getElementById('demoP2Grid').innerHTML = buildGrid(45); document.getElementById('caseP2Grid').innerHTML = buildGrid(68); renderStrictTray('trayP2', ['frac_17_25','dec_068','pct_68','frac_13_25','dec_086','pct_86'], 'frac_17_25|dec_068|pct_68|frac_13_25|dec_086|pct_86'); }
+    function renderPage3() { const tray = document.getElementById('trayP3'); tray.innerHTML = [buildCard('good_pct375'), buildCard('wrong_pct38'), buildCard('wrong_pct30')].join(''); attachDragCard(document.getElementById('chipP3Bad')); document.querySelectorAll('#trayP3 .ficha').forEach(attachDragCard); }
+    function renderPage4() { document.getElementById('demoP4Line').innerHTML = buildLine(4, 3); document.getElementById('caseP4Line').innerHTML = buildLine(10, 7); renderStrictTray('trayP4', ['frac_7_10','dec_070','pct_70','frac_7_8','dec_007','pct_17'], 'frac_7_10|dec_070|pct_70|frac_7_8|dec_007|pct_17'); }
+    function renderPage5() { document.getElementById('caseP5Left').innerHTML = buildStrip(5, 3); document.getElementById('caseP5Right').innerHTML = buildGrid(58); renderStrictTray('trayP5', ['dec_060','sign_greater','dec_058','dec_065','sign_less','sign_equal'], 'dec_060|sign_greater|dec_058|dec_065|sign_less|sign_equal'); }
+    function renderPage6() { renderStrictTray('trayP6', ['pct_35','frac_3_8','dec_040','frac_1_2'], 'pct_35|frac_3_8|dec_040|frac_1_2'); }
+    function buildPosterCard(offer) { return `<div class="poster-card"><div><div class="poster-badge">${offer.badge}</div><div class="panel-title" style="margin-bottom:6px">${offer.title}</div></div><div class="panel-note">${offer.body}</div><div class="poster-note">${offer.note}</div></div>`; }
+    function renderPage7() { const tray = document.getElementById('trayP7'); const offers = shuffleArray(p7Offers, ['offer_quarter|offer_30|offer_third|offer_040']); tray.innerHTML = offers.map((offer) => `<div class="ficha" draggable="true" data-value="${offer.value}">${buildPosterCard(offer)}</div>`).join(''); Object.keys(p7State).forEach((key) => p7State[key] = null); ['rankP7A','rankP7B','rankP7C','rankP7D'].forEach((id) => { const zone = document.getElementById(id); zone.innerHTML = '<span class="placeholder">Suelta aqu&iacute;</span>'; zone.classList.remove('has-card', 'correcta', 'incorrecta'); }); document.querySelectorAll('#trayP7 .ficha').forEach(attachDragCard); }
+    function setupFreeSortPage() { ['trayP7','rankP7A','rankP7B','rankP7C','rankP7D'].forEach((id) => { const zone = document.getElementById(id); zone.addEventListener('dragover', (event) => { event.preventDefault(); handleGlobalDragOver(event); }); zone.addEventListener('drop', (event) => { event.preventDefault(); if (actividadesResueltas[7] || !fichaArrastrada) return; const from = fichaArrastrada.parentElement; if (zone.id !== 'trayP7' && zone.querySelector('.ficha')) return; if (from && from.classList.contains('rank-slot')) { from.classList.remove('has-card'); from.innerHTML = '<span class="placeholder">Suelta aqu&iacute;</span>'; p7State[from.id] = null; } if (zone.id !== 'trayP7') { const placeholder = zone.querySelector('.placeholder'); if (placeholder) placeholder.remove(); zone.classList.add('has-card'); p7State[zone.id] = fichaArrastrada.dataset.value; } zone.appendChild(fichaArrastrada); stopAutoScroll(); if (['rankP7A','rankP7B','rankP7C','rankP7D'].every((slot) => p7State[slot])) { const expected = ['offer_quarter','offer_30','offer_third','offer_040']; const ok = expected.every((value, index) => p7State[['rankP7A','rankP7B','rankP7C','rankP7D'][index]] === value); if (ok) { ['rankP7A','rankP7B','rankP7C','rankP7D'].forEach((slot) => document.getElementById(slot).classList.add('correcta')); showFeedback(7, true); resolverPagina(7); } else { registrarError(7, 'ordenar_descuentos'); const wrong = ['rankP7A','rankP7B','rankP7C','rankP7D'].filter((slot, index) => p7State[slot] !== expected[index]).map((slot) => document.getElementById(slot)); markIncorrect(wrong); showFeedback(7, false); } } }); }); }
+    function reiniciarPagina7() { if (actividadesResueltas[7]) return; renderPage7(); }
+    function renderPage8() { renderStrictTray('trayP8', ['pair_3_5','pair_125','pair_075','pair_35'], 'pair_3_5|pair_125|pair_075|pair_35'); }
+    function bindMiniQuiz() { const btn = document.getElementById('btnMiniQuiz'); btn.addEventListener('click', async (event) => { event.preventDefault(); if (!actividadesResueltas[8]) return; if (session) await session.complete({ eventoCierre: 'quiz' }); window.location.href = 'quiz.html'; }); }
+    window.addEventListener('dragover', handleGlobalDragOver); window.addEventListener('drop', stopAutoScroll);
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPage1(); renderPage2(); renderPage3(); renderPage4(); renderPage5(); renderPage6(); renderPage7(); renderPage8();
+      setupStrictPage(1, '#trayP1 .ficha', ['zoneP1Frac','zoneP1Dec','zoneP1Pct'], 'feedback1ok', 'feedback1warn', 'pedido_equivalente');
+      setupStrictPage(2, '#trayP2 .ficha', ['zoneP2Frac','zoneP2Dec','zoneP2Pct'], 'feedback2ok', 'feedback2warn', 'registro_semillero');
+      setupStrictPage(3, '#trayP3 .ficha, #chipP3Bad', ['zoneP3Trash','zoneP3Fix'], 'feedback3ok', 'feedback3warn', 'reparar_etiqueta');
+      setupStrictPage(4, '#trayP4 .ficha', ['zoneP4Frac','zoneP4Dec','zoneP4Pct'], 'feedback4ok', 'feedback4warn', 'punto_recta');
+      setupStrictPage(5, '#trayP5 .ficha', ['zoneP5Dec','zoneP5Sign'], 'feedback5ok', 'feedback5warn', 'comparar_jugos');
+      setupStrictPage(6, '#trayP6 .ficha', ['zoneP6A','zoneP6B','zoneP6C','zoneP6D'], 'feedback6ok', 'feedback6warn', 'ordenar_laboratorio');
+      setupFreeSortPage();
+      setupStrictPage(8, '#trayP8 .ficha', ['zoneP8A','zoneP8B','zoneP8C','zoneP8D'], 'feedback8ok', 'feedback8warn', 'rescate_final');
+      bindMiniQuiz(); if (session) session.start(); registrarVisible(); actualizarNavegacion();
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poblaci&oacute;n Mundial &middot; Kinest&eacute;sico &middot; Nivel F&aacute;cil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cabecera">
+  <h1>POBLACI&Oacute;N MUNDIAL</h1>
+  <div class="sub">Pa&iacute;ses m&aacute;s y menos poblados &middot; Nivel F&aacute;cil &middot; Geograf&iacute;a 5&deg;</div>
+  <div class="badge-estilo">✋ Estilo Kinestésico</div>
+</div>
+
+<div class="progreso">
+  <i class="fas fa-hand-paper fa-2x" style="color:var(--guindo);"></i>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
+    Página <span id="numActual">1</span>/4
+  </span>
+</div>
+
+<div class="contenedor">
+
+<div class="pagina activa" id="pagina1">
+  <div class="card-kine">
+    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
+    <span class="subtitulo-tema">Subtema 1 de 3</span>
+
+    <p class="mb-2">La población mundial no está repartida de forma igual en el planeta. Algunos países tienen <strong>muchísimos habitantes</strong> y otros muy pocos. Los <strong>países más poblados</strong> son China, India, Estados Unidos, Indonesia y Brasil. Los <strong>menos poblados</strong> son Nauru, Tuvalu, Palau, San Marino y Liechtenstein.</p>
+
+    <div class="info-bloque">
+      <div class="info-titulo">Factores que influyen en la distribución</div>
+      <div>
+        <span class="info-pill"><i class="fas fa-cloud-sun"></i> <strong>Clima</strong> — Zonas templadas atraen más población</span>
+        <span class="info-pill"><i class="fas fa-seedling"></i> <strong>Relieve</strong> — Las llanuras son más habitadas que las montañas</span>
+        <span class="info-pill"><i class="fas fa-industry"></i> <strong>Economía</strong> — Zonas industriales concentran más personas</span>
+        <span class="info-pill"><i class="fas fa-tint"></i> <strong>Agua</strong> — Cerca de ríos y costas hay mayor densidad</span>
+      </div>
+    </div>
+
+    <div class="dato-box"><strong>Dato clave:</strong> China e India juntas superan los 2,800 millones de habitantes — más de un tercio de toda la población mundial.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Arrastra cada país al grupo correcto</p>
+        <small>¿Es de los más poblados o de los menos poblados del mundo?</small>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-arrows-alt me-2"></i>Arrastrar y Soltar</h3>
+
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <div class="zona" id="zonaAlta" data-tipo="alta">
+            <strong>Más poblados</strong>
+            <div id="cAlta" class="mt-2"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="zona" id="zonaBaja" data-tipo="baja">
+            <strong>Menos poblados</strong>
+            <div id="cBaja" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" id="elems1">
+        <span class="elemento" draggable="true" data-tipo="alta" data-texto="China">
+          <img src="https://flagcdn.com/cn.svg" alt="China"> China
+        </span>
+        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Nauru">
+          <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+        </span>
+        <span class="elemento" draggable="true" data-tipo="alta" data-texto="India">
+          <img src="https://flagcdn.com/in.svg" alt="India"> India
+        </span>
+        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Tuvalu">
+          <img src="https://flagcdn.com/tv.svg" alt="Tuvalu"> Tuvalu
+        </span>
+        <span class="elemento" draggable="true" data-tipo="alta" data-texto="Brasil">
+          <img src="https://flagcdn.com/br.svg" alt="Brasil"> Brasil
+        </span>
+        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Palau">
+          <img src="https://flagcdn.com/pw.svg" alt="Palau"> Palau
+        </span>
+        <span class="elemento" draggable="true" data-tipo="alta" data-texto="Indonesia">
+          <img src="https://flagcdn.com/id.svg" alt="Indonesia"> Indonesia
+        </span>
+        <span class="elemento" draggable="true" data-tipo="baja" data-texto="San Marino">
+          <img src="https://flagcdn.com/sm.svg" alt="San Marino"> San Marino
+        </span>
+      </div>
+      <div class="btn-row">
+        <button class="btn-verificar" onclick="verificarDrag1()">Verificar</button>
+        <button class="btn-verificar btn-secundario" onclick="resetDrag1()">Limpiar</button>
+      </div>
+
+      <div class="fb-ok" id="fbPag1">¡Excelente! Identificaste correctamente los países más y menos poblados.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina2">
+  <div class="card-kine">
+    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
+    <span class="subtitulo-tema">Subtema 2 de 3</span>
+
+    <p class="mb-2">La <strong>concentración</strong> ocurre cuando muchas personas viven en una zona pequeña, como grandes ciudades. La <strong>dispersión</strong> es cuando la población está repartida en grandes territorios con poca gente por área. Se mide con la <strong>densidad de población</strong>: número de habitantes por kilómetro cuadrado (hab/km²).</p>
+
+    <div class="dato-box"><strong>Más concentrada:</strong> Bangladesh tiene ~1,100 hab/km². <strong>Más dispersa:</strong> Mongolia tiene solo ~2 hab/km².</div>
+    <div class="dato-box"><strong>Megalópolis:</strong> Ciudades como Tokio, Shanghái y Ciudad de México concentran millones de personas en pocos kilómetros.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Da clic en los países que creas que son los MÁS poblados del mundo</p>
+        <small>Selecciona exactamente 5 países con mayor población</small>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-mouse-pointer me-2"></i>¿Cuáles son los más poblados?</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Selecciona los <strong>5 países más poblados</strong> — haz clic en cada bandera</p>
+
+      <div class="row g-2" id="mapGame">
+      </div>
+
+      <div class="text-center mt-3">
+        <button class="btn-verificar" onclick="verificarMapa()">Verificar selección</button>
+      </div>
+      <div class="fb-ok" id="fbPag2">¡Perfecto! China, India, EE.UU., Indonesia y Brasil son los 5 más poblados.</div>
+      <div class="fb-err" id="errPag2">Revisa tu selección. Recuerda los 5 países con más habitantes.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina3">
+  <div class="card-kine">
+    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
+    <span class="subtitulo-tema">Subtema 3 de 3</span>
+
+    <p class="mb-2">Cuando demasiada gente se concentra en un lugar surgen <strong>problemas graves</strong>: escasez de vivienda, contaminación, desempleo, falta de servicios (agua, luz, salud) y tráfico. Países muy poblados como China e India enfrentan estos retos constantemente.</p>
+
+    <div class="info-bloque">
+      <div class="info-titulo">Principales problemas</div>
+      <div>
+        <span class="info-pill"><i class="fas fa-home"></i> Escasez de vivienda</span>
+        <span class="info-pill"><i class="fas fa-smog"></i> Contaminación del aire</span>
+        <span class="info-pill"><i class="fas fa-briefcase"></i> Desempleo</span>
+        <span class="info-pill"><i class="fas fa-hospital"></i> Falta de servicios</span>
+        <span class="info-pill"><i class="fas fa-car"></i> Congestión vial</span>
+        <span class="info-pill"><i class="fas fa-trash"></i> Residuos y basura</span>
+      </div>
+    </div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Ordena los países de mayor a menor población</p>
+        <small>Arrastra los bloques — el 1° debe ser el más poblado</small>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-sort-amount-down me-2"></i>Ordenar Países</h3>
+
+      <div class="seq-list" id="seqPaises">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-verificar" onclick="verificarOrden()">Verificar orden</button>
+        <button class="btn-verificar btn-secundario" onclick="resetOrden()">Reiniciar orden</button>
+      </div>
+      <div class="fb-ok" id="fbPag3">¡Correcto! El orden es: China → India → EE.UU. → Indonesia → Brasil.</div>
+      <div class="fb-err" id="errPag3">El orden no está bien. ¡Inténtalo de nuevo! Recuerda: China es el 1°.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina4">
+  <div class="card-kine">
+    <h2 class="titulo-pag"><i class="fas fa-puzzle-piece me-2"></i>Repaso General</h2>
+    <span class="subtitulo-tema">Retroalimentación · Los 3 subtemas</span>
+
+    <p class="mb-2">¡Revisa lo que aprendiste en las 3 secciones! Cada tarjeta resume un subtema clave del tema <strong>Países más y menos poblados</strong>.</p>
+
+    <div class="row g-3 mt-2" id="puzzleRepaso">
+      <div class="col-md-4">
+        <div class="puzzle-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Distribución mundial">
+          <h6>Distribución de la Población</h6>
+          <p>La población no está repartida igual. China e India son los más poblados. Clima, agua y economía influyen en dónde vive la gente.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="puzzle-card">
+          <img src="https://th.bing.com/th/id/R.5612adfcd7c11880698e0780c9fe99cc?rik=R%2b2Six9HSgSiuA&riu=http%3a%2f%2fstatic.wixstatic.com%2fmedia%2fb55503_23b632a35d364273b2cd025f228d366d.jpg&ehk=St5eXWBtus%2b9VNv4w3GHjZguFxXIeBccU3ylfHHveUc%3d&risl=&pid=ImgRaw&r=0" alt="Concentración urbana">
+          <h6>Concentración y Dispersión</h6>
+          <p>La densidad mide hab/km². Bangladesh es muy concentrado. Mongolia es dispersa. Las megalópolis concentran millones de personas.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="puzzle-card">
+          <img src="https://tse1.mm.bing.net/th/id/OIP.0R3kkzMnNFkYy0BbFcdcowEsDI?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Problemas de concentración">
+          <h6>Problemas de Concentración</h6>
+          <p>Demasiada gente en un lugar genera: falta de vivienda, contaminación, desempleo y escasez de servicios básicos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actividad mt-3">
+      <h3 class="act-titulo"><i class="fas fa-puzzle-piece me-2"></i>Rompecabezas de Conceptos</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Arrastra cada concepto a su definición correcta</p>
+
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <div class="zona" id="zonaConc" data-tipo="conc">
+            <strong>Concentración</strong>
+            <div id="cConc" class="mt-2"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="zona" id="zonaDisp" data-tipo="disp">
+            <strong>Dispersión</strong>
+            <div id="cDisp" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <div class="zona" id="zonaDens" data-tipo="dens">
+            <strong>Densidad de población</strong>
+            <div id="cDens" class="mt-2"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="zona" id="zonaMega" data-tipo="mega">
+            <strong>Megalópolis</strong>
+            <div id="cMega" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" id="elemsRepaso">
+        <span class="elemento" draggable="true" data-tipo="conc" data-texto="Muchas personas en poco espacio">Muchas personas en poco espacio</span>
+        <span class="elemento" draggable="true" data-tipo="disp" data-texto="Pocos hab. en gran territorio">Pocos hab. en gran territorio</span>
+        <span class="elemento" draggable="true" data-tipo="dens" data-texto="Hab. por km²">Hab. por km²</span>
+        <span class="elemento" draggable="true" data-tipo="mega" data-texto="Ciudad con millones de hab.">Ciudad con millones de hab.</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn-verificar" onclick="verificarRepaso()">Verificar</button>
+        <button class="btn-verificar btn-secundario" onclick="resetDragRepaso()">Limpiar</button>
+      </div>
+
+      <div class="fb-ok" id="fbPag4">¡Excelente repaso! Estás listo para el quiz.</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/4</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="boton-quiz text-center">
+  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
+</a>
+
+</div>
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,1136 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra &middot; Nivel Normal &middot; Visual/No Verbal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #0d47a1, #01579b);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .cabecera-visual {
+      background: linear-gradient(135deg, #1565c0, #0d47a1);
+      padding: 25px 20px;
+      border-bottom: 6px solid #ffd600;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .cabecera-visual h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 3rem;
+      color: #ffd600;
+      text-shadow: 4px 4px 0 #002171;
+    }
+
+    .badge-estilo {
+      background: #ffd600;
+      color: #0d47a1;
+      padding: 12px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: inline-block;
+      border: 4px solid white;
+      margin-top: 10px;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .badge-nivel {
+      background: #002171;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      margin-left: 15px;
+      border: 2px solid #ffd600;
+    }
+
+    .progreso-contenedor {
+      background: #1a237e;
+      border-radius: 60px;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 12px 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 3px solid #ffd600;
+      box-shadow: 0 5px 0 #002171;
+    }
+
+    .puntos { display: flex; gap: 10px; flex: 1; justify-content: center; }
+
+    .punto {
+      width: 35px; height: 35px; border-radius: 50%;
+      background: #283593; border: 3px solid #ffd600;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: white; transition: all 0.3s;
+    }
+
+    .punto.activo   { background: #ffd600; color: #0d47a1; transform: scale(1.15); }
+    .punto.completado { background: #4caf50; color: white; border-color: white; }
+
+    .contenedor { max-width: 1100px; margin: 0 auto 40px; padding: 0 20px; }
+
+    .pagina { display: none; animation: fadeIn 0.4s ease; }
+    .pagina.activa { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta-visual {
+      background: #1e3a8a;
+      border-radius: 30px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 3px solid #ffd600;
+      box-shadow: 0 8px 0 #002171;
+    }
+
+    .titulo-pagina {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: #ffd600;
+      margin-bottom: 25px;
+      text-align: center;
+      text-shadow: 2px 2px 0 #002171;
+    }
+
+    /* IMÁGENES */
+    .imagen-grande {
+      background: #283593;
+      border: 4px solid #ffd600;
+      border-radius: 25px;
+      padding: 15px;
+      transition: all 0.3s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .imagen-grande:hover {
+      transform: scale(1.02) rotate(1deg);
+      box-shadow: 0 10px 20px rgba(255,214,0,0.3);
+    }
+
+    .imagen-geo {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw; max-height: 90vh;
+      width: auto; height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .pie-imagen {
+      text-align: center;
+      margin-top: 10px;
+      color: #ffd600;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* GRIDS */
+    .grid-2cols { display: grid; grid-template-columns: repeat(2,1fr); gap: 25px; margin: 25px 0; }
+    .grid-4cols { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin: 25px 0; }
+    .grid-3cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin: 25px 0; }
+
+    /* CAJAS INFO */
+    .caja-info {
+      background: #283593;
+      border: 3px solid #ffd600;
+      border-radius: 20px;
+      padding: 20px 10px;
+      text-align: center;
+      height: 100%;
+      box-shadow: 0 4px 0 #002171;
+    }
+
+    .caja-info i  { font-size: 2.5rem; color: #ffd600; margin-bottom: 10px; }
+    .caja-info h4 { color: #ffd600; font-weight: 800; font-size: 1.5rem; margin-bottom: 5px; }
+    .caja-info p  { margin-bottom: 0; color: white; font-size: 1rem; }
+
+    .contenedor-horas {
+      background: #283593;
+      border: 3px solid #ffd600;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .contenedor-horas i  { font-size: 2.5rem; color: #ffd600; margin-bottom: 10px; }
+    .contenedor-horas h4 { color: #ffd600; font-weight: 800; font-size: 2rem; margin-bottom: 5px; }
+    .contenedor-horas p  { margin-bottom: 0; color: white; font-size: 1.1rem; }
+
+    .fila-doble {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .estacion-card {
+      background: #283593;
+      border: 3px solid #ffd600;
+      border-radius: 15px;
+      padding: 15px 5px;
+      text-align: center;
+    }
+
+    .estacion-card i  { color: #ffd600; font-size: 2rem; margin-bottom: 8px; }
+    .estacion-card h5 { color: #ffd600; font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
+    .estacion-card p  { margin-bottom: 0; font-size: 0.9rem; color: white; }
+
+    .etiqueta {
+      background: #ffd600;
+      color: #0d47a1;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: inline-block;
+      border: 3px solid white;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    /* =====================================================
+       REFORZAMIENTO VISUAL
+    ===================================================== */
+    .reforzamiento {
+      background: #0d2b6e;
+      border: 4px solid #ffd600;
+      border-radius: 30px;
+      padding: 28px;
+      margin-top: 30px;
+    }
+
+    .reforzamiento-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: #ffd600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reforzamiento-instruccion {
+      color: #b3c5f7;
+      font-size: 1rem;
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+
+    /* Opciones SVG todas neutras */
+    .opciones-svg {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .opcion-svg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .opcion-svg svg {
+      border-radius: 16px;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .opcion-svg:hover svg {
+      filter: brightness(1.25) drop-shadow(0 0 10px rgba(255,214,0,0.55));
+      transform: scale(1.06);
+    }
+
+    .opcion-svg span {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #b3c5f7;
+      transition: color 0.2s;
+    }
+
+    .opcion-svg:hover span { color: #ffd600; }
+
+    .opcion-svg.correcto svg  { filter: drop-shadow(0 0 14px #4caf50); pointer-events: none; }
+    .opcion-svg.correcto span { color: #4caf50; }
+    .opcion-svg.incorrecto    { pointer-events: none; }
+    .opcion-svg.incorrecto svg  { filter: brightness(0.3); }
+    .opcion-svg.incorrecto span { color: #546e7a; }
+
+    /* Hemisferios P3 */
+    .hemi-opcion {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hemi-opcion svg {
+      border-radius: 50%;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .hemi-opcion:hover svg {
+      filter: brightness(1.25) drop-shadow(0 0 10px rgba(255,214,0,0.55));
+      transform: scale(1.06);
+    }
+
+    .hemi-opcion span {
+      font-weight: 700; font-size: 1rem; color: #b3c5f7; transition: color 0.2s;
+    }
+
+    .hemi-opcion:hover span { color: #ffd600; }
+    .hemi-opcion.correcto svg  { filter: drop-shadow(0 0 14px #4caf50); pointer-events: none; }
+    .hemi-opcion.correcto span { color: #4caf50; }
+    .hemi-opcion.incorrecto    { pointer-events: none; }
+    .hemi-opcion.incorrecto svg  { filter: brightness(0.28); }
+    .hemi-opcion.incorrecto span { color: #546e7a; }
+
+    /* Elementos mapa P4 */
+    .elem-opcion {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .elem-opcion svg {
+      border-radius: 16px;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .elem-opcion:hover svg {
+      filter: brightness(1.25) drop-shadow(0 0 10px rgba(255,214,0,0.55));
+      transform: scale(1.06);
+    }
+
+    .elem-opcion span {
+      font-weight: 700; font-size: .95rem; color: #b3c5f7; transition: color 0.2s;
+    }
+
+    .elem-opcion:hover span { color: #ffd600; }
+    .elem-opcion.correcto svg  { filter: drop-shadow(0 0 14px #4caf50); pointer-events: none; }
+    .elem-opcion.correcto span { color: #4caf50; }
+    .elem-opcion.incorrecto    { pointer-events: none; }
+    .elem-opcion.incorrecto svg  { filter: brightness(0.28); }
+    .elem-opcion.incorrecto span { color: #546e7a; }
+
+    /* Feedback */
+    .feedback-ref {
+      margin-top: 18px;
+      padding: 14px 20px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: none;
+      text-align: center;
+    }
+
+    .feedback-ref.ok  { background: #1b5e20; border: 2px solid #4caf50; color: #a5d6a7; }
+    .feedback-ref.err { background: #7f0000; border: 2px solid #ef5350; color: #ffcdd2; }
+
+    /* NAVEGADOR */
+    .navegador {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a237e;
+      padding: 15px 25px;
+      border-radius: 60px;
+      border: 3px solid #ffd600;
+      box-shadow: 0 6px 0 #002171;
+      margin: 30px 0;
+    }
+
+    .btn-nav {
+      background: #ffd600;
+      color: #0d47a1;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      border: 3px solid white;
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .btn-nav:hover:not(:disabled) { background: white; transform: translateY(-2px); }
+    .btn-nav:disabled { background: #546e7a; opacity: 0.5; box-shadow: none; }
+
+    .indicador {
+      background: #283593;
+      color: #ffd600;
+      padding: 8px 30px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      border: 3px solid #ffd600;
+    }
+
+    .btn-quiz {
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+      background: #ffd600;
+      color: #0d47a1;
+      border: none;
+      padding: 15px 45px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      border: 4px solid white;
+      box-shadow: 0 6px 0 #b26a00;
+      transition: all 0.2s;
+    }
+
+    .btn-quiz:hover { transform: translateY(-4px); box-shadow: 0 10px 0 #b26a00; background: white; }
+
+    .btn-subir {
+      position: fixed;
+      bottom: 80px; right: 20px;
+      background: #ffd600; color: #0d47a1;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      border: 3px solid white;
+      box-shadow: 0 4px 0 #b26a00;
+      cursor: pointer; transition: all 0.2s; z-index: 1000;
+    }
+
+    .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #b26a00; }
+
+    @media(max-width:600px){
+      .grid-2cols,.grid-3cols,.grid-4cols{ grid-template-columns:1fr 1fr; }
+      .opciones-svg{ gap:14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera-visual">
+  <h1>&#127757; LA TIERRA</h1>
+  <p class="lead text-white">Bloque I &middot; Nivel Normal</p>
+  <div>
+    <span class="badge-estilo">&#128065; Visual / No Verbal</span>
+    <span class="badge-nivel">&#9889; Intermedio</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-eye fa-2x" style="color: #ffd600;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #ffd600; color: #0d47a1; padding: 8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor">
+
+  <!-- =====================================================
+       PÁGINA 1: ROTACIÓN
+  ===================================================== -->
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i> ROTACI&Oacute;N</h2>
+
+      <div class="grid-2cols">
+        <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+               alt="Rotaci&oacute;n" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+          <div class="pie-imagen">&#127757; Gira sobre su propio eje</div>
+        </div>
+
+        <div>
+          <div class="contenedor-horas">
+            <i class="fas fa-clock"></i>
+            <h4>24 HORAS</h4>
+            <p>Duraci&oacute;n de la rotaci&oacute;n</p>
+          </div>
+          <div class="fila-doble">
+            <div class="caja-info">
+              <i class="fas fa-sun"></i>
+              <h4>D&Iacute;A</h4>
+              <p>Frente al Sol</p>
+            </div>
+            <div class="caja-info">
+              <i class="fas fa-moon"></i>
+              <h4>NOCHE</h4>
+              <p>Espaldas al Sol</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <span class="etiqueta">&#11014; Gira de Oeste a Este &middot; El Sol sale por el Este</span>
+      </div>
+
+      <!-- REFORZAMIENTO P1: tres relojes SVG con distintas duraciones, todos iguales en estilo -->
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Los tres relojes muestran distintas duraciones. Haz clic en el que indica cu&aacute;nto tarda la Tierra en completar una rotaci&oacute;n completa.
+        </p>
+        <div class="opciones-svg">
+
+          <!-- Reloj A: 12 horas — INCORRECTO -->
+          <div class="opcion-svg" id="r1A" onclick="responder1('A')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <!-- Caratula reloj -->
+              <circle cx="70" cy="78" r="52" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="3"/>
+              <!-- Marcas hora -->
+              <line x1="70" y1="30" x2="70" y2="38" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="70" y1="118" x2="70" y2="126" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="22" y1="78" x2="30" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="110" y1="78" x2="118" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <!-- Minutero (a las 12) -->
+              <line x1="70" y1="78" x2="70" y2="36" stroke="#b3c5f7" stroke-width="3" stroke-linecap="round"/>
+              <!-- Horario (apuntando al 6 = 12 horas = media vuelta) -->
+              <line x1="70" y1="78" x2="70" y2="110" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="70" cy="78" r="4" fill="#b3c5f7"/>
+            </svg>
+            <span>12 horas</span>
+          </div>
+
+          <!-- Reloj B: 24 horas — CORRECTO -->
+          <div class="opcion-svg" id="r1B" onclick="responder1('B')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <circle cx="70" cy="78" r="52" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="3"/>
+              <line x1="70" y1="30" x2="70" y2="38" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="70" y1="118" x2="70" y2="126" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="22" y1="78" x2="30" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="110" y1="78" x2="118" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <!-- Minutero -->
+              <line x1="70" y1="78" x2="70" y2="36" stroke="#b3c5f7" stroke-width="3" stroke-linecap="round"/>
+              <!-- Horario: vuelta completa, apunta las 12 -->
+              <line x1="70" y1="78" x2="70" y2="36" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+              <!-- Flecha circular indicando vuelta completa -->
+              <path d="M 70 33 A 45 45 0 1 1 69 33" fill="none" stroke="#ffd600" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.6"/>
+              <polygon points="69,26 65,34 73,34" fill="#ffd600" opacity="0.7"/>
+              <circle cx="70" cy="78" r="4" fill="#b3c5f7"/>
+            </svg>
+            <span>24 horas</span>
+          </div>
+
+          <!-- Reloj C: 365 dias — INCORRECTO -->
+          <div class="opcion-svg" id="r1C" onclick="responder1('C')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <circle cx="70" cy="78" r="52" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="3"/>
+              <line x1="70" y1="30" x2="70" y2="38" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="70" y1="118" x2="70" y2="126" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="22" y1="78" x2="30" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="110" y1="78" x2="118" y2="78" stroke="#7a9cc5" stroke-width="2.5"/>
+              <line x1="70" y1="78" x2="70" y2="36" stroke="#b3c5f7" stroke-width="3" stroke-linecap="round"/>
+              <!-- Horario apuntando ~30deg = 1 hora, para indicar "mucho tiempo" -->
+              <line x1="70" y1="78" x2="96" y2="52" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="70" cy="78" r="4" fill="#b3c5f7"/>
+              <!-- Texto 365 -->
+              <text x="70" y="82" text-anchor="middle" font-family="Fredoka One" font-size="13" fill="#ffd600">365d</text>
+            </svg>
+            <span>365 d&iacute;as</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb1"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PÁGINA 2: TRASLACIÓN
+  ===================================================== -->
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i> TRASLACI&Oacute;N</h2>
+
+      <div class="grid-2cols">
+        <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
+               alt="Traslaci&oacute;n" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
+          <div class="pie-imagen">&#9728; Orbita alrededor del Sol</div>
+        </div>
+
+        <div>
+          <div class="contenedor-horas mb-3">
+            <i class="fas fa-calendar-alt"></i>
+            <h4>365 D&Iacute;AS</h4>
+            <p>+ 6 horas cada a&ntilde;o</p>
+          </div>
+          <div class="contenedor-horas">
+            <i class="fas fa-star"></i>
+            <h4>A&Ntilde;O BISIESTO</h4>
+            <p>Cada 4 a&ntilde;os &middot; Febrero 29</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <span class="etiqueta">&#128640; Velocidad: 107,000 km/h</span>
+      </div>
+
+      <!-- REFORZAMIENTO P2: tres calendarios SVG con distintos intervalos, todos en mismo estilo -->
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Cada calendario muestra cada cu&aacute;ntos a&ntilde;os ocurre el a&ntilde;o bisiesto. Haz clic en el correcto.
+        </p>
+        <div class="opciones-svg">
+
+          <!-- Calendario A: cada 2 años — INCORRECTO -->
+          <div class="opcion-svg" id="r2A" onclick="responder2('A')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <!-- Cabecera calendario -->
+              <rect x="10" y="10" width="120" height="30" rx="8" fill="#4a6fa5"/>
+              <text x="70" y="30" text-anchor="middle" font-family="Fredoka One" font-size="15" fill="#ffd600">Bisiesto</text>
+              <!-- Cuerpo -->
+              <rect x="10" y="45" width="120" height="104" rx="8" fill="#1a3a6e"/>
+              <!-- Numero grande: 2 -->
+              <text x="70" y="115" text-anchor="middle" font-family="Fredoka One" font-size="62" fill="#4a6fa5">2</text>
+              <text x="70" y="140" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="700" fill="#7a9cc5">a&ntilde;os</text>
+              <!-- Argollas -->
+              <rect x="42" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+              <rect x="88" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+            </svg>
+            <span>Cada 2 a&ntilde;os</span>
+          </div>
+
+          <!-- Calendario B: cada 4 años — CORRECTO -->
+          <div class="opcion-svg" id="r2B" onclick="responder2('B')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <rect x="10" y="10" width="120" height="30" rx="8" fill="#4a6fa5"/>
+              <text x="70" y="30" text-anchor="middle" font-family="Fredoka One" font-size="15" fill="#ffd600">Bisiesto</text>
+              <rect x="10" y="45" width="120" height="104" rx="8" fill="#1a3a6e"/>
+              <text x="70" y="115" text-anchor="middle" font-family="Fredoka One" font-size="62" fill="#4a6fa5">4</text>
+              <text x="70" y="140" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="700" fill="#7a9cc5">a&ntilde;os</text>
+              <rect x="42" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+              <rect x="88" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+            </svg>
+            <span>Cada 4 a&ntilde;os</span>
+          </div>
+
+          <!-- Calendario C: cada 10 años — INCORRECTO -->
+          <div class="opcion-svg" id="r2C" onclick="responder2('C')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="18"/>
+              <rect x="10" y="10" width="120" height="30" rx="8" fill="#4a6fa5"/>
+              <text x="70" y="30" text-anchor="middle" font-family="Fredoka One" font-size="15" fill="#ffd600">Bisiesto</text>
+              <rect x="10" y="45" width="120" height="104" rx="8" fill="#1a3a6e"/>
+              <text x="70" y="115" text-anchor="middle" font-family="Fredoka One" font-size="52" fill="#4a6fa5">10</text>
+              <text x="70" y="140" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="700" fill="#7a9cc5">a&ntilde;os</text>
+              <rect x="42" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+              <rect x="88" y="6" width="10" height="16" rx="5" fill="#4a6fa5"/>
+            </svg>
+            <span>Cada 10 a&ntilde;os</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb2"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PÁGINA 3: ESTACIONES
+  ===================================================== -->
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i> ESTACIONES</h2>
+
+      <div class="imagen-grande mb-4" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
+             alt="Estaciones" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
+        <div class="pie-imagen">&#127777; Las 4 estaciones</div>
+      </div>
+
+      <div class="grid-4cols">
+        <div class="estacion-card">
+          <i class="fas fa-seedling"></i>
+          <h5>PRIMAVERA</h5>
+          <p>21 Mar - 20 Jun</p>
+        </div>
+        <div class="estacion-card">
+          <i class="fas fa-sun"></i>
+          <h5>VERANO</h5>
+          <p>21 Jun - 22 Sep</p>
+        </div>
+        <div class="estacion-card">
+          <i class="fas fa-leaf"></i>
+          <h5>OTO&Ntilde;O</h5>
+          <p>23 Sep - 20 Dic</p>
+        </div>
+        <div class="estacion-card">
+          <i class="fas fa-snowflake"></i>
+          <h5>INVIERNO</h5>
+          <p>21 Dic - 20 Mar</p>
+        </div>
+      </div>
+
+      <div class="caja-info mt-4">
+        <i class="fas fa-globe-americas"></i>
+        <h4>HEMISFERIOS OPUESTOS</h4>
+        <p class="fs-5">&#127474;&#127485; Norte &rarr; Verano &middot; &#127462;&#127479; Sur &rarr; Invierno</p>
+      </div>
+
+      <!-- REFORZAMIENTO P3: dos globos que muestran hemisferios — el alumno elige en cual hay invierno -->
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Cuando en M&eacute;xico (Hemisferio Norte) es verano, haz clic en el hemisferio del globo donde es invierno al mismo tiempo.
+        </p>
+        <div class="opciones-svg" style="gap:40px;align-items:center;">
+
+          <!-- Hemisferio Norte con sol — el que tiene verano (INCORRECTO pues pregunta donde hay invierno) -->
+          <div class="hemi-opcion" id="h3N" onclick="responder3('N')">
+            <svg width="150" height="170" viewBox="0 0 150 170">
+              <defs>
+                <radialGradient id="gHN" cx="40%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#5c9bd6"/>
+                  <stop offset="100%" stop-color="#1a3a6e"/>
+                </radialGradient>
+                <clipPath id="cHN"><ellipse cx="75" cy="80" rx="65" ry="65"/></clipPath>
+              </defs>
+              <!-- Globo entero en gris para contexto -->
+              <ellipse cx="75" cy="80" rx="65" ry="65" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <!-- Hemisferio Norte destacado (mitad superior) -->
+              <rect x="10" y="15" width="130" height="65" fill="url(#gHN)" clip-path="url(#cHN)"/>
+              <!-- Tierra verde -->
+              <ellipse cx="58" cy="44" rx="16" ry="20" fill="#3d7a3d" opacity="0.75" clip-path="url(#cHN)"/>
+              <ellipse cx="92" cy="60" rx="18" ry="14" fill="#3d7a3d" opacity="0.7" clip-path="url(#cHN)"/>
+              <!-- Linea ecuador -->
+              <line x1="10" y1="80" x2="140" y2="80" stroke="#ffd600" stroke-width="2" opacity="0.5"/>
+              <!-- Sol indicando verano -->
+              <circle cx="75" cy="10" r="14" fill="#ffd600" opacity="0.9"/>
+              <line x1="75" y1="0"  x2="75" y2="-4"  stroke="#ffd600" stroke-width="2" opacity="0.7"/>
+              <line x1="85" y1="2"  x2="88" y2="-2"  stroke="#ffd600" stroke-width="2" opacity="0.7"/>
+              <line x1="89" y1="10" x2="93" y2="10"  stroke="#ffd600" stroke-width="2" opacity="0.7"/>
+              <!-- Etiqueta -->
+              <text x="75" y="162" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">Hemisferio Norte</text>
+            </svg>
+            <span>Hemisferio Norte</span>
+          </div>
+
+          <!-- Hemisferio Sur sin sol — el que tiene invierno (CORRECTO) -->
+          <div class="hemi-opcion" id="h3S" onclick="responder3('S')">
+            <svg width="150" height="170" viewBox="0 0 150 170">
+              <defs>
+                <radialGradient id="gHS" cx="40%" cy="65%" r="60%">
+                  <stop offset="0%" stop-color="#5c9bd6"/>
+                  <stop offset="100%" stop-color="#1a3a6e"/>
+                </radialGradient>
+                <clipPath id="cHS"><ellipse cx="75" cy="80" rx="65" ry="65"/></clipPath>
+              </defs>
+              <ellipse cx="75" cy="80" rx="65" ry="65" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <!-- Hemisferio Sur destacado (mitad inferior) -->
+              <rect x="10" y="80" width="130" height="65" fill="url(#gHS)" clip-path="url(#cHS)"/>
+              <ellipse cx="60" cy="96" rx="16" ry="14" fill="#3d7a3d" opacity="0.7" clip-path="url(#cHS)"/>
+              <ellipse cx="94" cy="112" rx="18" ry="12" fill="#3d7a3d" opacity="0.65" clip-path="url(#cHS)"/>
+              <line x1="10" y1="80" x2="140" y2="80" stroke="#ffd600" stroke-width="2" opacity="0.5"/>
+              <text x="75" y="162" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">Hemisferio Sur</text>
+            </svg>
+            <span>Hemisferio Sur</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PÁGINA 4: ELEMENTOS DEL MAPA
+  ===================================================== -->
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i> ELEMENTOS DEL MAPA</h2>
+
+      <div class="imagen-grande mb-4" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
+             alt="Mapa" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
+        <div class="pie-imagen">&#128506; Partes de un mapa</div>
+      </div>
+
+      <div class="grid-4cols">
+        <div class="caja-info">
+          <i class="fas fa-compass"></i>
+          <h4>ORIENTACI&Oacute;N</h4>
+          <p>N &middot; S &middot; E &middot; O</p>
+        </div>
+        <div class="caja-info">
+          <i class="fas fa-ruler"></i>
+          <h4>ESCALA</h4>
+          <p>Distancia real</p>
+        </div>
+        <div class="caja-info">
+          <i class="fas fa-symbols"></i>
+          <h4>SIMBOLOG&Iacute;A</h4>
+          <p>&#127968; &middot; &#128739; &middot; &#127754;</p>
+        </div>
+        <div class="caja-info">
+          <i class="fas fa-map-pin"></i>
+          <h4>COORDENADAS</h4>
+          <p>Latitud/Longitud</p>
+        </div>
+      </div>
+
+      <div class="caja-info mt-4">
+        <h4>TIPOS DE MAPAS</h4>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-2">
+          <span class="badge bg-warning text-dark p-3 fs-6">F&Iacute;SICOS</span>
+          <span class="badge bg-warning text-dark p-3 fs-6">POL&Iacute;TICOS</span>
+          <span class="badge bg-warning text-dark p-3 fs-6">TUR&Iacute;STICOS</span>
+        </div>
+      </div>
+
+      <!-- REFORZAMIENTO P4: cuatro iconos SVG de elementos del mapa, todos iguales en estilo -->
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Cada figura representa un elemento del mapa. Pasa el cursor sobre cada una y haz clic en la que indica los puntos cardinales.
+        </p>
+        <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;">
+
+          <!-- Orientacion / rosa de vientos — CORRECTA -->
+          <div class="elem-opcion" id="e4A" onclick="responder4('A')">
+            <svg width="120" height="130" viewBox="0 0 120 130">
+              <rect width="120" height="130" fill="#283593" rx="14"/>
+              <!-- Rosa de vientos simple -->
+              <circle cx="60" cy="62" r="40" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <polygon points="60,28 54,54 60,48 66,54" fill="#4a6fa5"/>
+              <polygon points="60,96 54,70 60,76 66,70" fill="#4a6fa5"/>
+              <polygon points="96,62 70,56 76,62 70,68" fill="#4a6fa5"/>
+              <polygon points="24,62 50,56 44,62 50,68" fill="#4a6fa5"/>
+              <circle cx="60" cy="62" r="6" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="1.5"/>
+              <text x="60" y="22" text-anchor="middle" font-family="Fredoka One" font-size="10" fill="#7a9cc5">N</text>
+              <text x="60" y="110" text-anchor="middle" font-family="Fredoka One" font-size="10" fill="#7a9cc5">S</text>
+              <text x="104" y="66" text-anchor="middle" font-family="Fredoka One" font-size="10" fill="#7a9cc5">E</text>
+              <text x="16" y="66" text-anchor="middle" font-family="Fredoka One" font-size="10" fill="#7a9cc5">O</text>
+              <text x="60" y="122" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="700" fill="#7a9cc5">Elemento A</text>
+            </svg>
+            <span>Elemento A</span>
+          </div>
+
+          <!-- Escala / regla — INCORRECTO -->
+          <div class="elem-opcion" id="e4B" onclick="responder4('B')">
+            <svg width="120" height="130" viewBox="0 0 120 130">
+              <rect width="120" height="130" fill="#283593" rx="14"/>
+              <!-- Regla horizontal -->
+              <rect x="14" y="46" width="92" height="32" rx="6" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="14" y1="62" x2="106" y2="62" stroke="#4a6fa5" stroke-width="1" opacity="0.4"/>
+              <!-- Marcas de la regla -->
+              <line x1="14"  y1="50" x2="14"  y2="78" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="37"  y1="54" x2="37"  y2="74" stroke="#4a6fa5" stroke-width="1.5"/>
+              <line x1="60"  y1="50" x2="60"  y2="78" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="83"  y1="54" x2="83"  y2="74" stroke="#4a6fa5" stroke-width="1.5"/>
+              <line x1="106" y1="50" x2="106" y2="78" stroke="#4a6fa5" stroke-width="2"/>
+              <!-- Etiquetas -->
+              <text x="14"  y="90" text-anchor="middle" font-family="Nunito" font-size="9" fill="#7a9cc5">0</text>
+              <text x="60"  y="90" text-anchor="middle" font-family="Nunito" font-size="9" fill="#7a9cc5">50</text>
+              <text x="106" y="90" text-anchor="middle" font-family="Nunito" font-size="9" fill="#7a9cc5">100</text>
+              <text x="60"  y="102" text-anchor="middle" font-family="Nunito" font-size="8" fill="#7a9cc5">km</text>
+              <text x="60" y="122" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="700" fill="#7a9cc5">Elemento B</text>
+            </svg>
+            <span>Elemento B</span>
+          </div>
+
+          <!-- Simbología — INCORRECTO -->
+          <div class="elem-opcion" id="e4C" onclick="responder4('C')">
+            <svg width="120" height="130" viewBox="0 0 120 130">
+              <rect width="120" height="130" fill="#283593" rx="14"/>
+              <!-- Lista de simbolos -->
+              <rect x="14" y="22" width="92" height="80" rx="8" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <!-- Simbolo 1: casa -->
+              <rect x="22" y="30" width="14" height="12" rx="2" fill="#4a6fa5"/>
+              <polygon points="22,30 29,23 36,30" fill="#4a6fa5"/>
+              <line x1="38" y1="36" x2="98" y2="36" stroke="#4a6fa5" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Simbolo 2: arbol -->
+              <ellipse cx="29" cy="56" rx="7" ry="9" fill="#4a6fa5"/>
+              <rect x="27" y="65" width="4" height="6" fill="#4a6fa5"/>
+              <line x1="38" y1="60" x2="98" y2="60" stroke="#4a6fa5" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <!-- Simbolo 3: linea carretera -->
+              <line x1="22" y1="80" x2="36" y2="80" stroke="#4a6fa5" stroke-width="3" stroke-linecap="round"/>
+              <line x1="38" y1="80" x2="98" y2="80" stroke="#4a6fa5" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <text x="60" y="122" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="700" fill="#7a9cc5">Elemento C</text>
+            </svg>
+            <span>Elemento C</span>
+          </div>
+
+          <!-- Coordenadas — INCORRECTO -->
+          <div class="elem-opcion" id="e4D" onclick="responder4('D')">
+            <svg width="120" height="130" viewBox="0 0 120 130">
+              <rect width="120" height="130" fill="#283593" rx="14"/>
+              <rect x="14" y="22" width="92" height="80" rx="8" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <!-- Cuadricula coordenadas -->
+              <line x1="14" y1="62" x2="106" y2="62" stroke="#4a6fa5" stroke-width="1.5" opacity="0.5"/>
+              <line x1="60" y1="22" x2="60" y2="102" stroke="#4a6fa5" stroke-width="1.5" opacity="0.5"/>
+              <line x1="14" y1="42" x2="106" y2="42" stroke="#4a6fa5" stroke-width="1" opacity="0.3"/>
+              <line x1="14" y1="82" x2="106" y2="82" stroke="#4a6fa5" stroke-width="1" opacity="0.3"/>
+              <line x1="37" y1="22" x2="37" y2="102" stroke="#4a6fa5" stroke-width="1" opacity="0.3"/>
+              <line x1="83" y1="22" x2="83" y2="102" stroke="#4a6fa5" stroke-width="1" opacity="0.3"/>
+              <!-- Punto de coordenada -->
+              <circle cx="60" cy="62" r="5" fill="#4a6fa5"/>
+              <text x="65" y="56" font-family="Nunito" font-size="9" fill="#7a9cc5">19°N</text>
+              <text x="65" y="72" font-family="Nunito" font-size="9" fill="#7a9cc5">99°O</text>
+              <text x="60" y="122" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="700" fill="#7a9cc5">Elemento D</text>
+            </svg>
+            <span>Elemento D</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+<script>
+  function ampliarImagen(img) {
+    if (!img) return;
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(function(i) { i.classList.remove('ampliada'); });
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
+
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-grande')) {
+      document.querySelectorAll('.ampliada').forEach(function(img) {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
+  var sonidos = {
+    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
+    click:       new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
+  };
+
+  function reproducirSonido(nombre) {
+    try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
+  }
+
+  var paginaActual = 1;
+  var totalPaginas = 4;
+  var respondidas = {1:false, 2:false, 3:false, 4:false};
+
+  function cambiarPagina(direccion) {
+    reproducirSonido('pasarPagina');
+    document.getElementById('pagina' + paginaActual).classList.remove('activa');
+    paginaActual += direccion;
+    document.getElementById('pagina' + paginaActual).classList.add('activa');
+    actualizarUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    localStorage.setItem('progreso_normal_visualnoverbal', paginaActual);
+  }
+
+  function actualizarUI() {
+    document.querySelectorAll('.punto').forEach(function(punto, index) {
+      punto.classList.remove('activo', 'completado');
+      if (index + 1 === paginaActual) punto.classList.add('activo');
+      else if (respondidas[index + 1]) punto.classList.add('completado');
+    });
+    document.getElementById('paginaActualNum').innerText = paginaActual;
+    document.getElementById('contadorPagina').innerText  = paginaActual + '/' + totalPaginas;
+    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+  }
+
+  function mostrarFeedback(id, ok, msg) {
+    var el = document.getElementById(id);
+    el.className = 'feedback-ref ' + (ok ? 'ok' : 'err');
+    el.innerHTML = msg;
+    el.style.display = 'block';
+  }
+
+  /* P1: duracion de la rotacion */
+  function responder1(op) {
+    if (respondidas[1]) return;
+    reproducirSonido('click');
+    if (op === 'B') {
+      reproducirSonido('completar');
+      document.getElementById('r1B').classList.add('correcto');
+      document.getElementById('r1A').classList.add('incorrecto');
+      document.getElementById('r1C').classList.add('incorrecto');
+      mostrarFeedback('fb1', true, '&#10003; Correcto! La rotaci&oacute;n dura exactamente 24 horas, que es lo que llamamos un d&iacute;a completo.');
+      respondidas[1] = true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      document.getElementById('r1' + op).classList.add('incorrecto');
+      mostrarFeedback('fb1', false, '&#10007; Incorrecto. Recuerda cu&aacute;ntas horas tiene un d&iacute;a completo e int&eacute;ntalo de nuevo.');
+      setTimeout(function() {
+        document.getElementById('r1' + op).classList.remove('incorrecto');
+        document.getElementById('fb1').style.display = 'none';
+      }, 1800);
+    }
+  }
+
+  /* P2: cada cuantos anos hay bisiesto */
+  function responder2(op) {
+    if (respondidas[2]) return;
+    reproducirSonido('click');
+    if (op === 'B') {
+      reproducirSonido('completar');
+      document.getElementById('r2B').classList.add('correcto');
+      document.getElementById('r2A').classList.add('incorrecto');
+      document.getElementById('r2C').classList.add('incorrecto');
+      mostrarFeedback('fb2', true, '&#10003; Correcto! El a&ntilde;o bisiesto ocurre cada 4 a&ntilde;os porque la Tierra tarda 365 d&iacute;as y 6 horas en orbitar el Sol. Despu&eacute;s de 4 a&ntilde;os se acumulan 24 horas extra, que forman el 29 de febrero.');
+      respondidas[2] = true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      document.getElementById('r2' + op).classList.add('incorrecto');
+      mostrarFeedback('fb2', false, '&#10007; Incorrecto. Piensa en cu&aacute;ntas horas extra se acumulan al a&ntilde;o y cu&aacute;ntos a&ntilde;os se necesitan para que sean un d&iacute;a completo.');
+      setTimeout(function() {
+        document.getElementById('r2' + op).classList.remove('incorrecto');
+        document.getElementById('fb2').style.display = 'none';
+      }, 1800);
+    }
+  }
+
+  /* P3: donde hay invierno cuando en Mexico es verano */
+  function responder3(op) {
+    if (respondidas[3]) return;
+    reproducirSonido('click');
+    if (op === 'S') {
+      reproducirSonido('completar');
+      document.getElementById('h3S').classList.add('correcto');
+      document.getElementById('h3N').classList.add('incorrecto');
+      mostrarFeedback('fb3', true, '&#10003; Correcto! Cuando el Hemisferio Norte tiene verano (M&eacute;xico, junio-septiembre), el Hemisferio Sur tiene invierno al mismo tiempo porque recibe menos luz solar.');
+      respondidas[3] = true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      document.getElementById('h3N').classList.add('incorrecto');
+      mostrarFeedback('fb3', false, '&#10007; Incorrecto. Si en M&eacute;xico es verano, ese hemisferio ya tiene calor. El otro hemisferio tiene lo contrario en ese mismo momento.');
+      setTimeout(function() {
+        document.getElementById('h3N').classList.remove('incorrecto');
+        document.getElementById('fb3').style.display = 'none';
+      }, 1800);
+    }
+  }
+
+  /* P4: elemento que indica puntos cardinales (orientacion = Elemento A) */
+  function responder4(op) {
+    if (respondidas[4]) return;
+    reproducirSonido('click');
+    if (op === 'A') {
+      reproducirSonido('completar');
+      document.getElementById('e4A').classList.add('correcto');
+      ['B','C','D'].forEach(function(x) { document.getElementById('e4' + x).classList.add('incorrecto'); });
+      mostrarFeedback('fb4', true, '&#10003; Correcto! La orientaci&oacute;n es el elemento del mapa que indica los puntos cardinales (Norte, Sur, Este, Oeste), representada generalmente con una rosa de los vientos o una flecha que se&ntilde;ala el Norte.');
+      respondidas[4] = true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      document.getElementById('e4' + op).classList.add('incorrecto');
+      var pistas = {
+        B: '&#10007; Incorrecto. Ese elemento muestra distancias. Busca el que indica direcci&oacute;n.',
+        C: '&#10007; Incorrecto. Eso muestra lo que significan los dibujos del mapa. Busca el que indica direcci&oacute;n.',
+        D: '&#10007; Incorrecto. Las coordenadas sirven para ubicar puntos exactos. &iquest;Cu&aacute;l te dice hacia d&oacute;nde es el Norte?'
+      };
+      mostrarFeedback('fb4', false, pistas[op]);
+      setTimeout(function() {
+        document.getElementById('e4' + op).classList.remove('incorrecto');
+        document.getElementById('fb4').style.display = 'none';
+      }, 1900);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var guardado = localStorage.getItem('progreso_normal_visualnoverbal');
+    if (guardado) {
+      var pag = parseInt(guardado);
+      if (pag >= 1 && pag <= totalPaginas) {
+        document.getElementById('pagina' + paginaActual).classList.remove('activa');
+        paginaActual = pag;
+        document.getElementById('pagina' + paginaActual).classList.add('activa');
+      }
+    }
+    actualizarUI();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

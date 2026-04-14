@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra &middot; Nivel Dif&iacute;cil &middot; Auditivo</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera">
+  <h1>&#127911; LA TIERRA</h1>
+  <p class="lead text-white">Bloque I &middot; Nivel Dif&iacute;cil</p>
+  <div>
+    <span class="badge-estilo">&#127925; Auditivo</span>
+    <span class="badge-nivel">&#128293; Avanzado</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-headphones fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background:#1976d2;color:white;padding:8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<audio id="audP1" src="audios/01-pregunta.mp3"></audio>
+<audio id="audP2" src="audios/02-pregunta.mp3"></audio>
+<audio id="audP3" src="audios/03-pregunta.mp3"></audio>
+<audio id="audP4" src="audios/04-pregunta.mp3"></audio>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-globe-americas"></i></div>
+        <div class="audio-titulo">Coordenadas geogr&aacute;ficas</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/01-coordenadas.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" alt="Coordenadas" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
+        <div class="pie-imagen">&#127758; LATITUD y LONGITUD</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha y asigna</div>
+      <p class="ref-instruccion">
+        Escucha la coordenada. Luego haz clic en el valor que corresponde a la <strong style="color:#ffd600;">LATITUD</strong>
+        y en el que corresponde a la <strong style="color:#ffd600;">LONGITUD</strong>.
+      </p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP1" onclick="reproducirPregunta(1)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar coordenada
+        </button>
+      </div>
+
+      <div style="background:#283593;border-radius:16px;padding:14px;text-align:center;margin-bottom:20px;">
+        <p style="color:#b3c5f7;font-weight:700;font-size:.95rem;margin-bottom:6px;">Coordenada de Ciudad de M&eacute;xico:</p>
+        <p style="font-family:'Fredoka One',cursive;font-size:1.6rem;color:white;">19&deg; N &nbsp;&nbsp; 99&deg; O</p>
+      </div>
+
+      <p style="color:#ffd600;font-weight:800;text-align:center;margin-bottom:12px;" id="inst1">
+        &#8594; Haz clic en el valor que es la <strong>LATITUD</strong>
+      </p>
+      <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;" id="valores1">
+        <div class="asignacion-valor" id="v1-lat" onclick="asignarCoord('lat')">
+          19&deg; N
+        </div>
+        <div class="asignacion-valor" id="v1-lon" onclick="asignarCoord('lon')">
+          99&deg; O
+        </div>
+      </div>
+      <div class="feedback-auditivo" id="fb1"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-arrows-alt-h"></i></div>
+        <div class="audio-titulo">LATITUD y paralelos</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/02-paralelos.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg" alt="Paralelos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
+        <div class="pie-imagen">&#128207; Principales paralelos</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha y se&ntilde;ala</div>
+      <p class="ref-instruccion">
+        Escucha la descripci&oacute;n de un paralelo. Luego haz clic directamente sobre esa l&iacute;nea en el globo.
+      </p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP2" onclick="reproducirPregunta(2)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar descripci&oacute;n
+        </button>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <svg width="280" height="300" viewBox="0 0 280 300">
+          <defs>
+            <radialGradient id="gPaud" cx="38%" cy="38%" r="60%">
+              <stop offset="0%" stop-color="#5c9bd6"/>
+              <stop offset="100%" stop-color="#1a3a6e"/>
+            </radialGradient>
+            <clipPath id="cPaud"><circle cx="140" cy="148" r="108"/></clipPath>
+          </defs>
+          <circle cx="140" cy="148" r="108" fill="url(#gPaud)" stroke="#4a6fa5" stroke-width="2"/>
+          <ellipse cx="108" cy="112" rx="24" ry="30" fill="#3d7a3d" opacity="0.65" clip-path="url(#cPaud)"/>
+          <ellipse cx="166" cy="138" rx="28" ry="20" fill="#3d7a3d" opacity="0.65" clip-path="url(#cPaud)"/>
+          <ellipse cx="130" cy="184" rx="22" ry="13" fill="#3d7a3d" opacity="0.55" clip-path="url(#cPaud)"/>
+          <g class="paralelo-linea-aud" id="pa1" onclick="responderParalelo('pa1',false)">
+            <ellipse cx="140" cy="78" rx="58" ry="14" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
+            <text x="248" y="82" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P1</text>
+          </g>
+          <g class="paralelo-linea-aud" id="pa2" onclick="responderParalelo('pa2',true)">
+            <ellipse cx="140" cy="108" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
+            <text x="242" y="112" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P2</text>
+          </g>
+          <g class="paralelo-linea-aud" id="pa3" onclick="responderParalelo('pa3',false)">
+            <ellipse cx="140" cy="148" rx="108" ry="28" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
+            <text x="252" y="152" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P3</text>
+          </g>
+          <g class="paralelo-linea-aud" id="pa4" onclick="responderParalelo('pa4',false)">
+            <ellipse cx="140" cy="188" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
+            <text x="242" y="193" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P4</text>
+          </g>
+          <g class="paralelo-linea-aud" id="pa5" onclick="responderParalelo('pa5',false)">
+            <ellipse cx="140" cy="218" rx="58" ry="14" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
+            <text x="202" y="222" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P5</text>
+          </g>
+          <text x="140" y="16" text-anchor="middle" font-family="Fredoka One" font-size="13" fill="#7a9cc5">Norte</text>
+          <text x="140" y="292" text-anchor="middle" font-family="Fredoka One" font-size="13" fill="#7a9cc5">Sur</text>
+        </svg>
+      </div>
+      <div class="feedback-auditivo" id="fb2"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-arrows-alt-v"></i></div>
+        <div class="audio-titulo">LONGITUD y meridianos</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/03-meridianos.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg" alt="Meridianos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
+        <div class="pie-imagen">&#128205; Meridianos y husos horarios</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha y elige el reloj</div>
+      <p class="ref-instruccion">
+        Escucha el problema de husos horarios. Luego haz clic en el reloj que muestra la hora correcta.
+      </p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP3" onclick="reproducirPregunta(3)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar problema
+        </button>
+      </div>
+      <div style="background:#283593;border-radius:14px;padding:14px;margin-bottom:20px;text-align:center;">
+        <p style="color:#b3c5f7;font-size:.95rem;font-weight:700;">
+          Son las <strong style="color:#ffd600;">12:00</strong> en Greenwich (0&deg;).<br>
+          &iquest;Qu&eacute; hora es en un lugar a <strong style="color:#ffd600;">45&deg; al Este</strong>?
+        </p>
+      </div>
+      <div class="relojes-wrap">
+
+        <div class="reloj-opcion" id="relA" onclick="responderReloj('A',false)">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <defs>
+              <radialGradient id="gRA" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3949ab"/>
+                <stop offset="100%" stop-color="#1a237e"/>
+              </radialGradient>
+            </defs>
+            <circle cx="65" cy="65" r="62" fill="url(#gRA)" stroke="#4a6fa5" stroke-width="2.5"/>
+            <line x1="65" y1="6"  x2="65" y2="16" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="114" x2="65" y2="124" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="6"  y1="65" x2="16" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="114" y1="65" x2="124" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="65" x2="65" y2="20" stroke="#b3c5f7" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="65" y1="65" x2="36" y2="38" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="65" cy="65" r="5" fill="#b3c5f7"/>
+          </svg>
+          <span>11:00</span>
+        </div>
+
+        <div class="reloj-opcion" id="relB" onclick="responderReloj('B',false)">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <defs>
+              <radialGradient id="gRB" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3949ab"/>
+                <stop offset="100%" stop-color="#1a237e"/>
+              </radialGradient>
+            </defs>
+            <circle cx="65" cy="65" r="62" fill="url(#gRB)" stroke="#4a6fa5" stroke-width="2.5"/>
+            <line x1="65" y1="6"  x2="65" y2="16" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="114" x2="65" y2="124" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="6"  y1="65" x2="16" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="114" y1="65" x2="124" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="65" x2="65" y2="20" stroke="#b3c5f7" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="65" y1="65" x2="65" y2="32" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="65" cy="65" r="5" fill="#b3c5f7"/>
+          </svg>
+          <span>12:00</span>
+        </div>
+
+        <div class="reloj-opcion" id="relC" onclick="responderReloj('C',true)">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <defs>
+              <radialGradient id="gRC" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3949ab"/>
+                <stop offset="100%" stop-color="#1a237e"/>
+              </radialGradient>
+            </defs>
+            <circle cx="65" cy="65" r="62" fill="url(#gRC)" stroke="#4a6fa5" stroke-width="2.5"/>
+            <line x1="65" y1="6"  x2="65" y2="16" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="114" x2="65" y2="124" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="6"  y1="65" x2="16" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="114" y1="65" x2="124" y2="65" stroke="#7a9cc5" stroke-width="2"/>
+            <line x1="65" y1="65" x2="65" y2="20" stroke="#b3c5f7" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="65" y1="65" x2="94" y2="65" stroke="#ffd600" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="65" cy="65" r="5" fill="#b3c5f7"/>
+          </svg>
+          <span>15:00</span>
+        </div>
+
+      </div>
+      <div class="feedback-auditivo" id="fb3"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-map"></i></div>
+        <div class="audio-titulo">Proyecciones cartogr&aacute;ficas</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/04-proyecciones.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="grid-3-imagenes">
+        <div class="imagen-pequena" onclick="ampliarImagen(this.querySelector('img'))">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg" alt="Mercator" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mercator_projection_SW.jpg/800px-Mercator_projection_SW.jpg'">
+          <div class="pie-imagen">Mercator</div>
+        </div>
+        <div class="imagen-pequena" onclick="ampliarImagen(this.querySelector('img'))">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg" alt="Robinson" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Robinson_projection_SW.jpg/800px-Robinson_projection_SW.jpg'">
+          <div class="pie-imagen">Robinson</div>
+        </div>
+        <div class="imagen-pequena" onclick="ampliarImagen(this.querySelector('img'))">
+          <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg" alt="Peters" class="imagen-geo"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Peters_projection%2C_Japan.jpg/800px-Peters_projection%2C_Japan.jpg'">
+          <div class="pie-imagen">Peters</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha y se&ntilde;ala el mapa</div>
+      <p class="ref-instruccion">
+        Escucha la descripci&oacute;n de una proyecci&oacute;n. Luego haz clic en el mapa que corresponde.
+      </p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP4" onclick="reproducirPregunta(4)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar descripci&oacute;n
+        </button>
+      </div>
+      <div class="proyecciones-wrap">
+
+        <div class="mapa-opcion" id="mpA" onclick="responderProyeccion('A',false)">
+          <svg width="148" height="118" viewBox="0 0 148 118">
+            <rect width="148" height="118" fill="#283593" rx="10"/>
+            <rect x="5" y="5" width="138" height="108" fill="#1a3a6e" rx="5"/>
+            <path d="M 86 6 Q 116 4 136 12 L 138 36 Q 126 44 102 42 Q 82 38 78 26 Q 80 12 86 6Z" fill="#4a6fa5" opacity="0.9"/>
+            <path d="M 12 14 Q 26 10 38 16 L 42 48 Q 34 58 22 54 Q 10 46 12 14Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 16 62 Q 28 58 38 66 L 36 96 Q 26 104 16 100 Q 8 90 16 62Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 58 14 Q 72 10 80 18 L 78 32 Q 68 36 60 32 Q 54 24 58 14Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 58 36 Q 74 32 82 40 L 80 76 Q 70 84 60 80 Q 50 70 58 36Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 86 16 Q 112 10 142 18 L 142 46 Q 122 50 98 46 Q 84 40 86 16Z" fill="#4a6fa5" opacity="0.85"/>
+            <text x="110" y="28" text-anchor="middle" font-family="Nunito" font-size="6" font-weight="700" fill="#ffd600">Groenlandia</text>
+          </svg>
+          <span>Mapa A</span>
+        </div>
+
+        <div class="mapa-opcion" id="mpB" onclick="responderProyeccion('B',false)">
+          <svg width="148" height="118" viewBox="0 0 148 118">
+            <rect width="148" height="118" fill="#283593" rx="10"/>
+            <ellipse cx="74" cy="59" rx="68" ry="52" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+            <path d="M 16 34 Q 28 28 40 34 L 42 56 Q 34 64 22 60 Q 12 52 16 34Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 18 64 Q 30 60 40 68 L 38 94 Q 28 102 18 98 Q 10 88 18 64Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 56 30 Q 70 26 78 32 L 76 54 Q 66 60 58 56 Q 50 48 56 30Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 56 58 Q 70 54 80 62 L 76 86 Q 64 92 56 88 Q 48 80 56 58Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 84 28 Q 108 22 134 32 L 134 54 Q 112 58 90 54 Q 80 46 84 28Z" fill="#4a6fa5" opacity="0.85"/>
+          </svg>
+          <span>Mapa B</span>
+        </div>
+
+        <div class="mapa-opcion" id="mpC" onclick="responderProyeccion('C',true)">
+          <svg width="148" height="118" viewBox="0 0 148 118">
+            <rect width="148" height="118" fill="#283593" rx="10"/>
+            <rect x="5" y="5" width="138" height="108" fill="#1a3a6e" rx="5"/>
+            <path d="M 12 12 Q 24 8 36 14 L 38 50 Q 28 58 16 54 Q 8 44 12 12Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 14 62 Q 26 58 36 66 L 34 110 Q 24 116 14 112 Q 6 102 14 62Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 52 36 Q 82 28 96 40 L 94 112 Q 76 120 58 116 Q 44 106 52 36Z" fill="#4a6fa5" opacity="0.9"/>
+            <path d="M 52 18 Q 72 12 88 20 L 86 32 Q 70 36 54 32 Q 48 26 52 18Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 52 6 Q 62 4 70 8 L 70 16 Q 62 20 54 16 Q 48 12 52 6Z" fill="#4a6fa5" opacity="0.85"/>
+            <path d="M 100 12 Q 130 6 146 16 L 146 50 Q 128 54 106 50 Q 96 42 100 12Z" fill="#4a6fa5" opacity="0.85"/>
+            <text x="74" y="80" text-anchor="middle" font-family="Nunito" font-size="8" font-weight="800" fill="#ffd600">AFRICA</text>
+            <text x="62" y="10" text-anchor="middle" font-family="Nunito" font-size="6" font-weight="700" fill="#b3c5f7">Groen.</text>
+          </svg>
+          <span>Mapa C</span>
+        </div>
+
+      </div>
+      <div class="feedback-auditivo" id="fb4"></div>
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+</body>
+</html>

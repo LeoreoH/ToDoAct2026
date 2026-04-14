@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrucciones Espaciales &middot; F&aacute;cil &middot; Kinestsico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<audio id="sndClick"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing"   src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError"  src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada"   src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+<audio id="sndStep"   src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+
+<div class="cabecera">
+  <h1>&#x1F9ED; Seguir instrucciones espaciales</h1>
+  <p style="color:rgba(255,255,255,.85);margin:4px 0 8px;font-weight:700;">El paseo por el pueblo m&aacute;gico</p>
+  <div>
+    <span class="badge-estilo">&#128075; Kinestésico</span>
+    <span class="badge-nivel">&#127807; F&aacute;cil</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="mapa-wrap">
+    <div class="mapa-titulo">
+      <i class="fas fa-hand-pointer"></i> &#161;Arrastra a Luna por el mapa!
+    </div>
+
+    <div class="mapa-svg-wrap" id="mapaSvgWrap">
+
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" id="mapaSVG">
+        <defs>
+          <linearGradient id="gCielo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#bfdbfe"/>
+            <stop offset="100%" stop-color="#e0f2fe"/>
+          </linearGradient>
+          <pattern id="adoquin" x="0" y="0" width="24" height="16" patternUnits="userSpaceOnUse">
+            <rect width="24" height="16" fill="#c8bdb0"/>
+            <rect x="1" y="1" width="10" height="6" rx="1" fill="#d4c9bc"/>
+            <rect x="13" y="1" width="10" height="6" rx="1" fill="#d4c9bc"/>
+            <rect x="1" y="9" width="10" height="6" rx="1" fill="#ccc1b4"/>
+            <rect x="13" y="9" width="10" height="6" rx="1" fill="#ccc1b4"/>
+          </pattern>
+          <pattern id="adoquinV" x="0" y="0" width="16" height="24" patternUnits="userSpaceOnUse">
+            <rect width="16" height="24" fill="#c8bdb0"/>
+            <rect x="1" y="1" width="6" height="10" rx="1" fill="#d4c9bc"/>
+            <rect x="9" y="1" width="6" height="10" rx="1" fill="#ccc1b4"/>
+            <rect x="1" y="13" width="6" height="10" rx="1" fill="#d4c9bc"/>
+            <rect x="9" y="13" width="6" height="10" rx="1" fill="#ccc1b4"/>
+          </pattern>
+          <filter id="sombra" x="-10%" y="-10%" width="120%" height="130%">
+            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.18)"/>
+          </filter>
+          <filter id="sombraFuerte">
+            <feDropShadow dx="2" dy="5" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+          </filter>
+        </defs>
+
+        <rect width="600" height="600" fill="url(#gCielo)"/>
+
+        <g opacity=".7">
+          <ellipse cx="80"  cy="55" rx="42" ry="18" fill="white"/>
+          <ellipse cx="110" cy="45" rx="28" ry="20" fill="white"/>
+          <ellipse cx="55"  cy="48" rx="22" ry="16" fill="white"/>
+          <ellipse cx="430" cy="40" rx="50" ry="20" fill="white"/>
+          <ellipse cx="470" cy="30" rx="32" ry="22" fill="white"/>
+          <ellipse cx="400" cy="36" rx="24" ry="16" fill="white"/>
+          <ellipse cx="530" cy="80" rx="36" ry="16" fill="white" opacity=".5"/>
+          <ellipse cx="555" cy="72" rx="22" ry="14" fill="white" opacity=".5"/>
+        </g>
+
+        <rect y="100" width="600" height="500" fill="#d4a96a"/>
+        <rect x="0"   y="100" width="180" height="160" fill="#86efac" opacity=".55"/>
+        <rect x="220" y="100" width="160" height="160" fill="#86efac" opacity=".45"/>
+        <rect x="420" y="100" width="180" height="160" fill="#86efac" opacity=".55"/>
+        <rect x="0"   y="330" width="180" height="160" fill="#86efac" opacity=".5"/>
+        <rect x="220" y="330" width="160" height="160" fill="#86efac" opacity=".45"/>
+        <rect x="420" y="330" width="180" height="160" fill="#86efac" opacity=".5"/>
+
+        <rect x="0"   y="255" width="600" height="72" fill="url(#adoquin)"/>
+        <rect x="185" y="100" width="62" height="500" fill="url(#adoquinV)"/>
+        <rect x="385" y="100" width="62" height="500" fill="url(#adoquinV)"/>
+        <rect x="185" y="255" width="62" height="72" fill="#bfb0a0"/>
+        <rect x="385" y="255" width="62" height="72" fill="#bfb0a0"/>
+
+        <line x1="216" y1="100" x2="216" y2="255" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="216" y1="327" x2="216" y2="600" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="416" y1="100" x2="416" y2="255" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="416" y1="327" x2="416" y2="600" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="0" y1="291" x2="185" y2="291" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="247" y1="291" x2="385" y2="291" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+        <line x1="447" y1="291" x2="600" y2="291" stroke="#e8ddd0" stroke-width="2" stroke-dasharray="16,12"/>
+
+        <g transform="translate(182,252)"><rect x="-3" y="-30" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="-34" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="-34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+        <g transform="translate(248,252)"><rect x="-3" y="-30" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="-34" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="-34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+        <g transform="translate(382,252)"><rect x="-3" y="-30" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="-34" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="-34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+        <g transform="translate(448,252)"><rect x="-3" y="-30" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="-34" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="-34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+        <g transform="translate(182,327)"><rect x="-3" y="0" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="26" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+        <g transform="translate(248,327)"><rect x="-3" y="0" width="5" height="30" fill="#78716c" rx="2"/><rect x="-10" y="26" width="14" height="8" rx="3" fill="#a8a29e"/><ellipse cx="0" cy="34" rx="5" ry="5" fill="#fde68a" opacity=".8"/></g>
+
+        <g id="loc-pan" filter="url(#sombra)">
+          <rect x="18" y="140" width="148" height="108" rx="6" fill="#fffbeb"/>
+          <polygon points="8,142 92,108 176,142" fill="#dc2626"/>
+          <rect x="120" y="112" width="18" height="30" fill="#78716c" rx="2"/><rect x="115" y="110" width="28" height="8" rx="2" fill="#57534e"/>
+          <ellipse cx="129" cy="102" rx="7" ry="10" fill="#e7e5e4" opacity=".7"/>
+          <ellipse cx="133" cy="90"  rx="5" ry="8"  fill="#e7e5e4" opacity=".5"/>
+          <ellipse cx="127" cy="80"  rx="4" ry="6"  fill="#e7e5e4" opacity=".35"/>
+          <rect x="70" y="192" width="44" height="56" rx="4" fill="#92400e"/>
+          <rect x="74" y="196" width="36" height="20" rx="3" fill="#fde68a" opacity=".6"/>
+          <circle cx="109" cy="222" r="3" fill="#fde68a"/>
+          <rect x="24" y="162" width="36" height="30" rx="4" fill="#fef3c7" opacity=".7"/>
+          <text x="35" y="182" font-size="12">&#127830;</text>
+          <rect x="124" y="162" width="36" height="30" rx="4" fill="#fef3c7" opacity=".7"/>
+          <text x="135" y="182" font-size="12">&#127840;</text>
+          <text x="30"  y="245" font-size="20">&#127838;</text>
+          <text x="60"  y="245" font-size="20">&#127840;</text>
+          <text x="92"  y="245" font-size="20">&#127838;</text>
+          <text x="124" y="245" font-size="20">&#127840;</text>
+        </g>
+
+        <g id="loc-jug" filter="url(#sombra)">
+          <rect x="260" y="140" width="112" height="108" rx="6" fill="#fef9c3"/>
+          <rect x="254" y="128" width="124" height="18" rx="4" fill="#7c3aed"/>
+          <rect x="260" y="110" width="112" height="24" rx="4" fill="#db2777"/>
+          <rect x="268" y="100" width="96"  height="16" rx="4" fill="#d97706"/>
+          <text x="316" y="112" font-size="14" text-anchor="middle">&#11088;</text>
+          <rect x="290" y="196" width="52" height="52" rx="4" fill="#1d4ed8"/>
+          <rect x="294" y="200" width="44" height="20" rx="3" fill="#93c5fd" opacity=".6"/>
+          <circle cx="312" cy="224" r="3" fill="#fde68a"/>
+          <circle cx="278" cy="172" r="18" fill="#bae6fd"/>
+          <circle cx="278" cy="172" r="14" fill="#e0f2fe"/>
+          <text x="278" y="178" font-size="16" text-anchor="middle">&#127873;</text>
+          <circle cx="354" cy="172" r="18" fill="#bae6fd"/>
+          <circle cx="354" cy="172" r="14" fill="#e0f2fe"/>
+          <text x="354" y="178" font-size="16" text-anchor="middle">&#127904;</text>
+          <circle cx="265" cy="130" r="6" fill="#f43f5e" opacity=".8"/>
+          <line  x1="265" y1="136" x2="268" y2="148" stroke="#f43f5e" stroke-width="1.5"/>
+          <circle cx="278" cy="122" r="6" fill="#a78bfa" opacity=".8"/>
+          <line  x1="278" y1="128" x2="276" y2="148" stroke="#a78bfa" stroke-width="1.5"/>
+          <circle cx="355" cy="128" r="6" fill="#34d399" opacity=".8"/>
+          <line  x1="355" y1="134" x2="354" y2="148" stroke="#34d399" stroke-width="1.5"/>
+          <circle cx="366" cy="120" r="5" fill="#fb923c" opacity=".8"/>
+          <line  x1="366" y1="125" x2="364" y2="148" stroke="#fb923c" stroke-width="1.5"/>
+          <text x="268" y="248" font-size="16">&#11088;</text>
+          <text x="290" y="244" font-size="12">&#127872;</text>
+          <text x="310" y="248" font-size="16">&#11088;</text>
+          <text x="332" y="244" font-size="12">&#127872;</text>
+          <text x="352" y="248" font-size="16">&#11088;</text>
+        </g>
+
+        <g id="loc-hel" filter="url(#sombra)">
+          <rect x="460" y="140" width="126" height="108" rx="6" fill="#fdf4ff"/>
+          <path d="M450,145 Q523,110 590,145 L590,148 Q523,118 450,148 Z" fill="#ec4899"/>
+          <rect x="450" y="145" width="140" height="14" fill="#ec4899" opacity=".6"/>
+          <rect x="464" y="145" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="488" y="145" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="512" y="145" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="536" y="145" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="560" y="145" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="493" y="196" width="40" height="52" rx="4" fill="#d946ef"/>
+          <rect x="497" y="200" width="32" height="16" rx="3" fill="#f0abfc" opacity=".7"/>
+          <circle cx="528" cy="224" r="3" fill="white"/>
+          <rect x="462" y="162" width="28" height="28" rx="12" fill="#f9a8d4"/>
+          <text x="476" y="182" font-size="18" text-anchor="middle">&#127846;</text>
+          <rect x="536" y="162" width="28" height="28" rx="12" fill="#f9a8d4"/>
+          <text x="550" y="182" font-size="18" text-anchor="middle">&#127846;</text>
+          <text x="462" y="248" font-size="20">&#127846;</text>
+          <text x="488" y="252" font-size="24">&#127848;</text>
+          <text x="516" y="248" font-size="20">&#127846;</text>
+          <text x="542" y="252" font-size="24">&#127848;</text>
+          <text x="570" y="142" font-size="18">&#127800;</text>
+        </g>
+
+        <g id="loc-far" filter="url(#sombra)">
+          <rect x="18" y="340" width="148" height="110" rx="6" fill="#f0fdf4"/>
+          <rect x="12" y="332" width="160" height="16" rx="4" fill="#166534"/>
+          <rect x="78" y="295" width="28" height="42" rx="4" fill="#16a34a"/>
+          <rect x="66" y="307" width="52" height="18" rx="4" fill="#16a34a"/>
+          <rect x="82" y="299" width="20" height="34" rx="2" fill="#4ade80"/>
+          <rect x="70" y="311" width="44" height="10" rx="2" fill="#4ade80"/>
+          <rect x="68" y="394" width="48" height="56" rx="4" fill="#166534"/>
+          <rect x="72" y="398" width="40" height="20" rx="3" fill="#86efac" opacity=".6"/>
+          <circle cx="111" cy="424" r="3" fill="white"/>
+          <rect x="22" y="358" width="38" height="34" rx="4" fill="#bbf7d0"/>
+          <line x1="41" y1="358" x2="41" y2="392" stroke="white" stroke-width="2"/>
+          <line x1="22" y1="375" x2="60" y2="375" stroke="white" stroke-width="2"/>
+          <rect x="124" y="358" width="38" height="34" rx="4" fill="#bbf7d0"/>
+          <line x1="143" y1="358" x2="143" y2="392" stroke="white" stroke-width="2"/>
+          <line x1="124" y1="375" x2="162" y2="375" stroke="white" stroke-width="2"/>
+          <rect x="26"  y="444" width="18" height="10" rx="3" fill="#c2410c"/>
+          <text x="26"  y="443" font-size="16">&#127807;</text>
+          <rect x="140" y="444" width="18" height="10" rx="3" fill="#c2410c"/>
+          <text x="140" y="443" font-size="16">&#127807;</text>
+        </g>
+
+        <g id="loc-esc" filter="url(#sombra)">
+          <rect x="260" y="340" width="112" height="110" rx="6" fill="#fefce8"/>
+          <polygon points="252,340 316,310 380,340" fill="#b45309"/>
+          <rect x="314" y="286" width="3" height="28" fill="#78716c"/>
+          <rect x="317" y="286" width="22" height="14" fill="#16a34a"/>
+          <rect x="317" y="291" width="22" height="4"  fill="white"/>
+          <rect x="317" y="296" width="22" height="4"  fill="#dc2626"/>
+          <rect x="265" y="360" width="100" height="44" rx="4" fill="#166534"/>
+          <text x="315" y="376" font-family="Patrick Hand,cursive" font-size="9" fill="white" text-anchor="middle">2 + 3 = 5</text>
+          <text x="315" y="390" font-family="Patrick Hand,cursive" font-size="9" fill="#fde68a" text-anchor="middle">A B C D</text>
+          <rect x="278" y="400" width="30" height="50" rx="3" fill="#92400e"/>
+          <rect x="310" y="400" width="30" height="50" rx="3" fill="#92400e"/>
+          <rect x="280" y="404" width="26" height="14" rx="2" fill="#fde68a" opacity=".5"/>
+          <rect x="312" y="404" width="26" height="14" rx="2" fill="#fde68a" opacity=".5"/>
+          <circle cx="307" cy="428" r="3" fill="#fde68a"/>
+          <circle cx="313" cy="428" r="3" fill="#fde68a"/>
+          <ellipse cx="262" cy="456" rx="18" ry="22" fill="#22c55e"/>
+          <rect    x="259" y="468" width="6" height="14" fill="#92400e"/>
+          <ellipse cx="370" cy="456" rx="18" ry="22" fill="#22c55e"/>
+          <rect    x="367" y="468" width="6" height="14" fill="#92400e"/>
+        </g>
+
+        <g id="loc-hel2" filter="url(#sombra)">
+          <rect x="460" y="340" width="126" height="110" rx="6" fill="#eff6ff"/>
+          <path d="M450,345 Q523,310 590,345 L590,348 Q523,318 450,348 Z" fill="#2563eb"/>
+          <rect x="450" y="345" width="140" height="14" fill="#2563eb" opacity=".6"/>
+          <rect x="464" y="345" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="488" y="345" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="512" y="345" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="536" y="345" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="560" y="345" width="10" height="14" fill="white" opacity=".5"/>
+          <rect x="493" y="396" width="40" height="54" rx="4" fill="#1d4ed8"/>
+          <rect x="497" y="400" width="32" height="16" rx="3" fill="#93c5fd" opacity=".7"/>
+          <circle cx="528" cy="424" r="3" fill="white"/>
+          <rect x="462" y="362" width="28" height="28" rx="12" fill="#bfdbfe"/>
+          <text x="476" y="382" font-size="18" text-anchor="middle">&#127846;</text>
+          <rect x="536" y="362" width="28" height="28" rx="12" fill="#bfdbfe"/>
+          <text x="550" y="382" font-size="18" text-anchor="middle">&#127846;</text>
+          <text x="462" y="448" font-size="20">&#127848;</text>
+          <text x="488" y="452" font-size="24">&#127846;</text>
+          <text x="516" y="448" font-size="20">&#127848;</text>
+          <text x="542" y="452" font-size="24">&#127846;</text>
+          <text x="570" y="342" font-size="18">&#10052;&#65039;</text>
+        </g>
+
+        <g>
+          <circle cx="216" cy="291" r="26" fill="#93c5fd" opacity=".4"/>
+          <circle cx="216" cy="291" r="20" fill="#60a5fa" opacity=".5"/>
+          <circle cx="216" cy="291" r="14" fill="#93c5fd"/>
+          <circle cx="216" cy="291" r="6"  fill="#bfdbfe"/>
+          <text x="216" y="296" font-size="10" text-anchor="middle">&#128166;</text>
+        </g>
+
+        <g filter="url(#sombra)" opacity=".9">
+          <ellipse cx="100" cy="210" rx="26" ry="30" fill="#16a34a"/>
+          <ellipse cx="88"  cy="218" rx="18" ry="22" fill="#22c55e"/>
+          <ellipse cx="112" cy="215" rx="16" ry="20" fill="#15803d"/>
+          <rect    x="97"  y="232"  width="6" height="18" fill="#92400e"/>
+        </g>
+        <g filter="url(#sombra)" opacity=".9">
+          <ellipse cx="430" cy="210" rx="26" ry="30" fill="#16a34a"/>
+          <ellipse cx="418" cy="218" rx="18" ry="22" fill="#22c55e"/>
+          <ellipse cx="442" cy="215" rx="16" ry="20" fill="#15803d"/>
+          <rect    x="427" y="232"  width="6" height="18" fill="#92400e"/>
+        </g>
+        <g filter="url(#sombra)" opacity=".9">
+          <ellipse cx="100" cy="430" rx="24" ry="28" fill="#16a34a"/>
+          <ellipse cx="90"  cy="438" rx="16" ry="20" fill="#22c55e"/>
+          <rect    x="97"  y="450"  width="6" height="16" fill="#92400e"/>
+        </g>
+
+        <text x="205" y="238" font-size="12">&#127800;</text>
+        <text x="218" y="230" font-size="10">&#127804;</text>
+        <text x="222" y="244" font-size="11">&#127800;</text>
+        <text x="390" y="236" font-size="12">&#127800;</text>
+        <text x="404" y="244" font-size="10">&#127804;</text>
+        <text x="395" y="250" font-size="11">&#127800;</text>
+
+        <rect id="zona-hel"  x="450" y="105" width="146" height="155" rx="14"
+              fill="none" stroke="#15803d" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+        <rect id="zona-hel2" x="450" y="325" width="146" height="155" rx="14"
+              fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+        <rect id="zona-pan"  x="4"   y="105" width="178" height="155" rx="14"
+              fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+        <rect id="zona-jug"  x="247" y="105" width="132" height="155" rx="14"
+              fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+        <rect id="zona-far"  x="4"   y="325" width="178" height="155" rx="14"
+              fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+        <rect id="zona-esc"  x="247" y="325" width="132" height="155" rx="14"
+              fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="10,7"
+              opacity="0" style="transition:opacity .3s;"/>
+
+        <g id="rastroSVG"></g>
+
+        <g id="lunaPersonaje" transform="translate(390,260)"
+           style="cursor:grab; transition: transform .32s cubic-bezier(.34,1.56,.64,1);">
+          <rect x="-28" y="-24" width="56" height="15" rx="4" fill="#fde68a" stroke="#c2410c" stroke-width="1.5"/>
+          <text x="0" y="-13" font-family="Fredoka One,cursive" font-size="8" fill="#7c2d12" text-anchor="middle">&#161;EMPIEZA AQU&#205;!</text>
+          <ellipse cx="0" cy="42" rx="16" ry="5" fill="rgba(0,0,0,.18)"/>
+          <rect x="-12" y="18" width="24" height="24" rx="5" fill="#1d4ed8"/>
+          <rect x="-8"  y="18" width="16" height="10" rx="3" fill="#3b82f6"/>
+          <rect x="-4" y="12" width="8" height="8" fill="#fbbf24" rx="2"/>
+          <ellipse cx="0" cy="6" rx="12" ry="13" fill="#fbbf24"/>
+          <path d="M-12,2 Q-14,-8 0,-14 Q14,-8 12,2 Q8,-4 0,-6 Q-8,-4 -12,2Z" fill="#1c1917"/>
+          <ellipse cx="12" cy="-4" rx="6" ry="4" fill="#1c1917" transform="rotate(20,12,-4)"/>
+          <circle cx="14" cy="-6" r="3" fill="#ec4899"/>
+          <circle cx="-4" cy="6"  r="2.5" fill="#1c1917"/>
+          <circle cx="4"  cy="6"  r="2.5" fill="#1c1917"/>
+          <circle cx="-3" cy="5"  r="1"   fill="white"/>
+          <circle cx="5"  cy="5"  r="1"   fill="white"/>
+          <path d="M-4,11 Q0,15 4,11" fill="none" stroke="#c2410c" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="10" y="18" width="10" height="16" rx="3" fill="#7c3aed"/>
+          <rect x="12" y="22" width="6" height="4" rx="1" fill="#a78bfa"/>
+          <rect x="-10" y="40" width="8" height="14" rx="3" fill="#1e40af"/>
+          <rect x="2"   y="40" width="8" height="14" rx="3" fill="#1e40af"/>
+          <rect x="-12" y="52" width="10" height="6" rx="3" fill="#1c1917"/>
+          <rect x="2"   y="52" width="10" height="6" rx="3" fill="#1c1917"/>
+          <rect x="-20" y="18" width="10" height="6" rx="3" fill="#1d4ed8" transform="rotate(20,-20,18)"/>
+          <rect x="10"  y="18" width="10" height="6" rx="3" fill="#1d4ed8" transform="rotate(-20,10,18)"/>
+          <circle cx="-18" cy="28" r="4" fill="#fbbf24"/>
+          <circle cx="20"  cy="28" r="4" fill="#fbbf24"/>
+        </g>
+
+      </svg>
+
+      <div class="drag-overlay" id="dragOverlay"></div>
+
+    </div><div class="leyenda">
+      <div class="leyenda-titulo"><i class="fas fa-lightbulb me-1"></i> Pistas visuales:</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#dc2626;"></div> Techo rojo + panes &#127838;</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#7c3aed;"></div> Globos de colores &#127880;</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#ec4899;"></div> Toldo <strong>rosa</strong> + helados &#127846;</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#166534;"></div> Cruz verde &#10010;</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#b45309;"></div> Pizarr&oacute;n + bandera &#127979;</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#2563eb;"></div> Toldo <strong>azul</strong> + helados &#127846;</div>
+    </div>
+  </div><div class="panel">
+
+    <div class="tarjeta-instrucciones">
+      <div class="instrucciones-header">
+        <i class="fas fa-scroll"></i>
+        <span>&#161;Mueve a Luna t&uacute; mismo!</span>
+      </div>
+      <div class="instrucciones-body">
+        <div class="mision-chip">
+          <span style="font-size:1.5rem;">&#128073;</span>
+          <span>Luna est&aacute; en la <strong>intersecci&oacute;n central derecha</strong>. <strong>Arr&aacute;strala</strong> siguiendo los pasos uno a uno.</span>
+        </div>
+
+        <div class="pasos-lista">
+          <div class="paso resaltado" id="paso1">
+            <div class="paso-num">1</div>
+            <div>
+              <div class="paso-flecha">&#11014;&#65039;</div>
+              <div class="paso-texto">
+                Arrastra a Luna <em>1 cuadra hacia arriba</em> por la calle de los faroles.
+              </div>
+            </div>
+          </div>
+          <div class="conector"></div>
+          <div class="paso inactivo" id="paso2">
+            <div class="paso-num">2</div>
+            <div>
+              <div class="paso-flecha">&#127937;</div>
+              <div class="paso-texto">
+                Su&eacute;ltala sobre el edificio con <em>toldo de rayas</em> y muchos <em>conos de helado</em> &#127846;.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#fef9c3;border:2px solid #fde68a;border-radius:12px;padding:10px 14px;font-size:.88rem;font-weight:700;color:#92400e;">
+          &#128161; <strong>Pista:</strong> Hay dos edificios con helados. &#161;F&iacute;jate en el color del toldo y en la <strong>direcci&oacute;n</strong> que indica la instrucci&oacute;n!
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta-controles">
+      <div class="controles-titulo">
+        <i class="fas fa-hand-pointer"></i> C&oacute;mo mover a Luna
+      </div>
+      <div class="controles-sub">
+        Haz clic sobre Luna y arr&aacute;strala hacia el lugar correcto. Su&eacute;ltala cuando est&eacute;s encima del edificio.
+      </div>
+
+      <div class="drag-indicator" id="dragIndicator">
+        <i class="fas fa-hand-pointer"></i>
+        <span id="dragMsg">Haz clic sobre Luna y arr&aacute;strala &#11014;&#65039; hacia arriba</span>
+      </div>
+
+      <div class="paso-estado" id="pasoEstado">
+        <span class="estado-flecha">&#11014;&#65039;</span>
+        <span id="estadoTxt">Arrastra a Luna 1 cuadra <strong>hacia arriba</strong></span>
+      </div>
+
+      <button class="btn-deshacer" id="btnDeshacer" onclick="deshacerMovimiento()" disabled>
+        <i class="fas fa-undo-alt"></i> Deshacer
+      </button>
+
+      <div class="feedback-box" id="feedbackBox"></div>
+
+      <div class="btn-quiz-wrap" id="btnQuizWrap">
+        <a href="quiz.html" class="btn-quiz">
+          <i class="fas fa-puzzle-piece"></i> &#161;Ir al ejercicio!
+        </a>
+      </div>
+    </div>
+
+  </div></div>
+
+
+</body>
+</html>
+
+

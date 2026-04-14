@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque I: La Tierra</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+
+<body>
+
+<header class="bloque-header">
+    <button class="boton-volver" onclick="volver()">← Volver</button>
+    <h1 id="nombre-bloque">Bloque I: La Tierra</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Elige una opción</h2>
+
+    <div class="contenedor-niveles">
+
+        <button id="btn-diagnostico" onclick="irADiagnostico()">
+            <span>Examen diagnóstico</span>
+            <span class="descripcion-nivel">
+                Descubre tu nivel inicial sobre la Tierra
+            </span>
+        </button>
+
+        <button onclick="mostrarContenidos()">
+            <span>Contenidos</span>
+            <span class="descripcion-nivel">
+                Accede a los niveles del bloque
+            </span>
+        </button>
+
+    </div>
+
+    <div id="bloque-contenidos" style="display:none">
+
+        <h3>Niveles del contenido</h3>
+
+        <div class="contenedor-niveles">
+            <button id="btn-facil" onclick="abrirNivel('facil')" disabled>
+                <span>Fácil</span>
+                <span class="descripcion-nivel">Conceptos básicos: líneas imaginarias, zonas térmicas</span>
+            </button>
+            <button id="btn-normal" onclick="abrirNivel('normal')" disabled>
+                <span>Normal</span>
+                <span class="descripcion-nivel">Movimientos de la Tierra, estaciones, mapas</span>
+            </button>
+            <button id="btn-dificil" onclick="abrirNivel('dificil')" disabled>
+                <span>Difícil</span>
+                <span class="descripcion-nivel">Coordenadas, proyecciones, localización exacta</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <script src="menu.js"></script>
+</body>
+</html>

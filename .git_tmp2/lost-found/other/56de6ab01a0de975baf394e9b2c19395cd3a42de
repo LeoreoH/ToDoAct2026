@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil &middot; Visual / No Verbal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>EQUIVALENCIAS COMPLETAS</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</div>
+    <div class="badge-estilo">Visual / No Verbal</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">0%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="tarjeta">
+      <h2 class="titulo-pagina" id="tituloPagina"></h2>
+      <div class="texto-destacado" id="leadPagina"></div>
+      <div id="contenidoPagina"></div>
+      <div class="activity-box">
+        <h3>Actividad de reforzamiento</h3>
+        <div class="activity-prompt" id="promptActividad"></div>
+        <div id="supportActividad"></div>
+        <div id="rootActividad"></div>
+        <div class="action-row">
+          <button class="btn-accion" id="btnVerificar">Verificar</button>
+          <button class="btn-accion" id="btnBorrar">Borrar selecci&oacute;n</button>
+        </div>
+        <div id="feedbackOk" class="mensaje-feedback mensaje-ok"></div>
+        <div id="feedbackWarn" class="mensaje-feedback mensaje-warn"></div>
+      </div>
+      <div class="text-center" id="quizWrap"></div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/8</span>
+      <button class="btn-nav" id="btnSiguiente" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/equivalencias-numericas/recursos/js/visual-verbal-engine.js"></script>
+  <script>
+    const B = window.EquivVisualVerbalBuilders;
+
+    function compareCard(title, leftVisual, sign, rightVisual, cls) {
+      return B.ticket(title, '', '<div class="ticket-row">' + leftVisual + B.wordChip(sign, 'word') + rightVisual + '</div>', '', cls);
+    }
+
+    const pages = [
+      {
+        title: 'Festival de pizzas equivalentes',
+        icon: 'fa-pizza-slice',
+        lead: 'La misma porci&oacute;n puede verse como fracci&oacute;n, decimal y porcentaje.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si una pizza tiene 3 de 4 rebanadas usadas, tambi&eacute;n puede escribirse como 0.75 y 75%.</p></div>' +
+          '<div class="formula-board">' +
+            B.formula('🍕 Fracci&oacute;n', '3/4', 'theme-coral') +
+            B.formula('🎟️ Decimal', '0.75', 'theme-gold') +
+            B.formula('🏷️ Porcentaje', '75%', 'theme-sky') +
+          '</div>' +
+          '<div class="model-grid">' +
+            B.panel('🍕 Pizza de ejemplo', B.pizza(4, 3), '', 'theme-coral') +
+            B.panel('🎟️ Tres formas', B.equivRow([B.fracChip('3','4'), B.decChip('0.75'), B.pctChip('75%')]), '', 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'pizza_equiv_vnv',
+          prompt: '&iquest;Qu&eacute; ticket coincide con la pizza del reto?',
+          supportHtml: '<div class="support-box theme-coral"><div class="support-title">🍕 Pizza del reto</div>' + B.pizza(8, 5) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🍕 Mesa coral', '', B.equivRow([B.fracChip('5','8'), B.decChip('0.625'), B.pctChip('62.5%')]), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🍕 Mesa jade', '', B.equivRow([B.fracChip('5','8'), B.decChip('0.58'), B.pctChip('58%')]), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🍕 Mesa cielo', '', B.equivRow([B.fracChip('5','8'), B.decChip('0.62'), B.pctChip('62%')]), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🍕 Mesa sol', '', B.equivRow([B.fracChip('5','8'), B.decChip('0.75'), B.pctChip('75%')]), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Muy bien! 5/8 equivale a 0.625 y 62.5%.',
+          warn: 'Busca el ticket donde las tres formas mantengan el mismo valor.'
+        }
+      },
+      {
+        title: 'Semillero del huerto escolar',
+        icon: 'fa-seedling',
+        lead: 'Una cuadr&iacute;cula de 100 tambi&eacute;n puede leerse con tres escrituras.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">45 de 100 tambi&eacute;n puede verse como 0.45 y 45%.</p></div>' +
+          '<div class="formula-board">' +
+            B.formula('🌱 Porcentaje', '45%', 'theme-jade') +
+            B.formula('🪴 Decimal', '0.45', 'theme-mint') +
+            B.formula('🌱 Fracci&oacute;n', '9/20', 'theme-coral') +
+          '</div>' +
+          '<div class="model-grid">' +
+            B.panel('🌱 Charola de ejemplo', B.grid(45), '', 'theme-jade') +
+            B.panel('🪴 Tres etiquetas', B.equivRow([B.fracChip('9','20'), B.decChip('0.45'), B.pctChip('45%')]), '', 'theme-mint') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'semillero_equiv_vnv',
+          prompt: '&iquest;Qu&eacute; conjunto coincide con la charola del reto?',
+          supportHtml: '<div class="support-box theme-jade"><div class="support-title">🌱 Charola del reto</div>' + B.grid(68) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🌱 Charola coral', '', B.equivRow([B.fracChip('17','25'), B.decChip('0.68'), B.pctChip('68%')]), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🌱 Charola jade', '', B.equivRow([B.fracChip('17','20'), B.decChip('0.68'), B.pctChip('68%')]), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🌱 Charola cielo', '', B.equivRow([B.fracChip('17','25'), B.decChip('0.86'), B.pctChip('68%')]), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🌱 Charola sol', '', B.equivRow([B.fracChip('17','25'), B.decChip('0.68'), B.pctChip('86%')]), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Correcto! 68 de 100 tambi&eacute;n puede escribirse como 17/25 y 0.68.',
+          warn: 'Busca el conjunto donde fracci&oacute;n, decimal y porcentaje coincidan.'
+        }
+      },
+      {
+        title: 'Inspector de etiquetas',
+        icon: 'fa-stamp',
+        lead: 'Si una pieza cambia el valor, toda la cadena deja de ser equivalente.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">2/5, 0.40 y 40% forman una cadena correcta porque las tres tarjetas dicen lo mismo.</p></div>' +
+          '<div class="formula-board">' +
+            B.formula('🧾 Fracci&oacute;n a decimal', '2/5 → 0.40', 'theme-indigo') +
+            B.formula('🔎 Decimal a porcentaje', '0.40 → 40%', 'theme-sky') +
+          '</div>' +
+          '<div class="model-grid">' + B.panel('🧾 Cadena correcta', B.equivRow([B.fracChip('2','5'), B.decChip('0.40'), B.pctChip('40%')]), '', 'theme-indigo') + '</div>',
+        activity: {
+          type: 'choice', errorKey: 'inspector_reparacion_vnv',
+          prompt: '&iquest;Qu&eacute; pieza repara la etiqueta del reto?',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">🧾 Etiqueta del reto</div>' + B.equivRow([B.fracChip('3','8'), B.decChip('0.375'), B.pctChip('30%')]) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🧾 Pieza coral', '', B.pctChip('37.5%'), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🧾 Pieza jade', '', B.decChip('0.35'), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🧾 Pieza cielo', '', B.fracChip('3','10'), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🧾 Pieza sol', '', B.pctChip('35%'), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Bien visto! La pieza correcta es 37.5%.',
+          warn: 'Revisa qu&eacute; tarjeta debe cambiar para que la cadena vuelva a coincidir.'
+        }
+      },
+      {
+        title: 'Ruta del ciclista',
+        icon: 'fa-route',
+        lead: 'En la recta, un mismo punto tambi&eacute;n puede escribirse de tres formas.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si el punto cae en 3 de 4 tramos, tambi&eacute;n puede leerse como 0.75 y 75%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🚲 Recta de ejemplo', B.line(4, 3), '', 'theme-sky') +
+            B.panel('🧭 Mismo punto', B.equivRow([B.fracChip('3','4'), B.decChip('0.75'), B.pctChip('75%')]), '', 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'ruta_equiv_vnv',
+          prompt: '&iquest;Qu&eacute; tr&iacute;o coincide con el punto del reto?',
+          supportHtml: '<div class="support-box theme-sky"><div class="support-title">🚲 Ruta del reto</div>' + B.line(10, 7) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🚲 Ruta coral', '', B.equivRow([B.fracChip('7','10'), B.decChip('0.70'), B.pctChip('70%')]), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🚲 Ruta jade', '', B.equivRow([B.fracChip('7','10'), B.decChip('0.07'), B.pctChip('7%')]), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🚲 Ruta cielo', '', B.equivRow([B.fracChip('7','100'), B.decChip('0.70'), B.pctChip('70%')]), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🚲 Ruta sol', '', B.equivRow([B.fracChip('7','10'), B.decChip('0.70'), B.pctChip('17%')]), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Exacto! Ese punto se lee como 7/10, 0.70 y 70%.',
+          warn: 'Identifica primero la fracci&oacute;n del punto y luego busca el tr&iacute;o equivalente.'
+        }
+      },
+      {
+        title: 'Barra de jugos',
+        icon: 'fa-scale-balanced',
+        lead: 'Para comparar dos cantidades, conviene escribir ambas en la misma forma.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">3/5 se puede convertir a 0.60. 58% se puede convertir a 0.58. Ya con el mismo formato, la comparaci&oacute;n se vuelve clara.</p></div>' +
+          '<div class="formula-board">' +
+            B.formula('🥤 Frasco A', '3/5 → 0.60', 'theme-coral') +
+            B.formula('🧃 Frasco B', '58% → 0.58', 'theme-mint') +
+            B.formula('⚖️ Comparaci&oacute;n', '0.60 &gt; 0.58', 'theme-indigo') +
+          '</div>' +
+          '<div class="model-grid">' +
+            B.panel('🥤 Frasco A', B.strip(5, 3), 'Tres partes de cinco.', 'theme-coral') +
+            B.panel('🧃 Frasco B', B.grid(58), 'Cincuenta y ocho de cien.', 'theme-mint') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'jugos_comparacion_vnv',
+          prompt: '&iquest;Qu&eacute; tarjeta compara bien los dos frascos?',
+          supportHtml: '<div class="support-box theme-mint"><div class="support-title">🥤 Caso del reto</div><div class="model-grid">' + B.panel('🥤 A', B.strip(5, 3), '', 'theme-coral') + B.panel('🧃 B', B.grid(58), '', 'theme-mint') + '</div><div class="hint-line">Primero convierte. Despu&eacute;s compara.</div></div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(compareCard('🥤 Tarjeta coral', B.decChip('0.60'), '&gt;', B.decChip('0.58'), 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(compareCard('🥤 Tarjeta jade', B.decChip('0.60'), '&lt;', B.decChip('0.58'), 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(compareCard('🥤 Tarjeta cielo', B.decChip('0.50'), '&gt;', B.decChip('0.58'), 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(compareCard('🥤 Tarjeta sol', B.decChip('0.60'), '=', B.decChip('0.58'), 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Correcto! 0.60 es mayor que 0.58, as&iacute; que el frasco A tiene m&aacute;s.',
+          warn: 'Revisa si ambas cantidades ya est&aacute;n en decimal y luego compara el signo.'
+        }
+      },
+      {
+        title: 'Podio del laboratorio',
+        icon: 'fa-arrow-down-short-wide',
+        lead: 'Para ordenar cantidades mixtas, puedes imaginar todas como porcentaje.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">35% es menor que 3/8, porque 3/8 vale 37.5%. 0.40 vale 40%. 1/2 vale 50%.</p></div>' +
+          '<div class="formula-board">' +
+            B.formula('🧪 3/8', '37.5%', 'theme-indigo') +
+            B.formula('🔬 0.40', '40%', 'theme-sky') +
+            B.formula('🧪 1/2', '50%', 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'sequence', errorKey: 'podio_laboratorio_vnv',
+          prompt: 'Ordena las tarjetas de menor a mayor.',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">🧪 Tarjetas del reto</div><div class="hint-line">Convierte mentalmente antes de ordenar.</div></div>',
+          items: [
+            { value: '35', html: B.choice(B.ticket('🧪 Ficha coral', '', B.pctChip('35%'), '', 'theme-coral'), '', '') },
+            { value: '38', html: B.choice(B.ticket('🧪 Ficha jade', '', B.fracChip('3','8'), '', 'theme-jade'), '', '') },
+            { value: '040', html: B.choice(B.ticket('🧪 Ficha cielo', '', B.decChip('0.40'), '', 'theme-sky'), '', '') },
+            { value: '12', html: B.choice(B.ticket('🧪 Ficha sol', '', B.fracChip('1','2'), '', 'theme-gold'), '', '') }
+          ],
+          correctOrder: ['35', '38', '040', '12'],
+          ok: '&iexcl;Muy bien! Ordenaste correctamente las cantidades mixtas.',
+          warn: 'Convierte cada tarjeta a una misma escala antes de decidir el orden.'
+        }
+      },
+      {
+        title: 'Feria de descuentos',
+        icon: 'fa-store',
+        lead: 'Cada tienda anuncia su descuento de forma distinta, pero el valor puede compararse.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">1/4 vale 25%, 30% queda igual, 3/8 vale 37.5% y 0.40 vale 40%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🏷️ Aurora', B.coupon('Aurora', 'Fracci&oacute;n', B.equivRow([B.fracChip('1','4')]), 'theme-gold'), '', 'theme-gold') +
+            B.panel('🏷️ Brisa', B.coupon('Brisa', 'Porcentaje', B.equivRow([B.pctChip('30%')]), 'theme-sky'), '', 'theme-sky') +
+            B.panel('🏷️ Luna', B.coupon('Luna', 'Fracci&oacute;n', B.equivRow([B.fracChip('3','8')]), 'theme-indigo'), '', 'theme-indigo') +
+            B.panel('🏷️ Bosque', B.coupon('Bosque', 'Decimal', B.equivRow([B.decChip('0.40')]), 'theme-jade'), '', 'theme-jade') +
+          '</div>',
+        activity: {
+          type: 'sequence', errorKey: 'feria_descuentos_vnv',
+          prompt: 'Ordena los descuentos del menor al mayor.',
+          supportHtml: '<div class="support-box theme-gold"><div class="support-title">🏷️ Carteles del reto</div><div class="hint-line">No importa la forma: compara el valor real.</div></div>',
+          items: [
+            { value: 'quarter', html: B.choice(B.coupon('Aurora', 'Fracci&oacute;n', B.equivRow([B.fracChip('1','4')]), 'theme-gold'), '', '') },
+            { value: '30', html: B.choice(B.coupon('Brisa', 'Porcentaje', B.equivRow([B.pctChip('30%')]), 'theme-sky'), '', '') },
+            { value: 'threeeighths', html: B.choice(B.coupon('Luna', 'Fracci&oacute;n', B.equivRow([B.fracChip('3','8')]), 'theme-indigo'), '', '') },
+            { value: '040', html: B.choice(B.coupon('Bosque', 'Decimal', B.equivRow([B.decChip('0.40')]), 'theme-jade'), '', '') }
+          ],
+          correctOrder: ['quarter', '30', 'threeeighths', '040'],
+          ok: '&iexcl;Excelente! Ordenaste correctamente los descuentos.',
+          warn: 'Convierte cada oferta a porcentaje antes de decidir su lugar.'
+        }
+      },
+      {
+        title: 'Centro de rescate de equivalencias',
+        icon: 'fa-handshake-angle',
+        lead: 'Solo un expediente mantiene la equivalencia completa.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Un expediente correcto mantiene la misma cantidad en fracci&oacute;n, decimal y porcentaje.</p></div>' +
+          '<div class="model-grid">' + B.panel('🗂️ Modelo', B.ticket('🗂️ Archivo modelo', '', B.equivRow([B.fracChip('1','8'), B.decChip('0.125'), B.pctChip('12.5%')]), '', 'theme-indigo'), '', 'theme-indigo') + '</div>',
+        activity: {
+          type: 'choice', errorKey: 'rescate_final_vnv',
+          prompt: '&iquest;Qu&eacute; expediente est&aacute; completo?',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">🗂️ Expedientes del cierre</div><div class="hint-line">Revisa cu&aacute;l conserva la equivalencia exacta.</div></div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🗂️ Archivo coral', '', B.equivRow([B.fracChip('1','8'), B.decChip('0.125'), B.pctChip('12.5%')]), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🗂️ Archivo jade', '', B.equivRow([B.fracChip('3','5'), B.decChip('0.6'), B.pctChip('30%')]), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🗂️ Archivo cielo', '', B.equivRow([B.fracChip('7','10'), B.decChip('0.7'), B.pctChip('7%')]), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🗂️ Archivo sol', '', B.equivRow([B.fracChip('1','4'), B.decChip('0.25'), B.pctChip('2.5%')]), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Excelente cierre! Encontraste el expediente completo.',
+          warn: 'Revisa si las tres tarjetas mantienen el mismo valor.'
+        }
+      }
+    ];
+
+    window.EquivVisualVerbalEngine.boot({
+      contenidoId: 6,
+      nivel: 'dificil',
+      estilo: 'visual_no_verbal',
+      sectionPrefix: 'equiv_vnv_dificil',
+      pages: pages
+    });
+  </script>
+</body>
+</html>

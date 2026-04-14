@@ -1,0 +1,816 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - La Tierra (Nivel Fácil)</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #0277bd, #01579b);
+      min-height: 100vh;
+      color: white;
+    }
+    
+    .quiz-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 3px solid #ffd600;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .quiz-container::before {
+      content: "⭐";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 40px;
+      opacity: 0.1;
+      transform: rotate(-15deg);
+    }
+    
+    .quiz-container::after {
+      content: "\1F30D";
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 50px;
+      opacity: 0.1;
+    }
+    
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .quiz-header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: #ffd600;
+      text-shadow: 3px 3px 0 #01579b;
+    }
+    
+    .badge-intentos {
+      background: #ffd600;
+      color: #01579b;
+      padding: 5px 15px;
+      border-radius: 30px;
+      font-weight: 700;
+      display: inline-block;
+      border: 2px solid white;
+    }
+    
+    .pregunta-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-left: 5px solid #ffd600;
+      animation: slideIn 0.5s ease;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .pregunta-numero {
+      font-size: 14px;
+      color: #ffd600;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    
+    .pregunta-texto {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 15px 0;
+    }
+    
+    .contexto-ejercicio {
+      background: rgba(0,0,0,0.2);
+      border-left: 4px solid #ffd600;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    
+    .opciones {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .opcion-btn {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      color: white;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .opcion-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.3);
+      border-color: #ffd600;
+      transform: translateX(5px) scale(1.02);
+    }
+    
+    .opcion-btn.correcta {
+      background: rgba(76,175,80,0.4);
+      border-color: #81c784;
+      animation: pulseVerde 0.5s;
+    }
+    
+    .opcion-btn.incorrecta {
+      background: rgba(244,67,54,0.4);
+      border-color: #ef9a9a;
+      animation: shake 0.3s;
+    }
+    
+    @keyframes pulseVerde {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); background: rgba(76,175,80,0.6); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    .opcion-btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    
+    .feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+      font-weight: 600;
+      animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .feedback.visible {
+      display: block;
+    }
+    
+    .feedback.correcto {
+      background: rgba(76,175,80,0.3);
+      color: #c8e6c9;
+      border-left: 4px solid #4caf50;
+    }
+    
+    .feedback.incorrecto {
+      background: rgba(244,67,54,0.3);
+      color: #ffcdd2;
+      border-left: 4px solid #f44336;
+    }
+    
+    .btn-quiz {
+      background: #ffd600;
+      color: #01579b;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      margin: 10px;
+      border: 3px solid white;
+      box-shadow: 0 4px 0 #b26a00;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-quiz::after {
+      content: "\26A1";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255,255,255,0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+    
+    .btn-quiz:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 0 #b26a00;
+    }
+    
+    .btn-quiz:active::after {
+      animation: ripple 0.3s ease-out;
+    }
+    
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+    
+    .btn-secundario {
+      background: white;
+      color: #01579b;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      border: 3px solid #ffd600;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+    
+    .btn-secundario:hover {
+      transform: scale(1.05);
+      background: #ffd600;
+    }
+    
+    .progreso-quiz {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 30px 0;
+    }
+    
+    .punto {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 3px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .punto.respondido {
+      background: #ffd600;
+      border-color: white;
+      color: #01579b;
+    }
+    
+    .punto.activo {
+      background: white;
+      border-color: #ffd600;
+      color: #01579b;
+      transform: scale(1.2);
+    }
+    
+    .punto.correcto {
+      background: #4caf50;
+      border-color: white;
+      color: white;
+    }
+    
+    .resultado {
+      text-align: center;
+      padding: 30px;
+      display: none;
+      animation: popIn 0.5s;
+    }
+    
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    .resultado.visible {
+      display: block;
+    }
+    
+    .resultado-emoji {
+      font-size: 6rem;
+      margin-bottom: 10px;
+      animation: bounce 1s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .resultado-titulo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.5rem;
+      color: #ffd600;
+    }
+    
+    .resultado-puntaje {
+      font-size: 5rem;
+      font-weight: 900;
+      color: #ffd600;
+      text-shadow: 3px 3px 0 #01579b;
+      margin: 15px 0;
+    }
+    
+    .contador-estrellas {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
+    .estrella {
+      font-size: 2rem;
+      color: #ffd600;
+      opacity: 0.3;
+      transition: all 0.3s;
+    }
+    
+    .estrella.obtenida {
+      opacity: 1;
+      animation: estrellaBrillo 0.5s;
+    }
+    
+    @keyframes estrellaBrillo {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); color: white; }
+      100% { transform: scale(1); }
+    }
+
+    .timer-container {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid #ffd600;
+    }
+
+    .timer-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .timer-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffd600;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <i class="fas fa-star fa-3x" style="color: #ffd600;"></i>
+    <h1>Mini-Quiz</h1>
+    <p class="lead">La Tierra · Nivel Fácil</p>
+    <div class="badge-intentos">
+      <i class="fas fa-trophy me-2"></i> 4/5 para avanzar
+    </div>
+  </div>
+  
+  <!-- Timer -->
+  <div class="timer-container">
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
+    <span class="timer-value" id="timerDisplay">00:00</span>
+  </div>
+  
+  <!-- Puntos de progreso -->
+  <div class="progreso-quiz" id="progresoQuiz">
+    <div class="punto activo" data-i="0">1</div>
+    <div class="punto" data-i="1">2</div>
+    <div class="punto" data-i="2">3</div>
+    <div class="punto" data-i="3">4</div>
+    <div class="punto" data-i="4">5</div>
+  </div>
+  
+  <!-- Contenedor de estrellas (aparece al final) -->
+  <div class="contador-estrellas" id="contadorEstrellas" style="display: none;">
+    <span class="estrella" id="estrella1">⭐</span>
+    <span class="estrella" id="estrella2">⭐</span>
+    <span class="estrella" id="estrella3">⭐</span>
+    <span class="estrella" id="estrella4">⭐</span>
+    <span class="estrella" id="estrella5">⭐</span>
+  </div>
+  
+  <!-- Preguntas -->
+  <div id="preguntasContainer"></div>
+  
+  <!-- Botones de navegación -->
+  <div class="text-center" id="navBotones">
+    <button class="btn-secundario" onclick="anteriorPregunta()" id="btnAnterior" style="display: none;">
+      <i class="fas fa-arrow-left me-2"></i> Anterior
+    </button>
+    <button class="btn-quiz" onclick="siguientePregunta()" id="btnSiguiente">
+      Siguiente <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+    <button class="btn-quiz" onclick="enviarQuiz()" id="btnEnviar" style="display: none;">
+      <i class="fas fa-check me-2"></i> Enviar
+    </button>
+  </div>
+  
+  <!-- Resultado -->
+  <div class="resultado" id="resultado">
+    <div class="resultado-emoji" id="resultadoEmoji">&#127942;</div>
+    <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
+    <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
+    <p class="mb-4" id="resultadoMensaje"></p>
+    <p class="text-white-50" id="resultadoTiempo"></p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <button class="btn-quiz" onclick="volverAlContenido()">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+      </button>
+      <button class="btn-quiz" style="background: white;" id="btnSiguienteNivel" onclick="irSiguienteNivel()">
+        Siguiente nivel <i class="fas fa-arrow-right ms-2"></i>
+      </button>
+      <button class="btn-quiz" style="background: #f44336; color: white;" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+        <i class="fas fa-redo me-2"></i> Reintentar
+      </button>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  // ===== VARIABLES =====
+  let fechaInicio = new Date();
+  let timerInterval = null;
+  let estiloUsuario = null;
+
+  // ===== SISTEMA DE SONIDOS =====
+  const sonidos = {
+    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    incorrecto: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+    click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+    completar: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+  };
+
+  Object.values(sonidos).forEach(s => {
+    if (s.src) {
+      s.volume = 0.3;
+      s.load();
+    }
+  });
+
+  function reproducirSonido(nombre) {
+    if (sonidos[nombre] && sonidos[nombre].src) {
+      sonidos[nombre].currentTime = 0;
+      sonidos[nombre].play().catch(() => {});
+    }
+  }
+
+  // ===== OBTENER ESTILO DEL USUARIO =====
+  async function obtenerEstiloUsuario() {
+    try {
+      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+      const data = await res.json();
+      estiloUsuario = data.estilo || 'visual_verbal';
+    } catch (e) {
+      console.error('Error al obtener estilo:', e);
+      estiloUsuario = 'visual_verbal';
+    }
+  }
+
+  // ===== FUNCION PARA ACTUALIZAR EL TIMER =====
+  function actualizarTimer() {
+    const ahora = new Date();
+    const diferencia = Math.floor((ahora - fechaInicio) / 1000);
+    const minutos = Math.floor(diferencia / 60);
+    const segundos = diferencia % 60;
+    document.getElementById('timerDisplay').innerText = 
+      `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+  }
+
+  // ===== PREGUNTAS CON CONTEXTO NEUTRO (NO revelan la respuesta) =====
+  const preguntas = [
+    {
+      texto: "¿Qué línea imaginaria divide la Tierra en hemisferio norte y hemisferio sur?",
+      contexto: "El planeta se divide en dos mitades iguales por una línea horizontal.",
+      opciones: ["Meridiano de Greenwich", "Ecuador", "Trópico de Cáncer", "Círculo Polar Ártico"],
+      correcta: 1,
+      explicacion: "El Ecuador es la línea que divide la Tierra en dos mitades iguales: el hemisferio norte y el hemisferio sur."
+    },
+    {
+      texto: "¿Cuál es la forma de la Tierra?",
+      contexto: "Los científicos han estudiado la forma real de nuestro planeta.",
+      opciones: ["Esfera perfecta", "Esfera achatada en los polos", "Plana", "Cúbica"],
+      correcta: 1,
+      explicacion: "La Tierra no es una esfera perfecta. Está ligeramente achatada en los polos y abultada en el Ecuador."
+    },
+    {
+      texto: "¿Cuántos puntos cardinales principales existen?",
+      contexto: "Son las direcciones básicas que se usan para orientarse.",
+      opciones: ["2", "3", "4", "6"],
+      correcta: 2,
+      explicacion: "Los cuatro puntos cardinales son: Norte, Sur, Este y Oeste."
+    },
+    {
+      texto: "¿En qué zona térmica se encuentra la mayor parte de México?",
+      contexto: "Las zonas térmicas se dividen según la latitud y la cantidad de calor que reciben.",
+      opciones: ["Zona cálida", "Zona templada", "Zona fría", "Zona polar"],
+      correcta: 1,
+      explicacion: "México se encuentra en la zona templada del hemisferio norte, aunque también tiene zonas cálidas en el sur."
+    },
+    {
+      texto: "¿Qué porcentaje de la superficie terrestre está cubierta por agua?",
+      contexto: "Desde el espacio, la Tierra se ve principalmente de color azul.",
+      opciones: ["29%", "51%", "71%", "90%"],
+      correcta: 2,
+      explicacion: "El 71% de la superficie de la Tierra está cubierta por agua, principalmente océanos."
+    }
+  ];
+  
+  let preguntaActual = 0;
+  let respuestasUsuario = new Array(preguntas.length).fill(null);
+  let respuestasCorrectas = new Array(preguntas.length).fill(false);
+  let aciertos = 0;
+  const TOTAL = preguntas.length;
+  const MINIMO = 4;
+  
+  function mostrarPregunta() {
+    const container = document.getElementById('preguntasContainer');
+    container.innerHTML = '';
+    
+    const p = preguntas[preguntaActual];
+    const respondida = respuestasUsuario[preguntaActual] !== null;
+    
+    const div = document.createElement('div');
+    div.className = 'pregunta-card';
+    
+    div.innerHTML = `
+      <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+      <div class="pregunta-texto">${p.texto}</div>
+      <div class="contexto-ejercicio"><i class="fas fa-info-circle me-2"></i> ${p.contexto}</div>
+      <div class="opciones" id="opciones-${preguntaActual}"></div>
+      <div class="feedback ${respondida ? 'visible' : ''} ${respuestasCorrectas[preguntaActual] ? 'correcto' : 'incorrecto'}" 
+           id="feedback-${preguntaActual}">
+        ${respondida ? (respuestasCorrectas[preguntaActual] ? '&#9989; ' + p.explicacion : '&#10060; ' + p.explicacion) : ''}
+      </div>
+    `;
+    container.appendChild(div);
+    
+    const opcionesDiv = document.getElementById(`opciones-${preguntaActual}`);
+    p.opciones.forEach((opcion, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opcion-btn';
+      if (respondida) {
+        btn.disabled = true;
+        if (idx === respuestasUsuario[preguntaActual]) {
+          btn.classList.add(respuestasCorrectas[preguntaActual] ? 'correcta' : 'incorrecta');
+        }
+        if (idx === p.correcta) {
+          btn.classList.add('correcta');
+        }
+      }
+      btn.innerHTML = `<i class="fas fa-circle me-2" style="color: #ffd600; font-size: 10px;"></i> ${opcion}`;
+      btn.onclick = () => seleccionarRespuesta(preguntaActual, idx);
+      opcionesDiv.appendChild(btn);
+    });
+    
+    actualizarPuntos();
+    actualizarBotones();
+  }
+  
+  function seleccionarRespuesta(idxPregunta, idxOpcion) {
+    if (respuestasUsuario[idxPregunta] !== null) return;
+    
+    reproducirSonido('click');
+    respuestasUsuario[idxPregunta] = idxOpcion;
+    const esCorrecta = idxOpcion === preguntas[idxPregunta].correcta;
+    respuestasCorrectas[idxPregunta] = esCorrecta;
+    
+    aciertos = respuestasCorrectas.filter(v => v === true).length;
+    
+    if (esCorrecta) {
+      reproducirSonido('correcto');
+    } else {
+      reproducirSonido('incorrecto');
+    }
+    
+    mostrarPregunta();
+  }
+  
+  function anteriorPregunta() {
+    reproducirSonido('click');
+    if (preguntaActual > 0) {
+      preguntaActual--;
+      mostrarPregunta();
+    }
+  }
+  
+  function siguientePregunta() {
+    reproducirSonido('click');
+    if (preguntaActual < TOTAL - 1) {
+      preguntaActual++;
+      mostrarPregunta();
+    }
+  }
+  
+  function actualizarPuntos() {
+    const puntos = document.querySelectorAll('.punto');
+    puntos.forEach((punto, i) => {
+      punto.classList.remove('activo', 'respondido', 'correcto');
+      if (respuestasUsuario[i] !== null) {
+        punto.classList.add('respondido');
+        if (respuestasCorrectas[i]) {
+          punto.classList.add('correcto');
+        }
+      }
+      if (i === preguntaActual) {
+        punto.classList.add('activo');
+      }
+    });
+  }
+  
+  function actualizarBotones() {
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const btnEnviar = document.getElementById('btnEnviar');
+    
+    btnAnterior.style.display = preguntaActual > 0 ? 'inline-block' : 'none';
+    
+    if (preguntaActual === TOTAL - 1) {
+      btnSiguiente.style.display = 'none';
+      btnEnviar.style.display = 'inline-block';
+    } else {
+      btnSiguiente.style.display = 'inline-block';
+      btnEnviar.style.display = 'none';
+    }
+  }
+  
+  function mostrarEstrellas() {
+    const contenedor = document.getElementById('contadorEstrellas');
+    contenedor.style.display = 'flex';
+    
+    for (let i = 1; i <= 5; i++) {
+      const estrella = document.getElementById(`estrella${i}`);
+      estrella.classList.remove('obtenida');
+      if (i <= aciertos) {
+        setTimeout(() => {
+          estrella.classList.add('obtenida');
+        }, i * 200);
+      }
+    }
+  }
+  
+  async function enviarQuiz() {
+    const sinResponder = respuestasUsuario.filter(r => r === null).length;
+    if (sinResponder > 0) {
+      alert(`\u26A0\uFE0F Te faltan ${sinResponder} preguntas por responder`);
+      return;
+    }
+    
+    if (timerInterval) clearInterval(timerInterval);
+    
+    const fechaFin = new Date();
+    const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
+    
+    reproducirSonido('completar');
+    
+    document.getElementById('preguntasContainer').style.display = 'none';
+    document.getElementById('progresoQuiz').style.display = 'none';
+    document.getElementById('navBotones').style.display = 'none';
+    document.getElementById('contadorEstrellas').style.display = 'flex';
+    
+    mostrarEstrellas();
+    
+    setTimeout(async () => {
+      const resultado = document.getElementById('resultado');
+      resultado.classList.add('visible');
+      
+      const aprobado = aciertos >= MINIMO;
+      const pct = Math.round((aciertos / TOTAL) * 100);
+      
+      document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
+      document.getElementById('resultadoEmoji').innerHTML = aprobado ? '&#127942;' : '&#128218;';
+      document.getElementById('resultadoTitulo').innerHTML = aprobado ? '¡Lo lograste!' : 'Sigue practicando';
+      document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
+      
+      if (aprobado) {
+        document.getElementById('resultadoMensaje').innerHTML = 
+          `¡Excelente! Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Has desbloqueado el siguiente nivel.`;
+        document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
+        document.getElementById('btnReintentar').style.display = 'none';
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
+      } else {
+        document.getElementById('resultadoMensaje').innerHTML = 
+          `Obtuviste ${pct}% (${aciertos} de ${TOTAL}). Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar. ¡Inténtalo de nuevo!`;
+        document.getElementById('btnSiguienteNivel').style.display = 'none';
+        document.getElementById('btnReintentar').style.display = 'inline-block';
+        await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
+      }
+    }, 1500);
+  }
+  
+      function obtenerSessionUuidActual(nivel) {
+    try {
+      const key = `reforzamiento_sesion_1_${nivel}_${estiloUsuario}`;
+      const raw = window.sessionStorage.getItem(key);
+      if (!raw) return null;
+      const meta = JSON.parse(raw);
+      return typeof meta.sessionUuid === 'string' ? meta.sessionUuid : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
+    try {
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 1,
+          nivel_completado: 'facil',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: aprobado,
+          aciertos: aciertos,
+          total_preguntas: total,
+          tiempo_segundos: tiempoSegundos,
+          fecha_inicio: fechaInicio.toISOString(),
+          errores: Math.max(total - aciertos, 0),
+          session_uuid: obtenerSessionUuidActual('facil')
+        })
+      });
+    } catch(e) {
+      console.error('Error guardando progreso:', e);
+    }
+  }
+  
+  function reiniciarQuiz() {
+    preguntaActual = 0;
+    respuestasUsuario = new Array(preguntas.length).fill(null);
+    respuestasCorrectas = new Array(preguntas.length).fill(false);
+    aciertos = 0;
+    fechaInicio = new Date();
+    
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(actualizarTimer, 1000);
+    
+    document.getElementById('preguntasContainer').style.display = 'block';
+    document.getElementById('progresoQuiz').style.display = 'flex';
+    document.getElementById('navBotones').style.display = 'block';
+    document.getElementById('contadorEstrellas').style.display = 'none';
+    document.getElementById('resultado').classList.remove('visible');
+    
+    mostrarPregunta();
+  }
+  
+  function volverAlContenido() {
+    window.location.href = '/contenidos/geografia/la-tierra/menu.html';
+  }
+  
+  async function irSiguienteNivel() {
+    if (!estiloUsuario) await obtenerEstiloUsuario();
+    window.location.href = `../normal/${estiloUsuario}.html`;
+  }
+  
+  // INICIALIZAR
+  (async function init() {
+    await obtenerEstiloUsuario();
+    mostrarPregunta();
+    timerInterval = setInterval(actualizarTimer, 1000);
+  })();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,4 +1,4 @@
-﻿const SLUG_CONTENIDO = 'seguir-instrucciones-espaciales';
+const SLUG_CONTENIDO = 'seguir-instrucciones-espaciales';
 const AREA_CONTENIDO = 'matematicas';
 
 let estadoContenido = null;

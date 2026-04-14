@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Normal &middot; Kinest&eacute;sico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;">
+      <i class="fas fa-house"></i>
+    </button>
+    <h1>PORCENTAJES</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Normal</div>
+    <div class="badge-estilo">Kinest&eacute;sico</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 6</span>
+    <div class="barra-fondo">
+      <div class="barra-relleno" id="barraRelleno"></div>
+    </div>
+    <span class="progreso-num" id="progresoNum">17%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-table-cells me-2"></i>Porcentaje significa de cada 100</h2>
+
+        <div class="texto-destacado">
+          Un porcentaje indica cu&aacute;ntas partes hay de un total de <strong>100</strong>. Si en una cuadr&iacute;cula de 100 espacios hay 18 coloreados, hablamos de <strong>18%</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> imagina un &aacute;lbum con 100 espacios para estampas. Si se llenan 47 espacios, se puede decir que el &aacute;lbum est&aacute; al <strong>47%</strong>.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP1"></div>
+            <div class="modelo-nota">En este tablero hay 18 de 100 espacios marcados. Eso es <strong>18%</strong>.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra cada porcentaje a la cuadr&iacute;cula correcta.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tablero A</div>
+              <div id="ejP1A"></div>
+              <div class="caja-destino" id="dropP1A" data-accept="18%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tablero B</div>
+              <div id="ejP1B"></div>
+              <div class="caja-destino" id="dropP1B" data-accept="47%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tablero C</div>
+              <div id="ejP1C"></div>
+              <div class="caja-destino" id="dropP1C" data-accept="72%">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP1">
+            <div class="ficha" draggable="true" data-value="72%">72%</div>
+            <div class="ficha" draggable="true" data-value="18%">18%</div>
+            <div class="ficha" draggable="true" data-value="47%">47%</div>
+          </div>
+
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">Muy bien. Ya reconoces porcentajes como partes de una cuadr&iacute;cula de 100.</div>
+          <div id="feedback1warn" class="mensaje-feedback mensaje-warn">Esa ficha no coincide. Cuenta otra vez cu&aacute;ntos cuadritos est&aacute;n coloreados.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-right-arrow-left me-2"></i>Puente entre decimal y porcentaje</h2>
+
+        <div class="texto-destacado">
+          Un decimal y un porcentaje pueden representar la misma cantidad. Por ejemplo, <strong>0.47</strong> significa 47 de 100, as&iacute; que tambi&eacute;n se escribe como <strong>47%</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> cuando un decimal tiene dos cifras, puedes pensarlo como una cantidad de cada 100. Por eso <strong>0.58</strong> es lo mismo que <strong>58%</strong>.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP2"></div>
+            <div class="modelo-nota">Este puente muestra que <strong>0.47</strong> y <strong>47%</strong> representan la misma cantidad.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra el porcentaje que corresponde a cada decimal.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tarjeta A</div>
+              <div id="ejP2A"></div>
+              <div class="caja-destino" id="dropP2A" data-accept="18%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tarjeta B</div>
+              <div id="ejP2B"></div>
+              <div class="caja-destino" id="dropP2B" data-accept="47%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Tarjeta C</div>
+              <div id="ejP2C"></div>
+              <div class="caja-destino" id="dropP2C" data-accept="58%">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP2">
+            <div class="ficha" draggable="true" data-value="47%">47%</div>
+            <div class="ficha" draggable="true" data-value="18%">18%</div>
+            <div class="ficha" draggable="true" data-value="58%">58%</div>
+          </div>
+
+          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">Excelente. Ya usas el decimal como puente para encontrar el porcentaje correcto.</div>
+          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">Ese porcentaje no corresponde. Revisa el decimal y piensa cu&aacute;ntas partes de 100 representa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-link me-2"></i>Misma cantidad, otra escritura</h2>
+
+        <div class="texto-destacado">
+          Una misma cantidad puede escribirse de varias formas. Por ejemplo, <strong>0.35</strong>, <strong>35%</strong> y una cuadr&iacute;cula con 35 de 100 partes coloreadas representan lo mismo.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> para decidir si dos escrituras equivalen, piensa si ambas describen la misma cantidad del entero. No importa que una est&eacute; escrita como decimal y otra como porcentaje.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP3"></div>
+            <div class="modelo-nota"><span class="decimal-pill">0.35</span> y <span class="percent-pill">35%</span> representan la misma parte del tablero.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra la tarjeta que completa correctamente cada grupo equivalente.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Grupo A</div>
+              <div id="ejP3A"></div>
+              <div class="modelo-nota"><span class="decimal-pill">0.35</span></div>
+              <div class="caja-destino" id="dropP3A" data-accept="35%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Grupo B</div>
+              <div id="ejP3B"></div>
+              <div class="modelo-nota"><span class="percent-pill">65%</span></div>
+              <div class="caja-destino" id="dropP3B" data-accept="0.65">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Grupo C</div>
+              <div id="ejP3C"></div>
+              <div class="modelo-nota"><span class="percent-pill">8%</span></div>
+              <div class="caja-destino" id="dropP3C" data-accept="0.08">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP3">
+            <div class="ficha" draggable="true" data-value="0.08">0.08</div>
+            <div class="ficha" draggable="true" data-value="35%">35%</div>
+            <div class="ficha" draggable="true" data-value="0.65">0.65</div>
+          </div>
+
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">Correcto. Ya reconoces grupos equivalentes entre cuadr&iacute;culas, decimales y porcentajes.</div>
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">Esa ficha no completa bien el grupo. Comprueba si describe la misma cantidad que el tablero.</div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Cu&aacute;l porcentaje es mayor</h2>
+
+        <div class="texto-destacado">
+          Si dos porcentajes describen partes del mismo entero, el porcentaje mayor representa una cantidad m&aacute;s grande. Por eso <strong>45%</strong> es menor que <strong>55%</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> puedes comparar porcentajes con los signos <strong>&gt;</strong>, <strong>&lt;</strong> y <strong>=</strong>. Elige el signo que deja verdadera la comparaci&oacute;n.
+          <div class="simbolos-mini">
+            <span class="simbolo-chip">&gt; mayor que</span>
+            <span class="simbolo-chip">&lt; menor que</span>
+            <span class="simbolo-chip">= igual que</span>
+          </div>
+        </div>
+
+        <div class="compare-layout">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Tarjeta izquierda</div>
+            <div id="demoP4A"></div>
+            <div class="modelo-nota"><span class="percent-pill">45%</span></div>
+          </div>
+          <div class="percent-pill">&lt;</div>
+          <div class="modelo-card">
+            <div class="modelo-titulo">Tarjeta derecha</div>
+            <div id="demoP4B"></div>
+            <div class="modelo-nota"><span class="percent-pill">55%</span></div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra el signo correcto entre <strong>48%</strong> y <strong>52%</strong>.</div>
+
+          <div class="compare-layout">
+            <div class="modelo-card">
+              <div class="modelo-titulo">48%</div>
+              <div id="ejP4A"></div>
+            </div>
+            <div class="signo-drop" id="dropP4Sign" data-accept="<">Suelta aqu&iacute;</div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">52%</div>
+              <div id="ejP4B"></div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP4">
+            <div class="ficha" draggable="true" data-value=">">&gt;</div>
+            <div class="ficha" draggable="true" data-value="=">=</div>
+            <div class="ficha" draggable="true" data-value="<">&lt;</div>
+          </div>
+
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">Muy bien. <strong>48% &lt; 52%</strong> porque 48 de 100 es menos que 52 de 100.</div>
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">Ese signo no corresponde. Compara cu&aacute;ntos cuadritos tiene cada tarjeta.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-cookie-bite me-2"></i>Cuando el entero tiene 20 partes</h2>
+
+        <div class="texto-destacado">
+          Si el entero se divide en <strong>20</strong> partes iguales, cada parte vale <strong>5%</strong>. Por eso 13 de 20 equivale a <strong>65%</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> algunos modelos no est&aacute;n divididos en 100 partes, pero aun as&iacute; se pueden convertir a porcentaje. Solo debes pensar cu&aacute;ntas partes del entero se tomaron.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP5"></div>
+            <div class="modelo-nota">Esta barra tiene 13 de 20 partes coloreadas. Eso equivale a <strong>65%</strong>.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra el porcentaje correcto a cada barra.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra A</div>
+              <div id="ejP5A"></div>
+              <div class="caja-destino" id="dropP5A" data-accept="45%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra B</div>
+              <div id="ejP5B"></div>
+              <div class="caja-destino" id="dropP5B" data-accept="65%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra C</div>
+              <div id="ejP5C"></div>
+              <div class="caja-destino" id="dropP5C" data-accept="80%">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP5">
+            <div class="ficha" draggable="true" data-value="80%">80%</div>
+            <div class="ficha" draggable="true" data-value="45%">45%</div>
+            <div class="ficha" draggable="true" data-value="65%">65%</div>
+          </div>
+
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">Excelente. Ya puedes reconocer porcentajes incluso cuando el entero tiene 20 partes.</div>
+          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide. Cuenta cu&aacute;ntas partes de 20 est&aacute;n coloreadas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-flag-checkered me-2"></i>Reto final</h2>
+
+        <div class="texto-destacado">
+          &Uacute;ltima misi&oacute;n: une porcentajes con modelos distintos y demuestra que ya puedes moverte entre porcentajes y decimales.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> la misma cantidad puede aparecer como cuadr&iacute;cula, como decimal o como barra de partes iguales. Lo importante es identificar cu&aacute;nto del entero representa.
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra cada porcentaje al modelo correcto.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo A</div>
+              <div id="ejP6A"></div>
+              <div class="caja-destino" id="dropP6A" data-accept="58%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo B</div>
+              <div id="ejP6B"></div>
+              <div class="caja-destino" id="dropP6B" data-accept="35%">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo C</div>
+              <div id="ejP6C"></div>
+              <div class="caja-destino" id="dropP6C" data-accept="65%">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP6">
+            <div class="ficha" draggable="true" data-value="35%">35%</div>
+            <div class="ficha" draggable="true" data-value="65%">65%</div>
+            <div class="ficha" draggable="true" data-value="58%">58%</div>
+          </div>
+
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">Excelente. Ya dominaste la base del nivel normal y el mini-quiz est&aacute; desbloqueado.</div>
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide con el modelo. Revisa si el tablero, el decimal o la barra representan ese porcentaje.</div>
+        </div>
+
+        <div class="text-center">
+          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Normal &middot; Visual / No Verbal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>PORCENTAJES VISUALES</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Normal</div>
+    <div class="badge-estilo">Visual / No Verbal</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 6</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">0%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="tarjeta">
+      <h2 class="titulo-pagina" id="tituloPagina"></h2>
+      <div class="texto-destacado" id="leadPagina"></div>
+      <div id="contenidoPagina"></div>
+      <div class="activity-box">
+        <h3>Actividad de reforzamiento</h3>
+        <div class="activity-prompt" id="promptActividad"></div>
+        <div id="supportActividad"></div>
+        <div id="rootActividad"></div>
+        <div class="action-row">
+          <button class="btn-accion" id="btnVerificar">Verificar</button>
+          <button class="btn-accion" id="btnBorrar">Borrar selecci&oacute;n</button>
+        </div>
+        <div id="feedbackOk" class="mensaje-feedback mensaje-ok"></div>
+        <div id="feedbackWarn" class="mensaje-feedback mensaje-warn"></div>
+      </div>
+      <div class="text-center" id="quizWrap"></div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/equivalencias-numericas/recursos/js/visual-verbal-engine.js"></script>
+  <script>
+    const B = window.EquivVisualVerbalBuilders;
+    const pages = [
+      {
+        title: 'De cada 100',
+        icon: 'fa-table-cells',
+        lead: 'Un porcentaje indica cu&aacute;ntas partes hay de un total de 100.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si 18 cuadros est&aacute;n coloreados, vemos 18%. Si 72 cuadros est&aacute;n coloreados, vemos 72%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🌱 18 de 100', B.grid(18), B.pctChip('18%'), 'theme-jade') +
+            B.panel('🌱 72 de 100', B.grid(72), B.pctChip('72%'), 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'porcentaje_grid',
+          prompt: '&iquest;Qu&eacute; porcentaje muestra el tablero del reto?',
+          supportHtml: '<div class="support-box theme-jade"><div class="support-title">🌱 Tablero del reto</div>' + B.grid(47) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.pctChip('47%'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.pctChip('74%'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.pctChip('18%'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.pctChip('72%'), '', '') }
+          ],
+          ok: '&iexcl;Correcto! 47 de 100 se lee como 47%.',
+          warn: 'Cuenta cu&aacute;ntos cuadros coloreados hay de cada 100.'
+        }
+      },
+      {
+        title: 'Puente decimal-porcentaje',
+        icon: 'fa-arrow-right-arrow-left',
+        lead: 'Un decimal y un porcentaje pueden representar la misma cantidad.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">0.47 significa 47 de 100. Por eso tambi&eacute;n se escribe 47%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🌉 Puente visual', B.equivRow([B.decChip('0.47'), B.pctChip('47%')]), '', 'theme-sky') +
+            B.panel('🔲 Mismo valor', B.grid(47), '', 'theme-mint') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'puente_decimal_porcentaje',
+          prompt: '&iquest;Qu&eacute; porcentaje representa el tablero del reto?',
+          supportHtml: '<div class="support-box theme-sky"><div class="support-title">🌉 Tablero del reto</div>' + B.grid(58) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.pctChip('58%'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.pctChip('85%'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.pctChip('5.8%'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.pctChip('50.8%'), '', '') }
+          ],
+          ok: '&iexcl;Muy bien! 58 de 100 tambi&eacute;n se escribe 58%.',
+          warn: 'Piensa en el tablero como una cuadr&iacute;cula de 100 partes.'
+        }
+      },
+      {
+        title: 'Misma cantidad, otra escritura',
+        icon: 'fa-link',
+        lead: 'Una misma cantidad puede verse como tablero, decimal y porcentaje.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si el tablero muestra 35 de 100, tambi&eacute;n puede escribirse como 0.35 y como 35%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🔗 Ejemplo', B.equivRow([B.grid(35), B.decChip('0.35'), B.pctChip('35%')]), '', 'theme-coral') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'misma_cantidad_otra_escritura',
+          prompt: '&iquest;Qu&eacute; grupo mantiene la misma cantidad?',
+          supportHtml: '<div class="support-box theme-coral"><div class="support-title">🔗 Grupo del reto</div>' + B.grid(65) + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🔗 Grupo coral', '', B.equivRow([B.grid(65), B.decChip('0.65'), B.pctChip('65%')]), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🔗 Grupo jade', '', B.equivRow([B.grid(65), B.decChip('0.56'), B.pctChip('56%')]), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🔗 Grupo cielo', '', B.equivRow([B.grid(65), B.decChip('0.65'), B.pctChip('56%')]), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🔗 Grupo sol', '', B.equivRow([B.grid(65), B.decChip('0.35'), B.pctChip('65%')]), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Exacto! Ese grupo conserva la misma cantidad en las tres formas.',
+          warn: 'Revisa si tablero, decimal y porcentaje siguen representando lo mismo.'
+        }
+      },
+      {
+        title: 'Cu&aacute;l porcentaje es mayor',
+        icon: 'fa-scale-balanced',
+        lead: 'Si el entero es el mismo, el porcentaje mayor tiene m&aacute;s partes coloreadas.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">45% es menor que 55% porque el segundo modelo tiene m&aacute;s partes de 100.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('⚖️ 45%', B.grid(45), '', 'theme-coral') +
+            B.panel('⚖️ 55%', B.grid(55), '', 'theme-jade') +
+          '</div>' +
+          '<div class="formula-board">' + B.formula('⚖️ Resultado', '45% &lt; 55%', 'theme-indigo') + '</div>',
+        activity: {
+          type: 'choice', errorKey: 'comparar_porcentajes',
+          prompt: '&iquest;Qu&eacute; signo completa la comparaci&oacute;n?',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">⚖️ Reto visual</div><div class="model-grid">' + B.panel('Izquierdo', B.grid(48), '', 'theme-coral') + B.panel('Derecho', B.grid(52), '', 'theme-jade') + '</div></div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.wordChip('&lt;', 'dec'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.wordChip('&gt;', 'pct'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.wordChip('=', 'word'), '', '') }
+          ],
+          ok: '&iexcl;Correcto! 48% es menor que 52%.',
+          warn: 'Mira cu&aacute;l tablero tiene m&aacute;s espacios coloreados.'
+        }
+      },
+      {
+        title: 'Cuando el entero tiene 20 partes',
+        icon: 'fa-cookie-bite',
+        lead: 'Si el entero se divide en 20 partes, cada parte vale 5%.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">5 partes valen 25%, 10 partes valen 50% y 16 partes valen 80%.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🍪 Ejemplo', B.strip(20, 13), B.pctChip('65%'), 'theme-gold') +
+            B.panel('🍪 Otra barra', B.strip(20, 16), B.pctChip('80%'), 'theme-coral') +
+          '</div>' +
+          '<div class="formula-board">' + B.formula('🍪 Regla visual', '16 de 20 = 80%', 'theme-gold') + '</div>',
+        activity: {
+          type: 'choice', errorKey: 'veinte_partes',
+          prompt: '&iquest;Qu&eacute; modelo representa 80%?',
+          supportHtml: '<div class="support-box theme-gold"><div class="support-title">🍪 Porcentaje del reto</div>' + B.pctChip('80%') + '</div>',
+          choices: [
+            { value: 'a', correct: false, html: B.choice(B.ticket('🍪 Barra coral', '', B.strip(20, 9), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🍪 Barra jade', '', B.strip(20, 13), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: true, html: B.choice(B.ticket('🍪 Barra cielo', '', B.strip(20, 16), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🍪 Barra sol', '', B.strip(20, 10), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Bien! 16 de 20 partes equivalen a 80%.',
+          warn: 'Recuerda que cada parte de 20 vale 5%.'
+        }
+      },
+      {
+        title: 'Reto final',
+        icon: 'fa-flag-checkered',
+        lead: 'Un modelo tambi&eacute;n puede reconocer su porcentaje correcto.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Ya puedes leer tableros de 100 y barras de 20 para decidir qu&eacute; porcentaje representan.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🔲 Modelo 1', B.grid(58), '', 'theme-sky') +
+            B.panel('🔲 Modelo 2', B.grid(35), '', 'theme-coral') +
+            B.panel('🍪 Modelo 3', B.strip(20, 13), '', 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'sequence', errorKey: 'reto_final_normal',
+          prompt: 'Coloca los porcentajes correctos de izquierda a derecha.',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">🎯 Orden del reto</div><div class="hint-line">Modelo 1, Modelo 2 y Modelo 3.</div></div>',
+          items: [
+            { value: '58%', html: B.choice(B.pctChip('58%'), '', '') },
+            { value: '35%', html: B.choice(B.pctChip('35%'), '', '') },
+            { value: '65%', html: B.choice(B.pctChip('65%'), '', '') },
+            { value: '85%', html: B.choice(B.pctChip('85%'), '', '') }
+          ],
+          correctOrder: ['58%', '35%', '65%'],
+          ok: '&iexcl;Excelente! Ya relacionas porcentajes con modelos visuales.',
+          warn: 'Observa cada modelo y decide cu&aacute;ntas partes coloreadas representa.'
+        }
+      }
+    ];
+
+    window.EquivVisualVerbalEngine.boot({
+      contenidoId: 6,
+      nivel: 'normal',
+      estilo: 'visual_no_verbal',
+      sectionPrefix: 'equiv_vnv_normal',
+      pages: pages
+    });
+  </script>
+</body>
+</html>

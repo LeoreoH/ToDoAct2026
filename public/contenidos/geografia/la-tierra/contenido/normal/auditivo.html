@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -9,7 +9,215 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  __BLOCK_
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #e3f2fd;
+      color: #01579b;
+      min-height: 100vh;
+    }
+
+    .cabecera {
+      background: #1976d2; padding: 25px 20px;
+      border-bottom: 6px solid #ffd600; text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .cabecera h1 { font-family: 'Fredoka One', cursive; font-size: 3rem; color: white; text-shadow: 3px 3px 0 #01579b; }
+    .badge-estilo {
+      background: #ffd600; color: #01579b; padding: 12px 35px; border-radius: 50px;
+      font-weight: 800; font-size: 1.3rem; display: inline-block;
+      border: 4px solid white; margin-top: 10px; box-shadow: 0 4px 0 #b26a00;
+    }
+    .badge-nivel {
+      background: #01579b; color: white; padding: 8px 25px; border-radius: 40px;
+      font-weight: 700; font-size: 1.1rem; display: inline-block;
+      margin-left: 15px; border: 2px solid #ffd600;
+    }
+    .progreso-contenedor {
+      background: white; border-radius: 60px; margin: 20px auto; max-width: 700px;
+      padding: 12px 25px; display: flex; align-items: center; gap: 15px;
+      border: 3px solid #1976d2; box-shadow: 0 5px 0 #0d47a1;
+    }
+    .puntos { display: flex; gap: 10px; flex: 1; justify-content: center; }
+    .punto {
+      width: 35px; height: 35px; border-radius: 50%; background: #bbdefb;
+      border: 3px solid #1976d2; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #01579b; transition: all 0.3s;
+    }
+    .punto.activo    { background: #ffd600; transform: scale(1.15); }
+    .punto.completado { background: #4caf50; color: white; border-color: white; }
+
+    .contenedor { max-width: 900px; margin: 0 auto 40px; padding: 0 20px; }
+    .pagina { display: none; animation: fadeIn 0.4s ease; }
+    .pagina.activa { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta-audio {
+      background: white; border-radius: 30px; padding: 25px; margin-bottom: 20px;
+      border: 3px solid #1976d2; box-shadow: 0 8px 0 #0d47a1;
+    }
+    .audio-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .audio-icono {
+      background: #ffd600; color: #01579b; width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 2rem;
+      border: 3px solid #1976d2; box-shadow: 0 4px 0 #b26a00; flex-shrink: 0;
+    }
+    .audio-titulo { font-size: 1.5rem; font-weight: 800; color: #01579b; }
+    .audio-control { width: 100%; margin: 15px 0; }
+    audio { width: 100%; border-radius: 30px; border: 2px solid #1976d2; }
+
+    .imagen-grande {
+      background: #e3f2fd; border: 3px dashed #1976d2; border-radius: 20px;
+      padding: 20px; margin: 15px 0; text-align: center; transition: all 0.3s; cursor: pointer;
+    }
+    .imagen-grande:hover { transform: scale(1.02) rotate(1deg); box-shadow: 0 10px 20px rgba(25,118,210,0.3); }
+    .imagen-geo { width: 100%; max-height: 250px; object-fit: contain; border-radius: 15px; border: 3px solid white; cursor: pointer; }
+    .imagen-geo.ampliada {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      max-width: 90vw; max-height: 90vh; width: auto; height: auto; object-fit: contain;
+      z-index: 1000; border: 4px solid #ffd600; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-radius: 10px;
+    }
+    body.imagen-ampliada::after { content:''; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; }
+    .pie-imagen { color: #01579b; font-size: 1rem; margin-top: 10px; font-weight: 700; font-style: italic; }
+
+    /* =====================================================
+       REFORZAMIENTO AUDITIVO
+    ===================================================== */
+    .reforzamiento-auditivo {
+      background: #1a237e; border: 4px solid #ffd600;
+      border-radius: 30px; padding: 28px; margin-top: 30px;
+    }
+    .ref-titulo {
+      font-family: 'Fredoka One', cursive; font-size: 1.6rem;
+      color: #ffd600; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ref-instruccion { color: #b3c5f7; font-size: 1rem; margin-bottom: 22px; font-weight: 600; }
+
+    .btn-play-pregunta {
+      display: flex; align-items: center; gap: 14px;
+      background: #ffd600; color: #01579b; border: 4px solid white;
+      border-radius: 60px; padding: 14px 28px; font-weight: 800; font-size: 1.15rem;
+      cursor: pointer; transition: all 0.2s; box-shadow: 0 5px 0 #b26a00;
+      margin: 0 auto 22px; width: fit-content;
+    }
+    .btn-play-pregunta:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #b26a00; background: white; }
+    .btn-play-pregunta .icono-play {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #01579b; color: #ffd600;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0; transition: background 0.2s;
+    }
+    .btn-play-pregunta.reproduciendo .icono-play { background: #4caf50; }
+    .btn-play-pregunta.reproduciendo .icono-play i::before { content: '\f04c'; }
+
+    /* Botones de respuesta texto */
+    .opciones-respuesta { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+    .btn-respuesta {
+      background: #283593; color: white; border: 3px solid #7986cb;
+      padding: 12px 28px; border-radius: 50px; font-weight: 800; font-size: 1.05rem;
+      cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 0 #1a237e;
+    }
+    .btn-respuesta:hover { background: #3949ab; transform: translateY(-3px); border-color: #ffd600; }
+    .btn-respuesta.correcto  { background: #1b5e20; border-color: #4caf50; color: #a5d6a7; }
+    .btn-respuesta.incorrecto { background: #7f0000; border-color: #ef5350; color: #ffcdd2; }
+
+    /* Tarjetas de aÃ±o (P2) */
+    .anios-grid { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
+    .card-anio {
+      background: #283593; border: 3px solid #7986cb; border-radius: 20px;
+      padding: 18px 22px; text-align: center; cursor: pointer; transition: all 0.2s;
+      min-width: 100px; box-shadow: 0 4px 0 #1a237e;
+    }
+    .card-anio:hover { background: #3949ab; transform: translateY(-4px); border-color: #ffd600; }
+    .card-anio .num-anio { font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #ffd600; }
+    .card-anio .lbl-anio { font-size: .85rem; color: #b3c5f7; font-weight: 700; margin-top: 4px; }
+    .card-anio.correcto { background: #1b5e20; border-color: #4caf50; }
+    .card-anio.correcto .num-anio { color: #a5d6a7; }
+    .card-anio.incorrecto { background: #7f0000; border-color: #ef5350; pointer-events: none; }
+    .card-anio.incorrecto .num-anio { color: #ffcdd2; }
+    .card-anio.opacado { opacity: 0.3; pointer-events: none; }
+
+    /* Globo hemisferios (P3) */
+    .globo-hemisferios { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+    .hemi-card {
+      background: #283593; border: 3px solid #7986cb; border-radius: 20px;
+      padding: 20px 26px; text-align: center; cursor: pointer; transition: all 0.2s;
+      min-width: 160px; box-shadow: 0 4px 0 #1a237e;
+    }
+    .hemi-card:hover { background: #3949ab; transform: translateY(-4px); border-color: #ffd600; }
+    .hemi-card .hemi-icono { font-size: 2.5rem; margin-bottom: 8px; }
+    .hemi-card .hemi-nombre { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: #ffd600; }
+    .hemi-card .hemi-pais { font-size: .85rem; color: #b3c5f7; font-weight: 700; margin-top: 4px; }
+    .hemi-card.correcto { background: #1b5e20; border-color: #4caf50; }
+    .hemi-card.correcto .hemi-nombre { color: #a5d6a7; }
+    .hemi-card.incorrecto { background: #7f0000; border-color: #ef5350; pointer-events: none; }
+    .hemi-card.incorrecto .hemi-nombre { color: #ffcdd2; }
+    .hemi-card.opacado { opacity: 0.3; pointer-events: none; }
+
+    /* Elementos del mapa (P4) */
+    .elementos-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 4px; }
+    .elem-card {
+      background: #283593; border: 3px solid #7986cb; border-radius: 20px;
+      padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 0 #1a237e;
+    }
+    .elem-card:hover { background: #3949ab; transform: translateY(-3px); border-color: #ffd600; }
+    .elem-card i { font-size: 2.2rem; color: #ffd600; margin-bottom: 8px; }
+    .elem-card .elem-nombre { font-size: .9rem; color: #b3c5f7; font-weight: 700; }
+    .elem-card.correcto { background: #1b5e20; border-color: #4caf50; }
+    .elem-card.correcto i { color: #a5d6a7; }
+    .elem-card.correcto .elem-nombre { color: #a5d6a7; }
+    .elem-card.incorrecto { background: #7f0000; border-color: #ef5350; pointer-events: none; }
+    .elem-card.incorrecto i { color: #ffcdd2; }
+    .elem-card.opacado { opacity: 0.3; pointer-events: none; }
+
+    /* Feedback */
+    .feedback-auditivo {
+      margin-top: 18px; padding: 14px 20px; border-radius: 16px;
+      font-weight: 700; font-size: 1rem; display: none; text-align: center;
+    }
+    .feedback-auditivo.ok  { background: #1b5e20; border: 2px solid #4caf50; color: #a5d6a7; }
+    .feedback-auditivo.err { background: #7f0000; border: 2px solid #ef5350; color: #ffcdd2; }
+
+    /* NAVEGADOR */
+    .navegador {
+      display: flex; justify-content: space-between; align-items: center;
+      background: white; padding: 15px 25px; border-radius: 60px;
+      border: 3px solid #1976d2; box-shadow: 0 5px 0 #0d47a1; margin: 30px 0;
+    }
+    .btn-nav {
+      background: #ffd600; color: #01579b; border: none;
+      padding: 10px 25px; border-radius: 40px; font-weight: 800;
+      border: 3px solid #1976d2; transition: all 0.2s; box-shadow: 0 4px 0 #b26a00;
+    }
+    .btn-nav:hover:not(:disabled) { background: white; transform: translateY(-2px); }
+    .btn-nav:disabled { background: #e0e0e0; color: #9e9e9e; border-color: #bdbdbd; box-shadow: none; }
+    .indicador {
+      background: #bbdefb; color: #01579b; padding: 8px 30px;
+      border-radius: 40px; font-weight: 800; font-size: 1.3rem; border: 3px solid #1976d2;
+    }
+    .btn-quiz {
+      display: block; width: fit-content; margin: 0 auto;
+      background: #ffd600; color: #01579b; border: none;
+      padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
+      text-decoration: none; border: 4px solid #1976d2; box-shadow: 0 6px 0 #0d47a1; transition: all 0.2s;
+    }
+    .btn-quiz:hover { transform: translateY(-4px); box-shadow: 0 10px 0 #0d47a1; background: white; }
+    .btn-subir {
+      position: fixed; bottom: 80px; right: 20px;
+      background: #ffd600; color: #01579b; width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+      border: 3px solid #1976d2; box-shadow: 0 4px 0 #0d47a1; cursor: pointer; transition: all 0.2s; z-index: 1000;
+    }
+    .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #0d47a1; }
+  </style>
 </head>
 <body>
 
@@ -37,6 +245,7 @@
   <span class="badge" style="background:#1976d2;color:white;padding:8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
 </div>
 
+<!-- Audios de preguntas ocultos -->
 <audio id="audP1" src="audios/01-pregunta.mp3"></audio>
 <audio id="audP2" src="audios/02-pregunta.mp3"></audio>
 <audio id="audP3" src="audios/03-pregunta.mp3"></audio>
@@ -44,6 +253,9 @@
 
 <div class="contenedor">
 
+  <!-- =====================================================
+       PÃGINA 1: ROTACIÃ“N
+  ===================================================== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-audio">
       <div class="audio-header">
@@ -61,6 +273,7 @@
       </div>
     </div>
 
+    <!-- REFORZAMIENTO P1: escucha instruccion, selecciona la duracion correcta Y el fenomeno que produce -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Comprueba lo que aprendiste</div>
       <p class="ref-instruccion">Escucha las instrucciones y responde las dos preguntas sobre la rotaci&oacute;n.</p>
@@ -71,6 +284,7 @@
         </button>
       </div>
 
+      <!-- Pregunta 1a: duracion -->
       <p style="color:#ffd600;font-weight:800;margin-bottom:10px;">1. &iquest;Cu&aacute;nto dura una rotaci&oacute;n completa?</p>
       <div class="opciones-respuesta" id="ops1a">
         <button class="btn-respuesta" onclick="responderParte('1a', false, this)">12 horas</button>
@@ -78,6 +292,7 @@
         <button class="btn-respuesta" onclick="responderParte('1a', false, this)">365 d&iacute;as</button>
       </div>
 
+      <!-- Pregunta 1b: fenomeno (aparece al responder 1a bien) -->
       <div id="bloque1b" style="display:none;margin-top:20px;">
         <p style="color:#ffd600;font-weight:800;margin-bottom:10px;">2. &iquest;Qu&eacute; fen&oacute;meno produce la rotaci&oacute;n?</p>
         <div class="opciones-respuesta" id="ops1b">
@@ -91,6 +306,9 @@
     </div>
   </div>
 
+  <!-- =====================================================
+       PÃGINA 2: TRASLACIÃ“N
+  ===================================================== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-audio">
       <div class="audio-header">
@@ -108,6 +326,7 @@
       </div>
     </div>
 
+    <!-- REFORZAMIENTO P2: escucha y haz clic en el anio bisiesto dentro de la linea de tiempo -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Identifica y marca</div>
       <p class="ref-instruccion">Escucha la instrucci&oacute;n. Ver&aacute;s una l&iacute;nea de tiempo con cuatro a&ntilde;os seguidos. Haz clic en el que es a&ntilde;o bisiesto.</p>
@@ -139,6 +358,9 @@
     </div>
   </div>
 
+  <!-- =====================================================
+       PÃGINA 3: ESTACIONES
+  ===================================================== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-audio">
       <div class="audio-header">
@@ -156,6 +378,7 @@
       </div>
     </div>
 
+    <!-- REFORZAMIENTO P3: escucha la situacion y elige la estacion del otro hemisferio -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Piensa y responde</div>
       <p class="ref-instruccion">Escucha la situaci&oacute;n. Los hemisferios Norte y Sur siempre tienen estaciones contrarias. Elige qu&eacute; estaci&oacute;n tiene Argentina en ese momento.</p>
@@ -166,6 +389,7 @@
         </button>
       </div>
 
+      <!-- Contexto visual -->
       <div style="background:#283593;border-radius:16px;padding:16px;margin-bottom:18px;text-align:center;">
         <p style="color:#ffd600;font-weight:800;font-size:1.1rem;margin-bottom:6px;">&#127474;&#127485; M&eacute;xico (Hemisferio Norte)</p>
         <p style="color:white;font-size:1.4rem;font-weight:800;">&#9728; VERANO</p>
@@ -195,6 +419,9 @@
     </div>
   </div>
 
+  <!-- =====================================================
+       PÃGINA 4: ELEMENTOS DE MAPAS
+  ===================================================== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-audio">
       <div class="audio-header">
@@ -212,6 +439,7 @@
       </div>
     </div>
 
+    <!-- REFORZAMIENTO P4: escucha la descripcion, identifica el elemento correcto entre 4 iconos -->
     <div class="reforzamiento-auditivo">
       <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha e identifica</div>
       <p class="ref-instruccion">Escucha la descripci&oacute;n de un elemento del mapa. Despu&eacute;s haz clic en la tarjeta que corresponde a ese elemento.</p>
@@ -221,6 +449,7 @@
           Escuchar descripci&oacute;n
         </button>
       </div>
+      <!-- El audio describe: "Este elemento te dice hacia donde esta el Norte, el Sur, el Este y el Oeste en el mapa." => Orientacion -->
       <div class="elementos-grid">
         <div class="elem-card" onclick="responderElemento('orientacion', true, this)">
           <i class="fas fa-compass"></i>
@@ -249,12 +478,222 @@
     <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
   </div>
 
-  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
 
 </div>
 
-__BLOCK_
+<script>
+  function ampliarImagen(img) {
+    if (!img) return;
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada'); document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(function(i){ i.classList.remove('ampliada'); });
+      img.classList.add('ampliada'); document.body.classList.add('imagen-ampliada');
+    }
+  }
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-grande')) {
+      document.querySelectorAll('.ampliada').forEach(function(img){
+        img.classList.remove('ampliada'); document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
 
-__BLOCK_
-</body>
+  var sonidos = {
+    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
+    click:       new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+    completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
+  };
+  function reproducirSonido(nombre){ try{ sonidos[nombre].currentTime=0; sonidos[nombre].play(); }catch(e){} }
+
+  var paginaActual = 1;
+  var totalPaginas = 4;
+  var respondidas = {1:false, 2:false, 3:false, 4:false};
+  var audioActivo = null;
+  var botonActivo = null;
+  var parte1aOk   = false;
+
+  function cambiarPagina(direccion) {
+    reproducirSonido('pasarPagina');
+    if (audioActivo){ audioActivo.pause(); audioActivo.currentTime=0; }
+    if (botonActivo) botonActivo.classList.remove('reproduciendo');
+    audioActivo=null; botonActivo=null;
+    document.getElementById('pagina'+paginaActual).classList.remove('activa');
+    paginaActual += direccion;
+    document.getElementById('pagina'+paginaActual).classList.add('activa');
+    actualizarUI();
+    window.scrollTo({top:0, behavior:'smooth'});
+    localStorage.setItem('progreso_normal_auditivo', paginaActual);
+  }
+
+  function actualizarUI() {
+    document.querySelectorAll('.punto').forEach(function(punto, index) {
+      punto.classList.remove('activo','completado');
+      if (index+1===paginaActual) punto.classList.add('activo');
+      else if (respondidas[index+1]) punto.classList.add('completado');
+    });
+    document.getElementById('paginaActualNum').innerText = paginaActual;
+    document.getElementById('contadorPagina').innerText  = paginaActual+'/'+totalPaginas;
+    document.getElementById('btnAnterior').disabled = (paginaActual===1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual===totalPaginas);
+  }
+
+  function mostrarFeedback(id, ok, msg) {
+    var el = document.getElementById(id);
+    el.className = 'feedback-auditivo '+(ok?'ok':'err');
+    el.innerHTML = msg;
+    el.style.display = 'block';
+  }
+
+  function reproducirPregunta(num) {
+    var audio = document.getElementById('audP'+num);
+    var boton = document.getElementById('btnP'+num);
+    if (!audio) return;
+    if (audioActivo && audioActivo!==audio){
+      audioActivo.pause(); audioActivo.currentTime=0;
+      if (botonActivo) botonActivo.classList.remove('reproduciendo');
+    }
+    if (audio.paused) {
+      audio.play(); boton.classList.add('reproduciendo');
+      audioActivo=audio; botonActivo=boton;
+      audio.onended = function(){ boton.classList.remove('reproduciendo'); audioActivo=null; botonActivo=null; };
+    } else {
+      audio.pause(); audio.currentTime=0; boton.classList.remove('reproduciendo');
+      audioActivo=null; botonActivo=null;
+    }
+  }
+
+  /* ============================================================
+     P1: dos partes - duracion y fenomeno
+  ============================================================ */
+  function responderParte(parte, esCorrecta, boton) {
+    reproducirSonido('click');
+    var fb = document.getElementById('fb1');
+
+    if (parte === '1a') {
+      var botones = document.querySelectorAll('#ops1a .btn-respuesta');
+      if (esCorrecta) {
+        reproducirSonido('completar');
+        boton.classList.add('correcto');
+        botones.forEach(function(b){ if(b!==boton) b.classList.add('opacado'); });
+        parte1aOk = true;
+        fb.style.display = 'none';
+        /* Revelar segunda pregunta */
+        var bloque = document.getElementById('bloque1b');
+        bloque.style.display = 'block';
+        bloque.scrollIntoView({behavior:'smooth', block:'nearest'});
+      } else {
+        reproducirSonido('error');
+        boton.classList.add('incorrecto');
+        mostrarFeedback('fb1','err','&#10007; Incorrecto. Recuerda cu&aacute;ntas horas tiene un d&iacute;a completo. Int&eacute;ntalo de nuevo.');
+        setTimeout(function(){ boton.classList.remove('incorrecto'); fb.style.display='none'; }, 1600);
+      }
+    } else {
+      /* parte 1b */
+      var botones2 = document.querySelectorAll('#ops1b .btn-respuesta');
+      if (esCorrecta) {
+        reproducirSonido('completar');
+        boton.classList.add('correcto');
+        botones2.forEach(function(b){ if(b!==boton) b.classList.add('opacado'); });
+        mostrarFeedback('fb1','ok','&#10003; Correcto en ambas! La rotaci&oacute;n dura 24 horas y produce el d&iacute;a y la noche. Mientras un lado de la Tierra est&aacute; de frente al Sol (d&iacute;a), el otro est&aacute; de espaldas (noche).');
+        respondidas[1] = true; actualizarUI();
+      } else {
+        reproducirSonido('error');
+        boton.classList.add('incorrecto');
+        mostrarFeedback('fb1','err','&#10007; Incorrecto. Piensa: cuando la Tierra gira, un lado queda frente al Sol y el otro no. &iquest;Qu&eacute; produce eso?');
+        setTimeout(function(){ boton.classList.remove('incorrecto'); fb.style.display='none'; }, 1800);
+      }
+    }
+  }
+
+  /* ============================================================
+     P2: linea de tiempo de anios bisiestos
+  ============================================================ */
+  function responderAnio(anio, esCorrecta, card) {
+    if (respondidas[2]) return;
+    reproducirSonido('click');
+    if (esCorrecta) {
+      reproducirSonido('completar');
+      card.classList.add('correcto');
+      document.querySelectorAll('#aniosGrid .card-anio').forEach(function(c){ if(c!==card) c.classList.add('opacado'); });
+      mostrarFeedback('fb2','ok','&#10003; Correcto! El 2024 es un a&ntilde;o bisiesto. Ocurre cada 4 a&ntilde;os porque la Tierra tarda 365 d&iacute;as y 6 horas en orbitar el Sol. Al acumular esas 6 horas en 4 a&ntilde;os se forma el 29 de febrero.');
+      respondidas[2]=true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      card.classList.add('incorrecto');
+      mostrarFeedback('fb2','err','&#10007; Incorrecto. El a&ntilde;o bisiesto ocurre cada 4 a&ntilde;os. Busca el a&ntilde;o que sea divisible entre 4 en esta lista.');
+      setTimeout(function(){ card.classList.remove('incorrecto'); document.getElementById('fb2').style.display='none'; }, 1800);
+    }
+  }
+
+  /* ============================================================
+     P3: estacion del hemisferio sur
+  ============================================================ */
+  function responderHemi(estacion, esCorrecta, card) {
+    if (respondidas[3]) return;
+    reproducirSonido('click');
+    if (esCorrecta) {
+      reproducirSonido('completar');
+      card.classList.add('correcto');
+      document.querySelectorAll('.hemi-card').forEach(function(c){ if(c!==card) c.classList.add('opacado'); });
+      mostrarFeedback('fb3','ok','&#10003; Correcto! Cuando el Hemisferio Norte tiene verano (junio a septiembre), el Hemisferio Sur tiene invierno al mismo tiempo, porque recibe menos luz solar directa.');
+      respondidas[3]=true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      card.classList.add('incorrecto');
+      mostrarFeedback('fb3','err','&#10007; Incorrecto. Los hemisferios Norte y Sur siempre tienen estaciones opuestas. Si en el Norte es verano (mucho calor), en el Sur es la estaci&oacute;n de menos calor.');
+      setTimeout(function(){ card.classList.remove('incorrecto'); document.getElementById('fb3').style.display='none'; }, 1900);
+    }
+  }
+
+  /* ============================================================
+     P4: identificar elemento del mapa por descripcion auditiva
+  ============================================================ */
+  function responderElemento(elemento, esCorrecta, card) {
+    if (respondidas[4]) return;
+    reproducirSonido('click');
+    if (esCorrecta) {
+      reproducirSonido('completar');
+      card.classList.add('correcto');
+      document.querySelectorAll('.elem-card').forEach(function(c){ if(c!==card) c.classList.add('opacado'); });
+      mostrarFeedback('fb4','ok','&#10003; Correcto! La Orientaci&oacute;n es el elemento que indica los puntos cardinales (Norte, Sur, Este y Oeste). Generalmente se representa con una rosa de los vientos o una flecha hacia el Norte.');
+      respondidas[4]=true; actualizarUI();
+    } else {
+      reproducirSonido('error');
+      card.classList.add('incorrecto');
+      var pistas = {
+        escala:       '&#10007; La escala indica la relaci&oacute;n entre el tama&ntilde;o del mapa y la distancia real. No indica direcciones.',
+        simbologia:   '&#10007; La simbolog&iacute;a explica el significado de los dibujos y colores del mapa. No indica direcciones.',
+        coordenadas:  '&#10007; Las coordenadas ubican puntos exactos con latitud y longitud. No indican los puntos cardinales.'
+      };
+      mostrarFeedback('fb4','err', pistas[elemento]||'&#10007; Incorrecto. Escucha de nuevo la descripci&oacute;n y busca el elemento que indica direcciones.');
+      setTimeout(function(){ card.classList.remove('incorrecto'); document.getElementById('fb4').style.display='none'; }, 2000);
+    }
+  }
+
+  document.addEventListener('play', function(e) {
+    if (e.target.tagName==='AUDIO') {
+      document.querySelectorAll('audio').forEach(function(audio){ if(audio!==e.target&&!audio.paused) audio.pause(); });
+    }
+  }, true);
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var guardado = localStorage.getItem('progreso_normal_auditivo');
+    if (guardado) {
+      var pag = parseInt(guardado);
+      if (pag>=1&&pag<=totalPaginas) {
+        document.getElementById('pagina'+paginaActual).classList.remove('activa');
+        paginaActual=pag;
+        document.getElementById('pagina'+paginaActual).classList.add('activa');
+      }
+    }
+    actualizarUI();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
 </html>

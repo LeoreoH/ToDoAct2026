@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrucciones Espaciales · Normal · Kinestésico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --verde:        #15803d;
+      --verde-med:    #16a34a;
+      --verde-pale:   #dcfce7;
+      --verde-oscuro: #14532d;
+      --dorado:       #b45309;
+      --dorado-claro: #fde68a;
+      --dorado-med:   #f59e0b;
+      --dorado-pale:  #fef3c7;
+      --texto:        #14532d;
+      --rojo-err:     #b91c1c;
+      --rojo-pale:    #fee2e2;
+      --azul:         #1d4ed8;
+      --azul-pale:    #dbeafe;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 50%, #d1fae5 100%);
+      color: var(--texto);
+      min-height: 100vh;
+      padding: 8px 0;
+    }
+
+    /* ══ CABECERA ══ */
+    .cabecera {
+      background: linear-gradient(135deg, #166534 0%, #14532d 60%, #052e16 100%);
+      padding: 6px 20px 4px;
+      border-bottom: 3px solid var(--dorado-claro);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(20,83,45,.4);
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto 8px auto;
+      border-radius: 16px;
+    }
+    .cabecera::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,222,128,.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(253,230,138,.05) 0%, transparent 50%),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 14px);
+    }
+    .magia-particle { position:absolute; width:3px; height:3px; border-radius:50%; background:var(--dorado-claro); opacity:0; pointer-events:none; animation: particleFloat 4s ease-in-out infinite; }
+    @keyframes particleFloat { 0%{ opacity:0; transform:translateY(0) scale(0); } 20%{ opacity:.9; } 80%{ opacity:.5; } 100%{ opacity:0; transform:translateY(-60px) scale(1.2); } }
+    .cabecera h1 { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--dorado-claro); text-shadow: 0 0 20px rgba(253,230,138,.4), 1px 1px 0 rgba(0,0,0,.4); position: relative; letter-spacing: .05em; margin: 0; }
+    .cabecera p  { color:rgba(255,255,255,.75); font-weight:600; margin: 2px 0 2px; position:relative; font-size: 0.75rem; }
+    .badge-estilo { background: var(--dorado-claro); color: var(--texto); padding: 2px 14px; border-radius: 50px; font-weight: 800; font-size: 0.7rem; border: 2px solid rgba(255,255,255,.6); display: inline-block; margin: 2px; box-shadow: 0 1px 0 var(--dorado); position: relative; }
+    .badge-nivel  { background: rgba(255,255,255,.12); color: var(--dorado-claro); padding: 2px 14px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; border: 2px solid var(--dorado-claro); display: inline-block; margin: 2px; position: relative; }
+
+    /* ══ LAYOUT ══ */
+    .layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5px 18px 10px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 16px;
+      align-items: start;
+      width: 100%;
+    }
+    @media(max-width:960px){ .layout { grid-template-columns: 1fr; } }
+
+    /* ══ JARDÍN ══ */
+    .jardin-wrap { background: white; border-radius: 20px; border: 3px solid #86efac; box-shadow: 0 6px 0 #bbf7d0, 0 10px 24px rgba(20,83,45,.12); overflow: hidden; position: sticky; top: 10px; }
+    .jardin-titulo { background: linear-gradient(135deg, var(--verde-med), var(--verde-oscuro)); color: var(--dorado-claro); font-family: 'Cinzel', serif; font-size: 0.8rem; padding: 6px 12px; display: flex; align-items: center; gap: 6px; letter-spacing: .04em; }
+    .jardin-svg-wrap { width:100%; aspect-ratio:1/1; position:relative; max-height: 460px; cursor: crosshair; }
+    .jardin-svg-wrap svg { width:100%; height:100%; display:block; }
+
+    /* Overlay de casillas interactivas */
+    .casilla-overlay {
+      position: absolute;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .casilla-overlay:hover { transform: scale(1.08); }
+    .casilla-overlay.disponible {
+      background: rgba(253,230,138,.35);
+      border: 2.5px dashed var(--dorado-med);
+      animation: pulsaCasilla 1.4s ease-in-out infinite;
+    }
+    .casilla-overlay.disponible:hover {
+      background: rgba(253,230,138,.65);
+    }
+    @keyframes pulsaCasilla {
+      0%,100%{ box-shadow: 0 0 0 0 rgba(245,158,11,.4); }
+      50%     { box-shadow: 0 0 0 6px rgba(245,158,11,0); }
+    }
+    .casilla-overlay.visitada {
+      background: rgba(74,222,128,.25);
+      border: 2px solid #4ade80;
+    }
+    .casilla-overlay.bloqueada { cursor: not-allowed; }
+
+    @keyframes floresBrillan { 0%,100%{ opacity:.5; filter:brightness(1); } 50%{ opacity:1; filter:brightness(1.4) drop-shadow(0 0 3px #fde68a); } }
+    .flor-camino { animation: floresBrillan 1.8s ease-in-out infinite; }
+
+    .leyenda { background: linear-gradient(135deg,#052e16,#14532d); border-top: 2px solid var(--dorado-claro); padding: 6px 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .leyenda-titulo { font-family:'Cinzel',serif; font-size:.7rem; color:var(--dorado-claro); width:100%; margin-bottom:2px; letter-spacing:.06em; }
+    .ley-item { display:flex; align-items:center; gap:4px; font-size:.65rem; font-weight:700; color:rgba(255,255,255,.8); background:rgba(255,255,255,.07); padding:2px 8px; border-radius:16px; }
+    .ley-dot { width:8px; height:8px; border-radius:50%; }
+
+    /* ══ PANEL DERECHO ══ */
+    .panel { display: flex; flex-direction: column; gap: 8px; }
+
+    .tarjeta-narrativa { background: linear-gradient(135deg, var(--verde-oscuro), #166534); border-radius: 12px; border: 2px solid var(--dorado-claro); box-shadow: 0 3px 0 #14532d; padding: 8px 12px; color: white; position: relative; overflow: hidden; }
+    .tarjeta-narrativa::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 10px); }
+    .narrativa-titulo { font-family:'Cinzel',serif; font-size:.8rem; color:var(--dorado-claro); margin-bottom:4px; display:flex; align-items:center; gap:6px; position:relative; }
+    .narrativa-texto { font-size:.7rem; line-height:1.4; color:rgba(255,255,255,.85); position:relative; }
+    .narrativa-texto strong { color:var(--dorado-claro); }
+
+    /* Brújula */
+    .brujula-card { background: linear-gradient(135deg,#052e16,#166534); border-radius: 12px; border: 2px solid var(--dorado-claro); box-shadow: 0 3px 0 #052e16; padding: 8px 12px; display: flex; align-items: center; gap: 10px; }
+    .brujula-svg-wrap { width:60px; height:60px; flex-shrink:0; }
+    .brujula-svg-wrap svg { width:100%; height:100%; }
+    .brujula-info { flex:1; }
+    .brujula-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.08em; margin-bottom:1px; }
+    .direccion-actual { font-family:'Cinzel',serif; font-size:.85rem; color:var(--dorado-claro); font-weight:600; line-height:1.2; }
+    .direccion-sub { font-size:.6rem; color:rgba(255,255,255,.55); margin-top:1px; font-weight:600; }
+
+    /* Panel de instrucciones de referencia (colapsable) */
+    .tarjeta-instrucciones { background: white; border-radius: 14px; border: 3px solid #86efac; box-shadow: 0 4px 0 #bbf7d0; overflow: hidden; }
+    .instrucciones-header { background: linear-gradient(135deg, var(--verde-med), var(--verde)); padding: 6px 12px; color: white; font-family:'Cinzel',serif; font-size: .75rem; display: flex; align-items: center; justify-content: space-between; gap: 6px; letter-spacing:.04em; cursor: pointer; user-select: none; }
+    .instrucciones-header:hover { filter: brightness(1.1); }
+    .instrucciones-body { padding: 8px 12px; }
+    .instrucciones-body.collapsed { display: none; }
+
+    .pasos-ref { display: flex; flex-direction: column; gap: 3px; }
+    .paso-ref { display: flex; gap: 6px; align-items: flex-start; padding: 4px 6px; border-radius: 8px; font-size: .65rem; font-weight: 700; color: var(--texto); background: var(--verde-pale); border: 1px solid #86efac; }
+    .paso-ref .pnum { font-family:'Cinzel',serif; color: var(--verde-med); font-size:.6rem; min-width:14px; }
+    .paso-ref em { color: var(--verde-med); font-style: normal; font-weight: 800; }
+
+    /* Panel kinestésico principal */
+    .tarjeta-kine { background: white; border-radius: 14px; border: 3px solid #fde68a; box-shadow: 0 4px 0 #f59e0b; overflow: hidden; }
+    .kine-header { background: linear-gradient(135deg, #92400e, #b45309); padding: 8px 12px; color: var(--dorado-claro); font-family:'Cinzel',serif; font-size: .8rem; display: flex; align-items: center; gap: 8px; letter-spacing:.04em; }
+    .kine-body { padding: 10px 12px; }
+
+    /* Indicador de paso actual */
+    .paso-actual-badge {
+      background: linear-gradient(135deg, var(--dorado-pale), #fef9c3);
+      border: 2px solid var(--dorado-med);
+      border-radius: 12px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .paso-actual-badge::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: var(--dorado-med); }
+    .paso-badge-label { font-size:.55rem; font-weight:800; color:var(--dorado); text-transform:uppercase; letter-spacing:.1em; }
+    .paso-badge-texto { font-size:.75rem; font-weight:800; color:var(--texto); line-height:1.3; margin: 2px 0 1px; }
+    .paso-badge-texto em { color: var(--verde-med); font-style: normal; }
+    .paso-badge-hint { font-size:.6rem; color:#78716c; font-weight:600; }
+
+    /* Progreso visual */
+    .progreso-pasos {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .prog-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      border: 2px solid #cbd5e1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem; font-weight: 800; color: #94a3b8;
+      transition: all .3s;
+      flex-shrink: 0;
+    }
+    .prog-dot.hecho {
+      background: var(--verde-pale);
+      border-color: var(--verde-med);
+      color: var(--verde-med);
+    }
+    .prog-dot.actual {
+      background: var(--dorado-pale);
+      border-color: var(--dorado-med);
+      color: var(--dorado);
+      animation: pulsaDot 1.2s ease-in-out infinite;
+    }
+    @keyframes pulsaDot {
+      0%,100%{ box-shadow: 0 0 0 0 rgba(245,158,11,.5); }
+      50%     { box-shadow: 0 0 0 5px rgba(245,158,11,0); }
+    }
+    .prog-linea {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: #e2e8f0; transition: background .3s;
+    }
+    .prog-linea.hecha { background: var(--verde-med); }
+
+    /* Contador de movimientos */
+    .movimientos-bar {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--azul-pale); border: 1.5px solid #93c5fd;
+      border-radius: 10px; padding: 5px 10px; margin-bottom: 8px;
+      font-size: .65rem; font-weight: 800; color: var(--azul);
+    }
+    .mov-num { font-size: 1rem; font-family: 'Cinzel',serif; }
+
+    /* Botones de control */
+    .ctrl-btns { display: flex; gap: 6px; }
+    .btn-ctrl {
+      flex: 1; padding: 6px 8px; border-radius: 30px;
+      font-weight: 800; font-size: .7rem;
+      cursor: pointer; transition: all .2s; border: none;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .btn-ctrl:disabled { opacity: .35; cursor: not-allowed; }
+    .btn-ctrl:not(:disabled):hover { transform: translateY(-1px); }
+    .btn-deshacer {
+      background: var(--dorado-pale); color: var(--dorado);
+      border: 2px solid var(--dorado-med);
+      box-shadow: 0 2px 0 #d97706;
+    }
+    .btn-reset {
+      background: var(--rojo-pale); color: var(--rojo-err);
+      border: 2px solid #fca5a5;
+      box-shadow: 0 2px 0 #fca5a5;
+    }
+
+    /* Atajos de teclado */
+    .atajos-teclado {
+      background: #f8fafc; border: 1.5px solid #e2e8f0;
+      border-radius: 10px; padding: 6px 10px; margin-top: 8px;
+    }
+    .atajos-titulo { font-size:.55rem; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+    .atajo-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .kbd { background: white; border: 1.5px solid #cbd5e1; border-radius: 5px; padding: 1px 6px; font-size: .6rem; font-weight: 800; color: #475569; box-shadow: 0 1px 0 #cbd5e1; font-family: monospace; }
+    .atajo-txt { font-size: .6rem; color: #64748b; font-weight: 700; }
+
+    /* Pregunta */
+    .tarjeta-pregunta { background: white; border-radius: 14px; border: 3px solid #86efac; box-shadow: 0 4px 0 #bbf7d0; padding: 10px; text-align: center; }
+    .pregunta-titulo { font-family:'Cinzel',serif; font-size:.8rem; color:var(--verde); margin-bottom:3px; letter-spacing:.04em; }
+    .pregunta-sub { font-size:.65rem; font-weight:600; color:#64748b; margin-bottom:8px; }
+
+    .destinos-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px; }
+    .destino-btn { background:var(--verde-pale); border:2px solid #86efac; border-radius:12px; padding:8px 6px; cursor:pointer; transition:all .2s; text-align:center; font-weight:700; font-size:.7rem; color:var(--texto); box-shadow:0 2px 0 #bbf7d0; }
+    .destino-btn:hover:not(:disabled) { border-color:var(--verde-med); background:white; transform:translateY(-2px); box-shadow:0 4px 0 #86efac; }
+    .destino-btn .dest-emoji { font-size:1.4rem; display:block; margin-bottom:2px; }
+    .destino-btn:disabled { cursor:not-allowed; opacity:.8; }
+    .destino-btn.correcta  { background:var(--verde-pale); border-color:var(--verde-med); }
+    .destino-btn.incorrecta { background:var(--rojo-pale); border-color:var(--rojo-err); }
+
+    .feedback-box { border-radius:10px; padding:8px 10px; font-weight:700; font-size:.7rem; line-height:1.4; display:none; }
+    .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
+    .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
+
+    .btn-quiz-wrap { margin-top:8px; display:none; }
+    .btn-quiz-wrap.visible { display:block; }
+    .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:8px 20px; border-radius:40px; font-family:'Cinzel',serif; font-size:.85rem; letter-spacing:.05em; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
+    .btn-quiz:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--verde-oscuro); color:white; }
+    .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 16px; font-weight:800; font-size:.7rem; cursor:pointer; margin-top:6px; transition:all .2s; display:none; }
+    .btn-reintentar.visible { display:inline-block; }
+    .btn-reintentar:hover { background:var(--verde-med); color:white; }
+
+    /* Nota pregunta bloqueada */
+    .nota-completa-ruta {
+      background: #fffbeb; border: 1.5px solid var(--dorado-med);
+      border-radius: 10px; padding: 6px 10px; font-size: .65rem;
+      font-weight: 700; color: #92400e; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Confeti */
+    .confeti { position:fixed; pointer-events:none; z-index:9999; border-radius:2px; }
+    @keyframes confetiFall { 0%{ transform:translateY(-10px) rotate(0deg); opacity:1; } 100%{ transform:translateY(100vh) rotate(800deg); opacity:0; } }
+
+    /* Toast */
+    .toast-kine {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(60px);
+      background: #1c1917; color: var(--dorado-claro); padding: 8px 20px;
+      border-radius: 40px; font-weight: 800; font-size: .75rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.35); z-index: 9998;
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+      opacity: 0; pointer-events: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toast-kine.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing"  src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada"  src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+<audio id="sndStep"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+
+<!-- CABECERA -->
+<div class="cabecera">
+  <div class="magia-particle" style="left:8%;top:25%;animation-delay:0s;"></div>
+  <div class="magia-particle" style="left:22%;top:60%;animation-delay:.9s;"></div>
+  <div class="magia-particle" style="left:50%;top:35%;animation-delay:1.5s;"></div>
+  <div class="magia-particle" style="left:72%;top:65%;animation-delay:.4s;"></div>
+  <div class="magia-particle" style="left:88%;top:20%;animation-delay:1.1s;"></div>
+  <h1>🌿 Instrucciones espaciales</h1>
+  <p>El jardín encantado · Orientación relativa</p>
+  <div>
+    <span class="badge-estilo">🖐️ Kinestésico</span>
+    <span class="badge-nivel">🍃 Nivel Normal</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- ══ JARDÍN SVG ══ -->
+  <div class="jardin-wrap">
+    <div class="jardin-titulo">
+      <i class="fas fa-hand-pointer"></i> Haz clic en las casillas doradas para mover a Mateo paso a paso
+    </div>
+
+    <div class="jardin-svg-wrap" id="jardinWrap">
+      <!-- MISMO SVG que visual-verbal — sin cambios -->
+      <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" id="svgJardin">
+        <defs>
+          <linearGradient id="gCielo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#bbf7d0"/><stop offset="100%" stop-color="#dcfce7"/>
+          </linearGradient>
+          <filter id="sombra"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.2)"/></filter>
+          <filter id="sombra-s"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.12)"/></filter>
+          <filter id="brillo-agua">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+            <feColorMatrix in="b" type="matrix" values="0 0 1 0 0  0 .4 1 0 0  0 0 1 0 .1  0 0 0 14 -6" result="g"/>
+            <feComposite in="SourceGraphic" in2="g" operator="over"/>
+          </filter>
+          <pattern id="cesped" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <rect width="20" height="20" fill="#22c55e" opacity=".18"/>
+            <line x1="0" y1="10" x2="20" y2="10" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+            <line x1="10" y1="0" x2="10" y2="20" stroke="#16a34a" stroke-width=".3" opacity=".3"/>
+          </pattern>
+          <pattern id="seto" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#15803d"/>
+            <circle cx="3" cy="3" r="3" fill="#16a34a"/>
+            <circle cx="9" cy="3" r="3" fill="#15803d"/>
+            <circle cx="3" cy="9" r="3" fill="#166534"/>
+            <circle cx="9" cy="9" r="3" fill="#16a34a"/>
+          </pattern>
+          <pattern id="camino" x="0" y="0" width="28" height="20" patternUnits="userSpaceOnUse">
+            <rect width="28" height="20" fill="#a8996a"/>
+            <rect x="1" y="1" width="12" height="8" rx="2" fill="#c2b280"/>
+            <rect x="15" y="1" width="11" height="8" rx="2" fill="#b8a870"/>
+            <rect x="1" y="11" width="7" height="7" rx="2" fill="#bfb07a"/>
+            <rect x="10" y="11" width="16" height="7" rx="2" fill="#c8b880"/>
+          </pattern>
+        </defs>
+
+        <rect width="700" height="700" fill="url(#gCielo)"/>
+        <rect width="700" height="700" fill="url(#cesped)"/>
+
+        <!-- CALLES -->
+        <rect x="0"   y="330" width="700" height="40"  fill="url(#camino)"/>
+        <rect x="330" y="0"   width="40"  height="700" fill="url(#camino)"/>
+        <rect x="140" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="524" y="0"   width="36"  height="700" fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="150" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+        <rect x="0"   y="518" width="700" height="32"  fill="url(#camino)" opacity=".75"/>
+
+        <!-- Setos -->
+        <rect x="0" y="0" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="670" width="700" height="30" fill="url(#seto)"/>
+        <rect x="0" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="670" y="0" width="30" height="700" fill="url(#seto)"/>
+        <rect x="30"  y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="80"  y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="200" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="600" y="260" width="70"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="628" y="60"  width="22"  height="100" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="90"  width="60"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="30"  y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="50"  y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="60"  y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="470" width="110" height="22" fill="url(#seto)" rx="4"/>
+        <rect x="560" y="560" width="90"  height="22" fill="url(#seto)" rx="4"/>
+        <rect x="618" y="600" width="22"  height="70" fill="url(#seto)" rx="4"/>
+
+        <!-- ══ FUENTE MÁGICA ⛲ ══ -->
+        <g filter="url(#sombra-s)">
+          <polygon points="92,120 112,106 132,106 148,120 148,144 132,158 112,158 92,144" fill="#bfdbfe" stroke="#60a5fa" stroke-width="2"/>
+          <polygon points="97,122 110,110 130,110 143,122 143,142 130,154 110,154 97,142" fill="#dbeafe"/>
+          <ellipse cx="120" cy="132" rx="22" ry="14" fill="#3b82f6" opacity=".6" filter="url(#brillo-agua)"/>
+          <ellipse cx="120" cy="132" rx="16" ry="9"  fill="#60a5fa" opacity=".5"/>
+          <rect x="116" y="96" width="8" height="38" rx="3" fill="#93c5fd"/>
+          <ellipse cx="120" cy="96" rx="10" ry="6"  fill="#bfdbfe"/>
+          <ellipse cx="120" cy="85" rx="3"  ry="8"  fill="#93c5fd" opacity=".9"/>
+          <ellipse cx="114" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(-22,114,93)"/>
+          <ellipse cx="126" cy="93" rx="2"  ry="5"  fill="#bfdbfe" opacity=".7" transform="rotate(22,126,93)"/>
+          <circle  cx="120" cy="84" r="5"   fill="#e0f2fe" opacity=".8"/>
+          <text x="99"  y="100" font-size="11">✨</text>
+          <text x="127" y="97"  font-size="9">💫</text>
+          <text x="120" y="168" font-family="Cinzel,serif" font-size="9" fill="#1e3a8a" text-anchor="middle" font-weight="700">⛲ Fuente Mágica</text>
+        </g>
+
+        <!-- ══ CARRUSEL 🎠 — DESTINO FINAL ══ -->
+        <g filter="url(#sombra)">
+          <ellipse cx="600" cy="145" rx="46" ry="14" fill="#86efac" opacity=".7"/>
+          <rect x="597" y="68" width="6" height="78" rx="2" fill="#7c3aed"/>
+          <polygon points="600,55 648,115 552,115" fill="#f43f5e"/>
+          <polygon points="600,55 640,105 560,105" fill="#fb7185"/>
+          <line x1="600" y1="55" x2="560" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="640" y2="105" stroke="#fde68a" stroke-width="2.5"/>
+          <line x1="600" y1="55" x2="600" y2="115" stroke="#fde68a" stroke-width="2"/>
+          <circle cx="600" cy="54" r="7" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <g transform="translate(570,112)"><text x="-7" y="5" font-size="12">🐴</text></g>
+          <g transform="translate(628,112)"><text x="-7" y="5" font-size="12">🦄</text></g>
+          <circle cx="556" cy="112" r="6" fill="#ec4899" opacity=".9"/>
+          <circle cx="644" cy="112" r="6" fill="#a78bfa" opacity=".9"/>
+          <circle cx="600" cy="115" r="5" fill="#fbbf24"/>
+          <text x="553" y="78" font-size="10">⭐</text>
+          <text x="638" y="78" font-size="10">✨</text>
+          <text x="600" y="152" font-family="Cinzel,serif" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="700">🎠 Carrusel</text>
+        </g>
+
+        <!-- ══ ESTANQUE 🦆 ══ -->
+        <g filter="url(#sombra-s)">
+          <ellipse cx="88" cy="420" rx="58" ry="40" fill="#60a5fa" opacity=".75"/>
+          <ellipse cx="88" cy="420" rx="50" ry="33" fill="#93c5fd" opacity=".65"/>
+          <ellipse cx="88" cy="420" rx="38" ry="24" fill="#bfdbfe" opacity=".5"/>
+          <ellipse cx="80" cy="420" rx="22" ry="8"  fill="none" stroke="#60a5fa" stroke-width="1.5" opacity=".6"/>
+          <ellipse cx="96" cy="428" rx="16" ry="5"  fill="none" stroke="#93c5fd" stroke-width="1"   opacity=".5"/>
+          <text x="64" y="415" font-size="18">🦆</text>
+          <text x="88" y="430" font-size="15">🦆</text>
+          <text x="74" y="433" font-size="12">🐣</text>
+          <ellipse cx="122" cy="408" rx="10" ry="6" fill="#4ade80" opacity=".8"/>
+          <circle  cx="122" cy="408" r="4" fill="#f43f5e" opacity=".7"/>
+          <ellipse cx="57"  cy="436" rx="8"  ry="5" fill="#4ade80" opacity=".7"/>
+          <circle  cx="57"  cy="436" r="3"  fill="#ec4899" opacity=".6"/>
+          <text x="88" y="468" font-family="Cinzel,serif" font-size="9" fill="#1e40af" text-anchor="middle" font-weight="700">🦆 Estanque</text>
+        </g>
+
+        <!-- ══ ESTATUA 💃 ══ -->
+        <g filter="url(#sombra)">
+          <rect x="570" y="440" width="60" height="44" rx="4" fill="#94a3b8"/>
+          <rect x="566" y="436" width="68" height="10" rx="3" fill="#cbd5e1"/>
+          <rect x="560" y="482" width="80" height="8"  rx="2" fill="#94a3b8"/>
+          <rect x="556" y="488" width="88" height="8"  rx="2" fill="#e2e8f0"/>
+          <ellipse cx="600" cy="410" rx="14" ry="20" fill="#cbd5e1"/>
+          <circle  cx="600" cy="395" r="11" fill="#e2e8f0"/>
+          <polygon points="592,386 596,380 600,386 604,380 608,386" fill="#fbbf24"/>
+          <rect x="576" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(-15,576,405)"/>
+          <rect x="610" y="405" width="14" height="6" rx="3" fill="#cbd5e1" transform="rotate(15,610,405)"/>
+          <text x="584" y="383" font-size="10">✨</text>
+          <text x="603" y="388" font-size="9">⭐</text>
+          <rect x="572" y="450" width="56" height="16" rx="3" fill="#64748b"/>
+          <text x="600" y="462" font-family="Cinzel,serif" font-size="7" fill="#fde68a" text-anchor="middle">ESTATUA</text>
+          <text x="600" y="504" font-family="Cinzel,serif" font-size="9" fill="#475569" text-anchor="middle" font-weight="700">💃 Estatua</text>
+        </g>
+
+        <!-- ══ PUENTE 🌉 ══ -->
+        <g filter="url(#sombra-s)">
+          <rect x="145" y="328" width="42" height="44" rx="3" fill="#92400e"/>
+          <rect x="145" y="333" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="342" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="351" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="360" width="42" height="5"  rx="1" fill="#a16207"/>
+          <rect x="145" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="181" y="328" width="6"  height="44" rx="2" fill="#78716c"/>
+          <rect x="148" y="328" width="36" height="5"  rx="2" fill="#57534e"/>
+          <rect x="148" y="367" width="36" height="5"  rx="2" fill="#57534e"/>
+          <text x="163" y="322" font-family="Cinzel,serif" font-size="8" fill="#78716c" text-anchor="middle">🌉 Puente</text>
+        </g>
+
+        <!-- ══ CASTILLO DE CRISTAL 💎 ══ -->
+        <g filter="url(#sombra)">
+          <rect x="298" y="370" width="104" height="80"  rx="4" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="285" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="381" y="340" width="34"  height="112" rx="4" fill="#bae6fd" stroke="#7dd3fc" stroke-width="2"/>
+          <rect x="320" y="300" width="60"  height="152" rx="4" fill="#cffafe" stroke="#67e8f9" stroke-width="2"/>
+          <polygon points="350,272 390,302 310,302" fill="#0ea5e9"/>
+          <circle  cx="350" cy="272" r="6" fill="#fde68a" stroke="white" stroke-width="1.5"/>
+          <polygon points="302,322 319,340 285,340" fill="#38bdf8"/>
+          <polygon points="398,322 415,340 381,340" fill="#38bdf8"/>
+          <rect x="320" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="332" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="344" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="356" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="368" y="296" width="8" height="8" rx="1" fill="#0ea5e9"/>
+          <rect x="335" y="315" width="30" height="26" rx="14" fill="#7dd3fc" opacity=".8"/>
+          <rect x="341" y="319" width="18" height="18" rx="9"  fill="#bae6fd"/>
+          <rect x="333" y="400" width="34" height="52" rx="17" fill="#0c4a6e"/>
+          <rect x="339" y="406" width="22" height="14" rx="7"  fill="#7dd3fc" opacity=".6"/>
+          <rect x="293" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="391" y="358" width="16" height="20" rx="8" fill="#7dd3fc" opacity=".7"/>
+          <rect x="327" y="305" width="8"  height="40" rx="4" fill="white" opacity=".35"/>
+          <rect x="340" y="370" width="6"  height="50" rx="3" fill="white" opacity=".25"/>
+          <rect x="319" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="321,258 337,264 321,270" fill="#fde68a"/>
+          <rect x="379" y="258" width="2"  height="16" fill="#78716c"/>
+          <polygon points="381,258 397,264 381,270" fill="#f43f5e"/>
+          <text x="283" y="308" font-size="12">✨</text>
+          <text x="407" y="308" font-size="12">✨</text>
+          <text x="350" y="294" font-size="11">💎</text>
+          <text x="350" y="464" font-family="Cinzel,serif" font-size="9" fill="#0c4a6e" text-anchor="middle" font-weight="700">💎 Castillo de Cristal</text>
+        </g>
+
+        <!-- Árboles -->
+        <g opacity=".9"><ellipse cx="220" cy="100" rx="28" ry="34" fill="#15803d"/><ellipse cx="208" cy="108" rx="20" ry="24" fill="#22c55e"/><ellipse cx="224" cy="104" rx="16" ry="20" fill="#15803d"/><rect x="217" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="100" rx="28" ry="34" fill="#166534"/><ellipse cx="468" cy="108" rx="20" ry="24" fill="#22c55e"/><rect x="477" y="128" width="6" height="18" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="220" cy="580" rx="26" ry="30" fill="#15803d"/><ellipse cx="210" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="217" y="604" width="6" height="16" fill="#92400e"/></g>
+        <g opacity=".9"><ellipse cx="480" cy="580" rx="26" ry="30" fill="#166534"/><ellipse cx="470" cy="588" rx="18" ry="22" fill="#22c55e"/><rect x="477" y="604" width="6" height="16" fill="#92400e"/></g>
+
+        <!-- Flores en caminos -->
+        <g class="flor-camino" style="animation-delay:0s;">  <text x="183" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.35s;"><text x="238" y="348" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.7s;"> <text x="295" y="348" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.2s;"> <text x="348" y="248" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.55s;"><text x="348" y="190" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.9s;"> <text x="348" y="140" font-size="13">🌟</text></g>
+        <g class="flor-camino" style="animation-delay:.4s;"> <text x="432" y="168" font-size="13">🌼</text></g>
+        <g class="flor-camino" style="animation-delay:.75s;"><text x="492" y="168" font-size="13">🌸</text></g>
+        <g class="flor-camino" style="animation-delay:.1s;"> <text x="544" y="168" font-size="13">🌟</text></g>
+        <!-- Decorativos -->
+        <text x="198" y="240" font-size="13">🌺</text><text x="228" y="200" font-size="11">🌸</text>
+        <text x="450" y="240" font-size="13">🌺</text><text x="478" y="200" font-size="11">🌸</text>
+        <text x="198" y="490" font-size="13">🌼</text><text x="238" y="452" font-size="11">🌸</text>
+        <text x="450" y="490" font-size="13">🌼</text><text x="478" y="452" font-size="11">🌸</text>
+        <text x="170" y="132" font-size="14">🦋</text>
+        <text x="508" y="492" font-size="14">🦋</text>
+        <text x="418" y="432" font-size="12">🦋</text>
+
+        <!-- Rastro kinestésico -->
+        <g id="rastroSVG"></g>
+
+        <!-- Casillas de movimiento (se dibujan via JS) -->
+        <g id="casillasG"></g>
+
+        <!-- Marcador DESTINO oculto -->
+        <g id="marcadorDestino" opacity="0">
+          <circle cx="600" cy="100" r="26" fill="none" stroke="#fde68a" stroke-width="3" stroke-dasharray="9,5"/>
+          <circle cx="600" cy="100" r="16" fill="rgba(253,230,138,.15)"/>
+          <text x="600" y="104" font-size="18" text-anchor="middle">🏁</text>
+        </g>
+
+        <!-- Marcador inicio -->
+        <g id="marcadorInicio">
+          <circle cx="158" cy="350" r="20" fill="#fde68a" opacity=".4" stroke="#f59e0b" stroke-width="2"/>
+          <text x="158" y="344" font-size="7.5" text-anchor="middle" font-family="Cinzel,serif" fill="#78350f" font-weight="700">INICIO</text>
+          <text x="158" y="357" font-size="10"  text-anchor="middle">⭐</text>
+        </g>
+
+        <!-- Flecha dirección -->
+        <g id="flechaDireccion" transform="translate(158,315)">
+          <polygon points="0,-15 8,0 0,-5 -8,0" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+        </g>
+
+        <!-- MATEO -->
+        <g id="mateo" transform="translate(158,315)">
+          <rect x="-28" y="-22" width="56" height="14" rx="4" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="0" y="-11" font-family="Cinzel,serif" font-size="7.5" fill="#78350f" text-anchor="middle" font-weight="700">MATEO</text>
+          <ellipse cx="0" cy="52" rx="16" ry="5" fill="rgba(0,0,0,.18)"/>
+          <rect x="-12" y="20" width="24" height="23" rx="5" fill="#15803d"/>
+          <rect x="-8"  y="20" width="16" height="10" rx="3" fill="#22c55e"/>
+          <rect x="-12" y="38" width="24" height="5"  rx="2" fill="#92400e"/>
+          <rect x="-3"  y="39" width="6"  height="3"  rx="1" fill="#fde68a"/>
+          <rect x="-4" y="14" width="8" height="7" rx="2" fill="#fbbf24"/>
+          <ellipse cx="0" cy="7" rx="12" ry="13" fill="#fbbf24"/>
+          <ellipse cx="0" cy="-3" rx="14" ry="5" fill="#92400e"/>
+          <rect x="-10" y="-9" width="20" height="8" rx="3" fill="#a16207"/>
+          <rect x="-5"  y="-12" width="10" height="5" rx="2" fill="#b45309"/>
+          <rect x="-10" y="-3" width="20" height="3"  rx="1" fill="#fde68a"/>
+          <circle cx="-4" cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="4"  cy="7"  r="2.5" fill="#1c1917"/>
+          <circle cx="-3" cy="6"  r="1"   fill="white"/>
+          <circle cx="5"  cy="6"  r="1"   fill="white"/>
+          <path d="M-3.5,12 Q0,16 3.5,12" fill="none" stroke="#c2410c" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="17" cy="28" r="6"   fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+          <line x1="17" y1="23" x2="17" y2="33" stroke="#dc2626" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="12" y1="28" x2="22" y2="28" stroke="#1c1917" stroke-width="1"   stroke-linecap="round"/>
+          <circle cx="17" cy="28" r="2"   fill="white" opacity=".5"/>
+          <rect x="-22" y="20" width="11" height="18" rx="3" fill="#16a34a"/>
+          <rect x="-20" y="24" width="7"  height="5"  rx="1" fill="#4ade80"/>
+          <rect x="-20" y="31" width="7"  height="3"  rx="1" fill="#4ade80"/>
+          <rect x="-10" y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <rect x="2"   y="41" width="8"  height="14" rx="3" fill="#166534"/>
+          <rect x="-12" y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <rect x="2"   y="53" width="10" height="6"  rx="3" fill="#1c1917"/>
+          <rect x="-22" y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(14,-22,20)"/>
+          <rect x="12"  y="20" width="10" height="6" rx="3" fill="#15803d" transform="rotate(-14,12,20)"/>
+          <circle cx="-20" cy="30" r="4" fill="#fbbf24"/>
+        </g>
+      </svg>
+
+      <!-- Overlay HTML para casillas (más fácil de posicionar) -->
+      <div id="casillasOverlay" style="position:absolute;inset:0;pointer-events:none;"></div>
+    </div>
+
+    <div class="leyenda">
+      <div class="leyenda-titulo"><i class="fas fa-map-pin me-1"></i> ELEMENTOS DEL JARDÍN ENCANTADO</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#3b82f6;"></div> ⛲ Fuente Mágica</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#f43f5e;"></div> 🎠 Carrusel</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#60a5fa;"></div> 🦆 Estanque</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#94a3b8;"></div> 💃 Estatua</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#92400e;"></div> 🌉 Puente</div>
+      <div class="ley-item"><div class="ley-dot" style="background:#0ea5e9;"></div> 💎 Castillo de Cristal</div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL DERECHO ══ -->
+  <div class="panel">
+
+    <!-- Narrativa -->
+    <div class="tarjeta-narrativa">
+      <div class="narrativa-titulo"><span style="font-size:1.1rem;">🖐️</span> Modo kinestésico</div>
+      <p class="narrativa-texto">
+        <strong>¡Tú controlas a Mateo!</strong> Lee cada instrucción y haz clic en la casilla dorada ✨ que aparece en el mapa para ejecutar ese movimiento. También puedes usar las <strong>flechas del teclado</strong>. Si te equivocas, usa <strong>Deshacer</strong> para retroceder un paso.
+      </p>
+    </div>
+
+    <!-- Brújula -->
+    <div class="brujula-card">
+      <div class="brujula-svg-wrap">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="gbrV" cx="50%" cy="30%">
+              <stop offset="0%" stop-color="#fef3c7"/>
+              <stop offset="70%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#b45309"/>
+            </radialGradient>
+          </defs>
+          <circle cx="40" cy="40" r="38" fill="url(#gbrV)" id="aroDorado"/>
+          <circle cx="40" cy="40" r="32" fill="#1c1917"/>
+          <circle cx="40" cy="40" r="37" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,4" opacity=".5"/>
+          <text x="40" y="16" font-family="Cinzel,serif" font-size="11" fill="#fde68a" text-anchor="middle" font-weight="700">N</text>
+          <text x="40" y="71" font-family="Cinzel,serif" font-size="11" fill="rgba(255,255,255,.5)" text-anchor="middle">S</text>
+          <text x="9"  y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">O</text>
+          <text x="71" y="44" font-family="Cinzel,serif" font-size="9"  fill="rgba(255,255,255,.5)" text-anchor="middle">E</text>
+          <line x1="40" y1="20" x2="40" y2="60" stroke="#57534e" stroke-width=".8"/>
+          <line x1="20" y1="40" x2="60" y2="40" stroke="#57534e" stroke-width=".8"/>
+          <g id="agujaGrande" style="transform-origin:40px 40px;" transform="rotate(0)">
+            <polygon points="40,14 43.5,40 40,36 36.5,40" fill="#dc2626"/>
+            <polygon points="40,66 43.5,40 40,44 36.5,40" fill="white" opacity=".8"/>
+          </g>
+          <circle cx="40" cy="40" r="8"   fill="url(#gbrV)" stroke="white" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="3"   fill="#1c1917"/>
+          <circle cx="40" cy="40" r="1.5" fill="#fde68a"/>
+        </svg>
+      </div>
+      <div class="brujula-info">
+        <div class="brujula-label"><i class="fas fa-compass me-1"></i> BRÚJULA DE MATEO</div>
+        <div class="direccion-actual" id="dirActual">Norte ↑</div>
+        <div class="direccion-sub"   id="dirSub">Mateo está listo. ¡Muévelo!</div>
+      </div>
+    </div>
+
+    <!-- Instrucciones de referencia (colapsable) -->
+    <div class="tarjeta-instrucciones">
+      <div class="instrucciones-header" onclick="toggleInstrucciones()" id="instrHeader">
+        <span><i class="fas fa-scroll me-1"></i> Instrucciones de Mateo (referencia)</span>
+        <i class="fas fa-chevron-up" id="instrChevron"></i>
+      </div>
+      <div class="instrucciones-body" id="instrBody">
+        <div class="pasos-ref">
+          <div class="paso-ref"><span class="pnum">P1</span> Gira a la <em>derecha</em> — Norte → Este</div>
+          <div class="paso-ref"><span class="pnum">P2</span> Avanza <em>2 cuadras</em> al este (cruzando el puente y el Castillo)</div>
+          <div class="paso-ref"><span class="pnum">P3</span> Gira a la <em>izquierda</em> — Este → Norte</div>
+          <div class="paso-ref"><span class="pnum">P4</span> Avanza <em>1 cuadra</em> al norte</div>
+          <div class="paso-ref"><span class="pnum">P5</span> Gira a la <em>derecha</em> y avanza <em>1 cuadra</em> — Norte → Este</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel kinestésico principal -->
+    <div class="tarjeta-kine">
+      <div class="kine-header">
+        <i class="fas fa-shoe-prints"></i> Tu turno — mueve a Mateo
+      </div>
+      <div class="kine-body">
+
+        <!-- Progreso pasos -->
+        <div class="progreso-pasos" id="progresoPasos">
+          <!-- generado por JS -->
+        </div>
+
+        <!-- Movimientos hechos -->
+        <div class="movimientos-bar">
+          <span style="font-size:1rem;">👟</span>
+          <span class="mov-num" id="movNum">0</span>
+          <span>movimientos realizados</span>
+          <span style="margin-left:auto; font-size:.65rem; color:#1d4ed8;" id="movRestante">Quedan 5 acciones</span>
+        </div>
+
+        <!-- Instrucción actual -->
+        <div class="paso-actual-badge" id="pasoBadge">
+          <div class="paso-badge-label">INSTRUCCIÓN ACTUAL</div>
+          <div class="paso-badge-texto" id="badgeTexto">Gira a la <em>derecha</em> (Norte → Este)</div>
+          <div class="paso-badge-hint" id="badgeHint">🖱️ Haz clic en la casilla dorada del mapa · o presiona ↵ Enter</div>
+        </div>
+
+        <!-- Botones de control -->
+        <div class="ctrl-btns">
+          <button class="btn-ctrl btn-deshacer" id="btnDeshacer" onclick="deshacerPaso()" disabled>
+            <i class="fas fa-undo"></i> Deshacer
+          </button>
+          <button class="btn-ctrl btn-reset" onclick="reiniciar()">
+            <i class="fas fa-redo"></i> Reiniciar
+          </button>
+        </div>
+
+        <!-- Atajos de teclado -->
+        <div class="atajos-teclado">
+          <div class="atajos-titulo"><i class="fas fa-keyboard me-1"></i> Atajos de teclado</div>
+          <div class="atajo-row">
+            <span class="kbd">Enter</span><span class="atajo-txt">= ejecutar movimiento</span>
+            <span class="kbd">Z</span><span class="atajo-txt">= deshacer</span>
+            <span class="kbd">R</span><span class="atajo-txt">= reiniciar</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Pregunta final -->
+    <div class="tarjeta-pregunta" id="tarjetaPregunta">
+      <div class="nota-completa-ruta" id="notaCompletaRuta">
+        <span>⚠️</span> Completa los 5 movimientos en el mapa para desbloquear la pregunta.
+      </div>
+      <div class="pregunta-titulo">🌿 ¿A qué lugar llegó Mateo?</div>
+      <div class="pregunta-sub">Después de mover a Mateo, selecciona el destino correcto.</div>
+      <div class="destinos-grid">
+        <button class="destino-btn" onclick="responder('fuente')"   id="dest-fuente"   disabled><span class="dest-emoji">⛲</span> Fuente Mágica</button>
+        <button class="destino-btn" onclick="responder('carrusel')" id="dest-carrusel" disabled><span class="dest-emoji">🎠</span> Carrusel</button>
+        <button class="destino-btn" onclick="responder('castillo')" id="dest-castillo" disabled><span class="dest-emoji">💎</span> Castillo de Cristal</button>
+        <button class="destino-btn" onclick="responder('estatua')"  id="dest-estatua"  disabled><span class="dest-emoji">💃</span> Estatua</button>
+      </div>
+      <div class="feedback-box" id="feedbackBox"></div>
+      <div class="btn-quiz-wrap" id="btnQuizWrap">
+        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!</a>
+      </div>
+      <button class="btn-reintentar" id="btnReintentar" onclick="reiniciar()">
+        <i class="fas fa-redo-alt me-1"></i> Intentar de nuevo
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-kine" id="toastKine"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   LÓGICA KINESTÉSICA — El jardín encantado
+   
+   Intersecciones (SVG 700×700):
+     x: 158 (izq)  |  350 (central)  |  542 (derecha)
+     y: 350 (media) | 166 (superior)
+   
+   SECUENCIA CORRECTA (5 acciones):
+     A0: Posición inicial x=158, y=350 mirando Norte(rot=0)
+     A1: Girar derecha  → rot=90° (este)           posición sin cambio
+     A2: Avanzar este   → x=350 (1ª cuadra)
+     A3: Avanzar este   → x=542 (2ª cuadra)
+     A4: Girar izquierda→ rot=0° (norte)            posición sin cambio
+     A5: Avanzar norte  → y=166
+     A6: Girar derecha  → rot=90° (este)            posición sin cambio  ← P5 inicio
+     A7: Avanzar este   → x=618, y=88              ← llega al Carrusel
+   
+   Dividido en pasos (instrucciones):
+     P1 = A1 (1 clic: girar)
+     P2 = A2 + A3 (2 clics: avanzar×2)
+     P3 = A4 (1 clic: girar)
+     P4 = A5 (1 clic: avanzar)
+     P5 = A6 + A7 (2 clics: girar + avanzar)
+   TOTAL = 7 clics
+══════════════════════════════════════════════════════ */
+
+  var DESTINO = 'carrusel';
+  var respondido = false;
+
+  /* Estado de Mateo */
+  var estado = { x: 158, y: 350, rot: 0 }; // rot: 0=Norte,90=Este,180=Sur,270=Oeste
+  var historial = []; // pila para deshacer
+  var movCount = 0;
+
+  /* Secuencia de acciones kinestésicas */
+  /* Cada acción tiene: tipo, descripción corta, nuevo estado, descripción de brújula */
+  var ACCIONES = [
+    { id:1, tipo:'giro',   label:'Gira a la <em>derecha</em>',        hint:'Norte → Este 🔄',
+      estado: { x:158, y:350, rot:90  }, dir:'Este →',  sub:'Giró a la derecha. Mira al este 🌿',
+      paso:1, casillaLabel:'🔄 Girar', casillaDir: 'giro' },
+    { id:2, tipo:'avance', label:'Avanza <em>1ª cuadra</em> al este', hint:'Cruzando el puente 🌉',
+      estado: { x:350, y:350, rot:90  }, dir:'Este →',  sub:'1ª cuadra: cruzó el puente 🌉',
+      paso:2, casillaLabel:'👣', casillaDir: 'este' },
+    { id:3, tipo:'avance', label:'Avanza <em>2ª cuadra</em> al este', hint:'Frente al Castillo 💎',
+      estado: { x:542, y:350, rot:90  }, dir:'Este →',  sub:'2ª cuadra: pasó frente al Castillo 💎',
+      paso:2, casillaLabel:'👣', casillaDir: 'este' },
+    { id:4, tipo:'giro',   label:'Gira a la <em>izquierda</em>',      hint:'Este → Norte 🔄',
+      estado: { x:542, y:350, rot:0   }, dir:'Norte ↑', sub:'Giró a la izquierda. Mira al norte ⬆️',
+      paso:3, casillaLabel:'🔄 Girar', casillaDir: 'giro' },
+    { id:5, tipo:'avance', label:'Avanza <em>1 cuadra</em> al norte', hint:'Hacia el camino superior 🌸',
+      estado: { x:542, y:166, rot:0   }, dir:'Norte ↑', sub:'Subió 1 cuadra al camino superior 🌸',
+      paso:4, casillaLabel:'👣', casillaDir: 'norte' },
+    { id:6, tipo:'giro',   label:'Gira a la <em>derecha</em>',        hint:'Norte → Este 🔄 (último)',
+      estado: { x:542, y:166, rot:90  }, dir:'Este →',  sub:'Último giro. Mira al este → Carrusel 🎠',
+      paso:5, casillaLabel:'🔄 Girar', casillaDir: 'giro' },
+    { id:7, tipo:'avance', label:'Avanza <em>1 cuadra</em> al este',  hint:'¡Destino final! 🎯',
+      estado: { x:618, y:88,  rot:90  }, dir:'Este →',  sub:'¡Llegó al Carrusel! 🎠✨',
+      paso:5, casillaLabel:'👣 Avanzar', casillaDir: 'este' },
+  ];
+
+  var accionActual = 0; // índice en ACCIONES (0..6), 7 = completado
+
+  /* Pasos de instrucción (para el badge) */
+  var PASOS_INFO = [
+    { paso:1, label:'Gira a la <em>derecha</em> (Norte → Este)', hint:'🖱️ Clic en casilla · o ↵ Enter' },
+    { paso:2, label:'Avanza <em>2 cuadras</em> al este',         hint:'🖱️ 2 clics · Primero cruzarás el puente' },
+    { paso:3, label:'Gira a la <em>izquierda</em> (Este → Norte)',hint:'🖱️ Clic en casilla · o ↵ Enter' },
+    { paso:4, label:'Avanza <em>1 cuadra</em> al norte',         hint:'🖱️ Clic en casilla · o ↵ Enter' },
+    { paso:5, label:'Gira a la <em>derecha</em> + avanza <em>1</em>', hint:'🖱️ 2 clics · Primero gira, luego avanza' },
+  ];
+  var TOTAL_ACCIONES = ACCIONES.length; // 7
+
+  /* ══ AUDIO ══ */
+  function play(id){ try{ var s=document.getElementById(id); if(!s)return; s.currentTime=0; s.play(); }catch(e){} }
+
+  /* ══ TOAST ══ */
+  var toastTimer = null;
+  function showToast(msg, dur) {
+    var t = document.getElementById('toastKine');
+    t.innerHTML = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, dur||2000);
+  }
+
+  /* ══ BRÚJULA ══ */
+  function actualizarBrujula(rot, dir, sub, anim) {
+    var ag = document.getElementById('agujaGrande');
+    if (ag) {
+      ag.style.transition = anim ? 'transform .6s cubic-bezier(.34,1.56,.64,1)' : 'none';
+      ag.setAttribute('transform','rotate('+rot+')');
+      if (anim) {
+        var aro = document.getElementById('aroDorado');
+        if (aro) { aro.style.filter='drop-shadow(0 0 14px #fde68a)'; setTimeout(function(){ aro.style.filter=''; }, 700); }
+      }
+    }
+    document.getElementById('dirActual').textContent = dir;
+    document.getElementById('dirSub').textContent    = sub;
+  }
+
+  /* ══ MOVER MATEO ══ */
+  function moverMateo(x, y, rot, anim) {
+    var m = document.getElementById('mateo');
+    var f = document.getElementById('flechaDireccion');
+    if (m) {
+      m.style.transition = anim ? 'transform .65s cubic-bezier(.34,1.2,.64,1)' : 'none';
+      m.setAttribute('transform','translate('+x+','+y+')');
+    }
+    if (f) {
+      f.style.transition = anim ? 'transform .65s' : 'none';
+      f.setAttribute('transform','translate('+x+','+(y-33)+') rotate('+rot+')');
+    }
+    if (anim) agregarRastro(x, y);
+  }
+
+  /* ══ RASTRO ══ */
+  var kfAdded = false;
+  function ensureKF() {
+    if (kfAdded) return; kfAdded = true;
+    var s = document.createElement('style');
+    s.textContent = '@keyframes rastroDesv{0%{opacity:.4;r:5px}100%{opacity:0;r:2px}}';
+    document.head.appendChild(s);
+  }
+  function agregarRastro(x, y) {
+    var g = document.getElementById('rastroSVG');
+    var c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y+35); c.setAttribute('r','5');
+    c.setAttribute('fill','#f59e0b'); c.setAttribute('opacity','.4');
+    c.style.animation = 'rastroDesv 2s forwards';
+    g.appendChild(c);
+    /* Línea de ruta permanente */
+    if (historial.length > 0) {
+      var prev = historial[historial.length-1];
+      var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', prev.x); line.setAttribute('y1', prev.y+35);
+      line.setAttribute('x2', x);      line.setAttribute('y2', y+35);
+      line.setAttribute('stroke','#fbbf24'); line.setAttribute('stroke-width','3');
+      line.setAttribute('stroke-dasharray','6,4'); line.setAttribute('opacity','.6');
+      line.setAttribute('class','linea-ruta');
+      g.insertBefore(line, g.firstChild);
+    }
+  }
+  function limpiarRastro() {
+    var g = document.getElementById('rastroSVG');
+    while(g.firstChild) g.removeChild(g.firstChild);
+  }
+
+  /* ══ PROGRESO ══ */
+  function renderProgreso() {
+    var cont = document.getElementById('progresoPasos');
+    cont.innerHTML = '';
+    var pasosUnicos = [1,2,3,4,5];
+    pasosUnicos.forEach(function(p, i) {
+      var pasoAcciones = ACCIONES.filter(function(a){ return a.paso === p; });
+      var todas = pasoAcciones.every(function(a){ return a.id <= accionActual; });
+      var alguna= pasoAcciones.some(function(a){ return a.id <= accionActual; });
+      var dot = document.createElement('div');
+      dot.className = 'prog-dot ' + (todas ? 'hecho' : (alguna ? 'actual' : (accionActual === 0 && p===1 ? 'actual' : '')));
+      dot.textContent = 'P'+p;
+      if (dot.className.indexOf('hecho')>=0) dot.innerHTML = '✓';
+      cont.appendChild(dot);
+      if (i < 4) {
+        var linea = document.createElement('div');
+        linea.className = 'prog-linea' + (todas ? ' hecha' : '');
+        cont.appendChild(linea);
+      }
+    });
+  }
+
+  /* ══ BADGE INSTRUCCIÓN ACTUAL ══ */
+  function actualizarBadge() {
+    if (accionActual >= TOTAL_ACCIONES) {
+      document.getElementById('badgeTexto').innerHTML = '🎯 ¡Ruta completada! Ahora responde la pregunta.';
+      document.getElementById('badgeHint').textContent = '⬇️ Selecciona el destino correcto abajo';
+      document.getElementById('pasoBadge').style.background = 'linear-gradient(135deg,#dcfce7,#bbf7d0)';
+      document.getElementById('pasoBadge').style.borderColor = '#16a34a';
+      return;
+    }
+    var acc = ACCIONES[accionActual];
+    var pasoInfo = PASOS_INFO[acc.paso - 1];
+    document.getElementById('badgeTexto').innerHTML = pasoInfo.label;
+    document.getElementById('badgeHint').textContent  = pasoInfo.hint;
+    document.getElementById('pasoBadge').style.background = '';
+    document.getElementById('pasoBadge').style.borderColor = '';
+  }
+
+  /* ══ CONTADOR MOVIMIENTOS ══ */
+  function actualizarContador() {
+    document.getElementById('movNum').textContent = movCount;
+    var restantes = TOTAL_ACCIONES - accionActual;
+    document.getElementById('movRestante').textContent =
+      restantes > 0 ? 'Quedan ' + restantes + ' accion' + (restantes===1?'':'es') : '¡Listo! ✅';
+  }
+
+  /* ══ CASILLAS INTERACTIVAS ══ */
+  /* Convierte coordenadas SVG → porcentaje en el wrapper */
+  function svgToOverlay(svgX, svgY) {
+    return { left: (svgX/700*100)+'%', top: (svgY/700*100)+'%' };
+  }
+
+  function limpiarCasillas() {
+    document.getElementById('casillasOverlay').innerHTML = '';
+  }
+
+  function mostrarCasilla(accionIdx) {
+    if (accionIdx >= TOTAL_ACCIONES) { limpiarCasillas(); return; }
+    limpiarCasillas();
+    var acc = ACCIONES[accionIdx];
+    /* Calcular posición de la casilla (dónde debe hacer clic) */
+    var cx, cy;
+    if (acc.tipo === 'giro') {
+      /* La casilla de giro está sobre Mateo en su posición actual */
+      cx = estado.x; cy = estado.y - 20;
+    } else {
+      /* La casilla de avance está a medio camino entre posición actual y destino */
+      cx = (estado.x + acc.estado.x) / 2;
+      cy = (estado.y + acc.estado.y) / 2 - 20;
+    }
+    var pos = svgToOverlay(cx, cy);
+    var div = document.createElement('div');
+    div.className = 'casilla-overlay disponible';
+    div.style.left   = pos.left;
+    div.style.top    = pos.top;
+    div.style.width  = '10%';
+    div.style.height = '10%';
+    div.style.transform = 'translate(-50%,-50%)';
+    div.style.pointerEvents = 'all';
+    div.innerHTML    = acc.tipo === 'giro' ? '🔄' : '👣';
+    div.title = acc.casillaLabel;
+    div.addEventListener('click', function(){ ejecutarAccion(); });
+    document.getElementById('casillasOverlay').appendChild(div);
+    /* Marcar casillas visitadas */
+    historial.forEach(function(h) {
+      if (h.accionId === undefined) return;
+      var hacc = ACCIONES.find(function(a){ return a.id === h.accionId; });
+      if (!hacc) return;
+      var vx = (h.prevX + hacc.estado.x)/2;
+      var vy = (h.prevY + hacc.estado.y)/2 - 20;
+      var vpos = svgToOverlay(vx, vy);
+      var vdiv = document.createElement('div');
+      vdiv.className = 'casilla-overlay visitada';
+      vdiv.style.left   = vpos.left;
+      vdiv.style.top    = vpos.top;
+      vdiv.style.width  = '7%';
+      vdiv.style.height = '7%';
+      vdiv.style.transform = 'translate(-50%,-50%)';
+      vdiv.innerHTML = '✓';
+      vdiv.style.fontSize = '.55rem';
+      vdiv.style.fontWeight = '800';
+      vdiv.style.color = '#16a34a';
+      document.getElementById('casillasOverlay').appendChild(vdiv);
+    });
+  }
+
+  /* ══ EJECUTAR ACCIÓN ══ */
+  function ejecutarAccion() {
+    if (accionActual >= TOTAL_ACCIONES) return;
+    var acc = ACCIONES[accionActual];
+    /* Guardar en historial */
+    historial.push({ accionId: acc.id, prevX: estado.x, prevY: estado.y, prevRot: estado.rot });
+    /* Aplicar nuevo estado */
+    estado = { x: acc.estado.x, y: acc.estado.y, rot: acc.estado.rot };
+    accionActual++;
+    movCount++;
+    play('sndStep');
+    /* Animación Mateo */
+    moverMateo(estado.x, estado.y - 35, estado.rot, true);
+    actualizarBrujula(estado.rot, acc.dir, acc.sub, true);
+    /* Flash en casilla si fue giro */
+    if (acc.tipo === 'giro') showToast('🔄 Giró al ' + (acc.dir === 'Norte ↑' ? 'norte' : 'este'), 1500);
+    else                     showToast('👣 Avanzó 1 cuadra', 1500);
+    /* Actualizar UI */
+    actualizarBadge();
+    actualizarContador();
+    renderProgreso();
+    document.getElementById('btnDeshacer').disabled = false;
+    /* Mostrar siguiente casilla o completar */
+    if (accionActual < TOTAL_ACCIONES) {
+      mostrarCasilla(accionActual);
+    } else {
+      limpiarCasillas();
+      onRutaCompleta();
+    }
+  }
+
+  /* ══ DESHACER ══ */
+  function deshacerPaso() {
+    if (historial.length === 0) return;
+    var prev = historial.pop();
+    accionActual--;
+    movCount = Math.max(0, movCount - 1);
+    estado = { x: prev.prevX, y: prev.prevY, rot: prev.prevRot };
+    play('sndClick');
+    moverMateo(estado.x, estado.y - 35, estado.rot, true);
+    /* Recalcular brújula */
+    if (accionActual > 0) {
+      var prevAcc = ACCIONES[accionActual - 1];
+      actualizarBrujula(estado.rot, prevAcc.dir, prevAcc.sub, true);
+    } else {
+      actualizarBrujula(0, 'Norte ↑', 'Mateo está listo. ¡Muévelo!', true);
+    }
+    /* Limpiar líneas de rastro */
+    limpiarRastro();
+    historial.forEach(function(h) {
+      var hacc = ACCIONES.find(function(a){ return a.id === h.accionId; });
+      if (hacc) agregarRastro(hacc.estado.x, hacc.estado.y);
+    });
+    document.getElementById('btnDeshacer').disabled = historial.length === 0;
+    /* Bloquear pregunta de nuevo si estaba completada */
+    if (accionActual < TOTAL_ACCIONES) {
+      document.getElementById('marcadorDestino').setAttribute('opacity','0');
+      document.getElementById('notaCompletaRuta').style.display = 'flex';
+      ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled = true; });
+      respondido = false;
+      document.getElementById('feedbackBox').className = 'feedback-box';
+      document.getElementById('btnQuizWrap').classList.remove('visible');
+      document.getElementById('btnReintentar').classList.remove('visible');
+      ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).className='destino-btn'; document.getElementById('dest-'+d).disabled=true; });
+    }
+    actualizarBadge();
+    actualizarContador();
+    renderProgreso();
+    mostrarCasilla(accionActual);
+    showToast('↩️ Deshecho', 1200);
+  }
+
+  /* ══ RUTA COMPLETA ══ */
+  function onRutaCompleta() {
+    play('sndDing');
+    showToast('🎯 ¡Ruta completa! Ahora responde la pregunta ⬇️', 3000);
+    document.getElementById('notaCompletaRuta').style.display = 'none';
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled = false; });
+    /* Animación celebración leve */
+    var m = document.getElementById('mateo');
+    if (m) {
+      m.style.transition = 'transform .3s';
+      var base = 'translate('+estado.x+','+(estado.y-35)+')';
+      var i = 0;
+      var bounce = setInterval(function() {
+        i++;
+        var dy = (i%2===0) ? 0 : -8;
+        m.setAttribute('transform', 'translate('+estado.x+','+(estado.y-35+dy)+')');
+        if (i >= 6) { clearInterval(bounce); m.setAttribute('transform', base); }
+      }, 110);
+    }
+  }
+
+  /* ══ RESPONDER ══ */
+  function responder(id) {
+    if (respondido) return;
+    if (accionActual < TOTAL_ACCIONES) { showToast('⚠️ Completa la ruta primero', 2000); return; }
+    respondido = true;
+    play('sndClick');
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled=true; });
+    var fb = document.getElementById('feedbackBox');
+    if (id === DESTINO) {
+      play('sndTada');
+      document.getElementById('marcadorDestino').setAttribute('opacity','1');
+      document.getElementById('dest-carrusel').classList.add('correcta');
+      ['fuente','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).classList.add('incorrecta'); });
+      fb.className = 'feedback-box ok';
+      fb.innerHTML = '🎠 ¡Correcto! Moviste a Mateo por los 5 pasos y llegaste al <strong>Carrusel</strong>. ¡Excelente trabajo kinestésico! ✨';
+      document.getElementById('btnQuizWrap').classList.add('visible');
+      lanzarConfeti();
+      localStorage.setItem('progreso_normal_kinesico_instrucciones','ok');
+    } else {
+      play('sndError');
+      document.getElementById('dest-'+id).classList.add('incorrecta');
+      respondido = false;
+      var exp = {
+        fuente:   'La Fuente ⛲ está arriba a la izquierda. ¿Observaste hacia qué lado giró Mateo en el P1?',
+        castillo: 'El Castillo 💎 es un lugar por el que Mateo pasa en el P2, pero no es el destino final.',
+        estatua:  'La Estatua 💃 está abajo a la derecha. Los pasos 3 y 4 llevaron a Mateo al norte, no al sur.'
+      };
+      fb.className = 'feedback-box err';
+      fb.innerHTML = '❌ No es ese. ' + (exp[id]||'') + ' Revisa el rastro dorado del mapa.';
+      document.getElementById('btnReintentar').classList.add('visible');
+    }
+  }
+
+  /* ══ REINICIAR ══ */
+  function reiniciar() {
+    estado = { x: 158, y: 350, rot: 0 };
+    historial = []; accionActual = 0; movCount = 0; respondido = false;
+    moverMateo(158, 315, 0, false);
+    actualizarBrujula(0, 'Norte ↑', 'Mateo está listo. ¡Muévelo!', false);
+    limpiarRastro();
+    limpiarCasillas();
+    document.getElementById('marcadorDestino').setAttribute('opacity','0');
+    document.getElementById('notaCompletaRuta').style.display = 'flex';
+    ['fuente','carrusel','castillo','estatua'].forEach(function(d){
+      var b=document.getElementById('dest-'+d); b.disabled=true; b.className='destino-btn';
+    });
+    document.getElementById('feedbackBox').className='feedback-box';
+    document.getElementById('btnReintentar').classList.remove('visible');
+    document.getElementById('btnQuizWrap').classList.remove('visible');
+    document.getElementById('btnDeshacer').disabled = true;
+    actualizarBadge(); actualizarContador(); renderProgreso();
+    mostrarCasilla(0);
+    play('sndClick');
+    showToast('🔄 ¡Reiniciado! Mueve a Mateo de nuevo', 2000);
+  }
+
+  /* ══ INSTRUCCIONES TOGGLE ══ */
+  var instrAbiertas = true;
+  function toggleInstrucciones() {
+    instrAbiertas = !instrAbiertas;
+    document.getElementById('instrBody').className = 'instrucciones-body' + (instrAbiertas ? '' : ' collapsed');
+    document.getElementById('instrChevron').className = 'fas fa-chevron-' + (instrAbiertas ? 'up' : 'down');
+  }
+
+  /* ══ TECLADO ══ */
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ejecutarAccion(); }
+    if (e.key === 'z' || e.key === 'Z')     { e.preventDefault(); deshacerPaso(); }
+    if (e.key === 'r' || e.key === 'R')     { e.preventDefault(); reiniciar(); }
+  });
+
+  /* ══ CONFETI ══ */
+  function lanzarConfeti() {
+    var cols=['#16a34a','#4ade80','#fde68a','#f59e0b','#7c3aed','#0ea5e9','#22c55e','#86efac'];
+    for (var i=0;i<55;i++) { (function(idx){ setTimeout(function(){
+      var el=document.createElement('div'); el.className='confeti';
+      el.style.left=(Math.random()*100)+'vw'; el.style.top='-10px';
+      el.style.background=cols[Math.floor(Math.random()*cols.length)];
+      el.style.width=(6+Math.random()*8)+'px'; el.style.height=(6+Math.random()*8)+'px';
+      el.style.borderRadius=Math.random()>.5?'50%':'2px';
+      var dur=(1.8+Math.random()*1.6).toFixed(2);
+      el.style.animation='confetiFall '+dur+'s '+(Math.random()*.4)+'s linear forwards';
+      document.body.appendChild(el);
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },(parseFloat(dur)+.5)*1000);
+    },idx*28); })(i); }
+  }
+
+  /* ══ INIT ══ */
+  window.addEventListener('DOMContentLoaded', function(){
+    ensureKF();
+    moverMateo(158, 315, 0, false);
+    actualizarBrujula(0, 'Norte ↑', 'Mateo está listo. ¡Muévelo!', false);
+    actualizarBadge(); actualizarContador(); renderProgreso();
+    mostrarCasilla(0);
+    if (localStorage.getItem('progreso_normal_kinesico_instrucciones')==='ok') {
+      document.getElementById('btnQuizWrap').classList.add('visible');
+    }
+  });
+
+  /* API (mismo patrón que visual-verbal) */
+  var estiloUsuario = null;
+  async function obtenerEstiloUsuario() {
+    try { var r=await fetch('/api/usuario/estilo',{credentials:'include'}); var d=await r.json(); estiloUsuario=d.estilo||'kinesico'; } catch(e){ estiloUsuario='kinesico'; }
+  }
+  function volverAlContenido() { window.location.href='../menu.html'; }
+  async function irSiguienteNivel() {
+    if(!estiloUsuario) await obtenerEstiloUsuario();
+    window.location.href='../dificil/'+estiloUsuario+'.html';
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

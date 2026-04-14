@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas - Nivel Normal - Visual/Verbal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+
+</head>
+<body>
+
+<audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+<div class="cabecera-normal">
+    <h1><i class="fas fa-compass me-2"></i>COORDENADAS</h1>
+    <p class="lead text-white">Nivel Normal · Planos y rutas</p>
+    <div>
+        <span class="badge-estilo"><i class="fas fa-book-open me-2"></i>Visual / Verbal</span>
+        <span class="badge-nivel"><i class="fas fa-chart-line me-2"></i>Intermedio</span>
+    </div>
+</div>
+
+<div class="barra-progreso">
+    <i class="fas fa-map fa-2x" style="color: #f97316;"></i>
+    <div class="puntos-progreso" id="puntosProgreso">
+        <div class="punto activo" data-pagina="1">1</div>
+        <div class="punto" data-pagina="2">2</div>
+        <div class="punto" data-pagina="3">3</div>
+        <div class="punto" data-pagina="4">4</div>
+        <div class="punto" data-pagina="5">5</div>
+    </div>
+    <span class="badge" style="background: #f97316; color: white; font-size: 1.1rem; padding: 8px 20px;">
+        Página <span id="paginaActualNum">1</span>/5
+    </span>
+</div>
+
+<div class="contenedor-paginas">
+
+    <div class="pagina activa" id="pagina1">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta de Sebastián</h2>
+
+            <p class="lead">
+                Sebastián vive en la <strong>Calle Miguel Jacintez</strong> y quiere llegar al <strong>Parque Porfino Serrano</strong>.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con la ruta de Sebastián trazada" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-route me-2"></i>Recorrido de Sebastián</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-up"></i> Primero camina hacia el <strong>norte</strong> hasta la calle <strong>Luis Preciado de la Torre</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego gira al <strong>este</strong> hasta la calle <strong>Oriente 156</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Después camina al <strong>norte</strong> hasta el <strong>Eje 1 Norte</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego al <strong>este</strong> hasta la calle <strong>Oriente 170</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Finalmente al <strong>norte</strong> hasta llegar al parque</li>
+                </ul>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>¿Cuántas veces cambia de dirección Sebastián durante todo su recorrido desde su casa hasta el parque?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento1">
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 0, false)">A) 2 veces (norte y este)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 1, false)">B) 3 veces (norte, este, norte)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 2, true)">C) 4 veces (norte ? este ? norte ? este ? norte)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 3, false)">D) 5 veces (cada cuadra)</button>
+                </div>
+                <div id="feedback1" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagina" id="pagina2">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+
+            <p class="lead">
+                En Ciudad Universitaria hay varias facultades. Para ir del <strong>Estacionamiento</strong> al <strong>Departamento de Veterinaria</strong> se sigue una ruta específica.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg" alt="Mapa de Ciudad Universitaria con facultades" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-map-marked-alt me-2"></i>Recorrido</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-right"></i> Del estacionamiento se avanza hacia el <strong>este</strong>, bordeando el <strong>Estadio de Prácticas</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Se continúa al <strong>este</strong> y se pasa por <strong>Trabajo Social</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego se llega a <strong>Contaduría</strong>, siempre hacia el <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Después se encuentra <strong>Ciencias del Mar</strong>, también al <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Finalmente se gira al <strong>norte</strong> para llegar a <strong>Veterinaria</strong></li>
+                </ul>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Si alguien se encuentra en <strong>Contaduría</strong> y quiere ir a <strong>Trabajo Social</strong>, ¿hacia dónde debe dirigirse?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento2">
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 0, false)">A) Hacia el este (seguir avanzando)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 1, true)">B) Hacia el oeste (regresar por donde vino)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 2, false)">C) Hacia el norte (subir)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 3, false)">D) Hacia el sur (bajar)</button>
+                </div>
+                <div id="feedback2" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagina" id="pagina3">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
+
+            <p class="lead">
+                El Metro tiene varias líneas. Para cambiar de línea necesitas hacer un <strong>transbordo</strong> en estaciones donde coinciden.
+            </p>
+
+            <div class="mapa-metro-container">
+                <svg class="mapa-metro-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+
+                    <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
+
+                    <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+
+                    <g class="estacion" onclick="mostrarEstacion('Observatorio')">
+                        <circle cx="80" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="80" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Observatorio</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Tacubaya')">
+                        <circle cx="180" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="180" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Tacubaya</text>
+                    </g>
+
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="280" cy="80" r="12" fill="#ef4444" stroke="white" stroke-width="3"/>
+                        <circle cx="280" cy="80" r="6" fill="gold"/>
+                        <text x="280" y="50" text-anchor="middle" fill="#9a3412" font-weight="700">Balderas</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Pino Suárez')">
+                        <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="380" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Pino Suárez</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Pantitlán')">
+                        <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="620" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Pantitlán</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Tasqueña')">
+                        <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="350" text-anchor="middle" fill="#9a3412" font-weight="600">Tasqueña</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Ermita')">
+                        <circle cx="150" cy="250" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="250" text-anchor="end" fill="#9a3412" font-weight="600">Ermita</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Chabacano')">
+                        <circle cx="150" cy="180" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="180" text-anchor="end" fill="#9a3412" font-weight="600">Chabacano</text>
+                    </g>
+
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="150" cy="110" r="12" fill="#3b82f6" stroke="white" stroke-width="3"/>
+                        <circle cx="150" cy="110" r="6" fill="gold"/>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Cuatro Caminos')">
+                        <circle cx="150" cy="50" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="30" text-anchor="middle" fill="#9a3412" font-weight="600">Cuatro Caminos</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Universidad')">
+                        <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="350" text-anchor="middle" fill="#9a3412" font-weight="600">Universidad</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Copilco')">
+                        <circle cx="400" cy="250" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="250" text-anchor="start" fill="#9a3412" font-weight="600">Copilco</text>
+                    </g>
+
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="400" cy="180" r="12" fill="#10b981" stroke="white" stroke-width="3"/>
+                        <circle cx="400" cy="180" r="6" fill="gold"/>
+                        <text x="400" y="210" text-anchor="middle" fill="#9a3412" font-weight="700">Balderas</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Guerrero')">
+                        <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="110" text-anchor="start" fill="#9a3412" font-weight="600">Guerrero</text>
+                    </g>
+
+                    <g class="estacion" onclick="mostrarEstacion('Indios Verdes')">
+                        <circle cx="400" cy="50" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="30" text-anchor="middle" fill="#9a3412" font-weight="600">Indios Verdes</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>Líneas del Metro</h4>
+                <ul class="lista-iconos">
+                    <li><span style="color:#ef4444; font-weight:700;">Línea 1 (roja):</span> Observatorio - Tacubaya - Balderas - Pino Suárez - Pantitlán</li>
+                    <li><span style="color:#3b82f6; font-weight:700;">Línea 2 (azul):</span> Tasqueña - Ermita - Chabacano - Balderas - Cuatro Caminos</li>
+                    <li><span style="color:#10b981; font-weight:700;">Línea 3 (verde):</span> Universidad - Copilco - Balderas - Guerrero - Indios Verdes</li>
+                    <li><span style="color:gold; font-weight:700;">Balderas</span> es la estación donde coinciden las 3 líneas</li>
+                </ul>
+            </div>
+
+            <div class="leyenda-metro">
+                <div class="leyenda-item">
+                    <div class="color-linea roja"></div>
+                    <span>Línea 1</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="color-linea azul"></div>
+                    <span>Línea 2</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="color-linea verde"></div>
+                    <span>Línea 3</span>
+                </div>
+                <div class="leyenda-item">
+                    <span style="color:gold; font-size:1.5rem;">⬤</span>
+                    <span>Transbordo</span>
+                </div>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Para ir de <strong>Tasqueña</strong> (Línea 2) a <strong>Indios Verdes</strong> (Línea 3), ¿cuál es la estación de transbordo más eficiente?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento3">
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 0, false)">A) Chabacano (solo Línea 2)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 1, true)">B) Balderas (conecta L2 y L3)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 2, false)">C) Pino Suárez (solo Línea 1)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 3, false)">D) Guerrero (solo Línea 3)</button>
+                </div>
+                <div id="feedback3" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagina" id="pagina4">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots</h2>
+
+            <p class="lead">
+                Diferentes robots tienen distintas capacidades. Cada robot avanza una cantidad fija de unidades por paso.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/tabla-robot-avanzada.jpg" alt="Tabla de robots con unidades por paso y pasos dados" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>¿Cómo funciona?</h4>
+                <p>La tabla muestra, para cada robot:</p>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-shoe-prints"></i> <strong>Unidades por paso:</strong> lo que avanza en cada paso</li>
+                    <li><i class="fas fa-hashtag"></i> <strong>Pasos dados:</strong> cuántos pasos dio</li>
+                </ul>
+                <p class="texto-destacado">Para saber la distancia total, multiplica: Unidades por paso  x  Pasos dados</p>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Observa la tabla. ¿Cuál de estos robots avanzó <strong>MENOS</strong> distancia total?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento4">
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 0, true)">A) Robot A (1 unidad/paso, 5 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 1, false)">B) Robot F (5 unidades/paso, 2 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 2, false)">C) Robot G (3 unidades/paso, 3 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 3, false)">D) Robot B (2 unidades/paso, 7 pasos)</button>
+                </div>
+                <div id="feedback4" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagina" id="pagina5">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
+
+            <p class="lead">
+                El teatro tiene una sección llamada <strong>Platea</strong> con 18 filas. Los asientos se numeran desde el pasillo central.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg" alt="Plano de teatro con filas y asientos" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-chair me-2"></i>Distribución de asientos</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-left"></i> Lado izquierdo: asientos <strong>impares</strong> (1, 3, 5...)</li>
+                    <li><i class="fas fa-arrow-right"></i> Lado derecho: asientos <strong>pares</strong> (2, 4, 6...)</li>
+                    <li><i class="fas fa-sort-numeric-down"></i> Las filas más cercanas al escenario tienen números bajos</li>
+                </ul>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-chair me-2"></i>Capacidad de asientos por fila</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div>Fila 1: 16 asientos</div>
+                    <div>Fila 2: 18 asientos</div>
+                    <div>Fila 3: 20 asientos</div>
+                    <div>Fila 4: 20 asientos</div>
+                    <div>Fila 5: 22 asientos</div>
+                    <div>Fila 6: 24 asientos</div>
+                    <div>Fila 7: 24 asientos</div>
+                    <div>Fila 8: 26 asientos</div>
+                    <div>Fila 9: 26 asientos</div>
+                    <div>Fila 10: 28 asientos</div>
+                    <div>Filas 11-17: 30 asientos</div>
+                    <div>Fila 18: 28 asientos</div>
+                </div>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Dos amigos quieren sentarse juntos, pero uno quiere lado izquierdo y otro lado derecho, lo más cerca posible del escenario. ¿En qué fila y qué asientos deberían elegir?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento5">
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 0, true)">A) Fila 1, asientos 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 1, false)">B) Fila 1, asientos 3 y 4</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 2, false)">C) Fila 2, asientos 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 3, false)">D) Fila 5, asientos 15 y 16</button>
+                </div>
+                <div id="feedback5" class="feedback-reforzamiento"></div>
+            </div>
+
+            <a href="quiz.html" class="boton-quiz text-center">
+                <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
+            </a>
+        </div>
+    </div>
+
+    <div class="navegador">
+        <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+            <i class="fas fa-arrow-left me-2"></i> ANTERIOR
+        </button>
+        <span class="indicador-pagina" id="contadorPagina">1/5</span>
+        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+            SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

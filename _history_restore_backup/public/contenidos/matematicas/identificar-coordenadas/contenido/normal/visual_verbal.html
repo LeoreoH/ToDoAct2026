@@ -1,0 +1,993 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas · Nivel Normal · Visual/Verbal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fff7e6, #ffedd5);
+            color: #9a3412;
+            min-height: 100vh;
+        }
+
+        .cabecera-normal {
+            background: linear-gradient(135deg, #f97316, #c2410c);
+            padding: 25px 20px;
+            border-bottom: 6px solid #fde68a;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+            color: white;
+        }
+
+        .cabecera-normal h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            color: white;
+            text-shadow: 3px 3px 0 #9a3412;
+            margin-bottom: 8px;
+        }
+
+        .badge-estilo {
+            background: #fde68a;
+            color: #9a3412;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-block;
+            border: 4px solid white;
+            margin-top: 10px;
+        }
+
+        .badge-nivel {
+            background: #9a3412;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+            margin-left: 15px;
+            border: 2px solid #fde68a;
+        }
+
+        .barra-progreso {
+            background: white;
+            border-radius: 60px;
+            margin: 25px auto;
+            max-width: 950px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 3px solid #f97316;
+            box-shadow: 0 5px 0 #fed7aa;
+            flex-wrap: wrap;
+        }
+
+        .puntos-progreso {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .punto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffedd5;
+            border: 3px solid #f97316;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #9a3412;
+            transition: all 0.3s;
+        }
+
+        .punto.activo {
+            background: #fde68a;
+            border-color: #c2410c;
+            color: #7b341e;
+            transform: scale(1.15);
+        }
+
+        .punto.completado {
+            background: #4caf50;
+            border-color: white;
+            color: white;
+        }
+
+        .contenedor-paginas {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .pagina {
+            display: none;
+            animation: aparecer 0.5s ease;
+        }
+
+        .pagina.activa {
+            display: block;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tarjeta-contenido {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 3px solid #f97316;
+            box-shadow: 0 8px 0 #fed7aa;
+        }
+
+        .titulo-pagina {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: #c2410c;
+            margin-bottom: 22px;
+            border-left: 8px solid #fde68a;
+            padding-left: 20px;
+        }
+
+        .subtitulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f97316;
+            margin: 24px 0 14px;
+        }
+
+        .recuadro-info {
+            background: #fff7e6;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #fde68a;
+        }
+
+        .recuadro-info h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .lista-iconos {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista-iconos li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-bottom: 1px solid #fed7aa;
+        }
+
+        .lista-iconos li:last-child {
+            border-bottom: none;
+        }
+
+        .lista-iconos i {
+            color: #fde68a;
+            font-size: 1.2rem;
+            width: 28px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .texto-destacado {
+            background: #fff3e0;
+            border: 2px solid #fde68a;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #9a3412;
+        }
+
+        .contenedor-imagen {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #fff7e6;
+            border-radius: 20px;
+            border: 2px solid #fed7aa;
+            position: relative;
+        }
+
+        .contenedor-imagen img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 3px solid #f97316;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .contenedor-imagen img.ampliada {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 4px solid #fde68a;
+        }
+
+        /* Overlay para cuando la imagen está ampliada */
+        body.imagen-ampliada::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* Mapa de Metro SVG */
+        .mapa-metro-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #f97316;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .mapa-metro-svg {
+            width: 100%;
+            min-width: 700px;
+            height: auto;
+        }
+
+        .estacion {
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+
+        .estacion:hover {
+            filter: brightness(1.2);
+        }
+
+        .estacion circle {
+            transition: r 0.3s;
+        }
+
+        .estacion:hover circle {
+            r: 12;
+        }
+
+        .estacion text {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .leyenda-metro {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .leyenda-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-linea {
+            width: 25px;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .color-linea.roja { background: #ef4444; }
+        .color-linea.azul { background: #3b82f6; }
+        .color-linea.verde { background: #10b981; }
+
+        .transbordo {
+            filter: drop-shadow(0 0 5px gold);
+        }
+
+        .navegador {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 20px;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 60px;
+            border: 3px solid #f97316;
+            box-shadow: 0 5px 0 #fed7aa;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.15rem;
+            border: 3px solid #f97316;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .btn-nav:disabled {
+            background: #e0e0e0;
+            color: #9e9e9e;
+            border-color: #bdbdbd;
+        }
+
+        .indicador-pagina {
+            font-size: 1.35rem;
+            font-weight: 800;
+            background: #ffedd5;
+            color: #9a3412;
+            padding: 8px 26px;
+            border-radius: 40px;
+            border: 3px solid #f97316;
+        }
+
+        .boton-quiz {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 18px 42px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.45rem;
+            text-decoration: none;
+            border: 4px solid #f97316;
+            box-shadow: 0 8px 0 #fdba74;
+            transition: all 0.2s;
+        }
+
+        .boton-quiz:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #fdba74;
+            background: white;
+        }
+
+        .pregunta-reforzamiento {
+            background: #fff3e0;
+            border: 3px solid #f97316;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .pregunta-reforzamiento h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .opciones-reforzamiento {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .btn-opcion {
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 15px;
+            padding: 15px;
+            font-weight: 600;
+            color: #9a3412;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .btn-opcion:hover:not(:disabled) {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .btn-opcion.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-opcion.incorrecta {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-opcion:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .feedback-reforzamiento {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .cabecera-normal h1 { font-size: 2rem; }
+            .navegador { flex-direction: column; }
+            .titulo-pagina { font-size: 1.5rem; }
+            .badge-nivel { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUDIOS -->
+<audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+<div class="cabecera-normal">
+    <h1>🧭 COORDENADAS</h1>
+    <p class="lead text-white">Nivel Normal · Planos y rutas</p>
+    <div>
+        <span class="badge-estilo">📖 Visual / Verbal</span>
+        <span class="badge-nivel">📊 Intermedio</span>
+    </div>
+</div>
+
+<div class="barra-progreso">
+    <i class="fas fa-map fa-2x" style="color: #f97316;"></i>
+    <div class="puntos-progreso" id="puntosProgreso">
+        <div class="punto activo" data-pagina="1">1</div>
+        <div class="punto" data-pagina="2">2</div>
+        <div class="punto" data-pagina="3">3</div>
+        <div class="punto" data-pagina="4">4</div>
+        <div class="punto" data-pagina="5">5</div>
+    </div>
+    <span class="badge" style="background: #f97316; color: white; font-size: 1.1rem; padding: 8px 20px;">
+        Página <span id="paginaActualNum">1</span>/5
+    </span>
+</div>
+
+<div class="contenedor-paginas">
+
+    <!-- ============================================
+         PÁGINA 1: RUTA DE SEBASTIÁN
+        ============================================ -->
+    <div class="pagina activa" id="pagina1">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta de Sebastián</h2>
+
+            <p class="lead">
+                Sebastián vive en la <strong>Calle Miguel Jacintez</strong> y quiere llegar al <strong>Parque Porfino Serrano</strong>.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con la ruta de Sebastián trazada" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-route me-2"></i>Recorrido de Sebastián</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-up"></i> Primero camina hacia el <strong>norte</strong> hasta la calle <strong>Luis Preciado de la Torre</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego gira al <strong>este</strong> hasta la calle <strong>Oriente 156</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Después camina al <strong>norte</strong> hasta el <strong>Eje 1 Norte</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego al <strong>este</strong> hasta la calle <strong>Oriente 170</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Finalmente al <strong>norte</strong> hasta llegar al parque</li>
+                </ul>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>¿Cuántas veces cambia de dirección Sebastián durante todo su recorrido desde su casa hasta el parque?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento1">
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 0, false)">A) 2 veces (norte y este)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 1, false)">B) 3 veces (norte, este, norte)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 2, true)">C) 4 veces (norte → este → norte → este → norte)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, 3, false)">D) 5 veces (cada cuadra)</button>
+                </div>
+                <div id="feedback1" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 2: CIUDAD UNIVERSITARIA
+        ============================================ -->
+    <div class="pagina" id="pagina2">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+
+            <p class="lead">
+                En Ciudad Universitaria hay varias facultades. Para ir del <strong>Estacionamiento</strong> al <strong>Departamento de Veterinaria</strong> se sigue una ruta específica.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg" alt="Mapa de Ciudad Universitaria con facultades" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-map-marked-alt me-2"></i>Recorrido</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-right"></i> Del estacionamiento se avanza hacia el <strong>este</strong>, bordeando el <strong>Estadio de Prácticas</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Se continúa al <strong>este</strong> y se pasa por <strong>Trabajo Social</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Luego se llega a <strong>Contaduría</strong>, siempre hacia el <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-right"></i> Después se encuentra <strong>Ciencias del Mar</strong>, también al <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-up"></i> Finalmente se gira al <strong>norte</strong> para llegar a <strong>Veterinaria</strong></li>
+                </ul>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Si alguien se encuentra en <strong>Contaduría</strong> y quiere ir a <strong>Trabajo Social</strong>, ¿hacia dónde debe dirigirse?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento2">
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 0, false)">A) Hacia el este (seguir avanzando)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 1, true)">B) Hacia el oeste (regresar por donde vino)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 2, false)">C) Hacia el norte (subir)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, 3, false)">D) Hacia el sur (bajar)</button>
+                </div>
+                <div id="feedback2" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 3: METRO SIMPLIFICADO
+        ============================================ -->
+    <div class="pagina" id="pagina3">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
+
+            <p class="lead">
+                El Metro tiene varias líneas. Para cambiar de línea necesitas hacer un <strong>transbordo</strong> en estaciones donde coinciden.
+            </p>
+
+            <div class="mapa-metro-container">
+                <svg class="mapa-metro-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Línea 1 (Roja) - Horizontal superior -->
+                    <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+                    
+                    <!-- Línea 2 (Azul) - Vertical izquierda -->
+                    <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
+                    
+                    <!-- Línea 3 (Verde) - Vertical derecha -->
+                    <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+                    
+                    <!-- Estaciones Línea 1 -->
+                    <g class="estacion" onclick="mostrarEstacion('Observatorio')">
+                        <circle cx="80" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="80" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Observatorio</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Tacubaya')">
+                        <circle cx="180" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="180" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Tacubaya</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="280" cy="80" r="12" fill="#ef4444" stroke="white" stroke-width="3"/>
+                        <circle cx="280" cy="80" r="6" fill="gold"/>
+                        <text x="280" y="50" text-anchor="middle" fill="#9a3412" font-weight="700">Balderas</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Pino Suárez')">
+                        <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="380" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Pino Suárez</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Pantitlán')">
+                        <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="620" y="110" text-anchor="middle" fill="#9a3412" font-weight="600">Pantitlán</text>
+                    </g>
+                    
+                    <!-- Estaciones Línea 2 -->
+                    <g class="estacion" onclick="mostrarEstacion('Tasqueña')">
+                        <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="350" text-anchor="middle" fill="#9a3412" font-weight="600">Tasqueña</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Ermita')">
+                        <circle cx="150" cy="250" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="250" text-anchor="end" fill="#9a3412" font-weight="600">Ermita</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Chabacano')">
+                        <circle cx="150" cy="180" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="180" text-anchor="end" fill="#9a3412" font-weight="600">Chabacano</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="150" cy="110" r="12" fill="#3b82f6" stroke="white" stroke-width="3"/>
+                        <circle cx="150" cy="110" r="6" fill="gold"/>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Cuatro Caminos')">
+                        <circle cx="150" cy="50" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="30" text-anchor="middle" fill="#9a3412" font-weight="600">Cuatro Caminos</text>
+                    </g>
+                    
+                    <!-- Estaciones Línea 3 -->
+                    <g class="estacion" onclick="mostrarEstacion('Universidad')">
+                        <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="350" text-anchor="middle" fill="#9a3412" font-weight="600">Universidad</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Copilco')">
+                        <circle cx="400" cy="250" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="250" text-anchor="start" fill="#9a3412" font-weight="600">Copilco</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
+                        <circle cx="400" cy="180" r="12" fill="#10b981" stroke="white" stroke-width="3"/>
+                        <circle cx="400" cy="180" r="6" fill="gold"/>
+                        <text x="400" y="210" text-anchor="middle" fill="#9a3412" font-weight="700">Balderas</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Guerrero')">
+                        <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="110" text-anchor="start" fill="#9a3412" font-weight="600">Guerrero</text>
+                    </g>
+                    
+                    <g class="estacion" onclick="mostrarEstacion('Indios Verdes')">
+                        <circle cx="400" cy="50" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="30" text-anchor="middle" fill="#9a3412" font-weight="600">Indios Verdes</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>Líneas del Metro</h4>
+                <ul class="lista-iconos">
+                    <li><span style="color:#ef4444; font-weight:700;">Línea 1 (roja):</span> Observatorio - Tacubaya - Balderas - Pino Suárez - Pantitlán</li>
+                    <li><span style="color:#3b82f6; font-weight:700;">Línea 2 (azul):</span> Tasqueña - Ermita - Chabacano - Balderas - Cuatro Caminos</li>
+                    <li><span style="color:#10b981; font-weight:700;">Línea 3 (verde):</span> Universidad - Copilco - Balderas - Guerrero - Indios Verdes</li>
+                    <li><span style="color:gold; font-weight:700;">Balderas</span> es la estación donde coinciden las 3 líneas</li>
+                </ul>
+            </div>
+
+            <div class="leyenda-metro">
+                <div class="leyenda-item">
+                    <div class="color-linea roja"></div>
+                    <span>Línea 1</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="color-linea azul"></div>
+                    <span>Línea 2</span>
+                </div>
+                <div class="leyenda-item">
+                    <div class="color-linea verde"></div>
+                    <span>Línea 3</span>
+                </div>
+                <div class="leyenda-item">
+                    <span style="color:gold; font-size:1.5rem;">⬤</span>
+                    <span>Transbordo</span>
+                </div>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Para ir de <strong>Tasqueña</strong> (Línea 2) a <strong>Indios Verdes</strong> (Línea 3), ¿cuál es la estación de transbordo más eficiente?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento3">
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 0, false)">A) Chabacano (solo Línea 2)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 1, true)">B) Balderas (conecta L2 y L3)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 2, false)">C) Pino Suárez (solo Línea 1)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, 3, false)">D) Guerrero (solo Línea 3)</button>
+                </div>
+                <div id="feedback3" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 4: TABLA DE ROBOTS (CORREGIDA)
+        ============================================ -->
+    <div class="pagina" id="pagina4">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots</h2>
+
+            <p class="lead">
+                Diferentes robots tienen distintas capacidades. Cada robot avanza una cantidad fija de unidades por paso.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/tabla-robot-avanzada.jpg" alt="Tabla de robots con unidades por paso y pasos dados" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>¿Cómo funciona?</h4>
+                <p>La tabla muestra, para cada robot:</p>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-shoe-prints"></i> <strong>Unidades por paso:</strong> lo que avanza en cada paso</li>
+                    <li><i class="fas fa-hashtag"></i> <strong>Pasos dados:</strong> cuántos pasos dio</li>
+                </ul>
+                <p class="texto-destacado">Para saber la distancia total, multiplica: Unidades por paso × Pasos dados</p>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Observa la tabla. ¿Cuál de estos robots avanzó <strong>MENOS</strong> distancia total?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento4">
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 0, true)">A) Robot A (1 unidad/paso, 5 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 1, false)">B) Robot F (5 unidades/paso, 2 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 2, false)">C) Robot G (3 unidades/paso, 3 pasos)</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, 3, false)">D) Robot B (2 unidades/paso, 7 pasos)</button>
+                </div>
+                <div id="feedback4" class="feedback-reforzamiento"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 5: PLANO DE TEATRO
+        ============================================ -->
+    <div class="pagina" id="pagina5">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
+
+            <p class="lead">
+                El teatro tiene una sección llamada <strong>Platea</strong> con 18 filas. Los asientos se numeran desde el pasillo central.
+            </p>
+
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg" alt="Plano de teatro con filas y asientos" onclick="ampliarImagen(this)">
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-chair me-2"></i>Distribución de asientos</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-left"></i> Lado izquierdo: asientos <strong>impares</strong> (1, 3, 5...)</li>
+                    <li><i class="fas fa-arrow-right"></i> Lado derecho: asientos <strong>pares</strong> (2, 4, 6...)</li>
+                    <li><i class="fas fa-sort-numeric-down"></i> Las filas más cercanas al escenario tienen números bajos</li>
+                </ul>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-chair me-2"></i>Capacidad de asientos por fila</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div>Fila 1: 16 asientos</div>
+                    <div>Fila 2: 18 asientos</div>
+                    <div>Fila 3: 20 asientos</div>
+                    <div>Fila 4: 20 asientos</div>
+                    <div>Fila 5: 22 asientos</div>
+                    <div>Fila 6: 24 asientos</div>
+                    <div>Fila 7: 24 asientos</div>
+                    <div>Fila 8: 26 asientos</div>
+                    <div>Fila 9: 26 asientos</div>
+                    <div>Fila 10: 28 asientos</div>
+                    <div>Filas 11-17: 30 asientos</div>
+                    <div>Fila 18: 28 asientos</div>
+                </div>
+            </div>
+
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Pregunta</h4>
+                <p>Dos amigos quieren sentarse juntos, pero uno quiere lado izquierdo y otro lado derecho, lo más cerca posible del escenario. ¿En qué fila y qué asientos deberían elegir?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento5">
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 0, true)">A) Fila 1, asientos 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 1, false)">B) Fila 1, asientos 3 y 4</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 2, false)">C) Fila 2, asientos 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, 3, false)">D) Fila 5, asientos 15 y 16</button>
+                </div>
+                <div id="feedback5" class="feedback-reforzamiento"></div>
+            </div>
+
+            <!-- BOTÓN PARA IR AL QUIZ -->
+            <a href="quiz.html" class="boton-quiz text-center">
+                <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
+            </a>
+        </div>
+    </div>
+
+    <!-- NAVEGADOR -->
+    <div class="navegador">
+        <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+            <i class="fas fa-arrow-left me-2"></i> ANTERIOR
+        </button>
+        <span class="indicador-pagina" id="contadorPagina">1/5</span>
+        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+            SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    // ============================================
+    // VARIABLES GLOBALES
+    // ============================================
+    let paginaActual = 1;
+    const totalPaginas = 5;
+    const audioWhoosh = document.getElementById('audioWhoosh');
+    const audioClick = document.getElementById('audioClick');
+    const audioDing = document.getElementById('audioDing');
+    const audioError = document.getElementById('audioError');
+
+    let respuestasPagina = {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false
+    };
+
+    // ============================================
+    // NAVEGACIÓN
+    // ============================================
+    function cambiarPagina(direccion) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual += direccion;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+        audioWhoosh.play();
+        actualizarUI();
+        localStorage.setItem('progreso_normal_visualverbal_coordenadas', paginaActual);
+    }
+
+    function actualizarUI() {
+        document.querySelectorAll('.punto').forEach((punto, index) => {
+            const numPagina = index + 1;
+            punto.classList.remove('activo', 'completado');
+            if (numPagina === paginaActual) punto.classList.add('activo');
+            else if (numPagina < paginaActual && respuestasPagina[numPagina]) punto.classList.add('completado');
+            else if (numPagina < paginaActual) punto.classList.add('activo');
+        });
+
+        document.getElementById('paginaActualNum').innerText = paginaActual;
+        document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+        document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+    }
+
+    // ============================================
+    // FUNCIONES DE REFORZAMIENTO (CORREGIDAS)
+    // ============================================
+    function responderReforzamiento(pagina, opcion, esCorrecta) {
+        if (respuestasPagina[pagina]) return;
+        
+        audioClick.play();
+        
+        const feedback = document.getElementById(`feedback${pagina}`);
+        const botones = document.querySelectorAll(`#reforzamiento${pagina} .btn-opcion`);
+        
+        botones.forEach(btn => btn.disabled = true);
+        botones[opcion].classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+        
+        if (esCorrecta) {
+            audioDing.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-reforzamiento bg-success text-white';
+            
+            // Mensajes personalizados según la página
+            const mensajes = {
+                1: '✅ ¡Correcto! Sebastián cambia de dirección 4 veces: norte → este → norte → este → norte',
+                2: '✅ ¡Correcto! Para regresar de Contaduría a Trabajo Social debe ir hacia el oeste',
+                3: '✅ ¡Correcto! Balderas es la estación donde coinciden Línea 2 y Línea 3',
+                4: '✅ ¡Correcto! Robot A avanzó solo 5 unidades (1×5). Es menos que Robot F (10), Robot G (9) y Robot B (14)',
+                5: '✅ ¡Correcto! En la fila 1, los asientos 1 y 2 son los más cercanos al escenario, cada uno en su lado'
+            };
+            
+            feedback.innerHTML = mensajes[pagina] || '✅ ¡Correcto!';
+            respuestasPagina[pagina] = true;
+        } else {
+            audioError.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-reforzamiento bg-danger text-white';
+            
+            // Mensajes de error personalizados
+            const mensajesError = {
+                1: '❌ Incorrecto. Cuenta los cambios de dirección en el recorrido: norte, este, norte, este, norte = 4 cambios',
+                2: '❌ Incorrecto. Trabajo Social está ANTES de Contaduría en la ruta, así que debe regresar hacia el oeste',
+                3: '❌ Incorrecto. Revisa el mapa: Tasqueña está en Línea 2, Indios Verdes en Línea 3. La única estación donde coinciden es Balderas',
+                4: '❌ Incorrecto. Calcula: Robot A: 1×5=5, Robot F: 5×2=10, Robot G: 3×3=9, Robot B: 2×7=14. El que avanzó menos es Robot A (5 unidades)',
+                5: '❌ Incorrecto. Lo más cerca del escenario es fila 1. Para estar cada uno en su lado, deben ser asiento 1 (izquierda) y asiento 2 (derecha)'
+            };
+            
+            feedback.innerHTML = mensajesError[pagina] || '❌ Incorrecto. Sigue intentando.';
+        }
+        
+        actualizarUI();
+    }
+
+    // ============================================
+    // FUNCIONES DEL MAPA DE METRO
+    // ============================================
+    function mostrarEstacion(nombre) {
+        audioClick.play();
+        
+        let mensaje = `Estación: ${nombre}`;
+        if (nombre === 'Balderas') {
+            mensaje = '🌟 Balderas: Estación de transbordo entre Línea 1, Línea 2 y Línea 3';
+        }
+        
+        alert(mensaje);
+    }
+
+    // ============================================
+    // FUNCIÓN PARA AMPLIAR IMÁGENES
+    // ============================================
+    function ampliarImagen(img) {
+        if (img.classList.contains('ampliada')) {
+            img.classList.remove('ampliada');
+            document.body.classList.remove('imagen-ampliada');
+        } else {
+            // Cerrar cualquier otra imagen ampliada
+            document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+            
+            img.classList.add('ampliada');
+            document.body.classList.add('imagen-ampliada');
+        }
+    }
+
+    // Cerrar imagen al hacer clic fuera
+    document.addEventListener('click', function(event) {
+        if (!event.target.classList.contains('ampliada') && !event.target.closest('.contenedor-imagen')) {
+            document.querySelectorAll('.ampliada').forEach(img => {
+                img.classList.remove('ampliada');
+                document.body.classList.remove('imagen-ampliada');
+            });
+        }
+    });
+
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    window.addEventListener('DOMContentLoaded', () => {
+        const guardado = localStorage.getItem('progreso_normal_visualverbal_coordenadas');
+        if (guardado) {
+            const pag = parseInt(guardado, 10);
+            if (pag >= 1 && pag <= totalPaginas) {
+                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+                paginaActual = pag;
+                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+            }
+        }
+        actualizarUI();
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

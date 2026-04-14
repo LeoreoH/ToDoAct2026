@@ -1,4 +1,4 @@
--- INSERTAR PREGUNTAS DE DIAGNÓSTICO - GEOGRAFÍA
+﻿-- INSERTAR PREGUNTAS DE DIAGNÃ“STICO - GEOGRAFÃA
 
 SET client_encoding TO 'UTF8';
 
@@ -23,8 +23,8 @@ INSERT INTO preguntas_diagnostico (examen_id, pregunta, opcion_a, opcion_b, opci
 (1, 'Que paralelo marca el limite de la zona tropical en el hemisferio norte?', 
  'Ecuador', 'Tropico de Capricornio', 'Tropico de Cancer', 'Circulo Polar Artico', 'C'),
 
-(1, 'Que estacion del año comienza el 21 de junio en el hemisferio norte?', 
- 'Primavera', 'Verano', 'Otoño', 'Invierno', 'B'),
+(1, 'Que estacion del aÃ±o comienza el 21 de junio en el hemisferio norte?', 
+ 'Primavera', 'Verano', 'OtoÃ±o', 'Invierno', 'B'),
 
 (1, 'Que tipo de proyeccion cartografica distorsiona menos las formas de los continentes cerca del ecuador?', 
  'Mercator', 'Robinson', 'Goode', 'Peters', 'B'),
@@ -32,14 +32,14 @@ INSERT INTO preguntas_diagnostico (examen_id, pregunta, opcion_a, opcion_b, opci
 (1, 'Que es la altitud?', 
  'Distancia desde el ecuador', 'Distancia desde el meridiano de Greenwich', 'Distancia vertical respecto al nivel del mar', 'Distancia horizontal entre dos puntos', 'C'),
 
-(1, 'Por que en el ecuador el dia y la noche duran casi lo mismo durante todo el año?', 
+(1, 'Por que en el ecuador el dia y la noche duran casi lo mismo durante todo el aÃ±o?', 
  'Porque los rayos del sol caen perpendicularmente', 'Porque la inclinacion del eje no afecta esa zona', 'Porque esta mas cerca del sol', 'Porque no hay estaciones', 'B');
 
 -- BLOQUE II: COMPONENTES NATURALES (contenido_id = 2, examen_id = 2)
 
 INSERT INTO preguntas_diagnostico (examen_id, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, respuesta_correcta) VALUES
 (2, 'Que formas de relieve continental existen?', 
- 'Montañas, mesetas, llanuras y depresiones', 'Volcanes, rios, lagos y oceanos', 'Valles, colinas, dunas y acantilados', 'Sierras, cordilleras, penillanuras y fosas', 'A'),
+ 'MontaÃ±as, mesetas, llanuras y depresiones', 'Volcanes, rios, lagos y oceanos', 'Valles, colinas, dunas y acantilados', 'Sierras, cordilleras, penillanuras y fosas', 'A'),
 
 (2, 'Que fenomenos naturales son causados por el movimiento de las placas tectonicas?', 
  'Huracanes y tornados', 'Sismos y volcanes', 'Inundaciones y sequias', 'Erosion y sedimentacion', 'B'),
@@ -48,7 +48,7 @@ INSERT INTO preguntas_diagnostico (examen_id, pregunta, opcion_a, opcion_b, opci
  '97%', '3%', '1%', '0.5%', 'C'),
 
 (2, 'Cual es el rio mas largo del mundo?', 
- 'Nilo', 'Amazonas', 'Misisipi', 'Yangtsé', 'B'),
+ 'Nilo', 'Amazonas', 'Misisipi', 'YangtsÃ©', 'B'),
 
 (2, 'Que factores modifican el clima en la Tierra?', 
  'La latitud, altitud y cercania al mar', 'La rotacion y traslacion', 'Las fases lunares', 'Las mareas', 'A'),
@@ -57,7 +57,7 @@ INSERT INTO preguntas_diagnostico (examen_id, pregunta, opcion_a, opcion_b, opci
  'Desierto', 'Sabana', 'Selva tropical', 'Taiga', 'C'),
 
 (2, 'Donde se localizan los climas polares?', 
- 'Cerca del ecuador', 'En latitudes altas, despues de los circulos polares', 'En zonas montañosas', 'En el centro de los continentes', 'B'),
+ 'Cerca del ecuador', 'En latitudes altas, despues de los circulos polares', 'En zonas montaÃ±osas', 'En el centro de los continentes', 'B'),
 
 (2, 'Que agente erosivo es el principal modelador del relieve?', 
  'El viento', 'El agua', 'El hielo', 'Los sismos', 'B'),

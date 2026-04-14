@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="styles-inicio-perfil.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="perfil-page">
+    <div class="contenedor">
+        <div class="contenedor-cerrar-sesion">
+            <button onclick="cerrarSesion()" class="boton-cerrar-sesion">Cerrar sesión</button>
+        </div>
+
+        <div id="perfil">
+            <h2>Perfil</h2>
+
+            <div class="perfil-layout">
+
+                
+                <div class="perfil-izquierda">
+                    <div class="imagen-mascota">
+                        <img src="recursos/mascota.jpeg" alt="Mi mascota">
+                    </div>
+                    <div class="perfil-xp-badge">XP: <span id="xp-side">0</span></div>
+                </div>
+
+                
+                <div class="perfil-derecha">
+                    <div class="info-perfil">
+                        <div class="campo-perfil">
+                            <span class="campo-label">Usuario</span>
+                            <span class="campo-valor" id="usuario"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Nombre completo</span>
+                            <span class="campo-valor" id="nombrecompleto"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Fecha de nacimiento</span>
+                            <span class="campo-valor" id="fechanacimiento"></span>
+                        </div>
+                        <div class="campo-perfil">
+                            <span class="campo-label">Género</span>
+                            <span class="campo-valor" id="genero"></span>
+                        </div>
+                        <div class="campo-perfil campo-estilo">
+                            <span class="campo-label">Estilo de aprendizaje</span>
+                            <select id="estilo">
+                                <option value="">Selecciona un estilo</option>
+                                <option value="visual_verbal">Visual verbal</option>
+                                <option value="visual_no_verbal">Visual no verbal</option>
+                                <option value="auditivo">Auditivo</option>
+                                <option value="kinestesico">Kinestésico</option>
+                            </select>
+                            <button id="guardarEstilo">Guardar estilo</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-inferior">
+        <a href="inicio.html" class="menu-item">
+            <span>Actividades</span>
+        </a>
+        <a href="perfil.html" class="menu-item seleccionado">
+            <span>Perfil</span>
+        </a>
+        <span id="xp-total" class="menu-item xp-item">XP: 0</span>
+    </div>
+
+    <script src="configClient.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

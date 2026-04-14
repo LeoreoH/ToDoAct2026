@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poblaci&oacute;n Mundial &middot; Auditivo &middot; Nivel F&aacute;cil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cabecera">
+  <h1>POBLACI&Oacute;N MUNDIAL</h1>
+  <div class="sub">Pa&iacute;ses m&aacute;s y menos poblados &middot; Nivel F&aacute;cil &middot; Geograf&iacute;a 5&deg;</div>
+  <div class="badge-estilo"><i class="fas fa-headphones me-2"></i>Estilo Auditivo</div>
+</div>
+
+<div class="progreso">
+  <i class="fas fa-headphones fa-2x" style="color:var(--guindo);"></i>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
+    Página <span id="numActual">1</span>/4
+  </span>
+</div>
+
+<div class="contenedor">
+
+<div class="pagina activa" id="pagina1">
+  <div class="card-aud">
+    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
+    <span class="subtitulo-tema">Subtema 1 de 3</span>
+
+    <p class="mb-2">La población mundial no se distribuye de forma uniforme. Factores como el <strong>clima, el relieve, la disponibilidad de agua y la economía</strong> determinan dónde vive la gente. Los países más poblados concentran cientos de millones de personas.</p>
+
+    <div class="dato-box"><strong>Más poblados:</strong> China (~1,400M), India (~1,400M), EE.UU. (~330M), Indonesia (~280M), Brasil (~215M).</div>
+    <div class="dato-box"><strong>Menos poblados:</strong> Nauru, Tuvalu, Palau, San Marino y Liechtenstein — cada uno con menos de 50,000 habitantes.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p><i class="fas fa-headphones me-2"></i>Adivina por audio</p>
+      </div>
+      <h3 class="act-titulo">Escucha cada pista y elige el país correcto</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Cada pregunta tiene su propio audio — escúchalo y selecciona la respuesta</p>
+
+      <div class="vf-item" id="qAud1">
+        <div class="vf-texto">Pregunta 1 — ¿A qué país corresponde la descripción?</div>
+
+        <div class="pregunta-audio-wrap">
+          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 1</span>
+          <audio controls>
+            <source src="audios/audio 1 china.mp3.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio.
+          </audio>
+        </div>
+
+        <button class="opcion-btn" onclick="responderOpc('qAud1','china','china')">
+          <img src="https://flagcdn.com/cn.svg" alt="China"> China
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud1','noruega','china')">
+          <img src="https://flagcdn.com/no.svg" alt="Noruega"> Noruega
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud1','nauru','china')">
+          <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud1','islandia','china')">
+          <img src="https://flagcdn.com/is.svg" alt="Islandia"> Islandia
+        </button>
+        <div class="fb-ok" id="okQAud1">¡Correcto! China es el país más poblado del mundo con más de 1,400 millones de habitantes.</div>
+        <div class="fb-err" id="errQAud1">Incorrecto. La respuesta es China. Es el país más poblado del mundo.</div>
+      </div>
+
+      <div class="vf-item" id="qAud2">
+        <div class="vf-texto">Pregunta 2 — ¿A qué país corresponde esta descripción?</div>
+
+        <div class="pregunta-audio-wrap">
+          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 2</span>
+          <audio controls>
+            <source src="audios/audio 2 india.mp3.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio.
+          </audio>
+        </div>
+
+        <button class="opcion-btn" onclick="responderOpc('qAud2','brasil','india')">
+          <img src="https://flagcdn.com/br.svg" alt="Brasil"> Brasil
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud2','india','india')">
+          <img src="https://flagcdn.com/in.svg" alt="India"> India
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud2','palau','india')">
+          <img src="https://flagcdn.com/pw.svg" alt="Palau"> Palau
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud2','suecia','india')">
+          <img src="https://flagcdn.com/se.svg" alt="Suecia"> Suecia
+        </button>
+        <div class="fb-ok" id="okQAud2">¡Correcto! India tiene más de 1,400 millones de habitantes y compite con China por el 1er lugar.</div>
+        <div class="fb-err" id="errQAud2">Incorrecto. La respuesta es India, el segundo país más poblado del mundo.</div>
+      </div>
+
+      <div class="vf-item" id="qAud3">
+        <div class="vf-texto">Pregunta 3 — País con menos de 15,000 habitantes, ¿cuál es?</div>
+
+        <div class="pregunta-audio-wrap">
+          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 3</span>
+          <audio controls>
+            <source src="audios/audio 3 naru.mp3.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio.
+          </audio>
+        </div>
+
+        <button class="opcion-btn" onclick="responderOpc('qAud3','indonesia','nauru')">
+          <img src="https://flagcdn.com/id.svg" alt="Indonesia"> Indonesia
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud3','eeuu','nauru')">
+          <img src="https://flagcdn.com/us.svg" alt="EE.UU."> EE.UU.
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud3','nauru','nauru')">
+          <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+        </button>
+        <button class="opcion-btn" onclick="responderOpc('qAud3','alemania','nauru')">
+          <img src="https://flagcdn.com/de.svg" alt="Alemania"> Alemania
+        </button>
+        <div class="fb-ok" id="okQAud3">¡Correcto! Nauru es uno de los países menos poblados del mundo, con menos de 15,000 habitantes.</div>
+        <div class="fb-err" id="errQAud3">Incorrecto. La respuesta es Nauru, un pequeño estado insular con muy poca población.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina2">
+  <div class="card-aud">
+    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
+    <span class="subtitulo-tema">Subtema 2 de 3</span>
+
+    <p class="mb-2">La <strong>densidad de población</strong> mide cuántas personas viven en un km². Bangladesh (~1,100 hab/km²) es ejemplo de concentración extrema. Mongolia (~2 hab/km²) es ejemplo de dispersión. Las <strong>megalópolis</strong> como Tokio o Ciudad de México concentran decenas de millones.</p>
+
+    <div class="dato-box"><strong>Concentración:</strong> Muchas personas en poco espacio. Ciudades, costas, llanuras fértiles.</div>
+    <div class="dato-box"><strong>Dispersión:</strong> Pocas personas en gran territorio. Desiertos, zonas polares, selvas.</div>
+
+    <div class="audio-section">
+      <h5><i class="fas fa-volume-up me-2"></i>Escucha las afirmaciones</h5>
+      <div class="placeholder-audio">
+        <audio controls>
+    <source src="audios/audio 4 verdadfalso.mp3.mp3" type="audio/mpeg">
+  </audio>
+        <i class="fas fa-music fa-2x mb-2 d-block"></i>
+      </div>
+    </div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p><i class="fas fa-check-circle me-2"></i>Verdadero o Falso</p>
+      </div>
+      <h3 class="act-titulo">Escucha y decide: ¿Verdadero o Falso?</h3>
+
+      <div id="vfItems">
+        <div class="vf-item" id="vf1">
+          <div class="vf-texto">1. Bangladesh es uno de los países con mayor densidad de población del mundo.</div>
+          <div class="vf-btns">
+            <button class="vf-btn verdad" onclick="respVF('vf1','V','V')">Verdadero</button>
+            <button class="vf-btn falso" onclick="respVF('vf1','F','V')">Falso</button>
+          </div>
+        </div>
+        <div class="vf-item" id="vf2">
+          <div class="vf-texto">2. Mongolia tiene una de las densidades de población más altas del mundo.</div>
+          <div class="vf-btns">
+            <button class="vf-btn verdad" onclick="respVF('vf2','V','F')">Verdadero</button>
+            <button class="vf-btn falso" onclick="respVF('vf2','F','F')">Falso</button>
+          </div>
+        </div>
+        <div class="vf-item" id="vf3">
+          <div class="vf-texto">3. Las megalópolis son ciudades que concentran millones de personas en poco espacio.</div>
+          <div class="vf-btns">
+            <button class="vf-btn verdad" onclick="respVF('vf3','V','V')">Verdadero</button>
+            <button class="vf-btn falso" onclick="respVF('vf3','F','V')">Falso</button>
+          </div>
+        </div>
+        <div class="vf-item" id="vf4">
+          <div class="vf-texto">4. Los desiertos y zonas polares suelen tener alta concentración de población.</div>
+          <div class="vf-btns">
+            <button class="vf-btn verdad" onclick="respVF('vf4','V','F')">Verdadero</button>
+            <button class="vf-btn falso" onclick="respVF('vf4','F','F')">Falso</button>
+          </div>
+        </div>
+        <div class="vf-item" id="vf5">
+          <div class="vf-texto">5. La densidad de población se mide en habitantes por kilómetro cuadrado (hab/km²).</div>
+          <div class="vf-btns">
+            <button class="vf-btn verdad" onclick="respVF('vf5','V','V')">Verdadero</button>
+            <button class="vf-btn falso" onclick="respVF('vf5','F','V')">Falso</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-ok" id="fbPag2">¡Excelente! Respondiste correctamente todas las afirmaciones.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina3">
+  <div class="card-aud">
+    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
+    <span class="subtitulo-tema">Subtema 3 de 3</span>
+
+    <p class="mb-2">Cuando demasiada población se concentra en un lugar, los <strong>servicios básicos se saturan</strong>. Aumentan la contaminación, el desempleo, la inseguridad y la falta de vivienda. Es un reto para países como China, India y México.</p>
+
+    <div class="dato-box"><strong>Consecuencias:</strong> Escasez de agua, problemas de transporte, contaminación del aire y el suelo, desigualdad social.</div>
+
+    <div class="audio-section">
+      <h5><i class="fas fa-volume-up me-2"></i>Escucha las pistas</h5>
+      <div class="placeholder-audio">
+        <i class="fas fa-music fa-2x mb-2 d-block"></i>
+       <audio controls>
+    <source src="audios/audio 5 pistas.mp3.mp3" type="audio/mpeg">
+  </audio><br>
+      </div>
+    </div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p><i class="fas fa-lightbulb me-2"></i>Escucha las pistas y escoge la respuesta</p>
+      </div>
+      <h3 class="act-titulo">¿De qué concepto se habla?</h3>
+
+      <div class="pista-box mb-3" id="pista1">
+        <div class="pista-num">Pista 1:</div>
+        <div class="pista-txt mb-2">Cuando la ciudad crece demasiado, no hay suficientes casas para todos los habitantes.</div>
+        <div>
+          <button class="opcion-btn" onclick="responderPista('pista1','contaminacion','vivienda')">Contaminación</button>
+          <button class="opcion-btn" onclick="responderPista('pista1','vivienda','vivienda')">Escasez de vivienda</button>
+          <button class="opcion-btn" onclick="responderPista('pista1','desempleo','vivienda')">Desempleo</button>
+        </div>
+        <div class="fb-ok" id="okPista1">¡Correcto! La escasez de vivienda es uno de los principales problemas de la concentración.</div>
+        <div class="fb-err" id="errPista1">Incorrecto. La respuesta es "Escasez de vivienda".</div>
+      </div>
+
+      <div class="pista-box mb-3" id="pista2">
+        <div class="pista-num">Pista 2:</div>
+        <div class="pista-txt mb-2">Muchos vehículos, fábricas y personas en poco espacio ensucian el aire que respiramos.</div>
+        <div>
+          <button class="opcion-btn" onclick="responderPista('pista2','trafico','contaminacion')">Tráfico vehicular</button>
+          <button class="opcion-btn" onclick="responderPista('pista2','vivienda','contaminacion')">Falta de vivienda</button>
+          <button class="opcion-btn" onclick="responderPista('pista2','contaminacion','contaminacion')">Contaminación del aire</button>
+        </div>
+        <div class="fb-ok" id="okPista2">¡Correcto! La contaminación es un grave problema en zonas muy pobladas.</div>
+        <div class="fb-err" id="errPista2">Incorrecto. La respuesta es "Contaminación del aire".</div>
+      </div>
+
+      <div class="pista-box" id="pista3">
+        <div class="pista-num">Pista 3:</div>
+        <div class="pista-txt mb-2">Hay más personas que trabajos disponibles. Muchas personas no pueden ganarse la vida.</div>
+        <div>
+          <button class="opcion-btn" onclick="responderPista('pista3','desempleo','desempleo')">Desempleo</button>
+          <button class="opcion-btn" onclick="responderPista('pista3','agua','desempleo')">Escasez de agua</button>
+          <button class="opcion-btn" onclick="responderPista('pista3','vivienda','desempleo')">Vivienda</button>
+        </div>
+        <div class="fb-ok" id="okPista3">¡Correcto! El desempleo se agrava cuando hay mucha población concentrada en una zona.</div>
+        <div class="fb-err" id="errPista3">Incorrecto. La respuesta es "Desempleo".</div>
+      </div>
+
+      <div class="fb-ok mt-2" id="fbPag3">¡Muy bien! Identificaste todos los problemas de la concentración de población.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina4">
+  <div class="card-aud">
+    <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
+    <span class="subtitulo-tema">Retroalimentación · Los 3 subtemas</span>
+
+    <p class="mb-2">Escucha el audio de repaso mientras observas las imágenes. ¡Refuerza todo lo que aprendiste!</p>
+
+    <div class="audio-section">
+      <h5><i class="fas fa-volume-up me-2"></i>Audio de Repaso — Escúchalo completo</h5>
+      <div class="placeholder-audio">
+        <i class="fas fa-music fa-2x mb-2 d-block"></i>
+        <audio controls>
+    <source src="audios/audio 6 repaso.mp3.mp3" type="audio/mpeg">
+  </audio><br>
+        <small>Este audio debe repasar los 3 subtemas: distribución, concentración/dispersión y problemas</small>
+      </div>
+      <div class="note">Escucha mientras lees la información de cada imagen</div>
+    </div>
+
+    <div class="row g-3 mt-2">
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Tierra" class="rep-img">
+          <h6>Distribución Mundial</h6>
+          <p>La población no está repartida igual. China e India son los más poblados. Clima, agua y economía influyen en dónde vive la gente. Los países insulares pequeños son los menos poblados.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://th.bing.com/th/id/R.5612adfcd7c11880698e0780c9fe99cc?rik=R%2b2Six9HSgSiuA&riu=http%3a%2f%2fstatic.wixstatic.com%2fmedia%2fb55503_23b632a35d364273b2cd025f228d366d.jpg&ehk=St5eXWBtus%2b9VNv4w3GHjZguFxXIeBccU3ylfHHveUc%3d&risl=&pid=ImgRaw&r=0" alt="Ciudad densa" class="rep-img">
+          <h6>Concentración y Dispersión</h6>
+          <p>La densidad mide habitantes por km². Ciudades como Tokio o Dhaka están muy concentradas. Mongolia y el Sahara son ejemplos de dispersión poblacional extrema.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://phantom-marca-mx.unidadeditorial.es/e1847edcfa4ce97ef477243ef14a870e/resize/1320/f/jpg/mx/assets/multimedia/imagenes/2024/06/18/17187367465141.jpg" alt="Problemas de concentración" class="rep-img">
+          <h6>Problemas de Concentración</h6>
+          <p>Demasiada gente en un lugar causa: falta de vivienda, contaminación, desempleo y saturación de servicios. Es uno de los retos más grandes del mundo actual.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/4</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="boton-quiz text-center">
+  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
+</a>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

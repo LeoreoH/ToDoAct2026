@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Población Mundial · Visual No Verbal · Nivel Fácil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+<div class="cabecera">
+  <h1>POBLACIÓN MUNDIAL</h1>
+  <div class="sub">Paises mas y menos poblados · Nivel Facil · GEOGRAFÍA 5°</div>
+  <div class="badge-estilo"><i class="fas fa-eye me-2"></i>Estilo Visual No Verbal</div>
+</div>
+<div class="progreso">
+  <i class="fas fa-images fa-2x" style="color:var(--guindo);"></i>
+  <div class="puntos"><div class="punto activo">1</div><div class="punto">2</div><div class="punto">3</div><div class="punto">4</div></div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">Pagina <span id="numActual">1</span>/4</span>
+</div>
+<div class="contenedor">
+  <div class="pagina activa" id="pagina1">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La distribucion de la POBLACIÓN</h2>
+      <span class="subtitulo-tema">Subtema 1 de 3</span>
+      <p class="intro">La POBLACIÓN del mundo no esta repartida de la misma manera. Algunos paises tienen muchisima gente y otros tienen muy pocos habitantes. Las imagenes y banderas te ayudan a ver esa diferencia de inmediato.</p>
+      <div class="dato-box"><strong>Muy poblados:</strong> India, China, Estados Unidos y Brasil tienen millones de habitantes.</div>
+      <div class="dato-box"><strong>Muy poco poblados:</strong> Nauru, Tuvalu, San Marino y Palau tienen poblaciones pequenas.</div>
+      <div class="hero-visual">
+        <div class="hero-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Tierra vista desde el espacio"><div class="hero-info"><strong style="color:var(--guindo);">Observa el planeta:</strong> la gente se concentra mas en zonas con ciudades, trabajo, agua y mejores caminos.</div></div>
+        <div class="mini-grid">
+          <div class="mini-card"><img src="https://flagcdn.com/w320/in.png" alt="India"><div class="txt"><strong>India</strong><br>Uno de los paises mas poblados.</div></div>
+          <div class="mini-card"><img src="https://flagcdn.com/w320/cn.png" alt="China"><div class="txt"><strong>China</strong><br>Otro de los paises con mas habitantes.</div></div>
+          <div class="mini-card"><img src="https://flagcdn.com/w320/tv.png" alt="Tuvalu"><div class="txt"><strong>Tuvalu</strong><br>Isla con POBLACIÓN muy pequena.</div></div>
+          <div class="mini-card"><img src="https://flagcdn.com/w320/nr.png" alt="Nauru"><div class="txt"><strong>Nauru</strong><br>Pais pequeno con pocos habitantes.</div></div>
+        </div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Arrastra cada pais al grupo correcto</p><small>Usa las banderas y sus nombres para separarlos en muy poblados y poco poblados.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-arrows-alt me-2"></i>Clasificacion visual</h3>
+        <div class="legend-row"><span class="legend-chip"><span class="legend-dot" style="background:#d9485f"></span>Muy poblado</span><span class="legend-chip"><span class="legend-dot" style="background:#4f8dd7"></span>Poco poblado</span></div>
+        <div class="row g-3 mb-3"><div class="col-6"><div class="zona-img" id="zonaConc" data-tipo="alto"><h6>Mas poblados</h6><div id="dropConc"></div></div></div><div class="col-6"><div class="zona-img" id="zonaDisp" data-tipo="bajo"><h6>Menos poblados</h6><div id="dropDisp"></div></div></div></div>
+        <div class="row g-2" id="imgBanco">
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="India"><img src="https://flagcdn.com/w320/in.png" alt="India"><div class="lbl">India<br>Muy poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="China"><img src="https://flagcdn.com/w320/cn.png" alt="China"><div class="lbl">China<br>Muy poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="EE.UU."><img src="https://flagcdn.com/w320/us.png" alt="Estados Unidos"><div class="lbl">EE.UU.<br>Muy poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="Brasil"><img src="https://flagcdn.com/w320/br.png" alt="Brasil"><div class="lbl">Brasil<br>Muy poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Nauru"><img src="https://flagcdn.com/w320/nr.png" alt="Nauru"><div class="lbl">Nauru<br>Poco poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Tuvalu"><img src="https://flagcdn.com/w320/tv.png" alt="Tuvalu"><div class="lbl">Tuvalu<br>Poco poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="San Marino"><img src="https://flagcdn.com/w320/sm.png" alt="San Marino"><div class="lbl">San Marino<br>Poco poblado</div></div></div>
+          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Palau"><img src="https://flagcdn.com/w320/pw.png" alt="Palau"><div class="lbl">Palau<br>Poco poblado</div></div></div>
+        </div>
+        <div class="btn-row"><button class="btn-accion" onclick="verificarArrastreVisual()">Verificar</button><button class="btn-accion btn-secundario" onclick="resetDragImgs()">Limpiar</button></div>
+        <div class="fb-ok" id="fbPag1">Muy bien. Separaste los paises mas y menos poblados.</div>
+        <div class="fb-err" id="errPag1">Aun faltan piezas por colocar. Revisa los dos grupos.</div>
+      </div>
+    </div>
+  </div>
+  <div class="pagina" id="pagina2">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentracion y dispersion</h2>
+      <span class="subtitulo-tema">Subtema 2 de 3</span>
+      <p class="intro">Cuando muchas personas viven juntas en poco espacio hablamos de concentracion. Cuando hay pocas casas en grandes territorios hablamos de dispersion. Las imagenes permiten distinguirlo rapido.</p>
+      <div class="dato-box"><strong>Concentracion:</strong> ciudades densas como las de Bangladesh tienen muchisima gente en poco terreno.</div>
+      <div class="dato-box"><strong>Dispersion:</strong> lugares amplios como Mongolia tienen pocas personas repartidas en grandes espacios.</div>
+      <div class="hero-visual">
+        <div class="hero-card"><img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentracion de poblacion"><div class="hero-info"><strong style="color:var(--guindo);">Concentracion:</strong> edificios, calles llenas y personas viviendo muy cerca unas de otras.</div></div>
+        <div class="mini-grid">
+          <div class="mini-card"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900" alt="Territorio amplio"><div class="txt"><strong>Dispersion</strong><br>Pocas viviendas en mucho espacio.</div></div>
+          <div class="mini-card"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Ciudad densa"><div class="txt"><strong>Densidad alta</strong><br>Muchas personas por km².</div></div>
+          <div class="mini-card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Campo abierto"><div class="txt"><strong>Densidad baja</strong><br>Territorios abiertos y separados.</div></div>
+          <div class="mini-card"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900" alt="Avenida llena"><div class="txt"><strong>Ciudad intensa</strong><br>Mas concentracion y trafico.</div></div>
+        </div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Observa y elige la imagen correcta</p><small>Antes de responder, compara cuanta gente o cuantas casas aparecen en cada escena.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-image me-2"></i>COMPARACIÓN visual</h3>
+        <div class="question-block">
+          <div class="question-title">Pregunta 1: ¿Que imagen muestra mayor concentracion de POBLACIÓN?</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="img-opcion" data-q="q1" data-val="conc" onclick="selImagen('q1','conc')"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Ciudad densa"><div class="lbl">Ciudad con edificios y personas muy cerca</div></div></div>
+            <div class="col-md-6"><div class="img-opcion" data-q="q1" data-val="disp" onclick="selImagen('q1','disp')"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Campo abierto"><div class="lbl">Territorio amplio con pocas casas</div></div></div>
+          </div>
+          <div class="btn-row"><button class="btn-accion" onclick="verificarSelImagen('q1')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarSelImagen('q1')">Limpiar</button></div>
+          <div class="fb-ok" id="okQ1">Correcto. La ciudad compacta representa concentracion.</div>
+          <div class="fb-err" id="errQ1">La concentracion se ve donde hay mucha gente en poco espacio.</div>
+        </div>
+        <div class="question-block">
+          <div class="question-title">Pregunta 2: ¿Que imagen representa mejor la dispersion?</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="img-opcion" data-q="q2" data-val="conc" onclick="selImagen('q2','conc')"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900" alt="Avenida llena"><div class="lbl">Calles con muchas personas y autos</div></div></div>
+            <div class="col-md-6"><div class="img-opcion" data-q="q2" data-val="disp" onclick="selImagen('q2','disp')"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900" alt="Llanura"><div class="lbl">Viviendas separadas en un territorio grande</div></div></div>
+          </div>
+          <div class="btn-row"><button class="btn-accion" onclick="verificarSelImagen('q2')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarSelImagen('q2')">Limpiar</button></div>
+          <div class="fb-ok" id="okQ2">Exacto. La llanura con pocas casas representa dispersion.</div>
+          <div class="fb-err" id="errQ2">La dispersion aparece donde las viviendas estan separadas.</div>
+        </div>
+        <div class="fb-ok" id="fbPag2">Muy bien. Ya distingues concentracion y dispersion con imagenes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la concentracion</h2>
+      <span class="subtitulo-tema">Subtema 3 de 3</span>
+      <p class="intro">Cuando demasiada gente vive en una misma zona, los servicios se saturan. Por eso aparecen trafico, contaminacion, mucha basura y dificultad para conseguir vivienda.</p>
+      <div class="scene-strip">
+        <div class="scene-card"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Trafico"><div class="txt">Trafico intenso en una ciudad muy poblada.</div></div>
+        <div class="scene-card"><img src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?w=900" alt="Basura"><div class="txt">La basura crece cuando vive demasiada gente junta.</div></div>
+        <div class="scene-card"><img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=900" alt="Edificios"><div class="txt">Mas POBLACIÓN exige mas viviendas y servicios.</div></div>
+        <div class="scene-card"><img src="https://images.unsplash.com/photo-1475776408506-9a5371e7a068?w=900" alt="Smog"><div class="txt">La contaminacion del aire puede aumentar mucho.</div></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Observa y elige la escena correcta</p><small>Fijate si la imagen muestra un problema de una ciudad con mucha POBLACIÓN.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-search-plus me-2"></i>Compara escenas</h3>
+        <div class="question-block">
+          <div class="question-title">Ronda 1: ¿Que escena muestra mejor un problema de concentracion?</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="comp-card" data-ronda="r1" data-val="correcto" onclick="elegirComp(this,'r1')"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Trafico"><div class="lbl">Trafico y calles saturadas</div></div></div>
+            <div class="col-md-6"><div class="comp-card" data-ronda="r1" data-val="incorrecto" onclick="elegirComp(this,'r1')"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Paisaje tranquilo"><div class="lbl">Espacio abierto con pocas viviendas</div></div></div>
+          </div>
+          <div class="btn-row"><button class="btn-accion" onclick="verificarComp('r1')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarComp('r1')">Limpiar</button></div>
+          <div class="fb-ok" id="okR1">Correcto. El trafico es un problema comun en zonas muy pobladas.</div>
+          <div class="fb-err" id="errR1">Busca la escena donde se note saturacion y exceso de personas o vehiculos.</div>
+        </div>
+        <div class="question-block">
+          <div class="question-title">Ronda 2: ¿Que imagen se relaciona mejor con contaminacion y smog?</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="comp-card" data-ronda="r2" data-val="correcto" onclick="elegirComp(this,'r2')"><img src="https://images.unsplash.com/photo-1475776408506-9a5371e7a068?w=900" alt="Smog"><div class="lbl">Aire contaminado por demasiada actividad urbana</div></div></div>
+            <div class="col-md-6"><div class="comp-card" data-ronda="r2" data-val="incorrecto" onclick="elegirComp(this,'r2')"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Campo"><div class="lbl">Campo abierto con aire limpio</div></div></div>
+          </div>
+          <div class="btn-row"><button class="btn-accion" onclick="verificarComp('r2')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarComp('r2')">Limpiar</button></div>
+          <div class="fb-ok" id="okR2">Muy bien. Esa escena muestra contaminacion propia de una gran ciudad.</div>
+          <div class="fb-err" id="errR2">La respuesta correcta debe mostrar contaminacion o exceso de actividad urbana.</div>
+        </div>
+        <div class="fb-ok" id="fbPag3">Excelente. Ya reconoces visualmente los efectos de la concentracion.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso general</h2>
+      <span class="subtitulo-tema">Resumen visual del nivel</span>
+      <p class="intro">Antes del quiz, vuelve a observar estas tres ideas clave: paises con mucha o poca POBLACIÓN, concentracion o dispersion, y problemas de las grandes ciudades.</p>
+      <div class="rep-grid">
+        <div class="rep-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Distribucion de poblacion"><div class="txt"><h6>Distribucion</h6><p>La POBLACIÓN del mundo esta repartida de forma desigual. Algunos paises reunen muchisimas personas y otros tienen muy pocas.</p></div></div>
+        <div class="rep-card"><img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentracion"><div class="txt"><h6>Densidad</h6><p>La densidad muestra si la POBLACIÓN vive muy junta o muy separada dentro de un territorio.</p></div></div>
+        <div class="rep-card"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Problemas urbanos"><div class="txt"><h6>Problemas urbanos</h6><p>Cuando demasiada gente vive en el mismo lugar pueden aparecer trafico, basura, contaminacion y falta de vivienda.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar"><button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>&larr; ANTERIOR</button><span class="ind-pag" id="indPag">1/4</span><button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE &rarr;</button></div>
+  <a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1433 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrucciones Espaciales · Difícil · Kinestésico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --marron:      #78350f;
+      --marron-med:  #92400e;
+      --marron-pale: #fef3c7;
+      --marron-dark: #451a03;
+      --dorado:      #b45309;
+      --dor-claro:   #fde68a;
+      --dor-med:     #f59e0b;
+      --dor-pale:    #fef9c3;
+      --verde:       #15803d;
+      --verde-pale:  #dcfce7;
+      --verde-med:   #22c55e;
+      --rojo:        #dc2626;
+      --rojo-pale:   #fee2e2;
+      --azul:        #1e40af;
+      --azul-pale:   #dbeafe;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Nunito',sans-serif;
+      background:linear-gradient(160deg,#fef3c7 0%,#fde68a 40%,#fef9c3 100%);
+      color:var(--marron-dark);
+      min-height:100vh;
+      padding:8px 0;
+      user-select:none; /* evita selección de texto al arrastrar */
+    }
+
+    /* ══ CABECERA ══ */
+    .cabecera {
+      background:linear-gradient(135deg,#451a03,#78350f,#92400e);
+      padding:6px 20px 5px;
+      border-bottom:3px solid var(--dor-claro);
+      text-align:center;
+      position:relative; overflow:hidden;
+      box-shadow:0 4px 16px rgba(69,26,3,.5);
+      width:100%; max-width:1280px;
+      margin:0 auto 8px auto;
+      border-radius:16px;
+    }
+    .cabecera h1 { font-family:'Cinzel',serif; font-size:1.3rem; color:var(--dor-claro); text-shadow:0 0 20px rgba(253,230,138,.5); letter-spacing:.06em; margin:0; }
+    .cabecera p  { color:rgba(255,255,255,.75); font-weight:600; margin:2px 0; font-size:.75rem; }
+    .badge-estilo { background:var(--dor-claro); color:var(--marron-dark); padding:2px 14px; border-radius:50px; font-weight:800; font-size:.7rem; border:2px solid rgba(255,255,255,.6); display:inline-block; margin:2px; }
+    .badge-nivel  { background:rgba(255,255,255,.12); color:var(--dor-claro); padding:2px 14px; border-radius:40px; font-weight:700; font-size:.7rem; border:2px solid var(--dor-claro); display:inline-block; margin:2px; }
+
+    /* ══ LAYOUT ══ */
+    .layout { max-width:1280px; margin:0 auto; padding:5px 18px 10px; display:grid; grid-template-columns:1fr 340px; gap:16px; align-items:start; }
+    @media(max-width:960px){ .layout{grid-template-columns:1fr;} }
+
+    /* ══ MAPA ══ */
+    .mapa-wrap {
+      background:white;
+      border-radius:20px;
+      border:4px solid #92400e;
+      box-shadow:0 6px 0 #451a03,0 10px 28px rgba(69,26,3,.25);
+      overflow:hidden;
+      position:sticky; top:10px;
+    }
+    .mapa-barra {
+      background:linear-gradient(135deg,#451a03,#78350f);
+      padding:6px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .mapa-barra-titulo { font-family:'Cinzel',serif; font-size:.82rem; color:var(--dor-claro); display:flex; align-items:center; gap:6px; }
+
+    /* Hint de controles — KINESTÉSICO: siempre visible */
+    .ctrl-hint {
+      display:flex; gap:8px; align-items:center;
+    }
+    .ctrl-key {
+      background:rgba(253,230,138,.18);
+      border:1.5px solid rgba(253,230,138,.4);
+      border-bottom:3px solid rgba(253,230,138,.25);
+      border-radius:5px;
+      padding:1px 7px;
+      font-size:.6rem; font-weight:900;
+      color:var(--dor-claro);
+      letter-spacing:.04em;
+    }
+
+    .mapa-svg-wrap { width:100%; aspect-ratio:1/1; max-height:500px; position:relative; }
+    .mapa-svg-wrap svg { width:100%; height:100%; display:block; }
+
+    /* Zona de drop — resaltado al pasar el personaje cerca */
+    .zona-drop { cursor:pointer; }
+    .zona-drop.activa-drop circle.drop-ring { opacity:.8 !important; animation:anilloGira 1s linear infinite; }
+    @keyframes anilloGira { to{ stroke-dashoffset:-30; } }
+    .zona-drop.siguiente-sugerido circle.drop-ring { opacity:.5 !important; stroke:#22c55e !important; animation:anilloPulsa .8s ease-in-out infinite; }
+    @keyframes anilloPulsa { 0%,100%{r:38;} 50%{r:42;} }
+
+    /* Personaje pirata arrastrable */
+    #pirataGrupo {
+      cursor:grab;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
+      transition:filter .2s;
+    }
+    #pirataGrupo.arrastrando {
+      cursor:grabbing;
+      filter:drop-shadow(0 8px 16px rgba(245,158,11,.6));
+    }
+    #pirataGrupo.rebotando { animation:rebote .4s ease-in-out; }
+    @keyframes rebote { 0%,100%{transform:scale(1);} 30%{transform:scale(1.25) rotate(-8deg);} 60%{transform:scale(.85) rotate(5deg);} }
+
+    #pirataGrupo.caminando { animation:caminar .35s ease-in-out; }
+    @keyframes caminar { 0%{transform:scale(1,1);} 25%{transform:scale(.95,1.08);} 50%{transform:scale(1.05,.95);} 75%{transform:scale(.97,1.04);} 100%{transform:scale(1,1);} }
+
+    /* Rastro de pasos */
+    .huella { animation:huellaFade 1.8s ease-out forwards; }
+    @keyframes huellaFade { 0%{opacity:.7;} 100%{opacity:.1;} }
+
+    /* Segmento de ruta */
+    @keyframes lineaDibuja { from{stroke-dashoffset:300;} to{stroke-dashoffset:0;} }
+    .seg-ruta { stroke-dasharray:300; stroke-dashoffset:300; animation:lineaDibuja .5s ease forwards; }
+
+    /* ══ PANEL DERECHO ══ */
+    .panel { display:flex; flex-direction:column; gap:9px; }
+
+    /* ══ TIRA DE INSTRUCCIONES VISUALES — Kinestésico: mínimo texto, máximo ícono ══ */
+    .tira-instrucciones {
+      background:linear-gradient(135deg,#451a03,#78350f);
+      border-radius:14px;
+      border:2px solid var(--dor-claro);
+      box-shadow:0 4px 0 #1c0a00;
+      padding:10px 12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .tira-titulo {
+      font-family:'Cinzel',serif; font-size:.75rem; color:var(--dor-claro);
+      margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .tira-titulo span { font-size:.6rem; color:rgba(255,255,255,.55); font-family:'Nunito',sans-serif; font-weight:700; }
+
+    /* Pasos como iconos en tira horizontal */
+    .tira-pasos {
+      display:flex; gap:4px; align-items:center; overflow-x:auto;
+      padding-bottom:4px;
+    }
+    .tira-pasos::-webkit-scrollbar { height:3px; }
+    .tira-pasos::-webkit-scrollbar-track { background:rgba(255,255,255,.1); border-radius:3px; }
+    .tira-pasos::-webkit-scrollbar-thumb { background:var(--dor-med); border-radius:3px; }
+
+    .paso-icono-grande {
+      display:flex; flex-direction:column; align-items:center; gap:3px;
+      background:rgba(255,255,255,.08);
+      border:2px solid rgba(253,230,138,.2);
+      border-radius:10px;
+      padding:6px 8px;
+      min-width:60px;
+      transition:all .3s;
+      flex-shrink:0;
+      position:relative;
+    }
+    .paso-icono-grande .pig-emoji { font-size:1.5rem; line-height:1; }
+    .paso-icono-grande .pig-num   { font-size:.5rem; font-weight:900; color:rgba(255,255,255,.45); letter-spacing:.06em; text-transform:uppercase; }
+    .paso-icono-grande .pig-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.7); text-align:center; line-height:1.2; }
+    .paso-icono-grande .pig-cardinal { font-size:.6rem; font-weight:900; color:var(--dor-med); }
+
+    .paso-icono-grande.activo {
+      background:rgba(245,158,11,.2);
+      border-color:var(--dor-med);
+      box-shadow:0 0 12px rgba(245,158,11,.35);
+    }
+    .paso-icono-grande.activo .pig-num { color:var(--dor-med); }
+    .paso-icono-grande.completado {
+      background:rgba(34,197,94,.15);
+      border-color:#4ade80;
+      opacity:.7;
+    }
+    .paso-icono-grande.completado .pig-emoji::after {
+      content:'✓'; position:absolute; top:4px; right:4px;
+      background:#22c55e; color:white; width:14px; height:14px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:.5rem; font-weight:900;
+    }
+
+    .tira-sep { width:16px; height:2px; background:var(--dor-med); border-radius:2px; opacity:.5; flex-shrink:0; }
+    .tira-sep.flecha { width:auto; color:var(--dor-med); font-size:.9rem; font-weight:900; opacity:.6; flex-shrink:0; }
+
+    /* ══ CONTROLES KINESTÉSICOS ══ */
+    .controles-card {
+      background:white;
+      border-radius:14px;
+      border:3px solid #d97706;
+      box-shadow:0 4px 0 #92400e;
+      overflow:hidden;
+    }
+    .ctrl-header {
+      background:linear-gradient(135deg,#92400e,#451a03);
+      padding:7px 13px; color:white;
+      font-family:'Cinzel',serif; font-size:.75rem;
+      display:flex; align-items:center; gap:6px;
+    }
+    .ctrl-body { padding:10px 12px; }
+
+    /* Cruceta de teclado — KINESTÉSICO: visualización de controles */
+    .cruceta-wrap {
+      display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;
+    }
+    .cruceta {
+      display:grid; grid-template-columns:repeat(3,36px); grid-template-rows:repeat(3,36px);
+      gap:3px; flex-shrink:0;
+    }
+    .cr-key {
+      width:36px; height:36px;
+      background:linear-gradient(135deg,#fef3c7,#fde68a);
+      border:2px solid var(--dor-med);
+      border-bottom:4px solid var(--dorado);
+      border-radius:7px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; font-weight:900; color:var(--marron-dark);
+      cursor:pointer;
+      transition:all .12s;
+      box-shadow:0 2px 4px rgba(0,0,0,.15);
+    }
+    .cr-key:active, .cr-key.presionada {
+      transform:translateY(2px);
+      border-bottom:2px solid var(--dorado);
+      box-shadow:none;
+      background:linear-gradient(135deg,#fbbf24,#f59e0b);
+    }
+    .cr-key.vacia { visibility:hidden; }
+    .cr-key.enter-key {
+      font-size:.55rem; font-weight:900; letter-spacing:.04em;
+      background:linear-gradient(135deg,var(--dor-med),var(--dorado));
+      color:white; border-color:var(--marron);
+    }
+    .cruceta-info { flex:1; }
+    .cruceta-info-titulo { font-size:.68rem; font-weight:900; color:var(--marron); margin-bottom:4px; }
+    .cruceta-linea { display:flex; align-items:flex-start; gap:5px; margin-bottom:3px; }
+    .cruceta-linea .ck { background:var(--dor-pale); border:1.5px solid var(--dor-med); border-radius:4px; padding:1px 6px; font-size:.6rem; font-weight:900; color:var(--marron); flex-shrink:0; }
+    .cruceta-linea .cd { font-size:.62rem; font-weight:700; color:#64748b; }
+
+    /* También se puede hacer con mouse — nota */
+    .nota-mouse {
+      background:var(--azul-pale); border:1.5px solid #93c5fd;
+      border-radius:8px; padding:5px 9px;
+      font-size:.62rem; font-weight:700; color:var(--azul);
+      display:flex; align-items:center; gap:6px; margin-bottom:10px;
+    }
+
+    /* Lugar seleccionado actualmente */
+    .lugar-actual-card {
+      background:linear-gradient(135deg,var(--marron-dark),var(--marron));
+      border-radius:10px; padding:7px 10px; margin-bottom:8px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .lac-emoji { font-size:1.8rem; flex-shrink:0; }
+    .lac-info { flex:1; }
+    .lac-label { font-size:.55rem; font-weight:900; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.08em; }
+    .lac-nombre { font-family:'Cinzel',serif; font-size:.82rem; color:var(--dor-claro); font-weight:600; }
+    .lac-cardinal { font-size:.6rem; font-weight:700; color:rgba(255,255,255,.55); }
+
+    /* Lugares navegables con teclado */
+    .lugares-nav {
+      display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:10px;
+    }
+    .ln-btn {
+      background:var(--dor-pale);
+      border:2px solid var(--dor-med);
+      border-radius:10px;
+      padding:6px 8px;
+      cursor:pointer;
+      transition:all .2s;
+      display:flex; align-items:center; gap:6px;
+      font-size:.65rem; font-weight:800; color:var(--marron-dark);
+      box-shadow:0 2px 0 #d97706;
+      text-align:left;
+      position:relative;
+    }
+    .ln-btn .ln-emoji { font-size:1.2rem; flex-shrink:0; }
+    .ln-btn .ln-dir   { font-size:.5rem; font-weight:900; color:var(--dorado); letter-spacing:.06em; display:block; }
+    .ln-btn:hover:not(:disabled) { background:white; border-color:var(--marron); transform:translateY(-2px); box-shadow:0 4px 0 #d97706; }
+    .ln-btn:active:not(:disabled) { transform:translateY(1px); box-shadow:0 1px 0 #d97706; }
+    .ln-btn.focused   { background:var(--dor-pale); border-color:var(--marron); box-shadow:0 0 0 3px rgba(245,158,11,.35),0 2px 0 #d97706; }
+    .ln-btn.visitado  { background:var(--verde-pale); border-color:var(--verde-med); }
+    .ln-btn.visitado::after { content:'✓'; position:absolute; top:-5px; right:-5px; background:var(--verde-med); color:white; width:14px; height:14px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.55rem; font-weight:900; line-height:14px; text-align:center; }
+    .ln-btn.siguiente-sugerido { border-color:#22c55e; box-shadow:0 0 0 2px rgba(34,197,94,.3),0 2px 0 #15803d; animation:lnPulsa .9s ease-in-out infinite; }
+    @keyframes lnPulsa { 0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.3),0 2px 0 #15803d;} 50%{box-shadow:0 0 0 5px rgba(34,197,94,.15),0 2px 0 #15803d;} }
+    .ln-btn:disabled { opacity:.3; cursor:not-allowed; }
+
+    /* Ruta construida */
+    .ruta-visual {
+      background:#fef9c3;
+      border:2px dashed var(--dor-med);
+      border-radius:10px;
+      padding:6px 8px;
+      margin-bottom:8px;
+      min-height:34px;
+      display:flex; flex-wrap:wrap; gap:3px; align-items:center;
+    }
+    .rv-chip {
+      display:flex; align-items:center; gap:2px;
+      background:var(--dor-pale); border:1.5px solid var(--dor-med);
+      border-radius:16px; padding:2px 7px;
+      font-size:.6rem; font-weight:800; color:var(--marron);
+      animation:chipIn .2s ease;
+    }
+    @keyframes chipIn { from{transform:scale(.6);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .rv-chip .rvc-num { width:13px; height:13px; border-radius:50%; background:var(--dor-med); color:white; display:flex; align-items:center; justify-content:center; font-size:.48rem; font-weight:900; flex-shrink:0; }
+    .rv-placeholder { font-size:.62rem; font-weight:700; color:#a16207; opacity:.6; }
+
+    /* Contador pasos + eficiencia */
+    .paso-counter { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .pc-num { font-family:'Cinzel',serif; font-size:1.4rem; color:var(--dorado); font-weight:700; }
+    .pc-label { font-size:.62rem; font-weight:700; color:#64748b; }
+    .pc-optimo { font-size:.58rem; font-weight:900; color:var(--verde); background:var(--verde-pale); border:1.5px solid #86efac; border-radius:12px; padding:1px 8px; margin-left:auto; }
+
+    /* Botones de acción */
+    .accion-btns { display:flex; gap:6px; }
+    .btn-undo { background:var(--dor-pale); color:var(--marron); border:1.5px solid var(--dor-med); border-radius:20px; padding:5px 12px; font-weight:800; font-size:.65rem; cursor:pointer; transition:all .2s; }
+    .btn-undo:hover:not(:disabled) { background:var(--dor-med); color:white; }
+    .btn-undo:disabled { opacity:.3; cursor:not-allowed; }
+    .btn-confirmar { flex:1; background:linear-gradient(135deg,var(--dor-med),var(--dorado)); color:white; border:none; border-radius:20px; padding:6px 10px; font-weight:800; font-size:.7rem; cursor:pointer; box-shadow:0 3px 0 var(--marron); transition:all .2s; font-family:'Cinzel',serif; }
+    .btn-confirmar:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 0 var(--marron); }
+    .btn-confirmar:disabled { opacity:.35; cursor:not-allowed; box-shadow:none; }
+
+    /* ══ FEEDBACK ══ */
+    .feedback-card {
+      border-radius:12px; padding:10px 13px; display:none; margin-top:7px;
+    }
+    .feedback-card.perfecto { background:linear-gradient(135deg,#14532d,#166534); border:2px solid #4ade80; display:block; }
+    .feedback-card.bien     { background:linear-gradient(135deg,#451a03,#78350f); border:2px solid var(--dor-med); display:block; }
+    .feedback-card.extra    { background:linear-gradient(135deg,#1e3a8a,#1e40af); border:2px solid #93c5fd; display:block; }
+    .feedback-card.error    { background:linear-gradient(135deg,#7f1d1d,#991b1b); border:2px solid #fca5a5; display:block; }
+    .fb-titulo { font-family:'Cinzel',serif; font-size:.82rem; color:var(--dor-claro); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+    .fb-texto  { font-size:.68rem; font-weight:700; color:rgba(255,255,255,.88); line-height:1.5; }
+    .fb-texto strong { color:var(--dor-claro); }
+    .barra-ef { margin-top:7px; }
+    .barra-label { font-size:.56rem; font-weight:900; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+    .barra-track { background:rgba(0,0,0,.25); border-radius:20px; height:10px; overflow:hidden; }
+    .barra-fill  { height:100%; border-radius:20px; transition:width .9s cubic-bezier(.34,1.56,.64,1); }
+    .barra-fill.perfecto { background:linear-gradient(90deg,#4ade80,#22c55e); }
+    .barra-fill.bien     { background:linear-gradient(90deg,#fde68a,#f59e0b); }
+    .barra-fill.extra    { background:linear-gradient(90deg,#93c5fd,#3b82f6); }
+    .barra-stars { font-size:.9rem; text-align:center; margin-top:3px; }
+
+    .btn-final { display:inline-flex; align-items:center; gap:5px; margin-top:7px; padding:6px 16px; border-radius:28px; font-family:'Cinzel',serif; font-size:.75rem; letter-spacing:.04em; cursor:pointer; transition:all .2s; border:none; }
+    .btn-final.reintentar { background:var(--dor-pale); color:var(--marron); border:2px solid var(--dor-med); }
+    .btn-final.reintentar:hover { background:var(--dor-med); color:white; }
+    .btn-final.siguiente  { background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 3px 0 #14532d; text-decoration:none; }
+    .btn-final.siguiente:hover { transform:translateY(-1px); box-shadow:0 5px 0 #14532d; color:white; }
+
+    .leyenda-mapa { background:linear-gradient(135deg,#451a03,#78350f); border-top:2px solid var(--dor-claro); padding:5px 12px; display:flex; flex-wrap:wrap; gap:4px; }
+    .ley-t { font-family:'Cinzel',serif; font-size:.65rem; color:var(--dor-claro); width:100%; margin-bottom:1px; }
+    .ley-i { font-size:.6rem; font-weight:700; color:rgba(255,255,255,.8); background:rgba(255,255,255,.08); padding:2px 7px; border-radius:12px; }
+
+    .confeti { position:fixed; pointer-events:none; z-index:9999; border-radius:2px; }
+    @keyframes confetiFall { 0%{transform:translateY(-10px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(800deg);opacity:0;} }
+
+    /* Tooltip de lugar al hacer hover */
+    .tooltip-lugar {
+      position:absolute; background:#1c0a00; color:var(--dor-claro);
+      border:1.5px solid var(--dor-med); border-radius:7px;
+      padding:3px 9px; font-size:.62rem; font-weight:800;
+      pointer-events:none; white-space:nowrap; z-index:100;
+      opacity:0; transition:opacity .15s;
+      transform:translate(-50%,-110%);
+      font-family:'Cinzel',serif;
+    }
+    .tooltip-lugar.visible { opacity:1; }
+
+    /* Indicador "siguiente paso sugerido" en el mapa */
+    @keyframes brillaSugerido { 0%,100%{opacity:.4;} 50%{opacity:.9;} }
+    .sugerido-indicator { animation:brillaSugerido 1s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing"  src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada"  src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+<audio id="sndStep"  src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+
+<!-- CABECERA -->
+<div class="cabecera">
+  <h1>☠️ Instrucciones espaciales</h1>
+  <p>La isla del tesoro · Mueve al pirata por el mapa</p>
+  <div>
+    <span class="badge-estilo">🖐️ Kinestésico</span>
+    <span class="badge-nivel">💀 Nivel Difícil</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- ══ MAPA ══ -->
+  <div class="mapa-wrap">
+    <div class="mapa-barra">
+      <div class="mapa-barra-titulo"><i class="fas fa-map me-1"></i> Arrastra al pirata o usa las flechas del teclado</div>
+      <div class="ctrl-hint">
+        <span class="ctrl-key">↑↓←→</span>
+        <span style="font-size:.58rem;color:rgba(255,255,255,.5);">o</span>
+        <span class="ctrl-key">DRAG</span>
+      </div>
+    </div>
+
+    <div class="mapa-svg-wrap" id="mapaSVGWrap">
+      <svg id="mapaSVG" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gPK" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fef3c7"/>
+            <stop offset="35%" stop-color="#fde68a"/>
+            <stop offset="70%" stop-color="#fef9c3"/>
+            <stop offset="100%" stop-color="#fde68a"/>
+          </linearGradient>
+          <linearGradient id="gMarK" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#0ea5e9" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#0c4a6e" stop-opacity=".7"/>
+          </linearGradient>
+          <pattern id="pK" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect width="40" height="40" fill="#fef3c7" opacity=".5"/>
+            <line x1="0" y1="20" x2="40" y2="20" stroke="#d97706" stroke-width=".3" opacity=".18"/>
+            <line x1="20" y1="0" x2="20" y2="40" stroke="#d97706" stroke-width=".3" opacity=".18"/>
+          </pattern>
+          <filter id="fK4"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,.22)"/></filter>
+          <filter id="fK2"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,.14)"/></filter>
+          <filter id="gOro"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f59e0b" flood-opacity=".75"/></filter>
+          <filter id="gVerde"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#22c55e" flood-opacity=".75"/></filter>
+        </defs>
+
+        <!-- FONDO PERGAMINO -->
+        <rect width="700" height="700" fill="url(#gPK)"/>
+        <rect width="700" height="700" fill="url(#pK)" opacity=".5"/>
+        <!-- Bordes quemados -->
+        <rect x="0" y="0" width="700" height="700" fill="none" stroke="#451a03" stroke-width="28" stroke-opacity=".65"/>
+        <polygon points="0,0 58,0 0,58" fill="#1c0a00" opacity=".65"/>
+        <polygon points="700,0 642,0 700,58" fill="#1c0a00" opacity=".65"/>
+        <polygon points="0,700 58,700 0,642" fill="#1c0a00" opacity=".65"/>
+        <polygon points="700,700 642,700 700,642" fill="#1c0a00" opacity=".65"/>
+
+        <!-- Mar -->
+        <ellipse cx="350" cy="350" rx="310" ry="298" fill="url(#gMarK)" opacity=".5"/>
+        <path d="M80,350 Q110,330 140,350 Q170,370 200,350" fill="none" stroke="#7dd3fc" stroke-width="2" opacity=".35"/>
+        <path d="M500,400 Q530,380 560,400 Q590,420 620,400" fill="none" stroke="#7dd3fc" stroke-width="2" opacity=".35"/>
+        <text x="88"  y="385" font-size="18" opacity=".35">🌊</text>
+        <text x="560" y="370" font-size="16" opacity=".3">🌊</text>
+        <text x="300" y="645" font-size="16" opacity=".25">⛵</text>
+
+        <!-- Isla -->
+        <ellipse cx="350" cy="350" rx="250" ry="235" fill="#d97706" opacity=".15"/>
+        <path d="M180,280 Q160,250 175,220 Q190,185 220,175 Q255,162 280,170 Q305,158 340,155 Q378,148 410,162 Q442,172 460,190 Q485,208 500,235 Q522,265 522,300 Q525,340 510,375 Q498,408 478,430 Q455,458 425,470 Q395,484 360,486 Q325,488 295,475 Q262,460 240,440 Q215,415 200,385 Q182,350 180,315 Z" fill="#fef9c3" opacity=".88"/>
+
+        <!-- ══ ZONAS DE DROP — cada lugar tiene un área clicable y un anillo de drop ══ -->
+
+        <!-- MONTAÑA CALAVERA (NORTE) — cx=350,cy=105 -->
+        <g class="zona-drop" id="zona-montana" data-id="montana" data-cx="350" data-cy="105">
+          <circle class="drop-ring" cx="350" cy="105" r="48" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,5" opacity="0"/>
+          <polygon points="350,58 416,148 284,148" fill="#78716c" filter="url(#fK4)"/>
+          <polygon points="350,58 384,106 316,106" fill="#d6d3d1"/>
+          <polygon points="350,58 370,86 330,86" fill="white" opacity=".9"/>
+          <circle  cx="350" cy="118" r="12" fill="#fef3c7" stroke="#78716c" stroke-width="1.5"/>
+          <circle  cx="345" cy="115" r="3" fill="#1c1917"/>
+          <circle  cx="355" cy="115" r="3" fill="#1c1917"/>
+          <path    d="M345,124 Q350,128 355,124" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="344" y="126" width="3" height="4" rx="1" fill="#1c1917"/>
+          <rect x="348" y="126" width="3" height="4" rx="1" fill="#1c1917"/>
+          <rect x="352" y="126" width="3" height="4" rx="1" fill="#1c1917"/>
+          <!-- Indicador de siguiente paso -->
+          <g class="sugerido-indicator" id="sug-montana" opacity="0">
+            <text x="350" y="50" font-size="14" text-anchor="middle">👇</text>
+          </g>
+          <text x="350" y="166" font-family="Cinzel,serif" font-size="9.5" fill="#292524" text-anchor="middle" font-weight="700">⛰️ Montaña Calavera</text>
+          <text x="350" y="178" font-family="Cinzel,serif" font-size="7.5" fill="#78350f" text-anchor="middle" opacity=".7">norte</text>
+        </g>
+
+        <!-- RÍO SERPIENTE (SUR) — cx=350,cy=535 -->
+        <g class="zona-drop" id="zona-rio" data-id="rio" data-cx="350" data-cy="535">
+          <circle class="drop-ring" cx="350" cy="535" r="56" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,5" opacity="0"/>
+          <path d="M225,528 Q265,508 305,533 Q345,558 385,533 Q425,510 465,533" fill="none" stroke="#3b82f6" stroke-width="18" stroke-linecap="round" filter="url(#fK2)"/>
+          <path d="M225,528 Q265,508 305,533 Q345,558 385,533 Q425,510 465,533" fill="none" stroke="#60a5fa" stroke-width="12" stroke-linecap="round"/>
+          <path d="M225,528 Q265,508 305,533 Q345,558 385,533 Q425,510 465,533" fill="none" stroke="#bae6fd" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+          <text x="308" y="520" font-size="18" opacity=".8">🐍</text>
+          <text x="368" y="548" font-size="14" opacity=".7">🐍</text>
+          <g class="sugerido-indicator" id="sug-rio" opacity="0">
+            <text x="350" y="490" font-size="14" text-anchor="middle">👇</text>
+          </g>
+          <text x="350" y="572" font-family="Cinzel,serif" font-size="9.5" fill="#1e3a8a" text-anchor="middle" font-weight="700">🌊 Río Serpiente</text>
+          <text x="350" y="584" font-family="Cinzel,serif" font-size="7.5" fill="#1e3a8a" text-anchor="middle" opacity=".7">sur</text>
+        </g>
+
+        <!-- PUERTO DEL SOL (ESTE) — cx=548,cy=350 -->
+        <g class="zona-drop" id="zona-puerto" data-id="puerto" data-cx="548" data-cy="350">
+          <circle class="drop-ring" cx="548" cy="350" r="50" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,5" opacity="0"/>
+          <circle cx="548" cy="350" r="34" fill="#fbbf24" filter="url(#fK4)"/>
+          <circle cx="548" cy="350" r="26" fill="#fde68a"/>
+          <line x1="548" y1="306" x2="548" y2="296" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+          <line x1="548" y1="394" x2="548" y2="404" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+          <line x1="504" y1="350" x2="494" y2="350" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+          <line x1="592" y1="350" x2="602" y2="350" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+          <line x1="517" y1="319" x2="509" y2="311" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="579" y1="381" x2="587" y2="389" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="579" y1="319" x2="587" y2="311" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="517" y1="381" x2="509" y2="389" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="548" y="356" font-size="14" text-anchor="middle">☀️</text>
+          <text x="548" y="374" font-size="11" text-anchor="middle">⚓</text>
+          <g class="sugerido-indicator" id="sug-puerto" opacity="0">
+            <text x="548" y="295" font-size="14" text-anchor="middle">👇</text>
+          </g>
+          <text x="548" y="398" font-family="Cinzel,serif" font-size="9.5" fill="#92400e" text-anchor="middle" font-weight="700">☀️ Puerto del Sol</text>
+          <text x="548" y="410" font-family="Cinzel,serif" font-size="7.5" fill="#92400e" text-anchor="middle" opacity=".7">este</text>
+        </g>
+
+        <!-- CUEVA DEL ECO (OESTE) — cx=148,cy=350 — DESTINO -->
+        <g class="zona-drop" id="zona-cueva" data-id="cueva" data-cx="148" data-cy="350">
+          <circle class="drop-ring" cx="148" cy="350" r="58" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8,5" opacity="0"/>
+          <ellipse cx="148" cy="350" rx="52" ry="38" fill="#1c1917" filter="url(#fK4)"/>
+          <ellipse cx="148" cy="350" rx="42" ry="30" fill="#292524"/>
+          <ellipse cx="148" cy="352" rx="30" ry="22" fill="#0c0a09"/>
+          <path d="M138,335 Q128,342 128,352 Q128,362 138,368 Q118,365 115,352 Q112,338 128,331 Z" fill="#fde68a" opacity=".85"/>
+          <text x="142" y="348" font-size="10" opacity=".8">🦇</text>
+          <text x="156" y="340" font-size="8" opacity=".7">🦇</text>
+          <polygon points="130,322 133,336 127,336" fill="#57534e"/>
+          <polygon points="145,320 148,334 142,334" fill="#57534e"/>
+          <polygon points="160,322 163,336 157,336" fill="#57534e"/>
+          <g class="sugerido-indicator" id="sug-cueva" opacity="0">
+            <text x="148" y="292" font-size="14" text-anchor="middle">👇</text>
+          </g>
+          <text x="148" y="400" font-family="Cinzel,serif" font-size="9.5" fill="#1c1917" text-anchor="middle" font-weight="700">🌙 Cueva del Eco</text>
+          <text x="148" y="412" font-family="Cinzel,serif" font-size="7.5" fill="#451a03" text-anchor="middle" opacity=".7">oeste ← TESORO</text>
+        </g>
+
+        <!-- CASCADA -->
+        <g class="zona-drop" id="zona-cascada" data-id="cascada" data-cx="280" data-cy="232">
+          <circle class="drop-ring" cx="280" cy="232" r="42" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,5" opacity="0"/>
+          <rect x="252" y="195" width="56" height="72" rx="10" fill="#0ea5e9" opacity=".35" filter="url(#fK2)"/>
+          <rect x="256" y="195" width="48" height="52" rx="8" fill="#7dd3fc" opacity=".45"/>
+          <rect x="265" y="200" width="7" height="42" rx="3" fill="#bae6fd" opacity=".75"/>
+          <rect x="277" y="204" width="5" height="36" rx="2" fill="#93c5fd" opacity=".65"/>
+          <rect x="289" y="200" width="6" height="40" rx="3" fill="#bae6fd" opacity=".7"/>
+          <ellipse cx="280" cy="246" rx="24" ry="7" fill="#7dd3fc" opacity=".55"/>
+          <text x="280" y="244" font-size="15" text-anchor="middle">💧</text>
+          <text x="280" y="278" font-family="Cinzel,serif" font-size="8.5" fill="#0c4a6e" text-anchor="middle" font-weight="700">💧 Cascada</text>
+        </g>
+
+        <!-- BOSQUE -->
+        <g class="zona-drop" id="zona-bosque" data-id="bosque" data-cx="338" data-cy="298">
+          <circle class="drop-ring" cx="338" cy="298" r="46" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,5" opacity="0"/>
+          <ellipse cx="336" cy="290" rx="28" ry="34" fill="#166534" filter="url(#fK2)"/>
+          <ellipse cx="324" cy="298" rx="20" ry="24" fill="#22c55e"/>
+          <ellipse cx="340" cy="294" rx="18" ry="22" fill="#15803d"/>
+          <rect x="333" y="318" width="6" height="16" fill="#92400e"/>
+          <ellipse cx="358" cy="288" rx="22" ry="28" fill="#166534"/>
+          <ellipse cx="350" cy="294" rx="16" ry="20" fill="#22c55e"/>
+          <rect x="355" y="312" width="5" height="14" fill="#92400e"/>
+          <text x="338" y="285" font-size="13" text-anchor="middle">🌲</text>
+          <text x="338" y="344" font-family="Cinzel,serif" font-size="8.5" fill="#14532d" text-anchor="middle" font-weight="700">🌲 Bosque</text>
+        </g>
+
+        <!-- TEMPLO -->
+        <g class="zona-drop" id="zona-templo" data-id="templo" data-cx="350" data-cy="430">
+          <circle class="drop-ring" cx="350" cy="430" r="48" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,5" opacity="0"/>
+          <polygon points="350,398 398,450 302,450" fill="#d97706" filter="url(#fK4)"/>
+          <polygon points="350,398 386,432 314,432" fill="#b45309"/>
+          <polygon points="350,398 374,416 326,416" fill="#92400e"/>
+          <rect x="337" y="378" width="26" height="22" rx="3" fill="#78350f"/>
+          <text x="350" y="420" font-size="14" text-anchor="middle">🐆</text>
+          <rect x="302" y="448" width="96" height="5" rx="2" fill="#92400e"/>
+          <rect x="308" y="432" width="84" height="5" rx="2" fill="#b45309"/>
+          <text x="350" y="468" font-family="Cinzel,serif" font-size="8.5" fill="#451a03" text-anchor="middle" font-weight="700">🐆 Templo</text>
+        </g>
+
+        <!-- BARCO -->
+        <g class="zona-drop" id="zona-barco" data-id="barco" data-cx="490" data-cy="430">
+          <circle class="drop-ring" cx="490" cy="430" r="48" fill="rgba(245,158,11,.08)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,5" opacity="0"/>
+          <path d="M444,432 Q450,455 490,460 Q530,462 540,455 Q546,432 540,426 Z" fill="#78350f" filter="url(#fK2)"/>
+          <rect x="445" y="398" width="90" height="36" rx="6" fill="#92400e"/>
+          <rect x="450" y="393" width="80" height="10" rx="3" fill="#451a03"/>
+          <rect x="486" y="373" width="5" height="56" rx="2" fill="#292524"/>
+          <polygon points="491,373 520,387 491,402" fill="#fef3c7" opacity=".65"/>
+          <rect x="491" y="363" width="3" height="12" fill="#1c1917"/>
+          <rect x="494" y="363" width="18" height="12" rx="2" fill="#1c1917"/>
+          <text x="503" y="374" font-size="8" fill="white" text-anchor="middle">☠</text>
+          <text x="490" y="478" font-family="Cinzel,serif" font-size="8.5" fill="#292524" text-anchor="middle" font-weight="700">☠️ Barco Pirata</text>
+        </g>
+
+        <!-- X MARCA EL LUGAR -->
+        <g opacity=".4">
+          <line x1="138" y1="342" x2="158" y2="362" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+          <line x1="158" y1="342" x2="138" y2="362" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Rosa de los vientos -->
+        <g transform="translate(612,614)" filter="url(#fK2)">
+          <circle cx="0" cy="0" r="42" fill="#fef3c7" stroke="#92400e" stroke-width="2.5"/>
+          <circle cx="0" cy="0" r="36" fill="#fef9c3"/>
+          <polygon points="0,-36 5,-16 0,-22 -5,-16" fill="#dc2626"/>
+          <polygon points="0,36 5,16 0,22 -5,16" fill="#292524"/>
+          <polygon points="-36,0 -16,5 -22,0 -16,-5" fill="#292524"/>
+          <polygon points="36,0 16,5 22,0 16,-5" fill="#292524"/>
+          <text x="0"  y="-21" font-family="Cinzel,serif" font-size="10" fill="#dc2626" text-anchor="middle" font-weight="700">N</text>
+          <text x="0"  y="30"  font-family="Cinzel,serif" font-size="10" fill="#292524" text-anchor="middle">S</text>
+          <text x="-24" y="4" font-family="Cinzel,serif" font-size="9" fill="#292524" text-anchor="middle">O</text>
+          <text x="25"  y="4" font-family="Cinzel,serif" font-size="9" fill="#292524" text-anchor="middle">E</text>
+          <circle cx="0" cy="0" r="9" fill="#fde68a" stroke="#d97706" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="3" fill="#d97706"/>
+        </g>
+
+        <!-- Decorativos -->
+        <text x="432" y="252" font-size="12" opacity=".45">🌴</text>
+        <text x="246" y="440" font-size="11" opacity=".4">🌺</text>
+        <text x="458" y="298" font-size="12" opacity=".45">🌿</text>
+        <text x="600" y="140" font-size="13" opacity=".35">🦜</text>
+        <text x="74"  y="540" font-size="13" opacity=".35">🐋</text>
+        <text x="560" y="490" font-family="Cinzel,serif" font-size="7.5" fill="#92400e" opacity=".35" transform="rotate(-12,560,490)">Mare Incognita</text>
+
+        <!-- Capa de huellas y ruta (se dibuja encima) -->
+        <g id="huellasSVG"></g>
+        <g id="rutaSVG"></g>
+        <g id="marcadoresSVG"></g>
+
+        <!-- Cofre del tesoro (oculto al inicio) -->
+        <g id="cofreTesoro" opacity="0">
+          <rect x="124" y="335" width="48" height="36" rx="7" fill="#92400e" filter="url(#gOro)"/>
+          <rect x="120" y="330" width="56" height="16" rx="6" fill="#b45309"/>
+          <rect x="120" y="330" width="56" height="8" rx="6" fill="#d97706"/>
+          <rect x="138" y="328" width="16" height="12" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+          <circle cx="146" cy="334" r="3.5" fill="#fde68a" stroke="#f59e0b" stroke-width="1"/>
+          <text x="146" y="358" font-size="16" text-anchor="middle">💰</text>
+        </g>
+
+        <!-- ══ PIRATA ARRASTRABLE ══ -->
+        <g id="pirataGrupo" transform="translate(350,350)">
+          <!-- Sombra -->
+          <ellipse cx="0" cy="44" rx="18" ry="6" fill="rgba(0,0,0,.22)"/>
+          <!-- Cuerpo pirata -->
+          <rect x="-13" y="18" width="26" height="26" rx="5" fill="#1c1917"/>
+          <rect x="-9"  y="18" width="18" height="12" rx="3" fill="#292524"/>
+          <!-- Faja roja -->
+          <rect x="-13" y="38" width="26" height="6" rx="2" fill="#dc2626"/>
+          <!-- Cuello -->
+          <rect x="-5" y="12" width="10" height="8" rx="2" fill="#fbbf24"/>
+          <!-- Cabeza -->
+          <ellipse cx="0" cy="5" rx="13" ry="14" fill="#fbbf24"/>
+          <!-- Bandana pirata -->
+          <ellipse cx="0" cy="-4" rx="14" ry="5" fill="#dc2626"/>
+          <rect x="-12" y="-7" width="24" height="5" rx="2" fill="#b91c1c"/>
+          <circle cx="8" cy="-5" r="3" fill="white" opacity=".9"/>
+          <!-- Parche en el ojo -->
+          <circle cx="-4" cy="4" r="5" fill="#1c1917"/>
+          <circle cx="-4" cy="4" r="3.5" fill="#292524"/>
+          <line x1="-9" y1="1" x2="1" y2="7" stroke="#1c1917" stroke-width="1.5"/>
+          <!-- Ojo bueno -->
+          <circle cx="5" cy="5" r="2.5" fill="#1c1917"/>
+          <circle cx="6" cy="4" r="1" fill="white"/>
+          <!-- Sonrisa -->
+          <path d="M-2,12 Q0,15 3,12" fill="none" stroke="#92400e" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Bigote -->
+          <path d="M-5,9 Q-2,11 0,9 Q2,11 5,9" fill="none" stroke="#1c1917" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Piernas -->
+          <rect x="-11" y="42" width="9" height="14" rx="3" fill="#1c1917"/>
+          <rect x="2"   y="42" width="9" height="14" rx="3" fill="#1c1917"/>
+          <!-- Botas -->
+          <rect x="-13" y="54" width="11" height="6" rx="3" fill="#0c0a09"/>
+          <rect x="2"   y="54" width="11" height="6" rx="3" fill="#0c0a09"/>
+          <!-- Gancho (brazo derecho) -->
+          <rect x="13" y="18" width="10" height="6" rx="3" fill="#1c1917" transform="rotate(-15,13,18)"/>
+          <path d="M22,20 Q30,16 28,26" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Espada (brazo izquierdo) -->
+          <rect x="-23" y="18" width="10" height="5" rx="2" fill="#1c1917" transform="rotate(10,-23,18)"/>
+          <line x1="-28" y1="16" x2="-38" y2="6" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-33" y1="14" x2="-30" y2="8" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Etiqueta nombre -->
+          <rect x="-22" y="-24" width="44" height="13" rx="4" fill="#1c0a00" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="0" y="-14" font-family="Cinzel,serif" font-size="7" fill="#fde68a" text-anchor="middle" font-weight="700">CAPITÁN</text>
+        </g>
+
+      </svg>
+
+      <!-- Tooltip flotante -->
+      <div class="tooltip-lugar" id="tooltipLugar"></div>
+    </div>
+
+    <div class="leyenda-mapa">
+      <div class="ley-t">🗺️ LEYENDA — haz clic o arrastra el pirata a cada lugar</div>
+      <span class="ley-i">⛰️ Montaña (N)</span>
+      <span class="ley-i">🌊 Río (S)</span>
+      <span class="ley-i">☀️ Puerto (E)</span>
+      <span class="ley-i">🌙 Cueva (O)</span>
+      <span class="ley-i">💧 Cascada</span>
+      <span class="ley-i">🌲 Bosque</span>
+      <span class="ley-i">🐆 Templo</span>
+      <span class="ley-i">☠️ Barco</span>
+    </div>
+  </div>
+
+  <!-- ══ PANEL KINESTÉSICO ══ -->
+  <div class="panel">
+
+    <!-- TIRA DE INSTRUCCIONES VISUAL — iconos, cardinal, flecha, sin párrafos -->
+    <div class="tira-instrucciones">
+      <div class="tira-titulo">
+        🗺️ Instrucciones del mapa
+        <span>Sigue el orden</span>
+      </div>
+      <div class="tira-pasos" id="tiraPasos">
+        <div class="paso-icono-grande activo" id="tip1">
+          <div class="pig-num">paso 1</div>
+          <div class="pig-emoji">⛰️</div>
+          <div class="pig-cardinal">N</div>
+          <div class="pig-label">Montaña Calavera</div>
+        </div>
+        <div class="tira-sep flecha">→</div>
+        <div class="paso-icono-grande inactivo" id="tip2">
+          <div class="pig-num">paso 2</div>
+          <div class="pig-emoji">🌊</div>
+          <div class="pig-cardinal">S ×2</div>
+          <div class="pig-label">Río Serpiente</div>
+        </div>
+        <div class="tira-sep flecha">→</div>
+        <div class="paso-icono-grande inactivo" id="tip3">
+          <div class="pig-num">paso 3</div>
+          <div class="pig-emoji">☀️</div>
+          <div class="pig-cardinal">E</div>
+          <div class="pig-label">Puerto del Sol</div>
+        </div>
+        <div class="tira-sep flecha">→</div>
+        <div class="paso-icono-grande inactivo" id="tip4">
+          <div class="pig-num">paso 4</div>
+          <div class="pig-emoji">🌿</div>
+          <div class="pig-cardinal">O ×1</div>
+          <div class="pig-label">Interior isla</div>
+        </div>
+        <div class="tira-sep flecha">→</div>
+        <div class="paso-icono-grande inactivo" id="tip5">
+          <div class="pig-num">paso 5</div>
+          <div class="pig-emoji">🌙</div>
+          <div class="pig-cardinal">O ★</div>
+          <div class="pig-label">Cueva del Eco</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLES KINESTÉSICOS -->
+    <div class="controles-card">
+      <div class="ctrl-header">
+        <i class="fas fa-gamepad me-1"></i> Controles — mueve al Capitán
+      </div>
+      <div class="ctrl-body">
+
+        <!-- Nota mouse -->
+        <div class="nota-mouse">
+          <i class="fas fa-mouse-pointer"></i>
+          <span><strong>Haz clic</strong> en cualquier lugar del mapa para mover al Capitán ahí,
+          o <strong>arrástralo</strong> directamente con el mouse.</span>
+        </div>
+
+        <!-- Cruceta de teclado + descripción -->
+        <div class="cruceta-wrap">
+          <div>
+            <div class="cruceta">
+              <div class="cr-key vacia"></div>
+              <div class="cr-key" id="ck-n" onclick="moverTeclado('norte')">↑</div>
+              <div class="cr-key vacia"></div>
+              <div class="cr-key" id="ck-o" onclick="moverTeclado('oeste')">←</div>
+              <div class="cr-key enter-key" id="ck-ok" onclick="confirmarDesdeBoton()">✓<br>OK</div>
+              <div class="cr-key" id="ck-e" onclick="moverTeclado('este')">→</div>
+              <div class="cr-key vacio"></div>
+              <div class="cr-key" id="ck-s" onclick="moverTeclado('sur')">↓</div>
+              <div class="cr-key vacia"></div>
+            </div>
+            <div style="text-align:center;font-size:.52rem;font-weight:800;color:#94a3b8;margin-top:3px;">MOVER · CONFIRMAR</div>
+          </div>
+          <div class="cruceta-info">
+            <div class="cruceta-info-titulo">⌨️ Teclado</div>
+            <div class="cruceta-linea"><span class="ck">↑↓←→</span><span class="cd">Mover al siguiente lugar en esa dirección</span></div>
+            <div class="cruceta-linea"><span class="ck">Enter</span><span class="cd">Confirmar que llegaste a ese lugar</span></div>
+            <div class="cruceta-linea"><span class="ck">Backspace</span><span class="cd">Deshacer último movimiento</span></div>
+            <div class="cruceta-linea"><span class="ck">Esc</span><span class="cd">Reiniciar ruta completa</span></div>
+          </div>
+        </div>
+
+        <!-- Lugar actual -->
+        <div class="lugar-actual-card" id="lugarActualCard">
+          <div class="lac-emoji" id="lacEmoji">🏴‍☠️</div>
+          <div class="lac-info">
+            <div class="lac-label">CAPITÁN ESTÁ EN</div>
+            <div class="lac-nombre" id="lacNombre">Centro de la isla</div>
+            <div class="lac-cardinal" id="lacCardinal">Haz clic en un lugar para empezar</div>
+          </div>
+        </div>
+
+        <!-- Lugares navegables con TAB y flechas de teclado -->
+        <div style="font-size:.58rem;font-weight:900;color:#64748b;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;">Lugares disponibles → haz clic</div>
+        <div class="lugares-nav" id="lugaresNav">
+          <button class="ln-btn" id="lb-montana" onclick="irALugar('montana')">
+            <span class="ln-emoji">⛰️</span>
+            <span><span class="ln-dir">NORTE</span>Montaña Calavera</span>
+          </button>
+          <button class="ln-btn" id="lb-rio" onclick="irALugar('rio')">
+            <span class="ln-emoji">🌊</span>
+            <span><span class="ln-dir">SUR</span>Río Serpiente</span>
+          </button>
+          <button class="ln-btn" id="lb-puerto" onclick="irALugar('puerto')">
+            <span class="ln-emoji">☀️</span>
+            <span><span class="ln-dir">ESTE</span>Puerto del Sol</span>
+          </button>
+          <button class="ln-btn" id="lb-cueva" onclick="irALugar('cueva')">
+            <span class="ln-emoji">🌙</span>
+            <span><span class="ln-dir">OESTE ★</span>Cueva del Eco</span>
+          </button>
+          <button class="ln-btn" id="lb-cascada" onclick="irALugar('cascada')">
+            <span class="ln-emoji">💧</span>
+            <span><span class="ln-dir">CENTRO-N</span>Cascada</span>
+          </button>
+          <button class="ln-btn" id="lb-bosque" onclick="irALugar('bosque')">
+            <span class="ln-emoji">🌲</span>
+            <span><span class="ln-dir">CENTRO</span>Bosque</span>
+          </button>
+          <button class="ln-btn" id="lb-templo" onclick="irALugar('templo')">
+            <span class="ln-emoji">🐆</span>
+            <span><span class="ln-dir">CENTRO-S</span>Templo</span>
+          </button>
+          <button class="ln-btn" id="lb-barco" onclick="irALugar('barco')">
+            <span class="ln-emoji">☠️</span>
+            <span><span class="ln-dir">ESTE-S</span>Barco Pirata</span>
+          </button>
+        </div>
+
+        <!-- Ruta construida -->
+        <div class="ruta-visual" id="rutaVisual">
+          <span class="rv-placeholder">Tu ruta aparece aquí...</span>
+        </div>
+
+        <!-- Contador -->
+        <div class="paso-counter">
+          <div class="pc-num" id="pcNum">0</div>
+          <div class="pc-label">pasos</div>
+          <div class="pc-optimo">⚡ Óptimo: 5</div>
+        </div>
+
+        <div class="accion-btns">
+          <button class="btn-undo" id="btnUndo" onclick="deshacerPaso()" disabled>↩ Deshacer</button>
+          <button class="btn-confirmar" id="btnConfirmar" onclick="confirmarRuta()" disabled>☠️ ¡Confirmar Ruta!</button>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-card" id="feedbackCard">
+          <div class="fb-titulo" id="fbTitulo"></div>
+          <div class="fb-texto"  id="fbTexto"></div>
+          <div class="barra-ef" id="barraEf">
+            <div class="barra-label">Eficiencia de ruta</div>
+            <div class="barra-track"><div class="barra-fill" id="barraFill" style="width:0%;"></div></div>
+            <div class="barra-stars" id="barraStars"></div>
+          </div>
+        </div>
+        <div id="botonesFinales"></div>
+
+      </div>
+    </div>
+
+  </div><!-- /panel -->
+</div>
+
+<script>
+  /* ══════════════════════════════════════════════
+     KINESTÉSICO — La Isla del Tesoro
+     Mecánica: arrastrar pirata O clic en lugar O botones de panel OR teclado
+     Ruta óptima: montana→rio→puerto→[bosque|cascada|templo]→cueva (5 pasos)
+     Destino final: cueva
+  ══════════════════════════════════════════════ */
+
+  var LUGARES = {
+    montana: { x:350, y:105, emoji:'⛰️', nombre:'Montaña Calavera', cardinal:'norte'    },
+    rio:     { x:350, y:535, emoji:'🌊', nombre:'Río Serpiente',    cardinal:'sur'      },
+    puerto:  { x:548, y:350, emoji:'☀️', nombre:'Puerto del Sol',   cardinal:'este'     },
+    cueva:   { x:148, y:350, emoji:'🌙', nombre:'Cueva del Eco',    cardinal:'oeste'    },
+    cascada: { x:280, y:232, emoji:'💧', nombre:'Cascada Escondida',cardinal:'centro-norte'},
+    bosque:  { x:338, y:298, emoji:'🌲', nombre:'Bosque Susurros',  cardinal:'centro'   },
+    templo:  { x:350, y:430, emoji:'🐆', nombre:'Templo del Jaguar',cardinal:'centro-sur'},
+    barco:   { x:490, y:430, emoji:'☠️', nombre:'Barco Pirata',     cardinal:'este-sur' },
+  };
+
+  // Adyacencia cardinal para navegación con flechas
+  // Desde cada lugar, hacia cada dirección, ¿a qué lugar llegamos?
+  var ADYACENTE = {
+    montana: { norte:null,    sur:'bosque',  este:'cascada', oeste:null    },
+    rio:     { norte:'bosque',sur:null,      este:'barco',   oeste:null    },
+    puerto:  { norte:'montana',sur:'barco',  este:null,      oeste:'bosque'},
+    cueva:   { norte:null,    sur:null,      este:'bosque',  oeste:null    },
+    cascada: { norte:'montana',sur:'bosque', este:'puerto',  oeste:'cueva' },
+    bosque:  { norte:'montana',sur:'templo', este:'puerto',  oeste:'cueva' },
+    templo:  { norte:'bosque',sur:'rio',     este:'barco',   oeste:'cueva' },
+    barco:   { norte:'puerto',sur:'rio',     este:null,      oeste:'templo'},
+  };
+
+  var OBLIGATORIOS = ['montana','rio','puerto','cueva'];
+  var DESTINO = 'cueva';
+  var PASOS_OPTIMO = 5;
+
+  var rutaUsuario = [];
+  var posActual   = null; // lugar actual del pirata (null = centro isla)
+  var juegoTerminado = false;
+  var arrastrando = false;
+  var arrastrarOffX=0, arrastrarOffY=0;
+  var pirataX = 350, pirataY = 350; // posición actual en SVG coords
+
+  function play(id){ try{ var s=document.getElementById(id); s.currentTime=0; s.play(); }catch(e){} }
+
+  /* ── CONVERSIÓN COORDENADAS SVG ── */
+  function svgPt(svgEl, clientX, clientY){
+    var pt = svgEl.createSVGPoint();
+    pt.x=clientX; pt.y=clientY;
+    return pt.matrixTransform(svgEl.getScreenCTM().inverse());
+  }
+
+  /* ── MOVER PIRATA ANIMADO ── */
+  function moverPirataA(x, y, animar){
+    var g=document.getElementById('pirataGrupo');
+    if(animar){
+      g.classList.add('caminando');
+      setTimeout(function(){ g.classList.remove('caminando'); },400);
+    }
+    // Dejar huella en posición anterior
+    if(pirataX!==x||pirataY!==y) dejarHuella(pirataX, pirataY);
+    pirataX=x; pirataY=y;
+    g.setAttribute('transform','translate('+x+','+y+')');
+  }
+
+  function dejarHuella(x,y){
+    var g=document.getElementById('huellasSVG');
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','4');
+    c.setAttribute('fill','#f59e0b'); c.setAttribute('opacity','.6');
+    c.setAttribute('class','huella');
+    g.appendChild(c);
+    if(g.childNodes.length>60) g.removeChild(g.firstChild);
+  }
+
+  function dibujarSegmentoRuta(x1,y1,x2,y2){
+    var g=document.getElementById('rutaSVG');
+    var l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',x1); l.setAttribute('y1',y1);
+    l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+    l.setAttribute('stroke','#f59e0b'); l.setAttribute('stroke-width','4');
+    l.setAttribute('stroke-dasharray','10,6'); l.setAttribute('stroke-linecap','round');
+    l.setAttribute('opacity','.8'); l.setAttribute('class','seg-ruta');
+    g.appendChild(l);
+  }
+
+  function ponerMarcador(id,num){
+    var lug=LUGARES[id];
+    var g=document.getElementById('marcadoresSVG');
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',lug.x); c.setAttribute('cy',lug.y);
+    c.setAttribute('r','13'); c.setAttribute('fill','#f59e0b');
+    c.setAttribute('stroke','#451a03'); c.setAttribute('stroke-width','2');
+    g.appendChild(c);
+    var t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',lug.x); t.setAttribute('y',lug.y+4);
+    t.setAttribute('font-family','Cinzel,serif'); t.setAttribute('font-size','10');
+    t.setAttribute('fill','#451a03'); t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-weight','700'); t.textContent=num;
+    g.appendChild(t);
+  }
+
+  /* ── IR A UN LUGAR (desde clic, botón panel, o teclado) ── */
+  function irALugar(id){
+    if(juegoTerminado) return;
+    if(rutaUsuario.indexOf(id)!==-1){
+      // Rebote: ya visitado
+      document.getElementById('pirataGrupo').classList.add('rebotando');
+      setTimeout(function(){ document.getElementById('pirataGrupo').classList.remove('rebotando'); },450);
+      play('sndError');
+      mostrarTooltip(id,'¡Ya estuve aquí!',1200);
+      return;
+    }
+    play('sndDing');
+
+    var lug=LUGARES[id];
+    var prevX=pirataX, prevY=pirataY;
+
+    // Mover pirata
+    moverPirataA(lug.x, lug.y, true);
+
+    // Dibujar segmento si hay un anterior
+    if(rutaUsuario.length>0){
+      var prev=LUGARES[rutaUsuario[rutaUsuario.length-1]];
+      dibujarSegmentoRuta(prev.x,prev.y,lug.x,lug.y);
+    }
+
+    rutaUsuario.push(id);
+    ponerMarcador(id, rutaUsuario.length);
+    posActual=id;
+
+    // Resaltar halo en SVG
+    var halo=document.getElementById('halo-'+id);
+    // (no hay halo con ese id en este SVG, usamos zona-drop)
+    var zona=document.getElementById('zona-'+id);
+    if(zona){
+      var ring=zona.querySelector('.drop-ring');
+      if(ring) ring.setAttribute('opacity','.6');
+    }
+
+    // Marcar visitado en botones
+    document.getElementById('lb-'+id).classList.add('visitado');
+
+    actualizarPanelUI(id);
+
+    // Sugerir siguiente
+    actualizarSugeridos();
+  }
+
+  /* ── NAVEGACIÓN CON TECLADO (FLECHAS) ── */
+  function moverTeclado(dir){
+    if(juegoTerminado) return;
+    // Animar tecla
+    var keyMap={'norte':'ck-n','sur':'ck-s','este':'ck-e','oeste':'ck-o'};
+    var keyEl=document.getElementById(keyMap[dir]);
+    if(keyEl){ keyEl.classList.add('presionada'); setTimeout(function(){ keyEl.classList.remove('presionada'); },150); }
+
+    var destino=null;
+    if(posActual===null){
+      // Desde centro: ir al lugar más cercano en esa dirección
+      var deflt={norte:'montana',sur:'rio',este:'puerto',oeste:'cueva'};
+      destino=deflt[dir];
+    } else {
+      destino=ADYACENTE[posActual]?ADYACENTE[posActual][dir]:null;
+    }
+
+    if(!destino){
+      play('sndError');
+      // Feedback: no hay lugar en esa dirección
+      document.getElementById('lacCardinal').textContent='No hay ningún lugar en esa dirección';
+      setTimeout(function(){ document.getElementById('lacCardinal').textContent=LUGARES[posActual]?LUGARES[posActual].cardinal:''; },1200);
+      return;
+    }
+    if(rutaUsuario.indexOf(destino)!==-1){
+      play('sndError');
+      document.getElementById('lacCardinal').textContent='Ya visitaste ese lugar, elige otro camino';
+      setTimeout(function(){ document.getElementById('lacCardinal').textContent=LUGARES[posActual]?LUGARES[posActual].cardinal:''; },1400);
+      return;
+    }
+    irALugar(destino);
+  }
+
+  /* ── DRAG & DROP CON MOUSE ── */
+  var svgEl=null;
+  function initDrag(){
+    svgEl=document.getElementById('mapaSVG');
+    var pirata=document.getElementById('pirataGrupo');
+
+    pirata.addEventListener('mousedown',function(e){
+      if(juegoTerminado) return;
+      e.preventDefault();
+      arrastrando=true;
+      pirata.classList.add('arrastrando');
+      var pt=svgPt(svgEl,e.clientX,e.clientY);
+      arrastrarOffX=pt.x-pirataX;
+      arrastrarOffY=pt.y-pirataY;
+    });
+
+    document.addEventListener('mousemove',function(e){
+      if(!arrastrando) return;
+      var pt=svgPt(svgEl,e.clientX,e.clientY);
+      var nx=pt.x-arrastrarOffX, ny=pt.y-arrastrarOffY;
+      // Mover en tiempo real (sin registrar aún)
+      document.getElementById('pirataGrupo').setAttribute('transform','translate('+nx+','+ny+')');
+      pirataX=nx; pirataY=ny;
+      // Resaltar zona de drop cercana
+      resaltarZonaCercana(nx,ny);
+    });
+
+    document.addEventListener('mouseup',function(e){
+      if(!arrastrando) return;
+      arrastrando=false;
+      document.getElementById('pirataGrupo').classList.remove('arrastrando');
+      // Detectar si soltó cerca de algún lugar
+      var destino=lugarMasCercano(pirataX,pirataY,60);
+      quitarResaltadoZonas();
+      if(destino){
+        irALugar(destino);
+      } else {
+        // Volver a posición anterior
+        if(posActual){
+          var lug=LUGARES[posActual];
+          moverPirataA(lug.x,lug.y,false);
+        } else {
+          moverPirataA(350,350,false);
+        }
+      }
+    });
+
+    // Hover tooltip sobre zonas
+    document.querySelectorAll('.zona-drop').forEach(function(zona){
+      zona.addEventListener('mouseenter',function(){
+        if(arrastrando) return;
+        var id=zona.getAttribute('data-id');
+        var lug=LUGARES[id];
+        if(!lug) return;
+        var cx=parseFloat(zona.getAttribute('data-cx'))||lug.x;
+        var cy=parseFloat(zona.getAttribute('data-cy'))||lug.y;
+        mostrarTooltipSVG(id,lug.emoji+' '+lug.nombre,cx,cy);
+        var ring=zona.querySelector('.drop-ring');
+        if(ring&&rutaUsuario.indexOf(id)===-1) ring.setAttribute('opacity','.4');
+      });
+      zona.addEventListener('mouseleave',function(){
+        ocultarTooltip();
+        var id=zona.getAttribute('data-id');
+        if(rutaUsuario.indexOf(id)===-1){
+          var ring=zona.querySelector('.drop-ring');
+          if(ring) ring.setAttribute('opacity','0');
+        }
+      });
+      zona.addEventListener('click',function(){
+        if(arrastrando) return;
+        var id=zona.getAttribute('data-id');
+        irALugar(id);
+      });
+    });
+  }
+
+  function lugarMasCercano(x,y,umbral){
+    var mejorId=null, mejorDist=Infinity;
+    Object.keys(LUGARES).forEach(function(id){
+      var l=LUGARES[id];
+      var d=Math.sqrt((l.x-x)*(l.x-x)+(l.y-y)*(l.y-y));
+      if(d<umbral&&d<mejorDist){ mejorDist=d; mejorId=id; }
+    });
+    return mejorId;
+  }
+
+  function resaltarZonaCercana(x,y){
+    quitarResaltadoZonas();
+    var id=lugarMasCercano(x,y,70);
+    if(id&&rutaUsuario.indexOf(id)===-1){
+      var zona=document.getElementById('zona-'+id);
+      if(zona){
+        zona.classList.add('activa-drop');
+        var ring=zona.querySelector('.drop-ring');
+        if(ring) ring.setAttribute('opacity','.85');
+      }
+    }
+  }
+  function quitarResaltadoZonas(){
+    document.querySelectorAll('.zona-drop').forEach(function(z){
+      z.classList.remove('activa-drop');
+      var id=z.getAttribute('data-id');
+      if(rutaUsuario.indexOf(id)===-1){
+        var r=z.querySelector('.drop-ring'); if(r) r.setAttribute('opacity','0');
+      }
+    });
+  }
+
+  /* ── TOOLTIP ── */
+  function mostrarTooltipSVG(id,texto,cx,cy){
+    // Convertir coords SVG a pantalla
+    var svg=document.getElementById('mapaSVG');
+    var wrap=document.getElementById('mapaSVGWrap');
+    var pt=svg.createSVGPoint(); pt.x=cx; pt.y=cy;
+    var screen=pt.matrixTransform(svg.getScreenCTM());
+    var rect=wrap.getBoundingClientRect();
+    var tt=document.getElementById('tooltipLugar');
+    tt.textContent=texto;
+    tt.style.left=(screen.x-rect.left)+'px';
+    tt.style.top=(screen.y-rect.top-16)+'px';
+    tt.classList.add('visible');
+  }
+  function mostrarTooltip(id,texto,dur){
+    var lug=LUGARES[id];
+    if(lug) mostrarTooltipSVG(id,texto,lug.x,lug.y);
+    if(dur) setTimeout(ocultarTooltip,dur);
+  }
+  function ocultarTooltip(){ document.getElementById('tooltipLugar').classList.remove('visible'); }
+
+  /* ── ACTUALIZAR PANEL UI ── */
+  function actualizarPanelUI(id){
+    var lug=LUGARES[id];
+    document.getElementById('lacEmoji').textContent    = lug.emoji;
+    document.getElementById('lacNombre').textContent   = lug.nombre;
+    document.getElementById('lacCardinal').textContent = '📍 '+lug.cardinal;
+    document.getElementById('pcNum').textContent       = rutaUsuario.length;
+
+    // Actualizar tira de instrucciones
+    var orden=['montana','rio','puerto',null,'cueva'];
+    for(var i=0;i<5;i++){
+      var tipEl=document.getElementById('tip'+(i+1));
+      if(!tipEl) continue;
+      var expectedId=orden[i];
+      if(!expectedId) expectedId=rutaUsuario[3]||null; // paso 4 libre
+      var idx=rutaUsuario.indexOf(expectedId);
+      tipEl.classList.remove('activo','completado','inactivo');
+      if(idx!==-1) tipEl.classList.add('completado');
+      else if(rutaUsuario.length===i) tipEl.classList.add('activo');
+      else tipEl.classList.add('inactivo');
+    }
+
+    // Chips de ruta construida
+    var rv=document.getElementById('rutaVisual');
+    rv.innerHTML='';
+    for(var j=0;j<rutaUsuario.length;j++){
+      var rid=rutaUsuario[j];
+      var rl=LUGARES[rid];
+      var chip=document.createElement('div');
+      chip.className='rv-chip';
+      chip.innerHTML='<div class="rvc-num">'+(j+1)+'</div>'+rl.emoji+'<span style="font-size:.58rem;">'+rl.nombre+'</span>'+(j<rutaUsuario.length-1?'<span style="font-size:.7rem;margin:0 1px;">→</span>':'');
+      rv.appendChild(chip);
+    }
+
+    // Habilitar/deshabilitar botones
+    document.getElementById('btnUndo').disabled     = (rutaUsuario.length===0);
+    document.getElementById('btnConfirmar').disabled= (rutaUsuario.length===0||rutaUsuario[rutaUsuario.length-1]!==DESTINO);
+  }
+
+  function actualizarSugeridos(){
+    // Quitar todos los sugeridos
+    Object.keys(LUGARES).forEach(function(id){
+      document.getElementById('sug-'+id).setAttribute('opacity','0');
+      var lb=document.getElementById('lb-'+id);
+      if(lb) lb.classList.remove('siguiente-sugerido');
+    });
+    if(rutaUsuario.length===0||juegoTerminado) return;
+    // Sugerir siguientes basados en el paso
+    var paso=rutaUsuario.length;
+    var sugeridos={1:'rio',2:'puerto',3:null,4:'cueva'}; // paso 3: libre
+    var sid=sugeridos[paso];
+    if(sid&&rutaUsuario.indexOf(sid)===-1){
+      var sugEl=document.getElementById('sug-'+sid);
+      if(sugEl) sugEl.setAttribute('opacity','1');
+      var lbEl=document.getElementById('lb-'+sid);
+      if(lbEl) lbEl.classList.add('siguiente-sugerido');
+    }
+  }
+
+  /* ── DESHACER ── */
+  function deshacerPaso(){
+    if(rutaUsuario.length===0||juegoTerminado) return;
+    play('sndClick');
+    var id=rutaUsuario.pop();
+
+    // Quitar marcador (2 nodos: circle + text)
+    var gm=document.getElementById('marcadoresSVG');
+    if(gm.lastChild) gm.removeChild(gm.lastChild);
+    if(gm.lastChild) gm.removeChild(gm.lastChild);
+
+    // Quitar segmento de ruta
+    var gr=document.getElementById('rutaSVG');
+    if(gr.lastChild) gr.removeChild(gr.lastChild);
+
+    // Quitar halo zona
+    var ring=document.querySelector('#zona-'+id+' .drop-ring');
+    if(ring) ring.setAttribute('opacity','0');
+
+    // Quitar clase visitado del botón
+    var lb=document.getElementById('lb-'+id);
+    if(lb) lb.classList.remove('visitado');
+
+    // Mover pirata al anterior
+    posActual=rutaUsuario.length>0?rutaUsuario[rutaUsuario.length-1]:null;
+    if(posActual){
+      var lp=LUGARES[posActual];
+      moverPirataA(lp.x,lp.y,true);
+      actualizarPanelUI(posActual);
+    } else {
+      moverPirataA(350,350,true);
+      document.getElementById('lacEmoji').textContent='🏴‍☠️';
+      document.getElementById('lacNombre').textContent='Centro de la isla';
+      document.getElementById('lacCardinal').textContent='Haz clic en un lugar para empezar';
+      document.getElementById('pcNum').textContent='0';
+      var rv=document.getElementById('rutaVisual');
+      rv.innerHTML='<span class="rv-placeholder">Tu ruta aparece aquí...</span>';
+      document.getElementById('btnUndo').disabled=true;
+      document.getElementById('btnConfirmar').disabled=true;
+    }
+    actualizarSugeridos();
+  }
+
+  /* ── CONFIRMAR RUTA ── */
+  function confirmarRuta(){
+    if(juegoTerminado) return;
+    if(rutaUsuario[rutaUsuario.length-1]!==DESTINO){ play('sndError'); return; }
+    juegoTerminado=true;
+    document.getElementById('btnUndo').disabled=true;
+    document.getElementById('btnConfirmar').disabled=true;
+
+    var resultado=evaluarRuta(rutaUsuario);
+    mostrarFeedback(resultado);
+    if(resultado.valida){
+      play('sndTada');
+      // Mostrar cofre
+      document.getElementById('cofreTesoro').setAttribute('opacity','1');
+      setTimeout(lanzarConfeti,300);
+    } else {
+      play('sndError');
+    }
+  }
+  function confirmarDesdeBoton(){
+    var ckOk=document.getElementById('ck-ok');
+    ckOk.classList.add('presionada');
+    setTimeout(function(){ ckOk.classList.remove('presionada'); },150);
+    confirmarRuta();
+  }
+
+  function evaluarRuta(ruta){
+    if(ruta[ruta.length-1]!==DESTINO)
+      return {valida:false,tipo:'error',razon:'no_termina'};
+    var indices={};
+    for(var i=0;i<ruta.length;i++) indices[ruta[i]]=i;
+    var orden=['montana','rio','puerto','cueva'];
+    for(var j=0;j<orden.length-1;j++){
+      if(indices[orden[j]]===undefined||indices[orden[j+1]]===undefined) return {valida:false,tipo:'error',razon:'orden_incorrecto'};
+      if(indices[orden[j]]>=indices[orden[j+1]]) return {valida:false,tipo:'error',razon:'orden_incorrecto'};
+    }
+    var n=ruta.length;
+    if(n<=PASOS_OPTIMO) return {valida:true,tipo:'perfecto',pasos:n};
+    if(n<=PASOS_OPTIMO+2) return {valida:true,tipo:'bien',pasos:n};
+    return {valida:true,tipo:'extra',pasos:n};
+  }
+
+  function mostrarFeedback(resultado){
+    var card=document.getElementById('feedbackCard');
+    var titulo=document.getElementById('fbTitulo');
+    var texto=document.getElementById('fbTexto');
+    var fill=document.getElementById('barraFill');
+    var stars=document.getElementById('barraStars');
+    var botonesDiv=document.getElementById('botonesFinales');
+
+    if(!resultado.valida){
+      card.className='feedback-card error';
+      var msgs={no_termina:'¡Debes terminar en la Cueva del Eco! El tesoro está al oeste.',orden_incorrecto:'No seguiste el orden correcto. Mira la tira de instrucciones en la parte superior.'};
+      titulo.innerHTML='<span style="font-size:1.3rem;">❌</span> Ruta inválida';
+      texto.innerHTML='<strong>'+msgs[resultado.razon]+'</strong>';
+      document.getElementById('barraEf').style.display='none';
+      var btnR=document.createElement('button'); btnR.className='btn-final reintentar'; btnR.innerHTML='↩ Intentar de nuevo'; btnR.onclick=reiniciar; botonesDiv.appendChild(btnR);
+      return;
+    }
+    document.getElementById('barraEf').style.display='';
+    var ef=Math.round((PASOS_OPTIMO/resultado.pasos)*100);
+    setTimeout(function(){ fill.style.width=Math.min(100,ef)+'%'; },250);
+
+    if(resultado.tipo==='perfecto'){
+      card.className='feedback-card perfecto';
+      titulo.innerHTML='<span style="font-size:1.3rem;">🏆</span> ¡Ruta perfecta, Capitán!';
+      texto.innerHTML='¡Navegaste la isla en exactamente <strong>'+resultado.pasos+' pasos</strong>! Eso es el mínimo posible. Seguiste las instrucciones cardinales al pie de la letra. ¡Eres un maestro de los mares! ⚓';
+      fill.className='barra-fill perfecto'; stars.textContent='⭐⭐⭐';
+    } else if(resultado.tipo==='bien'){
+      card.className='feedback-card bien';
+      titulo.innerHTML='<span style="font-size:1.3rem;">✅</span> ¡Bien navegado!';
+      texto.innerHTML='Llegaste al tesoro en <strong>'+resultado.pasos+' pasos</strong>. Podrías hacerlo en '+PASOS_OPTIMO+'. Diste '+(resultado.pasos-PASOS_OPTIMO)+' pasos extra. Revisa la tira de instrucciones para encontrar la ruta más directa.';
+      fill.className='barra-fill bien'; stars.textContent='⭐⭐';
+    } else {
+      card.className='feedback-card extra';
+      titulo.innerHTML='<span style="font-size:1.3rem;">🔵</span> Llegaste, ¡pero con muchos rodeos!';
+      texto.innerHTML='Encontraste el tesoro en <strong>'+resultado.pasos+' pasos</strong>, pero la ruta óptima es de solo '+PASOS_OPTIMO+'. Hiciste '+(resultado.pasos-PASOS_OPTIMO)+' pasos de más. Usa las flechas cardinales para ir más directo.';
+      fill.className='barra-fill extra'; stars.textContent='⭐';
+    }
+
+    var btnR=document.createElement('button'); btnR.className='btn-final reintentar'; btnR.innerHTML='↩ Volver a intentar'; btnR.onclick=reiniciar;
+    var btnS=document.createElement('a'); btnS.className='btn-final siguiente'; btnS.href='quiz.html'; btnS.innerHTML='<i class="fas fa-puzzle-piece me-1"></i> Ir al quiz';
+    botonesDiv.innerHTML=''; botonesDiv.appendChild(btnR); botonesDiv.appendChild(btnS);
+    localStorage.setItem('progreso_dificil_kin_instrucciones','ok');
+  }
+
+  /* ── REINICIAR ── */
+  function reiniciar(){
+    juegoTerminado=false; rutaUsuario=[]; posActual=null; pirataX=350; pirataY=350;
+    moverPirataA(350,350,false);
+    document.getElementById('huellasSVG').innerHTML='';
+    document.getElementById('rutaSVG').innerHTML='';
+    document.getElementById('marcadoresSVG').innerHTML='';
+    document.getElementById('cofreTesoro').setAttribute('opacity','0');
+    // Quitar halos y visitados
+    document.querySelectorAll('.zona-drop').forEach(function(z){
+      var r=z.querySelector('.drop-ring'); if(r) r.setAttribute('opacity','0');
+    });
+    document.querySelectorAll('.ln-btn').forEach(function(b){ b.classList.remove('visitado','siguiente-sugerido'); });
+    document.querySelectorAll('.sugerido-indicator').forEach(function(s){ s.setAttribute('opacity','0'); });
+    // UI
+    document.getElementById('rutaVisual').innerHTML='<span class="rv-placeholder">Tu ruta aparece aquí...</span>';
+    document.getElementById('lacEmoji').textContent='🏴‍☠️';
+    document.getElementById('lacNombre').textContent='Centro de la isla';
+    document.getElementById('lacCardinal').textContent='Haz clic en un lugar para empezar';
+    document.getElementById('pcNum').textContent='0';
+    document.getElementById('feedbackCard').className='feedback-card';
+    document.getElementById('botonesFinales').innerHTML='';
+    document.getElementById('btnUndo').disabled=true;
+    document.getElementById('btnConfirmar').disabled=true;
+    document.getElementById('barraFill').style.width='0%';
+    document.getElementById('barraEf').style.display='';
+    ['tip1','tip2','tip3','tip4','tip5'].forEach(function(id,i){
+      var el=document.getElementById(id); el.className='paso-icono-grande '+(i===0?'activo':'inactivo');
+    });
+  }
+
+  /* ── TECLADO GLOBAL ── */
+  document.addEventListener('keydown',function(e){
+    if(juegoTerminado) return;
+    switch(e.key){
+      case 'ArrowUp':    case 'w': case 'W': e.preventDefault(); moverTeclado('norte'); break;
+      case 'ArrowDown':  case 's': case 'S': e.preventDefault(); moverTeclado('sur');   break;
+      case 'ArrowLeft':  case 'a': case 'A': e.preventDefault(); moverTeclado('oeste'); break;
+      case 'ArrowRight': case 'd': case 'D': e.preventDefault(); moverTeclado('este');  break;
+      case 'Enter': confirmarDesdeBoton(); break;
+      case 'Backspace': deshacerPaso(); break;
+      case 'Escape': reiniciar(); break;
+    }
+  });
+
+  function lanzarConfeti(){
+    var cols=['#f59e0b','#fde68a','#d97706','#92400e','#fbbf24','#4ade80','#22c55e','#dc2626'];
+    for(var i=0;i<65;i++){ (function(idx){ setTimeout(function(){
+      var el=document.createElement('div'); el.className='confeti';
+      el.style.left=(Math.random()*100)+'vw'; el.style.top='-10px';
+      el.style.background=cols[Math.floor(Math.random()*cols.length)];
+      el.style.width=(5+Math.random()*9)+'px'; el.style.height=(5+Math.random()*9)+'px';
+      el.style.borderRadius=Math.random()>.5?'50%':'2px';
+      var dur=(1.8+Math.random()*1.8).toFixed(2);
+      el.style.animation='confetiFall '+dur+'s '+(Math.random()*.5)+'s linear forwards';
+      document.body.appendChild(el);
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },(parseFloat(dur)+.6)*1000);
+    },idx*28); })(i); }
+  }
+
+  window.addEventListener('DOMContentLoaded',function(){
+    initDrag();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

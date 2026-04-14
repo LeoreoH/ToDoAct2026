@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra &middot; Nivel Dif&iacute;cil &middot; Visual/No Verbal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera-visual">
+  <h1>&#127757; LA TIERRA</h1>
+  <p class="lead text-white">Bloque I &middot; Nivel Dif&iacute;cil</p>
+  <div>
+    <span class="badge-estilo">&#128065; Visual / No Verbal</span>
+    <span class="badge-nivel">&#128293; Avanzado</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-eye fa-2x" style="color: #ffd600;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #ffd600; color: #0d47a1; padding: 8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>COORDENADAS GEOGR&Aacute;FICAS</h2>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg"
+             alt="Coordenadas" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
+        <div class="pie-imagen">LATITUD y LONGITUD</div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="caja-info">
+            <i class="fas fa-arrows-alt-h"></i>
+            <h4>LATITUD</h4>
+            <p>Distancia desde el Ecuador. 0&deg; a 90&deg; Norte o Sur.</p>
+            <p><strong>Ejemplo:</strong> M&eacute;xico 23&deg;N</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="caja-info">
+            <i class="fas fa-arrows-alt-v"></i>
+            <h4>LONGITUD</h4>
+            <p>Distancia desde Greenwich. 0&deg; a 180&deg; Este u Oeste.</p>
+            <p><strong>Ejemplo:</strong> Londres 0&deg;</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="texto-breve">
+        <strong>Coordenada &uacute;nica:</strong> Cada punto tiene LATITUD y LONGITUD. CDMX: 19&deg;N, 99&deg;O
+      </div>
+
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Cada planeta muestra un tipo de l&iacute;neas. Haz clic en el que representa la coordenada que mide la distancia al Ecuador.
+        </p>
+        <div class="opciones-svg">
+
+          <div class="opcion-svg" id="op1A" onclick="responder1('A')">
+            <svg width="160" height="180" viewBox="0 0 160 180">
+              <defs>
+                <radialGradient id="gP1A" cx="38%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#5c9bd6"/>
+                  <stop offset="100%" stop-color="#1a3a6e"/>
+                </radialGradient>
+                <clipPath id="cpP1A"><circle cx="80" cy="82" r="68"/></clipPath>
+              </defs>
+              <circle cx="80" cy="82" r="68" fill="url(#gP1A)" stroke="#4a6fa5" stroke-width="2.5"/>
+              <ellipse cx="62" cy="58" rx="18" ry="22" fill="#3d7a3d" opacity="0.7" clip-path="url(#cpP1A)"/>
+              <ellipse cx="100" cy="74" rx="20" ry="16" fill="#3d7a3d" opacity="0.7" clip-path="url(#cpP1A)"/>
+              <ellipse cx="74" cy="108" rx="16" ry="10" fill="#3d7a3d" opacity="0.6" clip-path="url(#cpP1A)"/>
+              <ellipse cx="80" cy="52"  rx="50" ry="11" fill="none" stroke="#7a9cc5" stroke-width="2" clip-path="url(#cpP1A)"/>
+              <ellipse cx="80" cy="82"  rx="68" ry="16" fill="none" stroke="#7a9cc5" stroke-width="2.5" clip-path="url(#cpP1A)"/>
+              <ellipse cx="80" cy="112" rx="50" ry="11" fill="none" stroke="#7a9cc5" stroke-width="2" clip-path="url(#cpP1A)"/>
+              <ellipse cx="80" cy="132" rx="28" ry="8"  fill="none" stroke="#7a9cc5" stroke-width="1.5" clip-path="url(#cpP1A)"/>
+              <text x="80" y="170" text-anchor="middle" font-family="Fredoka One" font-size="15" fill="#7a9cc5">Planeta A</text>
+            </svg>
+            <span></span>
+          </div>
+
+          <div class="opcion-svg" id="op1B" onclick="responder1('B')">
+            <svg width="160" height="180" viewBox="0 0 160 180">
+              <defs>
+                <radialGradient id="gP1B" cx="38%" cy="35%" r="60%">
+                  <stop offset="0%" stop-color="#5c9bd6"/>
+                  <stop offset="100%" stop-color="#1a3a6e"/>
+                </radialGradient>
+                <clipPath id="cpP1B"><circle cx="80" cy="82" r="68"/></clipPath>
+              </defs>
+              <circle cx="80" cy="82" r="68" fill="url(#gP1B)" stroke="#4a6fa5" stroke-width="2.5"/>
+              <ellipse cx="62" cy="58" rx="18" ry="22" fill="#3d7a3d" opacity="0.7" clip-path="url(#cpP1B)"/>
+              <ellipse cx="100" cy="74" rx="20" ry="16" fill="#3d7a3d" opacity="0.7" clip-path="url(#cpP1B)"/>
+              <ellipse cx="74" cy="108" rx="16" ry="10" fill="#3d7a3d" opacity="0.6" clip-path="url(#cpP1B)"/>
+              <line x1="80"  y1="14" x2="80"  y2="150" stroke="#7a9cc5" stroke-width="2.5" clip-path="url(#cpP1B)"/>
+              <line x1="50"  y1="17" x2="50"  y2="147" stroke="#7a9cc5" stroke-width="2"   clip-path="url(#cpP1B)"/>
+              <line x1="110" y1="17" x2="110" y2="147" stroke="#7a9cc5" stroke-width="2"   clip-path="url(#cpP1B)"/>
+              <line x1="26"  y1="32" x2="26"  y2="132" stroke="#7a9cc5" stroke-width="1.5" clip-path="url(#cpP1B)"/>
+              <line x1="134" y1="32" x2="134" y2="132" stroke="#7a9cc5" stroke-width="1.5" clip-path="url(#cpP1B)"/>
+              <text x="80" y="170" text-anchor="middle" font-family="Fredoka One" font-size="15" fill="#7a9cc5">Planeta B</text>
+            </svg>
+            <span></span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb1"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-h me-3"></i>LATITUD Y PARALELOS</h2>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg"
+             alt="Paralelos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
+        <div class="pie-imagen">Principales paralelos</div>
+      </div>
+
+      <ul class="lista-visual">
+        <li><i class="fas fa-circle"></i> <strong>Ecuador:</strong> 0&deg;</li>
+        <li><i class="fas fa-circle"></i> <strong>Tr&oacute;pico de C&aacute;ncer:</strong> 23&deg;27'N</li>
+        <li><i class="fas fa-circle"></i> <strong>Tr&oacute;pico de Capricornio:</strong> 23&deg;27'S</li>
+        <li><i class="fas fa-circle"></i> <strong>C&iacute;rculo Polar &Aacute;rtico:</strong> 66&deg;33'N</li>
+        <li><i class="fas fa-circle"></i> <strong>C&iacute;rculo Polar Ant&aacute;rtico:</strong> 66&deg;33'S</li>
+      </ul>
+
+      <div class="texto-breve">
+        Los paralelos determinan las zonas clim&aacute;ticas: tropical, templada y polar.
+      </div>
+
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          El globo muestra los cinco paralelos principales. Pasa el cursor sobre cada l&iacute;nea y haz clic en la que representa el Tr&oacute;pico de C&aacute;ncer (23&deg;27'N).
+        </p>
+        <div style="display:flex;justify-content:center;">
+          <svg width="280" height="300" viewBox="0 0 280 300">
+            <defs>
+              <radialGradient id="gParal" cx="38%" cy="38%" r="60%">
+                <stop offset="0%" stop-color="#5c9bd6"/>
+                <stop offset="100%" stop-color="#1a3a6e"/>
+              </radialGradient>
+              <clipPath id="cParal"><circle cx="140" cy="148" r="108"/></clipPath>
+            </defs>
+            <circle cx="140" cy="148" r="108" fill="url(#gParal)" stroke="#4a6fa5" stroke-width="2"/>
+            <ellipse cx="110" cy="112" rx="24" ry="30" fill="#3d7a3d" opacity="0.65" clip-path="url(#cParal)"/>
+            <ellipse cx="168" cy="138" rx="28" ry="20" fill="#3d7a3d" opacity="0.65" clip-path="url(#cParal)"/>
+            <ellipse cx="132" cy="184" rx="22" ry="13" fill="#3d7a3d" opacity="0.55" clip-path="url(#cParal)"/>
+
+            <g class="paralelo-linea" id="pl1" onclick="responder2('pl1')">
+              <ellipse cx="140" cy="78" rx="58" ry="14" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
+              <text x="248" y="82" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P1</text>
+            </g>
+
+            <g class="paralelo-linea" id="pl2" onclick="responder2('pl2')">
+              <ellipse cx="140" cy="108" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
+              <text x="242" y="112" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P2</text>
+            </g>
+
+            <g class="paralelo-linea" id="pl3" onclick="responder2('pl3')">
+              <ellipse cx="140" cy="148" rx="108" ry="28" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
+              <text x="252" y="152" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P3</text>
+            </g>
+
+            <g class="paralelo-linea" id="pl4" onclick="responder2('pl4')">
+              <ellipse cx="140" cy="188" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
+              <text x="242" y="193" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P4</text>
+            </g>
+
+            <g class="paralelo-linea" id="pl5" onclick="responder2('pl5')">
+              <ellipse cx="140" cy="218" rx="58" ry="14" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
+              <text x="202" y="222" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P5</text>
+            </g>
+
+            <text x="140" y="16" text-anchor="middle" font-family="Fredoka One" font-size="13" fill="#7a9cc5">Norte</text>
+            <text x="140" y="292" text-anchor="middle" font-family="Fredoka One" font-size="13" fill="#7a9cc5">Sur</text>
+          </svg>
+        </div>
+        <div class="feedback-ref" id="fb2"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-v me-3"></i>LONGITUD Y MERIDIANOS</h2>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg"
+             alt="Meridianos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
+        <div class="pie-imagen">Meridianos y husos horarios</div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="caja-info">
+            <h4>GREENWICH</h4>
+            <p>Meridiano 0&deg;. Divide la Tierra en Este y Oeste.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="caja-info">
+            <h4>HUSOS HORARIOS</h4>
+            <p>15&deg; = 1 hora. Este &#10133;, Oeste &#10134;.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="texto-breve">
+        Meridiano 180&deg; = L&iacute;nea Internacional de Cambio de Fecha. Al cruzarla cambia el d&iacute;a.
+      </div>
+
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          La Tierra tiene exactamente 24 husos horarios, uno por cada hora del d&iacute;a. Haz clic en el n&uacute;mero que indica cu&aacute;ntos grados ocupa cada huso.
+        </p>
+        <div class="opciones-svg">
+
+          <div class="opcion-svg" id="g3A" onclick="responder3('A')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="14"/>
+              <rect x="10" y="38" width="120" height="50" rx="6" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="13"  y1="38" x2="13"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="16"  y1="38" x2="16"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="19"  y1="38" x2="19"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="22"  y1="38" x2="22"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="25"  y1="38" x2="25"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="28"  y1="38" x2="28"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="32"  y1="38" x2="32"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="36"  y1="38" x2="36"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="40"  y1="38" x2="40"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="44"  y1="38" x2="44"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="48"  y1="38" x2="48"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="52"  y1="38" x2="52"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="56"  y1="38" x2="56"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="61"  y1="38" x2="61"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="66"  y1="38" x2="66"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="71"  y1="38" x2="71"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="76"  y1="38" x2="76"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="81"  y1="38" x2="81"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="86"  y1="38" x2="86"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="91"  y1="38" x2="91"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="96"  y1="38" x2="96"  y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="100" y1="38" x2="100" y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="104" y1="38" x2="104" y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="108" y1="38" x2="108" y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="112" y1="38" x2="112" y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <line x1="116" y1="38" x2="116" y2="88" stroke="#7a9cc5" stroke-width="1" opacity="0.6"/>
+              <text x="70" y="126" text-anchor="middle" font-family="Fredoka One" font-size="34" fill="#4a6fa5">10&deg;</text>
+            </svg>
+            <span>10 grados</span>
+          </div>
+
+          <div class="opcion-svg" id="g3B" onclick="responder3('B')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="14"/>
+              <rect x="10" y="38" width="120" height="50" rx="6" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="15"  y1="38" x2="15"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="20"  y1="38" x2="20"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="25"  y1="38" x2="25"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="30"  y1="38" x2="30"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="35"  y1="38" x2="35"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="40"  y1="38" x2="40"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="46"  y1="38" x2="46"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="52"  y1="38" x2="52"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="58"  y1="38" x2="58"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="64"  y1="38" x2="64"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="70"  y1="38" x2="70"  y2="88" stroke="#7a9cc5" stroke-width="2"   opacity="0.8"/>
+              <line x1="76"  y1="38" x2="76"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="82"  y1="38" x2="82"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="88"  y1="38" x2="88"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="94"  y1="38" x2="94"  y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="100" y1="38" x2="100" y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="106" y1="38" x2="106" y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="112" y1="38" x2="112" y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="118" y1="38" x2="118" y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <line x1="124" y1="38" x2="124" y2="88" stroke="#7a9cc5" stroke-width="1.5" opacity="0.7"/>
+              <text x="70" y="126" text-anchor="middle" font-family="Fredoka One" font-size="34" fill="#4a6fa5">15&deg;</text>
+            </svg>
+            <span>15 grados</span>
+          </div>
+
+          <div class="opcion-svg" id="g3C" onclick="responder3('C')">
+            <svg width="140" height="160" viewBox="0 0 140 160">
+              <rect width="140" height="160" fill="#283593" rx="14"/>
+              <rect x="10" y="38" width="120" height="50" rx="6" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <line x1="20"  y1="38" x2="20"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="30"  y1="38" x2="30"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="40"  y1="38" x2="40"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="50"  y1="38" x2="50"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="60"  y1="38" x2="60"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="70"  y1="38" x2="70"  y2="88" stroke="#7a9cc5" stroke-width="2.5" opacity="0.8"/>
+              <line x1="80"  y1="38" x2="80"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="90"  y1="38" x2="90"  y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="100" y1="38" x2="100" y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="110" y1="38" x2="110" y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <line x1="120" y1="38" x2="120" y2="88" stroke="#7a9cc5" stroke-width="2" opacity="0.7"/>
+              <text x="70" y="126" text-anchor="middle" font-family="Fredoka One" font-size="34" fill="#4a6fa5">30&deg;</text>
+            </svg>
+            <span>30 grados</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-visual">
+      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>PROYECCIONES CARTOGR&Aacute;FICAS</h2>
+
+      <div class="texto-breve">
+        La Tierra es esf&eacute;rica, los mapas son planos. Las proyecciones representan la superficie con distorsiones.
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg" alt="Mercator" class="imagen-geo">
+          </div>
+          <div class="caja-info">
+            <h4>MERCATOR</h4>
+            <p>Conserva formas. Distorsiona el tama&ntilde;o de los polos.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg" alt="Robinson" class="imagen-geo">
+          </div>
+          <div class="caja-info">
+            <h4>ROBINSON</h4>
+            <p>Equilibrio entre forma y tama&ntilde;o.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg" alt="Peters" class="imagen-geo">
+          </div>
+          <div class="caja-info">
+            <h4>PETERS</h4>
+            <p>Conserva &aacute;reas. Deforma formas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="texto-breve">
+        Ninguna proyecci&oacute;n es perfecta. Cada una sirve para diferentes prop&oacute;sitos.
+      </div>
+
+      <div class="reforzamiento">
+        <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
+        <p class="reforzamiento-instruccion">
+          Observa los tres mapas. En uno, los continentes del sur (como &Aacute;frica) se ven mucho m&aacute;s grandes de lo normal. En otro, los del norte (como Groenlandia) se ven enormes. Haz clic en el mapa donde se conserven las areas pero se deformen las formas.
+        </p>
+        <div class="opciones-svg" style="gap:16px;">
+
+          <div class="opcion-svg" id="m4A" onclick="responder4('A')">
+            <svg width="155" height="130" viewBox="0 0 155 130">
+              <rect width="155" height="130" fill="#283593" rx="12"/>
+              <rect x="6" y="6" width="143" height="118" fill="#1a3a6e" rx="6"/>
+              <path d="M 88 8 Q 118 6 138 14 L 140 38 Q 128 46 104 44 Q 84 40 80 28 Q 82 14 88 8Z" fill="#4a6fa5" opacity="0.9"/>
+              <path d="M 14 16 Q 28 12 40 18 L 44 50 Q 36 60 24 56 Q 12 48 14 16Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 18 64 Q 30 60 40 68 L 38 98 Q 28 106 18 102 Q 10 92 18 64Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 60 16 Q 74 12 82 20 L 80 34 Q 70 38 62 34 Q 56 26 60 16Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 60 38 Q 76 34 84 42 L 82 78 Q 72 86 62 82 Q 52 72 60 38Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 88 18 Q 118 12 148 22 L 148 48 Q 124 52 98 48 Q 84 42 88 18Z" fill="#4a6fa5" opacity="0.85"/>
+              <text x="112" y="30" text-anchor="middle" font-family="Nunito" font-size="7" font-weight="700" fill="#ffd600">Groenlandia</text>
+              <text x="70" y="62" text-anchor="middle" font-family="Nunito" font-size="7" font-weight="700" fill="#ffd600">Africa</text>
+            </svg>
+            <span>Mapa A</span>
+          </div>
+
+          <div class="opcion-svg" id="m4B" onclick="responder4('B')">
+            <svg width="155" height="130" viewBox="0 0 155 130">
+              <rect width="155" height="130" fill="#283593" rx="12"/>
+              <ellipse cx="77" cy="65" rx="70" ry="58" fill="#1a3a6e" stroke="#4a6fa5" stroke-width="2"/>
+              <path d="M 18 34 Q 30 28 42 34 L 44 58 Q 36 66 24 62 Q 14 54 18 34Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 20 66 Q 32 62 42 70 L 40 98 Q 30 106 20 102 Q 12 92 20 66Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 48 16 Q 62 12 72 18 L 70 28 Q 60 32 50 28 Q 44 22 48 16Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 60 32 Q 74 28 82 36 L 80 58 Q 70 64 62 60 Q 54 52 60 32Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 60 60 Q 76 56 84 64 L 82 96 Q 72 104 62 100 Q 52 90 60 60Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 88 28 Q 110 22 136 32 L 136 56 Q 114 60 94 56 Q 84 48 88 28Z" fill="#4a6fa5" opacity="0.85"/>
+              <text x="72" y="22" text-anchor="middle" font-family="Nunito" font-size="7" font-weight="700" fill="#ffd600">Groenlandia</text>
+              <text x="72" y="80" text-anchor="middle" font-family="Nunito" font-size="7" font-weight="700" fill="#ffd600">Africa</text>
+            </svg>
+            <span>Mapa B</span>
+          </div>
+
+          <div class="opcion-svg" id="m4C" onclick="responder4('C')">
+            <svg width="155" height="130" viewBox="0 0 155 130">
+              <rect width="155" height="130" fill="#283593" rx="12"/>
+              <rect x="6" y="6" width="143" height="118" fill="#1a3a6e" rx="6"/>
+              <path d="M 14 14 Q 26 10 38 16 L 40 52 Q 30 60 18 56 Q 10 46 14 14Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 16 64 Q 28 60 38 68 L 36 118 Q 26 124 16 120 Q 8 110 16 64Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 54 8 Q 64 6 72 10 L 72 18 Q 64 22 56 18 Q 50 14 54 8Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 54 20 Q 70 16 80 24 L 78 36 Q 66 40 56 36 Q 50 28 54 20Z" fill="#4a6fa5" opacity="0.85"/>
+              <path d="M 54 40 Q 82 34 96 44 L 94 118 Q 78 126 60 122 Q 46 110 54 40Z" fill="#4a6fa5" opacity="0.9"/>
+              <path d="M 100 14 Q 132 8 150 18 L 150 54 Q 130 58 106 52 Q 96 44 100 14Z" fill="#4a6fa5" opacity="0.85"/>
+              <text x="62" y="12" text-anchor="middle" font-family="Nunito" font-size="7" font-weight="700" fill="#ffd600">Groen.</text>
+              <text x="75" y="84" text-anchor="middle" font-family="Nunito" font-size="8" font-weight="800" fill="#ffd600">AFRICA</text>
+            </svg>
+            <span>Mapa C</span>
+          </div>
+
+        </div>
+        <div class="feedback-ref" id="fb4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+</body>
+</html>

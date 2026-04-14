@@ -1,421 +1,761 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fracciones &middot; Nivel Normal &middot; Auditivo</title>
+  <title>Reconocer fracciones · Nivel Normal · Auditivo</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ede7f6, #f3e5f5);
+      color: #4a148c;
+      min-height: 100vh;
+    }
+
+    .cabecera {
+      background: linear-gradient(135deg, #7b1fa2, #512da8);
+      color: white;
+      text-align: center;
+      padding: 28px 20px;
+      border-bottom: 6px solid #ffd54f;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .cabecera h1 {
+      margin: 0;
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.6rem;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    }
+
+    .cabecera .subtitulo {
+      margin-top: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .badge-estilo {
+      display: inline-block;
+      margin-top: 14px;
+      background: #ffd54f;
+      color: #4a148c;
+      border: 3px solid white;
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-weight: 800;
+      box-shadow: 0 4px 0 #d39e00;
+    }
+
+    .progreso {
+      max-width: 920px;
+      margin: 24px auto 0;
+      background: white;
+      border: 3px solid #7b1fa2;
+      border-radius: 999px;
+      box-shadow: 0 6px 0 #d1c4e9;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .progreso .texto {
+      font-weight: 800;
+      color: #6a1b9a;
+      white-space: nowrap;
+    }
+
+    .barra-fondo {
+      flex: 1;
+      min-width: 150px;
+      height: 14px;
+      background: #ede7f6;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid #d1c4e9;
+    }
+
+    .barra-relleno {
+      width: 16%;
+      height: 100%;
+      background: linear-gradient(90deg, #ab47bc, #7e57c2);
+      transition: .3s;
+    }
+
+    .porcentaje {
+      background: #7b1fa2;
+      color: white;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .contenedor {
+      max-width: 950px;
+      margin: 26px auto 42px;
+      padding: 0 16px;
+    }
+
+    .pagina {
+      display: none;
+      animation: aparecer .35s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta {
+      background: white;
+      border: 3px solid #7b1fa2;
+      border-radius: 30px;
+      box-shadow: 0 10px 0 #d1c4e9;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .titulo-pagina {
+      font-family: 'Fredoka One', cursive;
+      color: #6a1b9a;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      border-left: 8px solid #ffd54f;
+      padding-left: 18px;
+    }
+
+    .intro {
+      background: #faf5ff;
+      border: 2px dashed #ce93d8;
+      border-radius: 20px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      color: #6a1b9a;
+      font-weight: 700;
+    }
+
+    .audio-bloque {
+      background: #faf5ff;
+      border: 2px dashed #ce93d8;
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .audio-bloque h4 {
+      color: #6a1b9a;
+      font-weight: 800;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 12px;
+    }
+
+    .apoyo-visual {
+      background: white;
+      border: 2px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .fila-partes {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+    }
+
+    .parte {
+      width: 76px;
+      height: 76px;
+      background: white;
+      border: 3px solid #7b1fa2;
+      border-radius: 14px;
+    }
+
+    .parte.coloreada {
+      background: linear-gradient(135deg, #ab47bc, #7e57c2);
+    }
+
+    .parte.circulo {
+      border-radius: 50%;
+    }
+
+    .fraccion-chip {
+      display: inline-block;
+      background: #ffd54f;
+      color: #4a148c;
+      border: 3px solid #7b1fa2;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 800;
+      box-shadow: 0 4px 0 #d39e00;
+      margin-top: 6px;
+    }
+
+    .recuadro-explica {
+      background: #fff8e1;
+      border: 2px solid #ffd54f;
+      color: #6a1b9a;
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-weight: 700;
+      margin-top: 16px;
+    }
+
+    .tarjetas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mini-tarjeta {
+      background: #faf5ff;
+      border: 2px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      height: 100%;
+    }
+
+    .mini-tarjeta h5 {
+      color: #6a1b9a;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .mini-tarjeta p {
+      margin: 0;
+      color: #5e35b1;
+      font-weight: 700;
+    }
+
+    .comparacion-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .signo-compara {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #ffd54f;
+      border: 3px solid #7b1fa2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #4a148c;
+      box-shadow: 0 5px 0 #d39e00;
+      margin: 0 auto;
+    }
+
+    .linea-box {
+      background: #faf5ff;
+      border: 2px solid #d1c4e9;
+      border-radius: 20px;
+      padding: 18px;
+      margin-top: 18px;
+      overflow-x: auto;
+    }
+
+    .linea-numerica {
+      position: relative;
+      width: 100%;
+      min-width: 620px;
+      height: 120px;
+    }
+
+    .linea-base {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      top: 56px;
+      height: 6px;
+      background: #7b1fa2;
+      border-radius: 4px;
+    }
+
+    .marca {
+      position: absolute;
+      top: 28px;
+      transform: translateX(-50%);
+      text-align: center;
+      font-weight: 800;
+      color: #6a1b9a;
+    }
+
+    .marca .punto-linea {
+      display: block;
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .navegador {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      background: white;
+      border: 3px solid #7b1fa2;
+      border-radius: 999px;
+      padding: 14px 20px;
+      box-shadow: 0 6px 0 #d1c4e9;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      background: #7b1fa2;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: #5e35b1;
+      transform: translateY(-2px);
+    }
+
+    .btn-nav:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .contador {
+      font-weight: 800;
+      color: #6a1b9a;
+      background: #f3e5f5;
+      border: 2px solid #ce93d8;
+      padding: 8px 16px;
+      border-radius: 999px;
+    }
+
+    .boton-quiz {
+      display: inline-block;
+      margin: 28px auto 0;
+      text-decoration: none;
+      background: #ffd54f;
+      color: #4a148c;
+      border: 4px solid #7b1fa2;
+      padding: 16px 34px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 7px 0 #d39e00;
+      transition: .2s;
+    }
+
+    .boton-quiz:hover {
+      transform: translateY(-3px);
+      background: #fff3c4;
+    }
+
+    @media (max-width: 768px) {
+      .cabecera h1 { font-size: 2rem; }
+      .titulo-pagina { font-size: 1.55rem; }
+      .parte { width: 60px; height: 60px; }
+      .comparacion-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-  <audio id="audioClick"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
-  <audio id="audioDing"   src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
-  <audio id="audioError"  src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
-  <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+  <header class="cabecera">
+    <h1>🟣 FRACCIONES</h1>
+    <div class="subtitulo">Reconocer fracciones · Nivel Normal</div>
+    <div class="badge-estilo">🎧 Auditivo</div>
+  </header>
 
-  <audio id="audio_p1_intro" src="audios/frac_normal_p1_intro.mp3"></audio>
-  <audio id="audio_p1_ej1"   src="audios/frac_normal_p1_ej1.mp3"></audio>
-  <audio id="audio_p2_intro" src="audios/frac_normal_p2_intro.mp3"></audio>
-  <audio id="audio_p2_ej1"   src="audios/frac_normal_p2_ej1.mp3"></audio>
-  <audio id="audio_p3_intro" src="audios/frac_normal_p3_intro.mp3"></audio>
-  <audio id="audio_p3_ej1"   src="audios/frac_normal_p3_ej1.mp3"></audio>
-  <audio id="audio_p4_intro" src="audios/frac_normal_p4_intro.mp3"></audio>
-  <audio id="audio_p4_ej1"   src="audios/frac_normal_p4_ej1.mp3"></audio>
-  <audio id="audio_p5_intro" src="audios/frac_normal_p5_intro.mp3"></audio>
-  <audio id="audio_p5_ej1"   src="audios/frac_normal_p5_ej1.mp3"></audio>
-  <audio id="audio_p6_intro" src="audios/frac_normal_p6_intro.mp3"></audio>
-  <audio id="audio_p6_ej1"   src="audios/frac_normal_p6_ej1.mp3"></audio>
-  <audio id="audio_p7_intro" src="audios/frac_normal_p7_intro.mp3"></audio>
-  <audio id="audio_p7_ej1"   src="audios/frac_normal_p7_ej1.mp3"></audio>
-  <audio id="audio_p8_intro" src="audios/frac_normal_p8_intro.mp3"></audio>
-  <audio id="audio_p8_ej1"   src="audios/frac_normal_p8_ej1.mp3"></audio>
-
-  <div class="hero">
-    <h1><i class="fas fa-chart-pie me-2"></i>FRACCIONES</h1>
-    <p class="lead text-white mb-0">Nivel Normal &middot; Reconocer fracciones</p>
-    <div>
-      <span class="pill estilo"><i class="fas fa-headphones"></i> Auditivo</span>
-      <span class="pill nivel"><i class="fas fa-compass"></i> Intermedio</span>
+  <div class="progreso">
+    <span class="texto" id="progresoTexto">Página 1 de 6</span>
+    <div class="barra-fondo">
+      <div class="barra-relleno" id="barraRelleno"></div>
     </div>
+    <span class="porcentaje" id="progresoPorcentaje">17%</span>
   </div>
 
-  <div class="progress-shell">
-    <i class="fas fa-chart-pie fa-2x" style="color:var(--morado)"></i>
-    <div class="progress-dots">
-      <div class="dot active" data-page="1">1</div>
-      <div class="dot" data-page="2">2</div>
-      <div class="dot" data-page="3">3</div>
-      <div class="dot" data-page="4">4</div>
-      <div class="dot" data-page="5">5</div>
-      <div class="dot" data-page="6">6</div>
-      <div class="dot" data-page="7">7</div>
-      <div class="dot" data-page="8">8</div>
+  <div class="contenedor">
+
+    <!-- PAGINA 1 -->
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-headphones me-2"></i>Escucha cómo se lee una fracción</h2>
+
+        <div class="intro">
+          Escucha el audio y mira el ejemplo.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 1: Leer una fracción</h4>
+          <audio controls>
+            <source src="audios/01-leer-fraccion.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="apoyo-visual">
+          <div class="fila-partes">
+            <div class="parte coloreada"></div>
+            <div class="parte coloreada"></div>
+            <div class="parte"></div>
+            <div class="parte"></div>
+            <div class="parte"></div>
+          </div>
+          <div class="fraccion-chip">2/5</div>
+          <div class="recuadro-explica">2 partes coloreadas de 5 partes iguales</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 2 -->
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-microphone-alt me-2"></i>Numerador y denominador</h2>
+
+        <div class="intro">
+          Escucha qué significa el número de arriba y el número de abajo.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 2: Numerador y denominador</h4>
+          <audio controls>
+            <source src="audios/02-numerador-denominador.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="tarjetas-grid">
+          <div class="mini-tarjeta">
+            <h5>Numerador</h5>
+            <div class="fraccion-chip">4</div>
+            <div class="fila-partes">
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+            </div>
+            <p>Partes tomadas</p>
+          </div>
+
+          <div class="mini-tarjeta">
+            <h5>Denominador</h5>
+            <div class="fraccion-chip">6</div>
+            <div class="fila-partes">
+              <div class="parte"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+            </div>
+            <p>Partes totales</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 3 -->
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-balance-scale me-2"></i>Comparar fracciones</h2>
+
+        <div class="intro">
+          Escucha cuál fracción es mayor cuando ambas tienen el mismo denominador.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 3: Comparar fracciones</h4>
+          <audio controls>
+            <source src="audios/03-comparar-fracciones.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="comparacion-grid">
+          <div class="mini-tarjeta">
+            <h5>Fracción A</h5>
+            <div class="fraccion-chip">1/4</div>
+            <div class="fila-partes">
+              <div class="parte coloreada"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+            </div>
+            <p>1 parte tomada</p>
+          </div>
+
+          <div class="signo-compara">&lt;</div>
+
+          <div class="mini-tarjeta">
+            <h5>Fracción B</h5>
+            <div class="fraccion-chip">3/4</div>
+            <div class="fila-partes">
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+              <div class="parte"></div>
+            </div>
+            <p>3 partes tomadas</p>
+          </div>
+        </div>
+
+        <div class="recuadro-explica">
+          Como ambas tienen 4 partes en total, es mayor la que tiene más partes coloreadas.
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 4 -->
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-equals me-2"></i>Fracciones equivalentes</h2>
+
+        <div class="intro">
+          Escucha cómo dos fracciones pueden verse diferentes, pero representar lo mismo.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 4: Fracciones equivalentes</h4>
+          <audio controls>
+            <source src="audios/04-fracciones-equivalentes.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="comparacion-grid">
+          <div class="mini-tarjeta">
+            <h5>Primera fracción</h5>
+            <div class="fraccion-chip">2/4</div>
+            <div class="fila-partes">
+              <div class="parte coloreada"></div>
+              <div class="parte coloreada"></div>
+              <div class="parte"></div>
+              <div class="parte"></div>
+            </div>
+            <p>2 de 4 partes</p>
+          </div>
+
+          <div class="signo-compara">=</div>
+
+          <div class="mini-tarjeta">
+            <h5>Segunda fracción</h5>
+            <div class="fraccion-chip">1/2</div>
+            <div class="fila-partes">
+              <div class="parte coloreada"></div>
+              <div class="parte"></div>
+            </div>
+            <p>1 de 2 partes</p>
+          </div>
+        </div>
+
+        <div class="recuadro-explica">
+          Ambas cubren la misma cantidad del todo.
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 5 -->
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-sort-amount-up me-2"></i>Ordenar fracciones</h2>
+
+        <div class="intro">
+          Escucha cómo se ordenan fracciones con el mismo denominador.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 5: Ordenar fracciones</h4>
+          <audio controls>
+            <source src="audios/05-ordenar-fracciones.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="tarjetas-grid">
+          <div class="mini-tarjeta">
+            <h5>1/5</h5>
+            <div class="fila-partes">
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo"></div>
+              <div class="parte circulo"></div>
+              <div class="parte circulo"></div>
+              <div class="parte circulo"></div>
+            </div>
+            <p>Menor</p>
+          </div>
+
+          <div class="mini-tarjeta">
+            <h5>3/5</h5>
+            <div class="fila-partes">
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo"></div>
+              <div class="parte circulo"></div>
+            </div>
+            <p>Intermedia</p>
+          </div>
+
+          <div class="mini-tarjeta">
+            <h5>4/5</h5>
+            <div class="fila-partes">
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo coloreada"></div>
+              <div class="parte circulo"></div>
+            </div>
+            <p>Mayor</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINA 6 -->
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-ruler-horizontal me-2"></i>Fracciones en la recta numérica</h2>
+
+        <div class="intro">
+          Escucha cómo una fracción más a la derecha vale más.
+        </div>
+
+        <div class="audio-bloque">
+          <h4>Audio 6: Recta numérica</h4>
+          <audio controls>
+            <source src="audios/06-recta-numerica.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="linea-box">
+          <div class="linea-numerica">
+            <div class="linea-base"></div>
+
+            <div class="marca" style="left:5%;">
+              0
+              <span class="punto-linea">●</span>
+            </div>
+
+            <div class="marca" style="left:27.5%;">
+              1/4
+              <span class="punto-linea">●</span>
+            </div>
+
+            <div class="marca" style="left:50%;">
+              2/4
+              <span class="punto-linea">●</span>
+            </div>
+
+            <div class="marca" style="left:72.5%;">
+              3/4
+              <span class="punto-linea">●</span>
+            </div>
+
+            <div class="marca" style="left:95%;">
+              1
+              <span class="punto-linea">●</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tarjetas-grid">
+          <div class="mini-tarjeta">
+            <h5>1/4</h5>
+            <p>Más cerca de 0</p>
+          </div>
+          <div class="mini-tarjeta">
+            <h5>2/4</h5>
+            <p>A la mitad</p>
+          </div>
+          <div class="mini-tarjeta">
+            <h5>3/4</h5>
+            <p>Más cerca de 1</p>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="quiz.html" class="boton-quiz">
+            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+        ← Anterior
+      </button>
+      <span class="contador" id="contadorPagina">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+        Siguiente →
+      </button>
     </div>
-    <div class="page-pill">P&aacute;gina <span id="paginaActualNum">1</span>/8</div>
+
   </div>
 
-  <div class="wrap">
-    <div class="page active" id="pagina1">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-pizza-slice me-3"></i>Mismo denominador</h2>
-        <p class="frase-clave">Si el denominador es el mismo, es mayor la fracci&oacute;n que toma m&aacute;s partes.</p>
-        <div class="symbol-guide">
-          <div class="symbol-guide-title">Simbolog&iacute;a &uacute;til del nivel</div>
-          <div class="symbol-guide-grid">
-            <div class="symbol-item"><div class="symbol-glyph">&gt;</div><div class="symbol-text">mayor que</div></div>
-            <div class="symbol-item"><div class="symbol-glyph">&lt;</div><div class="symbol-text">menor que</div></div>
-            <div class="symbol-item"><div class="symbol-glyph">=</div><div class="symbol-text">igual que</div></div>
-            <div class="symbol-item"><div class="symbol-glyph">&ge;</div><div class="symbol-text">mayor o igual que</div></div>
-            <div class="symbol-item"><div class="symbol-glyph">&ne;</div><div class="symbol-text">no es igual</div></div>
-          </div>
-          <div class="symbol-note">La usar&aacute;s cuando compares fracciones en este nivel.</div>
-        </div>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p1_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row">
-            <div>
-              <div class="mini-frac"><span>2</span><span class="linea"></span><span>8</span></div>
-              <div class="round-model pizza-2-8" aria-hidden="true"></div>
-            </div>
-            <div class="sign-card">&lt;</div>
-            <div>
-              <div class="mini-frac"><span>6</span><span class="linea"></span><span>8</span></div>
-              <div class="round-model pizza-6-8" aria-hidden="true"></div>
-            </div>
-          </div>
-          <div class="model-note">Ambas pizzas usan octavos.</div>
-        </div>
-        <div class="exercise" id="card-p1e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p1_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="choice-grid round-choice-grid" id="p1e1-options">
-            <button type="button" class="choice-card round-card" data-value="3/8"><div class="round-model pizza-3-8" aria-hidden="true"></div><div class="round-caption">3/8</div></button>
-            <button type="button" class="choice-card round-card" data-value="5/8"><div class="round-model pizza-5-8" aria-hidden="true"></div><div class="round-caption">5/8</div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p1e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+  <script>
+    let paginaActual = 1;
+    const totalPaginas = 6;
 
-    <div class="page" id="pagina2">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-birthday-cake me-3"></i>Mismo numerador</h2>
-        <p class="frase-clave">Si el numerador es el mismo, importa el tama&ntilde;o de cada parte.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p2_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row">
-            <div><div class="mini-frac"><span>1</span><span class="linea"></span><span>4</span></div><div class="round-model cake-1-4" aria-hidden="true"></div></div>
-            <div class="sign-card">&gt;</div>
-            <div><div class="mini-frac"><span>1</span><span class="linea"></span><span>6</span></div><div class="round-model cake-1-6" aria-hidden="true"></div></div>
-          </div>
-          <div class="model-note">Ambos pasteles toman una sola parte.</div>
-        </div>
-        <div class="exercise" id="card-p2e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p2_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="choice-grid round-choice-grid" id="p2e1-options">
-            <button type="button" class="choice-card round-card" data-value="1/5"><div class="round-model cake-1-5" aria-hidden="true"></div><div class="round-caption">1/5</div></button>
-            <button type="button" class="choice-card round-card" data-value="1/3"><div class="round-model cake-1-3" aria-hidden="true"></div><div class="round-caption">1/3</div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p2e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+    function cambiarPagina(direccion) {
+      document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+      paginaActual += direccion;
+      document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+      actualizarNavegacion();
+      localStorage.setItem('mate_fracciones_auditivo_normal', paginaActual);
+    }
 
-    <div class="page" id="pagina3">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-hand-pointer me-3"></i>Construye la fracci&oacute;n mayor</h2>
-        <p class="frase-clave">Con sextos, la fracci&oacute;n mayor es la que cubre m&aacute;s partes del mismo entero.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p3_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row">
-            <div>
-              <div class="mini-frac"><span>3</span><span class="linea"></span><span>6</span></div>
-              <div class="mini-strip" style="max-width:210px"><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part"></div><div class="part"></div><div class="part"></div></div>
-            </div>
-            <div class="sign-card">&lt;</div>
-            <div>
-              <div class="mini-frac"><span>6</span><span class="linea"></span><span>6</span></div>
-              <div class="mini-strip" style="max-width:210px"><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div></div>
-            </div>
-          </div>
-          <div class="model-note">Las dos usan sextos.</div>
-        </div>
-        <div class="exercise" id="card-p3e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p3_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="question-box">
-            <div class="builder-strip" id="p3e1-builder">
-              <button type="button" class="builder-part" data-index="1"><span>1</span></button>
-              <button type="button" class="builder-part" data-index="2"><span>2</span></button>
-              <button type="button" class="builder-part" data-index="3"><span>3</span></button>
-              <button type="button" class="builder-part" data-index="4"><span>4</span></button>
-              <button type="button" class="builder-part" data-index="5"><span>5</span></button>
-              <button type="button" class="builder-part" data-index="6"><span>6</span></button>
-            </div>
-            <div class="model-note">Marca las partes necesarias para formar la fracci&oacute;n mayor.</div>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p3e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+    function actualizarNavegacion() {
+      document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
+      document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
 
-    <div class="page" id="pagina4">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-road me-3"></i>Recta num&eacute;rica</h2>
-        <p class="frase-clave">Cuatro quintos queda cerca del 1, pero no llega a &eacute;l.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p4_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="recta-box">
-          <div class="recta">
-            <div class="recta-line"></div>
-            <div class="mark" style="left:6%"><span>0</span></div>
-            <div class="mark" style="left:24.8%"><span>1/5</span></div>
-            <div class="mark" style="left:43.6%"><span>2/5</span></div>
-            <div class="mark" style="left:62.4%"><span>3/5</span></div>
-            <div class="mark" style="left:81.2%"><span>4/5</span></div>
-            <div class="mark" style="left:94%"><span>1</span></div>
-          </div>
-          <div class="model-note">Entre 0 y 1 aparecen cinco partes iguales; las fracciones m&aacute;s grandes quedan m&aacute;s cerca del 1.</div>
-        </div>
-        <div class="exercise" id="card-p4e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p4_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="recta-box" id="p4e1-recta">
-            <div class="recta">
-              <div class="recta-line"></div>
-              <div class="mark" style="left:6%"><span>0</span></div>
-              <div class="mark" style="left:24.8%"><span>1/5</span></div>
-              <div class="mark" style="left:43.6%"><span>2/5</span></div>
-              <div class="mark" style="left:62.4%"><span>3/5</span></div>
-              <div class="mark" style="left:81.2%"><span>4/5</span></div>
-              <div class="mark" style="left:94%"><span>1</span></div>
-              <button type="button" class="target" data-value="1/5" style="left:24.8%"></button>
-              <button type="button" class="target" data-value="2/5" style="left:43.6%"></button>
-              <button type="button" class="target" data-value="3/5" style="left:62.4%"></button>
-              <button type="button" class="target" data-value="4/5" style="left:81.2%"></button>
-            </div>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p4e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+      const porcentaje = (paginaActual / totalPaginas) * 100;
+      document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
+      document.getElementById('progresoPorcentaje').innerText = `${Math.round(porcentaje)}%`;
 
-    <div class="page" id="pagina5">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-tags me-3"></i>Numerador y denominador</h2>
-        <p class="frase-clave">El numerador indica lo tomado y el denominador el total de partes iguales.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p5_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row">
-            <div class="mini-frac"><span>3</span><span class="linea"></span><span>6</span></div>
-            <div>
-              <div class="rule-chip">3 &rarr; partes tomadas</div>
-              <div class="rule-chip" style="margin-top:10px">6 &rarr; partes iguales del entero</div>
-            </div>
-          </div>
-          <div class="model-note">Primero leemos arriba y luego abajo.</div>
-        </div>
-        <div class="exercise" id="card-p5e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p5_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="choice-grid" id="p5e1-options">
-            <button type="button" class="choice-card" data-value="correcta"><div class="mini-frac"><span>4</span><span class="linea"></span><span>7</span></div><div class="rule-chip">4 = tomadas</div><div class="rule-chip">7 = total</div></button>
-            <button type="button" class="choice-card" data-value="invertida"><div class="mini-frac"><span>4</span><span class="linea"></span><span>7</span></div><div class="rule-chip">4 = total</div><div class="rule-chip">7 = tomadas</div></button>
-            <button type="button" class="choice-card" data-value="cambiada"><div class="mini-frac"><span>7</span><span class="linea"></span><span>4</span></div><div class="rule-chip">7 = tomadas</div><div class="rule-chip">4 = total</div></button>
-            <button type="button" class="choice-card" data-value="doble"><div class="mini-frac"><span>4</span><span class="linea"></span><span>7</span></div><div class="rule-chip">4 = tomadas</div><div class="rule-chip">7 = tomadas</div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p5e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+      document.getElementById('btnAnterior').disabled = paginaActual === 1;
+      document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas;
+    }
 
-    <div class="page" id="pagina6">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-sort-amount-down me-3"></i>Ordena de menor a mayor</h2>
-        <p class="frase-clave">Para ordenar, piensa cu&aacute;l est&aacute; m&aacute;s cerca de 0 y cu&aacute;l se acerca m&aacute;s a 1.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p6_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="mini-seq">
-            <div class="mini-frac"><span>1</span><span class="linea"></span><span>4</span></div>
-            <span class="arrow">&rarr;</span>
-            <div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div>
-            <span class="arrow">&rarr;</span>
-            <div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div>
-          </div>
-          <div class="model-note">Primero la menor, luego la que est&aacute; a la mitad y al final la mayor.</div>
-        </div>
-        <div class="exercise" id="card-p6e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p6_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="choice-grid" id="p6e1-options">
-            <button type="button" class="choice-card" data-value="ordA"><div class="mini-seq"><div class="mini-frac"><span>1</span><span class="linea"></span><span>5</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>3</span><span class="linea"></span><span>5</span></div></div></button>
-            <button type="button" class="choice-card" data-value="ordB"><div class="mini-seq"><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>1</span><span class="linea"></span><span>5</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>3</span><span class="linea"></span><span>5</span></div></div></button>
-            <button type="button" class="choice-card" data-value="ordC"><div class="mini-seq"><div class="mini-frac"><span>3</span><span class="linea"></span><span>5</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>1</span><span class="linea"></span><span>5</span></div></div></button>
-            <button type="button" class="choice-card" data-value="ordD"><div class="mini-seq"><div class="mini-frac"><span>1</span><span class="linea"></span><span>5</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>3</span><span class="linea"></span><span>5</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div></div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p6e1-feedback"></div>
-        </div>
-      </div>
-    </div>
+    function cargarProgreso() {
+      const guardado = localStorage.getItem('mate_fracciones_auditivo_normal');
+      if (guardado) {
+        const pag = parseInt(guardado, 10);
+        if (pag >= 1 && pag <= totalPaginas) {
+          document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+          paginaActual = pag;
+          document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+        }
+      }
+      actualizarNavegacion();
+    }
 
-    <div class="page" id="pagina7">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-greater-than me-3"></i>Coloca el s&iacute;mbolo correcto</h2>
-        <p class="frase-clave">Con s&eacute;ptimos, la fracci&oacute;n que toma m&aacute;s partes es la mayor.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p7_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row">
-            <div>
-              <div class="mini-frac"><span>5</span><span class="linea"></span><span>7</span></div>
-              <div class="mini-strip"><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part"></div><div class="part"></div></div>
-            </div>
-            <div class="sign-card">&gt;</div>
-            <div>
-              <div class="mini-frac"><span>3</span><span class="linea"></span><span>7</span></div>
-              <div class="mini-strip"><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part"></div><div class="part"></div><div class="part"></div><div class="part"></div></div>
-            </div>
-          </div>
-          <div class="model-note">Ambas usan s&eacute;ptimos.</div>
-        </div>
-        <div class="exercise" id="card-p7e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p7_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="question-box">
-            <div class="pair-row">
-              <div class="question-card">
-                <div class="mini-frac"><span>4</span><span class="linea"></span><span>7</span></div>
-                <div class="mini-strip"><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part fill"></div><div class="part"></div><div class="part"></div><div class="part"></div></div>
-              </div>
-              <div class="sign-card">?</div>
-              <div class="question-card">
-                <div class="mini-frac"><span>2</span><span class="linea"></span><span>7</span></div>
-                <div class="mini-strip"><div class="part fill"></div><div class="part fill"></div><div class="part"></div><div class="part"></div><div class="part"></div><div class="part"></div><div class="part"></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="choice-grid" id="p7e1-options">
-            <button type="button" class="choice-card" data-value=">"><div class="sign-card">&gt;</div></button>
-            <button type="button" class="choice-card" data-value="<"><div class="sign-card">&lt;</div></button>
-            <button type="button" class="choice-card" data-value="="><div class="sign-card">=</div></button>
-            <button type="button" class="choice-card" data-value="!="><div class="sign-card">&ne;</div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p7e1-feedback"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page" id="pagina8">
-      <div class="card-main">
-        <h2 class="title"><i class="fas fa-puzzle-piece me-3"></i>Relaciona la regla correcta</h2>
-        <p class="frase-clave">A veces sirve mirar el mismo denominador y otras veces el mismo numerador.</p>
-        <div class="audio-box">
-          <button type="button" class="audio-btn" data-audio="audio_p8_intro"><i class="fas fa-play"></i></button>
-          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
-        </div>
-        <div class="model-card">
-          <div class="pair-row" style="align-items:stretch">
-            <div class="rule-chip" style="max-width:280px">Situaci&oacute;n A<br>2/6 y 4/6</div>
-            <div class="rule-chip" style="max-width:280px">Situaci&oacute;n B<br>1/4 y 1/8</div>
-          </div>
-          <div class="model-sub">Observa qu&eacute; n&uacute;mero se repite en cada pareja.</div>
-        </div>
-        <div class="exercise" id="card-p8e1">
-          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
-          <div class="audio-box">
-            <button type="button" class="audio-btn" data-audio="audio_p8_ej1"><i class="fas fa-play"></i></button>
-            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
-          </div>
-          <div class="question-box">
-            <div class="pair-row" style="align-items:stretch">
-              <div class="question-card">
-                <div class="question-label">Situaci&oacute;n A</div>
-                <div class="pair-row">
-                  <div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div>
-                  <div class="mini-frac"><span>5</span><span class="linea"></span><span>8</span></div>
-                </div>
-              </div>
-              <div class="question-card">
-                <div class="question-label">Situaci&oacute;n B</div>
-                <div class="pair-row">
-                  <div class="mini-frac"><span>1</span><span class="linea"></span><span>3</span></div>
-                  <div class="mini-frac"><span>1</span><span class="linea"></span><span>6</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="choice-grid" id="p8e1-options">
-            <button type="button" class="choice-card" data-value="regla_ok"><div class="rule-chip">A &rarr; mismo denominador</div><div class="rule-chip">B &rarr; mismo numerador</div></button>
-            <button type="button" class="choice-card" data-value="regla_swap"><div class="rule-chip">A &rarr; mismo numerador</div><div class="rule-chip">B &rarr; mismo denominador</div></button>
-            <button type="button" class="choice-card" data-value="regla_den"><div class="rule-chip">A &rarr; mismo denominador</div><div class="rule-chip">B &rarr; mismo denominador</div></button>
-            <button type="button" class="choice-card" data-value="regla_num"><div class="rule-chip">A &rarr; mismo numerador</div><div class="rule-chip">B &rarr; mismo numerador</div></button>
-          </div>
-          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
-          <div class="feedback" id="p8e1-feedback"></div>
-        </div>
-        <a href="quiz.html" class="quiz-link bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece"></i> IR AL QUIZ</a>
-      </div>
-    </div>
-
-    <div class="nav">
-      <button type="button" class="nav-btn" id="btnAnterior"><i class="fas fa-arrow-left me-2"></i>ANTERIOR</button>
-      <div class="page-ind" id="contadorPagina">1/8</div>
-      <button type="button" class="nav-btn" id="btnSiguiente">SIGUIENTE<i class="fas fa-arrow-right ms-2"></i></button>
-    </div>
-  </div>
-  __BLOCK_
-  __BLOCK_
-  __BLOCK_
+    window.addEventListener('DOMContentLoaded', () => {
+      cargarProgreso();
+    });
+  </script>
 </body>
 </html>

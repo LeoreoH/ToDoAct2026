@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico - Identificar coordenadas</title>
+    <link rel="stylesheet" href="diagnostico.css">
+</head>
+<body>
+    <header class="diagnostico-header">
+        <h1>Diagnóstico - Identificar coordenadas</h1>
+    </header>
+
+    <div class="contenedor-diagnostico">
+        <div id="formulario" class="preguntas-container"></div>
+        
+        <div class="controles">
+            <button onclick="volver()" class="btn-secundario">Cancelar</button>
+            <button onclick="enviarDiagnostico()" class="btn-primario" id="btn-enviar">Enviar respuestas</button>
+        </div>
+        
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <script src="/configClient.js"></script>
+    <script src="diagnostico.js"></script>
+</body>
+</html>

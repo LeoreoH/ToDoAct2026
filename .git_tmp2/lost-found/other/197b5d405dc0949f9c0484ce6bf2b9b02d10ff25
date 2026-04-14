@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguir instrucciones espaciales</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<header class="bloque-header">
+    <button class="boton-volver" onclick="volver()">← Volver</button>
+    <h1 id="nombre-bloque">Seguir instrucciones espaciales</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Elige una opción</h2>
+
+    <div class="contenedor-niveles">
+
+        <button id="btn-diagnostico" onclick="irADiagnostico()">
+            <span>Examen diagnóstico</span>
+            <span class="descripcion-nivel">
+                Descubre tu nivel inicial para seguir instrucciones espaciales
+            </span>
+        </button>
+
+        <button onclick="mostrarContenidos()">
+            <span>Contenidos</span>
+            <span class="descripcion-nivel">
+                Accede a los niveles del tema
+            </span>
+        </button>
+
+    </div>
+
+    <div id="bloque-contenidos" style="display:none">
+
+        <h3>Niveles del contenido</h3>
+
+        <div class="contenedor-niveles">
+            <button id="btn-facil" onclick="abrirNivel('facil')" disabled>
+                <span>Nivel 1 - Pueblo mágico</span>
+                <span class="descripcion-nivel">
+                    Instrucciones simples de 2-3 pasos en un pueblo encantado
+                </span>
+            </button>
+
+            <button id="btn-normal" onclick="abrirNivel('normal')" disabled>
+                <span>Nivel 2 - Jardín encantado</span>
+                <span class="descripcion-nivel">
+                    Orientación relativa con giros izquierda/derecha
+                </span>
+            </button>
+
+            <button id="btn-dificil" onclick="abrirNivel('dificil')" disabled>
+                <span>Nivel 3 - Isla del tesoro</span>
+                <span class="descripcion-nivel">
+                    Puntos cardinales y referentes naturales
+                </span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

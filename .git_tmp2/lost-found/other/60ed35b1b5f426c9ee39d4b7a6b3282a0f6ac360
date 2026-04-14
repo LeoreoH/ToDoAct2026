@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra &middot; Nivel F&aacute;cil &middot; Auditivo</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera-auditivo">
+  <h1>&#127911; LA TIERRA</h1>
+  <p class="lead">Bloque I &middot; Nivel F&aacute;cil</p>
+  <div class="badge-estilo">&#127925; Estilo Auditivo</div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-headphones fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<audio id="audPregunta1" src="audios/01-pregunta.mp3"></audio>
+<audio id="audPregunta2" src="audios/02-pregunta.mp3"></audio>
+<audio id="audPregunta3" src="audios/03-pregunta.mp3"></audio>
+<audio id="audPregunta4" src="audios/04-pregunta.mp3"></audio>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-globe-americas"></i></div>
+        <div class="audio-titulo">Nuestro planeta</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/01-introduccion.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" alt="Tierra" class="imagen-geo"
+             onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+        <div class="pie-imagen">&#127757; Vista desde el espacio</div>
+      </div>
+    </div>
+
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-ruler"></i></div>
+        <div class="audio-titulo">Forma de la Tierra</div>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" alt="Forma" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
+        <div class="pie-imagen">&#128208; Achatada en los polos</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
+      <p class="ref-instruccion">Escucha la pregunta y elige la respuesta correcta.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP1" onclick="reproducirPregunta(1)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar pregunta
+        </button>
+      </div>
+      <div class="opciones-respuesta">
+        <button class="btn-respuesta" onclick="responder(1, false, this)">S&iacute;, es redonda perfecta</button>
+        <button class="btn-respuesta" onclick="responder(1, true, this)">No, est&aacute; achatada en los polos</button>
+      </div>
+      <div class="feedback-auditivo" id="fb1"></div>
+    </div>
+
+  </div>
+
+  <div class="pagina" id="pagina2">
+
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-map-marked-alt"></i></div>
+        <div class="audio-titulo">L&iacute;neas imaginarias</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/02-lineas.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" alt="Paralelos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
+        <div class="pie-imagen">&#128506; Paralelos y meridianos</div>
+      </div>
+      <div class="imagen-grande mt-3" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/globo-lineas.jpg" alt="Globo" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/8d/Globo_terrestre.svg'">
+        <div class="pie-imagen">&#127758; Globo terr&aacute;queo</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
+      <p class="ref-instruccion">Escucha la pregunta y elige la respuesta correcta.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP2" onclick="reproducirPregunta(2)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar pregunta
+        </button>
+      </div>
+      <div class="opciones-respuesta">
+        <button class="btn-respuesta" onclick="responder(2, true, this)">Norte y Sur</button>
+        <button class="btn-respuesta" onclick="responder(2, false, this)">Este y Oeste</button>
+      </div>
+      <div class="feedback-auditivo" id="fb2"></div>
+    </div>
+
+  </div>
+
+  <div class="pagina" id="pagina3">
+
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-compass"></i></div>
+        <div class="audio-titulo">Puntos cardinales</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/03-orientacion.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" alt="Rosa" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
+        <div class="pie-imagen">&#129517; Rosa de los vientos</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Responde</div>
+      <p class="ref-instruccion">Escucha la pregunta con atenci&oacute;n y selecciona la opci&oacute;n correcta.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP3" onclick="reproducirPregunta(3)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar pregunta
+        </button>
+      </div>
+      <div class="opciones-respuesta">
+        <button class="btn-respuesta" onclick="responder(3, true, this)">Este</button>
+        <button class="btn-respuesta" onclick="responder(3, false, this)">Oeste</button>
+        <button class="btn-respuesta" onclick="responder(3, false, this)">Norte</button>
+      </div>
+      <div class="feedback-auditivo" id="fb3"></div>
+    </div>
+
+  </div>
+
+  <div class="pagina" id="pagina4">
+
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-temperature-high"></i></div>
+        <div class="audio-titulo">Zonas t&eacute;rmicas</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/04-zonas.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" alt="Zonas" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
+        <div class="pie-imagen">&#127777; 5 zonas t&eacute;rmicas</div>
+      </div>
+      <div class="imagen-grande mt-3" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" alt="Zona fr&iacute;a" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
+        <div class="pie-imagen">&#10052; Zona fr&iacute;a</div>
+      </div>
+    </div>
+
+    <div class="tarjeta-audio" style="background: #ffd600; border-color: #01579b;">
+      <div class="text-center">
+        <i class="fas fa-map-pin fa-3x" style="color: #01579b;"></i>
+        <h3 class="fw-bold" style="color: #01579b;">&#161;M&eacute;xico est&aacute; en la zona templada!</h3>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Contesta</div>
+      <p class="ref-instruccion">Escucha la pregunta y elige en qu&eacute; zona t&eacute;rmica se encuentra M&eacute;xico.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP4" onclick="reproducirPregunta(4)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar pregunta
+        </button>
+      </div>
+      <div class="opciones-respuesta">
+        <button class="btn-respuesta" onclick="responder(4, false, this)">C&aacute;lida</button>
+        <button class="btn-respuesta" onclick="responder(4, true, this)">Templada</button>
+        <button class="btn-respuesta" onclick="responder(4, false, this)">Fr&iacute;a</button>
+      </div>
+      <div class="feedback-auditivo" id="fb4"></div>
+    </div>
+
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+</body>
+</html>

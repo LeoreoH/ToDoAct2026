@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Componentes Naturales de la Tierra · Nivel Fácil · Visual Verbal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cabecera">
+  <h1>👐 COMPONENTES NATURALES DE LA TIERRA</h1>
+  <div class="sub">Bloque II · Nivel Fácil</div>
+  <div class="badge-estilo">📖 Estilo Visual Verbal</div>
+</div>
+
+<div class="progreso">
+  <i class="fas fa-book-open fa-2x" style="color:#2e7d32;"></i>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+    <div class="punto">5</div>
+  </div>
+  <span class="badge" style="background:#2e7d32;color:#fff;font-size:.92rem;padding:6px 13px;">
+    Pág <span id="numActual">1</span>/5
+  </span>
+</div>
+
+<div class="contenedor">
+
+<div class="pagina activa" id="pagina1">
+<div class="card-kine">
+  <h2 class="titulo-pag"><i class="fas fa-mountain me-2"></i>El Suelo que Pisamos</h2>
+  <span class="subtitulo-tema">📖 Subtema 1 · Formas del relieve</span>
+  <div class="tipo-badge">🎯 AHORCADO · Adivina las palabras del relieve</div>
+
+  <div class="info-titulo">📖 Lee esto antes de jugar</div>
+  <div class="dato-box">💡 El <strong>relieve</strong> son todas las formas de la superficie terrestre. Puede ser <strong>continental</strong> (en tierra) u <strong>oceánico</strong> (bajo el mar). Las formas del relieve determinan el clima, la vegetación y la vida humana de cada región.</div>
+
+ <div class="info-cards-grid">
+    <div class="info-card-v">
+      <div class="icv-img-emoji">
+        <img src="https://media3.giphy.com/media/Sye75bfzPZrmo/giphy.gif" alt="Montaña">
+      </div>
+      <div class="icv-body">
+        <div class="icv-titulo">Montaña</div>
+        <div class="icv-desc">Elevación alta con pendientes pronunciadas. Se forman por choque de placas o volcanes.</div>
+      </div>
+    </div>
+    <div class="info-card-v">
+      <div class="icv-img-emoji">
+        <img src="https://media3.giphy.com/media/1l7GT4n3CGTzW/giphy.gif" alt="Llanura">
+      </div>
+      <div class="icv-body">
+        <div class="icv-titulo">Llanura</div>
+        <div class="icv-desc">Superficie casi plana con poca inclinación. Zonas más habitadas y fértiles del planeta.</div>
+      </div>
+    </div>
+    <div class="info-card-v">
+      <div class="icv-img-emoji">
+        <img src="https://th.bing.com/th/id/R.77422b3f20eec90ac9744fd32b14e73c?rik=fVdWfPhHfnLwaA&riu=http%3a%2f%2fwww.lovethispic.com%2fuploaded_images%2f123428-Animated-Horse-Running-Through-Mountain-Valley.gif&ehk=626bkthA3lEA9wELBMDBQFXizGDavaRK5OSpSv69quw%3d&risl=&pid=ImgRaw&r=0" alt="Valle">
+      </div>
+      <div class="icv-body">
+        <div class="icv-titulo">Valle</div>
+        <div class="icv-desc">Zona plana deprimida rodeada de montañas o colinas. Por ellos corren ríos.</div>
+      </div>
+    </div>
+    <div class="info-card-v">
+      <div class="icv-img-emoji">
+        <img src="https://2.bp.blogspot.com/-z5p2Lz4lptY/VfGY8lpY_oI/AAAAAAACkQs/14RXUmqNMFM/s640/53421.gif" alt="Meseta">
+      </div>
+      <div class="icv-body">
+        <div class="icv-titulo">Meseta</div>
+        <div class="icv-desc">Elevación alta con la cima plana. También llamada altiplano o planicie elevada.</div>
+      </div>
+    </div>
+    <div class="info-card-v">
+      <div class="icv-img-emoji">
+        <img src="https://media1.tenor.com/images/5b6eeb4365ad1132e5ed5175a17bf6d6/tenor.gif?itemid=5611465" alt="Relieve Oceánico">
+      </div>
+      <div class="icv-body">
+        <div class="icv-titulo">Relieve Oceánico</div>
+        <div class="icv-desc">Formas bajo el mar: fosas, dorsales, plataforma continental y llanuras abisales.</div>
+      </div>
+    </div>
+</div>
+
+  <div class="actividad">
+    <h3 class="act-titulo"><i class="fas fa-male me-2"></i>Ahorcado · Adivina las palabras del relieve</h3>
+    <div class="instruccion">
+      🔤 Toca las letras para adivinar la palabra · Tienes <strong>6 errores</strong> máximo por palabra · ¡3 palabras del tema!
+    </div>
+    <div class="ah-progreso" id="ahProgreso"></div>
+
+    <div class="ahorcado-wrap">
+      <div class="ah-categoria" id="ahCategoria"></div>
+      <div class="ah-pista" id="ahPista"></div>
+
+      <div class="ahorcado-svg-wrap">
+        <svg class="ahorcado-svg" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
+          <line class="ah-parte" id="ahp0" x1="10" y1="170" x2="150" y2="170"/>
+          <line class="ah-parte oculta" id="ahp1" x1="40" y1="170" x2="40" y2="20"/>
+          <line class="ah-parte oculta" id="ahp2" x1="40" y1="20" x2="110" y2="20"/>
+          <line class="ah-parte oculta" id="ahp3" x1="110" y1="20" x1="110" y1="20" x2="110" y2="40"/>
+          <circle class="ah-parte oculta" id="ahp4" cx="110" cy="52" r="13"/>
+          <line class="ah-parte oculta" id="ahp5" x1="110" y1="65" x2="110" y2="115"/>
+          <line class="ah-parte oculta" id="ahp6" x1="110" y1="80" x2="85" y2="100"/>
+          <line class="ah-parte oculta" id="ahp7" x1="110" y1="80" x2="135" y2="100"/>
+          <line class="ah-parte oculta" id="ahp8" x1="110" y1="115" x2="85" y2="145"/>
+          <line class="ah-parte oculta" id="ahp9" x1="110" y1="115" x2="135" y2="145"/>
+        </svg>
+      </div>
+
+      <div class="ah-letras-wrap" id="ahLetras"></div>
+      <div class="ah-errores" id="ahErrores"></div>
+
+      <div class="ah-teclado" id="ahTeclado"></div>
+    </div>
+
+    <div class="fb-ok" id="ahFbOk" style="display:none;"></div>
+    <div class="fb-err" id="ahFbErr" style="display:none;"></div>
+
+    <div style="text-align:center;margin-top:10px;">
+      <button class="btn-borrar" onclick="resetAhorcado()">🔄 Reiniciar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="pagina" id="pagina2">
+<div class="card-kine">
+  <h2 class="titulo-pag"><i class="fas fa-layer-group me-2"></i>Una Corteza Quebradiza</h2>
+  <span class="subtitulo-tema">📖 Subtema 2 · Placas tectónicas</span>
+  <div class="tipo-badge">🖼️ 4 FOTOS 1 PALABRA · 3 Retos</div>
+
+  <div class="info-banner">
+    <h3>🌍 Las Placas Tectónicas</h3>
+    <p style="font-size:.85rem;color:#c8e6c9;margin-bottom:12px;">La corteza terrestre NO es sólida y continua — está quebrada en enormes bloques llamados <strong style="color:#ffea00">placas tectónicas</strong> que flotan sobre el manto y se mueven lentamente.</p>
+    <div class="info-banner-grid">
+      <div class="info-banner-item">
+        <div class="ib-ico">⬅️➡️</div>
+        <div class="ib-tit">Divergente</div>
+        <div class="ib-desc">Las placas se <strong>separan</strong>. Abren grietas en el suelo o en el fondo del mar.</div>
+      </div>
+      <div class="info-banner-item">
+        <div class="ib-ico">➡️⬅️</div>
+        <div class="ib-tit">Convergente</div>
+        <div class="ib-desc">Las placas <strong>chocan</strong>. Pueden formar montañas y volcanes. A veces una se mete debajo de la otra.</div>
+      </div>
+      <div class="info-banner-item">
+        <div class="ib-ico">↔️</div>
+        <div class="ib-tit">Deslizamiento</div>
+        <div class="ib-desc">Las placas se <strong>rozan</strong> lateralmente. Generan terremotos. Ej: Falla de San Andrés.</div>
+      </div>
+      <div class="info-banner-item">
+        <div class="ib-ico">🔢</div>
+        <div class="ib-tit">15 Placas Principales</div>
+        <div class="ib-desc">Existen 15 placas principales y más de 40 microplacas. Sus bordes = zonas más activas.</div>
+      </div>
+      <div class="info-banner-item">
+        <div class="ib-ico">🌋</div>
+        <div class="ib-tit">Cinturón de Fuego</div>
+        <div class="ib-desc">Rodea el Pacífico. Concentra 90% de los sismos y la mayoría de los volcanes activos.</div>
+      </div>
+      <div class="info-banner-item">
+        <div class="ib-ico">🇲🇽</div>
+        <div class="ib-tit">México</div>
+        <div class="ib-desc">Ubicado sobre la Placa Norteamericana, con influencia de la Placa de Cocos y Rivera.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actividad">
+    <h3 class="act-titulo"><i class="fas fa-images me-2"></i>¿Qué palabra conecta estas 4 imágenes?</h3>
+    <div class="instruccion">👁️ Observa las 4 imágenes · Toca las letras para formar la palabra · ¡3 retos del tema!</div>
+
+    <div id="reto4f"></div>
+
+    <div style="text-align:center;margin-top:10px;">
+      <button class="btn-borrar" onclick="resetCurrent4f()">🗑️ Borrar todo</button>
+    </div>
+
+    <div class="fb-ok" id="fbPag2">🎉 ¡Completaste todos los retos! Conoces muy bien las placas tectónicas.</div>
+  </div>
+</div>
+</div>
+
+<div class="pagina" id="pagina3">
+<div class="card-kine">
+  <h2 class="titulo-pag"><i class="fas fa-house-damage me-2"></i>Los Sismos y Temblores</h2>
+  <span class="subtitulo-tema">📖 Subtema 3 · Sismos</span>
+  <div class="tipo-badge">🔍 CONTEXTO · Adivina por pistas de cercanía</div>
+
+  <div class="info-titulo">📖 Repasa estos conceptos — te ayudarán en el juego</div>
+
+  <div class="dato-box">💡 Un <strong>sismo</strong> o terremoto es una vibración brusca de la corteza terrestre causada por el movimiento de las placas tectónicas o por la actividad volcánica. México está en el <strong>Cinturón de Fuego del Pacífico</strong>, zona con el 90% de los sismos del mundo.</div>
+
+  <div class="info-visual-grid">
+    <div class="info-visual-item">
+      <img src="https://media.giphy.com/media/RiwHi2Xyg16ik/giphy.gif" alt="Foco y epicentro" onerror="this.src='';this.style.height='100px';this.style.background='#e8f5e9';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.innerText='🔴';">
+      <div class="ivi-label">🔴 Foco (donde empieza)</div>
+      <div class="ivi-desc">Lugar <strong>dentro de la Tierra</strong> donde empieza el sismo.</div>
+    </div>
+    <div class="info-visual-item">
+      <img src="https://th.bing.com/th/id/R.a9d21231bb8759e423c3ac78134c19a8?rik=L3kXvcKoTKtxGw&riu=http%3a%2f%2fwww.apoioescolar24horas.com.br%2fsalaaula%2festudos%2fgeografia%2f604_terremotos%2fimages%2festudo%2fepicentro2.gif&ehk=ZvClvaVY3UZWwVieuBFv2iltReJug4nRRjuTH%2fhVYpo%3d&risl=&pid=ImgRaw&r=0" alt="Epicentro" onerror="this.style.background='#e8f5e9';">
+      <div class="ivi-label">🟡 Epicentro</div>
+      <div class="ivi-desc">Punto de la <strong>superficie</strong> que está justo arriba del foco.</div>
+    </div>
+    <div class="info-visual-item">
+      <img src="https://i.makeagif.com/media/11-08-2017/k7VYZ_.gif" alt="Ondas sísmicas" onerror="this.style.background='#e8f5e9';">
+      <div class="ivi-label">〰️ Ondas Sísmicas</div>
+      <div class="ivi-desc">Vibraciones que se propagan desde el foco. Tipos P (primarias) y S (secundarias).</div>
+    </div>
+    <div class="info-visual-item">
+      <img src="https://imgblog.interestingfacts.com/2023/04/GettyImages-648917542.jpg" alt="Cinturón de Fuego" onerror="this.style.background='#e8f5e9';">
+      <div class="ivi-label">🌋 Cinturón de Fuego</div>
+      <div class="ivi-desc">Zona que rodea el Océano Pacífico con 90% de sismos mundiales. ¡México está aquí!</div>
+    </div>
+    <div class="info-visual-item">
+      <img src="https://i.gifer.com/origin/62/62172da9116643ce027f4cbc5af53f99.gif" alt="Escala Richter" onerror="this.style.background='#e8f5e9';">
+      <div class="ivi-label">📏 Escala Richter</div>
+      <div class="ivi-desc">Mide la <strong>magnitud</strong> de la energía liberada. Cada punto = 31 veces más energía.</div>
+    </div>
+    <div class="info-visual-item">
+      <img src="https://i.gifer.com/origin/51/517e1e5a8374c6605048fd6012b824dd_w200.gif" alt="Tsunami" onerror="this.style.background='#e8f5e9';">
+      <div class="ivi-label">🌊 Tsunami</div>
+      <div class="ivi-desc">Ola gigante causada por un sismo submarino. Puede viajar miles de km a alta velocidad.</div>
+    </div>
+  </div>
+
+  <div class="actividad">
+    <h3 class="act-titulo"><i class="fas fa-search me-2"></i>Contexto · ¿Qué tan cerca estás?</h3>
+    <div class="instruccion">
+      💬 Escribe palabras relacionadas con los sismos. El % indica qué tan cerca estás de la palabra secreta.<br>
+      <strong>100% = ¡la encontraste!</strong> &nbsp;|&nbsp; Cuanto más alta la barra, más cerca estás.
+    </div>
+
+    <div class="ctx-pistas">
+      <button class="pista-btn" onclick="mostrarPista(1)">💡 Pista 1</button>
+      <button class="pista-btn" onclick="mostrarPista(2)">💡 Pista 2</button>
+      <button class="pista-btn" onclick="mostrarPista(3)">💡 Pista 3</button>
+      <div class="pista-txt" id="pista1">🌍 Es un movimiento o vibración de la corteza terrestre.</div>
+      <div class="pista-txt" id="pista2">🔴 Empieza en un punto llamado foco.</div>
+      <div class="pista-txt" id="pista3">〰️ Se propaga mediante ondas que viajan desde el interior.</div>
+    </div>
+
+    <div class="ctx-input-wrap">
+      <input type="text" id="ctxInput" class="ctx-input" placeholder="Escribe una palabra…" maxlength="20" autocomplete="off">
+      <button class="ctx-btn" onclick="intentarCtx()">→ Intentar</button>
+    </div>
+    <div id="ctxHistorial" class="ctx-historial"></div>
+    <div class="fb-ok" id="ctxFbOk">🎉 ¡Encontraste la palabra secreta: <strong>SISMO</strong>!</div>
+  </div>
+</div>
+</div>
+
+<div class="pagina" id="pagina4">
+<div class="card-kine">
+  <h2 class="titulo-pag"><i class="fas fa-fire me-2"></i>Los Volcanes</h2>
+  <span class="subtitulo-tema">📖 Subtema 4 · Volcanes</span>
+  <div class="tipo-badge">🧩 DINGBATS · Descifra con fotos</div>
+
+  <div class="info-titulo">📖 Repasa antes de jugar</div>
+  <div class="dato-box">🌋 Un <strong>volcán</strong> es una abertura en la corteza terrestre por donde sale material del interior de la Tierra: magma, lava, cenizas, gases y rocas. Se forman donde las placas tectónicas se separan o chocan.</div>
+
+  <div class="info-dingbat-grid">
+    <div class="info-ding-card">
+      <div class="idc-body">
+        <div class="idc-titulo">🔺 Partes del Volcán</div>
+        <div class="idc-desc">Cráter · Chimenea · Cono volcánico · Cámara magmática · Lava</div>
+      </div>
+    </div>
+    <div class="info-ding-card">
+      <div class="idc-body">
+        <div class="idc-titulo">🏔️ Popocatépetl</div>
+        <div class="idc-desc">Volcán activo de México, 5,426 m. Uno de los más monitoreados del mundo.</div>
+      </div>
+    </div>
+    <div class="info-ding-card">
+      <div class="idc-body">
+        <div class="idc-titulo">🟢🟡⚫ Tipos de Volcán</div>
+        <div class="idc-desc">Activo · Durmiente · Extinto — según su actividad reciente.</div>
+      </div>
+    </div>
+    <div class="info-ding-card">
+      <div class="idc-body">
+        <div class="idc-titulo">🔥 Lava y Magma</div>
+        <div class="idc-desc">Magma = roca fundida bajo tierra. Lava = magma que llega a la superficie.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actividad">
+    <h3 class="act-titulo"><i class="fas fa-puzzle-piece me-2"></i>Dingbats · ¿Qué concepto muestran las fotos?</h3>
+    <div class="instruccion">🔍 Observa las fotos · Descifra qué concepto representan · Toca la respuesta correcta</div>
+
+    <div class="marcador-d">
+      <div class="marc-d">✅ <span id="dOk">0</span>/5</div>
+      <div class="marc-d">❌ <span id="dErr">0</span></div>
+      <div class="marc-d">📍 Reto <span id="dNum">1</span>/5</div>
+    </div>
+
+    <div id="dingbatPanel"></div>
+
+    <div class="dingbat-nav">
+      <button class="btn-dingbat" id="dBtnAnt" onclick="navDingbat(-1)" disabled>← Anterior</button>
+      <button class="btn-dingbat" id="dBtnSig" onclick="navDingbat(1)">Siguiente →</button>
+    </div>
+
+    <div class="fb-ok" id="dFbOk">🎉 ¡Resolviste todos los Dingbats! Conoces muy bien los volcanes.</div>
+  </div>
+</div>
+</div>
+
+<div class="pagina" id="pagina5">
+<div class="card-kine">
+  <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso Final · Flashcards</h2>
+  <span class="subtitulo-tema">📖 Repaso · Bloque II completo</span>
+  <div class="tipo-badge">🃏 FLASHCARDS · Voltea y recuerda · 10 tarjetas con foto</div>
+
+  <div class="instruccion">🃏 Toca la tarjeta para voltearla y ver la respuesta completa · Navega con los botones · ¡Repasa todo el Bloque II!</div>
+
+  <div class="flash-prog" id="flashProg"></div>
+  <div style="text-align:center;font-size:.82rem;color:#66bb6a;font-weight:700;margin-bottom:10px;" id="flashIndicador">Tarjeta 1 de 10</div>
+
+  <div class="flash-wrap">
+    <div class="flash-card" id="flashCard" onclick="voltearFlash()">
+      <div class="flash-front" id="flashFront">
+        <div class="f-num" id="flashNum">1/10</div>
+        <span class="f-tap">👆 Toca para ver</span>
+        <img class="f-img" id="flashImg" src="" alt="" onerror="this.style.display='none';document.getElementById('flashIcoEmo').style.display='flex';">
+        <div class="f-img-emoji" id="flashIcoEmo" style="display:none;"></div>
+        <div class="f-txt" id="flashTxt"></div>
+      </div>
+      <div class="flash-back" id="flashBack">
+        <div class="b-tit" id="flashBTit"></div>
+        <div class="b-txt" id="flashBTxt"></div>
+        <div class="b-dato" id="flashBDato"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flash-controles">
+    <button class="flash-btn ant" onclick="navFlash(-1)">← Anterior</button>
+    <button class="flash-btn volt" onclick="voltearFlash()">🔄 Voltear</button>
+    <button class="flash-btn sig" onclick="navFlash(1)">Siguiente →</button>
+  </div>
+
+  <div class="fb-ok" id="flashFbOk" style="margin-top:14px;">🌟 ¡Revisaste todas las tarjetas! Dominas el Bloque II. ¡Listo para el quiz!</div>
+</div>
+</div>
+
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/5</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+
+<a href="quiz.html" class="boton-quiz text-center" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
+</div>
+
+
+
+
+
+
+</body>
+</html>
+

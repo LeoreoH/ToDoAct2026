@@ -75,6 +75,7 @@ body {
     overflow: hidden;
 }
 
+
 .perfil-izquierda {
     background: linear-gradient(160deg, var(--morado-oscuro) 0%, var(--morado-claro) 100%);
     display: flex;
@@ -106,10 +107,12 @@ body {
     letter-spacing: 0.04em;
 }
 
+
 .perfil-derecha {
     background-color: var(--blanco);
     padding: 36px 32px;
 }
+
 
 .info-perfil {
     display: flex;
@@ -142,6 +145,7 @@ body {
     font-weight: 400;
     color: var(--gris-texto);
 }
+
 
 .campo-estilo {
     gap: 10px;
@@ -187,6 +191,7 @@ body {
 #guardarEstilo:active {
     transform: scale(0.97);
 }
+
 
 .menu-inferior {
     position: fixed;
@@ -235,20 +240,20 @@ body {
     color: var(--morado-oscuro);
 }
 
-#contenidos h2 {
+#actividades h2 {
     font-size: 24px;
     color: var(--morado-medio);
     margin-bottom: 16px;
     text-align: center;
 }
 
-.lista-contenidos {
+.lista-actividades {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
 }
 
-.contenido-card {
+.actividad {
     background-color: var(--morado-palido);
     border-radius: 14px;
     padding: 18px;
@@ -258,22 +263,23 @@ body {
     border-left: 4px solid var(--morado-claro);
 }
 
-.contenido-card:hover {
+.actividad:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(74, 20, 140, 0.18);
 }
 
-.contenido-card h3 {
+.actividad h3 {
     font-size: 19px;
     margin: 0 0 10px;
     color: var(--morado-oscuro);
 }
 
-.contenido-card p {
+.actividad p {
     margin: 0;
     color: var(--gris-texto);
     font-size: 15px;
 }
+
 
 @media (max-width: 640px) {
     .contenedor {
@@ -306,7 +312,7 @@ body {
         font-size: 17px;
     }
 
-    .lista-contenidos {
+    .lista-actividades {
         grid-template-columns: 1fr;
     }
 

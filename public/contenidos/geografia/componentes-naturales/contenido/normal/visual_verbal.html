@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,158 @@
   <title>El Agua · Visual Verbal · 5to Primaria</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+  <style>
+    :root{
+      --vd1:#1b5e20; --vd2:#2e7d32; --vd3:#43a047;
+      --vd4:#66bb6a; --vd5:#c8e6c9;
+      --am1:#f57f17; --am2:#f9a825; --am3:#fdd835;
+      --am4:#fff176; --am5:#fffde7;
+      --ro:#c62828; --az:#0d47a1;
+      --bl:#ffffff; --tx:#1b3a1c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,var(--vd5) 0%,var(--vd4) 60%,var(--vd3) 100%);min-height:100vh;color:var(--tx);}
+
+    .cab{background:linear-gradient(135deg,var(--vd1),var(--vd2));padding:28px 20px 20px;text-align:center;border-bottom:6px solid var(--vd1);box-shadow:0 8px 25px rgba(27,94,32,.45);position:relative;z-index:10;}
+    .cab h1{font-family:'Fredoka One',cursive;font-size:2.6rem;color:var(--bl);text-shadow:3px 4px 0 rgba(0,0,0,.3);}
+    .cab p{color:var(--am4);font-weight:700;margin-top:4px;}
+    .badges{margin-top:10px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+    .b1{background:var(--vd1);color:var(--am3);padding:9px 24px;border-radius:50px;font-weight:800;font-size:1rem;border:3px solid var(--bl);}
+    .b2{background:var(--am3);color:var(--vd1);padding:9px 20px;border-radius:40px;font-weight:700;font-size:.95rem;border:2px solid var(--vd1);}
+
+    .marcador{background:var(--bl);border-radius:60px;margin:16px auto;max-width:840px;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:3px solid var(--vd2);box-shadow:0 5px 0 var(--vd1);position:relative;z-index:10;flex-wrap:wrap;}
+    .puntos-wrap{display:flex;gap:8px;}
+    .punto{width:40px;height:40px;border-radius:50%;background:var(--vd5);border:3px solid var(--vd2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--tx);transition:all .3s;}
+    .punto.activo{background:var(--am3);border-color:var(--vd1);transform:scale(1.2);box-shadow:0 0 12px rgba(253,216,53,.6);}
+    .punto.completado{background:var(--vd2);border-color:var(--bl);color:var(--bl);}
+    .score-box{background:var(--vd1);color:var(--am3);padding:8px 20px;border-radius:40px;font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px;}
+
+    .wrap{max-width:920px;margin:0 auto 40px;padding:0 18px;position:relative;z-index:10;}
+    .pag{display:none;animation:show .45s ease;}
+    .pag.activa{display:block;}
+    @keyframes show{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+    .card{background:var(--bl);border-radius:26px;padding:26px;margin-bottom:18px;border:3px solid var(--vd2);box-shadow:0 8px 0 var(--vd1);}
+    .card-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .card-icon{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid var(--bl);flex-shrink:0;}
+    .card-title{font-size:1.4rem;font-weight:800;color:var(--tx);}
+    .card-sub{font-size:.88rem;color:#607d8b;font-weight:600;margin-top:3px;}
+
+    .parr{background:var(--vd5);border-left:5px solid var(--vd2);border-radius:0 14px 14px 0;padding:14px 18px;margin-bottom:16px;font-size:.97rem;font-weight:600;line-height:1.75;color:var(--tx);}
+    .parr strong{color:var(--vd1);font-weight:900;}
+    .juego-titulo{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--vd1);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+
+    /* SOPA */
+    .sopa-wrap{overflow-x:auto;margin-bottom:12px;}
+    .sopa-grid{display:inline-grid;gap:3px;background:var(--vd5);padding:10px;border-radius:16px;border:3px solid var(--vd2);}
+    .sopa-cell{width:34px;height:34px;border-radius:7px;background:var(--bl);border:2px solid var(--vd4);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:var(--tx);cursor:pointer;user-select:none;transition:all .15s;}
+    .sopa-cell:hover{background:var(--am5);border-color:var(--vd2);}
+    .sopa-cell.sel{background:var(--am3);border-color:var(--vd1);transform:scale(1.08);}
+    .sopa-cell.encontrada{background:var(--vd2);border-color:var(--vd1);color:var(--bl);cursor:default;}
+    .sopa-palabras{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+    .sopa-pal{background:var(--vd5);border:2px solid var(--vd2);border-radius:20px;padding:6px 14px;font-weight:800;font-size:.9rem;color:var(--tx);transition:all .3s;}
+    .sopa-pal.hallada{background:var(--vd2);border-color:var(--vd1);color:var(--bl);text-decoration:line-through;}
+
+    /* CRUCIGRAMA */
+    .crucigrama-wrap{overflow-x:auto;display:flex;justify-content:center;margin-bottom:12px;}
+    .crucigrama{display:inline-grid;gap:3px;background:var(--vd5);padding:10px;border-radius:16px;border:3px solid var(--vd2);}
+    .cc{width:36px;height:36px;border-radius:6px;background:var(--bl);border:2.5px solid var(--vd4);display:flex;align-items:center;justify-content:center;position:relative;}
+    .cc input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-weight:900;font-size:1rem;color:var(--tx);outline:none;text-transform:uppercase;font-family:'Nunito',sans-serif;}
+    .cc.bloq{background:#e0e0e0;border-color:#bdbdbd;pointer-events:none;}
+    .cc.ok{background:var(--vd5);border-color:var(--vd2);}
+    .cc.mal{background:#ffebee;border-color:var(--ro);}
+    .cc .num{position:absolute;top:1px;left:3px;font-size:.5rem;font-weight:900;color:var(--vd1);line-height:1;}
+    .pistas-lista{margin:10px 0;padding:0;}
+    .pistas-lista li{font-size:.9rem;font-weight:700;color:var(--tx);margin-bottom:5px;line-height:1.5;}
+    .pistas-lista li span{color:var(--vd1);font-weight:900;}
+
+    /* RULETA */
+    .ruleta-wrap{text-align:center;margin-bottom:14px;}
+    .ruleta-svg{width:220px;height:220px;cursor:pointer;}
+    .ruleta-pregunta{background:linear-gradient(135deg,var(--vd1),var(--vd2));color:var(--bl);border-radius:20px;padding:16px 20px;margin:12px 0;font-weight:800;font-size:1rem;line-height:1.5;min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;}
+    .ruleta-opciones{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px;}
+    .rul-opc{background:var(--am5);border:2.5px solid var(--vd2);border-radius:14px;padding:11px 10px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;color:var(--tx);font-family:'Nunito',sans-serif;text-align:center;}
+    .rul-opc:hover:not(:disabled){background:var(--vd2);color:var(--am3);transform:scale(1.04);}
+    .rul-opc.correcta-r{background:var(--vd5);border-color:var(--vd2);color:var(--vd1);}
+    .rul-opc.incorrecta-r{background:#ffebee;border-color:var(--ro);color:var(--ro);}
+    .rul-opc:disabled{cursor:not-allowed;}
+    .btn-girar{background:linear-gradient(135deg,var(--vd2),var(--vd3));color:var(--am3);border:3px solid var(--vd1);padding:12px 30px;border-radius:40px;font-weight:900;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;}
+    .btn-girar:hover{transform:scale(1.08);}
+    .btn-girar:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+
+    /* AHORCADO */
+    .ahorcado-wrap{background:var(--am5);border-radius:20px;padding:18px;border:3px solid var(--vd2);margin-bottom:12px;}
+    .ahorcado-pista{font-weight:700;font-size:.95rem;color:var(--tx);margin-bottom:12px;background:var(--bl);border-radius:12px;padding:10px 14px;border:2px solid var(--vd4);line-height:1.5;}
+    .ahorcado-letras{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+    .ah-letra{width:38px;height:46px;border-bottom:4px solid var(--tx);display:flex;align-items:flex-end;justify-content:center;font-weight:900;font-size:1.4rem;color:var(--vd1);padding-bottom:2px;transition:all .3s;}
+    .ah-letra.revelada{animation:reveal .4s ease;}
+    @keyframes reveal{0%{transform:scale(0) rotate(-10deg);}60%{transform:scale(1.3);}100%{transform:scale(1);}}
+    .teclado{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px;}
+    .tecla{width:36px;height:36px;border-radius:8px;background:var(--bl);border:2.5px solid var(--vd2);font-weight:900;font-size:.95rem;cursor:pointer;color:var(--tx);font-family:'Nunito',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+    .tecla:hover:not(:disabled){background:var(--vd2);color:var(--am3);transform:scale(1.1);}
+    .tecla.ok-tecla{background:var(--vd2);border-color:var(--vd1);color:var(--bl);cursor:not-allowed;}
+    .tecla.mal-tecla{background:#ffebee;border-color:var(--ro);color:var(--ro);cursor:not-allowed;}
+    .ah-vidas{display:flex;gap:6px;justify-content:center;font-size:1.5rem;margin-bottom:8px;}
+
+    /* ADIVINANZA */
+    .adivinanza-card{background:linear-gradient(135deg,var(--vd1),var(--vd2));border-radius:22px;padding:20px;margin-bottom:12px;text-align:center;position:relative;overflow:hidden;}
+    .adivinanza-card::before{content:'❓';position:absolute;font-size:8rem;opacity:.08;right:-10px;top:-10px;}
+    .adiv-titulo{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--am3);margin-bottom:10px;}
+    .adiv-pistas{list-style:none;padding:0;text-align:left;}
+    .adiv-pistas li{background:rgba(255,255,255,.12);border-radius:12px;padding:9px 14px;margin-bottom:7px;color:var(--bl);font-weight:700;font-size:.92rem;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s;}
+    .adiv-pistas li:hover{background:rgba(255,255,255,.2);}
+    .adiv-pistas li.revelada{background:rgba(255,255,255,.18);}
+    .adiv-pistas li .pista-icono{font-size:1.1rem;flex-shrink:0;}
+    .adiv-pistas li .pista-txt{flex:1;}
+    .adiv-pistas li .pista-oculta{filter:blur(4px);user-select:none;transition:filter .4s;}
+    .adiv-pistas li.revelada .pista-oculta{filter:none;}
+    .adiv-opciones{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;}
+    .adiv-opc{background:var(--bl);color:var(--tx);border:3px solid var(--am3);border-radius:14px;padding:11px 10px;font-weight:800;font-size:.92rem;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;}
+    .adiv-opc:hover:not(:disabled){background:var(--am3);transform:scale(1.04);}
+    .adiv-opc.correcta-a{background:var(--vd5);border-color:var(--vd2);color:var(--vd1);}
+    .adiv-opc.incorrecta-a{background:#ffebee;border-color:var(--ro);color:var(--ro);}
+
+    /* TEXTO ROTO */
+    .texto-roto-wrap{margin-bottom:12px;}
+    .texto-roto{background:var(--am5);border:2.5px solid var(--vd2);border-radius:16px;padding:16px 18px;font-size:.97rem;font-weight:600;line-height:2.2;color:var(--tx);margin-bottom:10px;}
+    .error-span{background:#ffebee;border:2px solid var(--ro);border-radius:8px;padding:2px 8px;cursor:pointer;color:var(--ro);font-weight:800;transition:all .2s;display:inline-block;}
+    .error-span:hover{transform:scale(1.05);}
+    .error-span.corregido{background:var(--vd5);border-color:var(--vd2);color:var(--vd1);}
+    .input-correccion-wrap{display:inline-block;position:relative;vertical-align:middle;}
+    .input-correccion{border:2.5px solid var(--vd2);border-radius:8px;padding:2px 8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.97rem;color:var(--tx);outline:none;width:130px;background:var(--am5);transition:all .2s;}
+    .input-correccion:focus{border-color:var(--am2);background:var(--bl);}
+    .input-correccion.mal-inp{border-color:var(--ro);background:#ffebee;animation:shake .4s ease;}
+    @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+
+    /* RETRO / BTN / NAV */
+    .retro{padding:12px 16px;border-radius:14px;font-weight:800;font-size:.95rem;margin-top:8px;display:none;align-items:center;gap:10px;}
+    .retro.ok{background:var(--vd5);color:var(--vd1);border:2px solid var(--vd2);display:flex;}
+    .retro.mal{background:#ffebee;color:var(--ro);border:2px solid var(--ro);display:flex;}
+    .pts-ganados{display:none;background:linear-gradient(135deg,var(--am3),var(--am2));color:var(--vd1);border-radius:12px;padding:8px 18px;font-weight:900;font-size:1rem;text-align:center;margin-top:8px;animation:pop .4s ease;}
+    @keyframes pop{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+    .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;}
+
+    .btn-v{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:10px 26px;border-radius:40px;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;margin-top:8px;}
+    .btn-v:hover{background:var(--bl);transform:scale(1.05);}
+    .nav{display:flex;justify-content:space-between;align-items:center;margin:28px 0 16px;background:var(--bl);padding:13px 26px;border-radius:60px;border:3px solid var(--vd2);box-shadow:0 5px 0 var(--vd1);}
+    .btn-nav{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:10px 26px;border-radius:40px;font-weight:800;font-size:1.05rem;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;}
+    .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
+    .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+    .ind-pag{font-size:1.3rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:7px 22px;border-radius:40px;border:3px solid var(--vd2);}
+    .btn-quiz{display:block;width:fit-content;margin:16px auto 0;background:var(--am3);color:var(--vd1);padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd1);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
+    .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);}
+
+    .panel-final{display:none;text-align:center;background:var(--bl);border-radius:26px;padding:36px;border:3px solid var(--am3);box-shadow:0 8px 0 var(--vd1);margin-top:16px;}
+    .panel-final h2{font-family:'Fredoka One',cursive;font-size:2.4rem;color:var(--tx);}
+    .big-num{font-family:'Fredoka One',cursive;font-size:5rem;color:var(--vd2);line-height:1;}
+
+    @media(max-width:600px){
+      .cab h1{font-size:1.9rem;}
+      .sopa-cell,.cc{width:28px;height:28px;font-size:.8rem;}
+      .ah-letra{width:30px;}
+      .tecla{width:30px;height:30px;font-size:.85rem;}
+    }
+  </style>
 </head>
 <body>
 
@@ -28,6 +179,7 @@
 
 <div class="wrap">
 
+<!-- PÁG 1 -->
 <div class="pag activa" id="pagina1">
   <div class="card">
     <div class="card-head">
@@ -68,22 +220,19 @@
   </div>
 </div>
 
+<!-- PÁG 2 -->
 <div class="pag" id="pagina2">
   <div class="card">
     <div class="card-head">
       <div class="card-icon" style="background:linear-gradient(135deg,var(--vd3),var(--vd1));color:var(--am3);"><i class="fas fa-mountain"></i></div>
       <div><div class="card-title">El relieve y el agua</div><div class="card-sub">Corrige los errores y completa el crucigrama</div></div>
     </div>
-    <div class="parr">El <strong>relieve</strong> ayuda a mover el agua por la Tierra. Las <strong>montañas</strong> guardan lluvia y nieve. El agua baja por las laderas, pasa por los <strong>valles</strong> y forma <strong>ríos</strong>. Ese recorrido es el camino del agua desde los lugares altos hasta los más bajos.</div>
-    <div class="parr">Recuerda: una <strong>colina</strong> es una elevaci&oacute;n m&aacute;s baja que una monta&ntilde;a. Cuando hace mucho fr&iacute;o, el agua puede caer como <strong>nieve</strong>.</div>
-    <div class="parr">Toda la zona por donde la lluvia baja y llega al mismo <strong>río</strong> se llama <strong>cuenca hidrogr&aacute;fica</strong>, tambi&eacute;n conocida como <strong>zona del r&iacute;o</strong>. Una <strong>presa</strong> es una construcción que guarda agua del r&iacute;o para usarla despu&eacute;s.</div>
+    <div class="parr">El <strong>relieve</strong> guía el camino del agua. Las <strong>montañas</strong> capturan lluvia y nieve que luego forma ríos en los <strong>valles</strong>. Las <strong>llanuras</strong> planas pueden ser áridas. Una <strong>cuenca hidrográfica</strong> es el territorio donde toda el agua drena al mismo río principal. Los ríos secundarios se llaman <strong>afluentes</strong>.</div>
 
-    <div class="juego-titulo">✏️ Juego 1 — Corrige el texto usando las tarjetas de arriba</div>
+    <div class="juego-titulo">✏️ Juego 1 — ¡Hay 4 palabras equivocadas! Toca cada una en rojo y escribe la correcta</div>
     <div class="texto-roto-wrap">
-      <div class="banco-ayuda">Primero toca una palabra roja y luego elige la tarjeta correcta.</div>
-      <div class="banco-correcciones" id="banco_texto_roto_r"></div>
       <div class="texto-roto" id="texto_roto_r">
-        Las <span class="error-span" data-correcto="montañas" data-actual="llanuras" onclick="corregirError(this)">llanuras</span> guardan lluvia y nieve. El agua baja por las laderas y pasa por los <span class="error-span" data-correcto="valles" data-actual="mares" onclick="corregirError(this)">mares</span>. despu&eacute;s forma <span class="error-span" data-correcto="ríos" data-actual="presas" onclick="corregirError(this)">presas</span> que siguen su <span class="error-span" data-correcto="camino" data-actual="calma" onclick="corregirError(this)">calma</span> hacia lugares más bajos.
+        Las <span class="error-span" data-c="bW9udGHDsWFz" data-actual="llanuras" onclick="corregirError(this)">llanuras</span> son importantes porque capturan la lluvia y la nieve. El agua baja por las laderas y se acumula en los <span class="error-span" data-c="dmFsbGVz" data-actual="mares" onclick="corregirError(this)">mares</span> formando ríos. El territorio completo donde el agua drena a un mismo río se llama <span class="error-span" data-c="Y3VlbmNh" data-actual="presa" onclick="corregirError(this)">presa</span> hidrográfica. Los ríos que desembocan en un río principal se llaman <span class="error-span" data-c="YWZsdWVudGVz" data-actual="océanos" onclick="corregirError(this)">océanos</span>.
       </div>
       <button class="btn-v" onclick="verificarTextoRoto('retro_tr','pts_tr')">✅ Verificar correcciones</button>
       <div class="retro" id="retro_tr"></div>
@@ -96,15 +245,15 @@
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
-          <li><span>1.</span> Lugar bajo por donde puede pasar un río (5 letras)</li>
-          <li><span>3.</span> Agua que corre por la tierra (3 letras)</li>
+          <li><span>1.</span> Forma del terreno donde corren los ríos (5 letras)</li>
+          <li><span>3.</span> Río secundario que entra a otro mayor (8 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Elevaci&oacute;n m&aacute;s baja que una monta&ntilde;a (6 letras)</li>
-          <li><span>4.</span> Agua blanca que cae del cielo cuando hace fr&iacute;o (5 letras)</li>
+          <li><span>2.</span> Forma más alta del terreno, origen de ríos (7 letras)</li>
+          <li><span>4.</span> Zona donde toda el agua drena al mismo río (6 letras)</li>
         </ul>
       </div>
     </div>
@@ -114,6 +263,7 @@
   </div>
 </div>
 
+<!-- PÁG 3 -->
 <div class="pag" id="pagina3">
   <div class="card">
     <div class="card-head">
@@ -170,6 +320,7 @@
   </div>
 </div>
 
+<!-- PÁG 4 -->
 <div class="pag" id="pagina4">
   <div class="card">
     <div class="card-head">
@@ -177,7 +328,6 @@
       <div><div class="card-title">Recursos hídricos del planeta</div><div class="card-sub">Adivina la palabra y completa el crucigrama</div></div>
     </div>
     <div class="parr">El <strong>97%</strong> del agua del planeta es <strong>salada</strong>. Solo el <strong>3%</strong> es <strong>agua dulce</strong>. Se llama "dulce" porque <strong>no tiene sal</strong>. Gran parte está <strong>congelada</strong> en glaciares. Los grandes ríos como el <strong>Amazonas</strong> y el <strong>Nilo</strong> llevan agua dulce hasta los océanos.</div>
-    <div class="parr">Recuerda: el agua que <strong>no tiene sal</strong> se llama <strong>agua dulce</strong>. Si se congela, se vuelve <strong>hielo</strong>. El <strong>r&iacute;o</strong> lleva agua dulce por la tierra. El <strong>mar</strong> es una gran cantidad de agua salada que vemos junto a muchas playas. El <strong>oc&eacute;ano</strong> guarda casi toda el agua salada del planeta.</div>
 
     <div class="juego-titulo">🔤 Juego 1 — Adivina la palabra letra por letra</div>
     <div class="ahorcado-wrap" id="ahorcado_wrap">
@@ -197,14 +347,14 @@
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
           <li><span>1.</span> Tipo de agua que NO tiene sal (5 letras)</li>
-          <li><span>3.</span> Agua dulce que corre por la tierra (3 letras)</li>
+          <li><span>3.</span> Donde está la mayor parte del agua del planeta (6 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Agua congelada (5 letras)</li>
-          <li><span>4.</span> Gran cantidad de agua salada que vemos junto a la playa (3 letras)</li>
+          <li><span>2.</span> Gran masa de hielo con agua dulce congelada (8 letras)</li>
+          <li><span>4.</span> Río más grande del mundo, en Sudamérica (8 letras)</li>
         </ul>
       </div>
     </div>
@@ -214,6 +364,7 @@
   </div>
 </div>
 
+<!-- PÁG 5 -->
 <div class="pag" id="pagina5">
   <div class="card">
     <div class="card-head">
@@ -228,7 +379,7 @@
       <ul class="adiv-pistas">
         <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Mi agua está completamente quieta, casi no me muevo</span></span></li>
         <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Estoy rodeado de tierra por todos mis lados</span></span></li>
-        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → No llego al mar; mi agua se queda aquí</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → No tengo desembocadura; mi agua no va a ningún lado</span></span></li>
         <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → El Lago de Chapala y el Mar Muerto son ejemplos de lo que soy</span></span></li>
       </ul>
       <div class="adiv-opciones" id="adiv_opc5">
@@ -239,17 +390,23 @@
     <div class="retro" id="retro_adiv5"></div>
     <div class="pts-ganados" id="pts_adiv5"></div>
 
-    <div class="juego-titulo" style="margin-top:20px;">✏️ Juego 2 — Corrige el texto usando las tarjetas de arriba</div>
+    <div class="juego-titulo" style="margin-top:20px;">✏️ Juego 2 — ¡Hay 4 palabras equivocadas! Toca cada una y escribe la correcta</div>
     <div class="texto-roto-wrap">
-      <div class="banco-ayuda">Primero toca una palabra roja y luego elige la tarjeta correcta.</div>
-      <div class="banco-correcciones" id="banco_texto_roto_rl"></div>
       <div class="texto-roto" id="texto_roto_rl">
-        Un río tiene <span class="error-span" data-correcto="corriente" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-correcto="movimiento" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-correcto="salida" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span> hacia el mar. En cambio, un lago tiene agua <span class="error-span" data-correcto="quieta" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
+        Un río tiene <span class="error-span" data-c="Y29ycmllbnRl" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-c="bW92aW1pZW50bw==" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-c="ZGVzZW1ib2NhZHVyYQ==" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span> donde llega al mar. En cambio, un lago tiene agua <span class="error-span" data-c="cXVpZXRh" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
       </div>
       <button class="btn-v" onclick="verificarTextoRoto2('retro_tr_rl','pts_tr_rl')">✅ Verificar correcciones</button>
       <div class="retro" id="retro_tr_rl"></div>
       <div class="pts-ganados" id="pts_tr_rl"></div>
     </div>
+
+    <div class="panel-final" id="panelFinal">
+      <div style="font-size:3rem;margin-bottom:10px;" id="estrellasFinales">⭐⭐⭐</div>
+      <h2>¡Eres un campeón! 🏆</h2>
+      <p style="font-weight:700;color:#607d8b;margin:10px 0 4px;">Tu puntuación final:</p>
+      <div class="big-num" id="scoreFinal">0</div>
+      <p style="font-weight:800;color:var(--vd1);font-size:1.1rem;">puntos</p>
+      <div style="margin-top:16px;font-size:1rem;font-weight:700;color:#607d8b;" id="mensajeFinal"></div>
     </div>
   </div>
 </div>
@@ -259,13 +416,195 @@
   <span class="ind-pag" id="contPag">1/5</span>
   <button class="btn-nav" id="btnSiguiente" onclick="cambiarPag(1)">SIGUIENTE →</button>
 </div>
-
-<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
+<a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
 </div>
 
-__BLOCK_
-__BLOCK_
-__BLOCK_
-__BLOCK_
+<script>
+let pagActual=1,totalPags=5,score=0;
+
+function cambiarPag(dir){
+  document.getElementById('pagina'+pagActual).classList.remove('activa');
+  pagActual+=dir;
+  document.getElementById('pagina'+pagActual).classList.add('activa');
+  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
+  if(pagActual===5)setTimeout(mostrarFinal,3000);
+}
+function actualizarUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    const n=i+1;p.classList.remove('activo','completado');
+    if(n===pagActual)p.classList.add('activo');
+    else if(n<pagActual)p.classList.add('completado');
+  });
+  document.getElementById('contPag').innerText=pagActual+'/'+totalPags;
+  document.getElementById('btnAnterior').disabled=pagActual===1;
+  document.getElementById('btnSiguiente').disabled=pagActual===totalPags;
+}
+function sumarPts(pts,id){
+  score+=pts;document.getElementById('scoreTotal').innerText=score;
+  const el=document.getElementById(id);if(el){el.innerText='+'+pts+' puntos 🎉';el.style.display='block';}
+  document.getElementById('estrellasMini').innerText=score>=200?'⭐⭐⭐':score>=100?'⭐⭐':score>=40?'⭐':'☆☆☆';
+}
+function mostrarFinal(){
+  const pf=document.getElementById('panelFinal');pf.style.display='block';
+  document.getElementById('scoreFinal').innerText=score;
+  document.getElementById('mensajeFinal').innerText=score>=200?'¡Eres un experto en el agua! 🌊':score>=100?'¡Muy buen trabajo! 📚':'¡Buen intento! Repasa y vuelve 💪';
+  document.getElementById('estrellasFinales').innerText=score>=200?'⭐⭐⭐':score>=100?'⭐⭐':score>=40?'⭐':'☆';
+  lanzarConfetti();
+}
+function lanzarConfetti(){
+  const c=document.createElement('canvas');c.className='confetti';document.body.appendChild(c);
+  const ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;
+  const piezas=Array.from({length:80},()=>({x:Math.random()*c.width,y:Math.random()*c.height-c.height,w:Math.random()*10+5,h:Math.random()*6+3,color:['#1b5e20','#2e7d32','#fdd835','#f9a825','#43a047'][Math.floor(Math.random()*5)],r:Math.random()*Math.PI*2,vx:Math.random()*2-1,vy:Math.random()*3+2,vr:Math.random()*.1}));
+  let frame=0;
+  function animar(){ctx.clearRect(0,0,c.width,c.height);piezas.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;});frame++;if(frame<180)requestAnimationFrame(animar);else c.remove();}
+  animar();
+}
+
+// SOPA
+const sopaData1={id:'sopa1',palabras:['CLIMA','LLUVIA','ARIDO','VAPOR'],grid:[['C','L','I','M','A','T','B','V','P','Q'],['E','O','R','X','N','W','L','A','L','Z'],['A','R','I','D','O','K','U','P','L','M'],['Y','F','V','H','G','S','V','O','U','N'],['L','L','U','V','I','A','I','R','V','C'],['P','E','Q','T','Z','B','A','T','I','D'],['X','M','C','U','N','K','W','A','A','F'],['Z','O','B','K','S','Y','X','L','G','H'],['V','A','P','O','R','E','Q','M','E','L'],['N','P','W','X','D','T','C','F','H','J']]};
+let sopaState1={seleccion:[],encontradas:new Set(),encontradasCeldas:new Set()};
+function initSopa(data,state){
+  const grid=document.getElementById(data.id);grid.innerHTML='';
+  data.grid.forEach((fila,r)=>{fila.forEach((letra,c)=>{const cell=document.createElement('div');cell.className='sopa-cell';cell.innerText=letra;cell.dataset.r=r;cell.dataset.c=c;cell.onclick=()=>celdaSopa(cell,data,state);grid.appendChild(cell);});});
+}
+function celdaSopa(cell,data,state){
+  if(state.encontradasCeldas.has(cell.dataset.r+'_'+cell.dataset.c))return;
+  if(cell.classList.contains('sel')){cell.classList.remove('sel');state.seleccion=state.seleccion.filter(c=>!(c.dataset.r===cell.dataset.r&&c.dataset.c===cell.dataset.c));return;}
+  cell.classList.add('sel');state.seleccion.push(cell);
+  const palabra=state.seleccion.map(c=>c.innerText).join('');
+  const palabraRev=palabra.split('').reverse().join('');
+  const encontrada=data.palabras.find(p=>p===palabra||p===palabraRev);
+  if(encontrada){
+    state.seleccion.forEach(c=>{c.classList.remove('sel');c.classList.add('encontrada');state.encontradasCeldas.add(c.dataset.r+'_'+c.dataset.c);});
+    state.encontradas.add(encontrada);state.seleccion=[];
+    document.querySelectorAll('.sopa-pal').forEach(p=>{if(p.dataset.word===encontrada)p.classList.add('hallada');});
+    if(state.encontradas.size===data.palabras.length){const r=document.getElementById('retro_s1');r.className='retro ok';r.innerHTML='🎉 ¡Encontraste todas las palabras!';r.style.display='flex';sumarPts(30,'pts_s1');}
+  } else if(state.seleccion.length>=6){state.seleccion.forEach(c=>c.classList.remove('sel'));state.seleccion=[];}
+}
+
+// ADIVINANZA
+function revelarPista(li){li.classList.add('revelada');li.querySelector('.pista-oculta').style.filter='none';li.querySelector('.pista-icono').innerText='💡';li.onclick=null;}
+function respAdiv(btn,grupoId,correctaId,retroId,ptsId){
+  document.querySelectorAll('#'+grupoId+' .adiv-opc').forEach(b=>b.disabled=true);
+  const r=document.getElementById(retroId);
+  if(btn.dataset.id===correctaId){btn.classList.add('correcta-a');r.className='retro ok';r.innerHTML='✅ ¡Correcto! ¡Lo adivinaste!';r.style.display='flex';sumarPts(25,ptsId);}
+  else{btn.classList.add('incorrecta-a');r.className='retro mal';r.innerHTML='❌ No es esa. Lee mejor las pistas y prueba de nuevo.';r.style.display='flex';}
+}
+
+// TEXTO CON ERRORES — el alumno escribe la respuesta
+function corregirError(span){
+  if(span.classList.contains('corregido'))return;
+  if(span.querySelector('.input-correccion'))return;
+  const palabraIncorrecta=span.innerText;
+  span.innerHTML='<span class="input-correccion-wrap"><input class="input-correccion" placeholder="escribe aquí..." autocomplete="off" spellcheck="false" autocorrect="off"></span>';
+  const inp=span.querySelector('.input-correccion');
+  inp.focus();
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')verificarInputCorreccion(span,inp);});
+  inp.addEventListener('blur',()=>{if(inp.value.trim()!=='')verificarInputCorreccion(span,inp);else span.innerText=palabraIncorrecta;});
+}
+function verificarInputCorreccion(span,inp){
+  const escrito=inp.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const correcto=atob(span.dataset.c).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(escrito===correcto){span.innerText=atob(span.dataset.c);span.classList.add('corregido');span.onclick=null;}
+  else{inp.classList.add('mal-inp');setTimeout(()=>{inp.classList.remove('mal-inp');inp.value='';inp.focus();},700);}
+}
+let trCorregido1=false,trCorregido2=false;
+function verificarTextoRoto(retroId,ptsId){
+  const errores=document.querySelectorAll('#texto_roto_r .error-span');let ok=true;
+  errores.forEach(e=>{if(!e.classList.contains('corregido'))ok=false;});
+  const r=document.getElementById(retroId);
+  if(ok&&!trCorregido1){r.className='retro ok';r.innerHTML='✅ ¡Correcto! Corregiste todos los errores.';r.style.display='flex';sumarPts(25,ptsId);trCorregido1=true;}
+  else if(!ok){r.className='retro mal';r.innerHTML='❌ Aún hay palabras en rojo. Tócalas para corregirlas.';r.style.display='flex';}
+}
+function verificarTextoRoto2(retroId,ptsId){
+  const errores=document.querySelectorAll('#texto_roto_rl .error-span');let ok=true;
+  errores.forEach(e=>{if(!e.classList.contains('corregido'))ok=false;});
+  const r=document.getElementById(retroId);
+  if(ok&&!trCorregido2){r.className='retro ok';r.innerHTML='✅ ¡Perfecto! Todos los errores corregidos.';r.style.display='flex';sumarPts(25,ptsId);trCorregido2=true;}
+  else if(!ok){r.className='retro mal';r.innerHTML='❌ Aún quedan palabras en rojo por corregir.';r.style.display='flex';}
+}
+
+// CRUCIGRAMA
+const cruc2Layout=(()=>{const g=Array.from({length:7},()=>Array(9).fill(null));'VALLE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});'MONTANA'.split('').forEach((l,i)=>{if(!g[i][4])g[i][4]={l,editable:true};else g[i][4].l=l;});'AFLUENTE'.split('').forEach((l,i)=>{if(g[4][i])g[4][i].l=l;else g[4][i]={l,editable:true};});'CUENCA'.split('').forEach((l,i)=>{const r=i+1;if(g[r][0])g[r][0].l=l;else g[r][0]={l,editable:true};});return g;})();
+const cruc4Layout=(()=>{const g=Array.from({length:8},()=>Array(8).fill(null));'DULCE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});'GLACIAR '.split('').forEach((l,i)=>{if(i<8){if(!g[i][3])g[i][3]={l,editable:true};else g[i][3].l=l;}});'OCEANO'.split('').forEach((l,i)=>{if(g[3][i])g[3][i].l=l;else g[3][i]={l,editable:true};});'AMAZONAS'.split('').forEach((l,i)=>{if(!g[i][7])g[i][7]={l,editable:true};else g[i][7].l=l;});return g;})();
+function buildCrucigrama(containerId,layout,numeracion){
+  const cont=document.getElementById(containerId);cont.innerHTML='';
+  cont.style.gridTemplateColumns=`repeat(${layout[0].length},36px)`;
+  layout.forEach((fila,r)=>{fila.forEach((cell,c)=>{const div=document.createElement('div');div.className='cc';if(!cell){div.classList.add('bloq');}else{const num=numeracion.find(n=>n.r===r&&n.c===c);if(num){const s=document.createElement('span');s.className='num';s.innerText=num.n;div.appendChild(s);}const inp=document.createElement('input');inp.maxLength=1;inp.dataset.correcto=cell.l.trim();inp.oninput=e=>{e.target.value=e.target.value.toUpperCase();};div.appendChild(inp);}cont.appendChild(div);});});
+}
+function verificarCrucigrama(containerId,retroId,ptsId){
+  const inputs=document.querySelectorAll('#'+containerId+' input');let ok=true;
+  inputs.forEach(inp=>{const correcto=inp.dataset.correcto.trim();if(!correcto)return;const val=(inp.value||'').toUpperCase().trim();inp.closest('.cc').classList.remove('ok','mal');if(val===correcto)inp.closest('.cc').classList.add('ok');else{inp.closest('.cc').classList.add('mal');ok=false;}});
+  const r=document.getElementById(retroId);
+  if(ok){r.className='retro ok';r.innerHTML='✅ ¡Crucigrama completo y correcto!';r.style.display='flex';sumarPts(30,ptsId);}
+  else{r.className='retro mal';r.innerHTML='❌ Algunas letras son incorrectas. ¡Revisa e intenta de nuevo!';r.style.display='flex';}
+}
+function verificarCruc2(){verificarCrucigrama('cruc2','retro_cruc2','pts_cruc2');}
+function verificarCruc4(){verificarCrucigrama('cruc4','retro_cruc4','pts_cruc4');}
+
+// RULETA
+const ruletaPreguntas=[{tema:'PRESA',preg:'¿Para qué sirve una PRESA?',opc:['Llevar agua a cultivos','Almacenar agua de un río','Cambiar el curso del río','Secar el río'],correcta:'b'},{tema:'RIEGO',preg:'¿Qué lleva un canal de RIEGO?',opc:['Petróleo','Agua a cultivos lejanos','Electricidad','Personas'],correcta:'b'},{tema:'DESVÍO',preg:'¿Qué hace un DESVÍO de río?',opc:['Almacena agua','Lleva agua a la ciudad','Cambia la dirección natural del río','Purifica el agua'],correcta:'c'},{tema:'IMPACTO',preg:'¿Cuál es el principal impacto negativo de una presa?',opc:['Produce más lluvia','El río lleva menos agua aguas abajo','El río se hace más grande','Aparecen más peces'],correcta:'b'},{tema:'CARRETERA',preg:'¿Qué puede ocurrir al construir una carretera sobre un río?',opc:['El río desaparece para siempre','El río puede ser desviado de su curso','El agua del río se vuelve salada','La carretera se inunda siempre'],correcta:'b'},{tema:'CANAL',preg:'¿Dónde se usa principalmente un canal de riego?',opc:['En las ciudades','En los océanos','En zonas agrícolas sin lluvia suficiente','En los glaciares'],correcta:'c'}];
+let ruletaIdx=-1;
+function girarRuleta(){
+  const svg=document.getElementById('ruletaSvg');const btn=document.getElementById('btnGirar');btn.disabled=true;
+  const extra=Math.floor(Math.random()*360);const totalGrados=360*5+extra;
+  ruletaIdx=Math.floor(((extra%360)/60))%6;
+  let inicio=null;
+  function animar(ts){if(!inicio)inicio=ts;const prog=Math.min((ts-inicio)/2000,1);const ease=1-Math.pow(1-prog,4);svg.style.transform=`rotate(${totalGrados*ease}deg)`;if(prog<1)requestAnimationFrame(animar);else{mostrarPreguntaRuleta(ruletaIdx);btn.disabled=false;}}
+  requestAnimationFrame(animar);
+}
+function mostrarPreguntaRuleta(idx){
+  const q=ruletaPreguntas[idx];document.getElementById('ruletaPregunta').innerHTML='🎯 <strong>'+q.tema+':</strong> '+q.preg;
+  const opcDiv=document.getElementById('ruletaOpciones');opcDiv.style.display='grid';opcDiv.innerHTML='';
+  const letras=['a','b','c','d'];
+  q.opc.forEach((o,i)=>{const btn=document.createElement('button');btn.className='rul-opc';btn.innerText=o;btn.onclick=()=>respRuleta(btn,letras[i],q.correcta,opcDiv);opcDiv.appendChild(btn);});
+}
+function respRuleta(btn,resp,correcta,opcDiv){
+  opcDiv.querySelectorAll('.rul-opc').forEach(b=>b.disabled=true);const r=document.getElementById('retro_rul');
+  if(resp===correcta){btn.classList.add('correcta-r');r.className='retro ok';r.innerHTML='✅ ¡Correcto!';r.style.display='flex';sumarPts(20,'pts_rul');}
+  else{btn.classList.add('incorrecta-r');r.className='retro mal';r.innerHTML='❌ No es esa. Vuelve a leer el texto.';r.style.display='flex';}
+}
+
+// AHORCADO
+const ahPalabras=[{palabra:'DULCE',pista:'El agua que no tiene sal se llama agua _____ (5 letras)'},{palabra:'GLACIAR',pista:'Gran masa de hielo que guarda agua dulce congelada (7 letras)'},{palabra:'OCEANO',pista:'Donde está el 97% del agua del planeta (6 letras)'}];
+let ahIdx=0,ahVidas=5,ahDescubiertas=[],ahPtsGanados=false;
+function initAhorcado(){ahIdx=0;ahVidas=5;ahDescubiertas=[];ahPtsGanados=false;cargarPalabraAh();}
+function cargarPalabraAh(){
+  if(ahIdx>=ahPalabras.length){const r=document.getElementById('retro_ah');r.className='retro ok';r.innerHTML='🎉 ¡Adivinaste todas las palabras!';r.style.display='flex';if(!ahPtsGanados){sumarPts(35,'pts_ah');ahPtsGanados=true;}return;}
+  ahVidas=5;ahDescubiertas=[];
+  document.getElementById('ah_pista').innerText='💡 Pista: '+ahPalabras[ahIdx].pista;
+  document.getElementById('btn_sig_pal').style.display='none';
+  renderAhorcado();buildTeclado();
+}
+function renderAhorcado(){
+  const pal=ahPalabras[ahIdx].palabra;const letrasDiv=document.getElementById('ah_letras');letrasDiv.innerHTML='';
+  pal.split('').forEach(l=>{const div=document.createElement('div');div.className='ah-letra';div.innerText=ahDescubiertas.includes(l)?l:'';letrasDiv.appendChild(div);});
+  const v=['❤️','❤️','❤️','❤️','❤️'];for(let i=ahVidas;i<5;i++)v[i]='🖤';document.getElementById('ah_vidas').innerText=v.join('');
+}
+function buildTeclado(){
+  const t=document.getElementById('ah_teclado');t.innerHTML='';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{const btn=document.createElement('button');btn.className='tecla';btn.innerText=l;btn.onclick=()=>presionarTecla(l,btn);t.appendChild(btn);});
+}
+function presionarTecla(letra,btn){
+  btn.disabled=true;const pal=ahPalabras[ahIdx].palabra;
+  if(pal.includes(letra)){
+    ahDescubiertas.push(letra);btn.classList.add('ok-tecla');
+    const letrasDiv=document.getElementById('ah_letras');
+    pal.split('').forEach((l,i)=>{if(l===letra){const div=letrasDiv.children[i];div.innerText=l;div.classList.add('revelada');}});
+    if(pal.split('').every(l=>ahDescubiertas.includes(l))){document.getElementById('retro_ah').className='retro ok';document.getElementById('retro_ah').innerHTML='✅ ¡Correcto! La palabra era <strong>'+pal+'</strong>';document.getElementById('retro_ah').style.display='flex';ahIdx++;document.getElementById('btn_sig_pal').style.display='inline-block';document.querySelectorAll('#ah_teclado .tecla').forEach(b=>b.disabled=true);}
+  } else {
+    ahVidas--;btn.classList.add('mal-tecla');renderAhorcado();
+    if(ahVidas===0){document.getElementById('retro_ah').className='retro mal';document.getElementById('retro_ah').innerHTML='💔 ¡Sin vidas! La palabra era <strong>'+ahPalabras[ahIdx].palabra+'</strong>';document.getElementById('retro_ah').style.display='flex';document.querySelectorAll('#ah_teclado .tecla').forEach(b=>b.disabled=true);ahIdx++;document.getElementById('btn_sig_pal').style.display='inline-block';}
+  }
+}
+function siguientePalabra(){document.getElementById('retro_ah').style.display='none';cargarPalabraAh();}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  initSopa(sopaData1,sopaState1);
+  buildCrucigrama('cruc2',cruc2Layout,[{r:0,c:0,n:'1'},{r:0,c:4,n:'2'},{r:4,c:0,n:'3'},{r:1,c:0,n:'4'}]);
+  buildCrucigrama('cruc4',cruc4Layout,[{r:0,c:0,n:'1'},{r:0,c:3,n:'2'},{r:3,c:0,n:'3'},{r:0,c:7,n:'4'}]);
+  initAhorcado();actualizarUI();
+});
+</script>
 </body>
 </html>

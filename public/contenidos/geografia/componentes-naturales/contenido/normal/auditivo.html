@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,171 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+  <style>
+    :root{
+      --vd1:#1b5e20;--vd2:#2e7d32;--vd3:#43a047;--vd4:#66bb6a;--vd5:#c8e6c9;
+      --am1:#f57f17;--am2:#f9a825;--am3:#fdd835;--am4:#fff176;--am5:#fffde7;
+      --ro:#c62828;--ro2:#ffebee;--bl:#ffffff;--tx:#1b3a1c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,var(--vd5) 0%,var(--vd4) 60%,var(--vd3) 100%);min-height:100vh;color:var(--tx);}
+
+    /* ── CABECERA ── */
+    .cab{background:linear-gradient(135deg,var(--vd1),var(--vd2));padding:30px 20px;border-bottom:6px solid var(--am3);text-align:center;box-shadow:0 10px 20px rgba(27,94,32,.4);}
+    .cab h1{font-family:'Fredoka One',cursive;font-size:2.8rem;color:var(--bl);text-shadow:3px 3px 0 var(--vd1);margin-bottom:5px;}
+    .cab .sub{color:var(--am4);font-weight:700;margin-top:4px;}
+    .badge-e{background:var(--am3);color:var(--vd1);padding:11px 32px;border-radius:50px;font-weight:800;font-size:1.2rem;display:inline-block;border:4px solid var(--bl);margin-top:10px;box-shadow:0 4px 0 var(--am1);}
+    .badge-n{background:var(--vd1);color:var(--am3);padding:8px 20px;border-radius:30px;font-weight:800;font-size:.95rem;display:inline-block;border:3px solid var(--am3);margin-top:8px;margin-left:8px;}
+
+    /* ── PROGRESO ── */
+    .progreso{background:var(--bl);border-radius:60px;margin:22px auto;max-width:900px;padding:14px 28px;display:flex;align-items:center;gap:18px;border:3px solid var(--vd2);box-shadow:0 5px 15px rgba(27,94,32,.2);}
+    .puntos{display:flex;gap:10px;flex:1;justify-content:center;flex-wrap:wrap;}
+    .punto{width:40px;height:40px;border-radius:50%;background:var(--vd5);border:3px solid var(--vd2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--tx);transition:all .3s;cursor:pointer;}
+    .punto.activo{background:var(--am3);border-color:var(--vd1);transform:scale(1.2);}
+    .punto.completado{background:var(--vd2);border-color:var(--bl);color:var(--bl);}
+    .pag-label{background:var(--vd2);color:var(--bl);font-size:1rem;padding:7px 18px;border-radius:28px;font-weight:800;white-space:nowrap;}
+
+    /* ── CONTENEDOR ── */
+    .cont{max-width:960px;margin:0 auto 40px;padding:0 18px;}
+    .pagina{display:none;animation:ap .5s ease;}
+    .pagina.activa{display:block;}
+    @keyframes ap{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── TARJETA BASE ── */
+    .t{background:var(--bl);border-radius:28px;padding:24px;margin-bottom:22px;border:3px solid var(--vd2);box-shadow:0 8px 0 var(--vd1);}
+    .t-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+    .t-icon{background:var(--am3);color:var(--vd1);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid var(--vd2);flex-shrink:0;}
+    .t-titulo{font-size:1.4rem;font-weight:800;color:var(--tx);}
+    .seccion{background:var(--vd2);color:var(--bl);border-radius:18px;padding:11px 22px;margin-bottom:18px;font-family:'Fredoka One',cursive;font-size:1.5rem;text-align:center;border:3px solid var(--vd3);box-shadow:0 5px 0 var(--vd1);}
+    .inst{background:var(--am5);border:3px solid var(--am3);border-radius:18px;padding:13px 18px;margin-bottom:16px;font-size:1rem;font-weight:700;color:var(--tx);text-align:center;}
+    .juego-num{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--vd1);margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+    audio{width:100%;border-radius:28px;border:2px solid var(--vd2);margin:8px 0;}
+    audio.mini{height:34px;width:100%;border-radius:18px;border:2px solid var(--vd2);}
+
+    /* ── AUDIOS GRID ── */
+    .ag{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px;}
+    .ai{background:var(--vd5);border:3px solid var(--vd2);border-radius:18px;padding:14px;text-align:center;}
+    .ai label{font-weight:800;font-size:.95rem;color:var(--tx);display:block;margin-bottom:6px;}
+
+    /* ── FOTOS CLIC ── */
+    .fg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px;}
+    .fo{border:4px solid var(--vd2);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s;background:var(--bl);}
+    .fo:hover{transform:scale(1.04);box-shadow:0 8px 20px rgba(27,94,32,.3);}
+    .fo img{width:100%;height:148px;object-fit:cover;display:block;}
+    .fo .fn{background:var(--vd2);color:var(--bl);font-weight:800;font-size:.95rem;text-align:center;padding:9px;}
+    .fo.sel{border-color:var(--am3);box-shadow:0 0 0 4px var(--am3);}
+    .fo.ok{border-color:var(--vd3)!important;box-shadow:0 0 0 4px var(--vd3)!important;}
+    .fo.mal{border-color:var(--ro)!important;box-shadow:0 0 0 4px var(--ro)!important;opacity:.6;}
+
+    /* ── MATCH ── */
+    .mw{display:flex;gap:18px;align-items:flex-start;margin-bottom:14px;}
+    .mc{flex:1;display:flex;flex-direction:column;gap:9px;}
+    .mi{background:var(--vd5);border:3px solid var(--vd2);border-radius:13px;padding:11px 13px;cursor:pointer;transition:all .2s;font-weight:700;font-size:.9rem;line-height:1.4;}
+    .mi:hover{background:var(--vd4);}
+    .mi.sel{background:var(--am3);border-color:var(--vd1);}
+    .mi.ok{background:var(--vd5);border-color:var(--vd3);opacity:.7;pointer-events:none;}
+    .md{background:var(--am5);border:3px solid var(--am2);border-radius:13px;padding:11px 13px;cursor:pointer;transition:all .2s;font-weight:700;font-size:.9rem;line-height:1.4;}
+    .md:hover{border-color:var(--vd2);background:var(--vd5);}
+    .md.sel{background:var(--am3);border-color:var(--vd1);}
+    .md.ok{border-color:var(--vd3);opacity:.7;pointer-events:none;}
+    .md.mal{border-color:var(--ro);background:var(--ro2);animation:shake .4s;}
+    @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+    .match-pts{text-align:center;margin-bottom:12px;font-size:1.05rem;font-weight:800;color:var(--vd1);}
+
+    /* ── ORDENAR ── */
+    .ord-banco{display:flex;flex-wrap:wrap;gap:10px;padding:14px;background:var(--vd5);border-radius:16px;border:2px dashed var(--vd2);margin-bottom:12px;min-height:54px;}
+    .ord-item{background:var(--vd2);color:var(--am3);padding:9px 16px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;user-select:none;}
+    .ord-item:hover{transform:scale(1.07);background:var(--vd1);}
+    .ord-item.usado{opacity:.4;pointer-events:none;}
+    .ord-secuencia{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px;background:var(--am5);border-radius:14px;border:2px solid var(--am2);margin-bottom:10px;min-height:50px;}
+    .ord-paso{background:var(--am2);color:var(--vd1);padding:8px 14px;border-radius:10px;font-weight:800;font-size:.88rem;}
+    .ord-flecha{color:var(--vd1);font-weight:900;font-size:1.1rem;}
+
+    /* ── COMPLETAR FRASE ── */
+    .frase-wrap{background:var(--vd5);border-radius:16px;padding:16px;border:2px solid var(--vd2);margin-bottom:12px;font-size:1.05rem;font-weight:700;line-height:2.4;color:var(--tx);}
+    .blank{display:inline-block;border-bottom:3.5px solid var(--vd2);min-width:110px;text-align:center;padding:0 6px;cursor:pointer;color:var(--vd2);font-weight:900;transition:all .2s;}
+    .blank.fill{border-color:var(--vd3);color:var(--vd1);}
+    .blank.wrong{border-color:var(--ro);color:var(--ro);}
+    .banco-palabras{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;}
+    .palabra{background:var(--vd1);color:var(--am3);padding:8px 16px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;}
+    .palabra:hover{background:var(--vd2);transform:scale(1.06);}
+    .palabra.usada{background:#bdbdbd;color:#777;pointer-events:none;}
+
+    /* ── V/F ── */
+    .vf-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:12px;}
+    .vf-btn{border-radius:18px;padding:20px 10px;font-family:'Fredoka One',cursive;font-size:1.4rem;cursor:pointer;border:3px solid;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .vf-v{background:#e8f5e9;color:var(--vd1);border-color:var(--vd2);}
+    .vf-v:hover:not(:disabled){background:var(--vd2);color:var(--bl);transform:scale(1.05);}
+    .vf-f{background:var(--ro2);color:var(--ro);border-color:var(--ro);}
+    .vf-f:hover:not(:disabled){background:var(--ro);color:var(--bl);transform:scale(1.05);}
+    .vf-sub{font-size:.78rem;font-weight:800;font-family:'Nunito',sans-serif;opacity:.85;}
+    .vf-btn.acierto{box-shadow:0 5px 16px rgba(46,125,50,.4);transform:scale(1.07);}
+    .vf-btn.fallo{opacity:.5;}
+    .vf-btn:disabled{cursor:not-allowed;}
+    .vf-enunciado{background:var(--am5);border:2px solid var(--am2);border-radius:14px;padding:13px 16px;font-weight:700;font-size:1rem;color:var(--tx);margin-bottom:12px;line-height:1.55;}
+
+    /* ── SLIDER ── */
+    .slider-box{background:var(--vd5);border-radius:16px;padding:18px;border:2px solid var(--vd2);margin-bottom:12px;}
+    .slider-preg{font-weight:800;color:var(--tx);margin-bottom:12px;font-size:1rem;}
+    input[type=range]{width:100%;accent-color:var(--vd2);margin:8px 0;}
+    .slider-val{text-align:center;font-family:'Fredoka One',cursive;font-size:3.2rem;color:var(--vd2);margin:4px 0;}
+    .slider-labels{display:flex;justify-content:space-between;font-size:.82rem;color:#607d8b;font-weight:700;}
+
+    /* ── VOCAB CARDS ── */
+    .vc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+    .vc{background:var(--bl);border:3px solid var(--vd2);border-radius:20px;overflow:hidden;box-shadow:0 5px 0 var(--vd3);transition:transform .3s;}
+    .vc:hover{transform:translateY(-4px);}
+    .vc img{width:100%;height:130px;object-fit:cover;}
+    .vc .vb{padding:11px 14px;}
+    .vc .vt{font-weight:800;font-size:1.05rem;color:var(--tx);margin-bottom:7px;}
+
+    /* ── REPASO ── */
+    .rc{background:var(--bl);border:3px solid var(--vd2);border-radius:24px;padding:18px;box-shadow:0 6px 0 var(--vd3);display:flex;gap:18px;align-items:center;transition:transform .3s;margin-bottom:16px;}
+    .rc:hover{transform:translateY(-4px);}
+    .rc img{width:120px;height:90px;object-fit:cover;border-radius:13px;border:3px solid var(--vd5);flex-shrink:0;}
+    .rc .rt{font-weight:800;font-size:1.1rem;color:var(--tx);margin-bottom:8px;}
+
+    /* ── RETRO ── */
+    .fb{text-align:center;font-size:1.2rem;font-weight:800;padding:13px 16px;border-radius:14px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px;}
+    .fb.ok{background:var(--vd5);color:var(--vd1);border:2px solid var(--vd2);display:flex;}
+    .fb.mal{background:var(--ro2);color:var(--ro);border:2px solid var(--ro);display:flex;}
+    .pts-lbl{text-align:center;margin-top:12px;font-size:1rem;font-weight:800;color:var(--vd1);}
+    .pts-ganados{display:none;background:linear-gradient(135deg,var(--am3),var(--am2));color:var(--vd1);border-radius:12px;padding:7px 16px;font-weight:900;font-size:.95rem;text-align:center;margin-top:8px;animation:pop .4s ease;}
+    @keyframes pop{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+    /* ── BOTONES ── */
+    .btn-j{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:11px 30px;border-radius:38px;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;margin:6px 5px 0;display:inline-block;}
+    .btn-j:hover{background:var(--bl);transform:scale(1.05);}
+    .btn-j:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+    .btn-j.sec{background:var(--vd5);color:var(--vd1);border-color:var(--vd2);}
+
+    /* ── NAV ── */
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:38px 0 18px;background:var(--bl);padding:14px 28px;border-radius:60px;border:3px solid var(--vd2);box-shadow:0 5px 0 var(--vd3);}
+    .btn-nav{background:var(--am3);color:var(--vd1);border:3px solid var(--vd1);padding:12px 28px;border-radius:38px;font-weight:800;font-size:1.15rem;transition:all .2s;cursor:pointer;}
+    .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
+    .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
+    .ind-pag{font-size:1.4rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:8px 28px;border-radius:38px;border:3px solid var(--vd2);}
+    .btn-quiz{display:block;width:fit-content;margin:28px auto 0;background:var(--am3);color:var(--vd1);border:4px solid var(--vd1);padding:17px 48px;border-radius:58px;font-weight:800;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 0 var(--vd1);transition:all .2s;text-align:center;}
+    .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);color:var(--vd1);}
+
+    /* QUIZ RÁPIDO */
+    .qr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px;}
+    .qr-btn{background:var(--am5);border:3px solid var(--vd2);border-radius:14px;padding:14px 10px;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;color:var(--tx);font-family:'Nunito',sans-serif;text-align:center;}
+    .qr-btn:hover:not(:disabled){background:var(--vd5);border-color:var(--vd1);transform:scale(1.04);}
+    .qr-btn:disabled{cursor:not-allowed;}
+
+    .tarjeta-fin{background:var(--am3)!important;border-color:var(--vd1)!important;text-align:center;}
+
+    @media(max-width:768px){
+      .cab h1{font-size:2rem;}
+      .nav-bar{flex-direction:column;gap:14px;}
+      .ag,.fg,.vc-grid{grid-template-columns:1fr;}
+      .mw{flex-direction:column;}
+      .rc{flex-direction:column;}
+      .rc img{width:100%;height:150px;}
+      .vf-grid{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
 <div class="cab">
@@ -29,9 +193,11 @@
 </div>
 <div class="cont">
 
+<!-- ══ PÁG 1: CLIMA Y AGUA ══ -->
 <div class="pagina activa" id="pagina1">
   <div class="seccion">🌧️ El clima y el agua</div>
 
+  <!-- JUEGO 1: Emparejar concepto con descripción -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-link"></i></div>
@@ -43,19 +209,19 @@
       <div class="mc" id="mi1c">
         <div class="mi" data-id="lluvioso" onclick="selMI(this,'1c')">
           🌧️ Clima Lluvioso
-          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climalluvioso.mp3" type="audio/mpeg"></audio>
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="Audios/Climalluvioso.mp3" type="audio/mpeg"></audio>
         </div>
         <div class="mi" data-id="arido" onclick="selMI(this,'1c')">
           🏜️ Clima Árido
-          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climaarido.mp3" type="audio/mpeg"></audio>
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="Audios/Climaarido.mp3" type="audio/mpeg"></audio>
         </div>
         <div class="mi" data-id="polar" onclick="selMI(this,'1c')">
           ❄️ Clima Polar
-          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climapolar.mp3" type="audio/mpeg"></audio>
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="Audios/Climapolar.mp3" type="audio/mpeg"></audio>
         </div>
         <div class="mi" data-id="templado" onclick="selMI(this,'1c')">
           🌤️ Clima Templado
-          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climatemplado.mp3" type="audio/mpeg"></audio>
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="Audios/Climatemplado.mp3" type="audio/mpeg"></audio>
         </div>
       </div>
       <div class="mc" id="md1c">
@@ -69,13 +235,14 @@
     <div class="fb" id="fbM1c"></div>
   </div>
 
+  <!-- JUEGO 2: Completar frase con banco de palabras -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-pen"></i></div>
       <div class="t-titulo">Juego 2 — Completa las frases</div>
     </div>
     <div class="juego-num">🎮 Escucha el audio y elige la palabra que completa cada frase.</div>
-    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio del tema</label><audio controls><source src="audios/Juego2.mp3" type="audio/mpeg"></audio></div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio del tema</label><audio controls><source src="Audios/Juego2.mp3" type="audio/mpeg"></audio></div>
     <div class="banco-palabras" id="banco_p1">
       <span class="palabra" onclick="usarPalabra(this,'evaporacion','b3_p1')">evaporación</span>
       <span class="palabra" onclick="usarPalabra(this,'lluviosos','b1_p1')">lluviosos</span>
@@ -96,16 +263,18 @@
   </div>
 </div>
 
+<!-- ══ PÁG 2: TIPOS DE AGUA ══ -->
 <div class="pagina" id="pagina2">
   <div class="seccion">🌊 Tipos de agua en el planeta</div>
 
+  <!-- JUEGO 1: Slider del porcentaje -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-percentage"></i></div>
       <div class="t-titulo">Juego 1 — ¿Cuánta agua dulce hay?</div>
     </div>
     <div class="juego-num">🎮 Escucha el audio. Luego mueve el slider al porcentaje de agua dulce en el planeta.</div>
-    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre el agua dulce</label><audio controls><source src="audios/Juego3.mp3" type="audio/mpeg"></audio></div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre el agua dulce</label><audio controls><source src="Audios/Juego3.mp3" type="audio/mpeg"></audio></div>
     <div class="slider-box">
       <div class="slider-preg">💧 ¿Qué porcentaje del agua del planeta es agua DULCE?</div>
       <input type="range" id="slDulce" min="1" max="50" value="25" oninput="document.getElementById('slVal').innerText=this.value">
@@ -119,6 +288,7 @@
     <div class="pts-ganados" id="ptsSlider"></div>
   </div>
 
+  <!-- JUEGO 2: Match tipos de agua -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-link"></i></div>
@@ -128,10 +298,10 @@
     <div class="match-pts">🔗 Pares: <span id="ptsM2">0</span>/4</div>
     <div class="mw">
       <div class="mc" id="mi2">
-        <div class="mi" data-id="salada" onclick="selMI(this,2)">🧂 Agua Salada<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguasalada.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="dulce" onclick="selMI(this,2)">💧 Agua Dulce<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguadulce.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="glaciar" onclick="selMI(this,2)">❄️ Glaciares<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Glaciares.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="subte" onclick="selMI(this,2)">🌍 Agua Subterránea<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguasubterranea.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="salada" onclick="selMI(this,2)">🧂 Agua Salada<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/Aguasalada.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="dulce" onclick="selMI(this,2)">💧 Agua Dulce<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/Aguadulce.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="glaciar" onclick="selMI(this,2)">❄️ Glaciares<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/Glaciares.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="subte" onclick="selMI(this,2)">🌍 Agua Subterránea<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/Aguasubterranea.mp3" type="audio/mpeg"></audio></div>
       </div>
       <div class="mc" id="md2">
         <div class="md" data-id="salada" onclick="selMD(this,2)">97% del agua total del planeta — en océanos y mares</div>
@@ -145,9 +315,11 @@
   </div>
 </div>
 
+<!-- ══ PÁG 3: RECURSOS HÍDRICOS ══ -->
 <div class="pagina" id="pagina3">
   <div class="seccion">🗺️ Recursos hídricos del planeta</div>
 
+  <!-- JUEGO 1: Emparejar imágenes de recursos hídricos -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-images"></i></div>
@@ -159,25 +331,25 @@
       <div class="mc" id="mi3">
         <div class="mi" data-id="rio" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
           <img src="https://www.lifeder.com/wp-content/uploads/2022/11/partes-rio-1.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
-          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/rio.mp3" type="audio/mpeg"></audio></div>
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/rio.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="lago" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
           <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2022/04/08/lago-bled-eslovenia.jpeg" style="width:100%;height:80px;object-fit:cover;display:block;">
-          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/lago.mp3" type="audio/mpeg"></audio></div>
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/lago.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="cuenca" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
           <img src="https://www.gob.mx/cms/uploads/article/main_image/84153/que-es-una-cuenca-22.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
-          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cuenca.mp3" type="audio/mpeg"></audio></div>
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/cuenca.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="glaciar" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
           <img src="https://cdn0.ecologiaverde.com/es/posts/7/8/0/que_son_los_glaciares_2087_1200.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
-          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/glaciar.mp3" type="audio/mpeg"></audio></div>
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/glaciar.mp3" type="audio/mpeg"></audio></div>
         </div>
       </div>
       <div class="mc" id="md3">
         <div class="md" data-id="rio" onclick="selMD(this,3)">🏞️ RÍO — corriente que fluye hacia el mar</div>
         <div class="md" data-id="lago" onclick="selMD(this,3)">🏊 LAGO — agua quieta rodeada de tierra</div>
-        <div class="md" data-id="cuenca" onclick="selMD(this,3)">CUENCA HIDROGR&Aacute;FICA &mdash; zona donde el agua se junta y va al mismo r&iacute;o</div>
+        <div class="md" data-id="cuenca" onclick="selMD(this,3)">🗺️ CUENCA — zona donde drena el agua de una región</div>
         <div class="md" data-id="glaciar" onclick="selMD(this,3)">❄️ GLACIAR — masa de hielo con agua dulce congelada</div>
       </div>
     </div>
@@ -185,6 +357,7 @@
     <div class="fb" id="fbM3"></div>
   </div>
 
+  <!-- JUEGO 2: V/F sobre recursos hídricos -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-check-circle"></i></div>
@@ -196,16 +369,18 @@
   </div>
 </div>
 
+<!-- ══ PÁG 4: OBRAS HUMANAS ══ -->
 <div class="pagina" id="pagina4">
   <div class="seccion">🏗️ Obras humanas y el agua</div>
 
+    <!-- JUEGO 1: Ordenar pasos de construcción de obra -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-sort-numeric-up"></i></div>
       <div class="t-titulo">Juego 1 — Ordena los pasos: ¿Cómo funciona una presa?</div>
     </div>
     <div class="juego-num">🎮 Escucha el audio. Luego ordena los pasos del proceso de una presa en el orden correcto.</div>
-    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — Cómo funciona una presa</label><audio controls><source src="audios/Juego7.mp3" type="audio/mpeg"></audio></div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — Cómo funciona una presa</label><audio controls><source src="Audios/Juego7.mp3" type="audio/mpeg"></audio></div>
     <div class="ord-banco" id="bancoP4J1">
       <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="🌊 El río llega a la presa">🌊 El río llega a la presa</div>
       <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="💡 Se genera electricidad">💡 Se genera electricidad</div>
@@ -222,6 +397,7 @@
     <div class="pts-ganados" id="ptsP4J1"></div>
   </div>
 
+  <!-- JUEGO 2: Match obra - función -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-link"></i></div>
@@ -231,10 +407,10 @@
     <div class="match-pts">🔗 Pares: <span id="ptsM4">0</span>/4</div>
     <div class="mw">
       <div class="mc" id="mi4">
-        <div class="mi" data-id="presa" onclick="selMI(this,4)">🏗️ Presa<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/presa.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="canal" onclick="selMI(this,4)">🌾 Canal de riego<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/canalriego.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="desvio" onclick="selMI(this,4)">↪️ Desvío de río<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/desviorio.mp3" type="audio/mpeg"></audio></div>
-        <div class="mi" data-id="embalse" onclick="selMI(this,4)">🌊 Embalse<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/embalse.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="presa" onclick="selMI(this,4)">🏗️ Presa<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/presa.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="canal" onclick="selMI(this,4)">🌾 Canal de riego<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/canalriego.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="desvio" onclick="selMI(this,4)">↪️ Desvío de río<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/desviorio.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="embalse" onclick="selMI(this,4)">🌊 Embalse<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/embalse.mp3" type="audio/mpeg"></audio></div>
       </div>
       <div class="mc" id="md4">
         <div class="md" data-id="presa" onclick="selMD(this,4)">Bloquea un río para almacenar agua</div>
@@ -248,16 +424,18 @@
   </div>
 </div>
 
+<!-- ══ PÁG 5: RÍOS Y LAGOS ══ -->
 <div class="pagina" id="pagina5">
   <div class="seccion">🏞️ Ríos y Lagos</div>
 
+  <!-- JUEGO 1: Completar frase ríos/lagos -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-water"></i></div>
       <div class="t-titulo">Juego 1 — Completa con RÍO o LAGO</div>
     </div>
     <div class="juego-num">🎮 Escucha el audio y completa cada frase con la palabra correcta.</div>
-    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre ríos y lagos</label><audio controls><source src="audios/Juego9.mp3" type="audio/mpeg"></audio></div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre ríos y lagos</label><audio controls><source src="Audios/Juego9.mp3" type="audio/mpeg"></audio></div>
     <div class="banco-palabras" id="banco_p5">
       <span class="palabra" onclick="usarPalabra(this,'rio','c1_p5')">RÍO</span>
       <span class="palabra" onclick="usarPalabra(this,'lago','c2_p5')">LAGO</span>
@@ -267,7 +445,7 @@
     <div class="frase-wrap">
       Un <span class="blank" id="c1_p5" data-resp="rio">_____</span> tiene corriente constante y fluye hacia el mar.<br>
       Un <span class="blank" id="c2_p5" data-resp="lago">_____</span> acumula agua quieta rodeado de tierra.<br>
-      El <span class="blank" id="c3_p5" data-resp="rio">_____</span> puede tener una salida y llegar al mar.<br>
+      El <span class="blank" id="c3_p5" data-resp="rio">_____</span> tiene desembocadura donde llega al mar.<br>
       El <span class="blank" id="c4_p5" data-resp="lago">_____</span> no tiene salida natural al mar.
     </div>
     <div style="text-align:center;">
@@ -278,6 +456,7 @@
     <div class="pts-ganados" id="pts_p5"></div>
   </div>
 
+  <!-- JUEGO 2: Repaso V/F ríos y lagos -->
   <div class="t">
     <div class="t-header">
       <div class="t-icon"><i class="fas fa-star"></i></div>
@@ -288,6 +467,11 @@
     <div class="pts-lbl">⭐ Aciertos: <span id="ptsVF5">0</span>/<span id="totVF5">4</span></div>
   </div>
 
+  <div class="t tarjeta-fin">
+    <i class="fas fa-star fa-3x" style="color:var(--vd1);display:block;text-align:center;margin-bottom:10px;"></i>
+    <h3 style="font-family:'Fredoka One',cursive;color:var(--vd1);text-align:center;">¡Felicidades! 🎉</h3>
+    <p style="color:var(--vd1);font-weight:700;text-align:center;margin-top:8px;">Completaste El Agua en el Planeta</p>
+  </div>
 </div>
 
   <div class="nav-bar">
@@ -295,15 +479,273 @@
     <span class="ind-pag" id="indPag">1/5</span>
     <button class="btn-nav" id="btnSig" onclick="cambiar(1)">SIGUIENTE →</button>
   </div>
-
-<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece me-2"></i>IR AL QUIZ</a>
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-2"></i>IR AL QUIZ</a>
 </div>
 
-__BLOCK_
+<script>
+let pag=1;const tot=5;
+function cambiar(d){
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag+=d;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
+}
+function actualizarUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    const n=i+1;p.classList.remove('activo','completado');
+    if(n===pag)p.classList.add('activo');else if(n<pag)p.classList.add('completado');
+  });
+  document.getElementById('nPag').innerText=pag;
+  document.getElementById('indPag').innerText=pag+'/'+tot;
+  document.getElementById('btnAnt').disabled=pag===1;
+  document.getElementById('btnSig').disabled=pag===tot;
+}
+document.querySelectorAll('.punto').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.getElementById('pagina'+pag).classList.remove('activa');
+    pag=parseInt(p.dataset.p);
+    document.getElementById('pagina'+pag).classList.add('activa');
+    actualizarUI();
+  });
+});
+document.addEventListener('play',e=>{
+  if(e.target.tagName==='AUDIO')document.querySelectorAll('audio').forEach(a=>{if(a!==e.target&&!a.paused)a.pause();});
+},true);
 
-__BLOCK_
-__BLOCK_
-__BLOCK_
-__BLOCK_
+
+
+
+
+// ── COMPLETAR FRASES ────────────────────────────────────────────
+const blanks_usados={};
+function usarPalabra(el,palabra,blankId){
+  if(el.classList.contains('usada'))return;
+  const blank=document.getElementById(blankId);
+  if(blank.classList.contains('fill')||blank.classList.contains('wrong'))return;
+  // si ya tenía una palabra asignada, liberar
+  if(blanks_usados[blankId]){blanks_usados[blankId].classList.remove('usada');}
+  blanks_usados[blankId]=el;
+  el.classList.add('usada');
+  blank.innerText=palabra;blank.classList.add('fill');
+}
+function verFrases(ids,fbId,ptsId){
+  let ok=true;
+  ids.forEach(id=>{
+    const b=document.getElementById(id);if(!b)return;
+    const correcto=b.dataset.resp;
+    const val=(b.innerText||'').trim().toLowerCase();
+    b.classList.remove('fill','wrong');
+    if(val===correcto||val===correcto.replace('í','i').replace('é','e'))b.classList.add('fill');
+    else{b.classList.add('wrong');ok=false;}
+  });
+  const fb=document.getElementById(fbId);fb.style.display='flex';
+  if(ok){fb.className='fb ok';fb.innerHTML='✅ ¡Todas correctas! Muy bien.';const p=document.getElementById(ptsId);if(p){p.innerText='+20 puntos 🎉';p.style.display='block';}}
+  else{fb.className='fb mal';fb.innerHTML='❌ Algunas están incorrectas. Revisa e intenta de nuevo.';}
+}
+function reinFrases(bancoId,ids,fbId){
+  ids.forEach(id=>{
+    const b=document.getElementById(id);if(b){b.innerText='_____';b.classList.remove('fill','wrong');}
+    if(blanks_usados[id]){blanks_usados[id].classList.remove('usada');delete blanks_usados[id];}
+  });
+  document.querySelectorAll('#'+bancoId+' .palabra').forEach(p=>p.classList.remove('usada'));
+  const fb=document.getElementById(fbId);if(fb)fb.style.display='none';
+}
+
+// ── SLIDER AGUA DULCE ───────────────────────────────────────────
+function verSlider(){
+  const val=parseInt(document.getElementById('slDulce').value);
+  const fb=document.getElementById('fbSlider');fb.style.display='flex';
+  const pts=document.getElementById('ptsSlider');
+  if(Math.abs(val-3)<=2){
+    fb.className='fb ok';fb.innerHTML='✅ ¡Muy cerca! La respuesta real es solo el <strong>3%</strong>. ¡El agua dulce es muy escasa!';
+    pts.innerText='+15 puntos 🎉';pts.style.display='block';
+  }else{
+    fb.className='fb mal';fb.innerHTML='❌ Tu respuesta fue '+val+'%. La real es solo el <strong>3%</strong> del agua del planeta.';
+  }
+}
+
+// ── ORDENAR PASOS ───────────────────────────────────────────────
+const ordState={};
+function agregarOrden(el,secId){
+  if(el.classList.contains('usado'))return;
+  el.classList.add('usado');
+  if(!ordState[secId])ordState[secId]=[];
+  ordState[secId].push(el.dataset.txt);
+  const sec=document.getElementById(secId);
+  const ph=sec.querySelector('span');if(ph)ph.remove();
+  if(ordState[secId].length>1){const fl=document.createElement('span');fl.className='ord-flecha';fl.innerText='→';sec.appendChild(fl);}
+  const si=document.createElement('div');si.className='ord-paso';si.innerText=el.dataset.txt;sec.appendChild(si);
+}
+function verOrden(secId,correcto,fbId,ptsId){
+  const est=ordState[secId]||[];
+  const fb=document.getElementById(fbId);fb.style.display='flex';
+  if(JSON.stringify(est)===JSON.stringify(correcto)){
+    fb.className='fb ok';fb.innerHTML='✅ ¡Orden perfecto! Así funciona el ciclo del agua.';
+    const p=document.getElementById(ptsId);if(p){p.innerText='+25 puntos 🎉';p.style.display='block';}
+  }else{
+    fb.className='fb mal';fb.innerHTML='❌ Orden incorrecto. Correcto: Evaporación → Lluvia → Nieve → Ríos → Mar.';
+  }
+}
+function reinOrden(bancoId,secId,fbId){
+  ordState[secId]=[];
+  const sec=document.getElementById(secId);
+  sec.innerHTML='<span style="color:#607d8b;font-weight:700;">Tu orden aparecerá aquí →</span>';
+  document.querySelectorAll('#'+bancoId+' .ord-item').forEach(b=>b.classList.remove('usado'));
+  document.getElementById(fbId).style.display='none';
+}
+
+// ── MATCH GENÉRICO ──────────────────────────────────────────────
+const matchState={};
+function selMI(el,gid){
+  if(el.classList.contains('ok'))return;
+  document.querySelectorAll('#mi'+gid+' .mi').forEach(x=>x.classList.remove('sel'));
+  matchState['izq'+gid]=el;el.classList.add('sel');tentarMatch(gid);
+}
+function selMD(el,gid){
+  if(el.classList.contains('ok'))return;
+  document.querySelectorAll('#md'+gid+' .md').forEach(x=>x.classList.remove('sel'));
+  matchState['der'+gid]=el;el.classList.add('sel');tentarMatch(gid);
+}
+function tentarMatch(gid){
+  const iz=matchState['izq'+gid],de=matchState['der'+gid];
+  if(!iz||!de)return;
+  if(iz.dataset.id===de.dataset.id){
+    iz.classList.add('ok');iz.classList.remove('sel');
+    de.classList.add('ok');de.classList.remove('sel');
+    const cur=parseInt(document.getElementById('ptsM'+gid).textContent)+1;
+    document.getElementById('ptsM'+gid).textContent=cur;
+    const tot=document.querySelectorAll('#mi'+gid+' .mi').length;
+    if(cur===tot){const fb=document.getElementById('fbM'+gid);fb.className='fb ok';fb.innerHTML='🎉 ¡Emparejaste todo correctamente!';fb.style.display='flex';}
+  }else{
+    de.classList.add('mal');
+    setTimeout(()=>{de.classList.remove('mal','sel');iz.classList.remove('sel');matchState['izq'+gid]=null;matchState['der'+gid]=null;},800);
+    return;
+  }
+  matchState['izq'+gid]=null;matchState['der'+gid]=null;
+}
+function reinMatch(gid){
+  document.querySelectorAll('#mi'+gid+' .mi,#md'+gid+' .md').forEach(x=>x.classList.remove('sel','ok','mal'));
+  document.getElementById('ptsM'+gid).textContent=0;
+  const fb=document.getElementById('fbM'+gid);fb.style.display='none';
+  matchState['izq'+gid]=null;matchState['der'+gid]=null;
+  mezclar('md'+gid);
+}
+function mezclar(id){
+  const c=document.getElementById(id);if(!c)return;
+  Array.from(c.children).sort(()=>Math.random()-.5).forEach(e=>c.appendChild(e));
+}
+
+// ── VERDADERO / FALSO ───────────────────────────────────────────
+const vfData={
+  vf3:[
+    {audio:'Audios/Agua.mp3',txt:'El agua cubre el 71% de la superficie de la Tierra.',resp:true},
+    {audio:'Audios/desembocadura.mp3',txt:'Todos los ríos del mundo desembocan en lagos.',resp:false},
+    {audio:'Audios/cuencahidrografica.mp3',txt:'Una cuenca hidrográfica es la zona donde el agua drena a un mismo río.',resp:true},
+    {audio:'Audios/Aguadulceglaciares.mp3',txt:'Los glaciares contienen poca cantidad de agua dulce del planeta.',resp:false},
+  ],
+  vf5:[
+    {audio:'Audios/diferenciario.mp3',txt:'Un río tiene corriente constante y fluye hacia el mar.',resp:true},
+    {audio:'Audios/definicionlago.mp3',txt:'Un lago está completamente rodeado de tierra.',resp:true},
+    {audio:'Audios/tamano.mp3',txt:'Los ríos siempre son más grandes que los lagos.',resp:false},
+    {audio:'Audios/tipoagua.mp3',txt:'Tanto ríos como lagos son fuentes de agua dulce.',resp:true},
+  ]
+};
+const vfScore={};
+function buildVF(containerId,data,ptsId,totId){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  let pts=0;
+  vfScore[containerId]={pts:0,total:data.length};
+  document.getElementById(totId).textContent=data.length;
+  data.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.style.marginBottom='18px';
+    div.innerHTML=`
+      <div class="vf-enunciado">
+        <audio controls style="margin-bottom:8px;"><source src="${q.audio}" type="audio/mpeg"></audio>
+        ${q.txt}
+      </div>
+      <div class="vf-grid">
+        <button class="vf-btn vf-v" onclick="respVF(this,${q.resp},true,'${containerId}','${ptsId}')">
+          ✅<span class="vf-sub">VERDADERO</span>
+        </button>
+        <button class="vf-btn vf-f" onclick="respVF(this,${q.resp},false,'${containerId}','${ptsId}')">
+          ❌<span class="vf-sub">FALSO</span>
+        </button>
+      </div>
+      <div class="fb" id="vf_fb_${containerId}_${i}"></div>`;
+    c.appendChild(div);
+  });
+}
+function respVF(btn,correcto,respuesta,containerId,ptsId){
+  const parent=btn.closest('.vf-grid');
+  parent.querySelectorAll('.vf-btn').forEach(b=>b.disabled=true);
+  const es_ok=(correcto===respuesta);
+  const fbId='vf_fb_'+containerId+'_'+[...document.querySelectorAll('#'+containerId+' .vf-grid')].indexOf(parent);
+  const fb=document.getElementById(fbId)||btn.closest('div').querySelector('.fb');
+  if(es_ok){
+    btn.classList.add('acierto');
+    if(fb){fb.className='fb ok';fb.innerHTML='✅ ¡Correcto!';fb.style.display='flex';}
+    vfScore[containerId].pts++;
+    document.getElementById(ptsId).textContent=vfScore[containerId].pts;
+  }else{
+    btn.classList.add('fallo');
+    const correctBtn=correcto?parent.querySelector('.vf-v'):parent.querySelector('.vf-f');
+    if(correctBtn)correctBtn.classList.add('acierto');
+    if(fb){fb.className='fb mal';fb.innerHTML='❌ Incorrecto. Escucha nuevamente el audio.';fb.style.display='flex';}
+  }
+}
+
+
+// ── QUIZ RÁPIDO PÁG 4 ──────────────────────────────────────────
+const qrData4 = [
+  {audio:'audios/obra_presa.mp3',   correcto:'Presa',         opciones:['Presa','Canal de riego','Desvío de río','Embalse']},
+  {audio:'audios/obra_canal.mp3',   correcto:'Canal de riego',opciones:['Presa','Canal de riego','Desvío de río','Embalse']},
+  {audio:'audios/obra_desvio.mp3',  correcto:'Desvío de río', opciones:['Presa','Canal de riego','Desvío de río','Embalse']},
+  {audio:'audios/obra_embalse.mp3', correcto:'Embalse',       opciones:['Presa','Canal de riego','Desvío de río','Embalse']},
+];
+let ptsQR4=0;
+function buildQuizRapido4(){
+  const c=document.getElementById('quizRapido4');
+  if(!c)return;
+  document.getElementById('totQR4').textContent=qrData4.length;
+  qrData4.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.style.marginBottom='20px';
+    const opcs=q.opciones.map(o=>`<button class="qr-btn" onclick="respQR4(this,'${o}','${q.correcto}',${i})">${o}</button>`).join('');
+    div.innerHTML=`
+      <div class="ai" style="margin-bottom:10px;">
+        <label style="font-weight:800;color:var(--tx);">🔊 Pregunta ${i+1}</label>
+        <audio controls><source src="${q.audio}" type="audio/mpeg"></audio>
+      </div>
+      <div class="qr-grid" id="qrg4_${i}">${opcs}</div>
+      <div class="fb" id="qrfb4_${i}"></div>`;
+    c.appendChild(div);
+  });
+}
+function respQR4(btn,resp,correcto,idx){
+  document.querySelectorAll('#qrg4_'+idx+' .qr-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('qrfb4_'+idx);fb.style.display='flex';
+  if(resp===correcto){
+    btn.style.background='var(--vd2)';btn.style.color='var(--am3)';btn.style.borderColor='var(--vd1)';
+    fb.className='fb ok';fb.innerHTML='✅ ¡Correcto! Esa es una '+correcto+'.';
+    ptsQR4++;document.getElementById('ptsQR4').textContent=ptsQR4;
+  }else{
+    btn.style.background='var(--ro)';btn.style.color='#fff';btn.style.borderColor='#7f0000';
+    fb.className='fb mal';fb.innerHTML='❌ Incorrecto. Era: <strong>'+correcto+'</strong>.';
+    document.querySelectorAll('#qrg4_'+idx+' .qr-btn').forEach(b=>{if(b.textContent===correcto){b.style.background='var(--vd2)';b.style.color='var(--am3)';}});
+  }
+}
+
+// ── INICIALIZAR ─────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  mezclar('md1c');mezclar('md2');mezclar('md4');
+  buildVF('vf3Container',vfData.vf3,'ptsVF3','totVF3');
+  buildVF('vf5Container',vfData.vf5,'ptsVF5','totVF5');
+  actualizarUI();
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

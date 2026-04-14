@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poblaci&oacute;n Mundial &middot; Visual Verbal &middot; Nivel F&aacute;cil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cabecera">
+  <h1>POBLACI&Oacute;N MUNDIAL</h1>
+  <div class="sub">Pa&iacute;ses m&aacute;s y menos poblados &middot; Nivel F&aacute;cil &middot; Geograf&iacute;a 5&deg;</div>
+  <div class="badge-estilo"><i class="fas fa-book-open me-2"></i>Estilo Visual Verbal</div>
+</div>
+
+<div class="progreso">
+  <i class="fas fa-book-open fa-2x" style="color:var(--guindo);"></i>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
+    Página <span id="numActual">1</span>/4
+  </span>
+</div>
+
+<div class="contenedor">
+
+<div class="pagina activa" id="pagina1">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
+    <span class="subtitulo-tema">Subtema 1 de 3</span>
+
+    <p class="mb-2">La población mundial se distribuye de manera <strong>desigual</strong>. Algunos países concentran cientos de millones de personas mientras otros apenas superan los 10,000 habitantes. Los <strong>factores geográficos</strong> como el clima, el relieve y los recursos naturales determinan esta distribución.</p>
+
+    <div class="dato-box"><strong>5 más poblados:</strong> China (1,400M) · India (1,400M) · EE.UU. (330M) · Indonesia (280M) · Brasil (215M)</div>
+    <div class="dato-box"><strong>5 menos poblados:</strong> Nauru (≈12,000) · Tuvalu (≈11,000) · Palau (≈18,000) · San Marino (≈34,000) · Liechtenstein (≈38,000)</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Relaciona cada país con su nivel de población</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-link me-2"></i>Relacionar Columnas</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Toca un país (izquierda) → luego su nivel de población correcto (derecha)</p>
+
+      <div class="row g-2">
+        <div class="col-6">
+          <h6 class="text-center fw-bold mb-2" style="color:var(--guindo);">País</h6>
+          <div id="colPaises">
+            <div class="col-item" data-par="c1" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/cn.svg" alt="China"> China
+            </div>
+            <div class="col-item" data-par="c2" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+            </div>
+            <div class="col-item" data-par="c3" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/in.svg" alt="India"> India
+            </div>
+            <div class="col-item" data-par="c4" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/sm.svg" alt="San Marino"> San Marino
+            </div>
+            <div class="col-item" data-par="c5" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/br.svg" alt="Brasil"> Brasil
+            </div>
+            <div class="col-item" data-par="c6" onclick="parear(this,'col1')">
+              <img src="https://flagcdn.com/tv.svg" alt="Tuvalu"> Tuvalu
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h6 class="text-center fw-bold mb-2" style="color:var(--guindo);">Nivel de Población</h6>
+          <div id="colNiveles">
+            <div class="col-item" data-par="c1" onclick="parear(this,'col2')">Más de 1,400 millones</div>
+            <div class="col-item" data-par="c5" onclick="parear(this,'col2')">Más de 215 millones</div>
+            <div class="col-item" data-par="c2" onclick="parear(this,'col2')">Menos de 15,000 hab.</div>
+            <div class="col-item" data-par="c3" onclick="parear(this,'col2')">Segundo más poblado</div>
+            <div class="col-item" data-par="c6" onclick="parear(this,'col2')">Isla con ~11,000 hab.</div>
+            <div class="col-item" data-par="c4" onclick="parear(this,'col2')">República con 34,000 hab.</div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-verificar btn-secundario" onclick="limpiarSeleccionRelacionar()">Borrar selección</button>
+      </div>
+      <div class="fb-ok" id="fbPag1">¡Excelente! Relacionaste correctamente todos los países con su nivel de población.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina2">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
+    <span class="subtitulo-tema">Subtema 2 de 3</span>
+
+    <p class="mb-2">La <strong>densidad de población</strong> indica cuántas personas viven en un kilómetro cuadrado. Permite comparar qué tan concentrada o dispersa está la población en un territorio. Zonas costeras y valles fértiles tienden a ser más habitados.</p>
+
+    <div class="dato-box"><strong>Concentración:</strong> Bangladesh ~1,100 hab/km². Las ciudades grandes son megalópolis.</div>
+    <div class="dato-box"><strong>Dispersión:</strong> Mongolia ~2 hab/km². Desiertos, selvas y zonas polares tienen pocos habitantes.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Completa las oraciones con las palabras del banco</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-fill-drip me-2"></i>Completar Oraciones</h3>
+
+      <div class="palabras-banco" id="bancoPalabras">
+        <span class="palabra-chip" onclick="usarPalabra(this,'densidad')">densidad</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'concentración')">concentración</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'dispersión')">dispersión</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'megalópolis')">megalópolis</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'kilómetro')">kilómetro</span>
+        <span class="palabra-chip" onclick="usarPalabra(this,'Bangladesh')">Bangladesh</span>
+      </div>
+
+      <div id="oraciones">
+        <div class="oracion-box" id="orac1">
+          <div class="oracion-txt">
+            1. La <input type="text" class="input-blank" id="b1" placeholder="___" data-ans="densidad" readonly> de población mide cuántas personas viven en un kilómetro cuadrado.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac2">
+          <div class="oracion-txt">
+            2. Cuando muchas personas viven en poco espacio se llama <input type="text" class="input-blank" id="b2" placeholder="___" data-ans="concentración" readonly> de población.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac3">
+          <div class="oracion-txt">
+            3. La <input type="text" class="input-blank" id="b3" placeholder="___" data-ans="dispersión"> ocurre cuando la población está repartida en grandes territorios con pocos habitantes.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac4">
+          <div class="oracion-txt">
+            4. Una <input type="text" class="input-blank" id="b4" placeholder="___" data-ans="megalópolis" readonly> es una ciudad enorme con millones y millones de habitantes.
+          </div>
+        </div>
+        <div class="oracion-box" id="orac5">
+          <div class="oracion-txt">
+            5. <input type="text" class="input-blank" id="b5" placeholder="___" data-ans="Bangladesh" readonly> es uno de los países con mayor densidad de población del mundo.
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-verificar" onclick="verificarOraciones()">Verificar respuestas</button>
+        <button class="btn-verificar btn-secundario" onclick="limpiarOraciones()">Limpiar respuestas</button>
+      </div>
+      <div class="fb-ok" id="fbPag2">¡Perfecto! Completaste todas las oraciones correctamente.</div>
+      <div class="fb-err" id="errPag2">Hay respuestas incorrectas. Revisa los blancos en rojo e inténtalo de nuevo.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina3">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
+    <span class="subtitulo-tema">Subtema 3 de 3</span>
+
+    <p class="mb-2">La <strong>superpoblación</strong> en zonas urbanas genera serios problemas sociales y ambientales. Los gobiernos deben crear políticas para distribuir mejor la población y los servicios a lo largo del territorio.</p>
+
+    <div class="dato-box"><strong>Palabras clave:</strong> VIVIENDA — TRAFICO — BASURA — SMOG — POBREZA — AGUA — CIUDAD — CHINA</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Encuentra las palabras clave del tema</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-search me-2"></i>Sopa de Letras</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Toca la primera letra → luego la última letra de cada palabra (horizontal o vertical)</p>
+
+      <div class="text-center mb-2">
+        <div class="sopa-grid" id="sopaGrid" style="grid-template-columns:repeat(10,32px);">
+        </div>
+      </div>
+
+      <div class="palabras-buscar" id="palabrasBuscar">
+        <span class="pal-buscar" data-word="VIVIENDA">VIVIENDA</span>
+        <span class="pal-buscar" data-word="TRAFICO">TRAFICO</span>
+        <span class="pal-buscar" data-word="BASURA">BASURA</span>
+        <span class="pal-buscar" data-word="SMOG">SMOG</span>
+        <span class="pal-buscar" data-word="POBREZA">POBREZA</span>
+        <span class="pal-buscar" data-word="AGUA">AGUA</span>
+        <span class="pal-buscar" data-word="CIUDAD">CIUDAD</span>
+        <span class="pal-buscar" data-word="CHINA">CHINA</span>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-verificar btn-secundario" onclick="cancelarSeleccionSopa()">Borrar selección</button>
+      </div>
+      <p class="text-center mt-2" style="color:var(--guindo);font-weight:700;font-size:.9rem;" id="sopaMsg"></p>
+      <div class="fb-ok" id="fbPag3">¡Encontraste todas las palabras! Eres un experto en el tema.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina4">
+  <div class="card-vv">
+    <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
+    <span class="subtitulo-tema">Retroalimentación Visual-Verbal · Los 3 subtemas</span>
+
+    <p class="mb-3">Lee con atención cada subtema. Las imágenes y el texto te ayudarán a recordar todo lo aprendido.</p>
+
+    <div class="rep-section">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Distribución mundial">
+      <div class="rep-body">
+        <h5>Subtema 1: Distribución de la Población en el Mundo</h5>
+        <p>La población mundial supera los 8,000 millones de personas y no está repartida de forma uniforme. Factores como el <strong>clima</strong> (zonas templadas atraen más población), el <strong>relieve</strong> (llanuras y valles son más habitados), la <strong>disponibilidad de agua</strong> y las <strong>oportunidades económicas</strong> determinan dónde vive la gente.</p>
+        <ul>
+          <li><strong>5 países más poblados:</strong> China, India, EE.UU., Indonesia, Brasil</li>
+          <li><strong>5 países menos poblados:</strong> Nauru, Tuvalu, Palau, San Marino, Liechtenstein</li>
+          <li>China e India juntas superan los 2,800 millones de habitantes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rep-section">
+      <img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentración urbana">
+      <div class="rep-body">
+        <h5>Subtema 2: Concentración y Dispersión de la Población</h5>
+        <p>La <strong>densidad de población</strong> mide el número de habitantes por kilómetro cuadrado (hab/km²). Es el indicador principal para conocer si una zona está concentrada o dispersa.</p>
+        <ul>
+          <li><strong>Concentración:</strong> muchas personas en poco espacio. Ej: Bangladesh (~1,100 hab/km²)</li>
+          <li><strong>Dispersión:</strong> pocas personas en gran territorio. Ej: Mongolia (~2 hab/km²)</li>
+          <li><strong>Megalópolis:</strong> ciudades gigantes como Tokio, Shanghái o Ciudad de México</li>
+          <li>Las zonas costeras y los valles fértiles tienden a tener más población</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rep-section">
+      <img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Problemas de concentración">
+      <div class="rep-body">
+        <h5>Subtema 3: Problemas de la Concentración de Población</h5>
+        <p>Cuando demasiada gente se concentra en una zona, los recursos y servicios se saturan. Esto genera graves problemas sociales y ambientales que afectan la calidad de vida de millones de personas.</p>
+        <ul>
+          <li>Escasez de <strong>vivienda</strong> y asentamientos irregulares</li>
+          <li><strong>Contaminación</strong> del aire, agua y suelo</li>
+          <li><strong>Desempleo</strong> y pobreza urbana</li>
+          <li>Saturación de <strong>servicios</strong> (salud, educación, transporte)</li>
+          <li>Congestión <strong>vial</strong> y exceso de basura</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/4</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="boton-quiz text-center">
+  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
+</a>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

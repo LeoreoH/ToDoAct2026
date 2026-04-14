@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Agua · Visual Verbal · 5to Primaria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cab">
+  <h1>💧 EL AGUA EN EL PLANETA</h1>
+  <p>Bloque II · Geografía · 5to de Primaria</p>
+  <div class="badges">
+    <span class="b1">📖 Visual Verbal</span>
+    <span class="b2">🔥 Nivel Difícil</span>
+  </div>
+</div>
+
+<div class="marcador">
+  <div class="puntos-wrap" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+    <div class="punto">5</div>
+  </div>
+  <div class="score-box">⭐ <span id="scoreTotal">0</span> pts &nbsp;<span id="estrellasMini">☆☆☆</span></div>
+</div>
+
+<div class="wrap">
+
+<div class="pag activa" id="pagina1">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,#0096c7,#023e8a);color:#fff;"><i class="fas fa-cloud-rain"></i></div>
+      <div>
+        <div class="card-title">El clima y el agua</div>
+        <div class="card-sub">Lee, encuentra las palabras y adivina el concepto</div>
+      </div>
+    </div>
+    <div class="parr">
+      El <strong>clima</strong> determina cuánta agua hay en cada región. Los climas <strong>lluviosos</strong> mantienen más agua disponible, mientras que los <strong>áridos</strong> tienen escasez. La <strong>temperatura</strong> afecta la <strong>evaporación</strong>: más calor significa que más agua se evapora y se pierde.
+    </div>
+    <div class="parr">Las <strong>regiones naturales</strong> también cambian según el clima y el agua. La <strong>selva tropical</strong> es cálida y húmeda; la <strong>tundra</strong> es muy fría y tiene el suelo congelado gran parte del año; y los <strong>humedales</strong> son lugares con mucha agua, como pantanos y ciénagas.</div>
+
+    <div class="juego-titulo">🔍 Juego 1 — Sopa de letras: encuentra las 4 palabras clave del clima</div>
+    <div class="sopa-palabras" id="pal_s1">
+      <span class="sopa-pal" data-word="CLIMA">CLIMA</span>
+      <span class="sopa-pal" data-word="LLUVIA">LLUVIA</span>
+      <span class="sopa-pal" data-word="ARIDO">ÁRIDO</span>
+      <span class="sopa-pal" data-word="VAPOR">VAPOR</span>
+    </div>
+    <div class="sopa-wrap">
+      <div class="sopa-grid" id="sopa1" style="grid-template-columns:repeat(10,34px);"></div>
+    </div>
+    <div class="retro" id="retro_s1"></div>
+    <div class="pts-ganados" id="pts_s1"></div>
+
+    <div class="juego-titulo" style="margin-top:20px;">🎭 Juego 2 — ¿Quién soy? Toca cada pista para revelarla y adivina</div>
+    <div class="adivinanza-card" id="adiv_c1">
+      <div class="adiv-titulo">🤔 Lee las pistas y descubre de qué se trata...</div>
+      <ul class="adiv-pistas">
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca para revelar → Soy lo que hace que el agua desaparezca del suelo cuando hay mucho calor</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca para revelar → Convierto el agua líquida en vapor que sube al cielo</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca para revelar → Ocurro más rápido cuando la temperatura es muy alta</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca para revelar → Soy la razón por la que en el desierto hay poca agua disponible</span></span></li>
+      </ul>
+      <div class="adiv-opciones" id="adiv_opc1">
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc1','b','retro_adiv1','pts_adiv1')" data-id="a">💧 La lluvia</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc1','b','retro_adiv1','pts_adiv1')" data-id="b">☁️ La evaporación</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc1','b','retro_adiv1','pts_adiv1')" data-id="c">🌊 El río</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc1','b','retro_adiv1','pts_adiv1')" data-id="d">❄️ El hielo</button>
+      </div>
+    </div>
+    <div class="retro" id="retro_adiv1"></div>
+    <div class="pts-ganados" id="pts_adiv1"></div>
+  </div>
+</div>
+
+<div class="pag" id="pagina2">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,#43aa8b,#1b5e20);color:#fff;"><i class="fas fa-mountain"></i></div>
+      <div>
+        <div class="card-title">El relieve y el agua</div>
+        <div class="card-sub">Corrige los errores y completa el crucigrama</div>
+      </div>
+    </div>
+    <div class="parr">El <strong>relieve</strong> ayuda a mover el agua por la Tierra. Las <strong>montañas</strong> guardan lluvia y nieve. El agua baja por las laderas, pasa por los <strong>valles</strong> y forma <strong>ríos</strong>. Ese recorrido es el camino del agua desde los lugares altos hasta los más bajos.</div>
+    <div class="parr">Recuerda: una <strong>colina</strong> es una elevaci&oacute;n m&aacute;s baja que una monta&ntilde;a. Cuando hace mucho fr&iacute;o, el agua puede caer como <strong>nieve</strong>.</div>
+
+    <div class="juego-titulo">✏️ Juego 1 — Corrige el texto usando las tarjetas de arriba</div>
+    <div class="texto-roto-wrap">
+      <div class="banco-ayuda">Primero toca una palabra roja y luego elige la tarjeta correcta.</div>
+      <div class="banco-correcciones" id="banco_texto_roto_r"></div>
+      <div class="texto-roto" id="texto_roto_r">
+        Las <span class="error-span" data-correcto="montañas" data-actual="llanuras" onclick="corregirError(this)">llanuras</span> guardan lluvia y nieve. El agua baja por las laderas y pasa por los <span class="error-span" data-correcto="valles" data-actual="mares" onclick="corregirError(this)">mares</span>. Después forma <span class="error-span" data-correcto="ríos" data-actual="presas" onclick="corregirError(this)">presas</span> que siguen su <span class="error-span" data-correcto="camino" data-actual="calma" onclick="corregirError(this)">calma</span> hacia lugares más bajos.
+      </div>
+      <button class="btn-v" onclick="verificarTextoRoto('retro_tr','pts_tr')">✅ Verificar correcciones</button>
+      <div class="retro" id="retro_tr"></div>
+      <div class="pts-ganados" id="pts_tr"></div>
+    </div>
+
+    <div class="juego-titulo" style="margin-top:20px;">📝 Juego 2 — Crucigrama del relieve</div>
+    <div class="crucigrama-wrap">
+      <div class="crucigrama" id="cruc2" style="grid-template-columns:repeat(9,36px);"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div style="font-weight:800;color:var(--na2);margin-bottom:6px;">➡️ HORIZONTALES</div>
+        <ul class="pistas-lista">
+          <li><span>1.</span> Lugar bajo por donde puede pasar un río (5 letras)</li>
+          <li><span>3.</span> Agua que corre por la tierra (3 letras)</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:800;color:var(--na2);margin-bottom:6px;">⬇️ VERTICALES</div>
+        <ul class="pistas-lista">
+          <li><span>2.</span> Elevaci&oacute;n m&aacute;s baja que una monta&ntilde;a (6 letras)</li>
+          <li><span>4.</span> Agua blanca que cae del cielo cuando hace fr&iacute;o (5 letras)</li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn-v" onclick="verificarCruc2()">✅ Verificar crucigrama</button>
+    <div class="retro" id="retro_cruc2"></div>
+    <div class="pts-ganados" id="pts_cruc2"></div>
+  </div>
+</div>
+
+<div class="pag" id="pagina3">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--na),var(--na2));color:#fff;"><i class="fas fa-hard-hat"></i></div>
+      <div>
+        <div class="card-title">Obras humanas y el agua</div>
+        <div class="card-sub">¡Gira la ruleta y responde las preguntas!</div>
+      </div>
+    </div>
+    <div class="parr">
+      Las personas construimos obras para controlar el agua: las <strong>presas</strong> almacenan agua de ríos, los <strong>canales de riego</strong> llevan agua a cultivos lejanos, y los <strong>desvíos de ríos</strong> cambian su dirección para construir carreteras o ciudades. Todas estas obras modifican cuánta agua llega a otros lugares.
+    </div>
+
+    <div class="juego-titulo">🎡 Juego 1 — ¡Gira la ruleta y responde la pregunta que salga!</div>
+    <div class="ruleta-wrap">
+      <svg class="ruleta-svg" viewBox="0 0 220 220" id="ruletaSvg">
+        <circle cx="110" cy="110" r="108" fill="#f0faf2" stroke="#c75d00" stroke-width="4"/>
+        <path d="M110,110 L110,5 A105,105 0 0,1 196,57.5 Z" fill="#fb8500"/>
+        <path d="M110,110 L196,57.5 A105,105 0 0,1 196,162.5 Z" fill="#ffb703"/>
+        <path d="M110,110 L196,162.5 A105,105 0 0,1 110,215 Z" fill="#0077b6"/>
+        <path d="M110,110 L110,215 A105,105 0 0,1 24,162.5 Z" fill="#023e8a"/>
+        <path d="M110,110 L24,162.5 A105,105 0 0,1 24,57.5 Z" fill="#2dc653"/>
+        <path d="M110,110 L24,57.5 A105,105 0 0,1 110,5 Z" fill="#e63946"/>
+        <text x="148" y="68" fill="white" font-size="9" font-weight="900" font-family="Nunito" text-anchor="middle">PRESA</text>
+        <text x="185" y="115" fill="#023e8a" font-size="9" font-weight="900" font-family="Nunito" text-anchor="middle">RIEGO</text>
+        <text x="165" y="170" fill="white" font-size="8" font-weight="900" font-family="Nunito" text-anchor="middle">DESVÍO</text>
+        <text x="68" y="178" fill="white" font-size="8" font-weight="900" font-family="Nunito" text-anchor="middle">IMPACTO</text>
+        <text x="42" y="115" fill="white" font-size="8" font-weight="900" font-family="Nunito" text-anchor="middle">CARRETERA</text>
+        <text x="68" y="62" fill="white" font-size="8" font-weight="900" font-family="Nunito" text-anchor="middle">CANAL</text>
+        <circle cx="110" cy="110" r="18" fill="white" stroke="#c75d00" stroke-width="3"/>
+        <text x="110" y="115" fill="#c75d00" font-size="16" font-weight="900" text-anchor="middle">💧</text>
+        <polygon points="110,8 105,25 115,25" fill="#c75d00"/>
+      </svg>
+      <br>
+      <button class="btn-girar" id="btnGirar" onclick="girarRuleta()">🎡 ¡GIRAR!</button>
+    </div>
+    <div class="ruleta-pregunta" id="ruletaPregunta">⬆️ Gira la ruleta para obtener tu pregunta</div>
+    <div class="ruleta-opciones" id="ruletaOpciones" style="display:none;"></div>
+    <div class="retro" id="retro_rul"></div>
+    <div class="pts-ganados" id="pts_rul"></div>
+
+    <div class="juego-titulo" style="margin-top:20px;">🎭 Juego 2 — ¿Quién soy? Revela las pistas</div>
+    <div class="adivinanza-card">
+      <div class="adiv-titulo">🤔 Adivina de qué obra se trata...</div>
+      <ul class="adiv-pistas">
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Soy una construcción enorme que cierra el paso de un río</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Detrás de mí se forma un gran lago artificial llamado embalse</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Sirvo para guardar agua y también para producir electricidad</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Por mi culpa, aguas abajo llega menos agua al río</span></span></li>
+      </ul>
+      <div class="adiv-opciones" id="adiv_opc3">
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc3','b','retro_adiv3','pts_adiv3')" data-id="a">🌾 Canal de riego</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc3','b','retro_adiv3','pts_adiv3')" data-id="b">🏗️ La Presa</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc3','b','retro_adiv3','pts_adiv3')" data-id="c">🛣️ La Carretera</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc3','b','retro_adiv3','pts_adiv3')" data-id="d">↪️ Desvío de río</button>
+      </div>
+    </div>
+    <div class="retro" id="retro_adiv3"></div>
+    <div class="pts-ganados" id="pts_adiv3"></div>
+  </div>
+</div>
+
+<div class="pag" id="pagina4">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,#0096c7,#023e8a);color:#fff;"><i class="fas fa-globe-americas"></i></div>
+      <div>
+        <div class="card-title">Recursos hídricos del planeta</div>
+        <div class="card-sub">Adivina la palabra y completa el crucigrama</div>
+      </div>
+    </div>
+    <div class="parr">
+      El <strong>97%</strong> del agua del planeta es <strong>salada</strong> (océanos y mares). Solo el <strong>3%</strong> es <strong>agua dulce</strong>. Se llama "dulce" porque <strong>no tiene sal</strong>, no por su sabor. Gran parte del agua dulce está <strong>congelada</strong> en glaciares. Los grandes ríos como el <strong>Amazonas</strong> y el <strong>Nilo</strong> llevan agua dulce hasta los océanos.
+    </div>
+    <div class="parr">Recuerda: el agua que <strong>no tiene sal</strong> se llama <strong>agua dulce</strong>. Si se congela, se vuelve <strong>hielo</strong>. El <strong>r&iacute;o</strong> lleva agua dulce por la tierra. El <strong>mar</strong> es una gran cantidad de agua salada que vemos junto a muchas playas. El <strong>oc&eacute;ano</strong> guarda casi toda el agua salada del planeta.</div>
+
+    <div class="juego-titulo">🔤 Juego 1 — Adivina la palabra letra por letra</div>
+    <div class="ahorcado-wrap" id="ahorcado_wrap">
+      <div class="ahorcado-pista" id="ah_pista">Cargando...</div>
+      <div class="ah-vidas" id="ah_vidas">❤️❤️❤️❤️❤️</div>
+      <div class="ahorcado-letras" id="ah_letras"></div>
+      <div class="teclado" id="ah_teclado"></div>
+      <button class="btn-v" id="btn_sig_pal" onclick="siguientePalabra()" style="display:none;">➡️ Siguiente palabra</button>
+    </div>
+    <div class="retro" id="retro_ah"></div>
+    <div class="pts-ganados" id="pts_ah"></div>
+
+    <div class="juego-titulo" style="margin-top:20px;">📝 Juego 2 — Crucigrama del agua</div>
+    <div class="crucigrama-wrap">
+      <div class="crucigrama" id="cruc4" style="grid-template-columns:repeat(8,36px);"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div style="font-weight:800;color:var(--na2);margin-bottom:6px;">➡️ HORIZONTALES</div>
+        <ul class="pistas-lista">
+          <li><span>1.</span> Tipo de agua que NO tiene sal (5 letras)</li>
+          <li><span>3.</span> Agua dulce que corre por la tierra (3 letras)</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-weight:800;color:var(--na2);margin-bottom:6px;">⬇️ VERTICALES</div>
+        <ul class="pistas-lista">
+          <li><span>2.</span> Agua congelada (5 letras)</li>
+          <li><span>4.</span> Gran cantidad de agua salada que vemos junto a la playa (3 letras)</li>
+        </ul>
+      </div>
+    </div>
+    <button class="btn-v" onclick="verificarCruc4()">✅ Verificar crucigrama</button>
+    <div class="retro" id="retro_cruc4"></div>
+    <div class="pts-ganados" id="pts_cruc4"></div>
+  </div>
+</div>
+
+<div class="pag" id="pagina5">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,#43aa8b,#0077b6);color:#fff;"><i class="fas fa-water"></i></div>
+      <div>
+        <div class="card-title">Ríos y Lagos</div>
+        <div class="card-sub">Adivina palabras clave y corrige los errores</div>
+      </div>
+    </div>
+    <div class="parr">
+      Un <strong>río</strong> es una corriente de agua que fluye constantemente hacia el mar o hacia otro río. Un <strong>lago</strong> acumula agua quieta, completamente rodeado de tierra. Los dos son fuentes de <strong>agua dulce</strong> esenciales para la vida, pero su diferencia principal está en el <strong>movimiento</strong> del agua.
+    </div>
+
+    <div class="juego-titulo">🎭 Juego 1 — ¿Soy un RÍO o un LAGO? Lee las pistas y decide</div>
+    <div class="adivinanza-card" style="background:linear-gradient(135deg,#005f61,#0a9396);">
+      <div class="adiv-titulo">🤔 Revela pistas y adivina...</div>
+      <ul class="adiv-pistas">
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Mi agua está completamente quieta, casi no me muevo</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → Estoy rodeado de tierra por todos mis lados</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → No llego al mar; mi agua se queda aquí</span></span></li>
+        <li onclick="revelarPista(this)"><span class="pista-icono">🔒</span><span class="pista-txt"><span class="pista-oculta">Toca → El Lago de Chapala y el Mar Muerto son ejemplos de lo que soy</span></span></li>
+      </ul>
+      <div class="adiv-opciones" id="adiv_opc5">
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc5','b','retro_adiv5','pts_adiv5')" data-id="a">🏞️ Soy un RÍO</button>
+        <button class="adiv-opc" onclick="respAdiv(this,'adiv_opc5','b','retro_adiv5','pts_adiv5')" data-id="b">🏊 Soy un LAGO</button>
+      </div>
+    </div>
+    <div class="retro" id="retro_adiv5"></div>
+    <div class="pts-ganados" id="pts_adiv5"></div>
+
+    <div class="juego-titulo" style="margin-top:20px;">✏️ Juego 2 — Corrige el texto usando las tarjetas de arriba</div>
+    <div class="texto-roto-wrap">
+      <div class="banco-ayuda">Primero toca una palabra roja y luego elige la tarjeta correcta.</div>
+      <div class="banco-correcciones" id="banco_texto_roto_rl"></div>
+      <div class="texto-roto" id="texto_roto_rl">
+        Un río tiene <span class="error-span" data-correcto="corriente" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-correcto="movimiento" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-correcto="salida" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span> hacia el mar. En cambio, un lago tiene agua <span class="error-span" data-correcto="quieta" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
+      </div>
+      <button class="btn-v" onclick="verificarTextoRoto2('retro_tr_rl','pts_tr_rl')">✅ Verificar correcciones</button>
+      <div class="retro" id="retro_tr_rl"></div>
+      <div class="pts-ganados" id="pts_tr_rl"></div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="btn-nav" id="btnAnterior" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="contPag">1/5</span>
+  <button class="btn-nav" id="btnSiguiente" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+
+<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
+</div>
+
+
+
+</body>
+</html>
+

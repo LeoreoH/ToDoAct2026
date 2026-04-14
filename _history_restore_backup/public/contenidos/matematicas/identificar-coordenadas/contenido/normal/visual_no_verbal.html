@@ -1,0 +1,1293 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas · Nivel Normal · Visual/No Verbal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fff7e6, #ffedd5);
+            color: #9a3412;
+            min-height: 100vh;
+        }
+
+        .cabecera-normal {
+            background: linear-gradient(135deg, #f97316, #c2410c);
+            padding: 25px 20px;
+            border-bottom: 6px solid #fde68a;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+            color: white;
+        }
+
+        .cabecera-normal h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            color: white;
+            text-shadow: 3px 3px 0 #9a3412;
+            margin-bottom: 8px;
+        }
+
+        .badge-estilo {
+            background: #fde68a;
+            color: #9a3412;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-block;
+            border: 4px solid white;
+            margin-top: 10px;
+        }
+
+        .badge-nivel {
+            background: #9a3412;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+            margin-left: 15px;
+            border: 2px solid #fde68a;
+        }
+
+        .barra-progreso {
+            background: white;
+            border-radius: 60px;
+            margin: 25px auto;
+            max-width: 950px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 3px solid #f97316;
+            box-shadow: 0 5px 0 #fed7aa;
+            flex-wrap: wrap;
+        }
+
+        .puntos-progreso {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .punto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffedd5;
+            border: 3px solid #f97316;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #9a3412;
+            transition: all 0.3s;
+        }
+
+        .punto.activo {
+            background: #fde68a;
+            border-color: #c2410c;
+            color: #7b341e;
+            transform: scale(1.15);
+        }
+
+        .punto.completado {
+            background: #4caf50;
+            border-color: white;
+            color: white;
+        }
+
+        .contenedor-paginas {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .pagina {
+            display: none;
+            animation: aparecer 0.5s ease;
+        }
+
+        .pagina.activa {
+            display: block;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tarjeta-contenido {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 3px solid #f97316;
+            box-shadow: 0 8px 0 #fed7aa;
+        }
+
+        .titulo-pagina {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: #c2410c;
+            margin-bottom: 22px;
+            border-left: 8px solid #fde68a;
+            padding-left: 20px;
+        }
+
+        /* ============================================
+           CONTENIDO CON IMÁGENES AMPLIABLES
+        ============================================ */
+        .contenedor-imagen {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #fff7e6;
+            border-radius: 20px;
+            border: 2px solid #fed7aa;
+            position: relative;
+        }
+
+        .contenedor-imagen img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 3px solid #f97316;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .contenedor-imagen img.ampliada {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 4px solid #fde68a;
+        }
+
+        .pie-imagen {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #9a3412;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        /* Overlay para cuando la imagen está ampliada */
+        body.imagen-ampliada::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .recuadro-info {
+            background: #fff7e6;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #fde68a;
+        }
+
+        .recuadro-info h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .lista-iconos {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista-iconos li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-bottom: 1px solid #fed7aa;
+        }
+
+        .lista-iconos li:last-child {
+            border-bottom: none;
+        }
+
+        .lista-iconos i {
+            color: #fde68a;
+            font-size: 1.2rem;
+            width: 28px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .texto-destacado {
+            background: #fff3e0;
+            border: 2px solid #fde68a;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #9a3412;
+        }
+
+        /* ============================================
+           ACTIVIDADES VISUAL/NO VERBAL
+        ============================================ */
+        .actividad-visual {
+            background: #fff3e0;
+            border: 3px solid #f97316;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .actividad-visual h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        /* Página 1: Mapa de supermercado */
+        .mapa-supermercado {
+            display: inline-grid;
+            grid-template-columns: repeat(4, 90px);
+            grid-template-rows: repeat(4, 80px);
+            gap: 8px;
+            background: #fed7aa;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 0 auto;
+        }
+
+        .local {
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #9a3412;
+            text-align: center;
+            padding: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .local:hover {
+            background: #fde68a;
+            transform: scale(1.05);
+            border-color: #c2410c;
+        }
+
+        .local.ruta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .local.inicio {
+            background: #f97316;
+            color: white;
+            border-color: white;
+            animation: brillo 1s infinite;
+        }
+
+        @keyframes brillo {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .respuesta-opcion {
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 15px;
+            padding: 12px 20px;
+            margin: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .respuesta-opcion:hover {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .respuesta-opcion.seleccionada {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        /* Página 2: CU nueva ruta */
+        .cuadricula-cu-nueva {
+            display: inline-grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 80px);
+            gap: 8px;
+            background: #fed7aa;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 0 auto;
+        }
+
+        /* Página 3: Metro completo */
+        .mapa-metro-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #f97316;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .mapa-metro-svg {
+            width: 100%;
+            min-width: 700px;
+            height: auto;
+        }
+
+        .estacion {
+            cursor: pointer;
+            transition: filter 0.3s;
+        }
+
+        .estacion:hover {
+            filter: brightness(1.2);
+        }
+
+        .estacion circle {
+            transition: r 0.3s;
+        }
+
+        .estacion:hover circle {
+            r: 14;
+        }
+
+        .estacion text {
+            font-size: 10px;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .transbordo {
+            filter: drop-shadow(0 0 8px gold);
+        }
+
+        .linea-metro {
+            transition: stroke-width 0.3s;
+        }
+
+        .linea-metro:hover {
+            stroke-width: 8;
+        }
+
+        .leyenda-metro {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .leyenda-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-linea {
+            width: 25px;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .color-linea.roja { background: #ef4444; }
+        .color-linea.azul { background: #3b82f6; }
+        .color-linea.verde { background: #10b981; }
+
+        /* Página 4: Robots con nombres */
+        .tabla-robots-nombres {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .tabla-robots-nombres th {
+            background: #f97316;
+            color: white;
+            padding: 12px;
+            font-weight: 700;
+        }
+
+        .tabla-robots-nombres td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #fed7aa;
+            color: #9a3412;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tabla-robots-nombres tr:hover td {
+            background: #fde68a;
+        }
+
+        .tabla-robots-nombres td.destacado {
+            background: #4caf50;
+            color: white;
+        }
+
+        .robot-icon {
+            font-size: 1.5rem;
+            margin-right: 5px;
+        }
+
+        /* Página 5: Teatro simple */
+        .teatro-simple {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .escenario-simple {
+            width: 80%;
+            height: 40px;
+            background: #c2410c;
+            border-radius: 20px 20px 0 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .fila-simple {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        .numero-fila-simple {
+            width: 50px;
+            font-weight: 700;
+            color: #c2410c;
+        }
+
+        .asientos-fila {
+            display: flex;
+            gap: 5px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .asiento-simple {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .asiento-simple:hover {
+            background: #fde68a;
+            transform: scale(1.1);
+        }
+
+        .asiento-simple.seleccionado {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .navegador {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 20px;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 60px;
+            border: 3px solid #f97316;
+            box-shadow: 0 5px 0 #fed7aa;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.15rem;
+            border: 3px solid #f97316;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .btn-nav:disabled {
+            background: #e0e0e0;
+            color: #9e9e9e;
+            border-color: #bdbdbd;
+        }
+
+        .indicador-pagina {
+            font-size: 1.35rem;
+            font-weight: 800;
+            background: #ffedd5;
+            color: #9a3412;
+            padding: 8px 26px;
+            border-radius: 40px;
+            border: 3px solid #f97316;
+        }
+
+        .boton-quiz {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            background: #fde68a;
+            color: #9a3412;
+            border: none;
+            padding: 18px 42px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.45rem;
+            text-decoration: none;
+            border: 4px solid #f97316;
+            box-shadow: 0 8px 0 #fdba74;
+            transition: all 0.2s;
+        }
+
+        .boton-quiz:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #fdba74;
+            background: white;
+        }
+
+        .feedback-visual {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            display: none;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .cabecera-normal h1 { font-size: 2rem; }
+            .navegador { flex-direction: column; }
+            .titulo-pagina { font-size: 1.5rem; }
+            .badge-nivel { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUDIOS -->
+<audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+<div class="cabecera-normal">
+    <h1>🧭 COORDENADAS</h1>
+    <p class="lead text-white">Nivel Normal · Planos y rutas</p>
+    <div>
+        <span class="badge-estilo">👁️ Visual / No Verbal</span>
+        <span class="badge-nivel">📊 Intermedio</span>
+    </div>
+</div>
+
+<div class="barra-progreso">
+    <i class="fas fa-map fa-2x" style="color: #f97316;"></i>
+    <div class="puntos-progreso" id="puntosProgreso">
+        <div class="punto activo" data-pagina="1">1</div>
+        <div class="punto" data-pagina="2">2</div>
+        <div class="punto" data-pagina="3">3</div>
+        <div class="punto" data-pagina="4">4</div>
+        <div class="punto" data-pagina="5">5</div>
+    </div>
+    <span class="badge" style="background: #f97316; color: white; font-size: 1.1rem; padding: 8px 20px;">
+        Página <span id="paginaActualNum">1</span>/5
+    </span>
+</div>
+
+<div class="contenedor-paginas">
+
+    <!-- ============================================
+         PÁGINA 1: RUTA DE SUPERMERCADO
+        ============================================ -->
+    <div class="pagina activa" id="pagina1">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-shopping-cart me-3"></i>Ruta de Sebastián</h2>
+
+            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con calles numeradas" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Ruta de la casa de Sebastian al parquefortino serrano</div>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-store me-2"></i>Tiendas en la plaza</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-tshirt"></i> Ropa: A1</li>
+                    <li><i class="fas fa-gamepad"></i> Juguetes: B1</li>
+                    <li><i class="fas fa-laptop"></i> Electrónica: C1</li>
+                    <li><i class="fas fa-utensils"></i> Comida: A3</li>
+                </ul>
+            </div>
+
+            <!-- ACTIVIDAD -->
+            <div class="actividad-visual">
+                <h4><i class="fas fa-route me-2"></i>Encuentra la ruta</h4>
+                <p>Observa el mapa. ¿Qué ruta debes seguir para ir de Ropa (A1) a Comida (A3)?</p>
+
+                <div style="display: flex; justify-content: center;">
+                    <div class="mapa-supermercado">
+                        <div class="local inicio" data-local="ropa" style="grid-column: 1; grid-row: 1;">👕 Ropa</div>
+                        <div class="local" data-local="juguetes" style="grid-column: 2; grid-row: 1;">🧸 Juguetes</div>
+                        <div class="local" data-local="electronica" style="grid-column: 3; grid-row: 1;">📱 Elec.</div>
+                        <div class="local" data-local="libreria" style="grid-column: 4; grid-row: 1;">📚 Librería</div>
+                        
+                        <div class="local" data-local="deportes" style="grid-column: 1; grid-row: 2;">⚽ Deportes</div>
+                        <div class="local" data-local="zapatos" style="grid-column: 2; grid-row: 2;">👞 Zapatos</div>
+                        <div class="local" data-local="regalos" style="grid-column: 3; grid-row: 2;">🎁 Regalos</div>
+                        <div class="local" data-local="cafe" style="grid-column: 4; grid-row: 2;">☕ Café</div>
+                        
+                        <div class="local" data-local="comida" style="grid-column: 1; grid-row: 3;">🍔 Comida</div>
+                        <div class="local" data-local="pizzeria" style="grid-column: 2; grid-row: 3;">🍕 Pizzería</div>
+                        <div class="local" data-local="helados" style="grid-column: 3; grid-row: 3;">🍦 Helados</div>
+                        <div class="local" data-local="postres" style="grid-column: 4; grid-row: 3;">🍰 Postres</div>
+                        
+                        <div class="local" data-local="cine" style="grid-column: 1; grid-row: 4;">🎬 Cine</div>
+                        <div class="local" data-local="juegos" style="grid-column: 2; grid-row: 4;">🎮 Juegos</div>
+                        <div class="local" data-local="taqueria" style="grid-column: 3; grid-row: 4;">🌮 Taquería</div>
+                        <div class="local" data-local="fuente" style="grid-column: 4; grid-row: 4;">🍧 Fuente</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 0)">A) 2 sur</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 1)">B) 1 sur, 1 este</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 2)">C) 2 este, 2 sur</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 3)">D) 3 sur</div>
+                </div>
+
+                <div id="feedback1" class="feedback-visual"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 2: CIUDAD UNIVERSITARIA
+        ============================================ -->
+    <div class="pagina" id="pagina2">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+
+            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg" alt="Mapa de Ciudad Universitaria" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Ciudad Universitaria con facultades y edificios</div>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-map-marked-alt me-2"></i>Nueva ruta: Biblioteca a Museo</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-right"></i> Biblioteca → Derecho (este)</li>
+                    <li><i class="fas fa-arrow-right"></i> Derecho → Economía (este)</li>
+                    <li><i class="fas fa-arrow-up"></i> Economía → Museo (norte)</li>
+                </ul>
+            </div>
+
+            <!-- ACTIVIDAD -->
+            <div class="actividad-visual">
+                <h4><i class="fas fa-route me-2"></i>Ruta inversa</h4>
+                <p>Si estás en el Museo y quieres regresar a la Biblioteca, ¿qué ruta debes seguir?</p>
+                
+                <div style="display: flex; justify-content: center;">
+                    <div class="cuadricula-cu-nueva">
+                        <div class="local" style="grid-column: 1; grid-row: 3;">📚 Biblioteca</div>
+                        <div class="local" style="grid-column: 2; grid-row: 3;">⚖️ Derecho</div>
+                        <div class="local" style="grid-column: 3; grid-row: 3;">📊 Economía</div>
+                        <div class="local inicio" style="grid-column: 3; grid-row: 2;">🏛️ Museo</div>
+                        <div class="local" style="grid-column: 1; grid-row: 1;">🔬 Ciencias</div>
+                        <div class="local" style="grid-column: 2; grid-row: 1;">🧪 Química</div>
+                        <div class="local" style="grid-column: 4; grid-row: 2;">📐 Ingeniería</div>
+                        <div class="local" style="grid-column: 4; grid-row: 4;">🏫 Medicina</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 0)">A) Sur, Oeste, Oeste</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 1)">B) Oeste, Oeste, Sur</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 2)">C) Oeste, Sur, Oeste</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 3)">D) Sur, Sur, Oeste</div>
+                </div>
+
+                <div id="feedback2" class="feedback-visual"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 3: METRO COMPLETO
+        ============================================ -->
+    <div class="pagina" id="pagina3">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
+
+            <!-- CONTENIDO (SVG, no necesita ampliación) -->
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>Líneas del Metro</h4>
+                <ul class="lista-iconos">
+                    <li><span style="color:#ef4444; font-weight:700;">Línea 1:</span> Observatorio - Tacubaya - <strong style="color:gold;">Balderas</strong> - Pino Suárez - Pantitlán</li>
+                    <li><span style="color:#3b82f6; font-weight:700;">Línea 2:</span> Tasqueña - Ermita - Chabacano - <strong style="color:gold;">Balderas</strong> - Cuatro Caminos</li>
+                    <li><span style="color:#10b981; font-weight:700;">Línea 3:</span> Universidad - Copilco - <strong style="color:gold;">Balderas</strong> - Guerrero - Indios Verdes</li>
+                </ul>
+                <p class="texto-destacado" style="margin-top:10px;">🌟 <strong>Balderas</strong> es la única estación donde coinciden las 3 líneas. Allí puedes hacer transbordo.</p>
+            </div>
+
+            <!-- MAPA COMPLETO -->
+            <div class="mapa-metro-container">
+                <svg class="mapa-metro-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Línea 1 (Roja) -->
+                    <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 1"/>
+                    
+                    <!-- Línea 2 (Azul) -->
+                    <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 2"/>
+                    
+                    <!-- Línea 3 (Verde) -->
+                    <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 3"/>
+                    
+                    <!-- Estaciones Línea 1 -->
+                    <g class="estacion" data-nombre="Observatorio" data-linea="L1">
+                        <circle cx="80" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="80" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Observatorio</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Tacubaya" data-linea="L1">
+                        <circle cx="180" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="180" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Tacubaya</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L1,L2,L3">
+                        <circle cx="280" cy="80" r="12" fill="#ef4444" stroke="white" stroke-width="3"/>
+                        <circle cx="280" cy="80" r="6" fill="gold"/>
+                        <text x="280" y="50" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="700">Balderas</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Pino Suárez" data-linea="L1">
+                        <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="380" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Pino Suárez</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Pantitlán" data-linea="L1">
+                        <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
+                        <text x="620" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Pantitlán</text>
+                    </g>
+                    
+                    <!-- Estaciones Línea 2 -->
+                    <g class="estacion" data-nombre="Tasqueña" data-linea="L2">
+                        <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="350" text-anchor="middle" fill="#9a3412" font-size="10">Tasqueña</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Ermita" data-linea="L2">
+                        <circle cx="150" cy="250" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="250" text-anchor="end" fill="#9a3412" font-size="10">Ermita</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Chabacano" data-linea="L2">
+                        <circle cx="150" cy="180" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="120" y="180" text-anchor="end" fill="#9a3412" font-size="10">Chabacano</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L2">
+                        <circle cx="150" cy="110" r="12" fill="#3b82f6" stroke="white" stroke-width="3"/>
+                        <circle cx="150" cy="110" r="6" fill="gold"/>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Cuatro Caminos" data-linea="L2">
+                        <circle cx="150" cy="50" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                        <text x="150" y="30" text-anchor="middle" fill="#9a3412" font-size="10">Cuatro Caminos</text>
+                    </g>
+                    
+                    <!-- Estaciones Línea 3 -->
+                    <g class="estacion" data-nombre="Universidad" data-linea="L3">
+                        <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="350" text-anchor="middle" fill="#9a3412" font-size="10">Universidad</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Copilco" data-linea="L3">
+                        <circle cx="400" cy="250" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="250" text-anchor="start" fill="#9a3412" font-size="10">Copilco</text>
+                    </g>
+                    
+                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L3">
+                        <circle cx="400" cy="180" r="12" fill="#10b981" stroke="white" stroke-width="3"/>
+                        <circle cx="400" cy="180" r="6" fill="gold"/>
+                        <text x="400" y="210" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="700">Balderas</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Guerrero" data-linea="L3">
+                        <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="430" y="110" text-anchor="start" fill="#9a3412" font-size="10">Guerrero</text>
+                    </g>
+                    
+                    <g class="estacion" data-nombre="Indios Verdes" data-linea="L3">
+                        <circle cx="400" cy="50" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
+                        <text x="400" y="30" text-anchor="middle" fill="#9a3412" font-size="10">Indios Verdes</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="leyenda-metro">
+                <div class="leyenda-item"><div class="color-linea roja"></div> Línea 1</div>
+                <div class="leyenda-item"><div class="color-linea azul"></div> Línea 2</div>
+                <div class="leyenda-item"><div class="color-linea verde"></div> Línea 3</div>
+                <div class="leyenda-item"><span style="color:gold;">⬤</span> Transbordo</div>
+            </div>
+
+            <!-- ACTIVIDAD -->
+            <div class="actividad-visual">
+                <h4><i class="fas fa-question-circle me-2"></i>¿Qué estación necesitas?</h4>
+                <p>Para ir de Observatorio (Línea 1) a Copilco (Línea 3), ¿en qué estación debes hacer transbordo?</p>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 0)">A) Tacubaya</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 1)">B) Balderas</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 2)">C) Pino Suárez</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 3)">D) Guerrero</div>
+                </div>
+
+                <div id="feedback3" class="feedback-visual"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 4: ROBOTS CON NOMBRES AMIGABLES
+        ============================================ -->
+    <div class="pagina" id="pagina4">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots amigos</h2>
+
+            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/tabla-robot-avanzada.jpg" alt="Tabla de robots" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Tabla con datos de robots: unidades por paso y pasos dados</div>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-calculator me-2"></i>Distancia = Pasos × Unidades por paso</h4>
+            </div>
+
+            <!-- TABLA NUEVA -->
+            <table class="tabla-robots-nombres">
+                <thead>
+                    <tr>
+                        <th>Robot</th>
+                        <th>Pasos</th>
+                        <th>Unidades/paso</th>
+                        <th>Distancia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-pasos="4" data-unidades="3">
+                        <td><span class="robot-icon">🤖</span> Bolt</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td class="distancia">?</td>
+                    </tr>
+                    <tr data-pasos="5" data-unidades="4">
+                        <td><span class="robot-icon">🦾</span> Titan</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td class="distancia">?</td>
+                    </tr>
+                    <tr data-pasos="6" data-unidades="2">
+                        <td><span class="robot-icon">⚡</span> Rayo</td>
+                        <td>6</td>
+                        <td>2</td>
+                        <td class="distancia">?</td>
+                    </tr>
+                    <tr data-pasos="3" data-unidades="5">
+                        <td><span class="robot-icon">🛡️</span> Tank</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td class="distancia">?</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ACTIVIDAD -->
+            <div class="actividad-visual">
+                <h4><i class="fas fa-question-circle me-2"></i>¿Quién avanzó más?</h4>
+                <p>Pasa el cursor sobre cada robot para ver su distancia. Luego elige.</p>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 0)">A) Bolt</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 1)">B) Titan</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 2)">C) Rayo</div>
+                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 3)">D) Tank</div>
+                </div>
+
+                <div id="feedback4" class="feedback-visual"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PÁGINA 5: TEATRO SIMPLE
+        ============================================ -->
+    <div class="pagina" id="pagina5">
+        <div class="tarjeta-contenido">
+            <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Teatro</h2>
+
+            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <div class="contenedor-imagen">
+                <img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg" alt="Plano de teatro" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Plano de teatro con filas numeradas y asientos</div>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-chair me-2"></i>Platea (10 filas, 10 asientos por fila)</h4>
+                <p>Los asientos se numeran del 1 al 10 de izquierda a derecha.</p>
+            </div>
+
+            <!-- TEATRO SIMPLE -->
+            <div class="teatro-simple">
+                <div class="escenario-simple">ESCENARIO</div>
+                <div class="filas-teatro" id="teatro-simple">
+                    <!-- Se genera con JS -->
+                </div>
+            </div>
+
+            <!-- ACTIVIDAD -->
+            <div class="actividad-visual">
+                <h4><i class="fas fa-question-circle me-2"></i>Encuentra el asiento</h4>
+                <p>Haz clic en el asiento <strong>Fila 4, Asiento 8</strong></p>
+                
+                <div id="feedback5" class="feedback-visual"></div>
+            </div>
+
+            <!-- BOTÓN PARA IR AL QUIZ -->
+            <a href="quiz.html" class="boton-quiz text-center">
+                <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
+            </a>
+        </div>
+    </div>
+
+    <!-- NAVEGADOR -->
+    <div class="navegador">
+        <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+            <i class="fas fa-arrow-left me-2"></i> ANTERIOR
+        </button>
+        <span class="indicador-pagina" id="contadorPagina">1/5</span>
+        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+            SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+
+</div>
+
+<script>
+    // ============================================
+    // VARIABLES GLOBALES
+    // ============================================
+    let paginaActual = 1;
+    const totalPaginas = 5;
+    const audioWhoosh = document.getElementById('audioWhoosh');
+    const audioClick = document.getElementById('audioClick');
+    const audioDing = document.getElementById('audioDing');
+    const audioError = document.getElementById('audioError');
+
+    let respuestasPagina = {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false
+    };
+
+    let respuestasCorrectas = {
+        1: 0, // 2 sur
+        2: 0, // Sur, Oeste, Oeste
+        3: 1, // Balderas
+        4: 1  // Titan (5×4=20)
+    };
+
+    // ============================================
+    // NAVEGACIÓN
+    // ============================================
+    function cambiarPagina(direccion) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual += direccion;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+        audioWhoosh.play();
+        actualizarUI();
+        localStorage.setItem('progreso_normal_visualnoverbal_coordenadas', paginaActual);
+        
+        if (paginaActual === 4) inicializarTablaRobots();
+        if (paginaActual === 5) generarTeatroSimple();
+    }
+
+    function actualizarUI() {
+        document.querySelectorAll('.punto').forEach((punto, index) => {
+            const numPagina = index + 1;
+            punto.classList.remove('activo', 'completado');
+            if (numPagina === paginaActual) punto.classList.add('activo');
+            else if (numPagina < paginaActual && respuestasPagina[numPagina]) punto.classList.add('completado');
+            else if (numPagina < paginaActual) punto.classList.add('activo');
+        });
+
+        document.getElementById('paginaActualNum').innerText = paginaActual;
+        document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+        document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+    }
+
+    // ============================================
+    // FUNCIÓN PARA AMPLIAR IMÁGENES
+    // ============================================
+    function ampliarImagen(img) {
+        if (img.classList.contains('ampliada')) {
+            img.classList.remove('ampliada');
+            document.body.classList.remove('imagen-ampliada');
+        } else {
+            document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+            img.classList.add('ampliada');
+            document.body.classList.add('imagen-ampliada');
+        }
+    }
+
+    // Cerrar imagen al hacer clic fuera
+    document.addEventListener('click', function(event) {
+        if (!event.target.classList.contains('ampliada') && !event.target.closest('.contenedor-imagen')) {
+            document.querySelectorAll('.ampliada').forEach(img => {
+                img.classList.remove('ampliada');
+                document.body.classList.remove('imagen-ampliada');
+            });
+        }
+    });
+
+    // ============================================
+    // RESPUESTAS VISUALES
+    // ============================================
+    function seleccionarRespuestaVisual(pagina, opcion) {
+        if (respuestasPagina[pagina]) return;
+        
+        audioClick.play();
+        
+        const opciones = document.querySelectorAll(`#pagina${pagina} .respuesta-opcion`);
+        opciones.forEach(opt => opt.classList.remove('seleccionada'));
+        opciones[opcion].classList.add('seleccionada');
+        
+        const feedback = document.getElementById(`feedback${pagina}`);
+        
+        if (opcion === respuestasCorrectas[pagina]) {
+            audioDing.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-visual bg-success text-white';
+            
+            const mensajes = {
+                1: '✅ ¡Correcto! Ropa (A1) a Comida (A3): 2 sur',
+                2: '✅ ¡Correcto! Museo → Economía (sur) → Derecho (oeste) → Biblioteca (oeste)',
+                3: '✅ ¡Correcto! Balderas conecta Línea 1 y Línea 3',
+                4: '✅ ¡Correcto! Titan: 5×4 = 20 unidades (Bolt: 12, Rayo: 12, Tank: 15)'
+            };
+            
+            feedback.innerHTML = mensajes[pagina] || '✅ ¡Correcto!';
+            respuestasPagina[pagina] = true;
+        } else {
+            audioError.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-visual bg-danger text-white';
+            
+            const mensajesError = {
+                1: '❌ Incorrecto. Ropa está en A1, Comida en A3. Solo debes bajar 2 sur.',
+                2: '❌ Incorrecto. La ruta inversa es: sur (bajar del museo), oeste (a Derecho), oeste (a Biblioteca)',
+                3: '❌ Incorrecto. Balderas es la única estación donde coinciden L1 y L3',
+                4: '❌ Incorrecto. Calcula: Bolt: 4×3=12, Titan: 5×4=20, Rayo: 6×2=12, Tank: 3×5=15'
+            };
+            
+            feedback.innerHTML = mensajesError[pagina] || '❌ Incorrecto. Observa bien y vuelve a intentar.';
+        }
+        
+        actualizarUI();
+    }
+
+    // ============================================
+    // PÁGINA 3: METRO INTERACTIVO
+    // ============================================
+    document.querySelectorAll('.linea-metro, .estacion').forEach(elemento => {
+        elemento.addEventListener('mouseenter', function() {
+            if (this.classList.contains('linea-metro')) {
+                document.getElementById('info-metro').innerHTML = `🚇 ${this.getAttribute('data-linea')}`;
+            } else {
+                const nombre = this.getAttribute('data-nombre');
+                const linea = this.getAttribute('data-linea');
+                document.getElementById('info-metro').innerHTML = `🚉 ${nombre} (${linea})`;
+            }
+        });
+        
+        elemento.addEventListener('mouseleave', function() {
+            document.getElementById('info-metro').innerHTML = 'Pasa el cursor sobre líneas o estaciones';
+        });
+    });
+
+    // ============================================
+    // PÁGINA 4: TABLA DE ROBOTS
+    // ============================================
+    function inicializarTablaRobots() {
+        const filas = document.querySelectorAll('.tabla-robots-nombres tbody tr');
+        
+        filas.forEach(fila => {
+            const pasos = parseInt(fila.getAttribute('data-pasos'));
+            const unidades = parseInt(fila.getAttribute('data-unidades'));
+            const distancia = pasos * unidades;
+            
+            fila.addEventListener('mouseenter', function() {
+                const distanciaCell = this.querySelector('.distancia');
+                distanciaCell.textContent = distancia;
+                distanciaCell.classList.add('destacado');
+            });
+            
+            fila.addEventListener('mouseleave', function() {
+                const distanciaCell = this.querySelector('.distancia');
+                distanciaCell.textContent = '?';
+                distanciaCell.classList.remove('destacado');
+            });
+        });
+    }
+
+    // ============================================
+    // PÁGINA 5: TEATRO SIMPLE
+    // ============================================
+    function generarTeatroSimple() {
+        const contenedor = document.getElementById('teatro-simple');
+        if (!contenedor) return;
+        
+        let html = '';
+        
+        for (let fila = 1; fila <= 5; fila++) {
+            html += '<div class="fila-simple">';
+            html += `<div class="numero-fila-simple">Fila ${fila}</div>`;
+            html += '<div class="asientos-fila">';
+            
+            for (let asiento = 1; asiento <= 10; asiento++) {
+                html += `<div class="asiento-simple" data-fila="${fila}" data-asiento="${asiento}" onclick="seleccionarAsiento(${fila}, ${asiento})">${asiento}</div>`;
+            }
+            
+            html += '</div>';
+            html += '</div>';
+        }
+        
+        contenedor.innerHTML = html;
+    }
+
+    function seleccionarAsiento(fila, asiento) {
+        audioClick.play();
+        
+        document.querySelectorAll('.asiento-simple').forEach(a => a.classList.remove('seleccionado'));
+        
+        const asientoCorrecto = (fila === 4 && asiento === 8);
+        
+        const asientoElement = document.querySelector(`.asiento-simple[data-fila="${fila}"][data-asiento="${asiento}"]`);
+        asientoElement.classList.add('seleccionado');
+        
+        const feedback = document.getElementById('feedback5');
+        
+        if (asientoCorrecto) {
+            audioDing.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-visual bg-success text-white';
+            feedback.innerHTML = '✅ ¡Correcto! Encontraste el asiento Fila 4, Asiento 8';
+            respuestasPagina[5] = true;
+            actualizarUI();
+        } else {
+            audioError.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-visual bg-danger text-white';
+            feedback.innerHTML = `❌ Ese no es. Busca Fila 4, Asiento 8`;
+        }
+    }
+
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    window.addEventListener('DOMContentLoaded', () => {
+        const guardado = localStorage.getItem('progreso_normal_visualnoverbal_coordenadas');
+        if (guardado) {
+            const pag = parseInt(guardado, 10);
+            if (pag >= 1 && pag <= totalPaginas) {
+                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+                paginaActual = pag;
+                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+            }
+        }
+        actualizarUI();
+        
+        if (paginaActual === 4) inicializarTablaRobots();
+        if (paginaActual === 5) generarTeatroSimple();
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

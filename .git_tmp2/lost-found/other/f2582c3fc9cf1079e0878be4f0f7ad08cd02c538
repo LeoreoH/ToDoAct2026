@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fracciones &middot; Nivel Dif&iacute;cil &middot; Auditivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+  <audio id="audioClick"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="audioDing"   src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="audioError"  src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+  <audio id="audio_p1_intro" src="audios/frac_dificil_p1_intro.mp3"></audio>
+  <audio id="audio_p1_ej1"   src="audios/frac_dificil_p1_ej1.mp3"></audio>
+  <audio id="audio_p2_intro" src="audios/frac_dificil_p2_intro.mp3"></audio>
+  <audio id="audio_p2_ej1"   src="audios/frac_dificil_p2_ej1.mp3"></audio>
+  <audio id="audio_p3_intro" src="audios/frac_dificil_p3_intro.mp3"></audio>
+  <audio id="audio_p3_ej1"   src="audios/frac_dificil_p3_ej1.mp3"></audio>
+  <audio id="audio_p4_intro" src="audios/frac_dificil_p4_intro.mp3"></audio>
+  <audio id="audio_p4_ej1"   src="audios/frac_dificil_p4_ej1.mp3"></audio>
+  <audio id="audio_p5_intro" src="audios/frac_dificil_p5_intro.mp3"></audio>
+  <audio id="audio_p5_ej1"   src="audios/frac_dificil_p5_ej1.mp3"></audio>
+  <audio id="audio_p6_intro" src="audios/frac_dificil_p6_intro.mp3"></audio>
+  <audio id="audio_p6_ej1"   src="audios/frac_dificil_p6_ej1.mp3"></audio>
+  <audio id="audio_p7_intro" src="audios/frac_dificil_p7_intro.mp3"></audio>
+  <audio id="audio_p7_ej1"   src="audios/frac_dificil_p7_ej1.mp3"></audio>
+  <audio id="audio_p8_intro" src="audios/frac_dificil_p8_intro.mp3"></audio>
+  <audio id="audio_p8_ej1"   src="audios/frac_dificil_p8_ej1.mp3"></audio>
+
+  <div class="hero">
+    <h1><i class="fas fa-chart-pie me-2"></i>FRACCIONES</h1>
+    <p class="lead text-white mb-0">Nivel Dif&iacute;cil &middot; Reconocer fracciones</p>
+    <div>
+      <span class="pill estilo"><i class="fas fa-headphones"></i> Auditivo</span>
+      <span class="pill nivel"><i class="fas fa-brain"></i> Avanzado</span>
+    </div>
+  </div>
+
+  <div class="progress-shell">
+    <i class="fas fa-chart-pie fa-2x" style="color:var(--morado)"></i>
+    <div class="progress-dots">
+      <div class="dot active" data-page="1">1</div>
+      <div class="dot" data-page="2">2</div>
+      <div class="dot" data-page="3">3</div>
+      <div class="dot" data-page="4">4</div>
+      <div class="dot" data-page="5">5</div>
+      <div class="dot" data-page="6">6</div>
+      <div class="dot" data-page="7">7</div>
+      <div class="dot" data-page="8">8</div>
+    </div>
+    <div class="page-pill">P&aacute;gina <span id="paginaActualNum">1</span>/8</div>
+  </div>
+
+  <div class="wrap">
+    <div class="page active" id="pagina1">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-pizza-slice me-3"></i>Pizzer&iacute;a escolar</h2>
+        <p class="frase-clave">No basta con ver cu&aacute;nta pizza se us&oacute;; tambi&eacute;n importa en cu&aacute;ntas rebanadas iguales se cort&oacute;.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p1_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="pair-row">
+            <div>
+              <div class="mini-frac"><span>4</span><span class="linea"></span><span>6</span></div>
+              <div class="round-model pizza-4-6" aria-hidden="true"></div>
+            </div>
+            <div class="sign-card">&ne;</div>
+            <div>
+              <div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div>
+              <div class="round-model pizza-3-4" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="model-note">Aunque ambas se ven grandes, primero hay que revisar el total de rebanadas y luego las que ya se usaron.</div>
+        </div>
+        <div class="exercise" id="card-p1e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p1_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="choice-grid round-choice-grid" id="p1e1-options">
+            <button type="button" class="choice-card round-card" data-value="6/8"><div class="round-model pizza-6-8" aria-hidden="true"></div><div class="caption">Pizza A</div></button>
+            <button type="button" class="choice-card round-card" data-value="5/8"><div class="round-model pizza-5-8" aria-hidden="true"></div><div class="caption">Pizza B</div></button>
+            <button type="button" class="choice-card round-card" data-value="4/6"><div class="round-model pizza-4-6" aria-hidden="true"></div><div class="caption">Pizza C</div></button>
+            <button type="button" class="choice-card round-card" data-value="3/4"><div class="round-model pizza-3-4" aria-hidden="true"></div><div class="caption">Pizza D</div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p1e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina2">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-glass-water me-3"></i>Puesto de agua fresca</h2>
+        <p class="frase-clave">Las marcas de referencia ayudan a pensar si una fracci&oacute;n est&aacute; cerca de un cuarto, de la mitad o de tres cuartos.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p2_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="jar-row">
+            <div class="jar-box"><div class="jarra" style="--fill:25%"><div class="ticks eighths"></div></div><div class="caption">1/4</div></div>
+            <div class="jar-box"><div class="jarra" style="--fill:50%"><div class="ticks eighths"></div></div><div class="caption">1/2</div></div>
+            <div class="jar-box"><div class="jarra" style="--fill:75%"><div class="ticks eighths"></div></div><div class="caption">3/4</div></div>
+          </div>
+          <div class="model-note">Si una jarra queda entre 1/4 y 1/2, entonces representa una cantidad menor que la mitad pero mayor que un cuarto.</div>
+        </div>
+        <div class="exercise" id="card-p2e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p2_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="choice-grid jar-choice-grid" id="p2e1-options">
+            <button type="button" class="choice-card jar-card" data-value="3/8"><div class="jarra" style="--fill:37.5%"><div class="ticks eighths"></div></div><div class="caption">Jarra A</div></button>
+            <button type="button" class="choice-card jar-card" data-value="1/4"><div class="jarra" style="--fill:25%"><div class="ticks eighths"></div></div><div class="caption">Jarra B</div></button>
+            <button type="button" class="choice-card jar-card" data-value="5/8"><div class="jarra" style="--fill:62.5%"><div class="ticks eighths"></div></div><div class="caption">Jarra C</div></button>
+            <button type="button" class="choice-card jar-card" data-value="7/8"><div class="jarra" style="--fill:87.5%"><div class="ticks eighths"></div></div><div class="caption">Jarra D</div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p2e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="pagina3">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-road me-3"></i>Carrera escolar</h2>
+        <p class="frase-clave">En la recta num&eacute;rica, las fracciones mayores quedan m&aacute;s a la derecha y las menores m&aacute;s cerca del cero.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p3_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="recta-box">
+            <div class="recta">
+              <div class="recta-line"></div>
+              <div class="mark" style="left:6%"><span>0</span></div>
+              <div class="mark" style="left:50%"><span>1/2</span></div>
+              <div class="mark" style="left:94%"><span>1</span></div>
+            </div>
+          </div>
+          <div class="model-note">Si avanzas hacia la derecha, la cantidad representada aumenta. La mitad siempre queda entre el inicio y el entero completo.</div>
+        </div>
+        <div class="exercise" id="card-p3e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p3_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="recta-box" id="p3e1-recta">
+            <div class="recta">
+              <div class="recta-line"></div>
+              <div class="mark" style="left:6%"><span>0</span></div>
+              <div class="mark" style="left:28.67%"><span></span></div>
+              <div class="mark" style="left:50%"><span>1/2</span></div>
+              <div class="mark" style="left:72.67%"><span></span></div>
+              <div class="mark" style="left:94%"><span>1</span></div>
+              <button type="button" class="target" data-value="1/4" style="left:28.67%"></button>
+              <button type="button" class="target" data-value="1/2" style="left:50%"></button>
+              <button type="button" class="target" data-value="3/4" style="left:72.67%"></button>
+            </div>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p3e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina4">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-equals me-3"></i>Modelos equivalentes</h2>
+        <p class="frase-clave">Dos fracciones pueden verse distintas y aun as&iacute; representar la misma cantidad del entero.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p4_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="pair-row">
+            <div>
+              <div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div>
+              <div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div>
+            </div>
+            <div class="sign-card">=</div>
+            <div>
+              <div class="mini-frac"><span>4</span><span class="linea"></span><span>6</span></div>
+              <div class="strip s6"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div>
+            </div>
+          </div>
+          <div class="model-note">Aunque cambie el n&uacute;mero de partes, la zona coloreada ocupa la misma proporci&oacute;n del entero.</div>
+        </div>
+        <div class="exercise" id="card-p4e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p4_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="choice-grid" id="p4e1-options">
+            <button type="button" class="choice-card" data-value="6/8"><div class="mini-frac"><span>6</span><span class="linea"></span><span>8</span></div><div class="strip s8"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="2/4"><div class="mini-frac"><span>2</span><span class="linea"></span><span>4</span></div><div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="8/12"><div class="mini-frac"><span>8</span><span class="linea"></span><span>12</span></div><div class="strip s12"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="3/5"><div class="mini-frac"><span>3</span><span class="linea"></span><span>5</span></div><div class="strip s5"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p4e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina5">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-sort-amount-down me-3"></i>Ordena de menor a mayor</h2>
+        <p class="frase-clave">Para ordenar, conviene pensar qu&eacute; fracci&oacute;n queda m&aacute;s cerca de cero, cu&aacute;l pasa la mitad y cu&aacute;l casi llega al entero.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p5_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="mini-seq">
+            <div class="mini-frac"><span>1</span><span class="linea"></span><span>6</span></div>
+            <span class="arrow">&rarr;</span>
+            <div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div>
+            <span class="arrow">&rarr;</span>
+            <div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div>
+          </div>
+          <div class="model-note">Del menor al mayor, el orden siempre avanza desde las cantidades m&aacute;s peque&ntilde;as hasta las que est&aacute;n m&aacute;s cerca de 1.</div>
+        </div>
+        <div class="exercise" id="card-p5e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p5_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="question-box">
+            <div class="fraction-row">
+              <div class="fraction-box"><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div></div>
+              <div class="fraction-box"><div class="mini-frac"><span>2</span><span class="linea"></span><span>3</span></div></div>
+              <div class="fraction-box"><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div></div>
+            </div>
+          </div>
+          <div class="choice-grid" id="p5e1-options">
+            <button type="button" class="choice-card sequence-card" data-value="ordA"><div class="mini-seq"><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>2</span><span class="linea"></span><span>3</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div></div></button>
+            <button type="button" class="choice-card sequence-card" data-value="ordB"><div class="mini-seq"><div class="mini-frac"><span>2</span><span class="linea"></span><span>3</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div></div></button>
+            <button type="button" class="choice-card sequence-card" data-value="ordC"><div class="mini-seq"><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>2</span><span class="linea"></span><span>3</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div></div></button>
+            <button type="button" class="choice-card sequence-card" data-value="ordD"><div class="mini-seq"><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div><span class="arrow">&rarr;</span><div class="mini-frac"><span>2</span><span class="linea"></span><span>3</span></div></div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p5e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="pagina6">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-bullseye me-3"></i>Cerca del entero</h2>
+        <p class="frase-clave">A veces conviene pensar qu&eacute; fracci&oacute;n est&aacute; m&aacute;s cerca de 1 y cu&aacute;l todav&iacute;a se queda lejos.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p6_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="pair-row">
+            <div><div class="mini-frac"><span>1</span><span class="linea"></span><span>4</span></div><div class="strip s4"><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div></div>
+            <div><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div><div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></div>
+            <div><div class="mini-frac"><span>7</span><span class="linea"></span><span>8</span></div><div class="strip s8"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div></div>
+          </div>
+          <div class="model-note">La fracci&oacute;n m&aacute;s cercana a 1 es la que deja menos espacio sin completar.</div>
+        </div>
+        <div class="exercise" id="card-p6e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p6_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="choice-grid" id="p6e1-options">
+            <button type="button" class="choice-card" data-value="5/6"><div class="mini-frac"><span>5</span><span class="linea"></span><span>6</span></div><div class="strip s6"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="7/10"><div class="mini-frac"><span>7</span><span class="linea"></span><span>10</span></div><div class="strip s10"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="3/8"><div class="mini-frac"><span>3</span><span class="linea"></span><span>8</span></div><div class="strip s8"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div></button>
+            <button type="button" class="choice-card" data-value="1/2"><div class="mini-frac"><span>1</span><span class="linea"></span><span>2</span></div><div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p6e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina7">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-shapes me-3"></i>Taller de cocina</h2>
+        <p class="frase-clave">Un buen modelo de fracci&oacute;n debe mostrar partes iguales y la cantidad exacta que se toma del entero.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p7_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="pair-row">
+            <div>
+              <div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div>
+              <div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div>
+            </div>
+            <div class="sign-card">vs</div>
+            <div>
+              <div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div>
+              <div class="unequal-strip"><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="model-note">A la izquierda aparece un modelo que s&iacute; sirve para una fracci&oacute;n. A la derecha aparece uno que no sirve porque no tiene partes iguales.</div>
+        </div>
+        <div class="exercise" id="card-p7e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p7_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="question-box">
+            <div class="pair-row"><div class="fraction-box"><div class="mini-frac"><span>3</span><span class="linea"></span><span>4</span></div></div></div>
+          </div>
+          <div class="choice-grid model-grid-4" id="p7e1-options">
+            <button type="button" class="choice-card model-choice" data-value="modelo_ok"><div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div><div class="caption">Partes iguales</div></button>
+            <button type="button" class="choice-card model-choice" data-value="modelo_unequal"><div class="unequal-strip"><span></span><span></span><span></span><span></span></div><div class="caption">Partes desiguales</div></button>
+            <button type="button" class="choice-card model-choice" data-value="modelo_2_4"><div class="strip s4"><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">2/4</div></button>
+            <button type="button" class="choice-card model-choice" data-value="modelo_3_5"><div class="strip s5"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">3/5</div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p7e1-feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina8">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-puzzle-piece me-3"></i>Reto final</h2>
+        <p class="frase-clave">En este cierre conviene decidir con cuidado qu&eacute; modelo representa mejor la situaci&oacute;n completa.</p>
+        <div class="audio-box">
+          <button type="button" class="audio-btn" data-audio="audio_p8_intro"><i class="fas fa-play"></i></button>
+          <div class="audio-label"><i class="fas fa-volume-up me-2"></i>Escucha la explicaci&oacute;n</div>
+        </div>
+        <div class="model-card">
+          <div class="pair-row">
+            <div>
+              <div class="mini-frac"><span>6</span><span class="linea"></span><span>10</span></div>
+              <div class="strip s10"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div>
+            </div>
+          </div>
+          <div class="model-note">Primero mira en cu&aacute;ntas partes se divide el entero y luego cu&aacute;ntas de esas partes est&aacute;n ocupadas.</div>
+        </div>
+        <div class="exercise" id="card-p8e1">
+          <div class="ex-head"><span class="ex-badge">Ejercicio</span><span class="ex-sub">Escucha y toca</span></div>
+          <div class="audio-box">
+            <button type="button" class="audio-btn" data-audio="audio_p8_ej1"><i class="fas fa-play"></i></button>
+            <div class="audio-label">Escucha el reto y responde con el apoyo visual.</div>
+          </div>
+          <div class="question-box">
+            <div class="strip s12"><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div>
+            <div class="model-note">Escucha el audio y compara los modelos antes de decidir.</div>
+          </div>
+          <div class="choice-grid" id="p8e1-options">
+            <button type="button" class="choice-card" data-value="8/12"><div class="strip s12"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">Modelo A</div></button>
+            <button type="button" class="choice-card" data-value="9/12"><div class="strip s12"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">Modelo B</div></button>
+            <button type="button" class="choice-card" data-value="6/8"><div class="strip s8"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">Modelo C</div></button>
+            <button type="button" class="choice-card" data-value="6/12"><div class="strip s12"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div><div class="caption">Modelo D</div></button>
+          </div>
+          <div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div>
+          <div class="feedback" id="p8e1-feedback"></div>
+        </div>
+        <a href="quiz.html" class="quiz-link bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece"></i> IR AL QUIZ</a>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button type="button" class="nav-btn" id="btnAnterior"><i class="fas fa-arrow-left me-2"></i>ANTERIOR</button>
+      <div class="page-ind" id="contadorPagina">1/8</div>
+      <button type="button" class="nav-btn" id="btnSiguiente">SIGUIENTE<i class="fas fa-arrow-right ms-2"></i></button>
+    </div>
+  </div>
+  
+  
+  
+</body>
+</html>

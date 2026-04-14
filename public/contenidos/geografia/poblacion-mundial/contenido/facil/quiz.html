@@ -1,70 +1,727 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz - Poblaci&oacute;n Mundial (F&aacute;cil)</title>
+  <title>Quiz · Países más y menos Poblados · Geografía 5°</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+  <style>
+    :root{
+      --guindo:#7b1d2e;
+      --guindo-dark:#5a1320;
+      --guindo-light:#a63248;
+      --guindo-pale:#f5e0e4;
+      --gris:#4a4a5a;
+      --gris-light:#6b6b80;
+      --gris-pale:#e8e8ef;
+      --gris-bg:#f2f2f6;
+      --gris-mid:#d0d0de;
+      --verde-ok:#1e7e34;
+      --verde-ok-bg:#d4edda;
+      --rojo-err:#c0392b;
+      --rojo-err-bg:#fde8e8;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
+
+    /* ── HEADER ── */
+    .cabecera{
+      background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));
+      padding:26px 20px;
+      border-bottom:6px solid var(--gris-pale);
+      text-align:center;
+      box-shadow:0 10px 24px rgba(90,19,32,.35);
+    }
+    .cabecera h1{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:2.4rem;color:#fff;font-weight:900;
+      letter-spacing:1px;
+      text-shadow:2px 2px 0 var(--guindo-dark);
+    }
+    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:.95rem;margin-top:4px;}
+    .badge-bloque{
+      background:var(--gris-pale);color:var(--guindo);
+      padding:8px 24px;border-radius:50px;
+      font-weight:800;font-size:1rem;
+      display:inline-block;border:4px solid #fff;margin-top:8px;
+    }
+
+    .contenedor{max-width:800px;margin:0 auto 48px;padding:0 16px;}
+
+    /* ── PANTALLAS ── */
+    .pantalla{display:none;animation:aparecer .4s ease;}
+    .pantalla.activa{display:block;}
+    @keyframes aparecer{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+    .card-quiz{
+      background:#fff;border-radius:26px;padding:28px;
+      margin-top:24px;border:3px solid var(--guindo);
+      box-shadow:0 8px 0 var(--guindo-dark);
+    }
+
+    /* ── INICIO ── */
+    .inicio-ico{font-size:5rem;text-align:center;margin:12px 0;}
+    .inicio-titulo{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:2.2rem;font-weight:900;
+      color:var(--guindo);text-align:center;margin-bottom:8px;
+      letter-spacing:.5px;
+    }
+    .inicio-desc{
+      text-align:center;font-size:.95rem;
+      color:var(--gris);font-weight:600;
+      margin-bottom:20px;line-height:1.6;
+    }
+    .info-quiz{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
+    .info-item{
+      background:var(--gris-bg);border:2px solid var(--gris-mid);
+      border-radius:40px;padding:8px 18px;
+      font-weight:700;font-size:.88rem;
+      display:flex;align-items:center;gap:6px;color:var(--guindo);
+    }
+    .subtemas-lista{
+      background:var(--gris-bg);border-radius:16px;
+      padding:14px 18px;border-left:6px solid var(--guindo);
+      margin-bottom:20px;
+    }
+    .subtemas-lista li{font-size:.9rem;font-weight:600;color:var(--gris);margin-bottom:5px;}
+    .subtemas-lista strong{color:var(--guindo);}
+
+    .btn-empezar{
+      display:block;width:fit-content;margin:0 auto;
+      background:var(--guindo);color:#fff;
+      border:4px solid var(--guindo-dark);
+      padding:14px 48px;border-radius:60px;
+      font-weight:800;font-size:1.2rem;
+      font-family:'Barlow Condensed',sans-serif;
+      letter-spacing:1px;
+      cursor:pointer;box-shadow:0 7px 0 var(--guindo-dark);
+      transition:all .2s;text-decoration:none;
+    }
+    .btn-empezar:hover{transform:translateY(-4px);box-shadow:0 11px 0 var(--guindo-dark);background:var(--guindo-light);color:#fff;}
+
+    /* ── BARRA PROGRESO ── */
+    .quiz-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+    .quiz-num{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:1.15rem;font-weight:800;
+      color:var(--guindo);white-space:nowrap;
+    }
+    .barra-wrap{
+      flex:1;background:var(--gris-pale);
+      border-radius:20px;height:14px;
+      border:2px solid var(--gris-mid);overflow:hidden;min-width:100px;
+    }
+    .barra-fill{
+      height:100%;
+      background:linear-gradient(90deg,var(--guindo),var(--guindo-light));
+      border-radius:20px;transition:width .5s ease;
+    }
+    .quiz-pts{
+      background:var(--guindo-pale);color:var(--guindo);
+      border:3px solid var(--guindo);
+      padding:5px 14px;border-radius:30px;
+      font-weight:800;font-size:.88rem;
+      white-space:nowrap;box-shadow:0 3px 0 var(--guindo-dark);
+    }
+
+    /* ── PREGUNTA ── */
+    .preg-tema{
+      font-size:.78rem;font-weight:700;
+      color:var(--gris-light);
+      margin-bottom:6px;
+      display:flex;align-items:center;gap:6px;
+    }
+    .preg-txt{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:1.4rem;font-weight:800;
+      color:var(--guindo);margin-bottom:16px;line-height:1.4;
+    }
+    .preg-img{
+      width:100%;max-height:180px;object-fit:cover;
+      border-radius:14px;margin-bottom:14px;
+      border:3px solid var(--guindo);
+      display:none;
+    }
+    .preg-img.visible{display:block;}
+
+    /* ── OPCIONES ── */
+    .opciones{display:flex;flex-direction:column;gap:10px;}
+    .opcion{
+      background:var(--gris-bg);border:3px solid var(--guindo);
+      border-radius:15px;padding:13px 18px;
+      cursor:pointer;font-weight:700;font-size:.95rem;
+      transition:all .2s;
+      display:flex;align-items:center;gap:12px;
+      box-shadow:0 4px 0 var(--guindo-dark);
+    }
+    .opcion:hover:not(.bloq){background:var(--guindo-pale);transform:translateX(4px);}
+    .opcion.sel-ok{background:var(--verde-ok-bg);border-color:var(--verde-ok);box-shadow:0 4px 0 #155724;}
+    .opcion.sel-err{background:var(--rojo-err-bg);border-color:var(--rojo-err);box-shadow:0 4px 0 #922b21;}
+    .opcion.revelar-ok{background:var(--verde-ok-bg);border-color:var(--verde-ok);}
+    .opcion.bloq{cursor:default;}
+    .op-letra{
+      width:32px;height:32px;border-radius:50%;
+      background:var(--guindo);color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:.9rem;flex-shrink:0;
+      transition:background .2s;
+    }
+    .opcion.sel-ok .op-letra{background:var(--verde-ok);}
+    .opcion.sel-err .op-letra{background:var(--rojo-err);}
+    .opcion.revelar-ok .op-letra{background:var(--verde-ok);}
+
+    /* ── EXPLICACIÓN ── */
+    .explicacion{
+      background:var(--gris-bg);border-radius:14px;
+      padding:12px 16px;border-left:6px solid var(--guindo);
+      margin-top:14px;font-size:.88rem;font-weight:600;
+      display:none;color:var(--gris);line-height:1.5;
+    }
+    .explicacion.vis{display:block;animation:aparecer .3s ease;}
+
+    /* ── BTN SIGUIENTE ── */
+    .btn-sig-preg{
+      background:var(--guindo);color:#fff;border:none;
+      padding:12px 32px;border-radius:38px;
+      font-weight:800;font-size:1rem;
+      font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;
+      cursor:pointer;box-shadow:0 5px 0 var(--guindo-dark);
+      transition:all .2s;display:none;margin-top:14px;
+    }
+    .btn-sig-preg.vis{display:inline-flex;align-items:center;gap:8px;}
+    .btn-sig-preg:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--guindo-dark);}
+
+    /* ── DOTS ── */
+    .dots-preg{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:14px 0 4px;}
+    .dot-p{
+      width:22px;height:22px;border-radius:50%;
+      background:var(--gris-pale);border:2px solid var(--guindo);
+      transition:all .3s;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.6rem;font-weight:800;color:var(--guindo);
+    }
+    .dot-p.act{background:var(--guindo);color:#fff;transform:scale(1.2);}
+    .dot-p.ok{background:var(--verde-ok);border-color:#fff;color:#fff;}
+    .dot-p.err{background:var(--rojo-err);border-color:#fff;color:#fff;}
+
+    /* ── RESULTADOS ── */
+    .medalla{font-size:4rem;text-align:center;margin:8px 0;display:block;}
+    .resultado-titulo{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:2rem;font-weight:900;
+      color:var(--guindo);text-align:center;margin-bottom:8px;
+    }
+    .resultado-score{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:3.5rem;font-weight:900;
+      color:var(--guindo);text-align:center;
+    }
+    .resultado-sub{text-align:center;font-size:.95rem;color:var(--gris-light);font-weight:600;margin-bottom:18px;}
+    .resultado-barra{
+      background:var(--gris-pale);border-radius:20px;
+      height:20px;border:3px solid var(--guindo);
+      overflow:hidden;margin:14px 0;
+    }
+    .resultado-fill{
+      height:100%;
+      background:linear-gradient(90deg,var(--guindo),var(--guindo-light));
+      border-radius:20px;transition:width 1.2s ease;
+    }
+
+    /* ── RESUMEN ── */
+    .resumen-lista{
+      display:flex;flex-direction:column;gap:7px;
+      margin-top:14px;max-height:360px;overflow-y:auto;
+    }
+    .resumen-item{
+      display:flex;align-items:flex-start;gap:10px;
+      background:var(--gris-bg);border-radius:11px;
+      padding:9px 13px;border:2px solid var(--gris-mid);
+      font-size:.83rem;
+    }
+    .resumen-item .ri-ico{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+    .resumen-item.ok-r{border-color:#a8d5b5;background:#f0faf4;}
+    .resumen-item.err-r{border-color:#f5c0c0;background:#fff5f5;}
+    .resumen-item .ri-preg{font-weight:700;color:var(--guindo);line-height:1.3;}
+    .resumen-item .ri-resp{font-size:.78rem;color:var(--gris-light);}
+
+    /* ── BTNS FINAL ── */
+    .btns-final{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+    .btn-final{
+      padding:12px 30px;border-radius:40px;
+      font-weight:800;font-size:.95rem;
+      font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;
+      cursor:pointer;box-shadow:0 5px 0 var(--guindo-dark);
+      transition:all .2s;border:3px solid var(--guindo);
+    }
+    .btn-final:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--guindo-dark);}
+    .btn-repetir{background:var(--guindo);color:#fff;}
+    .btn-volver{background:var(--gris-pale);color:var(--guindo);text-decoration:none;display:inline-flex;align-items:center;}
+
+    @media(max-width:576px){
+      .cabecera h1{font-size:1.8rem;}
+      .preg-txt{font-size:1.15rem;}
+      .opcion{font-size:.88rem;}
+    }
+  </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <div class="quiz-header">
-      <h1>QUIZ &middot; BLOQUE III</h1>
-      <div class="quiz-subtitle">Pa&iacute;ses m&aacute;s y menos poblados, densidad, dispersi&oacute;n y problemas urbanos</div>
-      <div class="badge-level"><i class="fas fa-users"></i> Nivel F&aacute;cil</div>
-    </div>
 
-    <div class="quiz-meta">
-      <div class="meta-pill"><i class="fas fa-question-circle me-2"></i> 5 preguntas</div>
-      <div class="meta-pill"><i class="fas fa-check-circle me-2"></i> Necesitas 4 correctas</div>
-      <div class="meta-pill"><i class="fas fa-clock me-2"></i> <span id="timerDisplay">00:00</span></div>
-    </div>
+<div class="cabecera">
+  <h1><i class="fas fa-trophy me-2"></i>QUIZ · PAÍSES POBLADOS</h1>
+  <div class="sub">Tema: Países más y menos Poblados · Geografía 5°</div>
+  <div class="badge-bloque"><i class="fas fa-globe-americas me-2"></i>Distribución de la Población Mundial</div>
+</div>
 
-    <div class="progress-row" id="progressArea">
-      <div class="progress-label" id="progressLabel">Pregunta 1/5</div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="meta-pill"><i class="fas fa-star me-2"></i> <span id="scoreBadge">0/5</span></div>
-    </div>
+<div class="contenedor">
 
-    <div class="dots" id="progressDots"></div>
-
-    <div class="question-card" id="questionCard">
-      <div class="question-number" id="questionNumber">PREGUNTA 1 DE 5</div>
-      <div class="question-text" id="questionText"></div>
-      <div class="options" id="options"></div>
-      <div class="feedback" id="feedback"></div>
-    </div>
-
-    <div class="action-row" id="navRow">
-      <button class="btn-quiz btn-alt" id="btnPrev" onclick="anteriorPregunta()" style="display:none;">
-        <i class="fas fa-arrow-left"></i> Anterior
+  <!-- ── PANTALLA INICIO ── -->
+  <div class="pantalla activa" id="pInicio">
+    <div class="card-quiz">
+      <div class="inicio-ico">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/300px-The_Earth_seen_from_Apollo_17.jpg"
+             style="width:110px;height:110px;object-fit:cover;border-radius:50%;border:4px solid var(--guindo);box-shadow:0 6px 0 var(--guindo-dark);display:block;margin:0 auto;"
+             alt="Tierra">
+      </div>
+      <div class="inicio-titulo" style="margin-top:14px;">Quiz del Tema</div>
+      <div class="inicio-desc">
+        Pon a prueba todo lo que aprendiste sobre los<br>
+        <strong style="color:var(--guindo);">Países más y menos Poblados</strong>
+      </div>
+      <div class="info-quiz">
+        <div class="info-item"><i class="fas fa-question-circle"></i> 15 preguntas</div>
+        <div class="info-item"><i class="fas fa-star"></i> 5 puntos c/u</div>
+        <div class="info-item"><i class="fas fa-lightbulb"></i> Con explicación</div>
+        <div class="info-item"><i class="fas fa-redo"></i> Puedes repetir</div>
+      </div>
+      <div class="subtemas-lista">
+        <strong>Subtemas incluidos (5 preguntas cada uno):</strong>
+        <ul style="margin-top:8px;padding-left:18px;">
+          <li><i class="fas fa-globe me-1" style="color:var(--guindo);"></i> La distribución de la población en el mundo</li>
+          <li><i class="fas fa-map-marked-alt me-1" style="color:var(--guindo);"></i> Concentración y dispersión de la población en un territorio</li>
+          <li><i class="fas fa-city me-1" style="color:var(--guindo);"></i> Los problemas de la concentración de la población</li>
+        </ul>
+      </div>
+      <button class="btn-empezar" onclick="iniciarQuiz()">
+        <i class="fas fa-play me-2"></i>¡COMENZAR!
       </button>
-      <button class="btn-quiz" id="btnNext" onclick="siguientePregunta()">
-        Siguiente <i class="fas fa-arrow-right"></i>
-      </button>
-      <button class="btn-quiz" id="btnSubmit" onclick="enviarQuiz()" style="display:none;">
-        <i class="fas fa-check"></i> Enviar
-      </button>
     </div>
+  </div>
 
-    <div class="result" id="result">
-      <div class="result-emoji" id="resultEmoji">&#127881;</div>
-      <div class="result-title" id="resultTitle"></div>
-      <div class="result-score" id="resultScore"></div>
-      <div class="result-message" id="resultMessage"></div>
-      <div class="result-time" id="resultTime"></div>
-      <div class="action-row" style="margin-top:20px;">
-        <button class="btn-quiz btn-alt" onclick="volverAlContenido()"><i class="fas fa-home"></i> Volver al men&uacute;</button>
-        <button class="btn-quiz" id="btnNextLevel" onclick="irSiguienteNivel()" style="display:none;"><i class="fas fa-arrow-right"></i> Ir al siguiente nivel</button>
-        <button class="btn-quiz btn-danger" id="btnRetry" onclick="reiniciarQuiz()" style="display:none;"><i class="fas fa-rotate-right"></i> Reintentar</button>
+  <!-- ── PANTALLA QUIZ ── -->
+  <div class="pantalla" id="pQuiz">
+    <div class="card-quiz">
+      <div class="quiz-header">
+        <span class="quiz-num" id="qNum">Pregunta 1/15</span>
+        <div class="barra-wrap"><div class="barra-fill" id="qBarra" style="width:7%;"></div></div>
+        <span class="quiz-pts" id="qPts"><i class="fas fa-star me-1"></i>0 pts</span>
+      </div>
+
+      <div class="dots-preg" id="qDots"></div>
+
+      <div id="qContenido">
+        <img id="qImg" class="preg-img" src="" alt="">
+        <div class="preg-tema" id="qTema"></div>
+        <div class="preg-txt" id="qTxt"></div>
+        <div class="opciones" id="qOpciones"></div>
+        <div class="explicacion" id="qExpl"></div>
+        <button class="btn-sig-preg" id="btnSig" onclick="siguientePregunta()">
+          Siguiente <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>
 
-  __BLOCK_
-__BLOCK_
+  <!-- ── PANTALLA RESULTADOS ── -->
+  <div class="pantalla" id="pResultados">
+    <div class="card-quiz">
+      <span class="medalla" id="rMedalla"></span>
+      <div class="resultado-titulo" id="rTitulo"></div>
+      <div class="resultado-score" id="rScore"></div>
+      <div class="resultado-sub" id="rSub"></div>
+      <div class="resultado-barra"><div class="resultado-fill" id="rFill" style="width:0%;"></div></div>
+
+      <div style="text-align:center;margin:10px 0 4px;font-weight:800;font-size:.9rem;color:var(--guindo);">Detalle de respuestas:</div>
+      <div class="resumen-lista" id="rLista"></div>
+
+      <div class="btns-final">
+        <button class="btn-final btn-repetir" onclick="reiniciarQuiz()">
+          <i class="fas fa-redo me-2"></i>Repetir quiz
+        </button>
+        <a href="index.html" class="btn-final btn-volver">
+          <i class="fas fa-home me-2"></i>Inicio
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════
+   BANCO DE PREGUNTAS — 15 EN TOTAL · 5 POR SUBTEMA
+═══════════════════════════════════════════════════════ */
+const BANCO = {
+
+  distribucion: [
+    {
+      tema: 'La distribución de la población en el mundo',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg',
+      txt: '¿Cuáles son los dos países MÁS poblados del mundo?',
+      ops: ['China e India', 'EE.UU. y Brasil', 'Rusia y Japón', 'México y Alemania'],
+      ok: 0,
+      expl: 'China e India son los dos países más poblados, cada uno con más de 1,400 millones de habitantes. Juntos suman más de un tercio de la humanidad.'
+    },
+    {
+      tema: 'La distribución de la población en el mundo',
+      img: 'https://flagcdn.com/w640/nr.png',
+      txt: '¿Cuál de estos países es uno de los MENOS poblados del mundo?',
+      ops: ['Brasil', 'Indonesia', 'Nauru', 'India'],
+      ok: 2,
+      expl: 'Nauru es uno de los países menos poblados del mundo, con menos de 15,000 habitantes. Es un pequeño estado insular en el Pacífico.'
+    },
+    {
+      tema: 'La distribución de la población en el mundo',
+      img: '',
+      txt: '¿Qué factor del medio físico atrae mayor población a una zona?',
+      ops: ['Clima frío extremo', 'Cercanía al agua y clima templado', 'Alta altitud con montañas', 'Desiertos y zonas áridas'],
+      ok: 1,
+      expl: 'Las zonas con acceso a agua dulce y clima templado atraen más población. Los ríos, costas y llanuras fértiles son los lugares más habitados del mundo.'
+    },
+    {
+      tema: 'La distribución de la población en el mundo',
+      img: '',
+      txt: '¿Cuántos habitantes aproximadamente tiene la población mundial actualmente?',
+      ops: ['Unos 4,000 millones', 'Unos 6,000 millones', 'Más de 8,000 millones', 'Más de 12,000 millones'],
+      ok: 2,
+      expl: 'La población mundial supera los 8,000 millones de personas. Este número sigue creciendo principalmente en África y Asia.'
+    },
+    {
+      tema: 'La distribución de la población en el mundo',
+      img: '',
+      txt: '¿Cuál de estas afirmaciones sobre la distribución de la población es CORRECTA?',
+      ops: [
+        'La población está distribuida de forma igual en todo el planeta',
+        'Los países más fríos siempre son los más poblados',
+        'La población se concentra más en zonas con recursos y buen clima',
+        'Los océanos tienen más población que los continentes'
+      ],
+      ok: 2,
+      expl: 'La población se concentra en zonas con recursos naturales, buen clima, agua disponible y oportunidades económicas. Su distribución es muy desigual en el mundo.'
+    }
+  ],
+
+  concentracion: [
+    {
+      tema: 'Concentración y dispersión de la población',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg',
+      txt: '¿Qué mide la DENSIDAD de población?',
+      ops: [
+        'La altura promedio de los habitantes',
+        'El número de habitantes por kilómetro cuadrado',
+        'La velocidad de crecimiento de una ciudad',
+        'El total de habitantes de un país'
+      ],
+      ok: 1,
+      expl: 'La densidad de población mide el número de habitantes por kilómetro cuadrado (hab/km²). Permite saber qué tan concentrada o dispersa está la población en un territorio.'
+    },
+    {
+      tema: 'Concentración y dispersión de la población',
+      img: '',
+      txt: '¿Cuál país tiene una de las densidades de población MÁS ALTAS del mundo?',
+      ops: ['Mongolia', 'Rusia', 'Bangladesh', 'Australia'],
+      ok: 2,
+      expl: 'Bangladesh tiene una densidad de aproximadamente 1,100 hab/km², siendo uno de los países más densamente poblados del mundo a pesar de su pequeño territorio.'
+    },
+    {
+      tema: 'Concentración y dispersión de la población',
+      img: '',
+      txt: '¿Qué es la DISPERSIÓN de la población?',
+      ops: [
+        'Cuando muchas personas viven en un espacio pequeño',
+        'Cuando la población se reparte en grandes territorios con pocos habitantes por área',
+        'Cuando toda la gente se va a vivir a las ciudades',
+        'Cuando un país tiene más de 1,000 millones de personas'
+      ],
+      ok: 1,
+      expl: 'La dispersión ocurre cuando la población se distribuye en grandes territorios con poca gente por área. Ejemplos: Mongolia (~2 hab/km²), desiertos y zonas polares.'
+    },
+    {
+      tema: 'Concentración y dispersión de la población',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/640px-Skyscrapers_of_Shinjuku_2009_January.jpg',
+      txt: '¿Cómo se llaman las ciudades gigantes con decenas de millones de habitantes?',
+      ops: ['Metrópolis pequeñas', 'Aldeas urbanas', 'Megalópolis', 'Capitales dispersas'],
+      ok: 2,
+      expl: 'Las megalópolis son ciudades enormes con millones de habitantes. Ejemplos: Tokio (37M), Shanghái (24M) y Ciudad de México (21M). Son zonas de altísima concentración.'
+    },
+    {
+      tema: 'Concentración y dispersión de la población',
+      img: '',
+      txt: '¿Cuál de estos es un ejemplo de zona con BAJA densidad de población?',
+      ops: ['Bangladesh', 'Dhaka, India', 'Mongolia', 'Ciudad de México'],
+      ok: 2,
+      expl: 'Mongolia tiene solo ~2 habitantes por km², siendo uno de los países más dispersos del mundo. Sus enormes estepas y clima extremo limitan el asentamiento humano.'
+    }
+  ],
+
+  problemas: [
+    {
+      tema: 'Los problemas de la concentración de la población',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Jam_India.jpg/640px-Jam_India.jpg',
+      txt: '¿Cuál es uno de los principales problemas que causa la CONCENTRACIÓN excesiva de población en una ciudad?',
+      ops: [
+        'Sobra vivienda para todos',
+        'El aire es más limpio',
+        'Escasez de vivienda y asentamientos irregulares',
+        'Hay más empleo que personas'
+      ],
+      ok: 2,
+      expl: 'La concentración excesiva genera escasez de vivienda. Las personas de bajos recursos se ven obligadas a vivir en asentamientos irregulares sin servicios básicos.'
+    },
+    {
+      tema: 'Los problemas de la concentración de la población',
+      img: '',
+      txt: '¿Qué problema ambiental se agrava cuando hay demasiada gente concentrada en una ciudad?',
+      ops: [
+        'La temperatura baja mucho',
+        'La contaminación del aire y del agua',
+        'Hay más árboles y parques',
+        'Disminuye el tráfico vehicular'
+      ],
+      ok: 1,
+      expl: 'La concentración de millones de personas, fábricas y vehículos en poco espacio genera grave contaminación del aire (smog), del agua y del suelo.'
+    },
+    {
+      tema: 'Los problemas de la concentración de la población',
+      img: '',
+      txt: '¿Qué sucede con los servicios públicos (salud, educación, agua) cuando hay demasiada gente en un lugar?',
+      ops: [
+        'Mejoran automáticamente',
+        'Se saturan y no alcanzan para todos',
+        'Desaparecen por completo',
+        'No se ven afectados'
+      ],
+      ok: 1,
+      expl: 'Cuando la población supera la capacidad de los servicios, estos se saturan. Hospitales llenos, escuelas sin espacio y falta de agua potable son consecuencias directas.'
+    },
+    {
+      tema: 'Los problemas de la concentración de la población',
+      img: '',
+      txt: '¿Cuál de estos NO es un problema causado por la concentración excesiva de población?',
+      ops: [
+        'Desempleo y pobreza urbana',
+        'Contaminación del aire',
+        'Mayor disponibilidad de agua limpia',
+        'Congestión vial y exceso de basura'
+      ],
+      ok: 2,
+      expl: 'Mayor disponibilidad de agua limpia NO es una consecuencia de la sobrepoblación. Al contrario: la concentración provoca escasez y contaminación del agua potable.'
+    },
+    {
+      tema: 'Los problemas de la concentración de la población',
+      img: '',
+      txt: '¿Qué deben hacer los gobiernos para reducir los problemas de concentración?',
+      ops: [
+        'Cerrar todas las ciudades',
+        'Crear políticas para distribuir mejor la población y los servicios en el territorio',
+        'Prohibir que la gente se mueva de lugar',
+        'No hacer nada, pues el problema se resuelve solo'
+      ],
+      ok: 1,
+      expl: 'Los gobiernos deben planificar políticas de distribución territorial: impulsar el desarrollo en zonas rurales, mejorar infraestructura regional y descentralizar servicios y empleos.'
+    }
+  ]
+};
+
+// Arreglo final de 15 preguntas
+const PREGUNTAS = [
+  ...BANCO.distribucion,
+  ...BANCO.concentracion,
+  ...BANCO.problemas
+];
+
+/* ═══════ ESTADO ═══════ */
+let preguntasOrden = [];
+let idxActual = 0;
+let puntos = 0;
+let respondidas = [];
+let bloqueado = false;
+
+function barajar(arr){
+  const r=[...arr];
+  for(let i=r.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [r[i],r[j]]=[r[j],r[i]];
+  }
+  return r;
+}
+
+function mostrar(id){
+  document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('activa'));
+  document.getElementById(id).classList.add('activa');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function iniciarQuiz(){
+  preguntasOrden = barajar([...Array(PREGUNTAS.length).keys()]);
+  idxActual = 0; puntos = 0;
+  respondidas = new Array(PREGUNTAS.length).fill(null);
+  bloqueado = false;
+  buildDots();
+  renderPregunta();
+  mostrar('pQuiz');
+}
+
+function buildDots(){
+  const wrap = document.getElementById('qDots');
+  wrap.innerHTML='';
+  for(let i=0;i<PREGUNTAS.length;i++){
+    const d=document.createElement('div');
+    d.className='dot-p'+(i===0?' act':'');
+    d.id='dot_'+i;
+    d.innerText=i+1;
+    wrap.appendChild(d);
+  }
+}
+
+function renderPregunta(){
+  bloqueado=false;
+  const pIdx = preguntasOrden[idxActual];
+  const p = PREGUNTAS[pIdx];
+  const total = PREGUNTAS.length;
+
+  document.getElementById('qNum').innerText = `Pregunta ${idxActual+1}/${total}`;
+  document.getElementById('qBarra').style.width = ((idxActual+1)/total*100)+'%';
+  document.getElementById('qPts').innerHTML = `<i class="fas fa-star me-1"></i>${puntos} pts`;
+  document.getElementById('qTema').innerHTML = `<i class="fas fa-tag me-1"></i>${p.tema}`;
+  document.getElementById('qTxt').innerText = p.txt;
+
+  // Imagen opcional
+  const imgEl = document.getElementById('qImg');
+  if(p.img){
+    imgEl.src = p.img;
+    imgEl.classList.add('visible');
+  } else {
+    imgEl.src = '';
+    imgEl.classList.remove('visible');
+  }
+
+  // Actualizar dots
+  document.querySelectorAll('.dot-p').forEach((d,i)=>{
+    d.classList.remove('act');
+    if(i===idxActual) d.classList.add('act');
+  });
+
+  // Opciones barajadas
+  const opcionesIdx = barajar([0,1,2,3]);
+  const letras = ['A','B','C','D'];
+  const ops = document.getElementById('qOpciones');
+  ops.innerHTML='';
+  opcionesIdx.forEach((oIdx,pos)=>{
+    const div = document.createElement('div');
+    div.className='opcion';
+    div.innerHTML=`<div class="op-letra">${letras[pos]}</div><span>${p.ops[oIdx]}</span>`;
+    div.dataset.original = oIdx;
+    div.addEventListener('click',()=>elegir(div,oIdx,p.ok,pIdx));
+    ops.appendChild(div);
+  });
+
+  document.getElementById('qExpl').classList.remove('vis');
+  document.getElementById('qExpl').innerText='';
+  document.getElementById('btnSig').classList.remove('vis');
+}
+
+function elegir(div,oIdx,okIdx,pIdx){
+  if(bloqueado) return;
+  bloqueado=true;
+  const esOk = (oIdx===okIdx);
+
+  document.querySelectorAll('#qOpciones .opcion').forEach(op=>{
+    op.classList.add('bloq');
+    if(parseInt(op.dataset.original)===okIdx) op.classList.add('revelar-ok');
+  });
+  div.classList.add(esOk?'sel-ok':'sel-err');
+
+  if(esOk){
+    puntos+=5;
+    document.getElementById('qPts').innerHTML=`<i class="fas fa-star me-1"></i>${puntos} pts`;
+  }
+
+  const dot = document.getElementById('dot_'+idxActual);
+  if(dot){dot.classList.remove('act');dot.classList.add(esOk?'ok':'err');}
+
+  respondidas[idxActual]={pIdx,elegido:oIdx,ok:esOk};
+
+  const expl = document.getElementById('qExpl');
+  expl.innerHTML=`${esOk?'✅':'❌'} ${PREGUNTAS[pIdx].expl}`;
+  expl.classList.add('vis');
+
+  const btn = document.getElementById('btnSig');
+  btn.classList.add('vis');
+  btn.innerHTML = idxActual<PREGUNTAS.length-1
+    ? 'Siguiente <i class="fas fa-arrow-right"></i>'
+    : 'Ver resultados <i class="fas fa-flag-checkered"></i>';
+}
+
+function siguientePregunta(){
+  idxActual++;
+  if(idxActual>=PREGUNTAS.length){mostrarResultados();return;}
+  renderPregunta();
+}
+
+function mostrarResultados(){
+  const total = PREGUNTAS.length*5;
+  const pct = Math.round(puntos/total*100);
+  let medalla, titulo, sub;
+
+  if(pct>=90){
+    medalla='🏆';
+    titulo='¡Excelente! Eres un experto';
+    sub='Dominas todos los subtemas sobre la distribución de la población mundial.';
+  } else if(pct>=70){
+    medalla='🥈';
+    titulo='¡Muy bien! Casi perfecto';
+    sub='Conoces muy bien el tema. ¡Repasa los que fallaste y lograrás el 100%!';
+  } else if(pct>=50){
+    medalla='🥉';
+    titulo='¡Buen intento!';
+    sub='Repasa los subtemas donde te equivocaste e inténtalo de nuevo.';
+  } else {
+    medalla='📚';
+    titulo='Sigue estudiando';
+    sub='Revisa las actividades del tema antes de repetir el quiz.';
+  }
+
+  document.getElementById('rMedalla').innerText = medalla;
+  document.getElementById('rTitulo').innerText = titulo;
+  document.getElementById('rScore').innerText = `${puntos} / ${total} pts`;
+  document.getElementById('rSub').innerText = sub+'  ('+pct+'%)';
+  setTimeout(()=>document.getElementById('rFill').style.width=pct+'%',200);
+
+  const lista = document.getElementById('rLista');
+  lista.innerHTML='';
+  respondidas.forEach(r=>{
+    if(!r) return;
+    const p = PREGUNTAS[r.pIdx];
+    const d = document.createElement('div');
+    d.className='resumen-item '+(r.ok?'ok-r':'err-r');
+    d.innerHTML=`
+      <div class="ri-ico">${r.ok?'✅':'❌'}</div>
+      <div>
+        <div class="ri-preg">${p.txt}</div>
+        <div class="ri-resp">${r.ok?'Respuesta correcta':'Correcto: '+p.ops[p.ok]}</div>
+      </div>`;
+    lista.appendChild(d);
+  });
+
+  mostrar('pResultados');
+}
+
+function reiniciarQuiz(){ iniciarQuiz(); }
+</script>
 </body>
 </html>

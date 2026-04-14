@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coordenadas &middot; Nivel Normal &middot; Auditivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+  <audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+  <audio id="audio_p1_intro" src="audios/coord_normal_p1_intro.mp3"></audio>
+  <audio id="audio_p1_ej1" src="audios/coord_normal_p1_ej1.mp3"></audio>
+  <audio id="audio_p1_ej2" src="audios/coord_normal_p1_ej2.mp3"></audio>
+  <audio id="audio_p2_intro" src="audios/coord_normal_p2_intro.mp3"></audio>
+  <audio id="audio_p2_ej1" src="audios/coord_normal_p2_ej1.mp3"></audio>
+  <audio id="audio_p2_ej2" src="audios/coord_normal_p2_ej2.mp3"></audio>
+  <audio id="audio_p3_intro" src="audios/coord_normal_p3_intro.mp3"></audio>
+  <audio id="audio_p3_ej1" src="audios/coord_normal_p3_ej1.mp3"></audio>
+  <audio id="audio_p3_ej2" src="audios/coord_normal_p3_ej2.mp3"></audio>
+  <audio id="audio_p4_intro" src="audios/coord_normal_p4_intro.mp3"></audio>
+  <audio id="audio_p4_ej1" src="audios/coord_normal_p4_ej1.mp3"></audio>
+  <audio id="audio_p4_ej2" src="audios/coord_normal_p4_ej2.mp3"></audio>
+  <audio id="audio_p5_intro" src="audios/coord_normal_p5_intro.mp3"></audio>
+  <audio id="audio_p5_ej1" src="audios/coord_normal_p5_ej1.mp3"></audio>
+  <audio id="audio_p5_ej2" src="audios/coord_normal_p5_ej2.mp3"></audio>
+
+  <div class="hero">
+    <h1><i class="fas fa-compass me-2"></i>COORDENADAS</h1>
+    <p class="lead text-white mb-0">Nivel Normal &middot; Planos y rutas</p>
+    <div>
+      <span class="pill estilo"><i class="fas fa-headphones"></i> Auditivo</span>
+      <span class="pill nivel"><i class="fas fa-chart-line"></i> Intermedio</span>
+    </div>
+  </div>
+
+  <div class="progress-shell">
+    <i class="fas fa-map-marked-alt fa-2x" style="color:#f97316;"></i>
+    <div class="progress-dots"><div class="dot active" data-page="1">1</div><div class="dot" data-page="2">2</div><div class="dot" data-page="3">3</div><div class="dot" data-page="4">4</div><div class="dot" data-page="5">5</div></div>
+    <div class="page-pill">P&aacute;gina <span id="paginaActualNum">1</span>/5</div>
+  </div>
+
+  <div class="wrap">
+    <div class="page active" id="pagina1">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-road me-3"></i>Ruta de Sebasti&aacute;n</h2>
+        <p class="leadx">Sebasti&aacute;n sale de la Calle Miguel Jacintez y quiere llegar al Parque Porfino Serrano. Para entender su recorrido hay que mirar el inicio, los giros y el punto final.</p>
+        <div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p1_intro"><i class="fas fa-play"></i></button><div class="audio-label"><i class="fas fa-volume-up me-2"></i>Audio del contenido de la p&aacute;gina 1</div></div>
+        <div class="image-box"><img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con la ruta de Sebastian" class="zoomable"><div class="caption">Mapa con calles y avenidas del recorrido</div></div>
+        <div class="info"><h4><i class="fas fa-route me-2"></i>Ruta del ejemplo</h4><ul><li>Primero avanza al norte.</li><li>Luego gira al este.</li><li>Despu&eacute;s vuelve al norte, otra vez al este y termina con un tramo final al norte.</li></ul></div>
+        <div class="route-strip"><div class="route-chip"><i class="fas fa-house"></i>Casa</div><div class="route-chip"><i class="fas fa-road"></i>Oriente 156</div><div class="route-chip"><i class="fas fa-road"></i>Oriente 170</div><div class="route-chip"><i class="fas fa-tree"></i>Parque</div></div>
+        <div class="exercise" id="card-p1e1"><div class="ex-head"><span class="ex-badge">Ejercicio 1</span><span class="ex-sub">Escucha y ubica el final</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p1_ej1"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y elige el lugar donde termina el recorrido.</div></div><div class="question">Usa la ruta del ejemplo para identificar el punto final correcto.</div><div class="options" id="p1e1-options"><button type="button" class="opt card" data-value="casa"><strong>Casa</strong><span>Lugar del mapa</span></button><button type="button" class="opt card" data-value="parque"><strong>Parque</strong><span>Lugar del mapa</span></button><button type="button" class="opt card" data-value="oriente156"><strong>Oriente 156</strong><span>Lugar del mapa</span></button><button type="button" class="opt card" data-value="oriente170"><strong>Oriente 170</strong><span>Lugar del mapa</span></button></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p1e1-feedback"></div></div>
+        <div class="exercise" id="card-p1e2"><div class="ex-head"><span class="ex-badge">Ejercicio 2</span><span class="ex-sub">Ordena la ruta</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p1_ej2"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y ordena los movimientos de la ruta de Sebasti&aacute;n.</div></div><div class="question">Coloca los tramos en el orden correcto desde la casa hasta el parque.</div><div class="sequence-answer" id="p1e2-answer"><span style="color:#9a3412;font-weight:700;">Tu secuencia aparecer&aacute; aqu&iacute;.</span></div><div class="sequence-bank" id="p1e2-bank"></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="undo">Quitar &uacute;ltimo</button><button type="button" class="btnx alt" data-action="clear">Borrar todo</button></div><div class="feedback" id="p1e2-feedback"></div></div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina2">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+        <p class="leadx">En este plano cada edificio sirve como punto de referencia. Como la imagen no trae la ruta dibujada, aqu&iacute; usamos una gu&iacute;a de pasos para seguir el recorrido con claridad.</p>
+        <div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p2_intro"><i class="fas fa-play"></i></button><div class="audio-label"><i class="fas fa-volume-up me-2"></i>Audio del contenido de la p&aacute;gina 2</div></div>
+        <div class="image-box"><img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg" alt="Mapa de Ciudad Universitaria" class="zoomable"><div class="caption">Plano de Ciudad Universitaria</div></div>
+        <div class="info"><h4><i class="fas fa-map-signs me-2"></i>Gu&iacute;a del recorrido</h4><ul><li>Inicio: Estacionamiento.</li><li>Luego pasa por Estadio de Pr&aacute;cticas, Trabajo Social, Contadur&iacute;a y Ciencias del Mar.</li><li>Despu&eacute;s del &uacute;ltimo giro al norte llega a Veterinaria.</li></ul></div>
+        <div class="location-strip"><div class="place-chip"><i class="fas fa-square-parking"></i>Estacionamiento</div><div class="place-chip"><i class="fas fa-futbol"></i>Estadio</div><div class="place-chip"><i class="fas fa-briefcase"></i>Trabajo Social</div><div class="place-chip"><i class="fas fa-chart-pie"></i>Contadur&iacute;a</div><div class="place-chip"><i class="fas fa-water"></i>Ciencias del Mar</div><div class="place-chip"><i class="fas fa-paw"></i>Veterinaria</div></div>
+        <div class="exercise" id="card-p2e1"><div class="ex-head"><span class="ex-badge">Ejercicio 1</span><span class="ex-sub">Escucha y encuentra el destino</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p2_ej1"><i class="fas fa-play"></i></button><div class="audio-label">Escucha la ruta y elige el edificio donde termina.</div></div><div class="question">Usa la gu&iacute;a del recorrido para decidir cu&aacute;l es el punto final.</div><div class="options" id="p2e1-options"><button type="button" class="opt card" data-value="estadio"><strong>Estadio</strong><span>Edificio del plano</span></button><button type="button" class="opt card" data-value="trabajo"><strong>Trabajo Social</strong><span>Edificio del plano</span></button><button type="button" class="opt card" data-value="mar"><strong>Ciencias del Mar</strong><span>Edificio del plano</span></button><button type="button" class="opt card" data-value="veterinaria"><strong>Veterinaria</strong><span>Edificio del plano</span></button></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p2e1-feedback"></div></div>
+        <div class="exercise" id="card-p2e2"><div class="ex-head"><span class="ex-badge">Ejercicio 2</span><span class="ex-sub">Ordena los lugares</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p2_ej2"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y ordena los lugares por los que pasa la ruta.</div></div><div class="question">Coloca el recorrido completo desde Estacionamiento hasta Veterinaria.</div><div class="sequence-answer" id="p2e2-answer"><span style="color:#9a3412;font-weight:700;">Tu secuencia aparecer&aacute; aqu&iacute;.</span></div><div class="sequence-bank" id="p2e2-bank"></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="undo">Quitar &uacute;ltimo</button><button type="button" class="btnx alt" data-action="clear">Borrar todo</button></div><div class="feedback" id="p2e2-feedback"></div></div>
+      </div>
+    </div>
+    <div class="page" id="pagina3">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-train-subway me-3"></i>Red de Metro</h2>
+        <p class="leadx">En una ruta de Metro importan el punto de partida, la estaci&oacute;n donde cambias de l&iacute;nea y la estaci&oacute;n final. Observa el mismo mapa que aparece en los otros estilos y sigue el audio paso por paso.</p>
+        <div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p3_intro"><i class="fas fa-play"></i></button><div class="audio-label"><i class="fas fa-volume-up me-2"></i>Audio del contenido de la p&aacute;gina 3</div></div>
+        <div class="metro-wrap">
+          <svg class="metro-svg" viewBox="0 0 700 400" role="img" aria-label="Mapa simplificado del metro">
+            <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round"></line>
+            <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"></line>
+            <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"></line>
+
+            <g class="metro-station" data-station="observatorio"><circle class="outer" cx="80" cy="80" r="10" stroke="#ef4444"></circle><circle cx="80" cy="80" r="5" fill="#ef4444"></circle><text x="80" y="110" text-anchor="middle" fill="#9a3412">Observatorio</text></g>
+            <g class="metro-station" data-station="tacubaya"><circle class="outer" cx="180" cy="80" r="10" stroke="#ef4444"></circle><circle cx="180" cy="80" r="5" fill="#ef4444"></circle><text x="180" y="110" text-anchor="middle" fill="#9a3412">Tacubaya</text></g>
+            <g class="metro-station" data-station="balderas"><circle class="outer" cx="280" cy="80" r="12" stroke="#ef4444"></circle><circle cx="280" cy="80" r="6" fill="gold"></circle><text x="280" y="50" text-anchor="middle" fill="#9a3412">Balderas</text></g>
+            <g class="metro-station" data-station="pino-suarez"><circle class="outer" cx="380" cy="80" r="10" stroke="#ef4444"></circle><circle cx="380" cy="80" r="5" fill="#ef4444"></circle><text x="380" y="110" text-anchor="middle" fill="#9a3412">Pino Su&aacute;rez</text></g>
+            <g class="metro-station" data-station="pantitlan"><circle class="outer" cx="620" cy="80" r="10" stroke="#ef4444"></circle><circle cx="620" cy="80" r="5" fill="#ef4444"></circle><text x="620" y="110" text-anchor="middle" fill="#9a3412">Pantitl&aacute;n</text></g>
+
+            <g class="metro-station" data-station="tasquena"><circle class="outer" cx="150" cy="320" r="10" stroke="#3b82f6"></circle><circle cx="150" cy="320" r="5" fill="#3b82f6"></circle><text x="150" y="350" text-anchor="middle" fill="#9a3412">Tasque&ntilde;a</text></g>
+            <g class="metro-station" data-station="ermita"><circle class="outer" cx="150" cy="250" r="10" stroke="#3b82f6"></circle><circle cx="150" cy="250" r="5" fill="#3b82f6"></circle><text x="120" y="250" text-anchor="end" fill="#9a3412">Ermita</text></g>
+            <g class="metro-station" data-station="chabacano"><circle class="outer" cx="150" cy="180" r="10" stroke="#3b82f6"></circle><circle cx="150" cy="180" r="5" fill="#3b82f6"></circle><text x="120" y="180" text-anchor="end" fill="#9a3412">Chabacano</text></g>
+            <g class="metro-station" data-station="balderas"><circle class="outer" cx="150" cy="110" r="12" stroke="#3b82f6"></circle><circle cx="150" cy="110" r="6" fill="gold"></circle></g>
+            <g class="metro-station" data-station="cuatro-caminos"><circle class="outer" cx="150" cy="50" r="10" stroke="#3b82f6"></circle><circle cx="150" cy="50" r="5" fill="#3b82f6"></circle><text x="150" y="30" text-anchor="middle" fill="#9a3412">Cuatro Caminos</text></g>
+
+            <g class="metro-station" data-station="universidad"><circle class="outer" cx="400" cy="320" r="10" stroke="#10b981"></circle><circle cx="400" cy="320" r="5" fill="#10b981"></circle><text x="400" y="350" text-anchor="middle" fill="#9a3412">Universidad</text></g>
+            <g class="metro-station" data-station="copilco"><circle class="outer" cx="400" cy="250" r="10" stroke="#10b981"></circle><circle cx="400" cy="250" r="5" fill="#10b981"></circle><text x="430" y="250" text-anchor="start" fill="#9a3412">Copilco</text></g>
+            <g class="metro-station" data-station="balderas"><circle class="outer" cx="400" cy="180" r="12" stroke="#10b981"></circle><circle cx="400" cy="180" r="6" fill="gold"></circle><text x="400" y="210" text-anchor="middle" fill="#9a3412">Balderas</text></g>
+            <g class="metro-station" data-station="guerrero"><circle class="outer" cx="400" cy="110" r="10" stroke="#10b981"></circle><circle cx="400" cy="110" r="5" fill="#10b981"></circle><text x="430" y="110" text-anchor="start" fill="#9a3412">Guerrero</text></g>
+            <g class="metro-station" data-station="indios-verdes"><circle class="outer" cx="400" cy="50" r="10" stroke="#10b981"></circle><circle cx="400" cy="50" r="5" fill="#10b981"></circle><text x="400" y="30" text-anchor="middle" fill="#9a3412">Indios Verdes</text></g>
+          </svg>
+        </div>
+        <div class="info"><h4><i class="fas fa-info-circle me-2"></i>L&iacute;neas del Metro</h4><ul><li><span style="color:#ef4444;font-weight:700;">L&iacute;nea 1 (roja):</span> Observatorio - Tacubaya - Balderas - Pino Su&aacute;rez - Pantitl&aacute;n</li><li><span style="color:#3b82f6;font-weight:700;">L&iacute;nea 2 (azul):</span> Tasque&ntilde;a - Ermita - Chabacano - Balderas - Cuatro Caminos</li><li><span style="color:#10b981;font-weight:700;">L&iacute;nea 3 (verde):</span> Universidad - Copilco - Balderas - Guerrero - Indios Verdes</li><li><span style="color:gold;font-weight:700;">Balderas</span> es la estaci&oacute;n donde coinciden las 3 l&iacute;neas.</li></ul></div>
+        <div class="metro-legend"><div class="legend-item"><span class="legend-line legend-red"></span>L&iacute;nea 1</div><div class="legend-item"><span class="legend-line legend-blue"></span>L&iacute;nea 2</div><div class="legend-item"><span class="legend-line legend-green"></span>L&iacute;nea 3</div><div class="legend-item"><span style="color:gold;font-size:1.25rem;">&#11044;</span>Transbordo</div></div>
+        <div class="exercise" id="card-p3e1"><div class="ex-head"><span class="ex-badge">Ejercicio 1</span><span class="ex-sub">Encuentra el transbordo</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p3_ej1"><i class="fas fa-play"></i></button><div class="audio-label">Escucha esta ruta: Tasque&ntilde;a, Balderas, Copilco. Toca la estaci&oacute;n donde se hace el cambio de l&iacute;nea.</div></div><div class="question">Usa el mapa del Metro y selecciona la estaci&oacute;n de transbordo correcta.</div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p3e1-feedback"></div></div>
+        <div class="exercise" id="card-p3e2"><div class="ex-head"><span class="ex-badge">Ejercicio 2</span><span class="ex-sub">Ordena una ruta distinta</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p3_ej2"><i class="fas fa-play"></i></button><div class="audio-label">Escucha la nueva ruta y ordena las estaciones.</div></div><div class="question">Coloca las tres estaciones en el orden correcto seg&uacute;n el audio.</div><div class="sequence-answer" id="p3e2-answer"><span style="color:#9a3412;font-weight:700;">Tu secuencia aparecer&aacute; aqu&iacute;.</span></div><div class="sequence-bank" id="p3e2-bank"></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="undo">Quitar &uacute;ltimo</button><button type="button" class="btnx alt" data-action="clear">Borrar todo</button></div><div class="feedback" id="p3e2-feedback"></div></div>
+      </div>
+    </div>
+
+    <div class="page" id="pagina4">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-robot me-3"></i>Robots y distancia total</h2>
+        <p class="leadx">Para comparar robots no basta con ver los pasos o las unidades por separado. Hay que multiplicar ambos datos para encontrar la distancia total.</p>
+        <div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p4_intro"><i class="fas fa-play"></i></button><div class="audio-label"><i class="fas fa-volume-up me-2"></i>Audio del contenido de la p&aacute;gina 4</div></div>
+        <div class="info"><h4><i class="fas fa-calculator me-2"></i>Datos del reto</h4><p>Para comparar robots, observa cu&aacute;ntos pasos da cada uno y cu&aacute;nto vale cada paso. Luego calcula la distancia total.</p></div>
+        <div class="robot-table-wrap"><table class="robot-table"><thead><tr><th>Robot</th><th>Pasos</th><th>Unidades por paso</th></tr></thead><tbody><tr><td>Bolt</td><td>4</td><td>3</td></tr><tr><td>Titan</td><td>5</td><td>4</td></tr><tr><td>Rayo</td><td>7</td><td>2</td></tr><tr><td>Tank</td><td>3</td><td>5</td></tr></tbody></table></div>
+        <div class="exercise" id="card-p4e1"><div class="ex-head"><span class="ex-badge">Ejercicio 1</span><span class="ex-sub">Escucha y compara</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p4_ej1"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y elige el robot que recorre menos distancia total.</div></div><div class="question">Usa la tabla para calcular y luego selecciona el robot correcto.</div><div class="options" id="p4e1-options"><button type="button" class="opt card" data-value="bolt"><strong>Bolt</strong><span>Robot del reto</span></button><button type="button" class="opt card" data-value="titan"><strong>Titan</strong><span>Robot del reto</span></button><button type="button" class="opt card" data-value="rayo"><strong>Rayo</strong><span>Robot del reto</span></button><button type="button" class="opt card" data-value="tank"><strong>Tank</strong><span>Robot del reto</span></button></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p4e1-feedback"></div></div>
+        <div class="exercise" id="card-p4e2"><div class="ex-head"><span class="ex-badge">Ejercicio 2</span><span class="ex-sub">Ordena de menor a mayor</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p4_ej2"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y ordena los robots desde el que recorre menos hasta el que recorre m&aacute;s.</div></div><div class="question">Construye el orden correcto con los cuatro robots del reto.</div><div class="sequence-answer" id="p4e2-answer"><span style="color:#9a3412;font-weight:700;">Tu secuencia aparecer&aacute; aqu&iacute;.</span></div><div class="sequence-bank" id="p4e2-bank"></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="undo">Quitar &uacute;ltimo</button><button type="button" class="btnx alt" data-action="clear">Borrar todo</button></div><div class="feedback" id="p4e2-feedback"></div></div>
+      </div>
+    </div>
+    <div class="page" id="pagina5">
+      <div class="card-main">
+        <h2 class="title"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
+        <p class="leadx">En el teatro importa la fila, el lado y el n&uacute;mero del asiento. Los asientos con n&uacute;meros m&aacute;s peque&ntilde;os quedan m&aacute;s cerca del pasillo central.</p>
+        <div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p5_intro"><i class="fas fa-play"></i></button><div class="audio-label"><i class="fas fa-volume-up me-2"></i>Audio del contenido de la p&aacute;gina 5</div></div>
+        <div class="image-box"><img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg" alt="Plano de teatro" class="zoomable"><div class="caption">Platea con filas y asientos</div></div>
+        <div class="info"><h4><i class="fas fa-chair me-2"></i>Lo que no puede faltar</h4><ul><li>Fila.</li><li>Lado del teatro.</li><li>N&uacute;mero de asiento.</li></ul></div>
+        <div class="exercise" id="card-p5e1"><div class="ex-head"><span class="ex-badge">Ejercicio 1</span><span class="ex-sub">Encuentra el asiento</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p5_ej1"><i class="fas fa-play"></i></button><div class="audio-label">Boleto del reto: fila 4, lado derecho, asiento 8. Toca el asiento correcto.</div></div><div class="theater-box"><div class="stage">ESCENARIO</div><div class="theater-grid" id="theater-grid"></div></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p5e1-feedback"></div></div>
+        <div class="exercise" id="card-p5e2"><div class="ex-head"><span class="ex-badge">Ejercicio 2</span><span class="ex-sub">Compara asientos</span></div><div class="audio-box"><button type="button" class="audio-btn" data-audio="audio_p5_ej2"><i class="fas fa-play"></i></button><div class="audio-label">Escucha y elige la ubicaci&oacute;n que queda m&aacute;s cerca del pasillo central.</div></div><div class="question">Todas las opciones son del mismo lado. Elige la que est&aacute; m&aacute;s cerca del pasillo.</div><div class="theater-compare" id="p5e2-options"><button type="button" class="opt small" data-value="fila3-a2">Fila 3 &middot; Asiento 2</button><button type="button" class="opt small" data-value="fila3-a6">Fila 3 &middot; Asiento 6</button><button type="button" class="opt small" data-value="fila3-a10">Fila 3 &middot; Asiento 10</button><button type="button" class="opt small" data-value="fila3-a14">Fila 3 &middot; Asiento 14</button></div><div class="actions"><button type="button" class="btnx main" data-action="verify">Verificar</button><button type="button" class="btnx alt" data-action="clear">Borrar selecci&oacute;n</button></div><div class="feedback" id="p5e2-feedback"></div></div>
+        <a href="quiz.html" class="quiz-link"><i class="fas fa-puzzle-piece"></i> IR AL QUIZ</a>
+      </div>
+    </div>
+
+    <div class="nav"><button type="button" class="nav-btn" id="btnAnterior"><i class="fas fa-arrow-left me-2"></i>ANTERIOR</button><div class="page-ind" id="contadorPagina">1/5</div><button type="button" class="nav-btn" id="btnSiguiente">SIGUIENTE<i class="fas fa-arrow-right ms-2"></i></button></div>
+  </div>
+
+  <div class="lightbox" id="lightbox"><button type="button" class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button><img id="lightboxImg" alt="Imagen ampliada"></div>
+
+  
+  
+  
+</body>
+</html>

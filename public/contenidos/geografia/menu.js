@@ -1,4 +1,4 @@
-﻿function abrirModulo(slug) {
+function abrirModulo(slug) {
     window.location.href = `/contenidos/geografia/${slug}/menu.html`;
 }
 

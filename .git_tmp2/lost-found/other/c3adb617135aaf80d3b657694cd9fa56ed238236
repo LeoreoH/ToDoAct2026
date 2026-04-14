@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemáticas</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<header class="materia-header">
+    <button class="boton-volver" onclick="volver()">← Volver</button>
+    <h1>Matemáticas</h1>
+</header>
+
+<main class="contenedor-materia">
+    <h2>Selecciona un tema</h2>
+
+    <div class="contenedor-bloques">
+
+        <button onclick="abrirContenido('identificar-coordenadas')">
+            <span>Identificar coordenadas</span>
+            <span class="descripcion-bloque">
+                Ubicación en planos y mapas, cuadrículas y coordenadas
+            </span>
+        </button>
+
+        <button onclick="abrirContenido('seguir-instrucciones-espaciales')">
+            <span>Seguir instrucciones espaciales</span>
+            <span class="descripcion-bloque">
+                Interpretar secuencias de movimientos y direcciones
+            </span>
+        </button>
+
+        <button onclick="abrirContenido('reconocer-fracciones')">
+            <span>Reconocer fracciones</span>
+            <span class="descripcion-bloque">
+                Identifica partes de un todo, numerador y denominador
+            </span>
+        </button>
+
+        <button onclick="abrirContenido('equivalencias-numericas')">
+            <span>Equivalencias numéricas</span>
+            <span class="descripcion-bloque">
+                Equivalencias de fracciones, decimales y porcentajes
+            </span>
+        </button>
+
+    </div>
+</main>
+
+
+</body>
+</html>

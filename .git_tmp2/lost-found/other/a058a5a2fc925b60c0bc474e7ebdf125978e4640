@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenadas - Nivel Dificil - Visual No Verbal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
+</head>
+<body>
+
+<audio id="audioClick"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing"   src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError"  src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
+
+<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+    <img id="lightbox-img" src="" alt="Tablero ampliado">
+</div>
+
+<div class="cabecera-dificil">
+    <h1>&#9881; COORDENADAS</h1>
+    <p class="lead text-white">Nivel Dif&iacute;cil &middot; Planos y estrategia</p>
+    <div>
+        <span class="badge-estilo">&#128065; Visual / No Verbal</span>
+        <span class="badge-nivel">&#11088; Avanzado</span>
+    </div>
+</div>
+
+<div class="barra-progreso">
+    <i class="fas fa-map fa-2x" style="color:#f97316;"></i>
+    <div class="puntos-progreso" id="puntosProgreso">
+        <div class="punto activo" data-pagina="1">1</div>
+        <div class="punto" data-pagina="2">2</div>
+        <div class="punto" data-pagina="3">3</div>
+        <div class="punto" data-pagina="4">4</div>
+        <div class="punto" data-pagina="5">5</div>
+    </div>
+    <span class="badge" style="background:#f97316;color:white;font-size:1.1rem;padding:8px 20px;">
+        P&aacute;gina <span id="paginaActualNum">1</span>/5
+    </span>
+</div>
+
+<div class="contenedor-paginas">
+
+<div class="pagina activa" id="pagina1">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta por la colonia</h2>
+
+        <p class="lead">
+            Las <strong>calles</strong> van de norte a sur y las <strong>avenidas</strong> de este a oeste.
+            Mar&iacute;a sale de su casa en <strong>Calle Pino &amp; Avenida Amazonas</strong> y sigue la ruta marcada.
+        </p>
+
+        <div class="mapa-calles-wrap">
+            <svg id="svgMapa" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;width:100%;">
+                <line x1="120" y1="60" x2="120" y2="460" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                <line x1="220" y1="60" x2="220" y2="460" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                <line x1="320" y1="60" x2="320" y2="460" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                <line x1="420" y1="60" x2="420" y2="460" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                <line x1="520" y1="60" x2="520" y2="460" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                <line x1="60" y1="120" x2="600" y2="120" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                <line x1="60" y1="220" x2="600" y2="220" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                <line x1="60" y1="320" x2="600" y2="320" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                <line x1="60" y1="420" x2="600" y2="420" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                <text x="120" y="45" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Pino</text>
+                <text x="220" y="45" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Roble</text>
+                <text x="320" y="45" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Cedro</text>
+                <text x="420" y="45" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Fresno</text>
+                <text x="520" y="45" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Sauce</text>
+                <text x="58" y="125" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Amazonas</text>
+                <text x="58" y="225" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Nilo</text>
+                <text x="58" y="325" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Ganges</text>
+                <text x="58" y="425" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Misisipi</text>
+                <circle cx="120" cy="120" r="4" fill="#f97316"/>
+                <circle cx="220" cy="120" r="4" fill="#f97316"/>
+                <circle cx="320" cy="120" r="4" fill="#f97316"/>
+                <circle cx="420" cy="120" r="4" fill="#f97316"/>
+                <circle cx="120" cy="220" r="4" fill="#f97316"/>
+                <circle cx="220" cy="220" r="4" fill="#f97316"/>
+                <circle cx="320" cy="220" r="4" fill="#f97316"/>
+                <circle cx="420" cy="220" r="4" fill="#f97316"/>
+                <circle cx="120" cy="320" r="4" fill="#f97316"/>
+                <circle cx="220" cy="320" r="4" fill="#f97316"/>
+                <circle cx="320" cy="320" r="4" fill="#f97316"/>
+                <circle cx="420" cy="320" r="4" fill="#f97316"/>
+                <circle cx="120" cy="420" r="4" fill="#f97316"/>
+                <circle cx="220" cy="420" r="4" fill="#f97316"/>
+                <circle cx="320" cy="420" r="4" fill="#f97316"/>
+                <circle cx="420" cy="420" r="4" fill="#f97316"/>
+                <circle cx="120" cy="120" r="16" fill="#4caf50" stroke="white" stroke-width="3"/>
+                <text x="120" y="125" text-anchor="middle" font-size="14">&#127968;</text>
+                <text x="142" y="110" font-family="Nunito" font-size="10" font-weight="800" fill="#166534">Casa</text>
+                <rect x="206" y="206" width="28" height="28" rx="6" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                <text x="220" y="225" text-anchor="middle" font-size="14">&#128722;</text>
+                <text x="242" y="210" font-family="Nunito" font-size="10" font-weight="800" fill="#1d4ed8">Super</text>
+                <rect x="306" y="306" width="28" height="28" rx="6" fill="#8b5cf6" stroke="white" stroke-width="2"/>
+                <text x="320" y="325" text-anchor="middle" font-size="13">&#127979;</text>
+                <text x="342" y="310" font-family="Nunito" font-size="10" font-weight="800" fill="#5b21b6">Escuela</text>
+                <rect x="406" y="206" width="28" height="28" rx="6" fill="#ec4899" stroke="white" stroke-width="2"/>
+                <text x="420" y="225" text-anchor="middle" font-size="14">&#128138;</text>
+                <text x="442" y="210" font-family="Nunito" font-size="10" font-weight="800" fill="#9d174d">Farmacia</text>
+                <polyline id="rutaLinea"
+                    points="120,120 120,220 220,220 220,320 320,320 320,420 420,420 520,420"
+                    fill="none" stroke="#c2410c" stroke-width="3.5"
+                    stroke-dasharray="1200" stroke-dashoffset="1200"
+                    stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+                <g class="interseccion-btn" id="int-A" onclick="elegirInterseccion('A',false)">
+                    <circle cx="320" cy="420" r="14" fill="#f97316" stroke="white" stroke-width="2.5"/>
+                    <text x="320" y="416" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Cedro</text>
+                    <text x="320" y="427" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Misisipi</text>
+                </g>
+                <g class="interseccion-btn" id="int-B" onclick="elegirInterseccion('B',false)">
+                    <circle cx="420" cy="320" r="14" fill="#f97316" stroke="white" stroke-width="2.5"/>
+                    <text x="420" y="316" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Fresno</text>
+                    <text x="420" y="327" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Ganges</text>
+                </g>
+                <g class="interseccion-btn" id="int-C" onclick="elegirInterseccion('C',true)">
+                    <circle cx="520" cy="420" r="14" fill="#10b981" stroke="white" stroke-width="2.5"/>
+                    <text x="520" y="416" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Sauce</text>
+                    <text x="520" y="427" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Misisipi</text>
+                    <text x="520" y="400" text-anchor="middle" font-size="16">&#127795;</text>
+                </g>
+                <g class="interseccion-btn" id="int-D" onclick="elegirInterseccion('D',false)">
+                    <circle cx="520" cy="220" r="14" fill="#f97316" stroke="white" stroke-width="2.5"/>
+                    <text x="520" y="216" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Sauce</text>
+                    <text x="520" y="227" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Nilo</text>
+                </g>
+                <rect x="60" y="478" width="14" height="14" rx="3" fill="#4caf50"/>
+                <text x="80"  y="490" font-family="Nunito" font-size="11" fill="#9a3412">Casa</text>
+                <line x1="140" y1="485" x2="170" y2="485" stroke="#c2410c" stroke-width="3"/>
+                <text x="178" y="490" font-family="Nunito" font-size="11" fill="#9a3412">Ruta de Maria</text>
+                <circle cx="310" cy="485" r="8" fill="#10b981" stroke="white" stroke-width="2"/>
+                <text x="325" y="490" font-family="Nunito" font-size="11" fill="#9a3412">Parque (respuesta)</text>
+            </svg>
+        </div>
+
+        <div class="recuadro-info">
+            <h4><i class="fas fa-route me-2"></i>Recorrido de Mar&iacute;a</h4>
+            <ul class="lista-iconos">
+                <li><i class="fas fa-arrow-down" style="color:#f97316;"></i>1 cuadra al sur &rarr; <strong>Pino &amp; Nilo</strong></li>
+                <li><i class="fas fa-arrow-right" style="color:#f97316;"></i>1 cuadra al este &rarr; <strong>Roble &amp; Nilo</strong></li>
+                <li><i class="fas fa-arrow-down" style="color:#f97316;"></i>1 cuadra al sur &rarr; <strong>Roble &amp; Ganges</strong></li>
+                <li><i class="fas fa-arrow-right" style="color:#f97316;"></i>1 cuadra al este &rarr; <strong>Cedro &amp; Ganges</strong></li>
+                <li><i class="fas fa-arrow-down" style="color:#f97316;"></i>1 cuadra al sur &rarr; <strong>Cedro &amp; Misisipi</strong></li>
+                <li><i class="fas fa-arrow-right" style="color:#f97316;"></i>2 cuadras al este &rarr; <strong>Sauce &amp; Misisipi</strong></li>
+            </ul>
+        </div>
+
+        <div class="actividad-visual">
+            <h4><i class="fas fa-map-pin me-2"></i>Actividad</h4>
+            <p>Mar&iacute;a quiere llegar al <strong>Parque</strong>. Siguiendo la ruta marcada en el mapa,
+               haz clic en la interseccion donde termina su camino. Cada punto del mapa muestra el nombre de la calle y la avenida.</p>
+            <div id="feedback1" class="feedback-visual"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina2">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Metro complejo</h2>
+
+        <p class="lead">
+            La ciudad tiene <strong>4 l&iacute;neas de metro</strong>. Las estaciones con estrella son
+            transbordos donde puedes cambiar de l&iacute;nea.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px;padding:12px 18px;background:#fff7e6;border-radius:14px;border:2px solid #fed7aa;">
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:36px;height:6px;background:#ef4444;border-radius:3px;"></span>L&iacute;nea 1 - Roja
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:36px;height:6px;background:#3b82f6;border-radius:3px;"></span>L&iacute;nea 2 - Azul
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:36px;height:6px;background:#10b981;border-radius:3px;"></span>L&iacute;nea 3 - Verde
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:36px;height:6px;background:#f97316;border-radius:3px;"></span>L&iacute;nea 4 - Naranja
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                <span style="display:inline-block;width:20px;height:20px;background:#fde68a;border:3px solid #c2410c;border-radius:50%;"></span>Transbordo &#11088;
+            </span>
+        </div>
+
+        <div class="mapa-metro-dificil">
+            <svg class="metro-svg" viewBox="0 0 860 480" xmlns="http://www.w3.org/2000/svg">
+                <line x1="80"  y1="110" x2="780" y2="110" stroke="#ef4444" stroke-width="7" stroke-linecap="round"/>
+                <line x1="230" y1="60"  x2="230" y2="420" stroke="#3b82f6" stroke-width="7" stroke-linecap="round"/>
+                <path d="M 320 380 Q 430 260, 560 110" stroke="#10b981" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <line x1="80"  y1="380" x2="760" y2="380" stroke="#f97316" stroke-width="7" stroke-linecap="round"/>
+
+                <g>
+                    <circle cx="80"  cy="110" r="9" fill="white" stroke="#ef4444" stroke-width="3"/>
+                    <text x="80"  y="96"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Insurgentes</text>
+                </g>
+                <g>
+                    <circle cx="400" cy="110" r="9" fill="white" stroke="#ef4444" stroke-width="3"/>
+                    <text x="400" y="96"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Reforma</text>
+                </g>
+                <g>
+                    <circle cx="700" cy="110" r="9" fill="white" stroke="#ef4444" stroke-width="3"/>
+                    <text x="700" y="96"  text-anchor="middle" font-family="Nunito" font-size="10" fill="#7f1d1d">Pantitlan</text>
+                </g>
+
+                <circle cx="230" cy="110" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                <circle cx="230" cy="110" r="6"  fill="#ef4444"/>
+                <text x="230" y="88" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Buenavista &#11088;</text>
+                <rect x="218" y="126" width="11" height="5" rx="2" fill="#ef4444"/>
+                <rect x="231" y="126" width="11" height="5" rx="2" fill="#3b82f6"/>
+
+                <g class="estacion-clickeable" id="est2-Centro" onclick="elegirEstacion2('Centro',true)">
+                    <circle cx="560" cy="110" r="13" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="560" cy="110" r="6"  fill="#ef4444"/>
+                    <text x="560" y="88" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Centro &#11088;</text>
+                    <rect x="548" y="126" width="11" height="5" rx="2" fill="#ef4444"/>
+                    <rect x="561" y="126" width="11" height="5" rx="2" fill="#10b981"/>
+                </g>
+
+                <g>
+                    <circle cx="230" cy="190" r="9" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                    <text x="250" y="194" font-family="Nunito" font-size="10" fill="#1e3a8a">Tacubaya</text>
+                </g>
+                <g>
+                    <circle cx="230" cy="300" r="9" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                    <text x="250" y="304" font-family="Nunito" font-size="10" fill="#1e3a8a">Ermita</text>
+                </g>
+
+                <circle cx="230" cy="380" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                <circle cx="230" cy="380" r="6"  fill="#3b82f6"/>
+                <text x="230" y="408" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Balderas &#11088;</text>
+                <rect x="212" y="396" width="11" height="5" rx="2" fill="#3b82f6"/>
+                <rect x="225" y="396" width="11" height="5" rx="2" fill="#10b981"/>
+                <rect x="238" y="396" width="11" height="5" rx="2" fill="#f97316"/>
+
+                <g class="estacion-clickeable" id="est2-Copilco" onclick="elegirEstacion2('Copilco',false)">
+                    <circle cx="320" cy="380" r="9" fill="white" stroke="#10b981" stroke-width="3"/>
+                    <text x="320" y="370" text-anchor="middle" font-family="Nunito" font-size="10" fill="#065f46">Copilco</text>
+                    <rect x="295" y="388" width="50" height="16" rx="8" fill="#10b981" opacity="0.9"/>
+                    <text x="320" y="399" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Destino</text>
+                </g>
+                <g class="estacion-clickeable" id="est2-Zocalo" onclick="elegirEstacion2('Zocalo',false)">
+                    <circle cx="430" cy="250" r="9" fill="white" stroke="#10b981" stroke-width="3"/>
+                    <text x="452" y="254" font-family="Nunito" font-size="10" fill="#065f46">Zocalo</text>
+                </g>
+
+                <g class="estacion-clickeable" id="est2-Observatorio" onclick="elegirEstacion2('Observatorio',false)">
+                    <circle cx="80"  cy="380" r="9" fill="white" stroke="#f97316" stroke-width="3"/>
+                    <text x="80"  y="366" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Observatorio</text>
+                </g>
+                <g>
+                    <circle cx="680" cy="380" r="9" fill="white" stroke="#f97316" stroke-width="3"/>
+                    <text x="680" y="366" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Pantitlan</text>
+                </g>
+
+                <rect x="52" y="93" width="56" height="16" rx="8" fill="#ef4444" opacity="0.9"/>
+                <text x="80" y="104" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">Inicio</text>
+            </svg>
+        </div>
+
+        <div class="recuadro-info">
+            <h4><i class="fas fa-exchange-alt me-2"></i>Transbordos disponibles</h4>
+            <ul class="lista-iconos">
+                <li><span style="background:#fde68a;border:2px solid #c2410c;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">&#11088;</span>
+                    <span><strong>Buenavista</strong> - L&iacute;nea 1 &harr; L&iacute;nea 2</span></li>
+                <li><span style="background:#fde68a;border:2px solid #c2410c;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">&#11088;</span>
+                    <span><strong>Centro</strong> - L&iacute;nea 1 &harr; L&iacute;nea 3</span></li>
+                <li><span style="background:#fde68a;border:2px solid #c2410c;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;">&#11088;</span>
+                    <span><strong>Balderas</strong> - L&iacute;nea 2 &harr; L&iacute;nea 3 &harr; L&iacute;nea 4</span></li>
+            </ul>
+        </div>
+
+        <div class="actividad-visual">
+            <h4><i class="fas fa-subway me-2"></i>Actividad</h4>
+            <p>Vas de <strong>Insurgentes (L&iacute;nea 1, roja)</strong> a <strong>Copilco (L&iacute;nea 3, verde)</strong>.
+               Para llegar necesitas hacer un transbordo. Haz clic directamente en el mapa sobre la estacion donde debes cambiar de l&iacute;nea para hacer el recorrido con el menor n&uacute;mero de transbordos posible.</p>
+            <div id="feedback2" class="feedback-visual"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina3">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-fighter-jet me-3"></i>Batalla a&eacute;rea</h2>
+
+        <p class="lead">
+            Observa los dos tableros. La primera letra es la <strong>columna</strong> (A-G)
+            y la segunda es la <strong>fila</strong> (A-F).
+        </p>
+
+        <div class="batalla-imagenes">
+            <div class="imagen-tablero">
+                <h4>&#9992; Tablero Verde</h4>
+                <img src="/contenidos/matematicas/recursos/imagenes/libro-batalla-verde.jpg"
+                     alt="Tablero de batalla aerea - aviones verdes"
+                     onclick="abrirLightbox(this)">
+                <p class="pie-tablero">Haz clic para ampliar</p>
+            </div>
+            <div class="imagen-tablero">
+                <h4>&#128992; Tablero Naranja</h4>
+                <img src="/contenidos/matematicas/recursos/imagenes/libro-batalla-naranja.jpg"
+                     alt="Tablero de batalla aerea - aviones naranjas"
+                     onclick="abrirLightbox(this)">
+                <p class="pie-tablero">Haz clic para ampliar</p>
+            </div>
+        </div>
+
+        <div class="recuadro-info">
+            <h4><i class="fas fa-info-circle me-2"></i>Como leer las coordenadas</h4>
+            <p>La coordenada <strong>(E, A)</strong> significa columna <strong>E</strong>, fila <strong>A</strong>.
+            Busca primero la columna y luego baja hasta la fila.</p>
+        </div>
+
+        <div class="actividad-visual">
+            <h4><i class="fas fa-fighter-jet me-2"></i>Actividad</h4>
+            <p>Observa los dos tableros (puedes hacer clic en cada imagen para verla m&aacute;s grande).
+               Localiza la columna <strong>E</strong> en ambos y cuenta cu&aacute;ntos aviones hay en total sumando los dos tableros.
+               Luego haz clic en el n&uacute;mero correcto.</p>
+
+            <div class="opciones-numericas" id="opciones-p3">
+                <div class="opcion-num" id="op3-0" onclick="elegirNumero(0, false)">
+                    2 <span>aviones</span>
+                </div>
+                <div class="opcion-num" id="op3-1" onclick="elegirNumero(1, false)">
+                    1 <span>avion</span>
+                </div>
+                <div class="opcion-num" id="op3-2" onclick="elegirNumero(2, true)">
+                    3 <span>aviones</span>
+                </div>
+                <div class="opcion-num" id="op3-3" onclick="elegirNumero(3, false)">
+                    4 <span>aviones</span>
+                </div>
+            </div>
+
+            <div id="feedback3" class="feedback-visual"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina4">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Teatro</h2>
+
+        <p class="lead">
+            El teatro tiene <strong>20 filas</strong>. Los asientos <strong>impares</strong> van a la
+            izquierda del pasillo y los <strong>pares</strong> a la derecha.
+            El n&uacute;mero 1 y 2 son los m&aacute;s cercanos al pasillo.
+        </p>
+
+        <div class="teatro-wrap">
+            <div class="escenario-bar">&#127917; &nbsp; ESCENARIO &nbsp; &#127917;</div>
+            <div class="teatro-grid" id="teatro-grid"></div>
+        </div>
+
+        <div class="recuadro-info">
+            <h4><i class="fas fa-chair me-2"></i>Capacidad por secci&oacute;n</h4>
+            <p>Filas 1-5: <strong>24 asientos</strong> &nbsp;|&nbsp;
+               Filas 6-10: <strong>28 asientos</strong> &nbsp;|&nbsp;
+               Filas 11-15: <strong>32 asientos</strong> &nbsp;|&nbsp;
+               Filas 16-20: <strong>30 asientos</strong></p>
+        </div>
+
+        <div class="actividad-visual">
+            <h4><i class="fas fa-chair me-2"></i>Actividad</h4>
+            <p>Una familia de <strong>5 personas</strong> quiere sentarse en la <strong>fila 10</strong>, lo m&aacute;s cerca posible del pasillo central y repartidos en ambos lados. Los asientos impares (1, 3, 5...) est&aacute;n a la izquierda y los pares (2, 4, 6...) a la derecha. Haz clic en los 5 asientos m&aacute;s cercanos al pasillo en esa fila.</p>
+
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0;">
+                <span class="badge-lado izq"><i class="fas fa-arrow-left me-1"></i> Impares - Izquierda</span>
+                <span class="badge-lado der">Derecha - Pares <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+            <div class="info-sel" id="info-sel-p4">Seleccionados: 0 / 5</div>
+
+            <div style="text-align:center;margin-top:10px;">
+                <button style="background:#fde68a;color:#9a3412;padding:10px 22px;border-radius:30px;font-weight:700;font-size:1rem;border:2px solid #f97316;cursor:pointer;"
+                        onclick="verificarAsientosP4()">&#9654; Verificar</button>
+                <button style="background:white;color:#9a3412;padding:10px 22px;border-radius:30px;font-weight:700;font-size:1rem;border:2px solid #f97316;cursor:pointer;margin-left:8px;"
+                        onclick="limpiarAsientosP4()">&#8635; Limpiar</button>
+            </div>
+            <div id="feedback4" class="feedback-visual"></div>
+        </div>
+    </div>
+</div>
+
+<div class="pagina" id="pagina5">
+    <div class="tarjeta-contenido">
+        <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
+
+        <p class="lead">
+            En este campus las v&iacute;as son de <strong>sentido &uacute;nico</strong>.
+            Observa las flechas de color en cada via.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:20px;margin-bottom:16px;padding:14px 20px;background:#fff7e6;border-radius:14px;border:2px solid #fed7aa;">
+            <span style="display:flex;align-items:center;gap:10px;font-weight:700;color:#1d4ed8;">
+                <svg width="44" height="18" style="flex-shrink:0"><line x1="4" y1="9" x2="36" y2="9" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/><polygon points="30,4 44,9 30,14" fill="#3b82f6"/></svg>
+                Calle &rarr; este
+            </span>
+            <span style="display:flex;align-items:center;gap:10px;font-weight:700;color:#b45309;">
+                <svg width="44" height="18" style="flex-shrink:0"><line x1="40" y1="9" x2="8" y2="9" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/><polygon points="14,4 0,9 14,14" fill="#f59e0b"/></svg>
+                Calle &larr; oeste
+            </span>
+            <span style="display:flex;align-items:center;gap:10px;font-weight:700;color:#065f46;">
+                <svg width="18" height="44" style="flex-shrink:0"><line x1="9" y1="40" x2="9" y2="8" stroke="#10b981" stroke-width="4" stroke-linecap="round"/><polygon points="4,14 9,0 14,14" fill="#10b981"/></svg>
+                Avenida &#8593; norte
+            </span>
+            <span style="display:flex;align-items:center;gap:10px;font-weight:700;color:#b91c1c;">
+                <svg width="18" height="44" style="flex-shrink:0"><line x1="9" y1="4" x2="9" y2="36" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/><polygon points="4,30 9,44 14,30" fill="#ef4444"/></svg>
+                Avenida &#8595; sur
+            </span>
+        </div>
+
+        <div class="cu-wrap">
+            <svg class="cu-svg" viewBox="0 0 660 530" xmlns="http://www.w3.org/2000/svg">
+                <rect width="660" height="530" fill="#f0f9ff" rx="14"/>
+
+                <line x1="40" y1="120" x2="610" y2="120" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="600,113 616,120 600,127" fill="#3b82f6"/>
+                <text x="20" y="124" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">A</text>
+
+                <line x1="610" y1="240" x2="40"  y2="240" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="50,233 34,240 50,247" fill="#f59e0b"/>
+                <text x="20" y="244" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">B</text>
+
+                <line x1="40" y1="360" x2="610" y2="360" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="600,353 616,360 600,367" fill="#3b82f6"/>
+                <text x="20" y="364" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">C</text>
+
+                <line x1="610" y1="460" x2="40"  y2="460" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="50,453 34,460 50,467" fill="#f59e0b"/>
+                <text x="20" y="464" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">D</text>
+
+                <line x1="80"  y1="60"  x2="80"  y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="73,478 80,494 87,478" fill="#ef4444"/>
+                <text x="80"  y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">1</text>
+
+                <line x1="210" y1="490" x2="210" y2="60"  stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="203,72 210,56 217,72" fill="#10b981"/>
+                <text x="210" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">2</text>
+
+                <line x1="340" y1="60"  x2="340" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="333,478 340,494 347,478" fill="#ef4444"/>
+                <text x="340" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">3</text>
+
+                <line x1="470" y1="490" x2="470" y2="60"  stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="463,72 470,56 477,72" fill="#10b981"/>
+                <text x="470" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">4</text>
+
+                <line x1="580" y1="60"  x2="580" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                <polygon points="573,478 580,494 587,478" fill="#ef4444"/>
+                <text x="580" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">5</text>
+
+                <rect x="44"  y="84"  width="72" height="72" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                <text x="80"  y="116" text-anchor="middle" font-size="22">&#128218;</text>
+                <text x="80"  y="132" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#9a3412">Biblioteca</text>
+                <text x="80"  y="144" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(1,A)</text>
+
+                <rect x="304" y="84"  width="72" height="72" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                <text x="340" y="116" text-anchor="middle" font-size="22">&#127963;</text>
+                <text x="340" y="132" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#9a3412">Rectoria</text>
+                <text x="340" y="144" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(3,A)</text>
+
+                <rect x="174" y="204" width="72" height="72" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                <text x="210" y="234" text-anchor="middle" font-size="22">&#9749;</text>
+                <text x="210" y="250" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#065f46">Cafeteria</text>
+                <text x="210" y="262" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(2,B)</text>
+
+                <rect x="44"  y="324" width="72" height="72" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+                <text x="80"  y="354" text-anchor="middle" font-size="22">&#127973;</text>
+                <text x="80"  y="370" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#5b21b6">Medicina</text>
+                <text x="80"  y="382" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(1,C)</text>
+
+                <rect x="434" y="424" width="72" height="72" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+                <text x="470" y="454" text-anchor="middle" font-size="22">&#128062;</text>
+                <text x="470" y="470" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#92400e">Veterinaria</text>
+                <text x="470" y="482" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(4,D)</text>
+
+                <rect x="544" y="194" width="72" height="72" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                <text x="580" y="224" text-anchor="middle" font-size="22">&#128300;</text>
+                <text x="580" y="240" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#065f46">Laboratorio</text>
+                <text x="580" y="252" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(5,B)</text>
+
+                <text x="636" y="124" font-family="Nunito" font-size="11" font-weight="800" fill="#1d4ed8">&rarr; Calle A</text>
+                <text x="636" y="244" font-family="Nunito" font-size="11" font-weight="800" fill="#b45309">&larr; Calle B</text>
+                <text x="636" y="364" font-family="Nunito" font-size="11" font-weight="800" fill="#1d4ed8">&rarr; Calle C</text>
+                <text x="636" y="464" font-family="Nunito" font-size="11" font-weight="800" fill="#b45309">&larr; Calle D</text>
+
+                <g class="ruta-cu-opcion" id="ruta-A" onclick="elegirRutaCU('A',false)">
+                    <polyline points="80,116 470,116 470,456"
+                        fill="none" stroke="#ef4444" stroke-width="6" stroke-dasharray="12,7"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+                    <circle cx="470" cy="456" r="11" fill="#ef4444" stroke="white" stroke-width="2"/>
+                    <rect x="458" y="103" width="26" height="20" rx="5" fill="#ef4444"/>
+                    <text x="471" y="117" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="white">A</text>
+                </g>
+
+                <g class="ruta-cu-opcion" id="ruta-B" onclick="elegirRutaCU('B',false)">
+                    <polyline points="84,120 84,464 470,464"
+                        fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="12,7"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+                    <circle cx="470" cy="464" r="11" fill="#f59e0b" stroke="white" stroke-width="2"/>
+                    <rect x="72" y="103" width="26" height="20" rx="5" fill="#f59e0b"/>
+                    <text x="85" y="117" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="white">B</text>
+                </g>
+
+                <g class="ruta-cu-opcion" id="ruta-C" onclick="elegirRutaCU('C',true)">
+                    <polyline points="80,124 580,124 580,460 470,460"
+                        fill="none" stroke="#10b981" stroke-width="6" stroke-dasharray="12,7"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+                    <circle cx="470" cy="460" r="11" fill="#10b981" stroke="white" stroke-width="2"/>
+                    <rect x="568" y="103" width="26" height="20" rx="5" fill="#10b981"/>
+                    <text x="581" y="117" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="white">C</text>
+                </g>
+
+                <g class="ruta-cu-opcion" id="ruta-D" onclick="elegirRutaCU('D',false)">
+                    <polyline points="80,128 340,128 340,468 470,468"
+                        fill="none" stroke="#8b5cf6" stroke-width="6" stroke-dasharray="12,7"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+                    <circle cx="470" cy="468" r="11" fill="#8b5cf6" stroke="white" stroke-width="2"/>
+                    <rect x="328" y="103" width="26" height="20" rx="5" fill="#8b5cf6"/>
+                    <text x="341" y="117" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="white">D</text>
+                </g>
+
+                <circle cx="80" cy="120" r="12" fill="#4caf50" stroke="white" stroke-width="3"/>
+                <text x="80" y="124" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="white">IN</text>
+            </svg>
+        </div>
+
+        <div class="recuadro-info">
+            <h4><i class="fas fa-traffic-light me-2"></i>Sentidos de circulacion</h4>
+            <ul class="lista-iconos">
+                <li><i class="fas fa-arrow-right" style="color:#3b82f6;"></i>
+                    <span><strong style="color:#1d4ed8;">Calles A y C</strong>: solo hacia el este &rarr;</span></li>
+                <li><i class="fas fa-arrow-left" style="color:#f59e0b;"></i>
+                    <span><strong style="color:#b45309;">Calles B y D</strong>: solo hacia el oeste &larr;</span></li>
+                <li><i class="fas fa-arrow-down" style="color:#ef4444;"></i>
+                    <span><strong style="color:#b91c1c;">Avenidas 1, 3 y 5</strong>: solo hacia el sur &#8595;</span></li>
+                <li><i class="fas fa-arrow-up" style="color:#10b981;"></i>
+                    <span><strong style="color:#065f46;">Avenidas 2 y 4</strong>: solo hacia el norte &#8593;</span></li>
+            </ul>
+        </div>
+
+        <div class="actividad-visual">
+            <h4><i class="fas fa-route me-2"></i>Actividad</h4>
+            <p>En el mapa est&aacute;n dibujadas <strong>4 rutas posibles</strong> (A, B, C y D) para ir de
+               <strong>Biblioteca (1,A)</strong> a <strong>Veterinaria (4,D)</strong>. Cada ruta tiene su propio color,
+               indicado en la leyenda de abajo. Solo una de ellas respeta todos los sentidos de circulaci&oacute;n.
+               Haz clic sobre la ruta que consideres correcta.</p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0;padding:12px;background:#fff7e6;border-radius:12px;border:2px solid #fed7aa;">
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;">
+                    <span style="display:inline-block;width:32px;height:5px;background:#ef4444;border-radius:3px;"></span>
+                    Ruta A
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;">
+                    <span style="display:inline-block;width:32px;height:5px;background:#f59e0b;border-radius:3px;"></span>
+                    Ruta B
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;">
+                    <span style="display:inline-block;width:32px;height:5px;background:#10b981;border-radius:3px;"></span>
+                    Ruta C
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;">
+                    <span style="display:inline-block;width:32px;height:5px;background:#8b5cf6;border-radius:3px;"></span>
+                    Ruta D
+                </span>
+            </div>
+
+            <div id="feedback5" class="feedback-visual"></div>
+        </div>
+
+        <a href="quiz.html" class="boton-quiz text-center">
+            <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
+        </a>
+    </div>
+</div>
+
+<div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+        <i class="fas fa-arrow-left me-2"></i> ANTERIOR
+    </button>
+    <span class="indicador-pagina" id="contadorPagina">1/5</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
+        SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+</div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -5,14 +5,353 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Tierra · Nivel Normal · Visual/Verbal</title>
 
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  __BLOCK_
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #e3f2fd;
+      color: #01579b;
+      min-height: 100vh;
+    }
+
+    .cabecera {
+      background: #1976d2;
+      padding: 25px 20px;
+      border-bottom: 6px solid #ffd600;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .cabecera h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 3px 3px 0 #01579b;
+    }
+
+    .badge-estilo {
+      background: #ffd600;
+      color: #01579b;
+      padding: 12px 35px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      display: inline-block;
+      border: 4px solid white;
+      margin-top: 10px;
+      box-shadow: 0 4px 0 #b26a00;
+    }
+
+    .badge-nivel {
+      background: #01579b;
+      color: white;
+      padding: 8px 25px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      margin-left: 15px;
+      border: 2px solid #ffd600;
+    }
+
+    .progreso-contenedor {
+      background: white;
+      border-radius: 60px;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 12px 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 5px 0 #0d47a1;
+    }
+
+    .puntos {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .punto {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #bbdefb;
+      border: 3px solid #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #01579b;
+      transition: all 0.3s;
+    }
+
+    .punto.activo {
+      background: #ffd600;
+      transform: scale(1.15);
+    }
+
+    .punto.completado {
+      background: #4caf50;
+      color: white;
+      border-color: white;
+    }
+
+    .contenedor {
+      max-width: 1000px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .pagina {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjeta {
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 3px solid #1976d2;
+      box-shadow: 0 8px 0 #0d47a1;
+    }
+
+    .titulo-pagina {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.2rem;
+      color: #01579b;
+      margin-bottom: 20px;
+      border-left: 8px solid #ffd600;
+      padding-left: 20px;
+    }
+
+    .texto-explicativo {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+
+    .imagen-marco {
+      background: #e3f2fd;
+      border-radius: 20px;
+      padding: 15px;
+      border: 3px solid #1976d2;
+      transition: all 0.3s ease;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .imagen-marco:hover {
+      transform: rotate(1deg) scale(1.02);
+      box-shadow: 0 10px 20px rgba(25,118,210,0.3);
+    }
+
+    .imagen-geo {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .imagen-geo.ampliada {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      z-index: 1000;
+      border: 4px solid #ffd600;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border-radius: 10px;
+    }
+
+    body.imagen-ampliada::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    /* Mini-pregunta visual verbal */
+    .mini-pregunta {
+      position: relative;
+      display: block;
+      background: linear-gradient(180deg, #fffdf4 0%, #fff5cf 100%);
+      border: 3px solid #ffd54f;
+      border-radius: 24px;
+      padding: 22px 22px 18px;
+      margin: 22px 0 0;
+      box-shadow: 0 8px 0 rgba(13, 71, 161, 0.15);
+    }
+
+    .mini-esquina {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #ffd54f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      line-height: 1;
+      box-shadow: 0 4px 0 rgba(13, 71, 161, 0.16);
+    }
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1976d2;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 0 rgba(1, 87, 155, 0.22);
+    }
+
+    .mini-frase {
+      margin: 0 0 18px;
+      padding-right: 56px;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: #0d47a1;
+      font-weight: 700;
+    }
+
+    .mini-hueco {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 132px;
+      padding: 5px 14px;
+      margin: 0 4px;
+      border-radius: 14px;
+      border: 2px dashed #1976d2;
+      background: #ffffff;
+      color: #01579b;
+      font-weight: 900;
+      vertical-align: middle;
+    }
+
+    .opciones-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-mini {
+      background: #ffffff;
+      border: 2px solid #90caf9;
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-weight: 800;
+      color: #01579b;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 0 rgba(25, 118, 210, 0.12);
+    }
+
+    .btn-mini:hover {
+      transform: translateY(-2px);
+      background: #e3f2fd;
+      border-color: #1976d2;
+    }
+
+    .btn-mini.correcto {
+      background: #43a047;
+      color: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 4px 0 rgba(46, 125, 50, 0.22);
+    }
+
+    .btn-mini.incorrecto {
+      background: #ffebee;
+      color: #c62828;
+      border-color: #ef9a9a;
+      box-shadow: none;
+    }
+
+    .mini-feedback {
+      min-height: 26px;
+      margin-top: 14px;
+      font-weight: 800;
+      color: #0d47a1;
+    }
+
+    .mini-pregunta.resuelta {
+      border-color: #66bb6a;
+      box-shadow: 0 8px 0 rgba(76, 175, 80, 0.15);
+    }
+
+    .mini-pregunta.resuelta .mini-hueco {
+      background: #e8f5e9;
+      border-style: solid;
+      border-color: #43a047;
+    }
+
+    @media (max-width: 768px) {
+      .mini-pregunta {
+        padding: 20px 18px 16px;
+      }
+
+      .mini-frase {
+        padding-right: 50px;
+        font-size: 1rem;
+      }
+
+      .mini-hueco {
+        min-width: 110px;
+      }
+
+      .opciones-mini {
+        gap: 10px;
+      }
+
+      .btn-mini {
+        width: 100%;
+      }
+    }
+
+  </style>
 </head>
 <body>
 
+<!-- BOTÓN PARA SUBIR -->
 <div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
   <i class="fas fa-arrow-up"></i>
 </div>
@@ -39,10 +378,11 @@
 
 <div class="contenedor">
 
+  <!-- PÁGINA 1: MOVIMIENTO DE ROTACIÓN -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotación</h2>
-
+      
       <p class="texto-explicativo">
         La Tierra gira sobre sí misma como un trompo. Este movimiento se llama <strong>rotación</strong> y dura 24 horas, un día completo.
         Es el responsable de que tengamos días y noches.
@@ -51,7 +391,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+            <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
                  alt="Rotación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
           </div>
@@ -85,36 +425,26 @@
         <i class="fas fa-lightbulb"></i>
         <p>🌍 La Tierra gira de oeste a este. Por eso el Sol "sale" por el Este y se "oculta" por el Oeste.</p>
       </div>
-      <div class="mini-pregunta" data-feedback-ok="&iexcl;Correcto! La rotaci&oacute;n dura 24 horas." data-feedback-hint="Es el tiempo que tarda en pasar un d&iacute;a completo.">
-                  <div class="mini-encabezado">
-            <div class="mini-textos">
-              <span class="mini-etiqueta">Reto de pista</span>
-              <span class="mini-pista">Completa la idea principal.</span>
-            </div>
-            <div class="mini-sello" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="15" fill="#bbdefb" stroke="#1976d2" stroke-width="2.5"/>
-                <path d="M24 13v11l8 5" fill="none" stroke="#0d47a1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        <div class="mini-frase">
-          El movimiento de rotaci&oacute;n tarda <span class="mini-hueco">_____</span> en completarse.
-        </div>
+
+            <div class="mini-pregunta" id="mini1">
+        <div class="mini-esquina">&#128339;</div>
+        <div class="mini-badge"><span>Completa la idea</span></div>
+        <p class="mini-frase">Una vuelta completa de rotaci&oacute;n dura <span class="mini-hueco" data-default="____">____</span> horas.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">12 horas</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, true)">24 horas</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">365 d&iacute;as</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, '12', 'Cuenta un d&iacute;a completo: d&iacute;a y noche juntos.')">12</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', true, '24', 'Bien pensado: rotaci&oacute;n completa equivale a un d&iacute;a entero.')">24</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, '365', 'Esa cantidad se relaciona con la traslaci&oacute;n, no con la rotaci&oacute;n.')">365</button>
         </div>
-        <div class="mini-feedback"></div>
+        <div class="mini-feedback" aria-live="polite"></div>
       </div>
     </div>
   </div>
 
+  <!-- PÁGINA 2: MOVIMIENTO DE TRASLACIÓN -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslación</h2>
-
+      
       <p class="texto-explicativo">
         La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>órbita</strong>. Este movimiento se llama traslación y dura 365 días y 6 horas.
       </p>
@@ -122,7 +452,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
+            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
                  alt="Traslación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
           </div>
@@ -144,42 +474,32 @@
         <i class="fas fa-lightbulb"></i>
         <p>🚀 La Tierra viaja a 107,000 km/h alrededor del Sol. ¡Más rápido que un cohete!</p>
       </div>
-      <div class="mini-pregunta" data-feedback-ok="&iexcl;Muy bien! El a&ntilde;o bisiesto aparece cada 4 a&ntilde;os." data-feedback-hint="Recuerda el patr&oacute;n que corrige las horas extra del a&ntilde;o.">
-                  <div class="mini-encabezado">
-            <div class="mini-textos">
-              <span class="mini-etiqueta">Pista verbal</span>
-              <span class="mini-pista">Elige la ficha correcta para cerrar la frase.</span>
-            </div>
-            <div class="mini-sello" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <rect x="11" y="10" width="26" height="28" rx="5" fill="#fff59d" stroke="#f9a825" stroke-width="2.5"/>
-                <path d="M17 7v8M31 7v8M17 20h14M17 27h8" stroke="#f57f17" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-        <div class="mini-frase">
-          Los a&ntilde;os bisiestos aparecen cada <span class="mini-hueco">_____</span>.
-        </div>
+
+            <div class="mini-pregunta" id="mini2">
+        <div class="mini-esquina">&#128197;</div>
+        <div class="mini-badge"><span>Completa la idea</span></div>
+        <p class="mini-frase">El a&ntilde;o bisiesto aparece cada <span class="mini-hueco" data-default="____">____</span> a&ntilde;os.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">2 a&ntilde;os</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, true)">4 a&ntilde;os</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">10 a&ntilde;os</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', false, '2', 'No ocurre tan seguido.')">2</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', true, '4', 'Recuerda la acumulación de casi seis horas por año.')">4</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', false, '10', 'Es un ciclo m&aacute;s corto.')">10</button>
         </div>
-        <div class="mini-feedback"></div>
+        <div class="mini-feedback" aria-live="polite"></div>
       </div>
     </div>
   </div>
 
+  <!-- PÁGINA 3: LAS ESTACIONES DEL AÑO -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del año</h2>
-
+      
       <p class="texto-explicativo">
         La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
       </p>
 
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
              alt="Estaciones del año" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
       </div>
@@ -212,37 +532,26 @@
         <h4><i class="fas fa-globe-americas me-2"></i> Hemisferios opuestos</h4>
         <p>Cuando en el hemisferio norte es verano, en el hemisferio sur es invierno. En México (norte) es verano en junio, mientras que en Argentina (sur) es invierno.</p>
       </div>
-      <div class="mini-pregunta mt-4" data-feedback-ok="&iexcl;Exacto! Cuando en M&eacute;xico es verano, en Argentina es invierno." data-feedback-hint="Los hemisferios tienen estaciones opuestas.">
-                  <div class="mini-encabezado">
-            <div class="mini-textos">
-              <span class="mini-etiqueta">Frase secreta</span>
-              <span class="mini-pista">Completa la relaci&oacute;n entre hemisferios.</span>
-            </div>
-            <div class="mini-sello" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <circle cx="18" cy="18" r="9" fill="#ffcc80" stroke="#ef6c00" stroke-width="2.5"/>
-                <circle cx="30" cy="30" r="9" fill="#90caf9" stroke="#1565c0" stroke-width="2.5"/>
-                <path d="M13 31c4 4 18 4 22-1" fill="none" stroke="#546e7a" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-        <div class="mini-frase">
-          Si en M&eacute;xico es verano, en Argentina es <span class="mini-hueco">_____</span>.
-        </div>
+
+            <div class="mini-pregunta mt-4" id="mini3">
+        <div class="mini-esquina">&#10052;&#65039;</div>
+        <div class="mini-badge"><span>Completa la idea</span></div>
+        <p class="mini-frase">Si en M&eacute;xico es verano, en Argentina es <span class="mini-hueco" data-default="________">________</span> porque est&aacute;n en hemisferios opuestos.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">verano</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, true)">invierno</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">primavera</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'verano', 'Los hemisferios no comparten la misma estaci&oacute;n al mismo tiempo.')">verano</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', true, 'invierno', 'Piensa en estaciones opuestas entre norte y sur.')">invierno</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'primavera', 'Busca la estaci&oacute;n contraria al calor del verano.')">primavera</button>
         </div>
-        <div class="mini-feedback"></div>
+        <div class="mini-feedback" aria-live="polite"></div>
       </div>
     </div>
   </div>
 
+  <!-- PÁGINA 4: ELEMENTOS DE LOS MAPAS -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
-
+      
       <p class="texto-explicativo">
         Los mapas tienen elementos importantes que nos ayudan a entenderlos y usarlos correctamente.
       </p>
@@ -250,7 +559,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
+            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
                  alt="Elementos de un mapa" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
           </div>
@@ -261,7 +570,7 @@
             <li><i class="fas fa-compass"></i> <strong>Orientación:</strong> Puntos cardinales</li>
             <li><i class="fas fa-ruler"></i> <strong>Escala:</strong> Distancia real</li>
             <li><i class="fas fa-symbols"></i> <strong>Simbología:</strong> Carreteras, ríos, ciudades</li>
-            <li><i class="fas fa-map-pin"></i> <strong>Coordenadas:</strong> LATITUD y LONGITUD</li>
+            <li><i class="fas fa-map-pin"></i> <strong>Coordenadas:</strong> Latitud y longitud</li>
           </ul>
         </div>
       </div>
@@ -285,28 +594,17 @@
         <i class="fas fa-lightbulb"></i>
         <p>📏 La escala puede ser numérica (1:100,000) o gráfica (una barrita que representa kilómetros).</p>
       </div>
-      <div class="mini-pregunta" data-feedback-ok="&iexcl;Bien visto! La orientaci&oacute;n es la que marca el norte en el mapa." data-feedback-hint="Busca el elemento que te ayuda a saber hacia d&oacute;nde mirar.">
-                  <div class="mini-encabezado">
-            <div class="mini-textos">
-              <span class="mini-etiqueta">Detective visual</span>
-              <span class="mini-pista">Completa la frase con el t&eacute;rmino correcto.</span>
-            </div>
-            <div class="mini-sello" aria-hidden="true">
-              <svg viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2.5"/>
-                <path d="M24 13v16M24 13l-5 5M24 13l5 5" fill="none" stroke="#1b5e20" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        <div class="mini-frase">
-          En un mapa, el elemento que se&ntilde;ala el norte es la <span class="mini-hueco">_____</span>.
-        </div>
+
+            <div class="mini-pregunta" id="mini4">
+        <div class="mini-esquina">&#129517;</div>
+        <div class="mini-badge"><span>Completa la idea</span></div>
+        <p class="mini-frase">El elemento del mapa que muestra los puntos cardinales es la <span class="mini-hueco" data-default="___________">___________</span>.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, true)">orientaci&oacute;n</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">escala</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, false)">simbolog&iacute;a</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', true, 'orientación', 'Es la parte del mapa que te dice dónde está el norte.')">orientación</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'escala', 'La escala habla de distancias, no de direcciones.')">escala</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'simbología', 'La simbología explica símbolos, no el norte y el sur.')">simbología</button>
         </div>
-        <div class="mini-feedback"></div>
+        <div class="mini-feedback" aria-live="polite"></div>
       </div>
     </div>
   </div>
@@ -317,13 +615,135 @@
     <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
   </div>
 
-  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+  <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
 
 </div>
 
-__BLOCK_
-__BLOCK_
+<script>
+  // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
+  function ampliarImagen(img) {
+    if (!img) return;
+    
+    if (img.classList.contains('ampliada')) {
+      img.classList.remove('ampliada');
+      document.body.classList.remove('imagen-ampliada');
+    } else {
+      document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+      img.classList.add('ampliada');
+      document.body.classList.add('imagen-ampliada');
+    }
+  }
 
-__BLOCK_
-</body>
+  // Cerrar imagen al hacer clic fuera
+  document.addEventListener('click', function(event) {
+    if (!event.target.classList.contains('ampliada') && !event.target.closest('.imagen-marco')) {
+      document.querySelectorAll('.ampliada').forEach(img => {
+        img.classList.remove('ampliada');
+        document.body.classList.remove('imagen-ampliada');
+      });
+    }
+  });
+
+  // ===== SISTEMA DE SONIDOS =====
+  const sonidos = {
+    pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
+    click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+    completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+  };
+
+  Object.values(sonidos).forEach(s => {
+    if (s.src) s.volume = 0.2;
+  });
+
+  function reproducirSonido(nombre) {
+    if (sonidos[nombre] && sonidos[nombre].src) {
+      sonidos[nombre].currentTime = 0;
+      sonidos[nombre].play().catch(() => {});
+    }
+  }
+
+  // ===== NAVEGACIÓN =====
+  let paginaActual = 1;
+  const totalPaginas = 4;
+
+  function cambiarPagina(direccion) {
+    reproducirSonido('pasarPagina');
+    
+    document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+    paginaActual += direccion;
+    document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    actualizarUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    localStorage.setItem('progreso_normal_visualverbal', paginaActual);
+  }
+
+  function actualizarUI() {
+    document.querySelectorAll('.punto').forEach((punto, index) => {
+      punto.classList.remove('activo', 'completado');
+      if (index + 1 === paginaActual) punto.classList.add('activo');
+      else if (index + 1 < paginaActual) punto.classList.add('completado');
+    });
+    
+    document.getElementById('paginaActualNum').innerText = paginaActual;
+    document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+  }
+
+  // ===== MINI PREGUNTAS =====
+  function responderMini(boton, miniId, esCorrecto, palabra, pista) {
+    reproducirSonido('click');
+
+    const tarjeta = document.getElementById(miniId);
+    if (!tarjeta || tarjeta.dataset.resuelta === 'true') return;
+
+    const opciones = tarjeta.querySelectorAll('.btn-mini');
+    const hueco = tarjeta.querySelector('.mini-hueco');
+    const feedback = tarjeta.querySelector('.mini-feedback');
+
+    opciones.forEach(opt => opt.classList.remove('correcto', 'incorrecto'));
+    feedback.classList.remove('visible', 'ok', 'pista');
+
+    if (esCorrecto) {
+      tarjeta.dataset.resuelta = 'true';
+      tarjeta.classList.add('resuelta');
+      hueco.textContent = palabra;
+      hueco.classList.add('lleno');
+      boton.classList.add('correcto');
+      feedback.textContent = '¡Muy bien! La frase quedó completa.';
+      feedback.classList.add('visible', 'ok');
+      reproducirSonido('completar');
+      return;
+    }
+
+    boton.classList.add('incorrecto');
+    tarjeta.classList.remove('sacudir');
+    void tarjeta.offsetWidth;
+    tarjeta.classList.add('sacudir');
+    feedback.textContent = pista || 'Revisa la idea principal de esta página e inténtalo otra vez.';
+    feedback.classList.add('visible', 'pista');
+
+    setTimeout(() => {
+      boton.classList.remove('incorrecto');
+      tarjeta.classList.remove('sacudir');
+    }, 650);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const guardado = localStorage.getItem('progreso_normal_visualverbal');
+    if (guardado) {
+      const pag = parseInt(guardado);
+      if (pag >= 1 && pag <= totalPaginas) {
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual = pag;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+      }
+    }
+    actualizarUI();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
 </html>

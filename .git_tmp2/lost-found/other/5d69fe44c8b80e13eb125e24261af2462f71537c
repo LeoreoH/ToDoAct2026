@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Agua en el Planeta · Nivel Normal · Auditivo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+<div class="cab">
+  <h1>💧 EL AGUA EN EL PLANETA</h1>
+  <p class="sub">Bloque II · Geografía · 5to Primaria</p>
+  <div class="badge-e">🎵 Estilo Auditivo</div>
+  <div class="badge-n">⚡ Nivel Normal</div>
+</div>
+<div class="progreso">
+  <i class="fas fa-headphones fa-2x" style="color:var(--vd2);"></i>
+  <div class="puntos" id="puntosP">
+    <div class="punto activo" data-p="1">1</div>
+    <div class="punto" data-p="2">2</div>
+    <div class="punto" data-p="3">3</div>
+    <div class="punto" data-p="4">4</div>
+    <div class="punto" data-p="5">5</div>
+  </div>
+  <div class="pag-label">Pág <span id="nPag">1</span>/5</div>
+</div>
+<div class="cont">
+
+<div class="pagina activa" id="pagina1">
+  <div class="seccion">🌧️ El clima y el agua</div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-link"></i></div>
+      <div class="t-titulo">Juego 1 — Une cada concepto con su descripción</div>
+    </div>
+    <div class="juego-num">🎮 Escucha los audios y une cada concepto del clima (izquierda) con su descripción (derecha).</div>
+    <div class="match-pts">🔗 Pares correctos: <span id="ptsM1c">0</span>/4</div>
+    <div class="mw">
+      <div class="mc" id="mi1c">
+        <div class="mi" data-id="lluvioso" onclick="selMI(this,'1c')">
+          🌧️ Clima Lluvioso
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climalluvioso.mp3" type="audio/mpeg"></audio>
+        </div>
+        <div class="mi" data-id="arido" onclick="selMI(this,'1c')">
+          🏜️ Clima Árido
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climaarido.mp3" type="audio/mpeg"></audio>
+        </div>
+        <div class="mi" data-id="polar" onclick="selMI(this,'1c')">
+          ❄️ Clima Polar
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climapolar.mp3" type="audio/mpeg"></audio>
+        </div>
+        <div class="mi" data-id="templado" onclick="selMI(this,'1c')">
+          🌤️ Clima Templado
+          <audio class="mini" controls onclick="event.stopPropagation()" style="margin-top:6px;"><source src="audios/Climatemplado.mp3" type="audio/mpeg"></audio>
+        </div>
+      </div>
+      <div class="mc" id="md1c">
+        <div class="md" data-id="lluvioso" onclick="selMD(this,'1c')">Tiene abundante precipitación y mantiene ríos con mucha agua todo el año</div>
+        <div class="md" data-id="arido" onclick="selMD(this,'1c')">Tiene muy poca lluvia y alta evaporación, lo que genera escasez de agua</div>
+        <div class="md" data-id="polar" onclick="selMD(this,'1c')">El agua se acumula congelada en forma de hielo y nieve por las bajas temperaturas</div>
+        <div class="md" data-id="templado" onclick="selMD(this,'1c')">Tiene lluvias moderadas con estaciones definidas que regulan el agua disponible</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch('1c')">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbM1c"></div>
+  </div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-pen"></i></div>
+      <div class="t-titulo">Juego 2 — Completa las frases</div>
+    </div>
+    <div class="juego-num">🎮 Escucha el audio y elige la palabra que completa cada frase.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio del tema</label><audio controls><source src="audios/Juego2.mp3" type="audio/mpeg"></audio></div>
+    <div class="banco-palabras" id="banco_p1">
+      <span class="palabra" onclick="usarPalabra(this,'evaporacion','b3_p1')">evaporación</span>
+      <span class="palabra" onclick="usarPalabra(this,'lluviosos','b1_p1')">lluviosos</span>
+      <span class="palabra" onclick="usarPalabra(this,'aridos','b2_p1')">áridos</span>
+      <span class="palabra" onclick="usarPalabra(this,'temperatura','b4_p1')">temperatura</span>
+    </div>
+    <div class="frase-wrap">
+      Los climas <span class="blank" id="b1_p1" data-resp="lluviosos">_________</span> tienen más agua disponible.<br>
+      Los climas <span class="blank" id="b2_p1" data-resp="aridos">_________</span> tienen escasez de agua.<br>
+      La <span class="blank" id="b3_p1" data-resp="temperatura">_________</span> alta aumenta la <span class="blank" id="b4_p1" data-resp="evaporacion">_________</span> del agua.
+    </div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verFrases(['b1_p1','b2_p1','b3_p1','b4_p1'],'fb_p1','pts_p1')">✅ Verificar frases</button>
+      <button class="btn-j sec" onclick="reinFrases('banco_p1',['b1_p1','b2_p1','b3_p1','b4_p1'],'fb_p1')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fb_p1"></div>
+    <div class="pts-ganados" id="pts_p1"></div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina2">
+  <div class="seccion">🌊 Tipos de agua en el planeta</div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-percentage"></i></div>
+      <div class="t-titulo">Juego 1 — ¿Cuánta agua dulce hay?</div>
+    </div>
+    <div class="juego-num">🎮 Escucha el audio. Luego mueve el slider al porcentaje de agua dulce en el planeta.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre el agua dulce</label><audio controls><source src="audios/Juego3.mp3" type="audio/mpeg"></audio></div>
+    <div class="slider-box">
+      <div class="slider-preg">💧 ¿Qué porcentaje del agua del planeta es agua DULCE?</div>
+      <input type="range" id="slDulce" min="1" max="50" value="25" oninput="document.getElementById('slVal').innerText=this.value">
+      <div class="slider-val"><span id="slVal">25</span>%</div>
+      <div class="slider-labels"><span>1%</span><span>25%</span><span>50%</span></div>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verSlider()">🔍 Revelar respuesta</button>
+    </div>
+    <div class="fb" id="fbSlider"></div>
+    <div class="pts-ganados" id="ptsSlider"></div>
+  </div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-link"></i></div>
+      <div class="t-titulo">Juego 2 — Une el tipo de agua con su descripción</div>
+    </div>
+    <div class="juego-num">🎮 Escucha los audios. Haz clic en el <strong>tipo de agua</strong> y luego en su <strong>descripción</strong>.</div>
+    <div class="match-pts">🔗 Pares: <span id="ptsM2">0</span>/4</div>
+    <div class="mw">
+      <div class="mc" id="mi2">
+        <div class="mi" data-id="salada" onclick="selMI(this,2)">🧂 Agua Salada<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguasalada.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="dulce" onclick="selMI(this,2)">💧 Agua Dulce<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguadulce.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="glaciar" onclick="selMI(this,2)">❄️ Glaciares<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Glaciares.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="subte" onclick="selMI(this,2)">🌍 Agua Subterránea<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/Aguasubterranea.mp3" type="audio/mpeg"></audio></div>
+      </div>
+      <div class="mc" id="md2">
+        <div class="md" data-id="salada" onclick="selMD(this,2)">97% del agua total del planeta — en océanos y mares</div>
+        <div class="md" data-id="dulce" onclick="selMD(this,2)">Solo el 3% — en ríos, lagos y bajo tierra</div>
+        <div class="md" data-id="glaciar" onclick="selMD(this,2)">Agua dulce congelada en polos y montañas</div>
+        <div class="md" data-id="subte" onclick="selMD(this,2)">Agua dulce que fluye bajo la superficie terrestre</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch(2)">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbM2"></div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina3">
+  <div class="seccion">🗺️ Recursos hídricos del planeta</div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-images"></i></div>
+      <div class="t-titulo">Juego 1 — Une la imagen con su nombre</div>
+    </div>
+    <div class="juego-num">🎮 Escucha cada audio. Luego une cada imagen (izquierda) con el nombre correcto (derecha).</div>
+    <div class="match-pts">🔗 Pares correctos: <span id="ptsM3">0</span>/4</div>
+    <div class="mw">
+      <div class="mc" id="mi3">
+        <div class="mi" data-id="rio" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
+          <img src="https://www.lifeder.com/wp-content/uploads/2022/11/partes-rio-1.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/rio.mp3" type="audio/mpeg"></audio></div>
+        </div>
+        <div class="mi" data-id="lago" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
+          <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2022/04/08/lago-bled-eslovenia.jpeg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/lago.mp3" type="audio/mpeg"></audio></div>
+        </div>
+        <div class="mi" data-id="cuenca" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
+          <img src="https://www.gob.mx/cms/uploads/article/main_image/84153/que-es-una-cuenca-22.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/cuenca.mp3" type="audio/mpeg"></audio></div>
+        </div>
+        <div class="mi" data-id="glaciar" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
+          <img src="https://cdn0.ecologiaverde.com/es/posts/7/8/0/que_son_los_glaciares_2087_1200.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/glaciar.mp3" type="audio/mpeg"></audio></div>
+        </div>
+      </div>
+      <div class="mc" id="md3">
+        <div class="md" data-id="rio" onclick="selMD(this,3)">🏞️ RÍO — corriente que fluye hacia el mar</div>
+        <div class="md" data-id="lago" onclick="selMD(this,3)">🏊 LAGO — agua quieta rodeada de tierra</div>
+        <div class="md" data-id="cuenca" onclick="selMD(this,3)">CUENCA HIDROGR&Aacute;FICA &mdash; zona donde el agua se junta y va al mismo r&iacute;o</div>
+        <div class="md" data-id="glaciar" onclick="selMD(this,3)">❄️ GLACIAR — masa de hielo con agua dulce congelada</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch(3)">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbM3"></div>
+  </div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="t-titulo">Juego 2 — Verdadero o Falso</div>
+    </div>
+    <div class="juego-num">🎮 Escucha el audio de cada afirmación. ¿Es Verdadera o Falsa?</div>
+    <div id="vf3Container"></div>
+    <div class="pts-lbl">⭐ Aciertos: <span id="ptsVF3">0</span>/<span id="totVF3">4</span></div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina4">
+  <div class="seccion">🏗️ Obras humanas y el agua</div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-sort-numeric-up"></i></div>
+      <div class="t-titulo">Juego 1 — Ordena los pasos: ¿Cómo funciona una presa?</div>
+    </div>
+    <div class="juego-num">🎮 Escucha el audio. Luego ordena los pasos del proceso de una presa en el orden correcto.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio — Cómo funciona una presa</label><audio controls><source src="audios/Juego7.mp3" type="audio/mpeg"></audio></div>
+    <div class="ord-banco" id="bancoP4J1">
+      <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="🌊 El río llega a la presa">🌊 El río llega a la presa</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="💡 Se genera electricidad">💡 Se genera electricidad</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="🏗️ La presa bloquea el agua">🏗️ La presa bloquea el agua</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="🚰 El agua se distribuye">🚰 El agua se distribuye</div>
+      <div class="ord-item" onclick="agregarOrden(this,'secP4J1')" data-txt="💧 Se forma el embalse">💧 Se forma el embalse</div>
+    </div>
+    <div class="ord-secuencia" id="secP4J1"><span style="color:#607d8b;font-weight:700;">Toca los pasos en el orden correcto →</span></div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verOrden('secP4J1',['🌊 El río llega a la presa','🏗️ La presa bloquea el agua','💧 Se forma el embalse','💡 Se genera electricidad','🚰 El agua se distribuye'],'fbP4J1','ptsP4J1')">✅ Verificar orden</button>
+      <button class="btn-j sec" onclick="reinOrden('bancoP4J1','secP4J1','fbP4J1')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fbP4J1"></div>
+    <div class="pts-ganados" id="ptsP4J1"></div>
+  </div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-link"></i></div>
+      <div class="t-titulo">Juego 2 — Une la obra con su función</div>
+    </div>
+    <div class="juego-num">🎮 Escucha los audios. Empareja cada obra con su función principal.</div>
+    <div class="match-pts">🔗 Pares: <span id="ptsM4">0</span>/4</div>
+    <div class="mw">
+      <div class="mc" id="mi4">
+        <div class="mi" data-id="presa" onclick="selMI(this,4)">🏗️ Presa<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/presa.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="canal" onclick="selMI(this,4)">🌾 Canal de riego<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/canalriego.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="desvio" onclick="selMI(this,4)">↪️ Desvío de río<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/desviorio.mp3" type="audio/mpeg"></audio></div>
+        <div class="mi" data-id="embalse" onclick="selMI(this,4)">🌊 Embalse<br><audio class="mini" controls onclick="event.stopPropagation()"><source src="audios/embalse.mp3" type="audio/mpeg"></audio></div>
+      </div>
+      <div class="mc" id="md4">
+        <div class="md" data-id="presa" onclick="selMD(this,4)">Bloquea un río para almacenar agua</div>
+        <div class="md" data-id="canal" onclick="selMD(this,4)">Lleva agua desde el río hasta los cultivos</div>
+        <div class="md" data-id="desvio" onclick="selMD(this,4)">Cambia la dirección natural del río</div>
+        <div class="md" data-id="embalse" onclick="selMD(this,4)">Lago artificial formado por una presa</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><button class="btn-j sec" onclick="reinMatch(4)">🔄 Reiniciar</button></div>
+    <div class="fb" id="fbM4"></div>
+  </div>
+</div>
+
+<div class="pagina" id="pagina5">
+  <div class="seccion">🏞️ Ríos y Lagos</div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-water"></i></div>
+      <div class="t-titulo">Juego 1 — Completa con RÍO o LAGO</div>
+    </div>
+    <div class="juego-num">🎮 Escucha el audio y completa cada frase con la palabra correcta.</div>
+    <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre ríos y lagos</label><audio controls><source src="audios/Juego9.mp3" type="audio/mpeg"></audio></div>
+    <div class="banco-palabras" id="banco_p5">
+      <span class="palabra" onclick="usarPalabra(this,'rio','c1_p5')">RÍO</span>
+      <span class="palabra" onclick="usarPalabra(this,'lago','c2_p5')">LAGO</span>
+      <span class="palabra" onclick="usarPalabra(this,'rio','c3_p5')">RÍO</span>
+      <span class="palabra" onclick="usarPalabra(this,'lago','c4_p5')">LAGO</span>
+    </div>
+    <div class="frase-wrap">
+      Un <span class="blank" id="c1_p5" data-resp="rio">_____</span> tiene corriente constante y fluye hacia el mar.<br>
+      Un <span class="blank" id="c2_p5" data-resp="lago">_____</span> acumula agua quieta rodeado de tierra.<br>
+      El <span class="blank" id="c3_p5" data-resp="rio">_____</span> puede tener una salida y llegar al mar.<br>
+      El <span class="blank" id="c4_p5" data-resp="lago">_____</span> no tiene salida natural al mar.
+    </div>
+    <div style="text-align:center;">
+      <button class="btn-j" onclick="verFrases(['c1_p5','c2_p5','c3_p5','c4_p5'],'fb_p5','pts_p5')">✅ Verificar</button>
+      <button class="btn-j sec" onclick="reinFrases('banco_p5',['c1_p5','c2_p5','c3_p5','c4_p5'],'fb_p5')">🔄 Reiniciar</button>
+    </div>
+    <div class="fb" id="fb_p5"></div>
+    <div class="pts-ganados" id="pts_p5"></div>
+  </div>
+
+  <div class="t">
+    <div class="t-header">
+      <div class="t-icon"><i class="fas fa-star"></i></div>
+      <div class="t-titulo">Juego 2 — Verdadero o Falso: Ríos y Lagos</div>
+    </div>
+    <div class="juego-num">🎮 Escucha cada afirmación y decide si es Verdadera o Falsa.</div>
+    <div id="vf5Container"></div>
+    <div class="pts-lbl">⭐ Aciertos: <span id="ptsVF5">0</span>/<span id="totVF5">4</span></div>
+  </div>
+
+</div>
+
+  <div class="nav-bar">
+    <button class="btn-nav" id="btnAnt" onclick="cambiar(-1)" disabled>← ANTERIOR</button>
+    <span class="ind-pag" id="indPag">1/5</span>
+    <button class="btn-nav" id="btnSig" onclick="cambiar(1)">SIGUIENTE →</button>
+  </div>
+
+<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece me-2"></i>IR AL QUIZ</a>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

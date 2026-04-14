@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz · Instrucciones Espaciales · Nivel Difícil</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --mar:#062b3d;
+      --mar2:#0c4a6e;
+      --arena:#fef3c7;
+      --arena2:#fde68a;
+      --oro:#f59e0b;
+      --oro2:#b45309;
+      --madera:#78350f;
+      --madera2:#451a03;
+      --ok:#15803d;
+      --okp:#dcfce7;
+      --err:#b91c1c;
+      --errp:#fee2e2;
+      --txt:#451a03;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Nunito',sans-serif;
+      min-height:100vh;
+      color:var(--txt);
+      background:
+        radial-gradient(circle at top,#fef9c3 0%,rgba(254,249,195,.55) 18%,transparent 32%),
+        linear-gradient(180deg,#0b3954 0%,#0c4a6e 20%,#0f766e 36%,#fde68a 36%,#fef3c7 100%);
+    }
+    .cab{
+      background:linear-gradient(135deg,#451a03,#78350f,#92400e);
+      border-bottom:4px solid var(--arena2);
+      box-shadow:0 10px 28px rgba(0,0,0,.28);
+      padding:16px 20px 12px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .cab::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 30%,rgba(253,230,138,.08),transparent 30%),
+        radial-gradient(circle at 80% 20%,rgba(255,255,255,.05),transparent 24%),
+        repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 2px,transparent 2px,transparent 16px);
+      pointer-events:none;
+    }
+    .cab h1{
+      position:relative;
+      font-family:'Cinzel',serif;
+      color:var(--arena2);
+      font-size:1.9rem;
+      letter-spacing:.05em;
+      text-shadow:0 0 20px rgba(253,230,138,.32),2px 2px 0 rgba(0,0,0,.35);
+      margin:0;
+    }
+    .cab p{
+      position:relative;
+      color:rgba(255,255,255,.82);
+      font-weight:700;
+      margin:4px 0 8px;
+      font-size:.94rem;
+    }
+    .badges{position:relative;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+    .badge-q{
+      border-radius:999px;
+      padding:6px 16px;
+      font-weight:900;
+      font-size:.82rem;
+      border:2px solid rgba(255,255,255,.55);
+      box-shadow:0 3px 0 rgba(0,0,0,.18);
+    }
+    .badge-q.oro{background:var(--arena2);color:var(--madera2);}
+    .badge-q.dark{background:rgba(255,255,255,.1);color:var(--arena2);}
+    .prog{
+      max-width:1040px;
+      margin:12px auto 0;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:0 12px;
+      position:relative;
+    }
+    .pc{
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(255,255,255,.14);
+      border:3px solid rgba(255,255,255,.34);
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:900;font-size:.98rem;
+      transition:all .25s;
+      flex-shrink:0;
+    }
+    .pc.act{background:var(--arena2);border-color:white;color:var(--madera2);transform:scale(1.12);box-shadow:0 0 0 5px rgba(253,230,138,.22);}
+    .pc.ok{background:#4ade80;border-color:white;color:#14532d;}
+    .pc.bad{background:#f87171;border-color:white;color:white;}
+    .pl{flex:1;height:5px;border-radius:999px;background:rgba(255,255,255,.2);overflow:hidden;position:relative;}
+    .pl.done::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#4ade80,#22c55e);}
+    .score-h{
+      margin-left:auto;
+      border-radius:999px;
+      padding:6px 16px;
+      background:rgba(255,255,255,.13);
+      border:2px solid rgba(255,255,255,.28);
+      color:white;
+      font-weight:900;
+      white-space:nowrap;
+      font-size:.85rem;
+    }
+    .wrap{max-width:1180px;margin:26px auto 60px;padding:0 16px;}
+    .exercise{display:none;animation:fadeIn .35s ease;}
+    .exercise.active{display:block;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .ex-head{
+      background:linear-gradient(135deg,#fff7ed,#ffffff);
+      border:3px solid #fdba74;
+      border-bottom:none;
+      border-radius:24px 24px 0 0;
+      padding:15px 20px;
+      display:flex;gap:14px;align-items:center;
+    }
+    .ex-num{
+      width:48px;height:48px;border-radius:50%;
+      background:linear-gradient(135deg,var(--oro),var(--oro2));
+      color:white;
+      font-family:'Cinzel',serif;
+      font-size:1.15rem;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 0 var(--madera);
+      flex-shrink:0;
+    }
+    .ex-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--madera);}
+    .ex-sub{font-size:.84rem;color:#9a3412;font-weight:700;margin-top:2px;line-height:1.45;}
+    .ex-body{
+      background:rgba(255,255,255,.96);
+      border:3px solid #fdba74;
+      border-top:none;
+      border-radius:0 0 24px 24px;
+      box-shadow:0 10px 0 #fed7aa,0 16px 36px rgba(69,26,3,.14);
+      padding:20px;
+    }
+    .ex-grid{display:grid;grid-template-columns:minmax(0,1.15fr) 350px;gap:18px;align-items:start;}
+    @media(max-width:930px){.ex-grid{grid-template-columns:1fr;}}
+    .map-card{
+      background:white;
+      border:4px solid #92400e;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 6px 0 #451a03,0 10px 28px rgba(69,26,3,.25);
+    }
+    .map-top{
+      background:linear-gradient(135deg,#451a03,#78350f);
+      color:var(--arena2);
+      font-family:'Cinzel',serif;
+      font-size:.83rem;
+      letter-spacing:.04em;
+      padding:8px 14px;
+      display:flex;justify-content:space-between;align-items:center;gap:8px;
+    }
+    .map-subtag{
+      font-family:'Nunito',sans-serif;
+      font-size:.66rem;
+      font-weight:900;
+      color:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.08);
+      border-radius:999px;
+      padding:4px 10px;
+    }
+    .map-stage{padding:0;background:white;}
+    .map-stage .isla-svg-wrap{width:100%;aspect-ratio:1/1;max-height:500px;}
+    .map-stage svg{width:100%;height:100%;display:block;border:none;border-radius:0;background:none;}
+    .map-note{
+      padding:8px 12px;
+      border-top:2px dashed #fdba74;
+      font-size:.74rem;
+      font-weight:800;
+      color:#92400e;
+      display:flex;gap:8px;align-items:flex-start;
+      line-height:1.45;
+      background:#fffaf0;
+    }
+    .side{display:flex;flex-direction:column;gap:10px;}
+    .cardish{
+      background:white;
+      border:2px solid #fdba74;
+      border-radius:16px;
+      box-shadow:0 4px 0 #fed7aa;
+      overflow:hidden;
+    }
+    .cardish-top{
+      background:linear-gradient(135deg,#92400e,#78350f);
+      color:white;
+      padding:8px 12px;
+      font-family:'Cinzel',serif;
+      font-size:.8rem;
+      display:flex;align-items:center;gap:8px;
+      letter-spacing:.04em;
+    }
+    .cardish-body{padding:12px;}
+    .mission{background:linear-gradient(135deg,#451a03,#78350f);color:white;border-color:var(--arena2);box-shadow:0 4px 0 #1c0a00;}
+    .mission .cardish-top{background:transparent;border-bottom:1px solid rgba(255,255,255,.08);color:var(--arena2);}
+    .mission .cardish-body{font-size:.74rem;line-height:1.5;color:rgba(255,255,255,.88);}
+    .mission strong{color:var(--arena2);}
+    .compass{
+      display:flex;align-items:center;gap:12px;
+      background:linear-gradient(135deg,#082f49,#0c4a6e);
+      color:white;
+      border:2px solid var(--arena2);
+      border-radius:16px;
+      padding:10px 12px;
+      box-shadow:0 4px 0 #082f49;
+    }
+    .compass svg{width:68px;height:68px;flex-shrink:0;}
+    .compass small{display:block;color:rgba(255,255,255,.62);font-weight:800;text-transform:uppercase;letter-spacing:.09em;font-size:.54rem;margin-bottom:2px;}
+    .compass strong{display:block;color:var(--arena2);font-family:'Cinzel',serif;font-size:.98rem;}
+    .compass span{display:block;color:rgba(255,255,255,.74);font-size:.68rem;font-weight:700;line-height:1.4;}
+    .steps{display:flex;flex-direction:column;gap:8px;}
+    .step-chip{
+      display:flex;gap:9px;align-items:flex-start;
+      border:2px solid #fed7aa;
+      background:#fffaf0;
+      border-radius:14px;
+      padding:8px 10px;
+    }
+    .step-chip .n{
+      width:24px;height:24px;border-radius:50%;
+      background:linear-gradient(135deg,var(--oro),var(--oro2));
+      color:white;font-size:.68rem;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+      box-shadow:0 2px 0 var(--madera);
+    }
+    .step-chip strong{display:block;font-size:.76rem;color:var(--madera);}
+    .step-chip span{display:block;font-size:.67rem;color:#7c2d12;font-weight:700;line-height:1.35;}
+    .step-row{display:flex;gap:6px;flex-wrap:wrap;}
+    .mini-tag{
+      padding:3px 8px;border-radius:999px;font-size:.6rem;font-weight:900;border:1.5px solid transparent;
+      display:inline-flex;align-items:center;gap:4px;
+    }
+    .north{background:#fef2f2;color:#991b1b;border-color:#fecaca;}
+    .south{background:#f0fdf4;color:#166534;border-color:#86efac;}
+    .east{background:#fff7ed;color:#9a3412;border-color:#fdba74;}
+    .west{background:#f5f3ff;color:#6d28d9;border-color:#c4b5fd;}
+    .place{background:#fffbeb;color:#78350f;border-color:#fde68a;}
+    .prompt-box{
+      background:#fffbeb;
+      border:2px dashed #f59e0b;
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:.73rem;
+      font-weight:800;
+      color:#92400e;
+      line-height:1.45;
+    }
+    .options{display:grid;gap:10px;}
+    .option-btn{
+      width:100%;text-align:left;
+      padding:13px 14px;
+      border-radius:16px;
+      border:3px solid #fdba74;
+      background:white;
+      color:#78350f;
+      font-size:.87rem;
+      font-weight:800;
+      line-height:1.45;
+      cursor:pointer;
+      transition:all .18s;
+      box-shadow:0 4px 0 #fed7aa;
+    }
+    .option-btn:hover:not(:disabled){transform:translateY(-2px);background:#fff7ed;}
+    .option-btn.correct{background:var(--okp);border-color:#4ade80;color:#14532d;box-shadow:0 4px 0 #86efac;}
+    .option-btn.wrong{background:var(--errp);border-color:#fca5a5;color:#991b1b;box-shadow:0 4px 0 #fecaca;}
+    .option-btn:disabled{cursor:not-allowed;opacity:.98;}
+    .option-label{display:block;font-size:.62rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#9a3412;margin-bottom:4px;}
+    .fb{
+      display:none;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:800;
+      font-size:.78rem;
+      line-height:1.5;
+      margin-top:2px;
+    }
+    .fb.show{display:block;}
+    .fb.ok{background:var(--okp);border:2px solid #86efac;color:#14532d;}
+    .fb.bad{background:var(--errp);border:2px solid #fca5a5;color:#991b1b;}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px;}
+    .action-btn{
+      border:none;border-radius:999px;padding:10px 18px;
+      font-weight:900;font-size:.8rem;cursor:pointer;transition:all .2s;
+    }
+    .action-btn.primary{background:linear-gradient(135deg,var(--oro),var(--oro2));color:white;box-shadow:0 4px 0 var(--madera);}
+    .action-btn.secondary{background:#fff7ed;color:#78350f;border:2px solid #fdba74;box-shadow:0 3px 0 #fed7aa;}
+    .action-btn:hover:not(:disabled){transform:translateY(-2px);}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+    .legend-item{display:flex;align-items:center;gap:6px;background:#fffaf0;border:1.5px solid #fde68a;border-radius:999px;padding:4px 10px;font-size:.66rem;font-weight:800;color:#7c2d12;}
+    .legend-dot{width:10px;height:10px;border-radius:50%;}
+    .res{
+      display:none;
+      text-align:center;
+      background:linear-gradient(180deg,#fff7ed,#ffffff);
+      border:3px solid #fdba74;
+      border-radius:24px;
+      box-shadow:0 10px 0 #fed7aa;
+      padding:34px 20px;
+    }
+    .res.show{display:block;animation:fadeIn .35s ease;}
+    .res .emoji{font-size:4.8rem;margin-bottom:8px;}
+    .res h2{font-family:'Cinzel',serif;font-size:1.9rem;color:#78350f;margin-bottom:8px;}
+    .res .score{
+      display:inline-block;
+      background:linear-gradient(135deg,var(--oro),var(--oro2));
+      color:white;
+      padding:14px 36px;
+      border-radius:999px;
+      font-size:2.6rem;
+      font-weight:900;
+      border:4px solid #fff7ed;
+      box-shadow:0 6px 0 var(--madera);
+      margin:10px 0 14px;
+    }
+    .res p{font-weight:800;color:#7c2d12;line-height:1.55;max-width:760px;margin:0 auto 10px;}
+    .breakdown{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 0;}
+    .bd{
+      background:#fffaf0;border:2px solid #fde68a;border-radius:14px;padding:9px 14px;
+      font-weight:800;font-size:.82rem;color:#78350f;
+    }
+    .landmark-btn{cursor:pointer;transition:transform .18s ease;}
+    .landmark-btn:hover{transform:translateY(-4px) scale(1.02);}
+    .landmark-btn .ring{fill:none;stroke-width:4;opacity:0;transition:all .2s;}
+    .landmark-btn .label-bg{fill:rgba(69,26,3,.88);stroke:rgba(255,255,255,.25);stroke-width:1;}
+    .landmark-btn .label-text{font-size:12px;font-weight:900;fill:#fff7ed;text-anchor:middle;font-family:'Nunito',sans-serif;}
+    .landmark-btn.ref .ring{opacity:.95;stroke:#f59e0b;stroke-dasharray:8 6;}
+    .landmark-btn.start .ring{opacity:.95;stroke:#fef3c7;stroke-dasharray:4 5;}
+    .landmark-btn.correct .ring{opacity:1;stroke:#22c55e;filter:drop-shadow(0 0 8px rgba(34,197,94,.6));}
+    .landmark-btn.wrong .ring{opacity:1;stroke:#ef4444;filter:drop-shadow(0 0 8px rgba(239,68,68,.45));}
+    .landmark-btn.dim{opacity:.5;}
+    .place-base{stroke:#fff7ed;stroke-width:3;filter:drop-shadow(0 4px 7px rgba(0,0,0,.22));}
+    .toast-lite{
+      position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(60px);
+      background:#1c1917;color:#fde68a;padding:10px 18px;border-radius:999px;font-size:.8rem;font-weight:900;
+      box-shadow:0 10px 22px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:all .3s ease;z-index:1000;
+    }
+    .toast-lite.show{opacity:1;transform:translateX(-50%) translateY(0);}
+    .confetti{position:fixed;pointer-events:none;z-index:1001;border-radius:3px;}
+    @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+    @media(max-width:640px){
+      .cab h1{font-size:1.45rem;}
+      .ex-head,.ex-body{padding-left:14px;padding-right:14px;}
+      .map-top{flex-direction:column;align-items:flex-start;}
+      .actions{flex-direction:column;}
+      .action-btn{width:100%;}
+    }
+  </style>
+</head>
+<body>
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+<div class="cab">
+  <h1>☠️ Quiz · Instrucciones Espaciales</h1>
+  <p>La isla del tesoro · Nivel difícil · Rutas con referentes, distancias y puntos cardinales</p>
+  <div class="badges">
+    <span class="badge-q oro">💀 Nivel Difícil</span>
+    <span class="badge-q dark">🏆 Aprueba con 2 de 3</span>
+  </div>
+  <div class="prog">
+    <div class="pc act" id="c1">1</div>
+    <div class="pl" id="l1"></div>
+    <div class="pc" id="c2">2</div>
+    <div class="pl" id="l2"></div>
+    <div class="pc" id="c3">3</div>
+    <div class="score-h" id="scoreHead">🧭 0 / 3</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="exercise active" id="ex1">
+    <div class="ex-head">
+      <div class="ex-num">1</div>
+      <div>
+        <div class="ex-title">Ruta con Distancias Variables</div>
+        <div class="ex-sub">Empieza en el <strong>Barco Pirata</strong>, sigue los movimientos cardinales y toca el lugar donde termina la ruta.</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-grid">
+        <div class="map-card">
+          <div class="map-top">
+            <span><i class="fas fa-map"></i> Mapa de la Isla del Tesoro</span>
+            <span class="map-subtag">Toca el destino final</span>
+          </div>
+          <div class="map-stage" id="map1"></div>
+          <div class="map-note"><span>📍</span><span>Sigue la ruta paso a paso. El punto de partida queda marcado con una brújula brillante.</span></div>
+        </div>
+        <div class="side">
+          <div class="cardish mission">
+            <div class="cardish-top"><i class="fas fa-scroll"></i> Misión Pirata</div>
+            <div class="cardish-body">
+              El capitán parte desde el <strong>Barco Pirata</strong>. Debes seguir la secuencia completa y decidir <strong>en qué lugar termina</strong>.
+            </div>
+          </div>
+          <div class="compass">
+            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="comp1" cx="50%" cy="30%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="70%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#78350f"/></radialGradient>
+              </defs>
+              <circle cx="40" cy="40" r="37" fill="url(#comp1)"/>
+              <circle cx="40" cy="40" r="31" fill="#111827"/>
+              <text x="40" y="16" font-size="10" fill="#fde68a" text-anchor="middle" font-family="Cinzel,serif">N</text>
+              <text x="40" y="71" font-size="10" fill="rgba(255,255,255,.55)" text-anchor="middle" font-family="Cinzel,serif">S</text>
+              <text x="10" y="44" font-size="9" fill="rgba(255,255,255,.55)" text-anchor="middle" font-family="Cinzel,serif">O</text>
+              <text x="70" y="44" font-size="9" fill="rgba(255,255,255,.55)" text-anchor="middle" font-family="Cinzel,serif">E</text>
+              <polygon points="40,18 44,40 40,36 36,40" fill="#ef4444"/>
+              <polygon points="40,62 44,40 40,44 36,40" fill="#ffffff" opacity=".85"/>
+              <circle cx="40" cy="40" r="6" fill="#fde68a" stroke="#fff" stroke-width="1.3"/>
+            </svg>
+            <div>
+              <small>Referencia</small>
+              <strong>Norte · Sur · Este · Oeste</strong>
+              <span>Cuenta cada paso y mantén el orden exacto de la ruta.</span>
+            </div>
+          </div>
+          <div class="cardish">
+            <div class="cardish-top"><i class="fas fa-shoe-prints"></i> Instrucciones</div>
+            <div class="cardish-body">
+              <div class="steps" id="steps1"></div>
+            </div>
+          </div>
+          <div class="prompt-box">¿Qué lugar toca el pirata al final de la secuencia? Elige un solo destino en el mapa.</div>
+          <div class="fb" id="fb1"></div>
+          <div class="actions">
+            <button class="action-btn primary" id="next1" style="display:none;" onclick="goExercise(2)">Ejercicio 2 <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exercise" id="ex2">
+    <div class="ex-head">
+      <div class="ex-num">2</div>
+      <div>
+        <div class="ex-title">Referentes y Direcciones Mezcladas</div>
+        <div class="ex-sub">Ahora mezcla saltos entre lugares conocidos con desplazamientos cardinales. Deduce el destino final y tócala en el mapa.</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-grid">
+          <div class="map-card">
+          <div class="map-top">
+            <span><i class="fas fa-map-signs"></i> Isla del Tesoro · Ruta Cardinal</span>
+            <span class="map-subtag">Ruta solo con puntos cardinales</span>
+          </div>
+          <div class="map-stage" id="map2"></div>
+          <div class="map-note"><span>🧩</span><span>Empieza en el Rio Serpiente y sigue la secuencia usando solo norte, oeste y este. El mapa no te dice el destino final.</span></div>
+        </div>
+        <div class="side">
+          <div class="cardish mission">
+            <div class="cardish-top"><i class="fas fa-compass-drafting"></i> Reto del Navegante</div>
+            <div class="cardish-body">
+              Empieza en el <strong>Rio Serpiente</strong> y sigue una ruta hecha solo con posiciones cardinales. No se nombran los lugares del recorrido: debes imaginarlos mientras avanzas.
+            </div>
+          </div>
+          <div class="cardish">
+            <div class="cardish-top"><i class="fas fa-route"></i> Secuencia</div>
+            <div class="cardish-body">
+              <div class="steps" id="steps2"></div>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#22c55e;"></span> Respuesta correcta</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span> Selección incorrecta</div>
+          </div>
+          <div class="prompt-box">Toca el lugar donde termina la ruta completa. La secuencia solo usa puntos cardinales: debes deducir el destino final.</div>
+          <div class="fb" id="fb2"></div>
+          <div class="actions">
+            <button class="action-btn secondary" onclick="goExercise(1)">← Volver al 1</button>
+            <button class="action-btn primary" id="next2" style="display:none;" onclick="goExercise(3)">Ejercicio 3 <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exercise" id="ex3">
+    <div class="ex-head">
+      <div class="ex-num">3</div>
+      <div>
+        <div class="ex-title">Traduce la Ruta</div>
+        <div class="ex-sub">Observa la ruta dibujada sobre el mini mapa y elige la descripción correcta usando puntos cardinales.</div>
+      </div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-grid">
+        <div class="map-card">
+          <div class="map-top">
+            <span><i class="fas fa-draw-polygon"></i> Mini mapa con ruta dibujada</span>
+            <span class="map-subtag">Inicio en Templo del Jaguar · Final en Puerto del Sol</span>
+          </div>
+          <div class="map-stage" id="map3"></div>
+          <div class="map-note"><span>✍️</span><span>La ruta se ve solo sobre el mapa. Cada tramo tiene un color distinto para que puedas seguir el recorrido sin pistas escritas.</span></div>
+        </div>
+        <div class="side">
+          <div class="cardish mission">
+            <div class="cardish-top"><i class="fas fa-language"></i> Misión Final</div>
+            <div class="cardish-body">
+              Mira la ruta: empieza en <strong>Templo del Jaguar</strong> y termina en <strong>Puerto del Sol</strong>. Solo una opción describe exactamente el recorrido en puntos cardinales.
+            </div>
+          </div>
+          <div class="cardish">
+            <div class="cardish-top"><i class="fas fa-palette"></i> Ruta por Colores</div>
+            <div class="cardish-body">
+              <div class="step-row">
+                <span class="mini-tag place" style="background:#dcfce7;border-color:#22c55e;color:#166534;">Paso 1</span>
+                <span class="mini-tag place" style="background:#ede9fe;border-color:#8b5cf6;color:#5b21b6;">Paso 2</span>
+                <span class="mini-tag place" style="background:#e0f2fe;border-color:#38bdf8;color:#0c4a6e;">Paso 3</span>
+                <span class="mini-tag place" style="background:#fee2e2;border-color:#ef4444;color:#991b1b;">Paso 4</span>
+                <span class="mini-tag place" style="background:#fff7ed;border-color:#f59e0b;color:#9a3412;">Paso 5</span>
+              </div>
+            </div>
+          </div>
+          <div class="cardish">
+            <div class="cardish-top"><i class="fas fa-list-check"></i> Opciones</div>
+            <div class="cardish-body">
+              <div class="options" id="options3"></div>
+            </div>
+          </div>
+          <div class="fb" id="fb3"></div>
+          <div class="actions">
+            <button class="action-btn secondary" onclick="goExercise(2)">← Volver al 2</button>
+            <button class="action-btn primary" id="showRes" style="display:none;" onclick="showResult()">Ver resultado <i class="fas fa-flag-checkered"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="res" id="resultBox">
+    <div class="emoji" id="resEmoji">🏆</div>
+    <h2 id="resTitle">¡Isla conquistada!</h2>
+    <div class="score" id="resScore">3/3</div>
+    <p id="resText"></p>
+    <p id="resTime"></p>
+    <div class="breakdown">
+      <div class="bd" id="bd1">Ejercicio 1: ✅</div>
+      <div class="bd" id="bd2">Ejercicio 2: ✅</div>
+      <div class="bd" id="bd3">Ejercicio 3: ✅</div>
+    </div>
+    <div class="actions" style="justify-content:center;margin-top:14px;">
+      <button class="action-btn secondary" onclick="volverAlContenido()"><i class="fas fa-arrow-left"></i> Volver al contenido</button>
+      <button class="action-btn primary" onclick="restartAll()"><i class="fas fa-redo"></i> Reintentar quiz</button>
+    </div>
+  </section>
+</div>
+
+<div class="toast-lite" id="toastLite"></div>
+
+<script>
+  const PLACES = {
+    montana: { x:350, y:105, name:'Montaña Calavera', ring:52, labelY:165, labelSize:9.5, labelColor:'#292524', badgeOffset:66 },
+    rio:     { x:350, y:535, name:'Río Serpiente', ring:56, labelY:575, labelSize:9.5, labelColor:'#1e3a8a', badgeOffset:72 },
+    puerto:  { x:548, y:350, name:'Puerto del Sol', ring:48, labelY:396, labelSize:9.5, labelColor:'#92400e', badgeOffset:62 },
+    cueva:   { x:148, y:350, name:'Cueva del Eco', ring:58, labelY:402, labelSize:9.5, labelColor:'#1c1917', badgeOffset:72 },
+    cascada: { x:280, y:232, name:'Cascada Escondida', ring:42, labelY:280, labelSize:8.5, labelColor:'#0c4a6e', badgeOffset:56 },
+    bosque:  { x:338, y:298, name:'Bosque Susurros', ring:46, labelY:344, labelSize:8.5, labelColor:'#14532d', badgeOffset:58 },
+    templo:  { x:350, y:430, name:'Templo del Jaguar', ring:48, labelY:468, labelSize:8.5, labelColor:'#451a03', badgeOffset:60 },
+    barco:   { x:490, y:430, name:'Barco Pirata', ring:48, labelY:478, labelSize:8.5, labelColor:'#292524', badgeOffset:60 }
+  };
+
+  const LINKS = {
+    montana: { norte:null, sur:'bosque', este:'cascada', oeste:null },
+    rio:     { norte:'bosque', sur:null, este:'barco', oeste:null },
+    puerto:  { norte:'montana', sur:'barco', este:null, oeste:'bosque' },
+    cueva:   { norte:null, sur:null, este:'bosque', oeste:null },
+    cascada: { norte:'montana', sur:'bosque', este:'puerto', oeste:'cueva' },
+    bosque:  { norte:'montana', sur:'templo', este:'puerto', oeste:'cueva' },
+    templo:  { norte:'bosque', sur:'rio', este:'barco', oeste:'cueva' },
+    barco:   { norte:'puerto', sur:'rio', este:null, oeste:'templo' }
+  };
+
+  const EX1 = {
+    start: 'barco',
+    steps: [
+      { dir:'oeste', count:2 },
+      { dir:'este', count:1 },
+      { dir:'sur', count:2 },
+      { dir:'este', count:1 },
+      { dir:'norte', count:1 }
+    ]
+  };
+
+  const EX2 = {
+    start: 'rio',
+    path: ['rio','templo','cueva','bosque','puerto','montana'],
+    dirs: ['norte','oeste','este','este','norte']
+  };
+
+  const EX3 = {
+    start: 'templo',
+    path: ['templo','bosque','cueva','cascada','montana','puerto'],
+    dirs: ['norte','oeste','norte','norte','este'],
+    colors: ['#22c55e','#8b5cf6','#38bdf8','#ef4444','#f59e0b']
+  };
+
+  const state = {
+    current: 1,
+    points: [null, null, null],
+    answered: [false, false, false],
+    selected1: null,
+    selected2: null,
+    selected3: null,
+    errors: 0,
+    startTime: new Date()
+  };
+
+  const EX1_CORRECT = followMoveSteps(EX1.start, EX1.steps);
+  const EX2_CORRECT = EX2.path[EX2.path.length - 1];
+  const EX3_PATH = EX3.path.slice();
+  const EX3_CORRECT_TEXT = compressDirections(EX3.dirs);
+  const EX3_OPTIONS = [
+    EX3_CORRECT_TEXT,
+    '1 oeste, 2 sur, 1 este, 1 sur',
+    '1 norte, 1 oeste, 1 norte, 1 este, 1 norte',
+    '2 norte, 1 oeste, 1 este, 1 norte'
+  ];
+  const EX3_CORRECT_INDEX = 0;
+
+  function play(id){
+    try{
+      const snd = document.getElementById(id);
+      snd.currentTime = 0;
+      snd.play();
+    }catch(e){}
+  }
+
+  function toast(msg){
+    const t = document.getElementById('toastLite');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast._tmr);
+    toast._tmr = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  function registerError(){
+    state.errors++;
+  }
+
+  function moveOnce(place, dir){
+    return LINKS[place] ? LINKS[place][dir] : null;
+  }
+
+  function followMoveSteps(start, steps){
+    let current = start;
+    for(const step of steps){
+      for(let i=0;i<step.count;i++){
+        current = moveOnce(current, step.dir);
+        if(!current) return null;
+      }
+    }
+    return current;
+  }
+
+  function followMixedActions(start, actions){
+    let current = start;
+    for(const action of actions){
+      if(action.type === 'goto'){
+        current = action.place;
+      }else{
+        for(let i=0;i<action.count;i++){
+          current = moveOnce(current, action.dir);
+          if(!current) return null;
+        }
+      }
+    }
+    return current;
+  }
+
+  function tracePath(start, dirs){
+    const path = [start];
+    let current = start;
+    for(const dir of dirs){
+      current = moveOnce(current, dir);
+      if(!current) return path;
+      path.push(current);
+    }
+    return path;
+  }
+
+  function compressDirections(dirs){
+    const groups = [];
+    dirs.forEach(dir => {
+      const prev = groups[groups.length - 1];
+      if(prev && prev.dir === dir) prev.count += 1;
+      else groups.push({ dir, count:1 });
+    });
+    return groups.map(group => group.count + ' ' + group.dir).join(', ');
+  }
+
+  function buildStepHtml(lines){
+    return lines.map((line, idx) => {
+      const tags = line.tags.map(tag => `<span class="mini-tag ${tag.cls}">${tag.label}</span>`).join('');
+      return `
+        <div class="step-chip">
+          <div class="n">${idx + 1}</div>
+          <div>
+            <strong>${line.title}</strong>
+            <span>${line.text}</span>
+            <div class="step-row">${tags}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderInstructionCards(){
+    document.getElementById('steps1').innerHTML = buildStepHtml([
+      { title:'Sal del Barco Pirata', text:'Parte desde el barco y sigue solo movimientos cardinales.', tags:[{cls:'place',label:'☠️ Barco Pirata'}] },
+      { title:'Muévete 2 pasos al oeste', text:'Cuenta dos desplazamientos hacia la izquierda del mapa.', tags:[{cls:'west',label:'⬅ 2 oeste'}] },
+      { title:'Muévete 1 paso al este', text:'Corrige un paso hacia la derecha.', tags:[{cls:'east',label:'➡ 1 este'}] },
+      { title:'Muévete 2 pasos al sur', text:'Baja dos veces en la isla.', tags:[{cls:'south',label:'⬇ 2 sur'}] },
+      { title:'Termina con 1 este y 1 norte', text:'Haz los dos últimos movimientos en ese orden exacto.', tags:[{cls:'east',label:'➡ 1 este'},{cls:'north',label:'⬆ 1 norte'}] }
+    ]);
+
+    document.getElementById('steps2').innerHTML = buildStepHtml([
+      { title:'Empieza en el Rio Serpiente', text:'El punto de partida queda marcado en el mapa.', tags:[{cls:'place',label:'🌊 Punto inicial'}] },
+      { title:'Sube 1 paso al norte', text:'Haz el primer movimiento mirando la rosa de los vientos.', tags:[{cls:'north',label:'⬆ 1 norte'}] },
+      { title:'Ve 1 paso al oeste', text:'Ahora muévete hacia la izquierda del mapa.', tags:[{cls:'west',label:'⬅ 1 oeste'}] },
+      { title:'Avanza 2 pasos al este', text:'Haz los dos desplazamientos seguidos sin saltarte ninguno.', tags:[{cls:'east',label:'➡ 2 este'}] },
+      { title:'Termina con 1 paso al norte', text:'El destino final no está escrito: debes deducirlo después de completar toda la secuencia.', tags:[{cls:'north',label:'⬆ 1 norte'}] }
+    ]);
+  }
+
+  function getEdges(){
+    const edges = [];
+    const seen = new Set();
+    Object.keys(LINKS).forEach(from => {
+      Object.keys(LINKS[from]).forEach(dir => {
+        const to = LINKS[from][dir];
+        if(!to) return;
+        const key = [from, to].sort().join('-');
+        if(seen.has(key)) return;
+        seen.add(key);
+        edges.push([from, to]);
+      });
+    });
+    return edges;
+  }
+
+  const MAP_EDGES = getEdges();
+
+  function routeLineMarkup(routeIds, routeColors = []){
+    if(!routeIds || routeIds.length < 2) return '';
+    let html = '<g>';
+    for(let i=1;i<routeIds.length;i++){
+      const from = PLACES[routeIds[i-1]];
+      const to = PLACES[routeIds[i]];
+      const angle = Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI;
+      const midX = (from.x + to.x) / 2;
+      const midY = (from.y + to.y) / 2;
+      const color = routeColors[i - 1];
+      if(color){
+        html += `
+          <line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="#fff7ed" stroke-width="15" stroke-linecap="round" opacity=".95"></line>
+          <line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${color}" stroke-width="8" stroke-linecap="round"></line>
+          <circle cx="${midX}" cy="${midY}" r="13" fill="${color}" stroke="#fff7ed" stroke-width="3"></circle>
+          <text x="${midX}" y="${midY + 4}" text-anchor="middle" font-size="11" font-weight="900" fill="#1c1917">${i}</text>`;
+      }else{
+        html += `
+          <line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="#f59e0b" stroke-width="10" stroke-linecap="round" opacity=".18"></line>
+          <line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="#b45309" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"></line>
+          <g transform="translate(${midX},${midY}) rotate(${angle})">
+            <polygon points="12,0 -8,-8 -8,8" fill="#f59e0b"></polygon>
+          </g>`;
+      }
+    }
+    html += '</g>';
+    return html;
+  }
+
+  function renderPlaceArt(placeId, mapKey){
+    const ids = {
+      mont: `gMont-${mapKey}`,
+      selva: `gSelva-${mapKey}`,
+      som2: `som2-${mapKey}`,
+      som4: `som4-${mapKey}`
+    };
+
+    switch(placeId){
+      case 'montana':
+        return `
+          <g>
+            <polygon points="350,62 410,148 290,148" fill="url(#${ids.mont})" filter="url(#${ids.som4})"></polygon>
+            <polygon points="350,62 380,110 320,110" fill="#d6d3d1"></polygon>
+            <polygon points="350,62 368,90 332,90" fill="#ffffff" opacity=".92"></polygon>
+            <circle cx="350" cy="118" r="12" fill="#fef3c7" stroke="#78716c" stroke-width="1.5"></circle>
+            <circle cx="345" cy="115" r="3" fill="#1c1917"></circle>
+            <circle cx="355" cy="115" r="3" fill="#1c1917"></circle>
+            <path d="M345,124 Q350,128 355,124" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round"></path>
+            <rect x="344" y="126" width="3" height="4" rx="1" fill="#1c1917"></rect>
+            <rect x="348" y="126" width="3" height="4" rx="1" fill="#1c1917"></rect>
+            <rect x="352" y="126" width="3" height="4" rx="1" fill="#1c1917"></rect>
+          </g>`;
+      case 'rio':
+        return `
+          <g>
+            <path d="M230,530 Q270,510 310,535 Q350,558 390,535 Q430,512 470,535" fill="none" stroke="#3b82f6" stroke-width="18" stroke-linecap="round" filter="url(#${ids.som2})"></path>
+            <path d="M230,530 Q270,510 310,535 Q350,558 390,535 Q430,512 470,535" fill="none" stroke="#60a5fa" stroke-width="12" stroke-linecap="round"></path>
+            <path d="M230,530 Q270,510 310,535 Q350,558 390,535 Q430,512 470,535" fill="none" stroke="#bae6fd" stroke-width="5" stroke-linecap="round" opacity=".6"></path>
+            <text x="310" y="520" font-size="18" opacity=".8">🐍</text>
+            <text x="370" y="548" font-size="14" opacity=".7">🐍</text>
+          </g>`;
+      case 'puerto':
+        return `
+          <g>
+            <circle cx="548" cy="350" r="34" fill="#fbbf24" filter="url(#${ids.som4})"></circle>
+            <circle cx="548" cy="350" r="26" fill="#fde68a"></circle>
+            <line x1="548" y1="306" x2="548" y2="296" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></line>
+            <line x1="548" y1="394" x2="548" y2="404" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></line>
+            <line x1="504" y1="350" x2="494" y2="350" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></line>
+            <line x1="592" y1="350" x2="602" y2="350" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></line>
+            <line x1="517" y1="319" x2="509" y2="311" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="579" y1="381" x2="587" y2="389" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="579" y1="319" x2="587" y2="311" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="517" y1="381" x2="509" y2="389" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"></line>
+            <text x="530" y="356" font-size="16" text-anchor="middle">☀️</text>
+            <text x="548" y="376" font-size="12" text-anchor="middle">⚓</text>
+          </g>`;
+      case 'cueva':
+        return `
+          <g>
+            <ellipse cx="148" cy="350" rx="52" ry="38" fill="#1c1917" filter="url(#${ids.som4})"></ellipse>
+            <ellipse cx="148" cy="350" rx="42" ry="30" fill="#292524"></ellipse>
+            <ellipse cx="148" cy="352" rx="30" ry="22" fill="#0c0a09"></ellipse>
+            <path d="M138,335 Q128,342 128,352 Q128,362 138,368 Q118,365 115,352 Q112,338 128,331 Z" fill="#fde68a" opacity=".9"></path>
+            <text x="142" y="348" font-size="10" opacity=".8">🦇</text>
+            <text x="156" y="340" font-size="8" opacity=".7">🦇</text>
+            <polygon points="130,322 133,336 127,336" fill="#57534e"></polygon>
+            <polygon points="145,320 148,334 142,334" fill="#57534e"></polygon>
+            <polygon points="160,322 163,336 157,336" fill="#57534e"></polygon>
+          </g>`;
+      case 'cascada':
+        return `
+          <g>
+            <rect x="252" y="195" width="56" height="72" rx="10" fill="#0ea5e9" opacity=".4" filter="url(#${ids.som2})"></rect>
+            <rect x="256" y="195" width="48" height="52" rx="8" fill="#7dd3fc" opacity=".5"></rect>
+            <rect x="265" y="200" width="8" height="44" rx="4" fill="#bae6fd" opacity=".8"></rect>
+            <rect x="278" y="205" width="6" height="38" rx="3" fill="#93c5fd" opacity=".7"></rect>
+            <rect x="290" y="202" width="7" height="42" rx="3" fill="#bae6fd" opacity=".75"></rect>
+            <ellipse cx="280" cy="248" rx="26" ry="8" fill="#7dd3fc" opacity=".6"></ellipse>
+            <text x="280" y="244" font-size="16" text-anchor="middle">💧</text>
+          </g>`;
+      case 'bosque':
+        return `
+          <g>
+            <g filter="url(#${ids.som2})">
+              <ellipse cx="336" cy="290" rx="28" ry="34" fill="url(#${ids.selva})"></ellipse>
+              <ellipse cx="324" cy="298" rx="20" ry="24" fill="#22c55e"></ellipse>
+              <ellipse cx="340" cy="294" rx="18" ry="22" fill="#15803d"></ellipse>
+              <rect x="333" y="318" width="6" height="16" fill="#92400e"></rect>
+              <ellipse cx="358" cy="288" rx="22" ry="28" fill="#166534"></ellipse>
+              <ellipse cx="350" cy="294" rx="16" ry="20" fill="#22c55e"></ellipse>
+              <rect x="355" y="312" width="5" height="14" fill="#92400e"></rect>
+              <ellipse cx="316" cy="302" rx="18" ry="24" fill="#14532d"></ellipse>
+              <rect x="313" y="322" width="5" height="12" fill="#92400e"></rect>
+            </g>
+            <text x="338" y="285" font-size="13" text-anchor="middle">🌲</text>
+          </g>`;
+      case 'templo':
+        return `
+          <g>
+            <g filter="url(#${ids.som4})">
+              <polygon points="350,398 398,450 302,450" fill="#d97706"></polygon>
+              <polygon points="350,398 386,432 314,432" fill="#b45309"></polygon>
+              <polygon points="350,398 374,416 326,416" fill="#92400e"></polygon>
+              <rect x="337" y="378" width="26" height="22" rx="3" fill="#78350f"></rect>
+              <text x="350" y="420" font-size="14" text-anchor="middle">🐆</text>
+              <rect x="302" y="448" width="96" height="5" rx="2" fill="#92400e"></rect>
+              <rect x="308" y="432" width="84" height="5" rx="2" fill="#b45309"></rect>
+              <rect x="318" y="416" width="64" height="5" rx="2" fill="#d97706"></rect>
+            </g>
+          </g>`;
+      case 'barco':
+        return `
+          <g>
+            <g filter="url(#${ids.som2})">
+              <path d="M444,430 Q450,455 490,460 Q530,462 540,455 Q546,430 540,424 Z" fill="#78350f"></path>
+              <rect x="445" y="395" width="90" height="36" rx="6" fill="#92400e"></rect>
+              <rect x="450" y="390" width="80" height="10" rx="3" fill="#451a03"></rect>
+              <rect x="486" y="370" width="5" height="56" rx="2" fill="#292524"></rect>
+              <polygon points="491,370 520,385 491,400" fill="#fef3c7" opacity=".7"></polygon>
+              <polygon points="491,370 464,385 491,400" fill="#f5f5f4" opacity=".5"></polygon>
+              <rect x="491" y="360" width="3" height="12" fill="#1c1917"></rect>
+              <rect x="494" y="360" width="18" height="12" rx="2" fill="#1c1917"></rect>
+              <text x="504" y="371" font-size="8" fill="#ffffff" text-anchor="middle">☠</text>
+            </g>
+          </g>`;
+      default:
+        return '';
+    }
+  }
+
+  function buildMapSvg(options){
+    const {
+      mapKey,
+      clickable,
+      selected,
+      correct,
+      wrong,
+      referencePlaces = [],
+      startPlace = null,
+      routeIds = [],
+      routeColors = [],
+      endPlace = null
+    } = options;
+
+    const baseLines = MAP_EDGES.map(([fromId, toId]) => {
+      const from = PLACES[fromId];
+      const to = PLACES[toId];
+      return `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="rgba(120,53,15,.23)" stroke-width="7" stroke-linecap="round"></line>`;
+    }).join('');
+
+    const landmarks = Object.keys(PLACES).map(placeId => {
+      const place = PLACES[placeId];
+      const classes = ['landmark-btn'];
+      if(referencePlaces.includes(placeId)) classes.push('ref');
+      if(startPlace === placeId) classes.push('start');
+      if(correct === placeId) classes.push('correct');
+      if(wrong === placeId) classes.push('wrong');
+      if(correct && correct !== placeId && selected && selected !== placeId && selected !== correct) classes.push('dim');
+      const clickAttr = clickable ? `data-place="${placeId}"` : '';
+      const badgeY = place.y - place.badgeOffset;
+      return `
+        <g class="${classes.join(' ')}" ${clickAttr}>
+          <circle class="ring" cx="${place.x}" cy="${place.y}" r="${place.ring}"></circle>
+          ${renderPlaceArt(placeId, mapKey)}
+          <text x="${place.x}" y="${place.labelY}" font-family="Cinzel,serif" font-size="${place.labelSize}" fill="${place.labelColor}" text-anchor="middle" font-weight="700">${place.name}</text>
+          ${startPlace === placeId ? `<text x="${place.x}" y="${badgeY}" text-anchor="middle" font-size="14" font-weight="900" fill="#fff7ed" stroke="rgba(69,26,3,.45)" stroke-width=".8" paint-order="stroke">INICIO</text>` : ''}
+          ${endPlace === placeId ? `<text x="${place.x}" y="${badgeY}" text-anchor="middle" font-size="14" font-weight="900" fill="#14532d" stroke="rgba(255,255,255,.7)" stroke-width=".8" paint-order="stroke">FINAL</text>` : ''}
+        </g>`;
+    }).join('');
+
+    return `
+      <div class="isla-svg-wrap">
+      <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" aria-label="Isla del Tesoro">
+        <defs>
+          <linearGradient id="gPerg-${mapKey}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fef3c7"></stop>
+            <stop offset="35%" stop-color="#fde68a"></stop>
+            <stop offset="70%" stop-color="#fef9c3"></stop>
+            <stop offset="100%" stop-color="#fde68a"></stop>
+          </linearGradient>
+          <linearGradient id="gMar-${mapKey}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0ea5e9" stop-opacity=".55"></stop>
+            <stop offset="100%" stop-color="#0c4a6e" stop-opacity=".75"></stop>
+          </linearGradient>
+          <linearGradient id="gMont-${mapKey}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#78716c"></stop>
+            <stop offset="100%" stop-color="#44403c"></stop>
+          </linearGradient>
+          <linearGradient id="gSelva-${mapKey}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#166534"></stop>
+            <stop offset="100%" stop-color="#14532d"></stop>
+          </linearGradient>
+          <filter id="som4-${mapKey}"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,.25)"></feDropShadow></filter>
+          <filter id="som2-${mapKey}"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,.15)"></feDropShadow></filter>
+          <pattern id="texturaPerg-${mapKey}" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect width="40" height="40" fill="#fef3c7" opacity=".6"></rect>
+            <line x1="0" y1="20" x2="40" y2="20" stroke="#d97706" stroke-width=".3" opacity=".2"></line>
+            <line x1="20" y1="0" x2="20" y2="40" stroke="#d97706" stroke-width=".3" opacity=".2"></line>
+            <circle cx="10" cy="10" r=".8" fill="#92400e" opacity=".1"></circle>
+            <circle cx="30" cy="30" r=".8" fill="#92400e" opacity=".1"></circle>
+          </pattern>
+        </defs>
+
+        <rect width="700" height="700" fill="url(#gPerg-${mapKey})"></rect>
+        <rect width="700" height="700" fill="url(#texturaPerg-${mapKey})" opacity=".5"></rect>
+
+        <rect x="0" y="0" width="700" height="700" fill="none" stroke="#451a03" stroke-width="28" stroke-opacity=".7"></rect>
+        <polygon points="0,0 60,0 0,60" fill="#1c0a00" opacity=".7"></polygon>
+        <polygon points="700,0 640,0 700,60" fill="#1c0a00" opacity=".7"></polygon>
+        <polygon points="0,700 60,700 0,640" fill="#1c0a00" opacity=".7"></polygon>
+        <polygon points="700,700 640,700 700,640" fill="#1c0a00" opacity=".7"></polygon>
+        <path d="M0,14 Q20,8 40,16 Q60,24 80,12 Q100,2 120,14 Q140,24 160,10 Q180,0 200,14 Q220,26 240,12 Q260,0 280,14 Q300,24 320,10 Q340,-2 360,12 Q380,24 400,10 Q420,0 440,14 Q460,26 480,10 Q500,-2 520,14 Q540,26 560,10 Q580,-2 600,14 Q620,26 640,10 Q660,0 680,14 Q700,24 700,0 L0,0 Z" fill="#451a03" opacity=".5"></path>
+        <path d="M0,686 Q20,692 40,684 Q60,676 80,688 Q100,698 120,686 Q140,676 160,690 Q180,700 200,686 Q220,674 240,688 Q260,700 280,686 Q300,676 320,690 Q340,702 360,688 Q380,676 400,690 Q420,700 440,686 Q460,674 480,690 Q500,700 520,686 Q540,676 560,692 Q580,702 600,686 Q620,676 640,690 Q660,700 680,686 Q700,676 700,700 L0,700 Z" fill="#451a03" opacity=".5"></path>
+
+        <ellipse cx="350" cy="350" rx="310" ry="298" fill="url(#gMar-${mapKey})" opacity=".55"></ellipse>
+        <path d="M80,350 Q110,330 140,350 Q170,370 200,350" fill="none" stroke="#7dd3fc" stroke-width="2" opacity=".4"></path>
+        <path d="M500,400 Q530,380 560,400 Q590,420 620,400" fill="none" stroke="#7dd3fc" stroke-width="2" opacity=".4"></path>
+        <path d="M100,450 Q125,435 150,450" fill="none" stroke="#bae6fd" stroke-width="1.5" opacity=".4"></path>
+        <path d="M540,260 Q565,245 590,260" fill="none" stroke="#bae6fd" stroke-width="1.5" opacity=".4"></path>
+        <text x="90" y="380" font-size="20" opacity=".4">🌊</text>
+        <text x="558" y="370" font-size="18" opacity=".4">🌊</text>
+        <text x="300" y="640" font-size="18" opacity=".3">⛵</text>
+        <text x="380" y="645" font-size="14" opacity=".3">🌊</text>
+
+        <ellipse cx="350" cy="350" rx="250" ry="235" fill="#d97706" opacity=".18"></ellipse>
+        <ellipse cx="350" cy="350" rx="235" ry="220" fill="#fef3c7" opacity=".85"></ellipse>
+        <path d="M180,280 Q160,250 175,220 Q190,185 220,175 Q255,162 280,170 Q305,158 340,155 Q378,148 410,162 Q442,172 460,190 Q485,208 500,235 Q522,265 522,300 Q525,340 510,375 Q498,408 478,430 Q455,458 425,470 Q395,484 360,486 Q325,488 295,475 Q262,460 240,440 Q215,415 200,385 Q182,350 180,315 Z" fill="#fef9c3" opacity=".9"></path>
+
+        <g opacity=".92">${baseLines}</g>
+        ${routeLineMarkup(routeIds, routeColors)}
+        ${landmarks}
+
+        <g opacity=".35">
+          <line x1="215" y1="344" x2="231" y2="360" stroke="#dc2626" stroke-width="4" stroke-linecap="round"></line>
+          <line x1="231" y1="344" x2="215" y2="360" stroke="#dc2626" stroke-width="4" stroke-linecap="round"></line>
+        </g>
+
+        <g transform="translate(610,612)" filter="url(#som2-${mapKey})">
+          <circle cx="0" cy="0" r="44" fill="#fef3c7" stroke="#92400e" stroke-width="2.5"></circle>
+          <circle cx="0" cy="0" r="38" fill="#fef9c3"></circle>
+          <circle cx="0" cy="0" r="2.5" fill="#92400e"></circle>
+          <polygon points="0,-38 5,-18 0,-24 -5,-18" fill="#dc2626"></polygon>
+          <polygon points="0,38  5,18  0,24  -5,18" fill="#292524"></polygon>
+          <polygon points="-38,0 -18,5 -24,0 -18,-5" fill="#292524"></polygon>
+          <polygon points="38,0   18,5  24,0  18,-5" fill="#292524"></polygon>
+          <polygon points="0,-38 3,-28 0,-33 -3,-28" fill="#92400e" transform="rotate(45)"></polygon>
+          <polygon points="0,-38 3,-28 0,-33 -3,-28" fill="#92400e" transform="rotate(135)"></polygon>
+          <polygon points="0,-38 3,-28 0,-33 -3,-28" fill="#92400e" transform="rotate(225)"></polygon>
+          <polygon points="0,-38 3,-28 0,-33 -3,-28" fill="#92400e" transform="rotate(315)"></polygon>
+          <text x="0" y="-22" font-family="Cinzel,serif" font-size="10" fill="#dc2626" text-anchor="middle" font-weight="700">N</text>
+          <text x="0" y="30" font-family="Cinzel,serif" font-size="10" fill="#292524" text-anchor="middle">S</text>
+          <text x="-25" y="4" font-family="Cinzel,serif" font-size="9" fill="#292524" text-anchor="middle">O</text>
+          <text x="26" y="4" font-family="Cinzel,serif" font-size="9" fill="#292524" text-anchor="middle">E</text>
+          <circle cx="0" cy="0" r="10" fill="#fde68a" stroke="#d97706" stroke-width="1.5"></circle>
+          <circle cx="0" cy="0" r="4" fill="#d97706"></circle>
+        </g>
+
+        <text x="60" y="130" font-size="18" opacity=".5">🌊</text>
+        <text x="620" y="580" font-size="16" opacity=".4">🌊</text>
+        <text x="74" y="538" font-size="14" opacity=".4">🐋</text>
+        <text x="600" y="140" font-size="14" opacity=".4">🦜</text>
+        <text x="432" y="250" font-size="12" opacity=".5">🌴</text>
+        <text x="246" y="438" font-size="11" opacity=".4">🌺</text>
+        <text x="460" y="300" font-size="12" opacity=".5">🌿</text>
+      </svg>
+      </div>`;
+  }
+
+  function attachMapHandlers(containerId, handler){
+    document.querySelectorAll(`#${containerId} .landmark-btn[data-place]`).forEach(el => {
+      el.addEventListener('click', () => handler(el.getAttribute('data-place')));
+    });
+  }
+
+  function renderExercise1(){
+    document.getElementById('map1').innerHTML = buildMapSvg({
+      mapKey: 'ex1',
+      clickable: !state.answered[0],
+      selected: state.selected1,
+      correct: state.answered[0] ? EX1_CORRECT : null,
+      wrong: state.answered[0] && state.selected1 !== EX1_CORRECT ? state.selected1 : null,
+      startPlace: EX1.start
+    });
+    attachMapHandlers('map1', answerExercise1);
+  }
+
+  function renderExercise2(){
+    document.getElementById('map2').innerHTML = buildMapSvg({
+      mapKey: 'ex2',
+      clickable: !state.answered[1],
+      selected: state.selected2,
+      correct: state.answered[1] ? EX2_CORRECT : null,
+      wrong: state.answered[1] && state.selected2 !== EX2_CORRECT ? state.selected2 : null,
+      startPlace: EX2.start
+    });
+    attachMapHandlers('map2', answerExercise2);
+  }
+
+  function renderExercise3Map(){
+    document.getElementById('map3').innerHTML = buildMapSvg({
+      mapKey: 'ex3',
+      clickable: false,
+      startPlace: EX3.start,
+      endPlace: EX3_PATH[EX3_PATH.length - 1],
+      routeIds: EX3_PATH,
+      routeColors: EX3.colors
+    });
+  }
+
+  function renderExercise3Options(){
+    const container = document.getElementById('options3');
+    container.innerHTML = EX3_OPTIONS.map((option, idx) => {
+      let cls = 'option-btn';
+      if(state.answered[2]){
+        if(idx === EX3_CORRECT_INDEX) cls += ' correct';
+        else if(idx === state.selected3) cls += ' wrong';
+      }
+      return `
+        <button class="${cls}" ${state.answered[2] ? 'disabled' : ''} onclick="answerExercise3(${idx})">
+          <span class="option-label">Opción ${String.fromCharCode(65 + idx)}</span>
+          ${option}
+        </button>`;
+    }).join('');
+  }
+
+  function answerExercise1(placeId){
+    if(state.answered[0]) return;
+    state.selected1 = placeId;
+    state.answered[0] = true;
+    state.points[0] = placeId === EX1_CORRECT;
+    renderExercise1();
+    updateProgress();
+
+    const fb = document.getElementById('fb1');
+    fb.className = 'fb show ' + (state.points[0] ? 'ok' : 'bad');
+    if(state.points[0]){
+      play('sndTada');
+      fb.innerHTML = `✅ ¡Correcto! La ruta termina en <strong>${PLACES[EX1_CORRECT].name}</strong>. Seguiste bien los cinco movimientos cardinales desde el Barco Pirata.`;
+      launchConfetti();
+    }else{
+      registerError();
+      play('sndError');
+      fb.innerHTML = `❌ Esa no era la meta final. La ruta termina en <strong>${PLACES[EX1_CORRECT].name}</strong>. Conviene contar cada paso sin saltarte ninguna dirección.`;
+    }
+    document.getElementById('next1').style.display = 'inline-flex';
+  }
+
+  function answerExercise2(placeId){
+    if(state.answered[1]) return;
+    state.selected2 = placeId;
+    state.answered[1] = true;
+    state.points[1] = placeId === EX2_CORRECT;
+    renderExercise2();
+    updateProgress();
+
+    const fb = document.getElementById('fb2');
+    fb.className = 'fb show ' + (state.points[1] ? 'ok' : 'bad');
+    if(state.points[1]){
+      play('sndTada');
+      fb.innerHTML = `✅ ¡Excelente! El destino final es <strong>${PLACES[EX2_CORRECT].name}</strong>. Seguiste bien la ruta cardinal desde el Rio Serpiente.`;
+      launchConfetti();
+    }else{
+      registerError();
+      play('sndError');
+      fb.innerHTML = `❌ La secuencia no terminaba ahí. Si sigues norte, oeste, este, este y norte desde el Rio Serpiente, el recorrido termina en <strong>${PLACES[EX2_CORRECT].name}</strong>.`;
+    }
+    document.getElementById('next2').style.display = 'inline-flex';
+  }
+
+  function answerExercise3(index){
+    if(state.answered[2]) return;
+    state.selected3 = index;
+    state.answered[2] = true;
+    state.points[2] = index === EX3_CORRECT_INDEX;
+    renderExercise3Options();
+    updateProgress();
+
+    const fb = document.getElementById('fb3');
+    fb.className = 'fb show ' + (state.points[2] ? 'ok' : 'bad');
+    if(state.points[2]){
+      play('sndTada');
+      fb.innerHTML = `✅ ¡Muy bien! La ruta visible se traduce como <strong>${EX3_CORRECT_TEXT}</strong>. Seguiste bien los cinco tramos de color hasta Puerto del Sol.`;
+      launchConfetti();
+    }else{
+      registerError();
+      play('sndError');
+      fb.innerHTML = `❌ No coincide con la ruta dibujada. La traducción correcta es <strong>${EX3_CORRECT_TEXT}</strong>. Observa que la ruta sube dos veces antes del último paso al este.`;
+    }
+    document.getElementById('showRes').style.display = 'inline-flex';
+  }
+
+  function goExercise(n){
+    document.querySelectorAll('.exercise').forEach(el => el.classList.remove('active'));
+    document.getElementById('resultBox').classList.remove('show');
+    document.getElementById('ex' + n).classList.add('active');
+    state.current = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(){
+    const score = state.points.filter(Boolean).length;
+    document.getElementById('scoreHead').textContent = '🧭 ' + score + ' / 3';
+
+    for(let i=0;i<3;i++){
+      const circle = document.getElementById('c' + (i + 1));
+      circle.className = 'pc';
+      circle.textContent = String(i + 1);
+      if(state.points[i] === true){
+        circle.classList.add('ok');
+        circle.textContent = '✓';
+      }else if(state.points[i] === false){
+        circle.classList.add('bad');
+        circle.textContent = '✗';
+      }else if(state.current === i + 1){
+        circle.classList.add('act');
+      }
+    }
+
+    document.getElementById('l1').classList.toggle('done', state.points[0] !== null);
+    document.getElementById('l2').classList.toggle('done', state.points[1] !== null);
+  }
+
+  function showResult(){
+    state.current = 0;
+    updateProgress();
+    document.querySelectorAll('.exercise').forEach(el => el.classList.remove('active'));
+    const resultBox = document.getElementById('resultBox');
+    resultBox.classList.add('show');
+
+    const hits = state.points.filter(Boolean).length;
+    const passed = hits >= 2;
+    const seconds = Math.round((new Date() - state.startTime) / 1000);
+
+    document.getElementById('resEmoji').textContent = passed ? '🏆' : '🧭';
+    document.getElementById('resTitle').textContent = passed ? '¡Isla conquistada!' : 'Sigue navegando';
+    document.getElementById('resScore').textContent = hits + '/3';
+    document.getElementById('resText').textContent = passed
+      ? 'Superaste el nivel difícil siguiendo rutas complejas, mezclando referentes y traduciendo trayectos visuales. ¡Dominas la orientación en la isla del tesoro!'
+      : 'Completaste el quiz, pero necesitas al menos 2 aciertos para dominar la isla. Vuelve a intentarlo y revisa con calma el orden de cada ruta.';
+    document.getElementById('resTime').textContent = '⏱️ Tiempo total: ' + seconds + ' segundos';
+    document.getElementById('bd1').textContent = 'Ejercicio 1: ' + (state.points[0] ? '✅' : '❌');
+    document.getElementById('bd2').textContent = 'Ejercicio 2: ' + (state.points[1] ? '✅' : '❌');
+    document.getElementById('bd3').textContent = 'Ejercicio 3: ' + (state.points[2] ? '✅' : '❌');
+
+    if(passed) play('sndTada'); else play('sndError');
+    saveProgress(hits, 3, seconds, passed, state.errors);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function saveProgress(aciertos, total, tiempo, aprobado, errores){
+    try{
+      await fetch('/api/progreso/nivel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          contenido_id: 7,
+          nivel_completado: 'dificil',
+          puntaje: Math.round((aciertos / total) * 100),
+          aprobado: aprobado,
+          aciertos: aciertos,
+          total_preguntas: total,
+          tiempo_segundos: tiempo,
+          errores: errores,
+          fecha_inicio: state.startTime.toISOString()
+        })
+      });
+    }catch(e){
+      console.error('Error guardando progreso:', e);
+    }
+  }
+
+  function restartAll(){
+    location.reload();
+  }
+
+function volverAlContenido(){window.location.href = '../../menu.html';}
+
+  function launchConfetti(){
+    const colors = ['#f59e0b','#fde68a','#22c55e','#38bdf8','#ef4444','#8b5cf6'];
+    for(let i=0;i<54;i++){
+      setTimeout(() => {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.style.left = (Math.random() * 100) + 'vw';
+        piece.style.top = '-10px';
+        piece.style.width = (6 + Math.random() * 8) + 'px';
+        piece.style.height = (6 + Math.random() * 10) + 'px';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animation = 'confettiFall ' + (1.6 + Math.random() * 1.8).toFixed(2) + 's linear forwards';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3500);
+      }, i * 25);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderInstructionCards();
+    renderExercise1();
+    renderExercise2();
+    renderExercise3Map();
+    renderExercise3Options();
+    updateProgress();
+
+    if(!EX1_CORRECT || !EX2_CORRECT || EX3_PATH.length !== EX3.dirs.length + 1){
+      console.error('Configuración inválida del quiz difícil');
+      toast('Revisa la configuración del mapa');
+    }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque III: Poblaci&oacute;n Mundial</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+
+<body>
+
+<header class="bloque-header">
+    <button class="boton-volver" onclick="volver()">&larr; Volver</button>
+    <h1 id="nombre-bloque">Bloque III: Poblaci&oacute;n Mundial</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Elige una opci&oacute;n</h2>
+
+    <div class="contenedor-niveles">
+
+        <button id="btn-diagnostico" onclick="irADiagnostico()">
+            <span>Examen diagn&oacute;stico</span>
+            <span class="descripcion-nivel">
+                Descubre tu nivel inicial sobre poblaci&oacute;n mundial, ciudad y campo, y culturas
+            </span>
+        </button>
+
+        <button onclick="mostrarContenidos()">
+            <span>Contenidos</span>
+            <span class="descripcion-nivel">
+                Accede a los niveles del bloque
+            </span>
+        </button>
+
+    </div>
+
+    <div id="bloque-contenidos" style="display:none">
+
+        <h3>Niveles del contenido</h3>
+
+        <div class="contenedor-niveles">
+            <button id="btn-facil" onclick="abrirNivel('facil')" disabled>
+                <span>F&aacute;cil</span>
+                <span class="descripcion-nivel">Pa&iacute;ses m&aacute;s y menos poblados, concentraci&oacute;n y problemas urbanos</span>
+            </button>
+            <button id="btn-normal" onclick="abrirNivel('normal')" disabled>
+                <span>Normal</span>
+                <span class="descripcion-nivel">Densidad, ciudad y campo, migraci&oacute;n y culturas del mundo</span>
+            </button>
+            <button id="btn-dificil" onclick="abrirNivel('dificil')" disabled>
+                <span>Dif&iacute;cil</span>
+                <span class="descripcion-nivel">Nivel en preparaci&oacute;n</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

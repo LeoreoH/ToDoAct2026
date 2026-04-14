@@ -1,22 +1,150 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poblaci&oacute;n Mundial &middot; Auditivo &middot; Nivel F&aacute;cil</title>
+  <title>Países Poblados · Auditivo · Nivel Fácil</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+  <style>
+    :root{
+      --guindo:#7b1d2e;
+      --guindo-dark:#5a1320;
+      --guindo-light:#a63248;
+      --gris:#4a4a5a;
+      --gris-light:#6b6b80;
+      --gris-pale:#e8e8ef;
+      --gris-bg:#f2f2f6;
+      --blanco:#fff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
+
+    .cabecera{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));padding:28px 20px;border-bottom:6px solid var(--gris-pale);text-align:center;box-shadow:0 10px 24px rgba(90,19,32,.35);}
+    .cabecera h1{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;color:#fff;font-weight:900;letter-spacing:1px;}
+    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:1rem;margin-top:4px;}
+    .badge-estilo{background:var(--gris-pale);color:var(--guindo);padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.05rem;display:inline-block;border:3px solid #fff;margin-top:10px;}
+
+    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
+    .punto{width:38px;height:38px;border-radius:50%;background:var(--gris-pale);border:3px solid var(--guindo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--guindo);transition:all .3s;}
+    .punto.activo{background:var(--guindo);color:#fff;transform:scale(1.2);}
+    .punto.completado{background:var(--gris-light);border-color:#fff;color:#fff;}
+
+    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
+    .pagina{display:none;animation:aparecer .45s ease;}
+    .pagina.activa{display:block;}
+    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    .card-aud{background:#fff;border-radius:24px;padding:24px;margin-bottom:20px;border:3px solid var(--guindo);box-shadow:0 8px 0 var(--guindo-dark);}
+    .titulo-pag{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;color:var(--guindo);margin-bottom:8px;border-left:8px solid var(--gris-pale);padding-left:16px;font-weight:800;}
+    .subtitulo-tema{background:var(--gris-pale);border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--guindo);margin-bottom:14px;display:inline-block;border:2px solid #d0d0de;}
+
+    .dato-box{background:var(--gris-bg);border-radius:14px;padding:12px 16px;border-left:6px solid var(--guindo);margin:8px 0;font-size:.92rem;}
+    .dato-box strong{color:var(--guindo);}
+    .info-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gris-bg);border-radius:40px;padding:9px 15px;margin:5px 4px;border:2px solid #d0d0de;font-weight:700;font-size:.9rem;color:var(--gris);}
+
+    /* AUDIO PLAYER */
+    .audio-section{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));border-radius:20px;padding:20px;margin:14px 0;text-align:center;color:#fff;}
+    .audio-section h5{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:12px;}
+    .audio-section .note{font-size:.8rem;opacity:.8;margin-top:8px;}
+    .placeholder-audio{background:rgba(255,255,255,.2);border:2px dashed rgba(255,255,255,.5);border-radius:12px;padding:18px 24px;color:#fff;font-weight:700;font-size:.85rem;text-align:center;margin:10px 0;}
+
+    /* AUDIO POR PREGUNTA */
+    .pregunta-audio-wrap{
+      background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));
+      border-radius:14px;
+      padding:14px 18px;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .pregunta-audio-wrap .audio-label{
+      color:#fff;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:800;
+      font-size:1rem;
+      white-space:nowrap;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pregunta-audio-wrap audio{
+      flex:1;
+      min-width:200px;
+      max-width:400px;
+      border-radius:8px;
+      height:36px;
+    }
+
+    /* ACTIVIDAD */
+    .actividad{background:#fdf5f6;border-radius:24px;padding:20px;margin-top:16px;border:4px dashed var(--guindo-light);}
+    .act-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--guindo);margin-bottom:12px;text-align:center;}
+    .pista-banner{background:linear-gradient(135deg,var(--guindo),var(--guindo-light));color:#fff;border-radius:16px;padding:13px 18px;margin:0 0 12px;text-align:center;}
+    .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
+
+    /* OPCIONES RESPUESTA */
+    .opcion-btn{background:#fff;border:3px solid var(--guindo);border-radius:14px;padding:14px 20px;font-weight:700;font-size:.95rem;color:var(--guindo);cursor:pointer;transition:all .2s;width:100%;text-align:left;display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+    .opcion-btn img{width:32px;height:22px;object-fit:cover;border-radius:3px;flex-shrink:0;}
+    .opcion-btn:hover:not(.disabled){background:var(--gris-pale);transform:translateX(4px);}
+    .opcion-btn.correcto{background:#d5f5e3;border-color:#27ae60;color:#1a7a46;}
+    .opcion-btn.incorrecto{background:#fde8e8;border-color:#e74c3c;color:#a93226;}
+    .opcion-btn.disabled{cursor:default;}
+
+    /* PREGUNTA ITEM */
+    .vf-item{background:var(--gris-bg);border-radius:16px;padding:14px 18px;margin-bottom:14px;border:2px solid #d0d0de;}
+    .vf-texto{font-weight:700;font-size:.95rem;margin-bottom:10px;color:var(--guindo);}
+
+    /* VERDADERO / FALSO */
+    .vf-btns{display:flex;gap:10px;}
+    .vf-btn{padding:10px 24px;border-radius:26px;border:none;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;}
+    .vf-btn.verdad{background:var(--guindo);color:#fff;box-shadow:0 4px 0 var(--guindo-dark);}
+    .vf-btn.falso{background:var(--gris-light);color:#fff;box-shadow:0 4px 0 var(--gris);}
+    .vf-btn:hover:not(.disabled){transform:translateY(-2px);}
+    .vf-btn.ok{background:#27ae60 !important;box-shadow:none;}
+    .vf-btn.err{background:#e74c3c !important;box-shadow:none;}
+    .vf-btn.disabled{cursor:default;opacity:.6;transform:none !important;}
+
+    /* PISTAS */
+    .pista-box{background:var(--gris-bg);border-radius:16px;padding:16px;margin-bottom:12px;border:2px solid #d0d0de;}
+    .pista-num{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--guindo);margin-bottom:4px;}
+    .pista-txt{font-size:.9rem;font-weight:600;}
+
+    /* REPASO IMÁGENES */
+    .rep-img{width:100%;height:140px;object-fit:cover;border-radius:14px;margin-bottom:10px;}
+    .rep-card{background:var(--gris-bg);border-radius:16px;padding:14px;border:2px solid #d0d0de;}
+    .rep-card h6{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--guindo);font-size:1.1rem;margin-bottom:6px;}
+    .rep-card p{font-size:.82rem;line-height:1.5;}
+
+    /* FEEDBACK */
+    .fb-ok{background:var(--guindo);color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
+    .fb-ok.on{display:block;animation:aparecer .4s ease;}
+    .fb-err{background:#e74c3c;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
+    .fb-err.on{display:block;}
+
+    /* NAV */
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .btn-nav{background:var(--guindo);color:#fff;border:3px solid var(--guindo-dark);padding:10px 24px;border-radius:38px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;}
+    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 var(--guindo-dark);}
+    .btn-nav:disabled{background:#ccc;color:#999;border-color:#bbb;box-shadow:none;cursor:default;}
+    .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
+    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
+    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
+  </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="cabecera">
-  <h1>POBLACI&Oacute;N MUNDIAL</h1>
-  <div class="sub">Pa&iacute;ses m&aacute;s y menos poblados &middot; Nivel F&aacute;cil &middot; Geograf&iacute;a 5&deg;</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="sub">Bloque · Nivel Fácil · Geografía 5°</div>
   <div class="badge-estilo"><i class="fas fa-headphones me-2"></i>Estilo Auditivo</div>
 </div>
 
+<!-- PROGRESO -->
 <div class="progreso">
   <i class="fas fa-headphones fa-2x" style="color:var(--guindo);"></i>
   <div class="puntos" id="puntosDiv">
@@ -32,6 +160,10 @@
 
 <div class="contenedor">
 
+<!-- ═══════════════════════════════════════
+     PÁGINA 1 · DISTRIBUCIÓN DE LA POBLACIÓN
+     JUEGO: Cada pregunta tiene su propio audio
+     ═══════════════════════════════════════ -->
 <div class="pagina activa" id="pagina1">
   <div class="card-aud">
     <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
@@ -49,9 +181,11 @@
       <h3 class="act-titulo">Escucha cada pista y elige el país correcto</h3>
       <p class="text-center text-muted mb-3" style="font-size:.85rem;">Cada pregunta tiene su propio audio — escúchalo y selecciona la respuesta</p>
 
+      <!-- ── PREGUNTA 1 ── -->
       <div class="vf-item" id="qAud1">
         <div class="vf-texto">Pregunta 1 — ¿A qué país corresponde la descripción?</div>
 
+        <!-- AUDIO PREGUNTA 1 — sustituye src por tu archivo -->
         <div class="pregunta-audio-wrap">
           <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 1</span>
           <audio controls>
@@ -76,9 +210,11 @@
         <div class="fb-err" id="errQAud1">Incorrecto. La respuesta es China. Es el país más poblado del mundo.</div>
       </div>
 
+      <!-- ── PREGUNTA 2 ── -->
       <div class="vf-item" id="qAud2">
         <div class="vf-texto">Pregunta 2 — ¿A qué país corresponde esta descripción?</div>
 
+        <!-- AUDIO PREGUNTA 2 — sustituye src por tu archivo -->
         <div class="pregunta-audio-wrap">
           <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 2</span>
           <audio controls>
@@ -103,9 +239,11 @@
         <div class="fb-err" id="errQAud2">Incorrecto. La respuesta es India, el segundo país más poblado del mundo.</div>
       </div>
 
+      <!-- ── PREGUNTA 3 ── -->
       <div class="vf-item" id="qAud3">
         <div class="vf-texto">Pregunta 3 — País con menos de 15,000 habitantes, ¿cuál es?</div>
 
+        <!-- AUDIO PREGUNTA 3 — sustituye src por tu archivo -->
         <div class="pregunta-audio-wrap">
           <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 3</span>
           <audio controls>
@@ -134,6 +272,10 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     PÁGINA 2 · CONCENTRACIÓN Y DISPERSIÓN
+     JUEGO: Verdadero o Falso con audio
+     ═══════════════════════════════════════ -->
 <div class="pagina" id="pagina2">
   <div class="card-aud">
     <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
@@ -144,6 +286,7 @@
     <div class="dato-box"><strong>Concentración:</strong> Muchas personas en poco espacio. Ciudades, costas, llanuras fértiles.</div>
     <div class="dato-box"><strong>Dispersión:</strong> Pocas personas en gran territorio. Desiertos, zonas polares, selvas.</div>
 
+    <!-- AUDIO GENERAL PÁGINA 2 -->
     <div class="audio-section">
       <h5><i class="fas fa-volume-up me-2"></i>Escucha las afirmaciones</h5>
       <div class="placeholder-audio">
@@ -203,6 +346,10 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     PÁGINA 3 · PROBLEMAS DE CONCENTRACIÓN
+     JUEGO: Escuchar pistas y escoger el concepto
+     ═══════════════════════════════════════ -->
 <div class="pagina" id="pagina3">
   <div class="card-aud">
     <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
@@ -212,6 +359,7 @@
 
     <div class="dato-box"><strong>Consecuencias:</strong> Escasez de agua, problemas de transporte, contaminación del aire y el suelo, desigualdad social.</div>
 
+    <!-- AUDIO GENERAL PÁGINA 3 -->
     <div class="audio-section">
       <h5><i class="fas fa-volume-up me-2"></i>Escucha las pistas</h5>
       <div class="placeholder-audio">
@@ -269,6 +417,9 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     PÁGINA 4 · REPASO AUDITIVO CON IMÁGENES
+     ═══════════════════════════════════════ -->
 <div class="pagina" id="pagina4">
   <div class="card-aud">
     <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
@@ -314,6 +465,7 @@
   </div>
 </div>
 
+<!-- NAVEGADOR -->
 <div class="nav-bar">
   <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
   <span class="ind-pag" id="indPag">1/4</span>
@@ -325,10 +477,90 @@
 
 </div>
 
-__BLOCK_
-__BLOCK_
-__BLOCK_
-__BLOCK_
-__BLOCK_
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let pag=1; const TOTAL=4;
+function cambiarPag(d){
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag+=d;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  syncUI(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function syncUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    p.classList.remove('activo','completado');
+    if(i+1===pag) p.classList.add('activo');
+    else if(i+1<pag) p.classList.add('completado');
+  });
+  document.getElementById('numActual').innerText=pag;
+  document.getElementById('indPag').innerText=pag+'/'+TOTAL;
+  document.getElementById('btnAnt').disabled=(pag===1);
+  document.getElementById('btnSig').disabled=(pag===TOTAL);
+}
+function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+
+/* ── PÁG 1: OPCIÓN CON AUDIO POR PREGUNTA ── */
+function responderOpc(pregId, elegida, correcta){
+  const cont = document.getElementById(pregId);
+  const btns = cont.querySelectorAll('.opcion-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+
+  const okId  = 'ok'  + pregId.charAt(0).toUpperCase() + pregId.slice(1);
+  const errId = 'err' + pregId.charAt(0).toUpperCase() + pregId.slice(1);
+
+  if(elegida === correcta){
+    show(okId); hide(errId);
+    // resaltar botón correcto
+    [...btns].forEach(b => {
+      if(b.getAttribute('onclick').includes("'"+elegida+"'")){
+        b.classList.add('correcto');
+      }
+    });
+  } else {
+    show(errId); hide(okId);
+    [...btns].forEach(b => {
+      if(b.getAttribute('onclick').includes("'"+elegida+"'")){
+        b.classList.add('incorrecto');
+      }
+    });
+  }
+}
+
+/* ── PÁG 2: VERDADERO / FALSO ── */
+let vfAciertos = 0;
+function respVF(id, elegida, correcta){
+  const cont = document.getElementById(id);
+  const btns = cont.querySelectorAll('.vf-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+  if(elegida === correcta){
+    const btn = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
+    if(btn) btn.classList.add('ok');
+    vfAciertos++;
+    if(vfAciertos >= 4) show('fbPag2');
+  } else {
+    const btn = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
+    if(btn) btn.classList.add('err');
+  }
+}
+
+/* ── PÁG 3: PISTAS ── */
+let pistaAciertos = 0;
+function responderPista(pistaId, elegida, correcta){
+  const cont = document.getElementById(pistaId);
+  const btns = cont.querySelectorAll('.opcion-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+  const prefix = pistaId.charAt(0).toUpperCase() + pistaId.slice(1);
+  if(elegida === correcta){
+    show('ok'+prefix); hide('err'+prefix);
+    pistaAciertos++;
+    if(pistaAciertos >= 3) show('fbPag3');
+  } else {
+    show('err'+prefix); hide('ok'+prefix);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', syncUI);
+</script>
 </body>
 </html>

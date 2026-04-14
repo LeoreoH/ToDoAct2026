@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil &middot; Kinest&eacute;sico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+  <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <h1>DECIMALES</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil</div>
+    <div class="badge-estilo">Kinest&eacute;sico</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 6</span>
+    <div class="barra-fondo">
+      <div class="barra-relleno" id="barraRelleno"></div>
+    </div>
+    <span class="progreso-num" id="progresoNum">17%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-glass-water me-2"></i>La unidad completa</h2>
+
+        <div class="texto-destacado">
+          En decimal, el entero completo se escribe <strong>1.0</strong>. Si solo usamos una parte de diez, escribimos <strong>0.1</strong>. Si usamos la mitad, escribimos <strong>0.5</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> observa c&oacute;mo cambia la cantidad cuando el mismo entero est&aacute; completo, a la mitad o con una sola parte de diez.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Botella completa</div>
+            <div id="demoP1A"></div>
+            <div class="modelo-nota">Todo el entero est&aacute; lleno.</div>
+          </div>
+          <div class="modelo-card">
+            <div class="modelo-titulo">Barra a la mitad</div>
+            <div id="demoP1B"></div>
+            <div class="modelo-nota">Solo la mitad del entero est&aacute; marcada.</div>
+          </div>
+          <div class="modelo-card">
+            <div class="modelo-titulo">Un d&eacute;cimo</div>
+            <div id="demoP1C"></div>
+            <div class="modelo-nota">Solo una parte de diez est&aacute; marcada.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra cada decimal al modelo correcto.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo A</div>
+              <div id="ejP1A"></div>
+              <div class="caja-destino" data-accept="1.0" id="dropP1A">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo B</div>
+              <div id="ejP1B"></div>
+              <div class="caja-destino" data-accept="0.5" id="dropP1B">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo C</div>
+              <div id="ejP1C"></div>
+              <div class="caja-destino" data-accept="0.1" id="dropP1C">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP1">
+            <div class="ficha" draggable="true" data-value="0.1">0.1</div>
+            <div class="ficha" draggable="true" data-value="1.0">1.0</div>
+            <div class="ficha" draggable="true" data-value="0.5">0.5</div>
+          </div>
+
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">
+            Todo qued&oacute; bien colocado: <strong>1.0</strong> es el entero completo, <strong>0.5</strong> es la mitad y <strong>0.1</strong> es una parte de diez.
+          </div>
+          <div id="feedback1warn" class="mensaje-feedback mensaje-warn">
+            Esa ficha no corresponde a ese modelo. Revisa cu&aacute;ntas partes del entero est&aacute;n llenas.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-bars-progress me-2"></i>D&eacute;cimos en una barra</h2>
+
+        <div class="texto-destacado">
+          Si un entero est&aacute; dividido en <strong>10</strong> partes iguales, cada parte vale <strong>0.1</strong>. Cuatro partes llenas se leen como <strong>0.4</strong>, ocho partes llenas se leen como <strong>0.8</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> en las barras de d&eacute;cimos primero contamos cu&aacute;ntas partes est&aacute;n coloreadas y despu&eacute;s escribimos ese n&uacute;mero como decimal.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP2"></div>
+            <div class="modelo-nota">Esta barra tiene 4 de 10 partes marcadas. Se escribe <strong>0.4</strong>.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra cada decimal a la barra que le corresponde.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra A</div>
+              <div id="ejP2A"></div>
+              <div class="caja-destino" data-accept="0.3" id="dropP2A">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra B</div>
+              <div id="ejP2B"></div>
+              <div class="caja-destino" data-accept="0.6" id="dropP2B">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Barra C</div>
+              <div id="ejP2C"></div>
+              <div class="caja-destino" data-accept="0.8" id="dropP2C">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP2">
+            <div class="ficha" draggable="true" data-value="0.8">0.8</div>
+            <div class="ficha" draggable="true" data-value="0.3">0.3</div>
+            <div class="ficha" draggable="true" data-value="0.6">0.6</div>
+          </div>
+
+          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
+            Muy bien. En una barra de d&eacute;cimos, el decimal dice cu&aacute;ntas partes de diez est&aacute;n llenas.
+          </div>
+          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
+            Esa tarjeta no coincide con la cantidad marcada. Cuenta otra vez las partes coloreadas.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-table-cells-large me-2"></i>Cent&eacute;simos en una cuadr&iacute;cula</h2>
+
+        <div class="texto-destacado">
+          En una cuadr&iacute;cula de <strong>100</strong> partes, cada cuadrito vale <strong>0.01</strong>. Si hay 25 cuadritos marcados, escribimos <strong>0.25</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> en los cent&eacute;simos contamos cu&aacute;ntos cuadritos de cien est&aacute;n coloreados. As&iacute; aparecen decimales como <strong>0.25</strong>, <strong>0.43</strong> y <strong>0.57</strong>.
+        </div>
+
+        <div class="modelos-grid">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Ejemplo</div>
+            <div id="demoP3"></div>
+            <div class="modelo-nota">Esta cuadr&iacute;cula muestra 25 de 100. Se escribe <strong>0.25</strong>.</div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra el decimal correcto a cada cuadr&iacute;cula.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Cuadr&iacute;cula A</div>
+              <div id="ejP3A"></div>
+              <div class="caja-destino" data-accept="0.25" id="dropP3A">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Cuadr&iacute;cula B</div>
+              <div id="ejP3B"></div>
+              <div class="caja-destino" data-accept="0.43" id="dropP3B">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Cuadr&iacute;cula C</div>
+              <div id="ejP3C"></div>
+              <div class="caja-destino" data-accept="0.57" id="dropP3C">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP3">
+            <div class="ficha" draggable="true" data-value="0.57">0.57</div>
+            <div class="ficha" draggable="true" data-value="0.25">0.25</div>
+            <div class="ficha" draggable="true" data-value="0.43">0.43</div>
+          </div>
+
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
+            Excelente. Ya puedes leer decimales escritos con cent&eacute;simos en una cuadr&iacute;cula de 100 partes.
+          </div>
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
+            Esa tarjeta no coincide con la cuadr&iacute;cula. Cuenta cu&aacute;ntos cuadritos est&aacute;n llenos.
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Cu&aacute;l decimal es mayor</h2>
+
+        <div class="texto-destacado">
+          Para comparar decimales, primero revisamos el valor de las partes. Si dos cantidades usan el mismo entero, la que tiene m&aacute;s partes coloreadas es la mayor.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> compara estos dos ejemplos. <strong>0.3</strong> es menor que <strong>0.7</strong> porque 3 d&eacute;cimos es menos que 7 d&eacute;cimos.
+        </div>
+
+        <div class="comparacion-wrap">
+          <div class="modelo-card">
+            <div class="modelo-titulo">Tarjeta izquierda</div>
+            <div id="demoP4A"></div>
+            <div class="modelo-nota"><span class="valor-chip">0.3</span></div>
+          </div>
+          <div class="valor-chip">&lt;</div>
+          <div class="modelo-card">
+            <div class="modelo-titulo">Tarjeta derecha</div>
+            <div id="demoP4B"></div>
+            <div class="modelo-nota"><span class="valor-chip">0.7</span></div>
+          </div>
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra el signo correcto entre <strong>0.45</strong> y <strong>0.50</strong>.</div>
+
+          <div class="comparacion-wrap">
+            <div class="modelo-card">
+              <div class="modelo-titulo">0.45</div>
+              <div id="ejP4A"></div>
+            </div>
+            <div class="signo-drop" id="dropP4Sign" data-accept="<">Suelta aqu&iacute;</div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">0.50</div>
+              <div id="ejP4B"></div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP4">
+            <div class="ficha" draggable="true" data-value=">">&gt;</div>
+            <div class="ficha" draggable="true" data-value="<">&lt;</div>
+            <div class="ficha" draggable="true" data-value="=">=</div>
+          </div>
+
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
+            Correcto. <strong>0.45 &lt; 0.50</strong> porque 45 cent&eacute;simos es menos que 50 cent&eacute;simos.
+          </div>
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
+            Ese signo no corresponde. Compara cu&aacute;ntas partes de cien tiene cada tarjeta.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-route me-2"></i>La recta num&eacute;rica</h2>
+
+        <div class="texto-destacado">
+          Entre <strong>0</strong> y <strong>1</strong> caben muchos decimales. Si dividimos la recta en diez partes iguales, aparecen <strong>0.1, 0.2, 0.3</strong> y as&iacute; hasta <strong>1.0</strong>.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> observa la recta. El punto de ejemplo est&aacute; en <strong>0.4</strong> porque cae en la cuarta marca despu&eacute;s del cero.
+        </div>
+
+        <div id="demoP5" class="modelo-card"></div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra la ficha <strong>0.7</strong> hasta la marca correcta.</div>
+
+          <div class="bandeja" id="trayP5">
+            <div class="ficha" draggable="true" data-value="0.7">0.7</div>
+          </div>
+
+          <div id="lineaP5" class="modelo-card"></div>
+
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">
+            Muy bien. <strong>0.7</strong> queda en la s&eacute;ptima marca despu&eacute;s del cero.
+          </div>
+          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">
+            Esa no es la marca correcta. Cuenta las posiciones de diez en diez.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-flag-checkered me-2"></i>Reto final</h2>
+
+        <div class="texto-destacado">
+          &Uacute;ltima misi&oacute;n: usa todo lo que aprendiste sobre decimales para abrir el mini-quiz.
+        </div>
+
+        <div class="recuadro">
+          <strong>Contenido:</strong> un decimal puede aparecer como entero completo, como barra de d&eacute;cimos o como cuadr&iacute;cula de cent&eacute;simos.
+        </div>
+
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="instruccion-corta">Arrastra cada decimal al modelo correcto.</div>
+
+          <div class="modelos-grid">
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo A</div>
+              <div id="ejP6A"></div>
+              <div class="caja-destino" data-accept="1.0" id="dropP6A">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo B</div>
+              <div id="ejP6B"></div>
+              <div class="caja-destino" data-accept="0.8" id="dropP6B">Suelta aqu&iacute;</div>
+            </div>
+            <div class="modelo-card">
+              <div class="modelo-titulo">Modelo C</div>
+              <div id="ejP6C"></div>
+              <div class="caja-destino" data-accept="0.25" id="dropP6C">Suelta aqu&iacute;</div>
+            </div>
+          </div>
+
+          <div class="bandeja" id="trayP6">
+            <div class="ficha" draggable="true" data-value="0.25">0.25</div>
+            <div class="ficha" draggable="true" data-value="1.0">1.0</div>
+            <div class="ficha" draggable="true" data-value="0.8">0.8</div>
+          </div>
+
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">
+            Excelente. Ya identificas enteros, d&eacute;cimos y cent&eacute;simos. El mini-quiz est&aacute; desbloqueado.
+          </div>
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">
+            Esa tarjeta no coincide con el modelo. Revisa si muestra entero completo, d&eacute;cimos o cent&eacute;simos.
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz">
+            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
+        &larr; Anterior
+      </button>
+      <span class="contador" id="contadorPagina">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>
+        Siguiente &rarr;
+      </button>
+    </div>
+  </div>
+
+  
+  
+</body>
+</html>

@@ -60,9 +60,9 @@ function iniciarSesion(event) {
     event.preventDefault();
 
     const usuario = document.querySelector('input[name="usuario"]').value;
-    const contraseña = document.querySelector('input[name="contraseña"]').value;
+    const contrasena = document.querySelector('input[name="contrasena"]').value;
 
-    const data = { usuario, contraseña };
+    const data = { usuario, contrasena };
 
     fetch(`${window.servidorActivo}/index`, {
         method: 'POST',
@@ -83,7 +83,7 @@ function iniciarSesion(event) {
                 localStorage.setItem('usuario', usuario);
                 window.location.href = "inicio.html";
             } else {
-                alert(data.message || 'Usuario o contraseña incorrectos');
+                alert(data.message || 'Usuario o contrasena incorrectos');
             }
         })
         .catch(error => {
@@ -96,14 +96,14 @@ function crearCuenta(event) {
     event.preventDefault();
 
     const usuario = document.querySelector('input[name="usuario"]').value;
-    const contraseña = document.querySelector('input[name="contraseña"]').value;
+    const contrasena = document.querySelector('input[name="contrasena"]').value;
     const nombrecompleto = document.querySelector('input[name="nombrecompleto"]').value;
     const fechanacimiento = document.querySelector('input[name="fechanacimiento"]').value;
     const genero = document.querySelector('select[name="genero"]').value;
 
     const data = {
         usuario,
-        contraseña,
+        contrasena,
         nombrecompleto,
         fechanacimiento,
         genero

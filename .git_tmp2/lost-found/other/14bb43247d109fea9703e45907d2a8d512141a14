@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil &middot; Visual / No Verbal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>DECIMALES VISUALES</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil</div>
+    <div class="badge-estilo">Visual / No Verbal</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 6</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">0%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="tarjeta">
+      <h2 class="titulo-pagina" id="tituloPagina"></h2>
+      <div class="texto-destacado" id="leadPagina"></div>
+      <div id="contenidoPagina"></div>
+      <div class="activity-box">
+        <h3>Actividad de reforzamiento</h3>
+        <div class="activity-prompt" id="promptActividad"></div>
+        <div id="supportActividad"></div>
+        <div id="rootActividad"></div>
+        <div class="action-row">
+          <button class="btn-accion" id="btnVerificar">Verificar</button>
+          <button class="btn-accion" id="btnBorrar">Borrar selecci&oacute;n</button>
+        </div>
+        <div id="feedbackOk" class="mensaje-feedback mensaje-ok"></div>
+        <div id="feedbackWarn" class="mensaje-feedback mensaje-warn"></div>
+      </div>
+      <div class="text-center" id="quizWrap"></div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/equivalencias-numericas/recursos/js/visual-verbal-engine.js"></script>
+  <script>
+    const B = window.EquivVisualVerbalBuilders;
+    const pages = [
+      {
+        title: 'La unidad completa',
+        icon: 'fa-glass-water',
+        lead: 'El entero completo se escribe 1.0.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Cuando todo el modelo est&aacute; lleno, vemos un entero. Si falta una parte, ya no es 1.0.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🧃 Entero', B.strip(10, 10), B.decChip('1.0'), 'theme-gold') +
+            B.panel('◐ Mitad', B.strip(10, 5), B.decChip('0.5'), 'theme-sky') +
+            B.panel('▏Una parte', B.strip(10, 1), B.decChip('0.1'), 'theme-jade') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'entero_visual',
+          prompt: '&iquest;Qu&eacute; modelo muestra el entero completo?',
+          supportHtml: '<div class="support-box theme-gold"><div class="support-title">🧃 Pista breve</div><div class="hint-line">Busca el modelo donde no falta ninguna parte.</div></div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🧃 Modelo coral', '', B.strip(10,10), '', 'theme-gold'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('◐ Modelo cielo', '', B.strip(10,5), '', 'theme-sky'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('▏Modelo jade', '', B.strip(10,1), '', 'theme-jade'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('▉ Modelo coral', '', B.strip(10,8), '', 'theme-coral'), '', '') }
+          ],
+          ok: '&iexcl;Muy bien! El entero completo corresponde a 1.0.',
+          warn: 'Revisa cu&aacute;l modelo est&aacute; lleno por completo.'
+        }
+      },
+      {
+        title: 'D&eacute;cimos en una barra',
+        icon: 'fa-bars-progress',
+        lead: 'Si la barra tiene 10 partes iguales, cada parte vale 0.1.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Para leer un decimal en barras, cuenta cu&aacute;ntas partes de diez est&aacute;n coloreadas.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('📏 Ejemplo', B.strip(10, 4), B.decChip('0.4'), 'theme-coral') +
+            B.panel('📏 Otra barra', B.strip(10, 8), B.decChip('0.8'), 'theme-gold') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'decimos_barra',
+          prompt: '&iquest;Qu&eacute; barra representa 0.6?',
+          supportHtml: '<div class="support-box theme-coral"><div class="support-title">📏 Decimal del reto</div>' + B.decChip('0.6') + '</div>',
+          choices: [
+            { value: 'a', correct: false, html: B.choice(B.ticket('📏 Barra coral', '', B.strip(10, 3), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: true, html: B.choice(B.ticket('📏 Barra jade', '', B.strip(10, 6), '', 'theme-jade'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('📏 Barra cielo', '', B.strip(10, 8), '', 'theme-sky'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('📏 Barra sol', '', B.strip(10, 10), '', 'theme-gold'), '', '') }
+          ],
+          ok: '&iexcl;Correcto! 0.6 representa 6 de 10 partes.',
+          warn: 'Cuenta cu&aacute;ntas partes de diez est&aacute;n coloreadas.'
+        }
+      },
+      {
+        title: 'Cent&eacute;simos en una cuadr&iacute;cula',
+        icon: 'fa-table-cells-large',
+        lead: 'En una cuadr&iacute;cula de 100, cada cuadrito vale 0.01.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Los cent&eacute;simos se leen contando cu&aacute;ntos cuadritos de 100 est&aacute;n coloreados.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🔲 Ejemplo', B.grid(25), B.decChip('0.25'), 'theme-gold') +
+            B.panel('🔲 Otra lectura', B.grid(57), B.decChip('0.57'), 'theme-jade') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'centesimos_grid',
+          prompt: '&iquest;Qu&eacute; cuadr&iacute;cula representa 0.43?',
+          supportHtml: '<div class="support-box theme-sky"><div class="support-title">🔲 Decimal del reto</div>' + B.decChip('0.43') + '</div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.ticket('🔲 Cuadr&iacute;cula coral', '', B.grid(43), '', 'theme-coral'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.ticket('🔲 Cuadr&iacute;cula sol', '', B.grid(25), '', 'theme-gold'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.ticket('🔲 Cuadr&iacute;cula jade', '', B.grid(57), '', 'theme-jade'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.ticket('🔲 Cuadr&iacute;cula cielo', '', B.grid(34), '', 'theme-sky'), '', '') }
+          ],
+          ok: '&iexcl;Bien hecho! 43 cuadritos de 100 se leen como 0.43.',
+          warn: 'Busca la cuadr&iacute;cula con 43 cuadritos coloreados.'
+        }
+      },
+      {
+        title: 'Compara decimales',
+        icon: 'fa-scale-balanced',
+        lead: 'M&aacute;s partes coloreadas significa mayor valor.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si dos modelos usan el mismo entero, el que tiene m&aacute;s color representa el decimal mayor.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🟣 Modelo A', B.grid(30), B.decChip('0.30'), 'theme-coral') +
+            B.panel('🟢 Modelo B', B.grid(70), B.decChip('0.70'), 'theme-jade') +
+          '</div>' +
+          '<div class="formula-board">' + B.formula('⚖️ Resultado', '0.30 &lt; 0.70', 'theme-indigo') + '</div>',
+        activity: {
+          type: 'choice', errorKey: 'comparar_decimales',
+          prompt: '&iquest;Qu&eacute; signo completa la comparaci&oacute;n?',
+          supportHtml: '<div class="support-box theme-indigo"><div class="support-title">⚖️ Reto visual</div><div class="model-grid">' + B.panel('Modelo izquierdo', B.grid(45), '', 'theme-coral') + B.panel('Modelo derecho', B.grid(50), '', 'theme-jade') + '</div></div>',
+          choices: [
+            { value: 'a', correct: true, html: B.choice(B.wordChip('&lt;', 'dec'), '', '') },
+            { value: 'b', correct: false, html: B.choice(B.wordChip('&gt;', 'pct'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.wordChip('=', 'word'), '', '') }
+          ],
+          ok: '&iexcl;Exacto! 0.45 es menor que 0.50.',
+          warn: 'Compara cu&aacute;l modelo tiene m&aacute;s partes coloreadas.'
+        }
+      },
+      {
+        title: 'La recta num&eacute;rica',
+        icon: 'fa-route',
+        lead: 'En la recta, cada punto ocupa una posici&oacute;n exacta entre 0 y 1.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Si la recta se divide en diez partes iguales, cada salto vale 0.1.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('📍 Ejemplo', B.line(10, 6), B.decChip('0.6'), 'theme-sky') +
+          '</div>',
+        activity: {
+          type: 'choice', errorKey: 'recta_decimal',
+          prompt: '&iquest;Qu&eacute; decimal marca el punto?',
+          supportHtml: '<div class="support-box theme-sky"><div class="support-title">📍 Punto del reto</div>' + B.line(10, 7) + '</div>',
+          choices: [
+            { value: 'a', correct: false, html: B.choice(B.decChip('0.6'), '', '') },
+            { value: 'b', correct: true, html: B.choice(B.decChip('0.7'), '', '') },
+            { value: 'c', correct: false, html: B.choice(B.decChip('0.8'), '', '') },
+            { value: 'd', correct: false, html: B.choice(B.decChip('0.9'), '', '') }
+          ],
+          ok: '&iexcl;Muy bien! El punto est&aacute; en 0.7.',
+          warn: 'Cuenta los saltos desde 0 hasta el punto amarillo.'
+        }
+      },
+      {
+        title: 'Reto final',
+        icon: 'fa-flag-checkered',
+        lead: 'Un modelo visual puede relacionarse con su decimal correcto.',
+        contentHtml:
+          '<div class="recuadro"><h4>Idea visual</h4><p class="mb-0">Ya puedes mirar barras, cuadr&iacute;culas y enteros completos para decidir qu&eacute; decimal los representa.</p></div>' +
+          '<div class="model-grid">' +
+            B.panel('🧃 Modelo 1', B.strip(10, 10), '', 'theme-gold') +
+            B.panel('📏 Modelo 2', B.strip(10, 8), '', 'theme-coral') +
+            B.panel('🔲 Modelo 3', B.grid(25), '', 'theme-jade') +
+          '</div>',
+        activity: {
+          type: 'sequence', errorKey: 'reto_final_facil',
+          prompt: 'Coloca los decimales correctos de izquierda a derecha.',
+          supportHtml: '<div class="support-box theme-gold"><div class="support-title">🎯 Orden del reto</div><div class="hint-line">Modelo 1, Modelo 2 y Modelo 3.</div></div>',
+          items: [
+            { value: '1.0', html: B.choice(B.decChip('1.0'), '', '') },
+            { value: '0.8', html: B.choice(B.decChip('0.8'), '', '') },
+            { value: '0.25', html: B.choice(B.decChip('0.25'), '', '') },
+            { value: '0.4', html: B.choice(B.decChip('0.4'), '', '') },
+            { value: '0.57', html: B.choice(B.decChip('0.57'), '', '') }
+          ],
+          correctOrder: ['1.0', '0.8', '0.25'],
+          ok: '&iexcl;Excelente! Ya reconoces enteros, d&eacute;cimos y cent&eacute;simos.',
+          warn: 'Observa cada modelo y decide qu&eacute; decimal lo describe.'
+        }
+      }
+    ];
+
+    window.EquivVisualVerbalEngine.boot({
+      contenidoId: 6,
+      nivel: 'facil',
+      estilo: 'visual_no_verbal',
+      sectionPrefix: 'equiv_vnv_facil',
+      pages: pages
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz · Reconocer fracciones · Nivel Fácil</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
+    <h1>Mini-Quiz</h1>
+    <p class="lead">Reconocer fracciones · Nivel Fácil</p>
+    <span class="badge-nivel">⭐ 5 preguntas · necesitas al menos 4 correctas</span>
+  </div>
+
+  <div class="timer-container">
+    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i>Tiempo:</span>
+    <span class="timer-value" id="timerDisplay">00:00</span>
+  </div>
+
+  <div class="progreso-quiz" id="progresoQuiz">
+    <div class="punto activo" data-i="0">1</div>
+    <div class="punto" data-i="1">2</div>
+    <div class="punto" data-i="2">3</div>
+    <div class="punto" data-i="3">4</div>
+    <div class="punto" data-i="4">5</div>
+  </div>
+
+  <div id="preguntasContainer"></div>
+
+  <div class="navegador-quiz" id="navBotones">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>← Anterior</button>
+    <span class="contador" id="contadorPregunta">1/5</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)">Siguiente →</button>
+    <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;">Enviar</button>
+  </div>
+
+  <div class="resultado" id="resultado">
+    <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
+    <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
+    <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
+    <p class="mb-4" id="resultadoMensaje"></p>
+    <p class="text-white-50" id="resultadoTiempo"></p>
+
+    <button class="btn-accion" onclick="volverAlContenido()">
+      <i class="fas fa-arrow-left me-2"></i>Volver
+    </button>
+
+    <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
+      Nivel normal <i class="fas fa-arrow-right ms-2"></i>
+    </button>
+
+    <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+      <i class="fas fa-redo me-2"></i>Reintentar
+    </button>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>

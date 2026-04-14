@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque II: Componentes Naturales</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+
+<body>
+
+<header class="bloque-header">
+    <button class="boton-volver" onclick="volver()">&larr; Volver</button>
+    <h1 id="nombre-bloque">Bloque II: Componentes Naturales</h1>
+</header>
+
+<div class="contenedor-actividad">
+
+    <h2>Elige una opci&oacute;n</h2>
+
+    <div class="contenedor-niveles">
+
+        <button id="btn-diagnostico" onclick="irADiagnostico()">
+            <span>Examen diagn&oacute;stico</span>
+            <span class="descripcion-nivel">
+                Descubre tu nivel inicial sobre los componentes naturales
+            </span>
+        </button>
+
+        <button onclick="mostrarContenidos()">
+            <span>Contenidos</span>
+            <span class="descripcion-nivel">
+                Accede a los niveles del bloque
+            </span>
+        </button>
+
+    </div>
+
+    <div id="bloque-contenidos" style="display:none">
+
+        <h3>Niveles del contenido</h3>
+
+        <div class="contenedor-niveles">
+            <button id="btn-facil" onclick="abrirNivel('facil')" disabled>
+                <span>F&aacute;cil</span>
+                <span class="descripcion-nivel">Conceptos b&aacute;sicos: relieve, agua y clima</span>
+            </button>
+            <button id="btn-normal" onclick="abrirNivel('normal')" disabled>
+                <span>Normal</span>
+                <span class="descripcion-nivel">Placas tect&oacute;nicas, r&iacute;os y regiones naturales</span>
+            </button>
+            <button id="btn-dificil" onclick="abrirNivel('dificil')" disabled>
+                <span>Dif&iacute;cil</span>
+                <span class="descripcion-nivel">Factores del clima, mantos acu&iacute;feros y vegetaci&oacute;n</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

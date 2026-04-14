@@ -1,4 +1,4 @@
-﻿const pathParts = window.location.pathname.split('/');
+const pathParts = window.location.pathname.split('/');
 const SLUG_CONTENIDO = 'la-tierra';
 
 const nombresBloques = {
@@ -17,7 +17,7 @@ async function cargarEstadoContenido() {
         if (!res.ok) return;
 
         estadoContenido = await res.json();
-
+        
         actualizarBotones();
 
     } catch (e) {

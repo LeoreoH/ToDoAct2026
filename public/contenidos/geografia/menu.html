@@ -1,46 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geograf&iacute;a</title>
-    <link rel="stylesheet" href="menu.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geografia</title>
+<link rel="stylesheet" href="menu.css">
 </head>
+
 <body>
 
 <header class="materia-header">
-    <button class="boton-volver" onclick="volver()">&larr; Volver</button>
-    <h1>Geograf&iacute;a</h1>
+    <button class="boton-volver" onclick="volver()"><- Volver</button>
+    <h1>Geografia</h1>
 </header>
 
 <main class="contenedor-materia">
+
     <h2>Selecciona un bloque</h2>
 
     <div class="contenedor-bloques">
         <button onclick="abrirModulo('la-tierra')">
             <span>Bloque I: La Tierra</span>
-            <span class="descripcion-bloque">
-                D&oacute;nde hace calor y fr&iacute;o, mapas y coordenadas
-            </span>
+            <span class="descripcion-bloque">Donde hace calor y frio, mapas y coordenadas</span>
         </button>
 
         <button onclick="abrirModulo('componentes-naturales')">
             <span>Bloque II: Componentes naturales</span>
-            <span class="descripcion-bloque">
-                Relieve, agua, climas y regiones naturales
-            </span>
+            <span class="descripcion-bloque">Relieve, agua, climas y regiones naturales</span>
         </button>
 
         <button onclick="abrirModulo('poblacion-mundial')">
-            <span>Bloque III: Poblaci&oacute;n mundial</span>
-            <span class="descripcion-bloque">
-                Distribuci&oacute;n, ciudad y campo, migraci&oacute;n y culturas
-            </span>
+            <span>Bloque III: Poblacion mundial</span>
+            <span class="descripcion-bloque">Distribucion, ciudad o campo, migracion y culturas</span>
         </button>
     </div>
+
 </main>
 
-__BLOCK_
-__BLOCK_
+<script src="/configClient.js"></script>
+<script src="menu.js"></script>
 </body>
 </html>

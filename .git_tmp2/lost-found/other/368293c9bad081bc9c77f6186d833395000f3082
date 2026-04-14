@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra · Nivel Fácil · Kinestésico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera">
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I · Nivel Fácil</p>
+  <div class="badge-estilo">✋ Estilo Kinestésico</div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-hand-paper fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Nuestro planeta</h2>
+
+      <p class="texto-explicativo">
+        La <strong>Tierra</strong> es el planeta donde vivimos, el tercero más cercano al Sol y el único que conocemos que tiene vida.
+        Tiene forma de <strong>esfera ligeramente achatada en los polos</strong>.
+      </p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg"
+                 alt="Tierra desde el espacio" class="imagen-geo"
+                 onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+          </div>
+          <div class="pie-imagen">🌍 Vista satelital</div>
+        </div>
+        <div class="col-md-6">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg"
+                 alt="Forma de la Tierra" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
+          </div>
+          <div class="pie-imagen">📐 Forma achatada</div>
+        </div>
+      </div>
+
+      <div class="grid-datos">
+        <div class="dato-card">
+          <i class="fas fa-ruler"></i>
+          <span>12,742 km</span>
+          <small>Diámetro</small>
+        </div>
+        <div class="dato-card">
+          <i class="fas fa-water"></i>
+          <span>71%</span>
+          <small>Agua</small>
+        </div>
+        <div class="dato-card">
+          <i class="fas fa-clock"></i>
+          <span>4.5B</span>
+          <small>Años</small>
+        </div>
+      </div>
+
+      <div class="dato-curioso">
+        <i class="fas fa-lightbulb"></i>
+        <p>🌊 La Tierra se ve azul desde el espacio por la cantidad de agua.</p>
+      </div>
+
+      <div class="zona-actividad">
+        <h4 class="actividad-titulo"><i class="fas fa-arrows-alt me-2"></i> Arrastra cada número</h4>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="zona-soltar" id="zonaDiametro" data-tipo="diametro">
+              <strong>📏 DIÁMETRO</strong>
+              <div id="contenedorDiametro"></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="zona-soltar" id="zonaAgua" data-tipo="agua">
+              <strong>💧 AGUA</strong>
+              <div id="contenedorAgua"></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="zona-soltar" id="zonaEdad" data-tipo="edad">
+              <strong>⏳ EDAD</strong>
+              <div id="contenedorEdad"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <span class="elemento-arrastrable" draggable="true" data-tipo="diametro" data-texto="12,742 km">12,742 km</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="agua" data-texto="71%">71%</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="edad" data-texto="4.5B años">4.5B años</span>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina1">
+          🎉 ¡Excelente! Completaste los datos
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>Líneas imaginarias</h2>
+
+      <p class="texto-explicativo">
+        Para ubicarnos, inventamos <strong>líneas imaginarias</strong>: paralelos (horizontales) y meridianos (verticales).
+      </p>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg"
+             alt="Paralelos y meridianos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
+      </div>
+      <div class="pie-imagen">🗺️ Paralelos y meridianos</div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="recuadro">
+            <h4><i class="fas fa-circle-notch me-2"></i> Paralelos</h4>
+            <p>Líneas horizontales. El más importante: <strong>Ecuador</strong></p>
+            <p class="mb-0">🌐 Norte y Sur</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro">
+            <h4><i class="fas fa-arrow-up me-2"></i> Meridianos</h4>
+            <p>Líneas verticales. El más importante: <strong>Greenwich</strong></p>
+            <p class="mb-0">📍 Este y Oeste</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zona-actividad">
+        <h4 class="actividad-titulo"><i class="fas fa-brain me-2"></i> Encuentra las parejas</h4>
+
+        <div class="memorama-grid" id="memoramaGrid">
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina2">
+          🎉 ¡Encontraste todas las parejas!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-compass me-3"></i>Puntos cardinales</h2>
+
+      <p class="texto-explicativo">
+        Los <strong>puntos cardinales</strong> son las cuatro direcciones: Norte, Sur, Este y Oeste.
+      </p>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png"
+             alt="Rosa de los vientos" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
+      </div>
+      <div class="pie-imagen">🧭 Rosa de los vientos</div>
+
+      <div class="cardinales-grid">
+        <div class="cardinal-item"><i class="fas fa-arrow-up"></i><span>NORTE</span></div>
+        <div class="cardinal-item"><i class="fas fa-arrow-down"></i><span>SUR</span></div>
+        <div class="cardinal-item"><i class="fas fa-arrow-right"></i><span>ESTE</span></div>
+        <div class="cardinal-item"><i class="fas fa-arrow-left"></i><span>OESTE</span></div>
+      </div>
+
+      <div class="dato-curioso">
+        <i class="fas fa-sun"></i>
+        <p>🌅 El Sol sale por el Este y se oculta por el Oeste.</p>
+      </div>
+
+      <div class="zona-actividad">
+        <h4 class="actividad-titulo"><i class="fas fa-plus-circle me-2"></i> Arma la rosa en cruz</h4>
+
+        <div class="cruz-container">
+          <div class="fila-cruz">
+            <div class="celda-cruz"></div>
+            <div class="celda-cruz" id="zonaNorteCruz" data-posicion="norte">
+              <div id="colocadoNorteCruz"></div>
+            </div>
+            <div class="celda-cruz"></div>
+          </div>
+          <div class="fila-cruz">
+            <div class="celda-cruz" id="zonaOesteCruz" data-posicion="oeste">
+              <div id="colocadoOesteCruz"></div>
+            </div>
+            <div class="celda-cruz centro" id="zonaCentroCruz" data-posicion="centro">
+              <div id="colocadoCentroCruz"></div>
+            </div>
+            <div class="celda-cruz" id="zonaEsteCruz" data-posicion="este">
+              <div id="colocadoEsteCruz"></div>
+            </div>
+          </div>
+          <div class="fila-cruz">
+            <div class="celda-cruz"></div>
+            <div class="celda-cruz" id="zonaSurCruz" data-posicion="sur">
+              <div id="colocadoSurCruz"></div>
+            </div>
+            <div class="celda-cruz"></div>
+          </div>
+        </div>
+
+        <div class="piezas-disponibles" id="piezasCruz">
+          <div class="pieza-cruz" draggable="true" data-posicion="norte" data-texto="⬆️">⬆️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="sur" data-texto="⬇️">⬇️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="este" data-texto="➡️">➡️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="oeste" data-texto="⬅️">⬅️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="centro" data-texto="🧭">🧭</div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina3">
+          🎉 ¡Armaste la rosa de los vientos!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas térmicas</h2>
+
+      <p class="texto-explicativo">
+        Los rayos del Sol no calientan igual toda la Tierra. Hay <strong>5 zonas térmicas</strong>.
+      </p>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg"
+             alt="Zonas térmicas" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
+      </div>
+      <div class="pie-imagen">🌡️ Las 5 zonas térmicas</div>
+
+      <div class="zonas-grid">
+        <div class="zona-item zona-calida">
+          <i class="fas fa-sun"></i>
+          <h5>CÁLIDA</h5>
+          <small>Ecuador</small>
+        </div>
+        <div class="zona-item zona-templada">
+          <i class="fas fa-cloud-sun"></i>
+          <h5>TEMPLADA</h5>
+          <small>¡México!</small>
+        </div>
+        <div class="zona-item zona-fria">
+          <i class="fas fa-snowflake"></i>
+          <h5>FRÍA</h5>
+          <small>Polos</small>
+        </div>
+      </div>
+
+      <div class="imagen-marco mt-3" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg"
+             alt="Zona fría" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
+      </div>
+      <div class="pie-imagen">❄️ Paisaje de zona fría</div>
+
+      <div class="zona-actividad">
+        <h4 class="actividad-titulo"><i class="fas fa-road me-2"></i> Encuentra la salida</h4>
+
+        <div class="pistas-laberinto" id="pistasLaberinto">
+          <div class="pista activa" data-nivel="1">🌵 Selva</div>
+          <div class="pista" data-nivel="2">🌮 México</div>
+          <div class="pista" data-nivel="3">🧊 Glaciares</div>
+        </div>
+
+        <div class="laberinto-container" id="laberintoContainer">
+          <div class="nivel-laberinto" data-nivel="1">
+            <p><strong>🌵 Selva Amazónica:</strong> ¿En qué zona está?</p>
+            <div class="opciones-laberinto">
+              <div class="btn-laberinto" data-nivel="1" data-correcto="true">Cálida</div>
+              <div class="btn-laberinto" data-nivel="1" data-correcto="false">Templada</div>
+              <div class="btn-laberinto" data-nivel="1" data-correcto="false">Fría</div>
+            </div>
+          </div>
+
+          <div class="nivel-laberinto" data-nivel="2" style="display: none;">
+            <p><strong>🌮 México:</strong> ¿En qué zona está?</p>
+            <div class="opciones-laberinto">
+              <div class="btn-laberinto" data-nivel="2" data-correcto="false">Cálida</div>
+              <div class="btn-laberinto" data-nivel="2" data-correcto="true">Templada</div>
+              <div class="btn-laberinto" data-nivel="2" data-correcto="false">Fría</div>
+            </div>
+          </div>
+
+          <div class="nivel-laberinto" data-nivel="3" style="display: none;">
+            <p><strong>🧊 Glaciares:</strong> ¿En qué zona están?</p>
+            <div class="opciones-laberinto">
+              <div class="btn-laberinto" data-nivel="3" data-correcto="false">Cálida</div>
+              <div class="btn-laberinto" data-nivel="3" data-correcto="false">Templada</div>
+              <div class="btn-laberinto" data-nivel="3" data-correcto="true">Fría</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina4">
+          🎉 ¡Encontraste la salida!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+
+</body>
+</html>

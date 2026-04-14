@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil &middot; Kinest&eacute;sico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;"><i class="fas fa-house"></i></button>
+    <h1>EQUIVALENCIAS COMPLETAS</h1>
+    <div class="subtitulo">Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</div>
+    <div class="badge-estilo">Kinest&eacute;sico</div>
+  </header>
+
+  <div class="barra-progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">13%</span>
+  </div>
+
+  <div class="contenedor">
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-pizza-slice me-2"></i>Festival de pizzas equivalentes</h2>
+        <div class="texto-destacado">Una misma porci&oacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. Si las tres formas representan exactamente la misma parte del entero, entonces forman una equivalencia.</div>
+        <div class="recuadro">En el puesto principal se sirvieron <strong>3 de 4</strong> rebanadas. Esa misma porci&oacute;n tambi&eacute;n puede escribirse como <strong>0.75</strong> y como <strong>75%</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🍕 Fracci&oacute;n a decimal</div><div class="formula-line">Divide el numerador entre el denominador.<br><strong>3 &divide; 4 = 0.75</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📊 Decimal a porcentaje</div><div class="formula-line">Mueve el punto 2 lugares a la derecha y agrega %. <br><strong>0.75 = 75%</strong></div></div>
+        </div>
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div id="demoP1Pizza"></div>
+            <div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip ticket"><span class="chip-emoji">🍕</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>4</span></div></div><span class="story-tag ticket"><span class="tag-emoji">🔢</span><span>0.75</span></span><span class="story-tag ticket"><span class="tag-emoji">📊</span><span>75%</span></span></div></div>
+          </div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🍕 Mesa violeta</div>
+            <div id="caseP1Pizza"></div>
+            <div class="panel-note">El equipo de cocina dej&oacute; incompleto el ticket del pedido. La pizza tiene <strong>5 de 8</strong> rebanadas usadas y hay que completar la ficha.</div>
+          </div>
+          <div class="instruccion-corta">Completa el ticket del pedido arrastrando las piezas correctas.</div>
+          <div class="bandeja bandeja-sticky" id="trayP1"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">🍕 Numerador</div><div class="rank-slot" id="zoneP1Num" data-accept-list="num_5" data-max="1"><span class="placeholder">Parte tomada</span></div></div>
+            <div class="drop-card"><div class="drop-title">📄 Denominador</div><div class="rank-slot" id="zoneP1Den" data-accept-list="den_8" data-max="1"><span class="placeholder">Partes totales</span></div></div>
+            <div class="drop-card"><div class="drop-title">🔢 Decimal</div><div class="rank-slot" id="zoneP1Dec" data-accept-list="dec_0625" data-max="1"><span class="placeholder">Escritura decimal</span></div></div>
+            <div class="drop-card"><div class="drop-title">📊 Porcentaje</div><div class="rank-slot" id="zoneP1Pct" data-accept-list="pct_625" data-max="1"><span class="placeholder">Escritura porcentual</span></div></div>
+          </div>
+          <div id="feedback1ok" class="mensaje-feedback mensaje-ok">Excelente. El ticket de la mesa violeta qued&oacute; completo.</div>
+          <div id="feedback1warn" class="mensaje-feedback mensaje-warn">Esa pieza no corresponde al pedido. Vuelve a pensar en 5 de 8.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-seedling me-2"></i>Semillero del huerto escolar</h2>
+        <div class="texto-destacado">En una cuadr&iacute;cula de 100 espacios, una coloraci&oacute;n tambi&eacute;n se puede expresar con fracci&oacute;n, decimal y porcentaje. Las tres formas deben apuntar a la misma cantidad.</div>
+        <div class="recuadro">Si hay 45 espacios marcados, esa parte puede escribirse como <strong>45%</strong>, <strong>0.45</strong> y <strong>9/20</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🌱 Porcentaje a decimal</div><div class="formula-line">Quita el signo % y recorre el punto 2 lugares a la izquierda.<br><strong>45% = 0.45</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📄 Decimal a fracci&oacute;n</div><div class="formula-line">Si tiene 2 cifras decimales, escr&iacute;belo sobre 100 y simplifica.<br><strong>0.45 = 45/100</strong><br>Como ambos se pueden dividir entre <strong>5</strong>, queda <strong>9/20</strong>.</div></div>
+        </div>
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div id="demoP2Grid"></div>
+            <div class="pair-preview mt-3"><div class="pair-row"><div class="fraction-chip garden"><span class="chip-emoji">🌱</span><div class="fraction-stack"><span>9</span><span class="fraction-bar"></span><span>20</span></div></div><span class="story-tag garden"><span class="tag-emoji">🌿</span><span>0.45</span></span><span class="story-tag garden"><span class="tag-emoji">📊</span><span>45%</span></span></div></div>
+          </div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🌱 Charola verde</div>
+            <div id="caseP2Grid"></div>
+            <div class="panel-note">El huerto necesita separar las etiquetas que s&iacute; describen esta charola. La cuadr&iacute;cula muestra <strong>68</strong> espacios ocupados.</div>
+          </div>
+          <div class="instruccion-corta">Clasifica las etiquetas. Mueve a la placa oficial solo las que s&iacute; describen la charola verde y deja el resto en revisi&oacute;n.</div>
+          <div class="bandeja bandeja-sticky" id="trayP2"></div>
+          <div class="caso-grid mt-3">
+            <div class="drop-card">
+              <div class="drop-title">✅ Se queda en la etiqueta oficial</div>
+              <div class="bucket-drop" id="binP2Keep"><span class="placeholder">Suelta aqu&iacute; las etiquetas correctas</span></div>
+            </div>
+            <div class="drop-card">
+              <div class="drop-title">🔎 Va a revisi&oacute;n</div>
+              <div class="bucket-drop" id="binP2Review"><span class="placeholder">Suelta aqu&iacute; las etiquetas que no coinciden</span></div>
+            </div>
+          </div>
+          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">Muy bien. Separaste correctamente las equivalencias de la charola verde.</div>
+          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay etiquetas mal clasificadas. Revisa cu&aacute;les s&iacute; representan 68 de 100.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-stamp me-2"></i>Inspector de etiquetas</h2>
+        <div class="texto-destacado">Un grupo de equivalencias solo funciona si todas sus piezas representan exactamente la misma cantidad. Si una est&aacute; mal, primero se retira y luego se reemplaza.</div>
+        <div class="recuadro">Por ejemplo, <strong>2/5</strong>, <strong>0.40</strong> y <strong>40%</strong> s&iacute; forman un grupo correcto.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🖨️ Decimal a fracci&oacute;n</div><div class="formula-line">Escribe el decimal sobre 100 y simplifica.<br><strong>0.40 = 40/100</strong><br>Si divides ambos entre <strong>20</strong>, queda <strong>2/5</strong>.</div></div>
+          <div class="formula-card"><div class="formula-title">📊 Decimal a porcentaje</div><div class="formula-line">Recorre el punto 2 lugares a la derecha.<br><strong>0.40 = 40%</strong></div></div>
+        </div>
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div class="panel-note">Aqu&iacute; se ve un grupo bien formado: misma cantidad escrita con fracci&oacute;n, decimal y porcentaje.</div>
+            <div class="pair-preview mt-3">
+              <div class="pair-row"><div class="fraction-chip stamp"><span class="chip-emoji">🖨️</span><div class="fraction-stack"><span>2</span><span class="fraction-bar"></span><span>5</span></div></div></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">🔢</span><span>0.40</span></span></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">📊</span><span>40%</span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🖨️ Mesa de impresi&oacute;n</div>
+            <div class="panel-note">La imprenta envi&oacute; una etiqueta equivocada. Primero retira la pieza que sobra y despu&eacute;s coloca la correcta para reparar el grupo.</div>
+            <div class="pair-preview">
+              <div class="pair-row"><div class="fraction-chip stamp"><span class="chip-emoji">📄</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>8</span></div></div></div>
+              <div class="pair-row"><span class="story-tag stamp"><span class="tag-emoji">📄</span><span>0.375</span></span></div>
+              <div class="pair-row"><div class="ficha" id="chipP3Bad" draggable="true" data-value="bad_pct35"><span class="story-tag stamp"><span class="tag-emoji">📄</span><span>35%</span></span></div></div>
+            </div>
+          </div>
+          <div class="instruccion-corta">Lleva la pieza incorrecta a revisi&oacute;n y despu&eacute;s coloca la tarjeta correcta.</div>
+          <div class="column-board">
+            <div class="drop-card"><div class="drop-title">🧺 Bandeja de revisi&oacute;n</div><div class="rank-slot" id="zoneP3Trash" data-accept-list="bad_pct35" data-max="1"><span class="placeholder">Suelta aqu&iacute; la pieza incorrecta</span></div></div>
+            <div class="drop-card"><div class="drop-title">🩹 Espacio corregido</div><div class="rank-slot" id="zoneP3Fix" data-accept-list="good_pct375" data-max="1"><span class="placeholder">Completa el grupo</span></div></div>
+          </div>
+          <div class="bandeja" id="trayP3"></div>
+          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">Perfecto. Quitaste la pieza incorrecta y reparaste la etiqueta.</div>
+          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">Ese movimiento no repara el grupo. Revisa cu&aacute;nto representa 3/8.</div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-route me-2"></i>Ruta del ciclista</h2>
+        <div class="texto-destacado">En la recta num&eacute;rica, un mismo punto tambi&eacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. Las tres formas deben marcar exactamente la misma parte del recorrido.</div>
+        <div class="recuadro">Si en una recta dividida en 4 partes llegas a la tercera marca, eso equivale a <strong>3/4</strong>, <strong>0.75</strong> y <strong>75%</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🚴 Fracci&oacute;n de la recta</div><div class="formula-line">Cuenta cu&aacute;ntas partes avanz&oacute; el punto.<br><strong>3 de 4 = 3/4</strong></div></div>
+          <div class="formula-card"><div class="formula-title">📍 Decimal y porcentaje</div><div class="formula-line">Despu&eacute;s escribe la misma cantidad como decimal y porcentaje.<br><strong>3/4 = 0.75 = 75%</strong></div></div>
+        </div>
+        <div class="caso-grid">
+          <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div id="demoP4Line"></div><div class="panel-note">El punto del ejemplo est&aacute; en 3 de 4 partes del recorrido.</div></div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🚴 Ruta amarilla</div><div id="caseP4Line"></div><div class="panel-note">El ciclista lleg&oacute; a la marca de <strong>7 de 10</strong> partes del trayecto. Hay que separar las tarjetas que s&iacute; nombran exactamente ese mismo punto.</div></div>
+          <div class="instruccion-corta">Clasifica las tarjetas. Deja con la ruta solo las tres formas que dicen exactamente lo mismo que ese punto.</div>
+          <div class="bandeja bandeja-sticky" id="trayP4"></div>
+          <div class="caso-grid mt-3">
+            <div class="drop-card">
+              <div class="drop-title">📍 Equivale al punto</div>
+              <div class="bucket-drop" id="binP4Keep"><span class="placeholder">Suelta aqu&iacute; las tarjetas equivalentes</span></div>
+            </div>
+            <div class="drop-card">
+              <div class="drop-title">↩️ No equivale al punto</div>
+              <div class="bucket-drop" id="binP4Review"><span class="placeholder">Suelta aqu&iacute; las tarjetas equivocadas</span></div>
+            </div>
+          </div>
+          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">Excelente. El tablero del ciclista ya qued&oacute; bien clasificado.</div>
+          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay tarjetas mal ubicadas. Cuenta las 7 de 10 partes de la ruta.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Barra de jugos</h2>
+        <div class="texto-destacado">Cuando comparas formas distintas, primero puedes convertir una cantidad a otra forma y despu&eacute;s decidir el signo. As&iacute; comparas con m&aacute;s seguridad.</div>
+        <div class="recuadro">Un medio equivale a <strong>0.50</strong>. Por eso, si lo comparas con <strong>0.40</strong>, el signo correcto es <strong>&gt;</strong>.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🥤 Fracci&oacute;n a decimal</div><div class="formula-line">Convierte la fracci&oacute;n antes de comparar.<br><strong>3/5 = 0.60</strong></div></div>
+          <div class="formula-card"><div class="formula-title">🧃 Porcentaje a decimal</div><div class="formula-line">Quita % y mueve el punto 2 lugares a la izquierda.<br><strong>58% = 0.58</strong></div></div>
+        </div>
+        <div class="caso-grid">
+          <div class="panel">
+            <div class="panel-title">🧭 Ejemplo guiado</div>
+            <div class="pair-row"><div class="fraction-chip"><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div><span class="story-tag">0.50</span><span class="story-tag">&gt;</span><span class="story-tag">0.40</span></div>
+            <div class="panel-note">Primero conviertes y luego comparas.</div>
+          </div>
+        </div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box">
+            <div class="panel-title">🥤 Jurado de jugos</div>
+            <div class="scene-grid">
+              <div class="scene-card scene-card-a">
+                <div class="scene-head">
+                  <div class="scene-badge">A</div>
+                  <div>
+                    <div class="scene-title">Frasco A</div>
+                    <div class="scene-sub">Receta con fracción</div>
+                  </div>
+                </div>
+                <div id="caseP5Left"></div>
+                <div class="panel-note"><div class="fraction-chip juice-a"><span class="chip-emoji">🥤</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>5</span></div></div></div>
+              </div>
+              <div class="scene-card scene-card-b">
+                <div class="scene-head">
+                  <div class="scene-badge">B</div>
+                  <div>
+                    <div class="scene-title">Frasco B</div>
+                    <div class="scene-sub">Receta con porcentaje</div>
+                  </div>
+                </div>
+                <div id="caseP5Right"></div>
+                <div class="panel-note"><span class="story-tag juice-b"><span class="tag-emoji">🧃</span><span>58%</span></span></div>
+              </div>
+            </div>
+            <div class="case-note-banner">El jurado solo acepta el resultado si conviertes ambos frascos a la misma forma antes de compararlos.</div>
+          </div>
+          <div class="instruccion-corta">Convierte los dos frascos a decimal, arma una comparaci&oacute;n verdadera entre A y B y luego decide cu&aacute;l tiene m&aacute;s jugo.</div>
+          <div class="bandeja bandeja-sticky" id="trayP5"></div>
+          <div class="compare-strip">
+            <div class="compare-slot" id="zoneP5Val1" data-max="1"><span class="placeholder">Un decimal del jurado</span></div>
+            <div class="compare-slot" id="zoneP5Sign" data-max="1"><span class="placeholder">Signo que hace verdadera la comparaci&oacute;n</span></div>
+            <div class="compare-slot" id="zoneP5Val2" data-max="1"><span class="placeholder">El otro decimal</span></div>
+          </div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">🔢 Compara A y B</div><div class="panel-note">Primero convierte cada frasco a decimal. Despu&eacute;s coloca el signo que haga verdadera la comparaci&oacute;n entre <strong>Frasco A</strong> y <strong>Frasco B</strong>.</div></div>
+            <div class="drop-card"><div class="drop-title">🏆 Tiene m&aacute;s jugo</div><div class="rank-slot" id="zoneP5Winner" data-accept-list="winner_left" data-max="1"><span class="placeholder">Arrastra el frasco con mayor cantidad</span></div></div>
+          </div>
+          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">Correcto. <strong>3/5 = 0.60</strong> y <strong>58% = 0.58</strong>, por eso el frasco A tiene m&aacute;s jugo.</div>
+          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">La ficha del jurado a&uacute;n no coincide. Primero convierte ambos frascos a decimal y luego comp&aacute;ralos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-down-short-wide me-2"></i>Podio del laboratorio</h2>
+        <div class="texto-destacado">Para ordenar cantidades mixtas, conviene pensar todas en una misma escala. Puedes imaginar cada una como porcentaje o como decimal antes de decidir su lugar.</div>
+        <div class="recuadro">Una cantidad cercana a <strong>0.35</strong> es menor que otra cercana a <strong>0.50</strong>. El formato cambia, pero el valor es lo que importa.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🧪 Pasa todo a porcentaje</div><div class="formula-line"><strong>35% = 35%</strong><br><strong>3/8 = 37.5%</strong><br><strong>0.40 = 40%</strong><br><strong>1/2 = 50%</strong></div></div>
+        </div>
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><span class="story-tag lab"><span class="tag-emoji">🧪</span><span>35%</span></span><span class="story-tag lab"><span class="tag-emoji">🔬</span><span>0.40</span></span><div class="fraction-chip lab"><span class="chip-emoji">📏</span><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div></div><div class="panel-note">Aqu&iacute; se ve un recorrido que va de una cantidad menor a una mayor.</div></div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🧪 Podio del laboratorio</div><div class="micro-copy">El laboratorio quiere ordenar cuatro muestras de la menos concentrada a la m&aacute;s concentrada.</div></div>
+          <div class="instruccion-corta">Arrastra las cuatro tarjetas al podio en orden de menor a mayor.</div>
+          <div class="bandeja bandeja-sticky" id="trayP6"></div>
+          <div class="rank-board">
+            <div class="drop-card"><div class="drop-title">🥉 1. Menor</div><div class="rank-slot" id="zoneP6A" data-accept-list="pct_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3️⃣ 2.</div><div class="rank-slot" id="zoneP6B" data-accept-list="frac_3_8" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2️⃣ 3.</div><div class="rank-slot" id="zoneP6C" data-accept-list="dec_040" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">🥇 4. Mayor</div><div class="rank-slot" id="zoneP6D" data-accept-list="frac_1_2" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">Muy bien. Ordenaste las cuatro cantidades de menor a mayor.</div>
+          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">Esa posici&oacute;n no corresponde. Revisa cu&aacute;l cantidad est&aacute; m&aacute;s cerca de cero.</div>
+        </div>
+      </div>
+    </section>
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-store me-2"></i>Feria de descuentos</h2>
+        <div class="texto-destacado">En la feria, cada tienda escribe sus descuentos de manera distinta. Para decidir cu&aacute;l conviene m&aacute;s, primero hay que comparar todos los anuncios en una misma escala.</div>
+        <div class="recuadro">Un descuento de <strong>3/8</strong> equivale a <strong>37.5%</strong>. En cambio, <strong>0.40</strong> equivale a <strong>40%</strong>, por eso suele ser la mejor oferta del grupo.</div>
+        <div class="formula-board">
+          <div class="formula-card"><div class="formula-title">🏷️ Fracci&oacute;n a porcentaje</div><div class="formula-line">Primero convi&eacute;rtela a decimal y luego a porcentaje.<br><strong>3/8 = 0.375 = 37.5%</strong></div></div>
+          <div class="formula-card"><div class="formula-title">💸 Decimal a porcentaje</div><div class="formula-line">Solo mueve el punto 2 lugares a la derecha.<br><strong>0.40 = 40%</strong></div></div>
+        </div>
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><div class="fraction-chip shop"><span class="chip-emoji">🏷️</span><div class="fraction-stack"><span>3</span><span class="fraction-bar"></span><span>8</span></div></div><span class="story-tag shop"><span class="tag-emoji">⚖️</span><span>&lt;</span></span><span class="story-tag shop"><span class="tag-emoji">🏷️</span><span>0.40</span></span></div><div class="panel-note">Con una comparaci&oacute;n as&iacute; decides qu&eacute; descuento conviene m&aacute;s.</div></div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🛍️ Comisi&oacute;n de compras</div><div class="panel-note">Hay que ordenar las ofertas de la peor a la mejor. Para hacerlo, conviene pensar todas en porcentaje.</div></div>
+          <div class="instruccion-corta">Ordena las cuatro ofertas desde el descuento menor hasta el mayor.</div>
+          <div class="bandeja bandeja-sticky tray-drop" id="trayP7"><span class="placeholder">Toma un cup&oacute;n y su&eacute;ltalo en el ranking.</span></div>
+          <div class="rank-board offer-rank-board">
+            <div class="drop-card"><div class="drop-title">🥉 1. Menor</div><div class="rank-slot" id="rankP7A" data-accept-list="offer_quarter"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">3️⃣ 2.</div><div class="rank-slot" id="rankP7B" data-accept-list="offer_30"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">2️⃣ 3.</div><div class="rank-slot" id="rankP7C" data-accept-list="offer_three_eighths"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">🥇 4. Mayor</div><div class="rank-slot" id="rankP7D" data-accept-list="offer_040"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div class="action-row"><button class="btn-accion" onclick="reiniciarPagina7()">Reiniciar orden</button></div>
+          <div id="feedback7ok" class="mensaje-feedback mensaje-ok">Excelente. Ordenaste las ofertas desde el descuento menor hasta el mayor.</div>
+          <div id="feedback7warn" class="mensaje-feedback mensaje-warn">Todav&iacute;a hay algo fuera de lugar. Convierte mentalmente cada oferta a porcentaje y revisa el ranking.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina8">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-handshake-angle me-2"></i>Centro de rescate de equivalencias</h2>
+        <div class="texto-destacado">En el panel final, cada caso necesita recuperar su tarjeta correcta. Para lograrlo, debes completar los cuatro expedientes sin equivocarte.</div>
+        <div class="recuadro">Dos representaciones solo pueden emparejarse si describen exactamente la misma cantidad, aunque una use decimal, otra porcentaje y otra fracci&oacute;n.</div>
+        <div class="panel"><div class="panel-title">🧭 Ejemplo guiado</div><div class="pair-row"><div class="fraction-chip gold"><span class="chip-emoji">🗂️</span><div class="fraction-stack"><span>1</span><span class="fraction-bar"></span><span>2</span></div></div><span class="story-tag gold"><span class="tag-emoji">📄</span><span>0.50</span></span><span class="story-tag gold"><span class="tag-emoji">📄</span><span>50%</span></span></div><div class="panel-note">Si las tres formas dicen lo mismo, entonces pertenecen al mismo expediente.</div></div>
+        <div class="zona-juego">
+          <h3>Ejercicio</h3>
+          <div class="separador-mision"><span>Misi&oacute;n de la p&aacute;gina</span></div>
+          <div class="panel mision-box"><div class="panel-title">🗂️ Centro de rescate</div><div class="panel-note">Cada expediente perdi&oacute; su tarjeta correcta. Hay que completar los cuatro sin mezclar ninguna equivalencia.</div></div>
+          <div class="instruccion-corta">Arrastra las cuatro tarjetas doradas al expediente que les corresponde.</div>
+          <div class="bandeja bandeja-sticky" id="trayP8"></div>
+          <div class="column-board mt-3">
+            <div class="drop-card"><div class="drop-title">Caso A: 0.60</div><div class="rank-slot" id="zoneP8A" data-accept-list="pair_3_5" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso B: 1/8</div><div class="rank-slot" id="zoneP8B" data-accept-list="pair_125" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso C: 75%</div><div class="rank-slot" id="zoneP8C" data-accept-list="pair_075" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+            <div class="drop-card"><div class="drop-title">Caso D: 0.35</div><div class="rank-slot" id="zoneP8D" data-accept-list="pair_35" data-max="1"><span class="placeholder">Suelta aqu&iacute;</span></div></div>
+          </div>
+          <div id="feedback8ok" class="mensaje-feedback mensaje-ok">Excelente. Rescataste las cuatro equivalencias y el mini-quiz ya est&aacute; desbloqueado.</div>
+          <div id="feedback8warn" class="mensaje-feedback mensaje-warn">Esa tarjeta no coincide con el caso. Revisa si ambas representan la misma cantidad.</div>
+        </div>
+        <div class="text-center"><a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz"><i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz</a></div>
+      </div>
+    </section>
+
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/8</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+
+  
+  
+</body>
+</html>

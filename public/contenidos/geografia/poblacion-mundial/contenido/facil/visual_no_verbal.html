@@ -1,165 +1,593 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Población Mundial · Visual No Verbal · Nivel Fácil</title>
+  <title>Países Poblados · Visual No Verbal · Nivel Fácil</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  __BLOCK_
+  <style>
+    :root{
+      --guindo:#7b1d2e;
+      --guindo-dark:#5a1320;
+      --guindo-light:#a63248;
+      --gris:#4a4a5a;
+      --gris-light:#6b6b80;
+      --gris-pale:#e8e8ef;
+      --gris-bg:#f2f2f6;
+      --blanco:#fff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
+
+    .cabecera{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));padding:28px 20px;border-bottom:6px solid var(--gris-pale);text-align:center;box-shadow:0 10px 24px rgba(90,19,32,.35);}
+    .cabecera h1{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;color:#fff;font-weight:900;letter-spacing:1px;}
+    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:1rem;margin-top:4px;}
+    .badge-estilo{background:var(--gris-pale);color:var(--guindo);padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.05rem;display:inline-block;border:3px solid #fff;margin-top:10px;}
+
+    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
+    .punto{width:38px;height:38px;border-radius:50%;background:var(--gris-pale);border:3px solid var(--guindo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--guindo);transition:all .3s;}
+    .punto.activo{background:var(--guindo);color:#fff;transform:scale(1.2);}
+    .punto.completado{background:var(--gris-light);border-color:#fff;color:#fff;}
+
+    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
+    .pagina{display:none;animation:aparecer .45s ease;}
+    .pagina.activa{display:block;}
+    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    .card-vis{background:#fff;border-radius:24px;padding:24px;margin-bottom:20px;border:3px solid var(--guindo);box-shadow:0 8px 0 var(--guindo-dark);}
+    .titulo-pag{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;color:var(--guindo);margin-bottom:8px;border-left:8px solid var(--gris-pale);padding-left:16px;font-weight:800;}
+    .subtitulo-tema{background:var(--gris-pale);border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--guindo);margin-bottom:14px;display:inline-block;border:2px solid #d0d0de;}
+
+    .dato-box{background:var(--gris-bg);border-radius:14px;padding:12px 16px;border-left:6px solid var(--guindo);margin:8px 0;font-size:.92rem;}
+    .dato-box strong{color:var(--guindo);}
+
+    .actividad{background:#fdf5f6;border-radius:24px;padding:20px;margin-top:16px;border:4px dashed var(--guindo-light);}
+    .act-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--guindo);margin-bottom:12px;text-align:center;}
+    .pista-banner{background:linear-gradient(135deg,var(--guindo),var(--guindo-light));color:#fff;border-radius:16px;padding:13px 18px;margin:0 0 12px;text-align:center;}
+    .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
+
+    /* FOTO REFERENCIA */
+    .foto-ref{width:100%;height:170px;object-fit:cover;border-radius:14px;border:3px solid var(--guindo);display:block;}
+    .foto-cap{font-size:.78rem;font-weight:700;color:var(--guindo);text-align:center;margin-top:6px;}
+
+    /* IMAGENES DRAG */
+    .img-pieza{border-radius:12px;border:3px solid var(--guindo);overflow:hidden;cursor:grab;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;background:#fff;}
+    .img-pieza img{width:100%;height:90px;object-fit:cover;display:block;pointer-events:none;}
+    .img-pieza .lbl{font-size:.72rem;font-weight:700;color:var(--guindo);padding:5px 8px;text-align:center;background:var(--gris-pale);}
+    .img-pieza:hover:not(.oculta){transform:scale(1.04);}
+    .img-pieza.oculta{display:none;}
+    .img-pieza.dragging{opacity:.4;}
+
+    .zona-img{border:3px dashed var(--guindo);border-radius:16px;min-height:110px;padding:10px;transition:all .25s;background:var(--gris-bg);}
+    .zona-img.sobre{background:#f5e0e4;border-style:solid;}
+    .zona-img.ok{background:#f0dde2;border-style:solid;border-color:var(--guindo-dark);}
+    .zona-img h6{font-size:.82rem;font-weight:800;color:var(--guindo);margin-bottom:8px;}
+    .img-colocada{border-radius:8px;overflow:hidden;display:inline-block;margin:4px;border:2px solid var(--guindo-light);}
+    .img-colocada img{width:64px;height:48px;object-fit:cover;display:block;}
+
+    /* SELECCIÓN IMAGEN */
+    .img-opcion{border-radius:14px;border:4px solid transparent;overflow:hidden;cursor:pointer;transition:all .2s;position:relative;}
+    .img-opcion img{width:100%;height:150px;object-fit:cover;display:block;}
+    .img-opcion .lbl{font-size:.8rem;font-weight:700;padding:6px 10px;text-align:center;background:var(--gris-pale);color:var(--guindo);}
+    .img-opcion:hover:not(.disabled){border-color:var(--guindo);transform:translateY(-3px);}
+    .img-opcion.correcto{border-color:#27ae60 !important;}
+    .img-opcion.incorrecto{border-color:#e74c3c !important;}
+    .img-opcion.disabled{cursor:default;}
+    .check-badge{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;font-size:1.1rem;display:none;}
+    .img-opcion.correcto .check-badge{display:flex;background:#27ae60;color:#fff;}
+    .img-opcion.incorrecto .check-badge{display:flex;background:#e74c3c;color:#fff;}
+
+    /* COMPARAR IMÁGENES */
+    .comp-card{border-radius:16px;border:4px solid transparent;overflow:hidden;cursor:pointer;transition:all .2s;}
+    .comp-card img{width:100%;height:160px;object-fit:cover;display:block;}
+    .comp-card .lbl{font-size:.85rem;font-weight:700;padding:8px 12px;background:var(--gris-pale);color:var(--guindo);text-align:center;line-height:1.3;}
+    .comp-card:hover:not(.disabled){transform:translateY(-4px);border-color:var(--guindo);}
+    .comp-card.correcto{border-color:#27ae60 !important;}
+    .comp-card.incorrecto{border-color:#e74c3c !important;}
+    .comp-card.disabled{cursor:default;}
+
+    /* REPASO */
+    .rep-card{border-radius:16px;overflow:hidden;border:3px solid var(--guindo);box-shadow:0 4px 0 var(--guindo-dark);}
+    .rep-card img{width:100%;height:140px;object-fit:cover;display:block;}
+    .rep-info{padding:12px 14px;background:#fff;}
+    .rep-info h6{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--guindo);font-size:1.1rem;margin-bottom:4px;}
+    .rep-info p{font-size:.8rem;color:var(--gris);line-height:1.45;}
+
+    /* FEEDBACK */
+    .fb-ok{background:var(--guindo);color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
+    .fb-ok.on{display:block;animation:aparecer .4s ease;}
+    .fb-err{background:#e74c3c;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
+    .fb-err.on{display:block;}
+
+    /* NAV */
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
+    .btn-nav{background:var(--guindo);color:#fff;border:3px solid var(--guindo-dark);padding:10px 24px;border-radius:38px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;}
+    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 var(--guindo-dark);}
+    .btn-nav:disabled{background:#ccc;color:#999;border-color:#bbb;box-shadow:none;cursor:default;}
+    .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
+    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
+    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
+  </style>
 </head>
 <body>
+
 <div class="cabecera">
-  <h1>POBLACIÓN MUNDIAL</h1>
-  <div class="sub">Paises mas y menos poblados · Nivel Facil · GEOGRAFÍA 5°</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="sub">Bloque · Nivel Fácil · Geografía 5°</div>
   <div class="badge-estilo"><i class="fas fa-eye me-2"></i>Estilo Visual No Verbal</div>
 </div>
+
 <div class="progreso">
   <i class="fas fa-images fa-2x" style="color:var(--guindo);"></i>
-  <div class="puntos"><div class="punto activo">1</div><div class="punto">2</div><div class="punto">3</div><div class="punto">4</div></div>
-  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">Pagina <span id="numActual">1</span>/4</span>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
+    Página <span id="numActual">1</span>/4
+  </span>
 </div>
+
 <div class="contenedor">
-  <div class="pagina activa" id="pagina1">
-    <div class="card-vis">
-      <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La distribucion de la POBLACIÓN</h2>
-      <span class="subtitulo-tema">Subtema 1 de 3</span>
-      <p class="intro">La POBLACIÓN del mundo no esta repartida de la misma manera. Algunos paises tienen muchisima gente y otros tienen muy pocos habitantes. Las imagenes y banderas te ayudan a ver esa diferencia de inmediato.</p>
-      <div class="dato-box"><strong>Muy poblados:</strong> India, China, Estados Unidos y Brasil tienen millones de habitantes.</div>
-      <div class="dato-box"><strong>Muy poco poblados:</strong> Nauru, Tuvalu, San Marino y Palau tienen poblaciones pequenas.</div>
-      <div class="hero-visual">
-        <div class="hero-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Tierra vista desde el espacio"><div class="hero-info"><strong style="color:var(--guindo);">Observa el planeta:</strong> la gente se concentra mas en zonas con ciudades, trabajo, agua y mejores caminos.</div></div>
-        <div class="mini-grid">
-          <div class="mini-card"><img src="https://flagcdn.com/w320/in.png" alt="India"><div class="txt"><strong>India</strong><br>Uno de los paises mas poblados.</div></div>
-          <div class="mini-card"><img src="https://flagcdn.com/w320/cn.png" alt="China"><div class="txt"><strong>China</strong><br>Otro de los paises con mas habitantes.</div></div>
-          <div class="mini-card"><img src="https://flagcdn.com/w320/tv.png" alt="Tuvalu"><div class="txt"><strong>Tuvalu</strong><br>Isla con POBLACIÓN muy pequena.</div></div>
-          <div class="mini-card"><img src="https://flagcdn.com/w320/nr.png" alt="Nauru"><div class="txt"><strong>Nauru</strong><br>Pais pequeno con pocos habitantes.</div></div>
-        </div>
-      </div>
-      <div class="actividad">
-        <div class="pista-banner"><p>Arrastra cada pais al grupo correcto</p><small>Usa las banderas y sus nombres para separarlos en muy poblados y poco poblados.</small></div>
-        <h3 class="act-titulo"><i class="fas fa-arrows-alt me-2"></i>Clasificacion visual</h3>
-        <div class="legend-row"><span class="legend-chip"><span class="legend-dot" style="background:#d9485f"></span>Muy poblado</span><span class="legend-chip"><span class="legend-dot" style="background:#4f8dd7"></span>Poco poblado</span></div>
-        <div class="row g-3 mb-3"><div class="col-6"><div class="zona-img" id="zonaConc" data-tipo="alto"><h6>Mas poblados</h6><div id="dropConc"></div></div></div><div class="col-6"><div class="zona-img" id="zonaDisp" data-tipo="bajo"><h6>Menos poblados</h6><div id="dropDisp"></div></div></div></div>
-        <div class="row g-2" id="imgBanco">
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="India"><img src="https://flagcdn.com/w320/in.png" alt="India"><div class="lbl">India<br>Muy poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="China"><img src="https://flagcdn.com/w320/cn.png" alt="China"><div class="lbl">China<br>Muy poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="EE.UU."><img src="https://flagcdn.com/w320/us.png" alt="Estados Unidos"><div class="lbl">EE.UU.<br>Muy poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="alto" data-texto="Brasil"><img src="https://flagcdn.com/w320/br.png" alt="Brasil"><div class="lbl">Brasil<br>Muy poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Nauru"><img src="https://flagcdn.com/w320/nr.png" alt="Nauru"><div class="lbl">Nauru<br>Poco poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Tuvalu"><img src="https://flagcdn.com/w320/tv.png" alt="Tuvalu"><div class="lbl">Tuvalu<br>Poco poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="San Marino"><img src="https://flagcdn.com/w320/sm.png" alt="San Marino"><div class="lbl">San Marino<br>Poco poblado</div></div></div>
-          <div class="col-6 col-md-3"><div class="img-pieza" draggable="true" data-tipo="bajo" data-texto="Palau"><img src="https://flagcdn.com/w320/pw.png" alt="Palau"><div class="lbl">Palau<br>Poco poblado</div></div></div>
-        </div>
-        <div class="btn-row"><button class="btn-accion" onclick="verificarArrastreVisual()">Verificar</button><button class="btn-accion btn-secundario" onclick="resetDragImgs()">Limpiar</button></div>
-        <div class="fb-ok" id="fbPag1">Muy bien. Separaste los paises mas y menos poblados.</div>
-        <div class="fb-err" id="errPag1">Aun faltan piezas por colocar. Revisa los dos grupos.</div>
-      </div>
-    </div>
-  </div>
-  <div class="pagina" id="pagina2">
-    <div class="card-vis">
-      <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentracion y dispersion</h2>
-      <span class="subtitulo-tema">Subtema 2 de 3</span>
-      <p class="intro">Cuando muchas personas viven juntas en poco espacio hablamos de concentracion. Cuando hay pocas casas en grandes territorios hablamos de dispersion. Las imagenes permiten distinguirlo rapido.</p>
-      <div class="dato-box"><strong>Concentracion:</strong> ciudades densas como las de Bangladesh tienen muchisima gente en poco terreno.</div>
-      <div class="dato-box"><strong>Dispersion:</strong> lugares amplios como Mongolia tienen pocas personas repartidas en grandes espacios.</div>
-      <div class="hero-visual">
-        <div class="hero-card"><img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentracion de poblacion"><div class="hero-info"><strong style="color:var(--guindo);">Concentracion:</strong> edificios, calles llenas y personas viviendo muy cerca unas de otras.</div></div>
-        <div class="mini-grid">
-          <div class="mini-card"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900" alt="Territorio amplio"><div class="txt"><strong>Dispersion</strong><br>Pocas viviendas en mucho espacio.</div></div>
-          <div class="mini-card"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Ciudad densa"><div class="txt"><strong>Densidad alta</strong><br>Muchas personas por km².</div></div>
-          <div class="mini-card"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Campo abierto"><div class="txt"><strong>Densidad baja</strong><br>Territorios abiertos y separados.</div></div>
-          <div class="mini-card"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900" alt="Avenida llena"><div class="txt"><strong>Ciudad intensa</strong><br>Mas concentracion y trafico.</div></div>
-        </div>
-      </div>
-      <div class="actividad">
-        <div class="pista-banner"><p>Observa y elige la imagen correcta</p><small>Antes de responder, compara cuanta gente o cuantas casas aparecen en cada escena.</small></div>
-        <h3 class="act-titulo"><i class="fas fa-image me-2"></i>COMPARACIÓN visual</h3>
-        <div class="question-block">
-          <div class="question-title">Pregunta 1: ¿Que imagen muestra mayor concentracion de POBLACIÓN?</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="img-opcion" data-q="q1" data-val="conc" onclick="selImagen('q1','conc')"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Ciudad densa"><div class="lbl">Ciudad con edificios y personas muy cerca</div></div></div>
-            <div class="col-md-6"><div class="img-opcion" data-q="q1" data-val="disp" onclick="selImagen('q1','disp')"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Campo abierto"><div class="lbl">Territorio amplio con pocas casas</div></div></div>
-          </div>
-          <div class="btn-row"><button class="btn-accion" onclick="verificarSelImagen('q1')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarSelImagen('q1')">Limpiar</button></div>
-          <div class="fb-ok" id="okQ1">Correcto. La ciudad compacta representa concentracion.</div>
-          <div class="fb-err" id="errQ1">La concentracion se ve donde hay mucha gente en poco espacio.</div>
-        </div>
-        <div class="question-block">
-          <div class="question-title">Pregunta 2: ¿Que imagen representa mejor la dispersion?</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="img-opcion" data-q="q2" data-val="conc" onclick="selImagen('q2','conc')"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900" alt="Avenida llena"><div class="lbl">Calles con muchas personas y autos</div></div></div>
-            <div class="col-md-6"><div class="img-opcion" data-q="q2" data-val="disp" onclick="selImagen('q2','disp')"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900" alt="Llanura"><div class="lbl">Viviendas separadas en un territorio grande</div></div></div>
-          </div>
-          <div class="btn-row"><button class="btn-accion" onclick="verificarSelImagen('q2')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarSelImagen('q2')">Limpiar</button></div>
-          <div class="fb-ok" id="okQ2">Exacto. La llanura con pocas casas representa dispersion.</div>
-          <div class="fb-err" id="errQ2">La dispersion aparece donde las viviendas estan separadas.</div>
-        </div>
-        <div class="fb-ok" id="fbPag2">Muy bien. Ya distingues concentracion y dispersion con imagenes.</div>
-      </div>
-    </div>
-  </div>
 
-  <div class="pagina" id="pagina3">
-    <div class="card-vis">
-      <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la concentracion</h2>
-      <span class="subtitulo-tema">Subtema 3 de 3</span>
-      <p class="intro">Cuando demasiada gente vive en una misma zona, los servicios se saturan. Por eso aparecen trafico, contaminacion, mucha basura y dificultad para conseguir vivienda.</p>
-      <div class="scene-strip">
-        <div class="scene-card"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Trafico"><div class="txt">Trafico intenso en una ciudad muy poblada.</div></div>
-        <div class="scene-card"><img src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?w=900" alt="Basura"><div class="txt">La basura crece cuando vive demasiada gente junta.</div></div>
-        <div class="scene-card"><img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=900" alt="Edificios"><div class="txt">Mas POBLACIÓN exige mas viviendas y servicios.</div></div>
-        <div class="scene-card"><img src="https://images.unsplash.com/photo-1475776408506-9a5371e7a068?w=900" alt="Smog"><div class="txt">La contaminacion del aire puede aumentar mucho.</div></div>
+<!-- ═══════════════════════════════════════
+     PÁGINA 1 · DISTRIBUCIÓN DE LA POBLACIÓN
+     JUEGO: Arrastra imágenes a "concentración" o "dispersión"
+     ═══════════════════════════════════════ -->
+<div class="pagina activa" id="pagina1">
+  <div class="card-vis">
+    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
+    <span class="subtitulo-tema">Subtema 1 de 3</span>
+
+    <!-- Imágenes de referencia: ciudad densa vs zona dispersa -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <!-- Vista aérea de Dhaka, Bangladesh — ciudad muy densa -->
+        <img class="foto-ref"
+          src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+          alt="Dhaka ciudad densa"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg'">
+        <p class="foto-cap">Dhaka, Bangladesh — una de las ciudades más densas del mundo</p>
       </div>
-      <div class="actividad">
-        <div class="pista-banner"><p>Observa y elige la escena correcta</p><small>Fijate si la imagen muestra un problema de una ciudad con mucha POBLACIÓN.</small></div>
-        <h3 class="act-titulo"><i class="fas fa-search-plus me-2"></i>Compara escenas</h3>
-        <div class="question-block">
-          <div class="question-title">Ronda 1: ¿Que escena muestra mejor un problema de concentracion?</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="comp-card" data-ronda="r1" data-val="correcto" onclick="elegirComp(this,'r1')"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Trafico"><div class="lbl">Trafico y calles saturadas</div></div></div>
-            <div class="col-md-6"><div class="comp-card" data-ronda="r1" data-val="incorrecto" onclick="elegirComp(this,'r1')"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900" alt="Paisaje tranquilo"><div class="lbl">Espacio abierto con pocas viviendas</div></div></div>
-          </div>
-          <div class="btn-row"><button class="btn-accion" onclick="verificarComp('r1')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarComp('r1')">Limpiar</button></div>
-          <div class="fb-ok" id="okR1">Correcto. El trafico es un problema comun en zonas muy pobladas.</div>
-          <div class="fb-err" id="errR1">Busca la escena donde se note saturacion y exceso de personas o vehiculos.</div>
-        </div>
-        <div class="question-block">
-          <div class="question-title">Ronda 2: ¿Que imagen se relaciona mejor con contaminacion y smog?</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="comp-card" data-ronda="r2" data-val="correcto" onclick="elegirComp(this,'r2')"><img src="https://images.unsplash.com/photo-1475776408506-9a5371e7a068?w=900" alt="Smog"><div class="lbl">Aire contaminado por demasiada actividad urbana</div></div></div>
-            <div class="col-md-6"><div class="comp-card" data-ronda="r2" data-val="incorrecto" onclick="elegirComp(this,'r2')"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Campo"><div class="lbl">Campo abierto con aire limpio</div></div></div>
-          </div>
-          <div class="btn-row"><button class="btn-accion" onclick="verificarComp('r2')">Verificar</button><button class="btn-accion btn-secundario" onclick="limpiarComp('r2')">Limpiar</button></div>
-          <div class="fb-ok" id="okR2">Muy bien. Esa escena muestra contaminacion propia de una gran ciudad.</div>
-          <div class="fb-err" id="errR2">La respuesta correcta debe mostrar contaminacion o exceso de actividad urbana.</div>
-        </div>
-        <div class="fb-ok" id="fbPag3">Excelente. Ya reconoces visualmente los efectos de la concentracion.</div>
+      <div class="col-md-6">
+        <!-- Estepa mongola — zona muy dispersa -->
+        <img class="foto-ref"
+          src="https://th.bing.com/th/id/R.a9572f29b585a6fba91172817d313f83?rik=4bXqeQJwFRuIbw&pid=ImgRaw&r=0"
+          alt="Estepa de Mongolia"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Mongolia_countryside.jpg/640px-Mongolia_countryside.jpg'">
+        <p class="foto-cap">Estepa de Mongolia — zona con solo ~2 hab/km²</p>
       </div>
     </div>
-  </div>
 
-  <div class="pagina" id="pagina4">
-    <div class="card-vis">
-      <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso general</h2>
-      <span class="subtitulo-tema">Resumen visual del nivel</span>
-      <p class="intro">Antes del quiz, vuelve a observar estas tres ideas clave: paises con mucha o poca POBLACIÓN, concentracion o dispersion, y problemas de las grandes ciudades.</p>
-      <div class="rep-grid">
-        <div class="rep-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Distribucion de poblacion"><div class="txt"><h6>Distribucion</h6><p>La POBLACIÓN del mundo esta repartida de forma desigual. Algunos paises reunen muchisimas personas y otros tienen muy pocas.</p></div></div>
-        <div class="rep-card"><img src="https://0701.static.prezi.com/preview/v2/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dnitcq_3_0.png" alt="Concentracion"><div class="txt"><h6>Densidad</h6><p>La densidad muestra si la POBLACIÓN vive muy junta o muy separada dentro de un territorio.</p></div></div>
-        <div class="rep-card"><img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0" alt="Problemas urbanos"><div class="txt"><h6>Problemas urbanos</h6><p>Cuando demasiada gente vive en el mismo lugar pueden aparecer trafico, basura, contaminacion y falta de vivienda.</p></div></div>
+    <div class="dato-box"><strong>Concentración:</strong> Muchas personas en poco espacio. Ciudades grandes, llanuras fértiles, costas.</div>
+    <div class="dato-box"><strong>Dispersión:</strong> Pocas personas en grandes territorios. Desiertos, selvas, zonas polares y estepas.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Arrastra cada imagen al grupo correcto</p>
       </div>
+      <h3 class="act-titulo"><i class="fas fa-images me-2"></i>Clasificación de Imágenes</h3>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Arrastra cada imagen a su categoría: <strong>Concentración</strong> o <strong>Dispersión</strong></p>
+
+      <!-- BANCO -->
+      <div class="row g-2 mb-3" id="imgBanco">
+
+        <!-- Ciudad de México: ciudad enorme, concentración -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Ciudad de México">
+            <img src="https://media.admagazine.com/photos/6255f958b4e9a9f5ded6ed47/16:9/w_2560%2Cc_limit/GettyImages-638920569.jpg"
+                 alt="Ciudad de México"
+                 onerror="this.src='https://images.unsplash.com/photo-1518638150340-f706e86654de?w=320'">
+            <div class="lbl">Ciudad de México</div>
+          </div>
+        </div>
+
+        <!-- Desierto del Sahara: zona dispersa -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Desierto Sahara">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.ki-DUmWsou7iquhLkSuJ-gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+                 alt="Desierto Sahara"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/320px-Sahara_desert.jpg'">
+            <div class="lbl">Desierto Sahara</div>
+          </div>
+        </div>
+
+        <!-- Shanghái: megaciudad, concentración -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Shanghái">
+            <img src="https://th.bing.com/th/id/R.e0659da65fe339b3c804a6f0da39e5ba?rik=eVJGrtf3YRn3nw&pid=ImgRaw&r=0"
+                 alt="Shanghái">
+            <div class="lbl">Shanghái</div>
+          </div>
+        </div>
+
+        <!-- Siberia: bosques inmmensos, dispersión -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Siberia">
+            <img src="https://wallpapercave.com/wp/wp11088637.jpg"
+                 alt="Siberia taiga"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Siberia%2C_landscape.jpg/320px-Siberia%2C_landscape.jpg'">
+            <div class="lbl">Siberia</div>
+          </div>
+        </div>
+
+        <!-- Tokio: megalópolis, concentración -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Tokio">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.JQiLvfXfPROpPIW2SZY0gwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+                 alt="Tokio">
+            <div class="lbl">Tokio</div>
+          </div>
+        </div>
+
+        <!-- Antártida: zona polar sin habitantes permanentes, dispersión -->
+        <div class="col-4 col-sm-2">
+          <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Antártida">
+            <img src="https://www.nexofin.com/archivos/2018/05/antartida.jpg"
+                 alt="Antártida"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Antarctica_from_the_Front.jpg/320px-Antarctica_from_the_Front.jpg'">
+            <div class="lbl">Antártida</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ZONAS DROP -->
+      <div class="row g-3">
+        <div class="col-6">
+          <div class="zona-img" id="zonaConc" data-tipo="conc">
+            <h6><i class="fas fa-city me-1"></i>CONCENTRACIÓN</h6>
+            <div id="dropConc"></div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="zona-img" id="zonaDisp" data-tipo="disp">
+            <h6><i class="fas fa-mountain me-1"></i>DISPERSIÓN</h6>
+            <div id="dropDisp"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-ok" id="fbPag1">¡Excelente! Identificaste correctamente las zonas de concentración y dispersión.</div>
     </div>
   </div>
-
-  <div class="nav-bar"><button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>&larr; ANTERIOR</button><span class="ind-pag" id="indPag">1/4</span><button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE &rarr;</button></div>
-  <a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
 </div>
-__BLOCK_
-__BLOCK_
-__BLOCK_
-__BLOCK_
+
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 2 · CONCENTRACIÓN Y DISPERSIÓN
+     JUEGO: Selecciona la imagen correcta — Antes y Después
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina2">
+  <div class="card-vis">
+    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
+    <span class="subtitulo-tema">Subtema 2 de 3</span>
+
+    <div class="dato-box"><strong>Densidad alta:</strong> Bangladesh (~1,100 hab/km²). Sus ciudades están saturadas de gente.</div>
+    <div class="dato-box"><strong>Antes y después:</strong> Las ciudades pueden crecer enormemente en pocas décadas cuando hay industria y empleos.</div>
+
+    <!-- Seúl antes vs después — crecimiento urbano real -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <!-- Seúl antiguo, vista de ciudad pequeña -->
+        <img class="foto-ref" style="height:140px;"
+          src="https://aprendecoreano.com/wp-content/uploads/2021/02/seul-en-1900-1024x640.jpg"
+          alt="Seúl 1900"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Seoul%2C_Korea_1900.jpg/320px-Seoul%2C_Korea_1900.jpg'">
+        <p class="foto-cap">Seúl — Principios de 1900 (pequeña ciudad)</p>
+      </div>
+      <div class="col-6">
+        <!-- Seúl moderno, megalópolis -->
+        <img class="foto-ref" style="height:140px;"
+          src="https://tse2.mm.bing.net/th/id/OIP.qKjMkdT2xtqIo-e00tmXJQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3"
+          alt="Seúl actualidad"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Seoul_Gangnam.jpg/320px-Seoul_Gangnam.jpg'">
+        <p class="foto-cap">Seúl — Actualidad (más de 10 millones de hab.)</p>
+      </div>
+    </div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>Selecciona la imagen correcta</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-search me-2"></i>¿Cuál imagen muestra mayor concentración?</h3>
+
+      <!-- Pregunta 1 -->
+      <p class="fw-bold mb-2" style="color:var(--guindo);">Pregunta 1: ¿Cuál zona tiene mayor concentración de población?</p>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <!-- Dhaka vista aérea — alta concentración -->
+          <div class="img-opcion" onclick="selImagen('q1','conc','correcto')">
+            <div class="check-badge"><i class="fas fa-check"></i></div>
+            <img src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+                 alt="Dhaka ciudad densa">
+            <div class="lbl">Vista aérea de Dhaka, Bangladesh</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- Campo en Australia — baja densidad -->
+          <div class="img-opcion" onclick="selImagen('q1','disp','correcto')">
+            <div class="check-badge"><i class="fas fa-times"></i></div>
+            <img src="https://www.dreamsabroad.com/wp-content/uploads/2024/12/Photo-%C2%A9-Tourism-NT-An-Aerial-View-of-the-Scenery-of-Larapinta-Drive-in-the-Northern-Territory-Complete-Guide-to-Australias-Outback-scaled.jpg"
+                 alt="Outback de Australia"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/640px-Sahara_desert.jpg'">
+            <div class="lbl">Outback de Australia (muy pocas personas)</div>
+          </div>
+        </div>
+      </div>
+      <div class="fb-ok" id="okQ1" style="display:none;margin-bottom:12px;">¡Correcto! Dhaka es uno de los ejemplos más extremos de concentración en el mundo.</div>
+      <div class="fb-err" id="errQ1" style="display:none;margin-bottom:12px;">Incorrecto. Dhaka, Bangladesh, es el ejemplo de concentración extrema de población.</div>
+
+      <!-- Pregunta 2 -->
+      <p class="fw-bold mb-2" style="color:var(--guindo);">Pregunta 2: ¿Cuál imagen muestra DISPERSIÓN de población?</p>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <!-- Estepa mongola con yurtas — dispersión real -->
+          <div class="img-opcion" onclick="selImagen('q2','campo','correcto')">
+            <div class="check-badge"><i class="fas fa-check"></i></div>
+            <img src="https://th.bing.com/th/id/R.d64c82f4835d95ba5ea80c9a08468a9c?rik=MhiRWHMXeWsu1A&pid=ImgRaw&r=0"
+                 alt="Yurta en Mongolia"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Mongolian_steppe.jpg/640px-Mongolian_steppe.jpg'">
+            <div class="lbl">Nómadas en la estepa de Mongolia</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- Tokio nocturno — concentración total -->
+          <div class="img-opcion" onclick="selImagen('q2','ciudad','correcto')">
+            <div class="check-badge"><i class="fas fa-times"></i></div>
+            <img src="https://s1.eestatic.com/2019/08/27/omicrono/omicrono_424719047_133148676_1024x576.jpg"
+                 alt="Tokio rascacielos">
+            <div class="lbl">Rascacielos del centro de Tokio</div>
+          </div>
+        </div>
+      </div>
+      <div class="fb-ok" id="okQ2" style="display:none;margin-bottom:12px;">¡Correcto! Los nómadas mongoles viven muy dispersos en un enorme territorio.</div>
+      <div class="fb-err" id="errQ2" style="display:none;margin-bottom:12px;">Incorrecto. La estepa con nómadas mongoles muestra dispersión, no la ciudad.</div>
+
+      <div class="fb-ok" id="fbPag2">¡Perfecto! Identificas visualmente la concentración y la dispersión poblacional.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 3 · PROBLEMAS DE CONCENTRACIÓN
+     JUEGO: Ver dos imágenes y elegir la de más habitantes
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina3">
+  <div class="card-vis">
+    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
+    <span class="subtitulo-tema">Subtema 3 de 3</span>
+
+    <div class="dato-box"><strong>Problemas reales:</strong> Falta de vivienda, contaminación, desempleo, escasez de agua y tráfico extremo.</div>
+    <div class="dato-box"><strong>Ejemplo visual:</strong> Las fotos de ciudades superpobladas muestran smog, edificios apretados y calles saturadas.</div>
+
+    <div class="actividad">
+      <div class="pista-banner">
+        <p>¿Cuál tiene más habitantes?</p>
+      </div>
+      <h3 class="act-titulo"><i class="fas fa-search-plus me-2"></i>Compara las imágenes y elige la de mayor población</h3>
+
+      <!-- Ronda 1: Mumbai vs pueblo rural -->
+      <p class="fw-bold mb-2" style="color:var(--guindo);">Ronda 1: ¿Cuál ciudad tiene más habitantes?</p>
+      <div class="row g-3 mb-3" id="ronda1">
+        <div class="col-6">
+          <!-- Mumbai / Bombay — 20 millones -->
+          <div class="comp-card" data-ronda="r1" data-val="correcto" onclick="elegirComp(this,'r1','correcto')">
+            <img src="https://www.andbeyond.com/wp-content/uploads/sites/5/Chhatrapati-Shivaji-Terminus-railway-station-mumbai.jpg"
+                 alt="Mumbai India"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg'">
+            <div class="lbl">Bombay (Mumbai), India<br>~20 millones de hab.</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- Pueblo rural de Islandia — miles de hab. -->
+          <div class="comp-card" data-ronda="r1" data-val="incorrecto" onclick="elegirComp(this,'r1','correcto')">
+            <img src="https://lugarnia.com/wp-content/uploads/2020/02/Seydisfjordur-1000x556.jpg"
+                 alt="Pueblo en Islandia"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Reykjavik_from_Hallgrimskirkja.jpg/640px-Reykjavik_from_Hallgrimskirkja.jpg'">
+            <div class="lbl">Vík, Islandia<br>~300 habitantes</div>
+          </div>
+        </div>
+      </div>
+      <div class="fb-ok" id="okR1" style="display:none;margin-bottom:10px;">¡Correcto! Mumbai tiene millones de habitantes; Vík solo unos pocos cientos.</div>
+      <div class="fb-err" id="errR1" style="display:none;margin-bottom:10px;">Incorrecto. Mumbai, India, tiene ~20 millones de hab. frente a solo ~300 de Vík.</div>
+
+      <!-- Ronda 2: China vs Islandia -->
+      <p class="fw-bold mb-2" style="color:var(--guindo);">Ronda 2: ¿Cuál país tiene más población?</p>
+      <div class="row g-3 mb-3" id="ronda2">
+        <div class="col-6">
+          <!-- China: 1,400 millones -->
+          <div class="comp-card" data-ronda="r2" data-val="correcto" onclick="elegirComp(this,'r2','correcto')">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.73y5AMn31-Ls68BFypfR5wHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+                 alt="China Beijing"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shanghaiviewfromthebund.jpg/640px-Shanghaiviewfromthebund.jpg'">
+            <div class="lbl">China (Beijing)<br>~1,400 millones de hab.</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- Islandia: 370,000 hab. -->
+          <div class="comp-card" data-ronda="r2" data-val="incorrecto" onclick="elegirComp(this,'r2','correcto')">
+            <img src="https://th.bing.com/th/id/R.c1aaa701e5bf1894bbfbdd1d50fb6104?rik=Qe0OnazPZfyYeQ&pid=ImgRaw&r=0"
+                 alt="Islandia paisaje"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Reykjavik_from_Hallgrimskirkja.jpg/640px-Reykjavik_from_Hallgrimskirkja.jpg'">
+            <div class="lbl">Islandia<br>~370,000 habitantes</div>
+          </div>
+        </div>
+      </div>
+      <div class="fb-ok" id="okR2" style="display:none;margin-bottom:10px;">¡Correcto! China tiene casi 4,000 veces más habitantes que Islandia.</div>
+      <div class="fb-err" id="errR2" style="display:none;margin-bottom:10px;">Incorrecto. China tiene ~1,400 millones, Islandia solo ~370,000 personas.</div>
+
+      <div class="fb-ok" id="fbPag3">¡Excelente! Distingues visualmente la diferencia de población entre países y ciudades.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 4 · REPASO VISUAL CON IMÁGENES
+     ═══════════════════════════════════════ -->
+<div class="pagina" id="pagina4">
+  <div class="card-vis">
+    <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
+    <span class="subtitulo-tema">Retroalimentación Visual · Los 3 subtemas</span>
+
+    <p class="mb-3">Observa cada imagen con su información. ¡Repasa todo lo aprendido de forma visual!</p>
+
+    <div class="row g-3">
+
+      <!-- Subtema 1: imagen satelital de la Tierra de noche (luces = población) -->
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://s2.dmcdn.net/v/Ju2D_1VhM7rR7y8Fp/x1080"
+               alt="Tierra de noche - distribución de población"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg'">
+          <div class="rep-info">
+            <h6>Distribución de la Población</h6>
+            <p>Las luces nocturnas revelan dónde vive la gente. Asia y Europa brillan más. China e India concentran más de 1/3 de la humanidad. Las zonas oscuras son poco habitadas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtema 2: comparación visual ciudad densa vs campo vacío -->
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+               alt="Dhaka ciudad densa">
+          <div class="rep-info">
+            <h6>Concentración y Dispersión</h6>
+            <p>La densidad mide hab/km². Bangladesh (~1,100 hab/km²) es el extremo de concentración. Mongolia (~2 hab/km²) es el de dispersión. Las megalópolis como Tokio o Shanghái concentran millones.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtema 3: tráfico en ciudad superpoblada, smog, problemas -->
+      <div class="col-md-4">
+        <div class="rep-card">
+          <img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0"
+               alt="Tráfico en India - problemas de concentración"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Mumbai_03-2016_30_Gateway_of_India.jpg/640px-Mumbai_03-2016_30_Gateway_of_India.jpg'">
+          <div class="rep-info">
+            <h6>Problemas de Concentración</h6>
+            <p>Tráfico extremo, smog, falta de vivienda y desempleo son consecuencias directas. Las ciudades superpobladas enfrentan estos retos a diario en países como India, China y México.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGADOR -->
+<div class="nav-bar">
+  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="indPag">1/4</span>
+  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="boton-quiz text-center">
+  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
+</a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let pag=1; const TOTAL=4;
+function cambiarPag(d){
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag+=d;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  syncUI(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function syncUI(){
+  document.querySelectorAll('.punto').forEach((p,i)=>{
+    p.classList.remove('activo','completado');
+    if(i+1===pag) p.classList.add('activo');
+    else if(i+1<pag) p.classList.add('completado');
+  });
+  document.getElementById('numActual').innerText=pag;
+  document.getElementById('indPag').innerText=pag+'/'+TOTAL;
+  document.getElementById('btnAnt').disabled=(pag===1);
+  document.getElementById('btnSig').disabled=(pag===TOTAL);
+}
+function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+
+/* ══════════ PÁG 1 — DRAG IMÁGENES ══════════ */
+let dropOk=0;
+function initDragImgs(){
+  document.querySelectorAll('#imgBanco .img-pieza').forEach(el=>{
+    el.addEventListener('dragstart',e=>{
+      e.dataTransfer.setData('tipo',el.dataset.tipo);
+      e.dataTransfer.setData('texto',el.dataset.texto);
+      el.classList.add('dragging');
+    });
+    el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+  });
+  ['zonaConc','zonaDisp'].forEach(zId=>{
+    const z=document.getElementById(zId);
+    const dropId=zId==='zonaConc'?'dropConc':'dropDisp';
+    z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('sobre');});
+    z.addEventListener('dragleave',()=>z.classList.remove('sobre'));
+    z.addEventListener('drop',function(e){
+      e.preventDefault(); z.classList.remove('sobre');
+      const tipo=e.dataTransfer.getData('tipo');
+      const texto=e.dataTransfer.getData('texto');
+      if(tipo!==z.dataset.tipo) return;
+      document.querySelectorAll('#imgBanco .img-pieza').forEach(el=>{
+        if(el.dataset.texto===texto) el.classList.add('oculta');
+      });
+      const wrap=document.createElement('div');
+      wrap.className='img-colocada';
+      const imgSrc=document.querySelector(`[data-texto="${texto}"] img`)?.src||'';
+      wrap.innerHTML=`<img src="${imgSrc}" alt="${texto}" title="${texto}">`;
+      document.getElementById(dropId).appendChild(wrap);
+      z.classList.add('ok'); dropOk++;
+      if(dropOk>=6) show('fbPag1');
+    });
+  });
+}
+
+/* ══════════ PÁG 2 — SELECCIÓN IMAGEN ══════════ */
+const q1done={}, q2done={};
+let p2aciertos=0;
+function selImagen(qId, elegida, correcta){
+  if(qId==='q1'){
+    if(q1done.done) return; q1done.done=true;
+    if(elegida==='conc'){show('okQ1');hide('errQ1');p2aciertos++;}
+    else{show('errQ1');hide('okQ1');}
+  } else if(qId==='q2'){
+    if(q2done.done) return; q2done.done=true;
+    if(elegida==='campo'){show('okQ2');hide('errQ2');p2aciertos++;}
+    else{show('errQ2');hide('okQ2');}
+  }
+  if(p2aciertos>=2) show('fbPag2');
+}
+
+/* ══════════ PÁG 3 — COMPARAR ══════════ */
+const rondaDone={};
+let p3aciertos=0;
+function elegirComp(el, ronda, esperado){
+  if(rondaDone[ronda]) return;
+  rondaDone[ronda]=true;
+  const val=el.dataset.val;
+  document.querySelectorAll(`[data-ronda="${ronda}"]`).forEach(c=>c.classList.add('disabled'));
+  el.classList.add(val==='correcto'?'correcto':'incorrecto');
+  const prefix=ronda.charAt(0).toUpperCase()+ronda.slice(1);
+  if(val==='correcto'){show('ok'+prefix);hide('err'+prefix);p3aciertos++;}
+  else{show('err'+prefix);hide('ok'+prefix);}
+  if(p3aciertos>=2) show('fbPag3');
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  initDragImgs();
+  syncUI();
+});
+</script>
 </body>
 </html>

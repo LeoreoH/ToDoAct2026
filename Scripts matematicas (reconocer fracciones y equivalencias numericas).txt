@@ -1,5 +1,5 @@
--- ============================================
--- INSERTS DE CONTENIDOS DE MATEMÁTICAS
+﻿-- ============================================
+-- INSERTS DE CONTENIDOS DE MATEMÃTICAS
 -- KC 2.1 Fracciones y decimales
 -- Contenido 1: Reconocer fracciones
 -- ============================================
@@ -14,7 +14,7 @@ INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
 (4, 'normal'),
 (4, 'dificil');
 
--- Examen diagnóstico
+-- Examen diagnÃ³stico
 INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
 (4, 4, true);
 
@@ -24,7 +24,7 @@ INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
 -- ============================================
 
 INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
--- NIVEL FÁCIL
+-- NIVEL FÃCIL
 (4, 'facil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_verbal.html'),
 (4, 'facil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_no_verbal.html'),
 (4, 'facil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/auditivo.html'),
@@ -36,14 +36,14 @@ INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (4, 'normal', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/auditivo.html'),
 (4, 'normal', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/kinestesico.html'),
 
--- NIVEL DIFÍCIL
+-- NIVEL DIFÃCIL
 (4, 'dificil', 'visual_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_verbal.html'),
 (4, 'dificil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_no_verbal.html'),
 (4, 'dificil', 'auditivo', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/auditivo.html'),
 (4, 'dificil', 'kinestesico', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/kinestesico.html');
 
 -- ============================================
--- INSERTAR PREGUNTAS DE DIAGNÓSTICO - MATEMÁTICAS
+-- INSERTAR PREGUNTAS DE DIAGNÃ“STICO - MATEMÃTICAS
 -- KC 2.1 Fracciones y decimales
 -- Contenido: Reconocer fracciones
 -- contenido_id = 4, examen_id = 4
@@ -86,8 +86,8 @@ VALUES
  '5/1', '1/5', '4/5', '1/4', 'B');
 
  -- ============================================
--- MATEMÁTICAS - KC 2.1 Fracciones y decimales
--- Contenido 2: Equivalencias numéricas
+-- MATEMÃTICAS - KC 2.1 Fracciones y decimales
+-- Contenido 2: Equivalencias numÃ©ricas
 -- slug: equivalencias-fraccion-decimal-porcentaje
 -- contenido_id = 6
 -- examen_id = 6
@@ -105,13 +105,13 @@ INSERT INTO niveles_contenido (contenido_id, nivel) VALUES
 (6, 'normal'),
 (6, 'dificil');
 
--- EXAMEN DIAGNÓSTICO
+-- EXAMEN DIAGNÃ“STICO
 INSERT INTO examenes_diagnostico (id, contenido_id, activo) VALUES
 (6, 6, true);
 
 -- ============================================
 -- ARCHIVOS DE CONTENIDO
--- EQUIVALENCIAS NUMÉRICAS
+-- EQUIVALENCIAS NUMÃ‰RICAS
 -- ============================================
 
 INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
@@ -132,8 +132,8 @@ INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo) VALUES
 (6, 'dificil', 'kinestesico', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/kinestesico.html');
 
 -- ============================================
--- PREGUNTAS DE DIAGNÓSTICO
--- MATEMÁTICAS - EQUIVALENCIAS NUMÉRICAS
+-- PREGUNTAS DE DIAGNÃ“STICO
+-- MATEMÃTICAS - EQUIVALENCIAS NUMÃ‰RICAS
 -- examen_id = 6
 -- ============================================
 

@@ -1,4 +1,4 @@
-﻿function abrirContenido(slug) {
+function abrirContenido(slug) {
     window.location.href = `/contenidos/matematicas/${slug}/menu.html`;
 }
 

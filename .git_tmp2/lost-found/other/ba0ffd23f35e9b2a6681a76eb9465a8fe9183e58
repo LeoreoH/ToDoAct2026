@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra &middot; Nivel Normal &middot; Auditivo</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera">
+  <h1>&#127911; LA TIERRA</h1>
+  <p class="lead text-white">Bloque I &middot; Nivel Normal</p>
+  <div>
+    <span class="badge-estilo">&#127925; Auditivo</span>
+    <span class="badge-nivel">&#9889; Intermedio</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-headphones fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background:#1976d2;color:white;padding:8px 20px;">P&aacute;gina <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<audio id="audP1" src="audios/01-pregunta.mp3"></audio>
+<audio id="audP2" src="audios/02-pregunta.mp3"></audio>
+<audio id="audP3" src="audios/03-pregunta.mp3"></audio>
+<audio id="audP4" src="audios/04-pregunta.mp3"></audio>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-sync-alt"></i></div>
+        <div class="audio-titulo">Movimiento de rotaci&oacute;n</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/01-rotacion.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+             alt="Rotaci&oacute;n" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+        <div class="pie-imagen">&#127757; La Tierra gira sobre su propio eje</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Comprueba lo que aprendiste</div>
+      <p class="ref-instruccion">Escucha las instrucciones y responde las dos preguntas sobre la rotaci&oacute;n.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP1" onclick="reproducirPregunta(1)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar instrucciones
+        </button>
+      </div>
+
+      <p style="color:#ffd600;font-weight:800;margin-bottom:10px;">1. &iquest;Cu&aacute;nto dura una rotaci&oacute;n completa?</p>
+      <div class="opciones-respuesta" id="ops1a">
+        <button class="btn-respuesta" onclick="responderParte('1a', false, this)">12 horas</button>
+        <button class="btn-respuesta" onclick="responderParte('1a', true, this)">24 horas</button>
+        <button class="btn-respuesta" onclick="responderParte('1a', false, this)">365 d&iacute;as</button>
+      </div>
+
+      <div id="bloque1b" style="display:none;margin-top:20px;">
+        <p style="color:#ffd600;font-weight:800;margin-bottom:10px;">2. &iquest;Qu&eacute; fen&oacute;meno produce la rotaci&oacute;n?</p>
+        <div class="opciones-respuesta" id="ops1b">
+          <button class="btn-respuesta" onclick="responderParte('1b', false, this)">Las estaciones del a&ntilde;o</button>
+          <button class="btn-respuesta" onclick="responderParte('1b', true, this)">El d&iacute;a y la noche</button>
+          <button class="btn-respuesta" onclick="responderParte('1b', false, this)">El a&ntilde;o bisiesto</button>
+        </div>
+      </div>
+
+      <div class="feedback-auditivo" id="fb1"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-orbit"></i></div>
+        <div class="audio-titulo">Movimiento de traslaci&oacute;n</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/02-traslacion.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
+             alt="Traslaci&oacute;n" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
+        <div class="pie-imagen">&#9728; La Tierra orbita alrededor del Sol</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Identifica y marca</div>
+      <p class="ref-instruccion">Escucha la instrucci&oacute;n. Ver&aacute;s una l&iacute;nea de tiempo con cuatro a&ntilde;os seguidos. Haz clic en el que es a&ntilde;o bisiesto.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP2" onclick="reproducirPregunta(2)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar instrucci&oacute;n
+        </button>
+      </div>
+      <div class="anios-grid" id="aniosGrid">
+        <div class="card-anio" onclick="responderAnio(2021, false, this)">
+          <div class="num-anio">2021</div>
+          <div class="lbl-anio">A&ntilde;o 1</div>
+        </div>
+        <div class="card-anio" onclick="responderAnio(2022, false, this)">
+          <div class="num-anio">2022</div>
+          <div class="lbl-anio">A&ntilde;o 2</div>
+        </div>
+        <div class="card-anio" onclick="responderAnio(2023, false, this)">
+          <div class="num-anio">2023</div>
+          <div class="lbl-anio">A&ntilde;o 3</div>
+        </div>
+        <div class="card-anio" onclick="responderAnio(2024, true, this)">
+          <div class="num-anio">2024</div>
+          <div class="lbl-anio">A&ntilde;o 4</div>
+        </div>
+      </div>
+      <div class="feedback-auditivo" id="fb2"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-seedling"></i></div>
+        <div class="audio-titulo">Las estaciones del a&ntilde;o</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/03-estaciones.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
+             alt="Estaciones" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
+        <div class="pie-imagen">&#127777; Primavera, verano, oto&ntilde;o, invierno</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Piensa y responde</div>
+      <p class="ref-instruccion">Escucha la situaci&oacute;n. Los hemisferios Norte y Sur siempre tienen estaciones contrarias. Elige qu&eacute; estaci&oacute;n tiene Argentina en ese momento.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP3" onclick="reproducirPregunta(3)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar situaci&oacute;n
+        </button>
+      </div>
+
+      <div style="background:#283593;border-radius:16px;padding:16px;margin-bottom:18px;text-align:center;">
+        <p style="color:#ffd600;font-weight:800;font-size:1.1rem;margin-bottom:6px;">&#127474;&#127485; M&eacute;xico (Hemisferio Norte)</p>
+        <p style="color:white;font-size:1.4rem;font-weight:800;">&#9728; VERANO</p>
+        <p style="color:#b3c5f7;font-size:.95rem;margin-top:6px;">&#8595; Al mismo tiempo, en el otro lado del mundo&#8230;</p>
+        <p style="color:#ffd600;font-weight:800;font-size:1.1rem;margin-top:8px;">&#127462;&#127479; Argentina (Hemisferio Sur) tiene&#8230; &iquest;?</p>
+      </div>
+
+      <div class="globo-hemisferios">
+        <div class="hemi-card" onclick="responderHemi('primavera', false, this)">
+          <div class="hemi-icono">&#127807;</div>
+          <div class="hemi-nombre">Primavera</div>
+        </div>
+        <div class="hemi-card" onclick="responderHemi('verano', false, this)">
+          <div class="hemi-icono">&#9728;</div>
+          <div class="hemi-nombre">Verano</div>
+        </div>
+        <div class="hemi-card" onclick="responderHemi('invierno', true, this)">
+          <div class="hemi-icono">&#10052;</div>
+          <div class="hemi-nombre">Invierno</div>
+        </div>
+        <div class="hemi-card" onclick="responderHemi('otono', false, this)">
+          <div class="hemi-icono">&#127810;</div>
+          <div class="hemi-nombre">Oto&ntilde;o</div>
+        </div>
+      </div>
+      <div class="feedback-auditivo" id="fb3"></div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta-audio">
+      <div class="audio-header">
+        <div class="audio-icono"><i class="fas fa-map"></i></div>
+        <div class="audio-titulo">Elementos de los mapas</div>
+      </div>
+      <div class="audio-control">
+        <audio controls><source src="audios/04-mapas.mp3" type="audio/mpeg"></audio>
+      </div>
+      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
+             alt="Elementos del mapa" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
+        <div class="pie-imagen">&#128506; Orientaci&oacute;n, escala, simbolog&iacute;a, coordenadas</div>
+      </div>
+    </div>
+
+    <div class="reforzamiento-auditivo">
+      <div class="ref-titulo"><i class="fas fa-headphones"></i> Escucha e identifica</div>
+      <p class="ref-instruccion">Escucha la descripci&oacute;n de un elemento del mapa. Despu&eacute;s haz clic en la tarjeta que corresponde a ese elemento.</p>
+      <div style="text-align:center;">
+        <button class="btn-play-pregunta" id="btnP4" onclick="reproducirPregunta(4)">
+          <div class="icono-play"><i class="fas fa-play"></i></div>
+          Escuchar descripci&oacute;n
+        </button>
+      </div>
+      <div class="elementos-grid">
+        <div class="elem-card" onclick="responderElemento('orientacion', true, this)">
+          <i class="fas fa-compass"></i>
+          <div class="elem-nombre">Orientaci&oacute;n</div>
+        </div>
+        <div class="elem-card" onclick="responderElemento('escala', false, this)">
+          <i class="fas fa-ruler"></i>
+          <div class="elem-nombre">Escala</div>
+        </div>
+        <div class="elem-card" onclick="responderElemento('simbologia', false, this)">
+          <i class="fas fa-map-signs"></i>
+          <div class="elem-nombre">Simbolog&iacute;a</div>
+        </div>
+        <div class="elem-card" onclick="responderElemento('coordenadas', false, this)">
+          <i class="fas fa-map-pin"></i>
+          <div class="elem-nombre">Coordenadas</div>
+        </div>
+      </div>
+      <div class="feedback-auditivo" id="fb4"></div>
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&#8592; ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE &#8594;</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+</body>
+</html>

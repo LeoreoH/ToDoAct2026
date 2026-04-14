@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poblaci&oacute;n Mundial &middot; Kinest&eacute;sico &middot; Nivel Normal</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-theme.css">
+</head>
+<body>
+
+<div class="score-popup" id="scorePopup">+10 ⭐</div>
+
+<div class="top-header">
+  <div class="top-header-icon">&#127760;</div>
+  <h1>POBLACI&Oacute;N MUNDIAL</h1>
+  <div class="top-header-sub">Densidad, ciudad y campo, migraci&oacute;n e interculturalidad &middot; Nivel Normal</div>
+  <div class="header-badges">
+    <div class="header-badge">🖐️ Estilo Kinestésico</div>
+    <div class="header-badge secondary">🟢 Nivel Normal</div>
+  </div>
+</div>
+
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-icon">🤲</div>
+    <div class="page-dots">
+      <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
+      <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
+      <div class="page-dot" id="dot-2" onclick="goToPage(2)">3</div>
+      <div class="page-dot" id="dot-3" onclick="goToPage(3)">4</div>
+    </div>
+  </div>
+  <div class="hud-pts-group">
+    <div class="hud-chip">⭐ <span id="pts">0</span></div>
+    <div class="hud-chip">🏆 <span id="insig">0</span></div>
+  </div>
+  <div class="hud-pag" id="pagLabel">Pág 1/4</div>
+</div>
+
+<div class="section-title-bar" id="sectionBar">
+  <span class="sicon">🌐</span>
+  <span id="sectionTitle">Países Más y Menos Poblados</span>
+</div>
+
+<div class="main-wrap">
+
+  <div class="page active" id="page-0">
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Distribución Poblacional Mundial</span>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🌍 <strong style="color:var(--gold)">Distribución:</strong> La distribución poblacional es desigual. Factores como clima, agua, suelo y economía determinan dónde vive más gente.</p>
+          <p>🔴 <strong style="color:var(--gold)">Los 5 más poblados:</strong> India 🇮🇳, China 🇨🇳, EE.UU 🇺🇸, Indonesia 🇮🇩, Pakistán 🇵🇰</p>
+          <p>🔵 <strong style="color:var(--gold)">Los 5 menos poblados:</strong> Vaticano 🇻🇦, Nauru 🇳🇷, Tuvalu 🇹🇻, Palau 🇵🇼, San Marino 🇸🇲</p>
+          <p>⚠️ <strong style="color:var(--gold)">Problemas de concentración:</strong> hacinamiento, contaminación, desempleo, falta de agua, tráfico y exclusión social.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 1</span>
+        <span class="game-title">Clasifica los Países</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🖐️</span>
+        <span>Arrastra cada país a la categoría correcta: Más Poblados o Menos Poblados.</span>
+      </div>
+      <div class="game-body">
+        <div class="drag-zone" id="paises-source">
+          <div class="drag-chip" draggable="true" data-cat="mas" ondragstart="dragStart(event)">🇮🇳 India</div>
+          <div class="drag-chip" draggable="true" data-cat="menos" ondragstart="dragStart(event)">🇻🇦 Vaticano</div>
+          <div class="drag-chip" draggable="true" data-cat="mas" ondragstart="dragStart(event)">🇨🇳 China</div>
+          <div class="drag-chip" draggable="true" data-cat="menos" ondragstart="dragStart(event)">🇳🇷 Nauru</div>
+          <div class="drag-chip" draggable="true" data-cat="mas" ondragstart="dragStart(event)">🇺🇸 EE.UU</div>
+          <div class="drag-chip" draggable="true" data-cat="menos" ondragstart="dragStart(event)">🇹🇻 Tuvalu</div>
+          <div class="drag-chip" draggable="true" data-cat="mas" ondragstart="dragStart(event)">🇮🇩 Indonesia</div>
+          <div class="drag-chip" draggable="true" data-cat="menos" ondragstart="dragStart(event)">🇸🇲 San Marino</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+          <div>
+            <div class="drop-zone-label">🔴 Más Poblados</div>
+            <div class="drop-zone" id="drop-mas" ondrop="dropItem(event,'mas')" ondragover="dragOver(event)"></div>
+          </div>
+          <div>
+            <div class="drop-zone-label">🔵 Menos Poblados</div>
+            <div class="drop-zone" id="drop-menos" ondrop="dropItem(event,'menos')" ondragover="dragOver(event)"></div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkDrag1()">✅ Verificar</button>
+          <button class="btn" onclick="resetDrag1()">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-d1"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 2</span>
+        <span class="game-title">Ordena el Ranking de Población</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">↕️</span>
+        <span>Arrastra para ordenar los países del <strong>más al menos poblado</strong>.</span>
+      </div>
+      <div class="game-body">
+        <div class="sort-list" id="sort-ranking">
+          <div class="sort-item" draggable="true" data-order="3" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortDrop(event)"><span class="drag-handle">↕️</span>🇺🇸 Estados Unidos (~335M)</div>
+          <div class="sort-item" draggable="true" data-order="1" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortDrop(event)"><span class="drag-handle">↕️</span>🇮🇳 India (~1,430M)</div>
+          <div class="sort-item" draggable="true" data-order="5" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortDrop(event)"><span class="drag-handle">↕️</span>🇧🇷 Brasil (~215M)</div>
+          <div class="sort-item" draggable="true" data-order="2" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortDrop(event)"><span class="drag-handle">↕️</span>🇨🇳 China (~1,400M)</div>
+          <div class="sort-item" draggable="true" data-order="4" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortDrop(event)"><span class="drag-handle">↕️</span>🇮🇩 Indonesia (~275M)</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkSort()">✅ Verificar Orden</button>
+          <button class="btn" onclick="shuffleSort()">🔀 Mezclar</button>
+        </div>
+        <div class="feedback" id="fb-sort"></div>
+      </div>
+    </div>
+
+  </div><div class="page" id="page-1">
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Ciudad y Campo</span>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, industria, comercio, servicios, transporte masivo.</p>
+          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, naturaleza, actividades primarias, comunidades pequeñas.</p>
+          <p>🔄 <strong style="color:var(--gold)">Relación campo-ciudad:</strong> el campo provee alimentos; la ciudad provee manufactura, tecnología y servicios.</p>
+          <p>🚶 <strong style="color:var(--gold)">Éxodo rural:</strong> migración del campo a la ciudad en busca de mejores oportunidades.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 3</span>
+        <span class="game-title">Conecta Características</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🔗</span>
+        <span>Haz clic en un elemento de la izquierda y luego en su pareja de la derecha.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">✅ Parejas encontradas: <span id="match-score">0</span>/6</div>
+        <div class="match-grid">
+          <div class="match-col" id="match-left">
+            <div class="match-card" data-id="A" onclick="matchClick(this,'left')">🌾 Agricultura</div>
+            <div class="match-card" data-id="B" onclick="matchClick(this,'left')">🏗️ Rascacielos</div>
+            <div class="match-card" data-id="C" onclick="matchClick(this,'left')">🚜 Tractores</div>
+            <div class="match-card" data-id="D" onclick="matchClick(this,'left')">🚇 Metro</div>
+            <div class="match-card" data-id="E" onclick="matchClick(this,'left')">🐄 Ganadería</div>
+            <div class="match-card" data-id="F" onclick="matchClick(this,'left')">🏭 Industria</div>
+          </div>
+          <div class="match-col" id="match-right">
+            <div class="match-card" data-id="D" onclick="matchClick(this,'right')">🏙️ Espacio Urbano</div>
+            <div class="match-card" data-id="A" onclick="matchClick(this,'right')">🌾 Espacio Rural</div>
+            <div class="match-card" data-id="F" onclick="matchClick(this,'right')">🏭 Ciudad Industrial</div>
+            <div class="match-card" data-id="C" onclick="matchClick(this,'right')">🚜 Campo Mecanizado</div>
+            <div class="match-card" data-id="B" onclick="matchClick(this,'right')">🏢 Zona Metropolitana</div>
+            <div class="match-card" data-id="E" onclick="matchClick(this,'right')">🐮 Campo Ganadero</div>
+          </div>
+        </div>
+        <div class="feedback" id="fb-match"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 4</span>
+        <span class="game-title">Construye tu Ciudad</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🏗️</span>
+        <span>Selecciona elementos para construir tu ciudad. Cada uno afecta su <strong>calidad de vida</strong>.</span>
+      </div>
+      <div class="game-body">
+        <div class="city-builder">
+          <div class="build-panel">
+            <div class="build-title">🧱 Elementos disponibles</div>
+            <div class="build-items">
+              <div class="build-item" onclick="addCity('hospital','🏥 Hospital',+20)">🏥 Hospital <span style="color:var(--success)">+Salud</span></div>
+              <div class="build-item" onclick="addCity('escuela','🏫 Escuela',+15)">🏫 Escuela <span style="color:var(--success)">+Educación</span></div>
+              <div class="build-item" onclick="addCity('fabrica','🏭 Fábrica',+10)">🏭 Fábrica <span style="color:var(--success)">+Economía</span></div>
+              <div class="build-item" onclick="addCity('parque','🌳 Parque',+12)">🌳 Parque <span style="color:var(--success)">+Bienestar</span></div>
+              <div class="build-item" onclick="addCity('transporte','🚇 Metro',+18)">🚇 Metro <span style="color:var(--success)">+Transporte</span></div>
+              <div class="build-item" onclick="addCity('contaminacion','⚠️ Sin filtros',-15)">⚠️ Sin filtros <span style="color:var(--danger)">-Calidad</span></div>
+              <div class="build-item" onclick="addCity('hacinamiento','🏘️ Sin planif.',-10)">🏘️ Sin planif. <span style="color:var(--danger)">-Espacio</span></div>
+            </div>
+          </div>
+          <div class="build-panel">
+            <div class="build-title">📊 Tu Ciudad</div>
+            <div class="city-preview" id="city-preview">
+              <div class="city-stat"><span>Calidad de vida</span><span class="stat-val" id="city-quality">50</span></div>
+              <div id="city-elements" style="flex:1;overflow-y:auto;max-height:140px;"></div>
+            </div>
+            <div style="margin-top:10px;">
+              <button class="btn btn-sm" onclick="resetCity()">🔄 Nueva ciudad</button>
+            </div>
+          </div>
+        </div>
+        <div class="feedback" id="fb-city"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">¿Qué aprendiste? — Ciudad y Campo</span>
+      </div>
+      <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave del tema.</span></div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
+          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
+          <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
+          <p>🚶 <strong style="color:var(--gold)">Migración:</strong> movimiento campo → ciudad en busca de mejores oportunidades.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><div class="page" id="page-2">
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Culturas del Mundo</span>
+      </div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> más de 7,000 idiomas, miles de etnias, tradiciones, gastronomías, artes y religiones.</p>
+          <p>🤝 <strong style="color:var(--gold)">Multiculturalismo:</strong> convivencia de culturas. La interculturalidad es el diálogo y respeto mutuo entre ellas.</p>
+          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural material e inmaterial de la humanidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 5</span>
+        <span class="game-title">Coloca cada elemento en su cultura</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎎</span>
+        <span>Arrastra cada elemento cultural a su país de origen.</span>
+      </div>
+      <div class="game-body">
+        <div class="drag-zone" id="cultura-source">
+          <div class="drag-chip" draggable="true" data-cat="mexico" ondragstart="dragStart(event)">🌮 Tacos</div>
+          <div class="drag-chip" draggable="true" data-cat="japon" ondragstart="dragStart(event)">🍣 Sushi</div>
+          <div class="drag-chip" draggable="true" data-cat="india" ondragstart="dragStart(event)">🎆 Diwali</div>
+          <div class="drag-chip" draggable="true" data-cat="brasil" ondragstart="dragStart(event)">🎉 Carnaval</div>
+          <div class="drag-chip" draggable="true" data-cat="mexico" ondragstart="dragStart(event)">💀 Día de Muertos</div>
+          <div class="drag-chip" draggable="true" data-cat="japon" ondragstart="dragStart(event)">🎎 Kimonos</div>
+          <div class="drag-chip" draggable="true" data-cat="india" ondragstart="dragStart(event)">🐘 Elefante sagrado</div>
+          <div class="drag-chip" draggable="true" data-cat="brasil" ondragstart="dragStart(event)">💃 Samba</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+          <div><div class="drop-zone-label">🇲🇽 México</div><div class="drop-zone" id="drop-mexico" ondrop="dropItem(event,'mexico')" ondragover="dragOver(event)"></div></div>
+          <div><div class="drop-zone-label">🇯🇵 Japón</div><div class="drop-zone" id="drop-japon" ondrop="dropItem(event,'japon')" ondragover="dragOver(event)"></div></div>
+          <div><div class="drop-zone-label">🇮🇳 India</div><div class="drop-zone" id="drop-india" ondrop="dropItem(event,'india')" ondragover="dragOver(event)"></div></div>
+          <div><div class="drop-zone-label">🇧🇷 Brasil</div><div class="drop-zone" id="drop-brasil" ondrop="dropItem(event,'brasil')" ondragover="dragOver(event)"></div></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCulturasDrag()">✅ Verificar</button>
+          <button class="btn" onclick="resetCulturas()">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-cult"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 6</span>
+        <span class="game-title">Construye el Respeto Intercultural</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🤝</span>
+        <span>Arrastra las actitudes a la columna correcta: positivas o negativas.</span>
+      </div>
+      <div class="game-body">
+        <div class="drag-zone" id="actitudes-source">
+          <div class="drag-chip" draggable="true" data-cat="positivo" ondragstart="dragStart(event)">🤝 Diálogo</div>
+          <div class="drag-chip" draggable="true" data-cat="negativo" ondragstart="dragStart(event)">🚫 Racismo</div>
+          <div class="drag-chip" draggable="true" data-cat="positivo" ondragstart="dragStart(event)">💡 Curiosidad</div>
+          <div class="drag-chip" draggable="true" data-cat="negativo" ondragstart="dragStart(event)">👎 Xenofobia</div>
+          <div class="drag-chip" draggable="true" data-cat="positivo" ondragstart="dragStart(event)">🌱 Empatía</div>
+          <div class="drag-chip" draggable="true" data-cat="negativo" ondragstart="dragStart(event)">🙈 Discriminación</div>
+          <div class="drag-chip" draggable="true" data-cat="positivo" ondragstart="dragStart(event)">📖 Aprendizaje</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+          <div><div class="drop-zone-label">✅ Actitudes positivas</div><div class="drop-zone" id="drop-positivo" ondrop="dropItem(event,'positivo')" ondragover="dragOver(event)"></div></div>
+          <div><div class="drop-zone-label">❌ Actitudes negativas</div><div class="drop-zone" id="drop-negativo" ondrop="dropItem(event,'negativo')" ondragover="dragOver(event)"></div></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkActitudes()">✅ Verificar</button>
+          <button class="btn" onclick="resetActitudes()">🔄 Reiniciar</button>
+        </div>
+        <div class="feedback" id="fb-act"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header"><span class="game-number">Repaso</span><span class="game-title">¿Qué aprendiste? — Culturas</span></div>
+      <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave de diversidad cultural.</span></div>
+      <div class="game-body">
+        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
+          <p>🗣️ <strong style="color:var(--gold)">Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
+          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
+          <p>🤝 <strong style="color:var(--gold)">Interculturalidad:</strong> respeto, diálogo e intercambio entre culturas.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><div class="page" id="page-3">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">🎮 Reto Final</span>
+        <span class="game-title">Mega Reto: Empareja Conceptos</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🏆</span>
+        <span>Conecta cada concepto con su definición correcta. ¡Pon a prueba todo lo aprendido!</span>
+      </div>
+      <div class="game-body">
+        <div id="repaso-container">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <div class="hud-chip">⭐ Puntos del repaso: <span id="repaso-pts">0</span></div>
+            <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 9</div>
+          </div>
+          <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:11%"></div></div>
+          <div id="repaso-q" style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.55;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:12px;border-radius:0 8px 8px 0;"></div>
+          <div id="repaso-opts"></div>
+          <div class="feedback" id="fb-rep"></div>
+        </div>
+        <div id="repaso-end" style="display:none;" class="repaso-end">
+          <div style="font-family:'Fredoka One';font-size:2.2rem;color:var(--gold);">🏆 ¡Excelente!</div>
+          <div style="font-size:1.1rem;margin:14px 0;color:var(--white);">Puntuación: <span id="rep-final" style="color:var(--gold);font-weight:800;"></span>/90</div>
+          <div id="rep-badge" style="margin:10px 0;"></div>
+          <button class="btn" onclick="restartRepaso()">🔄 Jugar de nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Bonus</span>
+        <span class="game-title">Empareja: Concepto y Definición</span>
+      </div>
+      <div class="game-instruction"><span class="instr-icon">🧩</span><span>Conecta cada concepto con su definición. Haz clic en uno y luego en el otro.</span></div>
+      <div class="game-body">
+        <div class="score-counter">✅ Parejas: <span id="rep-match-score">0</span>/6</div>
+        <div class="match-grid">
+          <div class="match-col" id="rep-match-left">
+            <div class="match-card" data-id="r1" onclick="matchClickRep(this,'rep-left')">Éxodo rural</div>
+            <div class="match-card" data-id="r2" onclick="matchClickRep(this,'rep-left')">Interculturalidad</div>
+            <div class="match-card" data-id="r3" onclick="matchClickRep(this,'rep-left')">Hacinamiento</div>
+            <div class="match-card" data-id="r4" onclick="matchClickRep(this,'rep-left')">Espacio rural</div>
+            <div class="match-card" data-id="r5" onclick="matchClickRep(this,'rep-left')">Densidad poblacional</div>
+            <div class="match-card" data-id="r6" onclick="matchClickRep(this,'rep-left')">Multiculturalismo</div>
+          </div>
+          <div class="match-col" id="rep-match-right">
+            <div class="match-card" data-id="r3" onclick="matchClickRep(this,'rep-right')">Exceso de personas en espacio reducido</div>
+            <div class="match-card" data-id="r1" onclick="matchClickRep(this,'rep-right')">Migración del campo a la ciudad</div>
+            <div class="match-card" data-id="r6" onclick="matchClickRep(this,'rep-right')">Varias culturas en un mismo espacio</div>
+            <div class="match-card" data-id="r4" onclick="matchClickRep(this,'rep-right')">Zona de baja densidad y actividades primarias</div>
+            <div class="match-card" data-id="r2" onclick="matchClickRep(this,'rep-right')">Respeto e intercambio entre culturas</div>
+            <div class="match-card" data-id="r5" onclick="matchClickRep(this,'rep-right')">Número de habitantes por km²</div>
+          </div>
+        </div>
+        <div class="feedback" id="fb-rep-match"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Bonus 2</span>
+        <span class="game-title">Ordena: De Mayor a Menor Población</span>
+      </div>
+      <div class="game-instruction"><span class="instr-icon">📊</span><span>Arrastra para ordenar de mayor a menor.</span></div>
+      <div class="game-body">
+        <div class="sort-list" id="sort-final">
+          <div class="sort-item" draggable="true" data-order="4" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortFinalDrop(event)"><span class="drag-handle">↕️</span>🇵🇰 Pakistán (~230M)</div>
+          <div class="sort-item" draggable="true" data-order="2" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortFinalDrop(event)"><span class="drag-handle">↕️</span>🇨🇳 China (~1,400M)</div>
+          <div class="sort-item" draggable="true" data-order="5" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortFinalDrop(event)"><span class="drag-handle">↕️</span>🇳🇬 Nigeria (~220M)</div>
+          <div class="sort-item" draggable="true" data-order="1" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortFinalDrop(event)"><span class="drag-handle">↕️</span>🇮🇳 India (~1,430M)</div>
+          <div class="sort-item" draggable="true" data-order="3" ondragstart="sortDragStart(event)" ondragover="sortDragOver(event)" ondrop="sortFinalDrop(event)"><span class="drag-handle">↕️</span>🇺🇸 EE.UU (~335M)</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkSortFinal()">✅ Verificar</button>
+        </div>
+        <div class="feedback" id="fb-sort-final"></div>
+      </div>
+    </div>
+
+  </div></div><div class="footer-nav">
+  <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div class="footer-center" id="footerPageNum">1/4</div>
+    <a href="quiz.html" class="quiz-btn-footer boton-quiz">🎮 IR AL RETO</a>
+  </div>
+  <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
+</div>
+
+
+
+
+
+</body>
+</html>
+

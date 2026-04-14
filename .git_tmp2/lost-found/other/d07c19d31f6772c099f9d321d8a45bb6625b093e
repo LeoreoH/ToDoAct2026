@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Tierra · Nivel Normal · Kinestésico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+
+<div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="cabecera">
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I · Nivel Normal</p>
+  <div>
+    <span class="badge-estilo">✋ Kinestésico</span>
+    <span class="badge-nivel">⚡ Intermedio</span>
+  </div>
+</div>
+
+<div class="progreso-contenedor">
+  <i class="fas fa-hand-paper fa-2x" style="color: #1976d2;"></i>
+  <div class="puntos" id="puntosProgreso">
+    <div class="punto activo">1</div>
+    <div class="punto">2</div>
+    <div class="punto">3</div>
+    <div class="punto">4</div>
+  </div>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
+</div>
+
+<div class="contenedor">
+
+  <div class="pagina activa" id="pagina1">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotación</h2>
+
+      <p class="texto-explicativo">
+        La Tierra gira sobre sí misma como un trompo. Este movimiento se llama <strong>rotación</strong> y dura 24 horas, un día completo.
+        Es el responsable de que tengamos días y noches.
+      </p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+                 alt="Rotación de la Tierra" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+          </div>
+          <div class="pie-imagen">🌍 La Tierra gira sobre su propio eje</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro h-100">
+            <h4><i class="fas fa-clock me-2"></i> Duración</h4>
+            <p class="fs-3 fw-bold">24 horas</p>
+            <hr>
+            <h4 class="mt-3"><i class="fas fa-sun me-2"></i> Día y noche</h4>
+            <p>Cuando la parte donde vivimos mira al Sol es de <strong>día</strong>. Cuando queda de espaldas, es de <strong>noche</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2cols mt-4">
+        <div class="card-info">
+          <i class="fas fa-sun"></i>
+          <span>DÍA</span>
+          <small>Frente al Sol</small>
+        </div>
+        <div class="card-info">
+          <i class="fas fa-moon"></i>
+          <span>NOCHE</span>
+          <small>Espaldas al Sol</small>
+        </div>
+      </div>
+
+      <div class="dato-curioso">
+        <i class="fas fa-lightbulb"></i>
+        <p>🌍 La Tierra gira de oeste a este. Por eso el Sol "sale" por el Este y se "oculta" por el Oeste.</p>
+      </div>
+
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle"></i> ¿Cuánto dura el movimiento de rotación?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, false)">12 horas</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">24 horas</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">365 días</span>
+        </div>
+      </div>
+
+      <div class="zona-actividad">
+        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> Arma el ciclo del día</h3>
+
+        <div class="rueda-rompecabezas">
+          <div class="rueda-vacia">
+            <div class="hueco-rueda hueco-1" id="hueco1" data-pos="1"></div>
+            <div class="hueco-rueda hueco-2" id="hueco2" data-pos="2"></div>
+            <div class="hueco-rueda hueco-3" id="hueco3" data-pos="3"></div>
+            <div class="hueco-rueda hueco-4" id="hueco4" data-pos="4"></div>
+          </div>
+
+          <div class="piezas-rueda" id="piezasRueda">
+            <div class="pieza-rueda" draggable="true" data-pos="1" data-texto="MAÑANA">🌅 MAÑANA</div>
+            <div class="pieza-rueda" draggable="true" data-pos="2" data-texto="TARDE">☀️ TARDE</div>
+            <div class="pieza-rueda" draggable="true" data-pos="3" data-texto="NOCHE">🌙 NOCHE</div>
+            <div class="pieza-rueda" draggable="true" data-pos="4" data-texto="MADRUGADA">🌌 MADRUGADA</div>
+          </div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina1">
+          🎉 ¡Completaste el ciclo del día!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina2">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslación</h2>
+
+      <p class="texto-explicativo">
+        La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>órbita</strong>. Este movimiento se llama traslación y dura 365 días y 6 horas.
+      </p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
+                 alt="Traslación de la Tierra" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
+          </div>
+          <div class="pie-imagen">🌞 La Tierra orbita alrededor del Sol</div>
+        </div>
+        <div class="col-md-6">
+          <div class="recuadro h-100">
+            <h4><i class="fas fa-calendar-alt me-2"></i> Duración</h4>
+            <p class="fs-3 fw-bold">365 días</p>
+            <p class="text-muted">+ 6 horas</p>
+            <hr>
+            <h4 class="mt-3"><i class="fas fa-star me-2"></i> Año bisiesto</h4>
+            <p>Cada 4 años sumamos las 6 horas y febrero tiene 29 días.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dato-curioso mt-4">
+        <i class="fas fa-lightbulb"></i>
+        <p>🚀 La Tierra viaja a 107,000 km/h alrededor del Sol. ¡Más rápido que un cohete!</p>
+      </div>
+
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle"></i> ¿Cada cuántos años tenemos año bisiesto?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, false)">Cada 2 años</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Cada 4 años</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Cada 10 años</span>
+        </div>
+      </div>
+
+      <div class="zona-actividad">
+        <h3 class="actividad-titulo"><i class="fas fa-calculator me-2"></i> Máquina de años bisiestos</h3>
+
+        <div class="maquina-bisiesto">
+          <div class="panel-anos" id="panelAnos">
+            <div class="boton-ano" data-ano="2020" data-bisiesto="true">2020</div>
+            <div class="boton-ano" data-ano="2021" data-bisiesto="false">2021</div>
+            <div class="boton-ano" data-ano="2022" data-bisiesto="false">2022</div>
+            <div class="boton-ano" data-ano="2023" data-bisiesto="false">2023</div>
+            <div class="boton-ano" data-ano="2024" data-bisiesto="true">2024</div>
+            <div class="boton-ano" data-ano="2025" data-bisiesto="false">2025</div>
+          </div>
+
+          <div class="resultado-maquina" id="resultadoMaquina">
+            👆 Presiona un año para ver si es bisiesto
+          </div>
+
+          <div class="contador-bisiestos" id="contadorBisiestos">
+            Años bisiestos encontrados: 0/2
+          </div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina2">
+          🎉 ¡Encontraste todos los años bisiestos!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del año</h2>
+
+      <p class="texto-explicativo">
+        La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
+      </p>
+
+      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
+             alt="Estaciones del año" class="imagen-geo"
+             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
+      </div>
+      <div class="pie-imagen">🌡️ Las 4 estaciones</div>
+
+      <div class="grid-4cols mt-4">
+        <div class="card-info" style="background: #c8e6c9;">
+          <i class="fas fa-seedling"></i>
+          <span>PRIMAVERA</span>
+          <small>21 mar - 20 jun</small>
+        </div>
+        <div class="card-info" style="background: #fff9c4;">
+          <i class="fas fa-sun"></i>
+          <span>VERANO</span>
+          <small>21 jun - 22 sep</small>
+        </div>
+        <div class="card-info" style="background: #ffccbc;">
+          <i class="fas fa-leaf"></i>
+          <span>OTOÑO</span>
+          <small>23 sep - 20 dic</small>
+        </div>
+        <div class="card-info" style="background: #b3e5fc;">
+          <i class="fas fa-snowflake"></i>
+          <span>INVIERNO</span>
+          <small>21 dic - 20 mar</small>
+        </div>
+      </div>
+
+      <div class="recuadro mt-4">
+        <h4><i class="fas fa-globe-americas me-2"></i> Hemisferios opuestos</h4>
+        <p>Cuando en el hemisferio norte es verano, en el hemisferio sur es invierno. En México (norte) es verano en junio, mientras que en Argentina (sur) es invierno.</p>
+      </div>
+
+      <div class="mini-pregunta mt-4">
+        <p><i class="fas fa-question-circle"></i> Si en México es verano, ¿qué es en Argentina?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, false)">Verano</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Invierno</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Primavera</span>
+        </div>
+      </div>
+
+      <div class="zona-actividad">
+        <h3 class="actividad-titulo"><i class="fas fa-arrows-spin me-2"></i> Ordena las estaciones</h3>
+
+        <div class="linea-tiempo" id="lineaTiempo">
+          <div class="espacio-estacion" id="espacio1" data-pos="1"></div>
+          <div class="espacio-estacion" id="espacio2" data-pos="2"></div>
+          <div class="espacio-estacion" id="espacio3" data-pos="3"></div>
+          <div class="espacio-estacion" id="espacio4" data-pos="4"></div>
+        </div>
+
+        <div class="estaciones-desordenadas" id="estacionesDesordenadas">
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina3">
+          🎉 ¡Ordenaste las estaciones correctamente!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="tarjeta">
+      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
+
+      <p class="texto-explicativo">
+        Los mapas tienen elementos importantes que nos ayudan a entenderlos y usarlos correctamente.
+      </p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
+                 alt="Elementos de un mapa" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
+          </div>
+          <div class="pie-imagen">🗺️ Partes de un mapa</div>
+        </div>
+        <div class="col-md-6">
+          <ul class="lista-iconos">
+            <li><i class="fas fa-compass"></i> <strong>Orientación:</strong> Puntos cardinales</li>
+            <li><i class="fas fa-ruler"></i> <strong>Escala:</strong> Distancia real</li>
+            <li><i class="fas fa-symbols"></i> <strong>Simbología:</strong> Carreteras, ríos, ciudades</li>
+            <li><i class="fas fa-map-pin"></i> <strong>Coordenadas:</strong> LATITUD y LONGITUD</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-3cols mt-4">
+        <div class="card-info">
+          <span>FÍSICOS</span>
+          <small>Montañas, ríos</small>
+        </div>
+        <div class="card-info">
+          <span>POLÍTICOS</span>
+          <small>Países, ciudades</small>
+        </div>
+        <div class="card-info">
+          <span>TURÍSTICOS</span>
+          <small>Lugares de interés</small>
+        </div>
+      </div>
+
+      <div class="dato-curioso">
+        <i class="fas fa-lightbulb"></i>
+        <p>📏 La escala puede ser numérica (1:100,000) o gráfica (una barrita que representa kilómetros).</p>
+      </div>
+
+      <div class="mini-pregunta">
+        <p><i class="fas fa-question-circle"></i> ¿Qué elemento indica los puntos cardinales?</p>
+        <div class="opciones-mini">
+          <span class="btn-mini" onclick="responderMini(this, true)">Orientación</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Escala</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Simbología</span>
+        </div>
+      </div>
+
+      <div class="zona-actividad">
+        <h3 class="actividad-titulo"><i class="fas fa-map-pin me-2"></i> Identifica los elementos del mapa</h3>
+
+        <div class="mapa-mexico-container">
+          <div class="mapa-contenedor">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-mexico.png"
+                 alt="Mapa de México" class="mapa-base-img" onclick="ampliarImagen(this)"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg/800px-Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg.png'">
+
+            <div class="drop-zone" id="zonaNorte" data-tipo="norte"></div>
+            <div class="drop-zone" id="zonaEscala" data-tipo="escala"></div>
+            <div class="drop-zone" id="zonaEstado" data-tipo="estado"></div>
+            <div class="drop-zone" id="zonaOceano" data-tipo="oceano"></div>
+          </div>
+
+          <div class="elementos-mapa" id="elementosMapa">
+            <div class="elemento-mapa" draggable="true" data-tipo="norte" data-texto="🧭 NORTE">
+              <i class="fas fa-compass"></i> NORTE
+            </div>
+            <div class="elemento-mapa" draggable="true" data-tipo="escala" data-texto="📏 ESCALA">
+              <i class="fas fa-ruler"></i> ESCALA
+            </div>
+            <div class="elemento-mapa" draggable="true" data-tipo="estado" data-texto="📍 ESTADO">
+              <i class="fas fa-map-pin"></i> ESTADO
+            </div>
+            <div class="elemento-mapa" draggable="true" data-tipo="oceano" data-texto="🌊 OCÉANO">
+              <i class="fas fa-water"></i> OCÉANO
+            </div>
+          </div>
+        </div>
+
+        <div class="mensaje-feedback" id="feedbackPagina4">
+          🎉 ¡Identificaste todos los elementos del mapa!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navegador">
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
+    <span class="indicador" id="contadorPagina">1/4</span>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
+  </div>
+
+  <a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display: none;"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+﻿:root {
+    --morado-oscuro:   #4a148c;
+    --morado-medio:    #6a1b9a;
+    --morado-claro:    #9c27b0;
+    --morado-suave:    #e1bee7;
+    --morado-palido:   #f3e5f5;
+    --blanco:          #ffffff;
+    --gris-fondo:      #f2f0f7;
+    --gris-texto:      #444;
+    --gris-claro:      #e0dde8;
+    --rojo-cerrar:     #c62828;
+    --rojo-hover:      #b71c1c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--gris-fondo);
+    padding-bottom: 70px;
+}
+
+.contenedor {
+    max-width: 960px;
+    margin: 28px auto 90px;
+    background-color: var(--blanco);
+    border-radius: 20px;
+    box-shadow: 0 10px 32px rgba(74, 20, 140, 0.13);
+    padding: 32px 28px;
+}
+
+.contenedor-cerrar-sesion {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.boton-cerrar-sesion {
+    background-color: var(--rojo-cerrar);
+    color: var(--blanco);
+    border: none;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    letter-spacing: 0.02em;
+}
+
+.boton-cerrar-sesion:hover {
+    background-color: var(--rojo-hover);
+}
+
+#perfil h2 {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--morado-oscuro);
+    text-align: center;
+    margin: 0 0 28px;
+    letter-spacing: 0.01em;
+    border-bottom: 2px solid var(--morado-suave);
+    padding-bottom: 16px;
+}
+
+.perfil-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    border: 1.5px solid var(--morado-suave);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.perfil-izquierda {
+    background: linear-gradient(160deg, var(--morado-oscuro) 0%, var(--morado-claro) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 20px;
+}
+
+.imagen-mascota img {
+    width: 180px;
+    height: 180px;
+    border-radius: 18px;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    display: block;
+}
+
+.perfil-xp-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--blanco);
+    font-size: 17px;
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 30px;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.04em;
+}
+
+.perfil-derecha {
+    background-color: var(--blanco);
+    padding: 36px 32px;
+}
+
+.info-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.campo-perfil {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gris-claro);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.campo-perfil:last-child {
+    border-bottom: none;
+}
+
+.campo-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--morado-claro);
+}
+
+.campo-valor {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gris-texto);
+}
+
+.campo-estilo {
+    gap: 10px;
+}
+
+#estilo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--morado-suave);
+    border-radius: 8px;
+    background-color: var(--morado-palido);
+    color: var(--morado-oscuro);
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+#estilo:focus {
+    border-color: var(--morado-medio);
+}
+
+#guardarEstilo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 24px;
+    background-color: var(--morado-medio);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.25s ease, transform 0.1s;
+    letter-spacing: 0.02em;
+}
+
+#guardarEstilo:hover {
+    background-color: var(--morado-oscuro);
+}
+
+#guardarEstilo:active {
+    transform: scale(0.97);
+}
+
+.menu-inferior {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--blanco);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 54px;
+    border-top: 1.5px solid var(--morado-suave);
+    box-shadow: 0 -4px 16px rgba(74, 20, 140, 0.1);
+}
+
+.menu-item {
+    color: var(--morado-medio);
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 14px;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.menu-item:hover {
+    color: var(--morado-oscuro);
+}
+
+.menu-item.seleccionado {
+    color: var(--blanco);
+    background-color: var(--morado-medio);
+    border-radius: 22px;
+    padding: 8px 20px;
+    font-weight: 600;
+}
+
+.xp-item {
+    pointer-events: none;
+    font-weight: 700;
+    color: var(--morado-oscuro);
+}
+
+#bienvenida h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--morado-oscuro);
+}
+
+#contenidos h2 {
+    font-size: 24px;
+    color: var(--morado-medio);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.lista-contenidos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.contenido-card {
+    background-color: var(--morado-palido);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(74, 20, 140, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border-left: 4px solid var(--morado-claro);
+}
+
+.contenido-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(74, 20, 140, 0.18);
+}
+
+.contenido-card h3 {
+    font-size: 19px;
+    margin: 0 0 10px;
+    color: var(--morado-oscuro);
+}
+
+.contenido-card p {
+    margin: 0;
+    color: var(--gris-texto);
+    font-size: 15px;
+}
+
+@media (max-width: 640px) {
+    .contenedor {
+        padding: 20px 14px;
+        margin: 14px auto 80px;
+    }
+
+    .perfil-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-izquierda {
+        padding: 32px 20px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .imagen-mascota img {
+        width: 130px;
+        height: 130px;
+    }
+
+    .perfil-derecha {
+        padding: 24px 18px;
+    }
+
+    .campo-valor {
+        font-size: 17px;
+    }
+
+    .lista-contenidos {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-item {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

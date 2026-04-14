@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Población Mundial · Visual No Verbal · Nivel Normal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+<div class="cabecera"><h1>POBLACIÓN MUNDIAL</h1><div class="sub">Densidad poblacional, ciudad y campo, migracion e interculturalidad · Nivel Normal</div><div class="badge-estilo"><i class="fas fa-eye me-2"></i>Estilo Visual No Verbal</div></div>
+<div class="progreso"><i class="fas fa-eye fa-2x" style="color:var(--guindo);"></i><div class="puntos"><div class="punto activo" onclick="goToPage(0)">1</div><div class="punto" onclick="goToPage(1)">2</div><div class="punto" onclick="goToPage(2)">3</div><div class="punto" onclick="goToPage(3)">4</div></div><span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">Pagina <span id="numActual">1</span>/4</span></div>
+<div class="contenedor">
+  <div class="pagina activa" id="pagina1">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-chart-column me-2"></i>Densidad y distribucion de la POBLACIÓN</h2>
+      <span class="subtitulo-tema">Subtema 1 de 4</span>
+      <p class="intro">La densidad poblacional indica cuanta gente vive en un kilometro cuadrado. Algunas zonas tienen muchisimas personas juntas y otras tienen grandes espacios con pocas viviendas. Aqui lo aprenderas sobre todo mirando y comparando.</p>
+      <div class="dato-box"><strong>Alta densidad:</strong> muchas personas en poco espacio, como en ciudades muy grandes.</div>
+      <div class="dato-box"><strong>Baja densidad:</strong> pocas personas repartidas en un territorio amplio.</div>
+      <div class="photo-grid">
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Ciudad densa"><div class="txt"><strong>Alta densidad</strong><br>Muchas personas, edificios y servicios en poco espacio.</div></div>
+        <div class="photo-card"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900" alt="Territorio amplio"><div class="txt"><strong>Baja densidad</strong><br>Pocas casas y mucho terreno libre.</div></div>
+        <div class="photo-card"><img src="https://flagcdn.com/w320/in.png" alt="India"><div class="txt"><strong>India</strong><br>Uno de los paises con mas habitantes.</div></div>
+        <div class="photo-card"><img src="https://flagcdn.com/w320/tv.png" alt="Tuvalu"><div class="txt"><strong>Tuvalu</strong><br>Pais con muy poca POBLACIÓN.</div></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Selecciona los paises con POBLACIÓN mas alta</p><small>Elige solo cuatro paises del grupo que realmente tienen muchisimos habitantes.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-flag me-2"></i>Banderas y POBLACIÓN</h3>
+        <div class="flag-grid" id="flag-game">
+          <div class="flag-card" data-correct="yes" onclick="flagClick(this)"><span class="big-flag">🇮🇳</span><div class="lbl">India</div></div>
+          <div class="flag-card" data-correct="no" onclick="flagClick(this)"><span class="big-flag">🇻🇦</span><div class="lbl">Vaticano</div></div>
+          <div class="flag-card" data-correct="yes" onclick="flagClick(this)"><span class="big-flag">🇨🇳</span><div class="lbl">China</div></div>
+          <div class="flag-card" data-correct="no" onclick="flagClick(this)"><span class="big-flag">🇳🇷</span><div class="lbl">Nauru</div></div>
+          <div class="flag-card" data-correct="yes" onclick="flagClick(this)"><span class="big-flag">🇺🇸</span><div class="lbl">EE.UU.</div></div>
+          <div class="flag-card" data-correct="no" onclick="flagClick(this)"><span class="big-flag">🇹🇻</span><div class="lbl">Tuvalu</div></div>
+          <div class="flag-card" data-correct="yes" onclick="flagClick(this)"><span class="big-flag">🇮🇩</span><div class="lbl">Indonesia</div></div>
+          <div class="flag-card" data-correct="no" onclick="flagClick(this)"><span class="big-flag">🇸🇲</span><div class="lbl">San Marino</div></div>
+        </div>
+        <div class="btn-row"><button class="btn-accion" onclick="checkFlags()">Verificar</button><button class="btn-accion btn-secundario" onclick="resetFlags()">Limpiar</button></div>
+        <div class="feedback" id="fb-flags"></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Observa la foto y elige el concepto correcto</p><small>En cada ronda mira la imagen principal y decide cual opcion visual la representa mejor.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-images me-2"></i>Lectura visual de densidad</h3>
+        <div class="score-counter">Aciertos: <span id="sym-hits">0</span>/4</div>
+        <div class="question-box"><img class="question-photo" id="sym-photo" src="" alt="Pregunta visual"><div class="question-title" id="sym-q"></div><div class="opts-grid" id="sym-opts"></div><div class="feedback" id="fb-sym"></div></div>
+        <div class="btn-row"><button class="btn-accion btn-secundario" onclick="nextSym()">Siguiente</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="pagina" id="pagina2">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Ciudad, campo y migracion</h2>
+      <span class="subtitulo-tema">Subtema 2 de 4</span>
+      <p class="intro">La ciudad y el campo ofrecen formas de vida distintas. La ciudad concentra servicios, transporte y edificios. El campo tiene cultivos, ganaderia y menos personas. Mirar bien las escenas ayuda a compararlos y a entender por que muchas familias migran.</p>
+      <div class="dato-box"><strong>Ciudad:</strong> mas edificios, transporte, comercios y servicios.</div>
+      <div class="dato-box"><strong>Campo:</strong> mas espacio, cultivos, animales y viviendas separadas.</div>
+      <div class="photo-grid">
+        <div class="compare-card"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900" alt="Ciudad"><div class="txt"><strong>Espacio urbano</strong><br>Calles, edificios, transporte y mucha actividad.</div></div>
+        <div class="compare-card"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Campo"><div class="txt"><strong>Espacio rural</strong><br>Cultivos, terrenos amplios y menos personas.</div></div>
+        <div class="compare-card"><img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=900" alt="Tractor"><div class="txt"><strong>Trabajo rural</strong><br>Actividades del campo como la agricultura.</div></div>
+        <div class="compare-card"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900" alt="Rascacielos"><div class="txt"><strong>Trabajo urbano</strong><br>Mas oficinas, industrias y servicios.</div></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Selecciona las escenas que pertenecen al campo</p><small>Busca cultivos, ganado, espacios abiertos y menos construcciones.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-seedling me-2"></i>Ciudad o campo</h3>
+        <div class="scene-grid" id="campo-game">
+          <div class="scene-card" data-correct="no" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900" alt="Rascacielos"><div class="lbl">Rascacielos y avenidas</div></div>
+          <div class="scene-card" data-correct="yes" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Cultivos"><div class="lbl">Cultivos y parcelas</div></div>
+          <div class="scene-card" data-correct="no" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900" alt="Metro"><div class="lbl">Transporte masivo</div></div>
+          <div class="scene-card" data-correct="yes" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=900" alt="Ganado"><div class="lbl">Ganado y establos</div></div>
+          <div class="scene-card" data-correct="no" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=900" alt="Trafico"><div class="lbl">Calles con trafico</div></div>
+          <div class="scene-card" data-correct="yes" onclick="campoClick(this)"><img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=900" alt="Tractor"><div class="lbl">Trabajo agricola</div></div>
+        </div>
+        <div class="btn-row"><button class="btn-accion" onclick="checkCampo()">Verificar</button><button class="btn-accion btn-secundario" onclick="resetCampo()">Limpiar</button></div>
+        <div class="feedback" id="fb-campo"></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Observa la escena y decide si se parece mas a ciudad o a campo</p><small>La ultima ronda conecta con la idea de migracion del campo a la ciudad.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-image me-2"></i>Lectura visual rapida</h3>
+        <div class="score-counter">Aciertos: <span id="pq-score">0</span>/5</div>
+        <div class="question-box"><img class="question-photo" id="pq-photo" src="" alt="Escena visual"><div class="question-title" id="pq-desc"></div><div class="opts-grid"><button class="btn-accion" onclick="answerPQ('ciudad')"><i class="fas fa-city me-2"></i>Ciudad</button><button class="btn-accion btn-verde" onclick="answerPQ('campo')"><i class="fas fa-seedling me-2"></i>Campo</button></div><div class="question-title" style="margin-top:12px;font-size:.92rem;">Ronda <span id="pq-round">0</span>/5</div><div class="feedback" id="fb-pq"></div></div>
+        <div class="btn-row"><button class="btn-accion btn-secundario" onclick="startPQ()">Iniciar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina3">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-earth-americas me-2"></i>Culturas del mundo e interculturalidad</h2>
+      <span class="subtitulo-tema">Subtema 3 de 4</span>
+      <p class="intro">En el mundo existen muchas culturas. Se distinguen por lenguas, fiestas, comidas, ropa, musica y simbolos. La interculturalidad significa convivir con respeto y aprender de otras personas sin discriminar.</p>
+      <div class="dato-box"><strong>Diversidad cultural:</strong> el mundo esta lleno de costumbres y simbolos distintos.</div>
+      <div class="dato-box"><strong>Interculturalidad:</strong> dialogar, convivir y respetar otras culturas.</div>
+      <div class="photo-grid">
+        <div class="culture-card"><img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=900" alt="Mexico"><div class="lbl"><strong>Mexico</strong><br>Comida, musica y tradiciones.</div></div>
+        <div class="culture-card"><img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=900" alt="China"><div class="lbl"><strong>China</strong><br>Faroles, dragon y celebraciones.</div></div>
+        <div class="culture-card"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=900" alt="India"><div class="lbl"><strong>India</strong><br>Colores, danzas y festividades.</div></div>
+        <div class="culture-card"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900" alt="Japon"><div class="lbl"><strong>Japon</strong><br>Cerezos, templos y tradiciones.</div></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Relaciona cada bandera con su simbolo cultural</p><small>Haz clic en una tarjeta de la izquierda y luego en la que corresponde a la derecha.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-link me-2"></i>Asociacion visual</h3>
+        <div class="score-counter">Parejas: <span id="cult-match-score">0</span>/5</div>
+        <div class="match-grid"><div class="match-col"><div class="match-card" data-id="m1" onclick="culturalMatch(this,'left')">🇲🇽</div><div class="match-card" data-id="m2" onclick="culturalMatch(this,'left')">🇨🇳</div><div class="match-card" data-id="m3" onclick="culturalMatch(this,'left')">🇮🇳</div><div class="match-card" data-id="m4" onclick="culturalMatch(this,'left')">🇧🇷</div><div class="match-card" data-id="m5" onclick="culturalMatch(this,'left')">🇯🇵</div></div><div class="match-col"><div class="match-card" data-id="m5" onclick="culturalMatch(this,'right')">🌸</div><div class="match-card" data-id="m1" onclick="culturalMatch(this,'right')">🌮</div><div class="match-card" data-id="m3" onclick="culturalMatch(this,'right')">🐘</div><div class="match-card" data-id="m2" onclick="culturalMatch(this,'right')">🐉</div><div class="match-card" data-id="m4" onclick="culturalMatch(this,'right')">⚽</div></div></div>
+        <div class="btn-row"><button class="btn-accion btn-secundario" onclick="resetCulturalMatch()">Limpiar</button></div>
+        <div class="feedback" id="fb-cmatch"></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Observa la foto y elige la cultura correcta</p><small>Piensa en los simbolos, la ropa o el ambiente de cada escena.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-globe me-2"></i>Quiz visual de culturas</h3>
+        <div class="score-counter">Aciertos: <span id="cq-hits">0</span>/5</div>
+        <div class="question-box"><img class="question-photo" id="cq-photo" src="" alt="Cultura visual"><div class="question-title" id="cq-desc"></div><div class="opts-grid" id="cq-opts"></div><div class="feedback" id="fb-cq"></div></div>
+        <div class="btn-row"><button class="btn-accion btn-secundario" onclick="nextCQ()">Siguiente</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagina" id="pagina4">
+    <div class="card-vis">
+      <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso visual del nivel</h2>
+      <span class="subtitulo-tema">Subtema 4 de 4</span>
+      <p class="intro">En esta ultima pagina repasas las ideas principales del nivel: densidad, ciudad y campo, migracion e interculturalidad.</p>
+      <div class="photo-grid">
+        <div class="rep-card"><img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=900" alt="Densidad"><div class="txt"><strong>Densidad</strong><br>Ayuda a ver si un lugar tiene mucha o poca gente por kilometro cuadrado.</div></div>
+        <div class="rep-card"><img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900" alt="Campo"><div class="txt"><strong>Ciudad y campo</strong><br>Cada espacio tiene actividades, paisajes y formas de vida diferentes.</div></div>
+        <div class="rep-card"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900" alt="Interculturalidad"><div class="txt"><strong>Interculturalidad</strong><br>Respetar otras culturas nos ayuda a convivir mejor.</div></div>
+      </div>
+      <div class="actividad">
+        <div class="pista-banner"><p>Contesta el reto visual final</p><small>Cada pregunta se apoya en una imagen o simbolo principal.</small></div>
+        <h3 class="act-titulo"><i class="fas fa-medal me-2"></i>Reto final</h3>
+        <div class="score-counter">Puntos: <span id="repaso-pts">0</span></div>
+        <div id="repaso-container" class="question-box"><img class="question-photo" id="rep-photo" src="" alt="Reto visual"><div class="question-title" id="repaso-q"></div><div class="question-title" style="font-size:.92rem;">Pregunta <span id="rep-num">1</span> de 5</div><div class="opts-grid" id="repaso-opts"></div><div class="feedback" id="fb-rep"></div></div>
+        <div id="repaso-end" style="display:none;text-align:center;padding:18px 0;"><div style="font-size:3rem;">🏆</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;color:var(--guindo);font-weight:800;">Repaso completado</div><div style="font-size:1rem;color:var(--gris);margin:10px 0 12px;">Puntuacion final: <span id="rep-final" style="font-weight:800;color:var(--guindo);"></span>/50</div><div id="rep-badge" style="margin-bottom:12px;"></div><button class="btn-accion btn-secundario" onclick="restartRepaso()">Jugar de nuevo</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar"><button class="btn-nav" id="prevBtn" onclick="changePage(-1)" disabled>&larr; ANTERIOR</button><span class="ind-pag" id="indPag">1/4</span><button class="btn-nav" id="nextBtn" onclick="changePage(1)">SIGUIENTE &rarr;</button></div>
+  <a href="quiz.html" class="boton-quiz text-center"><i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ</a>
+</div>
+
+
+
+
+</body>
+</html>

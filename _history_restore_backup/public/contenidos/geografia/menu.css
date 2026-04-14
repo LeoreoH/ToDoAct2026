@@ -1,0 +1,94 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #f3f7fb;
+}
+
+.materia-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: white;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.materia-header h1 {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: 28px;
+}
+
+.boton-volver {
+    position: absolute;
+    left: 20px;
+    background: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1b5e20;
+    transition: all 0.3s;
+}
+
+.boton-volver:hover {
+    background: #e8f5e9;
+    transform: scale(1.05);
+}
+
+.contenedor-materia {
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-materia h2 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 25px;
+}
+
+.contenedor-bloques {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contenedor-bloques button {
+    padding: 18px;
+    border-radius: 12px;
+    border: 2px solid #2e7d32;
+    background: white;
+    color: #1b5e20;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.contenedor-bloques button:hover:not(:disabled) {
+    background: #e8f5e9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.25);
+}
+
+.contenedor-bloques button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+.descripcion-bloque {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 8px;
+    color: #5f6368;
+    font-weight: normal;
+}

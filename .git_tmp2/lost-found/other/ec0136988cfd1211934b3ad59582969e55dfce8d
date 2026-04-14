@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Agua · Visual No Verbal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+<body>
+
+<div class="cab">
+  <h1>💧 EL AGUA EN EL PLANETA</h1>
+  <p>Bloque II · Geografía · Nivel Normal</p>
+  <div class="badges">
+    <span class="b1">👁️ Visual No Verbal</span>
+    <span class="b2">⚡ Nivel Normal</span>
+  </div>
+</div>
+
+<div class="marcador">
+  <div class="puntos-wrap" id="puntosProgreso">
+    <div class="punto activo">1</div><div class="punto">2</div><div class="punto">3</div><div class="punto">4</div><div class="punto">5</div>
+  </div>
+  <div class="score-box">⭐ <span id="scoreTotal">0</span> pts &nbsp;<span id="estrellasMini">☆☆☆</span></div>
+</div>
+
+<div class="wrap">
+
+<!-- PÁG 1: CLIMA -->
+<div class="pag activa" id="pagina1">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--vd2),var(--vd1));color:var(--am3);"><i class="fas fa-cloud-rain"></i></div>
+      <div><div class="card-title">El clima y el agua</div><div class="card-sub">Toca la imagen o emoji que representa la respuesta correcta</div></div>
+    </div>
+
+    <div class="juego-titulo">🎮 Juego 1 — ¿Qué clima produce MÁS agua disponible? Toca la tarjeta correcta:</div>
+    <div class="tarjetas-grid t3" id="tg_c1">
+      <div class="tarj c-rojo" onclick="respTarj(this,'c1','b')" data-id="a"><span class="emoji">🏜️</span><div class="lbl">Clima Árido</div></div>
+      <div class="tarj c-am" onclick="respTarj(this,'c1','b')" data-id="b"><span class="emoji">🌧️</span><div class="lbl">Clima Lluvioso</div></div>
+      <div class="tarj c-azul" onclick="respTarj(this,'c1','b')" data-id="c"><span class="emoji">❄️</span><div class="lbl">Clima Polar</div></div>
+    </div>
+    <div class="retro" id="retro_c1"></div>
+    <div class="pts-ganados" id="pts_c1"></div>
+
+    <div class="juego-titulo" style="margin-top:18px;">🎮 Juego 2 — ¿Qué ícono representa la EVAPORACIÓN del agua?</div>
+    <div class="tarjetas-grid t4" id="tg_c2">
+      <div class="tarj c-azul" onclick="respTarj(this,'c2','b')" data-id="a"><span class="emoji">🌊</span><div class="lbl">Olas del mar</div></div>
+      <div class="tarj c-naranja" onclick="respTarj(this,'c2','b')" data-id="b"><span class="emoji">☁️+🌡️</span><div class="lbl">Calor que convierte agua en vapor</div></div>
+      <div class="tarj c-verde" onclick="respTarj(this,'c2','b')" data-id="c"><span class="emoji">🌿</span><div class="lbl">Plantas creciendo</div></div>
+      <div class="tarj c-morado" onclick="respTarj(this,'c2','b')" data-id="d"><span class="emoji">🌨️</span><div class="lbl">Nieve cayendo</div></div>
+    </div>
+    <div class="retro" id="retro_c2"></div>
+    <div class="pts-ganados" id="pts_c2"></div>
+  </div>
+</div>
+
+<!-- PÁG 2: RELIEVE -->
+<div class="pag" id="pagina2">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--vd3),var(--vd1));color:var(--am3);"><i class="fas fa-mountain"></i></div>
+      <div><div class="card-title">El relieve y el agua</div><div class="card-sub">Toca las imágenes en el orden que recorre el agua</div></div>
+    </div>
+
+    <div class="juego-titulo">🎮 Juego 1 — Toca los emojis en el orden correcto del recorrido del agua:</div>
+    <div class="ord-visual" id="ordv_r1">
+      <div class="ord-bloque c-azul" onclick="agregarOrdV(this,'r1')" data-txt="🌊 Mar"><span style="font-size:2rem;">🌊</span><br>Mar</div>
+      <div class="ord-bloque c-verde" onclick="agregarOrdV(this,'r1')" data-txt="🌧️ Lluvia"><span style="font-size:2rem;">🌧️</span><br>Lluvia</div>
+      <div class="ord-bloque c-morado" onclick="agregarOrdV(this,'r1')" data-txt="🏞️ Río"><span style="font-size:2rem;">🏞️</span><br>Río</div>
+      <div class="ord-bloque c-naranja" onclick="agregarOrdV(this,'r1')" data-txt="❄️ Nieve"><span style="font-size:2rem;">❄️</span><br>Nieve</div>
+    </div>
+    <div class="secuencia-v" id="secv_r1"><span style="color:#607d8b;font-weight:600;">Tu orden aparecerá aquí →</span></div>
+    <button class="btn-v" onclick="verificarOrdV('r1',['🌧️ Lluvia','❄️ Nieve','🏞️ Río','🌊 Mar'],'retro_r1','pts_r1')">✅ Verificar</button>
+    <button class="btn-v" onclick="resetOrdV('r1')" style="background:#e0e0e0;color:#333;border-color:#bdbdbd;margin-left:8px;">🔄 Reiniciar</button>
+    <div class="retro" id="retro_r1"></div>
+    <div class="pts-ganados" id="pts_r1"></div>
+
+    <div class="juego-titulo" style="margin-top:18px;">🎮 Juego 2 — Une visualmente cada forma del terreno con su característica:</div>
+    <div class="match-cols" id="mc_r2">
+      <div class="match-col" id="mc_izq_r2">
+        <div class="match-item match-izq" onclick="selMatch(this,'r2','izq')" data-id="montana">⛰️ Montaña</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'r2','izq')" data-id="valle">🏞️ Valle</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'r2','izq')" data-id="llanura">🌾 Llanura</div>
+      </div>
+      <div class="match-col" id="mc_der_r2">
+        <div class="match-item match-der" onclick="selMatch(this,'r2','der')" data-id="valle">Concentra los ríos</div>
+        <div class="match-item match-der" onclick="selMatch(this,'r2','der')" data-id="llanura">Puede ser árida</div>
+        <div class="match-item match-der" onclick="selMatch(this,'r2','der')" data-id="montana">Captura lluvia y nieve</div>
+      </div>
+    </div>
+    <div id="match_ok_r2"></div>
+    <div class="retro" id="retro_mc_r2"></div>
+    <div class="pts-ganados" id="pts_mc_r2"></div>
+  </div>
+</div>
+
+<!-- PÁG 3: OBRAS HUMANAS -->
+<div class="pag" id="pagina3">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--am2),var(--am1));color:var(--vd1);"><i class="fas fa-hard-hat"></i></div>
+      <div><div class="card-title">Obras humanas y el agua</div><div class="card-sub">Toca el emoji correcto para cada pregunta</div></div>
+    </div>
+
+    <div class="juego-titulo">🎮 Juego 1 — ¿Cuál emoji representa una PRESA?</div>
+    <div class="tarjetas-grid t4" id="tg_oh1">
+      <div class="tarj c-verde" onclick="respTarj(this,'oh1','b')" data-id="a"><span class="emoji">🌾</span><div class="lbl">Canal de riego</div></div>
+      <div class="tarj c-azul" onclick="respTarj(this,'oh1','b')" data-id="b"><span class="emoji">🏗️</span><div class="lbl">Construcción sobre río</div></div>
+      <div class="tarj c-naranja" onclick="respTarj(this,'oh1','b')" data-id="c"><span class="emoji">🛣️</span><div class="lbl">Carretera</div></div>
+      <div class="tarj c-morado" onclick="respTarj(this,'oh1','b')" data-id="d"><span class="emoji">🏠</span><div class="lbl">Casa</div></div>
+    </div>
+    <div class="retro" id="retro_oh1"></div>
+    <div class="pts-ganados" id="pts_oh1"></div>
+
+    <div class="juego-titulo" style="margin-top:18px;">🎮 Juego 2 — Une cada obra con su impacto visual:</div>
+    <div class="match-cols" id="mc_oh2">
+      <div class="match-col" id="mc_izq_oh2">
+        <div class="match-item match-izq" onclick="selMatch(this,'oh2','izq')" data-id="presa">🏗️ Presa</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'oh2','izq')" data-id="riego">🌾 Canal riego</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'oh2','izq')" data-id="desvio">↪️ Desvío río</div>
+      </div>
+      <div class="match-col" id="mc_der_oh2">
+        <div class="match-item match-der" onclick="selMatch(this,'oh2','der')" data-id="riego">💧→🌾 Agua a cultivos</div>
+        <div class="match-item match-der" onclick="selMatch(this,'oh2','der')" data-id="presa">🌊→💾 Almacena agua</div>
+        <div class="match-item match-der" onclick="selMatch(this,'oh2','der')" data-id="desvio">↪️ Cambia dirección</div>
+      </div>
+    </div>
+    <div id="match_ok_oh2"></div>
+    <div class="retro" id="retro_mc_oh2"></div>
+    <div class="pts-ganados" id="pts_mc_oh2"></div>
+  </div>
+</div>
+
+<!-- PÁG 4: RECURSOS HÍDRICOS -->
+<div class="pag" id="pagina4">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--vd2),var(--vd1));color:var(--am3);"><i class="fas fa-globe-americas"></i></div>
+      <div><div class="card-title">Recursos hídricos del planeta</div><div class="card-sub">Toca el sector correcto del gráfico</div></div>
+    </div>
+
+    <div class="juego-titulo">🎮 Juego 1 — Toca en la gráfica el sector que representa el AGUA DULCE:</div>
+    <div class="pie-wrap">
+      <svg class="pie" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path id="pie_salada" d="M100,100 L100,10 A90,90 0 1,1 72.6,13.6 Z" fill="#2e7d32" onclick="respPie('salada','dulce','retro_pie','pts_pie')"/>
+        <path id="pie_dulce" d="M100,100 L72.6,13.6 A90,90 0 0,1 100,10 Z" fill="#fdd835" onclick="respPie('dulce','dulce','retro_pie','pts_pie')"/>
+        <text x="115" y="120" fill="white" font-weight="900" font-size="18" font-family="Fredoka One">97%</text>
+        <text x="58" y="46" fill="#1b3a1c" font-weight="900" font-size="13" font-family="Fredoka One">3%</text>
+      </svg>
+      <div class="pie-legend">
+        <div class="pie-leg-item"><div class="pie-dot" style="background:#2e7d32;"></div>Agua salada (97%)</div>
+        <div class="pie-leg-item"><div class="pie-dot" style="background:#fdd835;border:1px solid #ccc;"></div>Agua dulce (3%)</div>
+      </div>
+  </div>
+    <div class="retro" id="retro_pie"></div>
+    <div class="pts-ganados" id="pts_pie"></div>
+
+    <div class="juego-titulo" style="margin-top:18px;">🎮 Juego 2 — ¿Cuál emoji muestra dónde está CONGELADA gran parte del agua dulce?</div>
+    <div class="tarjetas-grid t4" id="tg_rh2">
+      <div class="tarj c-azul" onclick="respTarj(this,'rh2','c')" data-id="a"><span class="emoji">🌊</span><div class="lbl">Océano</div></div>
+      <div class="tarj c-verde" onclick="respTarj(this,'rh2','c')" data-id="b"><span class="emoji">🌿</span><div class="lbl">Selva</div></div>
+      <div class="tarj c-naranja" onclick="respTarj(this,'rh2','c')" data-id="c"><span class="emoji">❄️🏔️</span><div class="lbl">Glaciares y polos</div></div>
+      <div class="tarj c-rojo" onclick="respTarj(this,'rh2','c')" data-id="d"><span class="emoji">🌋</span><div class="lbl">Volcanes</div></div>
+    </div>
+    <div class="retro" id="retro_rh2"></div>
+    <div class="pts-ganados" id="pts_rh2"></div>
+  </div>
+</div>
+
+<!-- PÁG 5: RÍOS VS LAGOS -->
+<div class="pag" id="pagina5">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:linear-gradient(135deg,var(--vd3),var(--vd2));color:var(--am3);"><i class="fas fa-water"></i></div>
+      <div><div class="card-title">Ríos y Lagos</div><div class="card-sub">Usa los emojis para distinguir ríos de lagos</div></div>
+    </div>
+
+    <div class="juego-titulo">🎮 Juego 1 — Toca qué emoji representa mejor a un RÍO:</div>
+    <div class="tarjetas-grid t4" id="tg_rl1">
+      <div class="tarj c-azul" onclick="respTarj(this,'rl1','b')" data-id="a"><span class="emoji">🏊</span><div class="lbl">Agua quieta</div></div>
+      <div class="tarj c-verde" onclick="respTarj(this,'rl1','b')" data-id="b"><span class="emoji">🏞️💧→</span><div class="lbl">Agua que fluye y corre</div></div>
+      <div class="tarj c-naranja" onclick="respTarj(this,'rl1','b')" data-id="c"><span class="emoji">🌊</span><div class="lbl">Océano</div></div>
+      <div class="tarj c-morado" onclick="respTarj(this,'rl1','b')" data-id="d"><span class="emoji">🌧️</span><div class="lbl">Lluvia</div></div>
+    </div>
+    <div class="retro" id="retro_rl1"></div>
+    <div class="pts-ganados" id="pts_rl1"></div>
+
+    <div class="juego-titulo" style="margin-top:18px;">🎮 Juego 2 — Une cada emoji con RÍO o LAGO:</div>
+    <div class="match-cols" id="mc_rl2">
+      <div class="match-col" id="mc_izq_rl2">
+        <div class="match-item match-izq" onclick="selMatch(this,'rl2','izq')" data-id="rio">🔄 Corriente constante</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'rl2','izq')" data-id="lago">😴 Agua quieta</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'rl2','izq')" data-id="rio">🌊 Desemboca en el mar</div>
+        <div class="match-item match-izq" onclick="selMatch(this,'rl2','izq')" data-id="lago">🌍 Rodeado de tierra</div>
+      </div>
+      <div class="match-col" id="mc_der_rl2">
+        <div class="match-item match-der" onclick="selMatch(this,'rl2','der')" data-id="lago">🏊 LAGO</div>
+        <div class="match-item match-der" onclick="selMatch(this,'rl2','der')" data-id="rio">🏞️ RÍO</div>
+        <div class="match-item match-der" onclick="selMatch(this,'rl2','der')" data-id="lago">🏊 LAGO</div>
+        <div class="match-item match-der" onclick="selMatch(this,'rl2','der')" data-id="rio">🏞️ RÍO</div>
+      </div>
+    </div>
+    <div id="match_ok_rl2"></div>
+    <div class="retro" id="retro_mc_rl2"></div>
+    <div class="pts-ganados" id="pts_mc_rl2"></div>
+
+    <div class="panel-final" id="panelFinal">
+      <div style="font-size:3rem;" id="estrellasFinales">⭐⭐⭐</div>
+      <h2>¡Increíble!</h2>
+      <p style="font-weight:700;color:#607d8b;margin:8px 0;">Tu puntuación final:</p>
+      <div class="big" id="scoreFinal">0</div>
+      <p style="font-weight:700;color:var(--vd1);">puntos</p>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="btn-nav" id="btnAnterior" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+  <span class="ind-pag" id="contPag">1/5</span>
+  <button class="btn-nav" id="btnSiguiente" onclick="cambiarPag(1)">SIGUIENTE →</button>
+</div>
+<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
+</div>
+
+
+
+
+</body>
+</html>
