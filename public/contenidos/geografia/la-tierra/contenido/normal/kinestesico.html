@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Tierra Â· Nivel Normal Â· KinestÃ©sico</title>
+  <title>La Tierra - Nivel Normal - Kinestésico</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -350,7 +350,7 @@
       border-color: white;
     }
 
-    /* ===== ACTIVIDADES KINESTÃ‰SICAS ===== */
+    /* ===== ACTIVIDADES KINEST�SICAS ===== */
     .zona-actividad {
       background: #fff3e0;
       border-radius: 30px;
@@ -374,7 +374,7 @@
       margin-right: auto;
     }
 
-    /* ACTIVIDAD 1: ROMPECABEZAS ROTACIÃ“N */
+    /* ACTIVIDAD 1: ROMPECABEZAS ROTACI�N */
     .rueda-rompecabezas {
       display: flex;
       flex-direction: column;
@@ -405,6 +405,11 @@
       font-size: 1.2rem;
       font-weight: 700;
       color: #01579b;
+    }
+
+    .hueco-rueda.incorrecta {
+      background: rgba(244, 67, 54, 0.25);
+      border-color: #f44336;
     }
 
     .hueco-1 { top: 5%; left: 5%; }
@@ -458,7 +463,11 @@
       animation: popIn 0.3s;
     }
 
-    /* ACTIVIDAD 2: MÃQUINA DE AÃ‘OS BISIESTO */
+    .pieza-colocada.error-temporal {
+      background: #f44336;
+    }
+
+    /* ACTIVIDAD 2: M�QUINA DE A�OS BISIESTO */
     .maquina-bisiesto {
       background: #e3f2fd;
       border: 4px solid #1976d2;
@@ -556,6 +565,11 @@
       color: white;
     }
 
+    .espacio-estacion.incorrecta {
+      background: #ffcdd2;
+      border-color: #f44336;
+    }
+
     .estaciones-desordenadas {
       display: flex;
       gap: 20px;
@@ -589,7 +603,7 @@
       display: none;
     }
 
-    /* ACTIVIDAD 4: MAPA DE MÃ‰XICO - CORREGIDA (CON IMAGEN AMPLIABLE) */
+    /* ACTIVIDAD 4: MAPA DE M�XICO - CORREGIDA (CON IMAGEN AMPLIABLE) */
     .mapa-mexico-container {
       background: #e3f2fd;
       border: 4px solid #1976d2;
@@ -620,6 +634,11 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
+    }
+
+    .drop-zone.incorrecta {
+      background: rgba(244, 67, 54, 0.25);
+      border-color: #f44336;
     }
 
     #zonaNorte {
@@ -827,20 +846,21 @@
       box-shadow: 0 8px 0 #0d47a1;
     }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
-<!-- BOTÃ“N PARA SUBIR -->
+<!-- BOT�N PARA SUBIR -->
 <div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
   <i class="fas fa-arrow-up"></i>
 </div>
 
 <div class="cabecera">
-  <h1>ðŸŒ LA TIERRA</h1>
-  <p class="lead text-white">Bloque I Â· Nivel Normal</p>
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I - Nivel Normal</p>
   <div>
-    <span class="badge-estilo">âœ‹ KinestÃ©sico</span>
-    <span class="badge-nivel">âš¡ Intermedio</span>
+    <span class="badge-estilo">✋ Kinestésico</span>
+    <span class="badge-nivel">Intermedio</span>
   </div>
 </div>
 
@@ -852,37 +872,42 @@
     <div class="punto">3</div>
     <div class="punto">4</div>
   </div>
-  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">PÃ¡gina <span id="paginaActualNum">1</span>/4</span>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
 </div>
 
 <div class="contenedor">
 
-  <!-- ===== PÃGINA 1: ROTACIÃ“N ===== -->
+  <!-- ===== P?GINA 1: ROTACI�N ===== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotaciÃ³n</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotación</h2>
+
       <p class="texto-explicativo">
-        La Tierra gira sobre sÃ­ misma como un trompo. Este movimiento se llama <strong>rotaciÃ³n</strong> y dura 24 horas, un dÃ­a completo.
-        Es el responsable de que tengamos dÃ­as y noches.
+        La Tierra gira sobre sí misma como un trompo. Este movimiento se llama <strong>rotación</strong> y dura 24 horas, un día completo.
+        Es el responsable de que tengamos días y noches.
       </p>
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
-                 alt="RotaciÃ³n de la Tierra" class="imagen-geo"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+          <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+            <div class="ayuda-ampliar-media">
+              <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+                <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+                     alt="Rotaci?n de la Tierra" class="imagen-geo"
+                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+              </div>
+              <div class="pie-imagen">&#127757; La Tierra gira sobre su propio eje</div>
+            </div>
+            <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
           </div>
-          <div class="pie-imagen">ðŸŒ La Tierra gira sobre su propio eje</div>
         </div>
         <div class="col-md-6">
           <div class="recuadro h-100">
-            <h4><i class="fas fa-clock me-2"></i> DuraciÃ³n</h4>
+            <h4><i class="fas fa-clock me-2"></i> Duración</h4>
             <p class="fs-3 fw-bold">24 horas</p>
             <hr>
-            <h4 class="mt-3"><i class="fas fa-sun me-2"></i> DÃ­a y noche</h4>
-            <p>Cuando la parte donde vivimos mira al Sol es de <strong>dÃ­a</strong>. Cuando queda de espaldas, es de <strong>noche</strong>.</p>
+            <h4 class="mt-3"><i class="fas fa-sun me-2"></i> Día y noche</h4>
+            <p>Cuando la parte donde vivimos mira al Sol es de <strong>día</strong>. Cuando queda de espaldas, es de <strong>noche</strong>.</p>
           </div>
         </div>
       </div>
@@ -890,7 +915,7 @@
       <div class="grid-2cols mt-4">
         <div class="card-info">
           <i class="fas fa-sun"></i>
-          <span>DÃA</span>
+          <span>DÍA</span>
           <small>Frente al Sol</small>
         </div>
         <div class="card-info">
@@ -902,22 +927,22 @@
 
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸŒ La Tierra gira de oeste a este. Por eso el Sol "sale" por el Este y se "oculta" por el Oeste.</p>
+        <p>La Tierra gira de oeste a este. Por eso el Sol "sale" por el Este y se "oculta" por el Oeste.</p>
       </div>
 
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿CuÃ¡nto dura el movimiento de rotaciÃ³n?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Cuánto dura el movimiento de rotación?</p>
         <div class="opciones-mini">
           <span class="btn-mini" onclick="responderMini(this, false)">12 horas</span>
           <span class="btn-mini" onclick="responderMini(this, true)">24 horas</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">365 dÃ­as</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">365 días</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 1: ROMPECABEZAS ROTACIÃ“N -->
+      <!-- ACTIVIDAD KINEST�SICA 1: ROMPECABEZAS ROTACI�N -->
       <div class="zona-actividad">
-        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> Arma el ciclo del dÃ­a</h3>
-        
+        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> Arma el ciclo del día</h3>
+
         <div class="rueda-rompecabezas">
           <div class="rueda-vacia">
             <div class="hueco-rueda hueco-1" id="hueco1" data-pos="1"></div>
@@ -927,68 +952,68 @@
           </div>
 
           <div class="piezas-rueda" id="piezasRueda">
-            <div class="pieza-rueda" draggable="true" data-pos="1" data-texto="MAÃ‘ANA">ðŸŒ… MAÃ‘ANA</div>
-            <div class="pieza-rueda" draggable="true" data-pos="2" data-texto="TARDE">â˜€ï¸ TARDE</div>
-            <div class="pieza-rueda" draggable="true" data-pos="3" data-texto="NOCHE">ðŸŒ™ NOCHE</div>
-            <div class="pieza-rueda" draggable="true" data-pos="4" data-texto="MADRUGADA">ðŸŒŒ MADRUGADA</div>
+            <div class="pieza-rueda" draggable="true" data-pos="1" data-texto="🌅 MAÑANA">🌅 MAÑANA</div>
+            <div class="pieza-rueda" draggable="true" data-pos="2" data-texto="☀️ TARDE">☀️ TARDE</div>
+            <div class="pieza-rueda" draggable="true" data-pos="3" data-texto="🌙 NOCHE">🌙 NOCHE</div>
+            <div class="pieza-rueda" draggable="true" data-pos="4" data-texto="🌌 MADRUGADA">🌌 MADRUGADA</div>
           </div>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina1">
-          ðŸŽ‰ Â¡Completaste el ciclo del dÃ­a!
+          ¡Completaste el ciclo del día!
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 2: TRASLACIÃ“N ===== -->
+  <!-- ===== P?GINA 2: TRASLACI�N ===== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslaciÃ³n</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslación</h2>
+
       <p class="texto-explicativo">
-        La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>Ã³rbita</strong>. Este movimiento se llama traslaciÃ³n y dura 365 dÃ­as y 6 horas.
+        La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>órbita</strong>. Este movimiento se llama traslación y dura 365 días y 6 horas.
       </p>
 
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
-                 alt="TraslaciÃ³n de la Tierra" class="imagen-geo"
+            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
+                 alt="Traslaci?n de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
           </div>
-          <div class="pie-imagen">ðŸŒž La Tierra orbita alrededor del Sol</div>
+          <div class="pie-imagen">☀️ La Tierra orbita alrededor del Sol</div>
         </div>
         <div class="col-md-6">
           <div class="recuadro h-100">
-            <h4><i class="fas fa-calendar-alt me-2"></i> DuraciÃ³n</h4>
-            <p class="fs-3 fw-bold">365 dÃ­as</p>
+            <h4><i class="fas fa-calendar-alt me-2"></i> Duración</h4>
+            <p class="fs-3 fw-bold">365 días</p>
             <p class="text-muted">+ 6 horas</p>
             <hr>
-            <h4 class="mt-3"><i class="fas fa-star me-2"></i> AÃ±o bisiesto</h4>
-            <p>Cada 4 aÃ±os sumamos las 6 horas y febrero tiene 29 dÃ­as.</p>
+            <h4 class="mt-3"><i class="fas fa-star me-2"></i> Año bisiesto</h4>
+            <p>Cada 4 años sumamos las 6 horas y febrero tiene 29 días.</p>
           </div>
         </div>
       </div>
 
       <div class="dato-curioso mt-4">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸš€ La Tierra viaja a 107,000 km/h alrededor del Sol. Â¡MÃ¡s rÃ¡pido que un cohete!</p>
+        <p>🚀 La Tierra viaja a 107,000 km/h alrededor del Sol. ¡Más rápido que un cohete!</p>
       </div>
 
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿Cada cuÃ¡ntos aÃ±os tenemos aÃ±o bisiesto?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Cada cuántos años tenemos año bisiesto?</p>
         <div class="opciones-mini">
-          <span class="btn-mini" onclick="responderMini(this, false)">Cada 2 aÃ±os</span>
-          <span class="btn-mini" onclick="responderMini(this, true)">Cada 4 aÃ±os</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">Cada 10 aÃ±os</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Cada 2 años</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Cada 4 años</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Cada 10 años</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 2: MÃQUINA DE AÃ‘OS BISIESTO -->
+      <!-- ACTIVIDAD KINEST�SICA 2: M�QUINA DE A�OS BISIESTO -->
       <div class="zona-actividad">
-        <h3 class="actividad-titulo"><i class="fas fa-calculator me-2"></i> MÃ¡quina de aÃ±os bisiestos</h3>
-        
+        <h3 class="actividad-titulo"><i class="fas fa-calculator me-2"></i> Máquina de años bisiestos</h3>
+
         <div class="maquina-bisiesto">
           <div class="panel-anos" id="panelAnos">
             <div class="boton-ano" data-ano="2020" data-bisiesto="true">2020</div>
@@ -1000,36 +1025,36 @@
           </div>
 
           <div class="resultado-maquina" id="resultadoMaquina">
-            ðŸ‘† Presiona un aÃ±o para ver si es bisiesto
+            Presiona un año para ver si es bisiesto
           </div>
 
           <div class="contador-bisiestos" id="contadorBisiestos">
-            AÃ±os bisiestos encontrados: 0/2
+            Años bisiestos encontrados: 0/2
           </div>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina2">
-          ðŸŽ‰ Â¡Encontraste todos los aÃ±os bisiestos!
+          ¡Encontraste todos los años bisiestos!
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 3: ESTACIONES ===== -->
+  <!-- ===== P?GINA 3: ESTACIONES ===== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del aÃ±o</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del año</h2>
+
       <p class="texto-explicativo">
-        La Tierra estÃ¡ inclinada sobre su eje. Esta inclinaciÃ³n, junto con la traslaciÃ³n, provoca que los rayos del Sol lleguen con diferente intensidad durante el aÃ±o, creando las cuatro estaciones.
+        La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
       </p>
 
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
-             alt="Estaciones del aÃ±o" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
+             alt="Estaciones del año" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
       </div>
-      <div class="pie-imagen">ðŸŒ¡ï¸ Las 4 estaciones</div>
+      <div class="pie-imagen">🍂 Las 4 estaciones</div>
 
       <div class="grid-4cols mt-4">
         <div class="card-info" style="background: #c8e6c9;">
@@ -1044,7 +1069,7 @@
         </div>
         <div class="card-info" style="background: #ffccbc;">
           <i class="fas fa-leaf"></i>
-          <span>OTOÃ‘O</span>
+          <span>OTOÑO</span>
           <small>23 sep - 20 dic</small>
         </div>
         <div class="card-info" style="background: #b3e5fc;">
@@ -1056,11 +1081,11 @@
 
       <div class="recuadro mt-4">
         <h4><i class="fas fa-globe-americas me-2"></i> Hemisferios opuestos</h4>
-        <p>Cuando en el hemisferio norte es verano, en el hemisferio sur es invierno. En MÃ©xico (norte) es verano en junio, mientras que en Argentina (sur) es invierno.</p>
+        <p>Cuando en el hemisferio norte es verano, en el hemisferio sur es invierno. En México (norte) es verano en junio, mientras que en Argentina (sur) es invierno.</p>
       </div>
 
       <div class="mini-pregunta mt-4">
-        <p><i class="fas fa-question-circle"></i> Si en MÃ©xico es verano, Â¿quÃ© es en Argentina?</p>
+        <p><i class="fas fa-question-circle"></i> Si en México es verano, ¿qué es en Argentina?</p>
         <div class="opciones-mini">
           <span class="btn-mini" onclick="responderMini(this, false)">Verano</span>
           <span class="btn-mini" onclick="responderMini(this, true)">Invierno</span>
@@ -1068,10 +1093,10 @@
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 3: ROULETTE DE ESTACIONES -->
+      <!-- ACTIVIDAD KINEST�SICA 3: ROULETTE DE ESTACIONES -->
       <div class="zona-actividad">
         <h3 class="actividad-titulo"><i class="fas fa-arrows-spin me-2"></i> Ordena las estaciones</h3>
-        
+
         <div class="linea-tiempo" id="lineaTiempo">
           <div class="espacio-estacion" id="espacio1" data-pos="1"></div>
           <div class="espacio-estacion" id="espacio2" data-pos="2"></div>
@@ -1084,17 +1109,17 @@
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina3">
-          ðŸŽ‰ Â¡Ordenaste las estaciones correctamente!
+          ¡Ordenaste las estaciones correctamente!
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 4: ELEMENTOS DE MAPAS ===== -->
+  <!-- ===== P?GINA 4: ELEMENTOS DE MAPAS ===== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
-      
+
       <p class="texto-explicativo">
         Los mapas tienen elementos importantes que nos ayudan a entenderlos y usarlos correctamente.
       </p>
@@ -1102,17 +1127,17 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
                  alt="Elementos de un mapa" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
           </div>
-          <div class="pie-imagen">ðŸ—ºï¸ Partes de un mapa</div>
+          <div class="pie-imagen">🗺️ Partes de un mapa</div>
         </div>
         <div class="col-md-6">
           <ul class="lista-iconos">
-            <li><i class="fas fa-compass"></i> <strong>OrientaciÃ³n:</strong> Puntos cardinales</li>
+            <li><i class="fas fa-compass"></i> <strong>Orientación:</strong> Puntos cardinales</li>
             <li><i class="fas fa-ruler"></i> <strong>Escala:</strong> Distancia real</li>
-            <li><i class="fas fa-symbols"></i> <strong>SimbologÃ­a:</strong> Carreteras, rÃ­os, ciudades</li>
+            <li><i class="fas fa-symbols"></i> <strong>Simbología:</strong> Carreteras, ríos, ciudades</li>
             <li><i class="fas fa-map-pin"></i> <strong>Coordenadas:</strong> Latitud y longitud</li>
           </ul>
         </div>
@@ -1120,43 +1145,43 @@
 
       <div class="grid-3cols mt-4">
         <div class="card-info">
-          <span>FÃSICOS</span>
-          <small>MontaÃ±as, rÃ­os</small>
+          <span>FÍSICOS</span>
+          <small>Montañas, ríos</small>
         </div>
         <div class="card-info">
-          <span>POLÃTICOS</span>
-          <small>PaÃ­ses, ciudades</small>
+          <span>POLÍTICOS</span>
+          <small>Países, ciudades</small>
         </div>
         <div class="card-info">
-          <span>TURÃSTICOS</span>
-          <small>Lugares de interÃ©s</small>
+          <span>TURÍSTICOS</span>
+          <small>Lugares de interés</small>
         </div>
       </div>
 
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸ“ La escala puede ser numÃ©rica (1:100,000) o grÃ¡fica (una barrita que representa kilÃ³metros).</p>
+        <p>La escala puede ser numérica (1:100,000) o gráfica (una barrita que representa kilómetros).</p>
       </div>
 
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿QuÃ© elemento indica los puntos cardinales?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Qué elemento indica los puntos cardinales?</p>
         <div class="opciones-mini">
-          <span class="btn-mini" onclick="responderMini(this, true)">OrientaciÃ³n</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Orientación</span>
           <span class="btn-mini" onclick="responderMini(this, false)">Escala</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">SimbologÃ­a</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Simbología</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 4: IDENTIFICA LOS ELEMENTOS DEL MAPA -->
+      <!-- ACTIVIDAD KINEST�SICA 4: IDENTIFICA LOS ELEMENTOS DEL MAPA -->
       <div class="zona-actividad">
         <h3 class="actividad-titulo"><i class="fas fa-map-pin me-2"></i> Identifica los elementos del mapa</h3>
-        
+
         <div class="mapa-mexico-container">
           <div class="mapa-contenedor">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-mexico.png" 
-                 alt="Mapa de MÃ©xico" class="mapa-base-img" onclick="ampliarImagen(this)"
+            <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-mexico.png"
+                 alt="Mapa de México" class="mapa-base-img" onclick="ampliarImagen(this)"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg/800px-Mapa_de_M%C3%A9xico_%28pol%C3%ADtico%29.svg.png'">
-            
+
             <!-- Zonas de drop - solo 4 elementos -->
             <div class="drop-zone" id="zonaNorte" data-tipo="norte"></div>
             <div class="drop-zone" id="zonaEscala" data-tipo="escala"></div>
@@ -1165,32 +1190,32 @@
           </div>
 
           <div class="elementos-mapa" id="elementosMapa">
-            <div class="elemento-mapa" draggable="true" data-tipo="norte" data-texto="ðŸ§­ NORTE">
+            <div class="elemento-mapa" draggable="true" data-tipo="norte" data-texto="NORTE">
               <i class="fas fa-compass"></i> NORTE
             </div>
-            <div class="elemento-mapa" draggable="true" data-tipo="escala" data-texto="ðŸ“ ESCALA">
+            <div class="elemento-mapa" draggable="true" data-tipo="escala" data-texto="ESCALA">
               <i class="fas fa-ruler"></i> ESCALA
             </div>
-            <div class="elemento-mapa" draggable="true" data-tipo="estado" data-texto="ðŸ“ ESTADO">
+            <div class="elemento-mapa" draggable="true" data-tipo="estado" data-texto="ESTADO">
               <i class="fas fa-map-pin"></i> ESTADO
             </div>
-            <div class="elemento-mapa" draggable="true" data-tipo="oceano" data-texto="ðŸŒŠ OCÃ‰ANO">
-              <i class="fas fa-water"></i> OCÃ‰ANO
+            <div class="elemento-mapa" draggable="true" data-tipo="oceano" data-texto="OCÉANO">
+              <i class="fas fa-water"></i> OCÉANO
             </div>
           </div>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina4">
-          ðŸŽ‰ Â¡Identificaste todos los elementos del mapa!
+          ¡Identificaste todos los elementos del mapa!
         </div>
       </div>
     </div>
   </div>
 
   <div class="navegador">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>â† ANTERIOR</button>
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>ANTERIOR</button>
     <span class="indicador" id="contadorPagina">1/4</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE â†’</button>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE</button>
   </div>
 
   <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
@@ -1198,10 +1223,10 @@
 </div>
 
 <script>
-  // ===== FUNCIÃ“N PARA AMPLIAR IMÃGENES =====
+  // ===== FUNCI�N PARA AMPLIAR IM�GENES =====
   function ampliarImagen(img) {
     if (!img) return;
-    
+
     if (img.classList.contains('ampliada')) {
       img.classList.remove('ampliada');
       document.body.classList.remove('imagen-ampliada');
@@ -1227,11 +1252,12 @@
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
     click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
     completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
   Object.values(sonidos).forEach(s => {
-    if (s.src) s.volume = 0.2;
+    if (s.src) s.volume = 0.15;
   });
 
   function reproducirSonido(nombre) {
@@ -1241,19 +1267,46 @@
     }
   }
 
-  // ===== NAVEGACIÃ“N =====
+  function registrarErrorTracker(pagina, detalle) {
+    if (window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorByPage === 'function') {
+      window.laTierraTrackerHooks.addErrorByPage(pagina, {
+        origen: 'kinestesico',
+        ...(detalle || {})
+      });
+    }
+  }
+
+  function crearElementoTemporal(claseBase, texto) {
+    const el = document.createElement('div');
+    el.className = claseBase + ' error-temporal';
+    el.innerText = texto;
+    return el;
+  }
+
+  function marcarZonaIncorrecta(zona, temporal, contenedor, resetStyles) {
+    zona.classList.add('incorrecta');
+    if (contenedor && temporal) contenedor.appendChild(temporal);
+    window.setTimeout(() => {
+      zona.classList.remove('incorrecta');
+      if (typeof resetStyles === 'function') resetStyles(zona);
+      if (contenedor && temporal && temporal.parentNode === contenedor) {
+        temporal.remove();
+      }
+    }, 700);
+  }
+
+  // ===== NAVEGACI�N =====
   let paginaActual = 1;
   const totalPaginas = 4;
 
   function cambiarPagina(direccion) {
     reproducirSonido('pasarPagina');
-    
+
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
     paginaActual += direccion;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_normal_kinestesico', paginaActual);
   }
 
   function actualizarUI() {
@@ -1262,7 +1315,7 @@
       if (index + 1 === paginaActual) punto.classList.add('activo');
       else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
-    
+
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
@@ -1272,10 +1325,10 @@
   // ===== MINI PREGUNTAS =====
   function responderMini(boton, esCorrecto) {
     reproducirSonido('click');
-    
+
     const opciones = boton.parentElement.querySelectorAll('.btn-mini');
     opciones.forEach(opt => opt.classList.remove('correcto'));
-    
+
     if (esCorrecto) {
       boton.classList.add('correcto');
       reproducirSonido('completar');
@@ -1289,7 +1342,7 @@
     }
   }
 
-  // ===== ACTIVIDAD 1: ROMPECABEZAS ROTACIÃ“N =====
+  // ===== ACTIVIDAD 1: ROMPECABEZAS ROTACI�N =====
   let piezasColocadasRueda = 0;
 
   document.querySelectorAll('#pagina1 .pieza-rueda').forEach(pieza => {
@@ -1315,28 +1368,28 @@
     hueco.addEventListener('dragleave', function(e) {
       this.style.background = 'rgba(255,214,0,0.2)';
     });
-    
+
     hueco.addEventListener('drop', function(e) {
       e.preventDefault();
       this.style.background = 'rgba(255,214,0,0.2)';
-      
+
       const posElemento = e.dataTransfer.getData('pos');
       const textoElemento = e.dataTransfer.getData('texto');
       const posHueco = this.dataset.pos;
-      
+
       if (posElemento === posHueco && this.children.length === 0) {
         const piezas = document.querySelectorAll('#pagina1 .pieza-rueda');
         for (let pieza of piezas) {
           if (pieza.innerText.includes(textoElemento) && !pieza.classList.contains('oculto')) {
             pieza.classList.add('oculto');
-            
+
             const nuevoDiv = document.createElement('div');
             nuevoDiv.className = 'pieza-colocada';
             nuevoDiv.innerText = textoElemento;
             this.appendChild(nuevoDiv);
-            
+
             reproducirSonido('correcto');
-            
+
             piezasColocadasRueda++;
             if (piezasColocadasRueda === 4) {
               document.getElementById('feedbackPagina1').classList.add('visible');
@@ -1345,37 +1398,45 @@
             break;
           }
         }
+      } else {
+        reproducirSonido('error');
+        registrarErrorTracker(1, { actividad: 'rompecabezas_rotacion', resultado: 'incorrecto' });
+        marcarZonaIncorrecta(this, crearElementoTemporal('pieza-colocada', textoElemento), this, (zona) => {
+          zona.style.background = 'rgba(255,214,0,0.2)';
+        });
       }
     });
   });
 
-  // ===== ACTIVIDAD 2: MÃQUINA DE AÃ‘OS BISIESTO =====
+  // ===== ACTIVIDAD 2: M�QUINA DE A�OS BISIESTO =====
   let bisiestosEncontrados = 0;
   const totalBisiestos = 2;
 
   document.querySelectorAll('#pagina2 .boton-ano').forEach(boton => {
     boton.addEventListener('click', function() {
       if (this.classList.contains('usado')) return;
-      
+
       const ano = this.dataset.ano;
       const esBisiesto = this.dataset.bisiesto === 'true';
       const resultado = document.getElementById('resultadoMaquina');
-      
+
       if (esBisiesto) {
-        resultado.innerHTML = `âœ… Â¡${ano} ES un aÃ±o bisiesto! (Febrero tuvo 29 dÃ­as)`;
+        resultado.innerHTML = `Sí, ${ano} es un año bisiesto. Febrero tuvo 29 días.`;
         resultado.style.background = '#c8e6c9';
         bisiestosEncontrados++;
       } else {
-        resultado.innerHTML = `âŒ ${ano} NO es un aÃ±o bisiesto (Febrero tuvo 28 dÃ­as)`;
+        registrarErrorTracker(2, { actividad: 'anos_bisiestos', resultado: 'incorrecto' });
+        reproducirSonido('error');
+        resultado.innerHTML = `✗ ${ano} no es un año bisiesto (febrero tuvo 28 días)`;
         resultado.style.background = '#ffcdd2';
       }
-      
+
       this.classList.add('usado');
       reproducirSonido('click');
-      
-      document.getElementById('contadorBisiestos').innerHTML = 
-        `AÃ±os bisiestos encontrados: ${bisiestosEncontrados}/${totalBisiestos}`;
-      
+
+      document.getElementById('contadorBisiestos').innerHTML =
+        `Años bisiestos encontrados: ${bisiestosEncontrados}/${totalBisiestos}`;
+
       if (bisiestosEncontrados === totalBisiestos) {
         document.getElementById('feedbackPagina2').classList.add('visible');
         reproducirSonido('completar');
@@ -1385,10 +1446,10 @@
 
   // ===== ACTIVIDAD 3: ROULETTE DE ESTACIONES =====
   const estaciones = [
-    { nombre: 'PRIMAVERA', pos: 1, emoji: 'ðŸŒ¼' },
-    { nombre: 'VERANO', pos: 2, emoji: 'â˜€ï¸' },
-    { nombre: 'OTOÃ‘O', pos: 3, emoji: 'ðŸ‚' },
-    { nombre: 'INVIERNO', pos: 4, emoji: 'â„ï¸' }
+    { nombre: 'PRIMAVERA', pos: 1, emoji: '' },
+    { nombre: 'VERANO', pos: 2, emoji: '' },
+    { nombre: 'OTOÑO', pos: 3, emoji: '' },
+    { nombre: 'INVIERNO', pos: 4, emoji: '' }
   ];
 
   function mezclarArray(array) {
@@ -1402,11 +1463,11 @@
   function iniciarEstaciones() {
     const contenedor = document.getElementById('estacionesDesordenadas');
     if (!contenedor) return;
-    
+
     contenedor.innerHTML = '';
-    
+
     const estacionesMezcladas = mezclarArray([...estaciones]);
-    
+
     estacionesMezcladas.forEach(est => {
       const div = document.createElement('div');
       div.className = 'ficha-estacion';
@@ -1414,7 +1475,7 @@
       div.dataset.pos = est.pos;
       div.dataset.texto = est.nombre;
       div.innerText = `${est.emoji} ${est.nombre}`;
-      
+
       div.addEventListener('dragstart', function(e) {
         e.dataTransfer.setData('text/plain', this.innerText);
         e.dataTransfer.setData('pos', this.dataset.pos);
@@ -1426,7 +1487,7 @@
       div.addEventListener('dragend', function(e) {
         this.style.opacity = '1';
       });
-      
+
       contenedor.appendChild(div);
     });
   }
@@ -1442,29 +1503,29 @@
     espacio.addEventListener('dragleave', function(e) {
       this.style.background = 'white';
     });
-    
+
     espacio.addEventListener('drop', function(e) {
       e.preventDefault();
       this.style.background = 'white';
-      
+
       const posElemento = e.dataTransfer.getData('pos');
       const textoElemento = e.dataTransfer.getData('texto');
       const posEspacio = this.dataset.pos;
-      
+
       if (posElemento === posEspacio && !this.classList.contains('lleno') && this.children.length === 0) {
         const fichas = document.querySelectorAll('#pagina3 .ficha-estacion');
         for (let ficha of fichas) {
           if (ficha.innerText.includes(textoElemento) && !ficha.classList.contains('oculto')) {
             ficha.classList.add('oculto');
-            
+
             const nuevoDiv = document.createElement('div');
             nuevoDiv.className = 'elemento-colocado';
             nuevoDiv.innerText = textoElemento;
             this.appendChild(nuevoDiv);
             this.classList.add('lleno');
-            
+
             reproducirSonido('correcto');
-            
+
             estacionesColocadas++;
             if (estacionesColocadas === 4) {
               document.getElementById('feedbackPagina3').classList.add('visible');
@@ -1473,11 +1534,17 @@
             break;
           }
         }
+      } else {
+        reproducirSonido('error');
+        registrarErrorTracker(3, { actividad: 'ordenar_estaciones', resultado: 'incorrecto' });
+        marcarZonaIncorrecta(this, crearElementoTemporal('elemento-colocado', textoElemento), this, (zona) => {
+          zona.style.background = 'white';
+        });
       }
     });
   });
 
-  // ===== ACTIVIDAD 4: MAPA DE MÃ‰XICO (FUNCIONAL) =====
+  // ===== ACTIVIDAD 4: MAPA DE M�XICO (FUNCIONAL) =====
   let elementosColocadosMapa = 0;
   const totalElementosMapa = 4; // norte, escala, estado, oceano
 
@@ -1508,32 +1575,32 @@
       this.style.background = 'rgba(255, 255, 255, 0.1)';
       this.style.borderColor = '#ffd600';
     });
-    
+
     zona.addEventListener('drop', function(e) {
       e.preventDefault();
       this.style.background = 'rgba(255, 255, 255, 0.1)';
       this.style.borderColor = '#ffd600';
-      
+
       const tipoElemento = e.dataTransfer.getData('tipo');
       const tipoZona = this.dataset.tipo;
       const textoElemento = e.dataTransfer.getData('texto');
-      
-      // Verificar que el tipo coincida y que la zona estÃ© vacÃ­a
+
+      // Verificar que el tipo coincida y que la zona est� vac�a
       if (tipoElemento === tipoZona && this.children.length === 0) {
         const elementos = document.querySelectorAll('#pagina4 .elemento-mapa');
         for (let elem of elementos) {
           if (elem.innerText.includes(textoElemento) && !elem.classList.contains('oculto')) {
             elem.classList.add('oculto');
-            
+
             const nuevoDiv = document.createElement('div');
             nuevoDiv.className = 'elemento-colocado';
             nuevoDiv.innerText = textoElemento;
             this.appendChild(nuevoDiv);
-            
+
             reproducirSonido('correcto');
-            
+
             elementosColocadosMapa++;
-            
+
             if (elementosColocadosMapa === totalElementosMapa) {
               document.getElementById('feedbackPagina4').classList.add('visible');
               reproducirSonido('completar');
@@ -1541,27 +1608,26 @@
             break;
           }
         }
+      } else {
+        reproducirSonido('error');
+        registrarErrorTracker(4, { actividad: 'elementos_mapa', resultado: 'incorrecto' });
+        marcarZonaIncorrecta(this, crearElementoTemporal('elemento-colocado', textoElemento), this, (zona) => {
+          zona.style.background = 'rgba(255, 255, 255, 0.1)';
+          zona.style.borderColor = '#ffd600';
+        });
       }
     });
   });
 
   // ===== INICIALIZAR =====
   window.addEventListener('DOMContentLoaded', () => {
-    const guardado = localStorage.getItem('progreso_normal_kinestesico');
-    if (guardado) {
-      const pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      }
-    }
     actualizarUI();
     iniciarEstaciones();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

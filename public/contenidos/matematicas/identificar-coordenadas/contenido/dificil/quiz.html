@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz · Coordenadas · Nivel Difícil</title>
+    <title>Quiz · Identificar coordenadas · Nivel Difícil</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -454,14 +454,53 @@
     const audioDing = document.getElementById('audioDing');
     const audioError = document.getElementById('audioError');
     const audioTada = document.getElementById('audioTada');
+    [audioClick, audioDing, audioError, audioTada].forEach(audio => {
+        if (audio) audio.volume = 0.15;
+    });
+
+    function reproducir(audio) {
+        try {
+            if (!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+        } catch (e) {}
+    }
+
+    function normalizarEstilo(estilo) {
+        const mapa = {
+            visual_verbal: 'visual_verbal',
+            'visual-verbal': 'visual_verbal',
+            verbal: 'visual_verbal',
+            visual_no_verbal: 'visual_no_verbal',
+            'visual-no-verbal': 'visual_no_verbal',
+            no_verbal: 'visual_no_verbal',
+            auditivo: 'auditivo',
+            kinestesico: 'kinestesico',
+            kinestésico: 'kinestesico'
+        };
+        return mapa[estilo] || 'visual_verbal';
+    }
 
     async function obtenerEstiloUsuario() {
         try {
             const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
             const data = await res.json();
-            estiloUsuario = data.estilo || 'visual_verbal';
+            estiloUsuario = normalizarEstilo(data.estilo || 'visual_verbal');
         } catch (e) {
             estiloUsuario = 'visual_verbal';
+        }
+    }
+
+    function obtenerSessionUuidActual(nivel) {
+        try {
+            const estilo = estiloUsuario || 'visual_verbal';
+            const key = `reforzamiento_sesion_5_${nivel}_${estilo}`;
+            const raw = window.sessionStorage.getItem(key);
+            if (!raw) return null;
+            const meta = JSON.parse(raw);
+            return typeof meta.sessionUuid === 'string' ? meta.sessionUuid : null;
+        } catch (e) {
+            return null;
         }
     }
 
@@ -508,13 +547,13 @@
 
     function seleccionarRespuesta(idxPregunta, idxOpcion) {
         if (respuestas[idxPregunta] !== null) return;
-        audioClick.play();
+        reproducir(audioClick);
         respuestas[idxPregunta] = idxOpcion;
         if (idxOpcion === preguntas[idxPregunta].correcta) {
             aciertos++;
-            audioDing.play();
+            reproducir(audioDing);
         } else {
-            audioError.play();
+            reproducir(audioError);
         }
         document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
         mostrarPregunta();
@@ -578,13 +617,13 @@
         document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
 
         if (aprobado) {
-            audioTada.play();
+            reproducir(audioTada);
             document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
             document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Felicidades, completaste el nivel más difícil!`;
             document.getElementById('btnReintentar').style.display = 'none';
             await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
         } else {
-            audioError.play();
+            reproducir(audioError);
             document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
             document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para completar el nivel difícil.`;
             document.getElementById('btnReintentar').style.display = 'inline-block';
@@ -594,6 +633,7 @@
 
     async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
         try {
+            const errores = Math.max(total - aciertos, 0);
             await fetch('/api/progreso/nivel', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -605,8 +645,10 @@
                     aprobado: aprobado,
                     aciertos: aciertos,
                     total_preguntas: total,
+                    errores: errores,
                     tiempo_segundos: tiempoSegundos,
-                    fecha_inicio: fechaInicio.toISOString()
+                    fecha_inicio: fechaInicio.toISOString(),
+                    session_uuid: obtenerSessionUuidActual('dificil')
                 })
             });
         } catch (e) {
@@ -647,6 +689,7 @@
     })();
 </script>
 
+<script src="/recursos/js/bayes-quiz-feedback.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

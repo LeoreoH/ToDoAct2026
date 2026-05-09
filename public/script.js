@@ -56,11 +56,30 @@ async function obtenerPerfil() {
     }
 }
 
+function obtenerValorCampo(selectores) {
+    for (const selector of selectores) {
+        const campo = document.querySelector(selector);
+        if (campo) {
+            return campo.value;
+        }
+    }
+
+    return '';
+}
+
 function iniciarSesion(event) {
     event.preventDefault();
 
-    const usuario = document.querySelector('input[name="usuario"]').value;
-    const contrasena = document.querySelector('input[name="contrasena"]').value;
+    const usuario = obtenerValorCampo(['input[name="usuario"]']);
+    const contrasena = obtenerValorCampo([
+        'input[name="contrasena"]',
+        'input[name="contraseña"]'
+    ]);
+
+    if (!usuario || !contrasena) {
+        alert('Completa usuario y contraseña');
+        return;
+    }
 
     const data = { usuario, contrasena };
 
@@ -95,11 +114,19 @@ function iniciarSesion(event) {
 function crearCuenta(event) {
     event.preventDefault();
 
-    const usuario = document.querySelector('input[name="usuario"]').value;
-    const contrasena = document.querySelector('input[name="contrasena"]').value;
-    const nombrecompleto = document.querySelector('input[name="nombrecompleto"]').value;
-    const fechanacimiento = document.querySelector('input[name="fechanacimiento"]').value;
-    const genero = document.querySelector('select[name="genero"]').value;
+    const usuario = obtenerValorCampo(['input[name="usuario"]']);
+    const contrasena = obtenerValorCampo([
+        'input[name="contrasena"]',
+        'input[name="contraseña"]'
+    ]);
+    const nombrecompleto = obtenerValorCampo(['input[name="nombrecompleto"]']);
+    const fechanacimiento = obtenerValorCampo(['input[name="fechanacimiento"]']);
+    const genero = obtenerValorCampo(['select[name="genero"]']);
+
+    if (!usuario || !contrasena || !nombrecompleto || !fechanacimiento || !genero) {
+        alert('Completa todos los campos');
+        return;
+    }
 
     const data = {
         usuario,

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Tierra Â· Nivel FÃ¡cil Â· KinestÃ©sico</title>
+  <title>La Tierra - Nivel Fácil - Kinestésico</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -295,7 +295,7 @@
       font-weight: 700;
     }
 
-    /* ===== ACTIVIDADES KINESTÃ‰SICAS ===== */
+    /* ===== ACTIVIDADES KINEST�SICAS ===== */
     .zona-actividad {
       background: #fff3e0;
       border-radius: 30px;
@@ -353,6 +353,12 @@
       border-style: solid;
     }
 
+    .zona-soltar.incorrecta {
+      background: #ffcdd2;
+      border-color: #f44336;
+      border-style: solid;
+    }
+
     .elemento-colocado {
       background: #4caf50;
       color: white;
@@ -362,6 +368,10 @@
       border: 3px solid white;
       display: inline-block;
       margin: 5px;
+    }
+
+    .elemento-colocado.error-temporal {
+      background: #f44336;
     }
 
     /* ACTIVIDAD 2: MEMORAMA */
@@ -432,6 +442,12 @@
       background: #fff3e0;
     }
 
+    .celda-cruz.incorrecta {
+      background: #ffcdd2;
+      border-color: #f44336;
+      border-style: solid;
+    }
+
     .pieza-cruz {
       width: 90px;
       height: 90px;
@@ -464,6 +480,11 @@
       font-weight: 800;
       font-size: 1.5rem;
       color: white;
+    }
+
+    .pieza-colocada-cruz.error-temporal {
+      background: #f44336;
+      border-color: white;
     }
 
     .piezas-disponibles {
@@ -666,18 +687,19 @@
       box-shadow: 0 8px 0 #0d47a1;
     }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
-<!-- BOTÃ“N PARA SUBIR -->
+<!-- BOT�N PARA SUBIR -->
 <div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
   <i class="fas fa-arrow-up"></i>
 </div>
 
 <div class="cabecera">
-  <h1>ðŸŒ LA TIERRA</h1>
-  <p class="lead text-white">Bloque I Â· Nivel FÃ¡cil</p>
-  <div class="badge-estilo">âœ‹ Estilo KinestÃ©sico</div>
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I - Nivel Fácil</p>
+  <div class="badge-estilo">✋ Estilo Kinestésico</div>
 </div>
 
 <div class="progreso-contenedor">
@@ -688,37 +710,42 @@
     <div class="punto">3</div>
     <div class="punto">4</div>
   </div>
-  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">PÃ¡gina <span id="paginaActualNum">1</span>/4</span>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
 </div>
 
 <div class="contenedor">
 
-  <!-- ===== PÃGINA 1: Â¿QUÃ‰ ES LA TIERRA? ===== -->
+  <!-- ===== P?GINA 1: �QU� ES LA TIERRA? ===== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Nuestro planeta</h2>
-      
+
       <p class="texto-explicativo">
-        La <strong>Tierra</strong> es el planeta donde vivimos, el tercero mÃ¡s cercano al Sol y el Ãºnico que conocemos que tiene vida. 
+        La <strong>Tierra</strong> es el planeta donde vivimos, el tercero más cercano al Sol y el único que conocemos que tiene vida.
         Tiene forma de <strong>esfera ligeramente achatada en los polos</strong>.
       </p>
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
-                 alt="Tierra desde el espacio" class="imagen-geo"
-                 onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+          <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+            <div class="ayuda-ampliar-media">
+              <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+                <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg"
+                     alt="Tierra desde el espacio" class="imagen-geo"
+                     onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+              </div>
+              <div class="pie-imagen">&#127757; Vista satelital de la Tierra</div>
+            </div>
+            <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
           </div>
-          <div class="pie-imagen">ðŸŒ Vista satelital</div>
         </div>
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg"
                  alt="Forma de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
           </div>
-          <div class="pie-imagen">ðŸ“ Forma achatada</div>
+          <div class="pie-imagen">📐 Forma achatada en los polos</div>
         </div>
       </div>
 
@@ -726,7 +753,7 @@
         <div class="dato-card">
           <i class="fas fa-ruler"></i>
           <span>12,742 km</span>
-          <small>DiÃ¡metro</small>
+          <small>Diámetro</small>
         </div>
         <div class="dato-card">
           <i class="fas fa-water"></i>
@@ -736,35 +763,35 @@
         <div class="dato-card">
           <i class="fas fa-clock"></i>
           <span>4.5B</span>
-          <small>AÃ±os</small>
+          <small>Años</small>
         </div>
       </div>
 
-      <div class="dato-curioso">
-        <i class="fas fa-lightbulb"></i>
-        <p>ðŸŒŠ La Tierra se ve azul desde el espacio por la cantidad de agua.</p>
-      </div>
+        <div class="dato-curioso">
+          <i class="fas fa-lightbulb"></i>
+          <p>La Tierra se ve azul desde el espacio por la cantidad de agua.</p>
+        </div>
 
       <!-- ACTIVIDAD 1: ARRASTRAR -->
       <div class="zona-actividad">
-        <h4 class="actividad-titulo"><i class="fas fa-arrows-alt me-2"></i> Arrastra cada nÃºmero</h4>
-        
+        <h4 class="actividad-titulo"><i class="fas fa-arrows-alt me-2"></i> Arrastra cada número</h4>
+
         <div class="row">
           <div class="col-md-4">
             <div class="zona-soltar" id="zonaDiametro" data-tipo="diametro">
-              <strong>ðŸ“ DIÃMETRO</strong>
+              <strong>DIÁMETRO</strong>
               <div id="contenedorDiametro"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="zona-soltar" id="zonaAgua" data-tipo="agua">
-              <strong>ðŸ’§ AGUA</strong>
+              <strong>AGUA</strong>
               <div id="contenedorAgua"></div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="zona-soltar" id="zonaEdad" data-tipo="edad">
-              <strong>â³ EDAD</strong>
+              <strong>EDAD</strong>
               <div id="contenedorEdad"></div>
             </div>
           </div>
@@ -773,45 +800,45 @@
         <div class="text-center mt-4">
           <span class="elemento-arrastrable" draggable="true" data-tipo="diametro" data-texto="12,742 km">12,742 km</span>
           <span class="elemento-arrastrable" draggable="true" data-tipo="agua" data-texto="71%">71%</span>
-          <span class="elemento-arrastrable" draggable="true" data-tipo="edad" data-texto="4.5B aÃ±os">4.5B aÃ±os</span>
+          <span class="elemento-arrastrable" draggable="true" data-tipo="edad" data-texto="4.5B años">4.5B años</span>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina1">
-          ðŸŽ‰ Â¡Excelente! Completaste los datos
+          ¡Excelente! Completaste los datos
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 2: LÃNEAS IMAGINARIAS ===== -->
+  <!-- ===== P?GINA 2: L�NEAS IMAGINARIAS ===== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>LÃ­neas imaginarias</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>Líneas imaginarias</h2>
+
       <p class="texto-explicativo">
-        Para ubicarnos, inventamos <strong>lÃ­neas imaginarias</strong>: paralelos (horizontales) y meridianos (verticales).
+        Para ubicarnos, inventamos <strong>líneas imaginarias</strong>: paralelos (horizontales) y meridianos (verticales).
       </p>
-      
+
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" 
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg"
              alt="Paralelos y meridianos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
       </div>
-      <div class="pie-imagen">ðŸ—ºï¸ Paralelos y meridianos</div>
+      <div class="pie-imagen">🗺️ Paralelos y meridianos</div>
 
       <div class="row mt-4">
         <div class="col-md-6">
           <div class="recuadro">
             <h4><i class="fas fa-circle-notch me-2"></i> Paralelos</h4>
-            <p>LÃ­neas horizontales. El mÃ¡s importante: <strong>Ecuador</strong></p>
-            <p class="mb-0">ðŸŒ Norte y Sur</p>
+            <p>Líneas horizontales. El más importante: <strong>Ecuador</strong></p>
+            <p class="mb-0">Norte y Sur</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="recuadro">
             <h4><i class="fas fa-arrow-up me-2"></i> Meridianos</h4>
-            <p>LÃ­neas verticales. El mÃ¡s importante: <strong>Greenwich</strong></p>
-            <p class="mb-0">ðŸ“ Este y Oeste</p>
+            <p>Líneas verticales. El más importante: <strong>Greenwich</strong></p>
+            <p class="mb-0">Este y Oeste</p>
           </div>
         </div>
       </div>
@@ -819,33 +846,33 @@
       <!-- ACTIVIDAD 2: MEMORAMA -->
       <div class="zona-actividad">
         <h4 class="actividad-titulo"><i class="fas fa-brain me-2"></i> Encuentra las parejas</h4>
-        
+
         <div class="memorama-grid" id="memoramaGrid">
           <!-- Las cartas se generan con JavaScript -->
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina2">
-          ðŸŽ‰ Â¡Encontraste todas las parejas!
+          ¡Encontraste todas las parejas!
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 3: PUNTOS CARDINALES ===== -->
+  <!-- ===== P?GINA 3: PUNTOS CARDINALES ===== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-compass me-3"></i>Puntos cardinales</h2>
-      
+
       <p class="texto-explicativo">
         Los <strong>puntos cardinales</strong> son las cuatro direcciones: Norte, Sur, Este y Oeste.
       </p>
-      
+
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" 
+        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png"
              alt="Rosa de los vientos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
       </div>
-      <div class="pie-imagen">ðŸ§­ Rosa de los vientos</div>
+      <div class="pie-imagen">🧭 Rosa de los vientos</div>
 
       <div class="cardinales-grid">
         <div class="cardinal-item"><i class="fas fa-arrow-up"></i><span>NORTE</span></div>
@@ -856,13 +883,13 @@
 
       <div class="dato-curioso">
         <i class="fas fa-sun"></i>
-        <p>ðŸŒ… El Sol sale por el Este y se oculta por el Oeste.</p>
+        <p>El Sol sale por el Este y se oculta por el Oeste.</p>
       </div>
 
       <!-- ACTIVIDAD 3: ROMPECABEZAS EN CRUZ -->
       <div class="zona-actividad">
         <h4 class="actividad-titulo"><i class="fas fa-plus-circle me-2"></i> Arma la rosa en cruz</h4>
-        
+
         <div class="cruz-container">
           <div class="fila-cruz">
             <div class="celda-cruz"></div>
@@ -892,111 +919,111 @@
         </div>
 
         <div class="piezas-disponibles" id="piezasCruz">
-          <div class="pieza-cruz" draggable="true" data-posicion="norte" data-texto="â¬†ï¸">â¬†ï¸</div>
-          <div class="pieza-cruz" draggable="true" data-posicion="sur" data-texto="â¬‡ï¸">â¬‡ï¸</div>
-          <div class="pieza-cruz" draggable="true" data-posicion="este" data-texto="âž¡ï¸">âž¡ï¸</div>
-          <div class="pieza-cruz" draggable="true" data-posicion="oeste" data-texto="â¬…ï¸">â¬…ï¸</div>
-          <div class="pieza-cruz" draggable="true" data-posicion="centro" data-texto="ðŸ§­">ðŸ§­</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="norte" data-texto="⬆️">⬆️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="sur" data-texto="⬇️">⬇️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="este" data-texto="➡️">➡️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="oeste" data-texto="⬅️">⬅️</div>
+          <div class="pieza-cruz" draggable="true" data-posicion="centro" data-texto="🧭">🧭</div>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina3">
-          ðŸŽ‰ Â¡Armaste la rosa de los vientos!
+          ¡Armaste la rosa de los vientos!
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 4: ZONAS TÃ‰RMICAS ===== -->
+  <!-- ===== P?GINA 4: ZONAS T�RMICAS ===== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas tÃ©rmicas</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas térmicas</h2>
+
       <p class="texto-explicativo">
-        Los rayos del Sol no calientan igual toda la Tierra. Hay <strong>5 zonas tÃ©rmicas</strong>.
+        Los rayos del Sol no calientan igual toda la Tierra. Hay <strong>5 zonas térmicas</strong>.
       </p>
-      
+
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" 
-             alt="Zonas tÃ©rmicas" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg"
+             alt="Zonas térmicas" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
       </div>
-      <div class="pie-imagen">ðŸŒ¡ï¸ Las 5 zonas tÃ©rmicas</div>
+      <div class="pie-imagen">☀️ Las 5 zonas térmicas</div>
 
       <div class="zonas-grid">
         <div class="zona-item zona-calida">
           <i class="fas fa-sun"></i>
-          <h5>CÃLIDA</h5>
+          <h5>CÁLIDA</h5>
           <small>Ecuador</small>
         </div>
         <div class="zona-item zona-templada">
           <i class="fas fa-cloud-sun"></i>
           <h5>TEMPLADA</h5>
-          <small>Â¡MÃ©xico!</small>
+          <small>¡México!</small>
         </div>
         <div class="zona-item zona-fria">
           <i class="fas fa-snowflake"></i>
-          <h5>FRÃA</h5>
+          <h5>FRÍA</h5>
           <small>Polos</small>
         </div>
       </div>
 
       <div class="imagen-marco mt-3" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" 
-             alt="Zona frÃ­a" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg"
+             alt="Zona fría" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
       </div>
-      <div class="pie-imagen">â„ï¸ Paisaje de zona frÃ­a</div>
+      <div class="pie-imagen">❄️ Paisaje de zona fría</div>
 
       <!-- ACTIVIDAD 4: LABERINTO -->
       <div class="zona-actividad">
         <h4 class="actividad-titulo"><i class="fas fa-road me-2"></i> Encuentra la salida</h4>
-        
+
         <div class="pistas-laberinto" id="pistasLaberinto">
-          <div class="pista activa" data-nivel="1">ðŸŒµ Selva</div>
-          <div class="pista" data-nivel="2">ðŸŒ® MÃ©xico</div>
-          <div class="pista" data-nivel="3">ðŸ§Š Glaciares</div>
+          <div class="pista activa" data-nivel="1">Selva</div>
+          <div class="pista" data-nivel="2">México</div>
+          <div class="pista" data-nivel="3">Glaciares</div>
         </div>
 
         <div class="laberinto-container" id="laberintoContainer">
           <div class="nivel-laberinto" data-nivel="1">
-            <p><strong>ðŸŒµ Selva AmazÃ³nica:</strong> Â¿En quÃ© zona estÃ¡?</p>
+            <p><strong>Selva Amazónica:</strong> ¿En qué zona está?</p>
             <div class="opciones-laberinto">
-              <div class="btn-laberinto" data-nivel="1" data-correcto="true">CÃ¡lida</div>
+              <div class="btn-laberinto" data-nivel="1" data-correcto="true">Cálida</div>
               <div class="btn-laberinto" data-nivel="1" data-correcto="false">Templada</div>
-              <div class="btn-laberinto" data-nivel="1" data-correcto="false">FrÃ­a</div>
+              <div class="btn-laberinto" data-nivel="1" data-correcto="false">Fría</div>
             </div>
           </div>
-          
+
           <div class="nivel-laberinto" data-nivel="2" style="display: none;">
-            <p><strong>ðŸŒ® MÃ©xico:</strong> Â¿En quÃ© zona estÃ¡?</p>
+            <p><strong>México:</strong> ¿En qué zona está?</p>
             <div class="opciones-laberinto">
-              <div class="btn-laberinto" data-nivel="2" data-correcto="false">CÃ¡lida</div>
+              <div class="btn-laberinto" data-nivel="2" data-correcto="false">Cálida</div>
               <div class="btn-laberinto" data-nivel="2" data-correcto="true">Templada</div>
-              <div class="btn-laberinto" data-nivel="2" data-correcto="false">FrÃ­a</div>
+              <div class="btn-laberinto" data-nivel="2" data-correcto="false">Fría</div>
             </div>
           </div>
-          
+
           <div class="nivel-laberinto" data-nivel="3" style="display: none;">
-            <p><strong>ðŸ§Š Glaciares:</strong> Â¿En quÃ© zona estÃ¡n?</p>
+            <p><strong>Glaciares:</strong> ¿En qué zona están?</p>
             <div class="opciones-laberinto">
-              <div class="btn-laberinto" data-nivel="3" data-correcto="false">CÃ¡lida</div>
+              <div class="btn-laberinto" data-nivel="3" data-correcto="false">Cálida</div>
               <div class="btn-laberinto" data-nivel="3" data-correcto="false">Templada</div>
-              <div class="btn-laberinto" data-nivel="3" data-correcto="true">FrÃ­a</div>
+              <div class="btn-laberinto" data-nivel="3" data-correcto="true">Fría</div>
             </div>
           </div>
         </div>
 
         <div class="mensaje-feedback" id="feedbackPagina4">
-          ðŸŽ‰ Â¡Encontraste la salida!
+          ¡Encontraste la salida!
         </div>
       </div>
     </div>
   </div>
 
   <div class="navegador">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>â† ANTERIOR</button>
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>ANTERIOR</button>
     <span class="indicador" id="contadorPagina">1/4</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE â†’</button>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE</button>
   </div>
 
   <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
@@ -1004,10 +1031,10 @@
 </div>
 
 <script>
-  // ===== FUNCIÃ“N PARA AMPLIAR IMÃGENES =====
+  // ===== FUNCI�N PARA AMPLIAR IM�GENES =====
   function ampliarImagen(img) {
     if (!img) return;
-    
+
     if (img.classList.contains('ampliada')) {
       img.classList.remove('ampliada');
       document.body.classList.remove('imagen-ampliada');
@@ -1033,11 +1060,12 @@
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
     click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
     completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
   Object.values(sonidos).forEach(s => {
-    if (s.src) s.volume = 0.2;
+    if (s.src) s.volume = 0.15;
   });
 
   function reproducirSonido(nombre) {
@@ -1047,19 +1075,45 @@
     }
   }
 
-  // ===== NAVEGACIÃ“N =====
+  function registrarErrorTracker(pagina, detalle) {
+    if (window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorByPage === 'function') {
+      window.laTierraTrackerHooks.addErrorByPage(pagina, {
+        origen: 'kinestesico',
+        ...(detalle || {})
+      });
+    }
+  }
+
+  function crearElementoTemporal(claseBase, texto) {
+    const el = document.createElement('div');
+    el.className = claseBase + ' error-temporal';
+    el.innerText = texto;
+    return el;
+  }
+
+  function marcarZonaIncorrecta(zona, temporal, contenedor) {
+    zona.classList.add('incorrecta');
+    if (contenedor && temporal) contenedor.appendChild(temporal);
+    window.setTimeout(() => {
+      zona.classList.remove('incorrecta');
+      if (contenedor && temporal && temporal.parentNode === contenedor) {
+        temporal.remove();
+      }
+    }, 700);
+  }
+
+  // ===== NAVEGACI�N =====
   let paginaActual = 1;
   const totalPaginas = 4;
 
   function cambiarPagina(direccion) {
     reproducirSonido('pasarPagina');
-    
+
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
     paginaActual += direccion;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_kine_facil', paginaActual);
   }
 
   function actualizarUI() {
@@ -1068,7 +1122,7 @@
       if (index + 1 === paginaActual) punto.classList.add('activo');
       else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
-    
+
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
@@ -1089,39 +1143,47 @@
 
   document.querySelectorAll('#pagina1 .zona-soltar').forEach(zona => {
     zona.addEventListener('dragover', e => e.preventDefault());
-    
+
     zona.addEventListener('drop', function(e) {
       e.preventDefault();
-      
+
       const tipoElemento = e.dataTransfer.getData('tipo');
       const tipoZona = this.dataset.tipo;
       const textoElemento = e.dataTransfer.getData('texto');
-      
+
+      const contenedor = this.querySelector('div[id^="contenedor"]');
+      if (!contenedor || contenedor.children.length > 0 || this.classList.contains('correcta')) return;
+
       if (tipoElemento === tipoZona) {
-        const elementos = document.querySelectorAll('#pagina1 .elemento-arrastrable');
-        for (let el of elementos) {
-          if (el.innerText.includes(textoElemento) && !el.classList.contains('oculto')) {
-            el.classList.add('oculto');
-            
-            const contenedor = this.querySelector('div[id^="contenedor"]');
-            if (contenedor) {
-              const nuevoSpan = document.createElement('span');
-              nuevoSpan.className = 'elemento-colocado';
-              nuevoSpan.innerText = textoElemento;
-              contenedor.appendChild(nuevoSpan);
-            }
-            
-            this.classList.add('correcta');
-            reproducirSonido('correcto');
-            
-            colocadosPagina1++;
-            if (colocadosPagina1 === 3) {
-              document.getElementById('feedbackPagina1').classList.add('visible');
-              reproducirSonido('completar');
-            }
-            break;
-          }
+        const origen = Array.from(document.querySelectorAll('#pagina1 .elemento-arrastrable')).find(el =>
+          el.dataset.texto === textoElemento && !el.classList.contains('oculto')
+        );
+        if (!origen) return;
+
+        origen.classList.add('oculto');
+
+        const nuevoSpan = document.createElement('span');
+        nuevoSpan.className = 'elemento-colocado';
+        nuevoSpan.innerText = textoElemento;
+        contenedor.appendChild(nuevoSpan);
+
+        this.classList.add('correcta');
+        reproducirSonido('correcto');
+
+        colocadosPagina1++;
+        if (colocadosPagina1 === 3) {
+          document.getElementById('feedbackPagina1').classList.add('visible');
+          reproducirSonido('completar');
         }
+      } else {
+        reproducirSonido('error');
+        registrarErrorTracker(1, {
+          actividad: 'datos_tierra',
+          resultado: 'incorrecto',
+          esperado: tipoZona,
+          recibido: tipoElemento
+        });
+        marcarZonaIncorrecta(this, crearElementoTemporal('elemento-colocado', textoElemento), contenedor);
       }
     });
   });
@@ -1154,14 +1216,14 @@
   function iniciarMemorama() {
     const grid = document.getElementById('memoramaGrid');
     if (!grid) return;
-    
+
     grid.innerHTML = '';
     const cartasMezcladas = mezclarArray([...paresMemorama]);
     cartasMemorama = [];
     cartaSeleccionada = null;
     paresEncontrados = 0;
     bloqueado = false;
-    
+
     cartasMezcladas.forEach((carta, index) => {
       const div = document.createElement('div');
       div.className = 'carta-memoria';
@@ -1170,14 +1232,14 @@
       div.dataset.parejaId = carta.parejaId;
       div.dataset.texto = carta.texto;
       div.textContent = '?';
-      
+
       div.addEventListener('click', function() {
         if (bloqueado) return;
         if (this.classList.contains('emparejada')) return;
         if (cartaSeleccionada === this) return;
-        
+
         reproducirSonido('click');
-        
+
         if (!cartaSeleccionada) {
           this.classList.add('volteada');
           this.textContent = this.dataset.texto;
@@ -1185,14 +1247,14 @@
         } else {
           this.classList.add('volteada');
           this.textContent = this.dataset.texto;
-          
+
           const primera = cartaSeleccionada;
           const segunda = this;
-          
-          if (primera.dataset.parejaId === segunda.dataset.id && 
+
+          if (primera.dataset.parejaId === segunda.dataset.id &&
               segunda.dataset.parejaId === primera.dataset.id) {
             bloqueado = true;
-            
+
             setTimeout(() => {
               primera.classList.remove('volteada');
               segunda.classList.remove('volteada');
@@ -1200,34 +1262,35 @@
               segunda.classList.add('emparejada');
               primera.textContent = primera.dataset.texto;
               segunda.textContent = segunda.dataset.texto;
-              
+
               paresEncontrados += 2;
               reproducirSonido('correcto');
-              
+
               if (paresEncontrados === 8) {
                 document.getElementById('feedbackPagina2').classList.add('visible');
                 reproducirSonido('completar');
               }
-              
+
               cartaSeleccionada = null;
               bloqueado = false;
             }, 500);
           } else {
             bloqueado = true;
-            
+            registrarErrorTracker(2, { actividad: 'memorama', resultado: 'incorrecto' });
+
             setTimeout(() => {
               primera.classList.remove('volteada');
               segunda.classList.remove('volteada');
               primera.textContent = '?';
               segunda.textContent = '?';
-              
+
               cartaSeleccionada = null;
               bloqueado = false;
             }, 800);
           }
         }
       });
-      
+
       grid.appendChild(div);
     });
   }
@@ -1246,39 +1309,47 @@
 
   document.querySelectorAll('#pagina3 .celda-cruz[data-posicion]').forEach(celda => {
     celda.addEventListener('dragover', e => e.preventDefault());
-    
+
     celda.addEventListener('drop', function(e) {
       e.preventDefault();
-      
+
       const posicionElemento = e.dataTransfer.getData('posicion');
       const textoElemento = e.dataTransfer.getData('texto');
       const posicionCelda = this.dataset.posicion;
-      
+
+      const contenedor = this.querySelector('div[id^="colocado"]');
+      if (!contenedor || contenedor.children.length > 0 || this.classList.contains('correcta')) return;
+
       if (posicionElemento === posicionCelda) {
-        const piezas = document.querySelectorAll('#pagina3 .pieza-cruz');
-        for (let pieza of piezas) {
-          if (pieza.innerText.includes(textoElemento) && !pieza.classList.contains('oculto')) {
-            pieza.classList.add('oculto');
-            
-            const contenedor = this.querySelector('div[id^="colocado"]');
-            if (contenedor) {
-              const nuevoDiv = document.createElement('div');
-              nuevoDiv.className = 'pieza-colocada-cruz';
-              nuevoDiv.innerText = textoElemento;
-              contenedor.appendChild(nuevoDiv);
-            }
-            
-            this.classList.add('correcta');
-            reproducirSonido('correcto');
-            
-            piezasColocadasCruz++;
-            if (piezasColocadasCruz === 5) {
-              document.getElementById('feedbackPagina3').classList.add('visible');
-              reproducirSonido('completar');
-            }
-            break;
-          }
+        const origen = Array.from(document.querySelectorAll('#pagina3 .pieza-cruz')).find(pieza =>
+          pieza.dataset.texto === textoElemento && !pieza.classList.contains('oculto')
+        );
+        if (!origen) return;
+
+        origen.classList.add('oculto');
+
+        const nuevoDiv = document.createElement('div');
+        nuevoDiv.className = 'pieza-colocada-cruz';
+        nuevoDiv.innerText = textoElemento;
+        contenedor.appendChild(nuevoDiv);
+
+        this.classList.add('correcta');
+        reproducirSonido('correcto');
+
+        piezasColocadasCruz++;
+        if (piezasColocadasCruz === 5) {
+          document.getElementById('feedbackPagina3').classList.add('visible');
+          reproducirSonido('completar');
         }
+      } else {
+        reproducirSonido('error');
+        registrarErrorTracker(3, {
+          actividad: 'rosa_vientos',
+          resultado: 'incorrecto',
+          esperado: posicionCelda,
+          recibido: posicionElemento
+        });
+        marcarZonaIncorrecta(this, crearElementoTemporal('pieza-colocada-cruz', textoElemento), contenedor);
       }
     });
   });
@@ -1291,30 +1362,31 @@
     btn.addEventListener('click', function() {
       const nivel = parseInt(this.dataset.nivel);
       const esCorrecto = this.dataset.correcto === 'true';
-      
+
       if (nivelesSuperados[nivel]) return;
-      
+
       reproducirSonido('click');
-      
+
       if (esCorrecto) {
         this.classList.add('correcto');
         nivelesSuperados[nivel] = true;
         reproducirSonido('correcto');
-        
+
         document.querySelector(`#pagina4 .pista[data-nivel="${nivel}"]`).classList.remove('activa');
         document.querySelector(`#pagina4 .pista[data-nivel="${nivel}"]`).classList.add('superada');
-        
+
         if (nivel < 3) {
           document.querySelector(`#pagina4 .nivel-laberinto[data-nivel="${nivel}"]`).style.display = 'none';
           document.querySelector(`#pagina4 .nivel-laberinto[data-nivel="${nivel + 1}"]`).style.display = 'block';
           document.querySelector(`#pagina4 .pista[data-nivel="${nivel + 1}"]`).classList.add('activa');
         }
-        
+
         if (nivel === 3) {
           document.getElementById('feedbackPagina4').classList.add('visible');
           reproducirSonido('completar');
         }
       } else {
+        registrarErrorTracker(4, { actividad: 'laberinto_zonas', resultado: 'incorrecto' });
         this.classList.add('incorrecto');
         setTimeout(() => {
           this.classList.remove('incorrecto');
@@ -1325,15 +1397,6 @@
 
   // ===== INICIALIZAR =====
   window.addEventListener('DOMContentLoaded', () => {
-    const guardado = localStorage.getItem('progreso_kine_facil');
-    if (guardado) {
-      const pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      }
-    }
     actualizarUI();
     iniciarMemorama();
   });
@@ -1350,7 +1413,8 @@
   observer.observe(document.getElementById('pagina2'), { attributes: true, attributeFilter: ['class'] });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visual No Verbal 🎨</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Países Poblados · Visual No Verbal · Nivel Normal</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --guindo: #6B0F2B;
@@ -417,6 +417,24 @@
     .nav-prev-btn, .nav-next-btn { padding: 8px 14px; font-size: 0.82rem; }
   }
 </style>
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-base.css">
+<style>
+  .quiz-btn-footer.bloqueado {
+    background: #b9bcc7 !important;
+    border-color: #8f94a3 !important;
+    color: #f6f7fb !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
+
+  .quiz-btn-footer.bloqueado:hover {
+    background: #b9bcc7 !important;
+    color: #f6f7fb !important;
+    transform: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
+</style>
 </head>
 <body>
 
@@ -424,19 +442,19 @@
 
 <!-- ══════════ TOP HEADER ══════════ -->
 <div class="top-header">
-  <div class="top-header-icon">🎨</div>
-  <h1>Aprendo Viendo</h1>
-  <div class="top-header-sub">Bloque II — Geografía · 5to Primaria</div>
+  <div class="top-header-icon">VNV</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="top-header-sub">Bloque · Nivel Normal · Geografía 5°</div>
   <div class="header-badges">
-    <div class="header-badge">🎨 Estilo Visual</div>
-    <div class="header-badge secondary">🟢 Nivel Normal</div>
+    <div class="header-badge">Estilo Visual No Verbal</div>
+    <div class="header-badge secondary">Nivel Normal</div>
   </div>
 </div>
 
 <!-- ══════════ HUD BAR ══════════ -->
 <div class="hud-bar">
   <div class="hud-left">
-    <div class="hud-icon">👁️</div>
+    <div class="hud-icon">VNV</div>
     <div class="page-dots">
       <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
       <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
@@ -874,7 +892,7 @@
   <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div class="footer-center" id="footerPageNum">1/4</div>
-    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL QUIZ</button>
+    <a class="quiz-btn-footer" href="quiz.html">🎮 IR AL QUIZ</a>
   </div>
   <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
 </div>
@@ -890,14 +908,85 @@ const PAGE_LABELS = [
   { icon:'🌍', title:'Las Culturas del Mundo' },
   { icon:'🎮', title:'Repaso Final Visual' },
 ];
+const progresoVisualNoVerbal = {
+  1: { flags: false, symbols: false },
+  2: { campo: false, pq: false },
+  3: { match: false, cq: false },
+  4: { repaso: false }
+};
+const paginasCelebradas = new Set();
+const symCorrectSet = new Set();
+const pqCorrectSet = new Set();
+const cqCorrectSet = new Set();
+let symCurrentResolved = false;
+let pqCurrentResolved = false;
+let cqCurrentResolved = false;
+const sonidos = {
+  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+};
+
+Object.values(sonidos).forEach(audio => {
+  if (audio && audio.src) audio.volume = 0.15;
+});
+
+function reproducirSonido(nombre) {
+  const audio = sonidos[nombre];
+  if (!audio || !audio.src) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+function paginaCompleta(numero) {
+  return Object.values(progresoVisualNoVerbal[numero] || {}).every(Boolean);
+}
+
+function todoCompletado() {
+  return Object.keys(progresoVisualNoVerbal).every(numero => paginaCompleta(Number(numero)));
+}
+
+function completarSubactividad(pagina, clave) {
+  if (!progresoVisualNoVerbal[pagina] || progresoVisualNoVerbal[pagina][clave]) return;
+  progresoVisualNoVerbal[pagina][clave] = true;
+  if (paginaCompleta(pagina) && !paginasCelebradas.has(pagina)) {
+    paginasCelebradas.add(pagina);
+    reproducirSonido('tada');
+  }
+  syncLockedUI();
+}
+
+function puedeIrAPagina(destino) {
+  if (destino <= currentPage) return true;
+  for (let idx = currentPage; idx < destino; idx++) {
+    if (!paginaCompleta(idx + 1)) return false;
+  }
+  return true;
+}
+
+function syncLockedUI() {
+  document.getElementById('prevBtn').disabled = (currentPage === 0);
+  document.getElementById('nextBtn').disabled = (currentPage === TOTAL_PAGES - 1) || !paginaCompleta(currentPage + 1);
+
+  const quizBtn = document.querySelector('.quiz-btn-footer');
+  if (quizBtn) {
+    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'inline-flex' : 'none';
+    const bloqueado = !todoCompletado();
+    quizBtn.classList.toggle('bloqueado', bloqueado);
+    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
+    quizBtn.tabIndex = bloqueado ? -1 : 0;
+    quizBtn.title = bloqueado ? 'Completa todas las paginas para desbloquear el quiz' : '';
+  }
+}
 
 // ───── POINTS ─────
 function addPoints(n) {
   totalPts += n;
   document.getElementById('pts').textContent = totalPts;
-  if (totalPts >= 50 && totalInsig === 0) { totalInsig=1; document.getElementById('insig').textContent=1; }
-  if (totalPts >= 120 && totalInsig === 1) { totalInsig=2; document.getElementById('insig').textContent=2; }
-  if (totalPts >= 200 && totalInsig < 3) { totalInsig=3; document.getElementById('insig').textContent=3; }
+  if (totalPts >= 50 && totalInsig === 0) { totalInsig = 1; document.getElementById('insig').textContent = 1; }
+  if (totalPts >= 120 && totalInsig === 1) { totalInsig = 2; document.getElementById('insig').textContent = 2; }
+  if (totalPts >= 200 && totalInsig < 3) { totalInsig = 3; document.getElementById('insig').textContent = 3; }
   const pop = document.getElementById('scorePopup');
   pop.textContent = '+' + n + ' ⭐';
   pop.classList.add('show');
@@ -906,37 +995,45 @@ function addPoints(n) {
 
 // ───── PAGE NAVIGATION ─────
 function goToPage(n) {
+  if (!puedeIrAPagina(n)) {
+    reproducirSonido('error');
+    return;
+  }
   currentPage = n;
-  document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
-  document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
-  document.getElementById('pagLabel').textContent = `Pág ${n+1}/${TOTAL_PAGES}`;
-  document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
+  reproducirSonido('click');
+  document.querySelectorAll('.page').forEach((p, i) => p.classList.toggle('active', i === n));
+  document.querySelectorAll('.page-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  document.getElementById('pagLabel').textContent = `Pag ${n + 1}/${TOTAL_PAGES}`;
+  document.getElementById('footerPageNum').textContent = `${n + 1}/${TOTAL_PAGES}`;
   document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
   document.getElementById('sectionIcon').textContent = PAGE_LABELS[n].icon;
-  document.getElementById('prevBtn').disabled = (n === 0);
-  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
-  window.scrollTo({top:0, behavior:'smooth'});
+  syncLockedUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
+
+function changePage(dir) {
+  goToPage(Math.max(0, Math.min(TOTAL_PAGES - 1, currentPage + dir)));
+}
 
 // ───── POPULATION BAR CHART ─────
 const popData = [
-  {label:'🇮🇳 India', val:1430, color:'#E74C3C'},
-  {label:'🇨🇳 China', val:1400, color:'#E74C3C'},
-  {label:'🇺🇸 EE.UU', val:335, color:'#F39C12'},
-  {label:'🇮🇩 Indo.', val:275, color:'#F39C12'},
-  {label:'🇵🇰 Pak.', val:230, color:'#F39C12'},
-  {label:'🇻🇦 Vat.', val:0.0008, color:'#3498DB'},
-  {label:'🇳🇷 Nauru', val:0.01, color:'#3498DB'},
-  {label:'🇹🇻 Tuva.', val:0.011, color:'#3498DB'},
+  { label:'🇮🇳 India', val:1430, color:'#E74C3C' },
+  { label:'🇨🇳 China', val:1400, color:'#E74C3C' },
+  { label:'🇺🇸 EE.UU', val:335, color:'#F39C12' },
+  { label:'🇮🇩 Indo.', val:275, color:'#F39C12' },
+  { label:'🇵🇰 Pak.', val:230, color:'#F39C12' },
+  { label:'🇻🇦 Vat.', val:0.0008, color:'#3498DB' },
+  { label:'🇳🇷 Nauru', val:0.01, color:'#3498DB' },
+  { label:'🇹🇻 Tuva.', val:0.011, color:'#3498DB' },
 ];
+
 function buildChart() {
   const maxV = 1430;
   const c = document.getElementById('popScale');
   c.innerHTML = popData.map(d => {
-    const h = Math.max(10, Math.round((d.val/maxV)*160));
+    const h = Math.max(10, Math.round((d.val / maxV) * 160));
     return `<div class="pop-bar-wrap">
-      <div class="pop-bar-val">${d.val<1?'<1K':d.val+'M'}</div>
+      <div class="pop-bar-val">${d.val < 1 ? '<1K' : d.val + 'M'}</div>
       <div class="pop-bar" style="height:${h}px;width:42px;background:${d.color};"></div>
       <div class="pop-bar-label">${d.label}</div>
     </div>`;
@@ -945,213 +1042,500 @@ function buildChart() {
 buildChart();
 
 // ───── FLAG GAME ─────
-function flagClick(el) { el.classList.toggle('selected'); }
+function flagClick(el) {
+  reproducirSonido('click');
+  el.classList.toggle('selected');
+}
+
 function checkFlags() {
-  let ok = 0, total = 8;
+  let ok = 0;
+  const total = 8;
   document.querySelectorAll('#flag-game .icon-card').forEach(c => {
     const sel = c.classList.contains('selected');
     const should = c.dataset.correct === 'yes';
-    if(sel&&should){c.classList.add('correct');ok++;}
-    else if(sel&&!should) c.classList.add('wrong');
-    else if(!sel&&should) c.classList.add('wrong');
-    else ok++;
+    c.classList.remove('correct', 'wrong');
+    if (sel && should) {
+      c.classList.add('correct');
+      ok++;
+    } else if (sel && !should) {
+      c.classList.add('wrong');
+      c.classList.remove('selected');
+    } else if (!sel && should) {
+      c.classList.add('wrong');
+    } else {
+      ok++;
+    }
   });
   const fb = document.getElementById('fb-flags');
-  fb.className = 'feedback show ' + (ok===total?'ok':'fail');
-  fb.textContent = ok===total ? '🎉 ¡Perfecto! +20 puntos' : `✏️ ${ok}/${total} correctas. Revisa las marcadas.`;
-  if (ok===total) addPoints(20);
+  if (ok === total) {
+    reproducirSonido('acierto');
+    fb.className = 'feedback show ok';
+    fb.textContent = '🎉 ¡Perfecto! +20 puntos';
+    addPoints(20);
+    completarSubactividad(1, 'flags');
+  } else {
+    reproducirSonido('error');
+    fb.className = 'feedback show fail';
+    fb.textContent = `✏️ ${ok}/${total} correctas. Ajusta las marcadas e intenta otra vez.`;
+  }
+  syncLockedUI();
 }
+
 function resetFlags() {
-  document.querySelectorAll('#flag-game .icon-card').forEach(c => c.classList.remove('selected','correct','wrong'));
+  reproducirSonido('click');
+  document.querySelectorAll('#flag-game .icon-card').forEach(c => c.classList.remove('selected', 'correct', 'wrong'));
   document.getElementById('fb-flags').className = 'feedback';
 }
 
 // ───── SYMBOL QUIZ ─────
 const symData = [
-  {q:'¿Cuál emoji representa el ÉXODO RURAL?', opts:['🚌','🍕','🎸','💻'], a:0},
-  {q:'¿Qué ícono simboliza el HACINAMIENTO urbano?', opts:['🌲','🏚️','🌊','🎭'], a:1},
-  {q:'¿Cuál representa la CONCENTRACIÓN de población?', opts:['👥👥👥','🏜️','🌾','🏔️'], a:0},
-  {q:'¿Qué emoji es sinónimo de DIVERSIDAD cultural?', opts:['😐','🌈','📦','🔴'], a:1},
-  {q:'¿Cuál representa el espacio RURAL?', opts:['🏙️','🚇','🌾','🏭'], a:2},
+  { q:'¿Cual emoji representa el EXODO RURAL?', opts:['🚌','🍕','🎸','💻'], a:0 },
+  { q:'¿Que icono simboliza el HACINAMIENTO urbano?', opts:['🌲','🏚️','🌊','🎭'], a:1 },
+  { q:'¿Cual representa la CONCENTRACION de poblacion?', opts:['👥👥👥','🏜️','🌾','🏔️'], a:0 },
+  { q:'¿Que emoji es sinonimo de DIVERSIDAD cultural?', opts:['😐','🌈','📦','🔴'], a:1 },
+  { q:'¿Cual representa el espacio RURAL?', opts:['🏙️','🚇','🌾','🏭'], a:2 },
 ];
 let symIdx = 0, symHits = 0;
+
 function loadSym() {
+  if (symCorrectSet.size >= symData.length) {
+    document.getElementById('sym-q').textContent = '🎉 ¡Completaste todas las preguntas visuales!';
+    document.getElementById('sym-opts').innerHTML = '';
+    const fb = document.getElementById('fb-sym');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Ya resolviste correctamente todos los simbolos.';
+    completarSubactividad(1, 'symbols');
+    return;
+  }
   const d = symData[symIdx];
+  symCurrentResolved = false;
   document.getElementById('sym-q').textContent = d.q;
-  document.getElementById('sym-opts').innerHTML = d.opts.map((o,i) =>
+  document.getElementById('sym-opts').innerHTML = d.opts.map((o, i) =>
     `<button class="sym-btn" onclick="answerSym(${i})">${o}</button>`
   ).join('');
   document.getElementById('fb-sym').className = 'feedback';
 }
+
 function answerSym(i) {
+  if (symCurrentResolved || symCorrectSet.has(symIdx)) return;
   const d = symData[symIdx];
-  document.querySelectorAll('#sym-opts .sym-btn').forEach((b,j) => {
-    if(j===d.a) b.classList.add('correct'); else if(j===i) b.classList.add('wrong');
-    b.disabled = true; b.style.cursor = 'default';
-  });
+  const buttons = document.querySelectorAll('#sym-opts .sym-btn');
   const fb = document.getElementById('fb-sym');
-  if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 puntos';symHits++;document.getElementById('sym-hits').textContent=symHits;addPoints(10);}
-  else{fb.className='feedback show fail';fb.textContent='❌ El correcto está en verde.';}
+  reproducirSonido('click');
+
+  if (i === d.a) {
+    if (!symCorrectSet.has(symIdx)) {
+      symCorrectSet.add(symIdx);
+      symHits = symCorrectSet.size;
+      document.getElementById('sym-hits').textContent = symHits;
+      addPoints(10);
+    }
+    reproducirSonido('acierto');
+    buttons.forEach((b, j) => {
+      if (j === d.a) b.classList.add('correct');
+      b.disabled = true;
+      b.style.cursor = 'default';
+    });
+    symCurrentResolved = true;
+    fb.className = 'feedback show ok';
+    fb.textContent = symCorrectSet.size === symData.length
+      ? '✅ ¡Correcto! Ya completaste toda la ronda.'
+      : '✅ ¡Correcto! Presiona "Siguiente".';
+    if (symCorrectSet.size === symData.length) completarSubactividad(1, 'symbols');
+  } else {
+    reproducirSonido('error');
+    const wrongBtn = buttons[i];
+    if (wrongBtn) {
+      wrongBtn.classList.add('wrong');
+      wrongBtn.disabled = true;
+      wrongBtn.style.cursor = 'default';
+    }
+    fb.className = 'feedback show fail';
+    fb.textContent = '❌ Incorrecto. Intenta con otro simbolo.';
+  }
+  syncLockedUI();
 }
-function nextSym() { symIdx = (symIdx+1) % symData.length; loadSym(); }
+
+function nextSym() {
+  if (symCorrectSet.size >= symData.length) {
+    reproducirSonido('acierto');
+    completarSubactividad(1, 'symbols');
+    return;
+  }
+  if (!symCurrentResolved) {
+    reproducirSonido('error');
+    return;
+  }
+  reproducirSonido('click');
+  for (let step = 1; step <= symData.length; step++) {
+    const next = (symIdx + step) % symData.length;
+    if (!symCorrectSet.has(next)) {
+      symIdx = next;
+      loadSym();
+      return;
+    }
+  }
+}
 loadSym();
 
 // ───── CAMPO CLICK GAME ─────
-function campoClick(el) { el.classList.toggle('selected'); }
+function campoClick(el) {
+  reproducirSonido('click');
+  el.classList.toggle('selected');
+}
+
 function checkCampo() {
-  let ok = 0, total = 8;
+  let ok = 0;
+  const total = 8;
   document.querySelectorAll('#campo-game .icon-card').forEach(c => {
     const sel = c.classList.contains('selected');
     const should = c.dataset.correct === 'yes';
-    if(sel&&should){c.classList.add('correct');ok++;}
-    else if(sel&&!should) c.classList.add('wrong');
-    else if(!sel&&should) c.classList.add('wrong');
-    else ok++;
+    c.classList.remove('correct', 'wrong');
+    if (sel && should) {
+      c.classList.add('correct');
+      ok++;
+    } else if (sel && !should) {
+      c.classList.add('wrong');
+      c.classList.remove('selected');
+    } else if (!sel && should) {
+      c.classList.add('wrong');
+    } else {
+      ok++;
+    }
   });
   const fb = document.getElementById('fb-campo');
-  fb.className = 'feedback show ' + (ok===total?'ok':'fail');
-  fb.textContent = ok===total ? '🌾 ¡Perfecto! +20 puntos' : `✏️ ${ok}/${total} correctos.`;
-  if (ok===total) addPoints(20);
+  if (ok === total) {
+    reproducirSonido('acierto');
+    fb.className = 'feedback show ok';
+    fb.textContent = '🌾 ¡Perfecto! +20 puntos';
+    addPoints(20);
+    completarSubactividad(2, 'campo');
+  } else {
+    reproducirSonido('error');
+    fb.className = 'feedback show fail';
+    fb.textContent = `✏️ ${ok}/${total} correctos. Corrige y vuelve a intentar.`;
+  }
+  syncLockedUI();
 }
+
 function resetCampo() {
-  document.querySelectorAll('#campo-game .icon-card').forEach(c => c.classList.remove('selected','correct','wrong'));
+  reproducirSonido('click');
+  document.querySelectorAll('#campo-game .icon-card').forEach(c => c.classList.remove('selected', 'correct', 'wrong'));
   document.getElementById('fb-campo').className = 'feedback';
 }
 
 // ───── PICTURE QUIZ (ciudad/campo) ─────
 const pqData = [
-  {emoji:'🚇', ans:'ciudad'},{emoji:'🌽', ans:'campo'},{emoji:'🏗️', ans:'ciudad'},
-  {emoji:'🐄', ans:'campo'},{emoji:'🏥', ans:'ciudad'},{emoji:'🚜', ans:'campo'},
-  {emoji:'🏭', ans:'ciudad'},{emoji:'🌾', ans:'campo'},
+  { emoji:'🚇', ans:'ciudad' }, { emoji:'🌽', ans:'campo' }, { emoji:'🏗️', ans:'ciudad' },
+  { emoji:'🐄', ans:'campo' }, { emoji:'🏥', ans:'ciudad' }, { emoji:'🚜', ans:'campo' },
+  { emoji:'🏭', ans:'ciudad' }, { emoji:'🌾', ans:'campo' },
 ];
-let pqIdx=0, pqScore=0, pqActive=false;
-function startPQ() { pqIdx=0; pqScore=0; pqActive=true; document.getElementById('pq-score').textContent=0; showPQ(); }
-function showPQ() {
-  if(pqIdx>=pqData.length){
-    document.getElementById('pq-emoji').textContent='🎉';
-    document.getElementById('pq-desc').textContent=`¡Fin! Aciertos: ${pqScore}/8`;
-    pqActive=false; return;
-  }
-  document.getElementById('pq-emoji').textContent=pqData[pqIdx].emoji;
-  document.getElementById('pq-round').textContent=pqIdx+1;
-  document.getElementById('fb-pq').className='feedback';
+let pqIdx = 0, pqScore = 0, pqActive = false;
+
+function startPQ() {
+  reproducirSonido('click');
+  pqIdx = 0;
+  pqScore = 0;
+  pqActive = true;
+  pqCurrentResolved = false;
+  pqCorrectSet.clear();
+  document.getElementById('pq-score').textContent = 0;
+  document.getElementById('pq-round').textContent = 1;
+  showPQ();
 }
+
+function showPQ() {
+  if (pqCorrectSet.size >= pqData.length) {
+    document.getElementById('pq-emoji').textContent = '🎉';
+    document.getElementById('pq-desc').textContent = `¡Fin! Aciertos: ${pqScore}/8`;
+    document.getElementById('pq-round').textContent = pqData.length;
+    pqActive = false;
+    pqCurrentResolved = true;
+    completarSubactividad(2, 'pq');
+    return;
+  }
+  const d = pqData[pqIdx];
+  document.getElementById('pq-emoji').textContent = d.emoji;
+  document.getElementById('pq-round').textContent = pqIdx + 1;
+  document.getElementById('pq-desc').textContent = '¿Pertenece a la ciudad o al campo?';
+  document.getElementById('fb-pq').className = 'feedback';
+  pqCurrentResolved = false;
+}
+
 function answerPQ(choice) {
-  if(!pqActive) return;
+  if (!pqActive || pqCurrentResolved) return;
   const correct = pqData[pqIdx].ans;
   const fb = document.getElementById('fb-pq');
-  if(choice===correct){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto!';pqScore++;addPoints(8);}
-  else{fb.className='feedback show fail';fb.textContent=`❌ Era ${correct==='ciudad'?'🏙️':'🌾'}`;}
-  document.getElementById('pq-score').textContent=pqScore;
-  pqIdx++; setTimeout(showPQ, 700);
+  reproducirSonido('click');
+
+  if (choice === correct) {
+    if (!pqCorrectSet.has(pqIdx)) {
+      pqCorrectSet.add(pqIdx);
+      pqScore = pqCorrectSet.size;
+      document.getElementById('pq-score').textContent = pqScore;
+      addPoints(8);
+    }
+    reproducirSonido('acierto');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ ¡Correcto!';
+    pqCurrentResolved = true;
+    if (pqCorrectSet.size === pqData.length) {
+      completarSubactividad(2, 'pq');
+      setTimeout(showPQ, 700);
+      return;
+    }
+    pqIdx++;
+    setTimeout(showPQ, 700);
+  } else {
+    reproducirSonido('error');
+    fb.className = 'feedback show fail';
+    fb.textContent = `❌ Intenta de nuevo. La respuesta correcta es ${correct === 'ciudad' ? 'una opcion urbana' : 'una opcion rural'}.`;
+  }
+  syncLockedUI();
 }
 
 // ───── CULTURAL MATCH ─────
-let cultMatchSel=null, cultMatchSide='', cultMatchPairs=new Set();
+let cultMatchSel = null, cultMatchSide = '', cultMatchPairs = new Set();
 function culturalMatch(el, side) {
-  if(el.classList.contains('matched')) return;
-  if(cultMatchSel===null){cultMatchSel=el;cultMatchSide=side;el.classList.add('selected');return;}
-  if(cultMatchSide===side){cultMatchSel.classList.remove('selected');cultMatchSel=el;cultMatchSide=side;el.classList.add('selected');return;}
-  const id1=cultMatchSel.dataset.id, id2=el.dataset.id;
-  if(id1===id2){
-    cultMatchSel.classList.remove('selected');cultMatchSel.classList.add('matched');
+  if (el.classList.contains('matched')) return;
+  reproducirSonido('click');
+  if (cultMatchSel === null) {
+    cultMatchSel = el;
+    cultMatchSide = side;
+    el.classList.add('selected');
+    return;
+  }
+  if (cultMatchSide === side) {
+    cultMatchSel.classList.remove('selected');
+    cultMatchSel = el;
+    cultMatchSide = side;
+    el.classList.add('selected');
+    return;
+  }
+  const id1 = cultMatchSel.dataset.id;
+  const id2 = el.dataset.id;
+  if (id1 === id2) {
+    reproducirSonido('acierto');
+    cultMatchSel.classList.remove('selected');
+    cultMatchSel.classList.add('matched');
     el.classList.add('matched');
     cultMatchPairs.add(id1);
-    document.getElementById('cult-match-score').textContent=cultMatchPairs.size;
+    document.getElementById('cult-match-score').textContent = cultMatchPairs.size;
     addPoints(15);
-    if(cultMatchPairs.size===5){
-      const fb=document.getElementById('fb-cmatch');
-      fb.className='feedback show ok';fb.textContent='🎉 ¡Todas conectadas! +Bonus';addPoints(10);
+    if (cultMatchPairs.size === 5) {
+      const fb = document.getElementById('fb-cmatch');
+      fb.className = 'feedback show ok';
+      fb.textContent = '🎉 ¡Todas conectadas! +Bonus';
+      addPoints(10);
+      completarSubactividad(3, 'match');
     }
   } else {
-    el.classList.add('wrong-flash');cultMatchSel.classList.add('wrong-flash');
-    setTimeout(()=>{el.classList.remove('wrong-flash','selected');cultMatchSel.classList.remove('wrong-flash','selected');},500);
+    reproducirSonido('error');
+    el.classList.add('wrong-flash');
+    cultMatchSel.classList.add('wrong-flash');
+    setTimeout(() => {
+      el.classList.remove('wrong-flash', 'selected');
+      cultMatchSel.classList.remove('wrong-flash', 'selected');
+    }, 500);
   }
-  cultMatchSel=null;cultMatchSide='';
+  cultMatchSel = null;
+  cultMatchSide = '';
+  syncLockedUI();
 }
 
 // ───── CQ (culture emoji quiz) ─────
 const cqData = [
-  {emoji:'🌮', opts:['🇲🇽 México','🇧🇷 Brasil','🇨🇳 China','🇯🇵 Japón'], a:0},
-  {emoji:'🐉', opts:['🇮🇳 India','🇨🇳 China','🇲🇽 México','🇧🇷 Brasil'], a:1},
-  {emoji:'🌸', opts:['🇧🇷 Brasil','🇺🇸 EE.UU','🇯🇵 Japón','🇲🇽 México'], a:2},
-  {emoji:'🎉 + 💃 + 🥁', opts:['🇲🇽 México','🇧🇷 Brasil','🇦🇷 Argentina','🇨🇳 China'], a:1},
-  {emoji:'🐘 + 🌸 + 🎆', opts:['🇧🇷 Brasil','🇨🇳 China','🇮🇳 India','🇺🇸 EE.UU'], a:2},
-  {emoji:'💀 + 🎭 + 🌮', opts:['🇺🇸 EE.UU','🇲🇽 México','🇧🇷 Brasil','🇨🇳 China'], a:1},
+  { emoji:'🌮', opts:['🇲🇽 México','🇧🇷 Brasil','🇨🇳 China','🇯🇵 Japón'], a:0 },
+  { emoji:'🐉', opts:['🇮🇳 India','🇨🇳 China','🇲🇽 México','🇧🇷 Brasil'], a:1 },
+  { emoji:'🌸', opts:['🇧🇷 Brasil','🇺🇸 EE.UU','🇯🇵 Japón','🇲🇽 México'], a:2 },
+  { emoji:'🎉 + 💃 + 🥁', opts:['🇲🇽 México','🇧🇷 Brasil','🇦🇷 Argentina','🇨🇳 China'], a:1 },
+  { emoji:'🐘 + 🌸 + 🎆', opts:['🇧🇷 Brasil','🇨🇳 China','🇮🇳 India','🇺🇸 EE.UU'], a:2 },
+  { emoji:'💀 + 🎭 + 🌮', opts:['🇺🇸 EE.UU','🇲🇽 México','🇧🇷 Brasil','🇨🇳 China'], a:1 },
 ];
-let cqIdx=0, cqHits=0;
+let cqIdx = 0, cqHits = 0;
+
 function loadCQ() {
-  if(cqIdx>=cqData.length) cqIdx=0;
-  const d=cqData[cqIdx];
-  document.getElementById('cq-emoji').textContent=d.emoji;
-  document.getElementById('cq-desc').textContent='¿A qué país/cultura pertenece?';
-  document.getElementById('cq-opts').innerHTML=d.opts.map((o,i)=>
+  if (cqCorrectSet.size >= cqData.length) {
+    document.getElementById('cq-emoji').textContent = '🏆';
+    document.getElementById('cq-desc').textContent = '¡Terminaste todas las culturas!';
+    document.getElementById('cq-opts').innerHTML = '';
+    const fb = document.getElementById('fb-cq');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Ya resolviste correctamente todas las preguntas culturales.';
+    completarSubactividad(3, 'cq');
+    return;
+  }
+  const d = cqData[cqIdx];
+  cqCurrentResolved = false;
+  document.getElementById('cq-emoji').textContent = d.emoji;
+  document.getElementById('cq-desc').textContent = '¿A que pais/cultura pertenece?';
+  document.getElementById('cq-opts').innerHTML = d.opts.map((o, i) =>
     `<button class="q-opt" onclick="answerCQ(${i})">${o}</button>`
   ).join('');
-  document.getElementById('fb-cq').className='feedback';
+  document.getElementById('fb-cq').className = 'feedback';
 }
+
 function answerCQ(i) {
-  const d=cqData[cqIdx];
-  document.querySelectorAll('#cq-opts .q-opt').forEach((b,j)=>{if(j===d.a)b.classList.add('correct');else if(j===i)b.classList.add('wrong');b.disabled=true;});
-  const fb=document.getElementById('fb-cq');
-  if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 puntos';cqHits++;document.getElementById('cq-hits').textContent=cqHits;addPoints(10);}
-  else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
-  cqIdx++;
+  if (cqCurrentResolved || cqCorrectSet.has(cqIdx)) return;
+  const d = cqData[cqIdx];
+  const buttons = document.querySelectorAll('#cq-opts .q-opt');
+  const fb = document.getElementById('fb-cq');
+  reproducirSonido('click');
+
+  if (i === d.a) {
+    if (!cqCorrectSet.has(cqIdx)) {
+      cqCorrectSet.add(cqIdx);
+      cqHits = cqCorrectSet.size;
+      document.getElementById('cq-hits').textContent = cqHits;
+      addPoints(10);
+    }
+    reproducirSonido('acierto');
+    buttons.forEach((b, j) => {
+      if (j === d.a) b.classList.add('correct');
+      b.disabled = true;
+    });
+    cqCurrentResolved = true;
+    fb.className = 'feedback show ok';
+    fb.textContent = cqCorrectSet.size === cqData.length
+      ? '✅ ¡Correcto! Ya completaste toda la ronda cultural.'
+      : '✅ ¡Correcto! Presiona "Siguiente".';
+    if (cqCorrectSet.size === cqData.length) completarSubactividad(3, 'cq');
+  } else {
+    reproducirSonido('error');
+    const wrongBtn = buttons[i];
+    if (wrongBtn) {
+      wrongBtn.classList.add('wrong');
+      wrongBtn.disabled = true;
+    }
+    fb.className = 'feedback show fail';
+    fb.textContent = '❌ Incorrecto. Intenta con otra opcion.';
+  }
+  syncLockedUI();
 }
-function nextCQ() { loadCQ(); }
+
+function nextCQ() {
+  if (cqCorrectSet.size >= cqData.length) {
+    reproducirSonido('acierto');
+    completarSubactividad(3, 'cq');
+    return;
+  }
+  if (!cqCurrentResolved) {
+    reproducirSonido('error');
+    return;
+  }
+  reproducirSonido('click');
+  for (let step = 1; step <= cqData.length; step++) {
+    const next = (cqIdx + step) % cqData.length;
+    if (!cqCorrectSet.has(next)) {
+      cqIdx = next;
+      loadCQ();
+      return;
+    }
+  }
+}
 loadCQ();
 
 // ───── REPASO FINAL ─────
 const repasoQ = [
-  {emoji:'🇮🇳', q:'¿Cuál es el país más poblado del mundo?', opts:['🇨🇳 China','🇮🇳 India','🇺🇸 EE.UU','🇮🇩 Indonesia'], a:1},
-  {emoji:'🔢', q:'¿Cuántos idiomas aprox. existen en el mundo?', opts:['500','2,000','7,000','100,000'], a:2},
-  {emoji:'🌾➡️🏙️', q:'¿Cómo se llama la migración del campo a la ciudad?', opts:['Turismo','Éxodo rural','Inmigración','Nomadismo'], a:1},
-  {emoji:'🏚️', q:'¿Qué problema causa la concentración urbana?', opts:['Más naturaleza','Hacinamiento','Bajo tráfico','Agua abundante'], a:1},
-  {emoji:'🤝', q:'¿Qué promueve la interculturalidad?', opts:['Una sola cultura','Exclusión','Respeto entre culturas','Competencia'], a:2},
-  {emoji:'🇻🇦', q:'¿Cuál es el territorio menos poblado?', opts:['Mónaco','Andorra','San Marino','Vaticano'], a:3},
-  {emoji:'🚜', q:'¿Qué actividad es característica del espacio rural?', opts:['Banca','Metro','Agricultura','Centro comercial'], a:2},
-  {emoji:'🏛️', q:'¿Qué protege la UNESCO?', opts:['Solo dinero','Solo edificios','Patrimonio cultural','Solo tecnología'], a:2},
-  {emoji:'📊', q:'¿Qué mide la densidad poblacional?', opts:['Altura','Temperatura','Hab./km²','Idiomas'], a:2},
-  {emoji:'🌍', q:'¿Cuál es el continente más poblado?', opts:['Europa','África','América','Asia'], a:3},
+  { emoji:'🇮🇳', q:'¿Cual es el pais mas poblado del mundo?', opts:['🇨🇳 China','🇮🇳 India','🇺🇸 EE.UU','🇮🇩 Indonesia'], a:1 },
+  { emoji:'🔢', q:'¿Cuantos idiomas aprox. existen en el mundo?', opts:['500','2,000','7,000','100,000'], a:2 },
+  { emoji:'🌾➡️🏙️', q:'¿Como se llama la migracion del campo a la ciudad?', opts:['Turismo','Exodo rural','Inmigracion','Nomadismo'], a:1 },
+  { emoji:'🏚️', q:'¿Que problema causa la concentracion urbana?', opts:['Mas naturaleza','Hacinamiento','Bajo trafico','Agua abundante'], a:1 },
+  { emoji:'🤝', q:'¿Que promueve la interculturalidad?', opts:['Una sola cultura','Exclusion','Respeto entre culturas','Competencia'], a:2 },
+  { emoji:'🇻🇦', q:'¿Cual es el territorio menos poblado?', opts:['Monaco','Andorra','San Marino','Vaticano'], a:3 },
+  { emoji:'🚜', q:'¿Que actividad es caracteristica del espacio rural?', opts:['Banca','Metro','Agricultura','Centro comercial'], a:2 },
+  { emoji:'🏛️', q:'¿Que protege la UNESCO?', opts:['Solo dinero','Solo edificios','Patrimonio cultural','Solo tecnologia'], a:2 },
+  { emoji:'📊', q:'¿Que mide la densidad poblacional?', opts:['Altura','Temperatura','Hab./km²','Idiomas'], a:2 },
+  { emoji:'🌍', q:'¿Cual es el continente mas poblado?', opts:['Europa','Africa','America','Asia'], a:3 },
 ];
-let repIdx=0, repPts=0;
-function initRepaso() { repIdx=0; repPts=0; document.getElementById('repaso-pts').textContent=0; loadRep(); }
+let repIdx = 0, repPts = 0;
+
+function initRepaso() {
+  repIdx = 0;
+  repPts = 0;
+  document.getElementById('repaso-pts').textContent = 0;
+  document.getElementById('rep-num').textContent = 1;
+  document.getElementById('repaso-prog').style.width = '10%';
+  loadRep();
+}
+
 function loadRep() {
-  if(repIdx>=repasoQ.length){ showRepasoEnd(); return; }
-  const d=repasoQ[repIdx];
-  document.getElementById('rep-emoji').textContent=d.emoji;
-  document.getElementById('repaso-q').textContent='❓ '+d.q;
-  const c=document.getElementById('repaso-opts'); c.innerHTML='';
-  d.opts.forEach((o,i)=>{
-    const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
-    b.onclick=()=>{
-      document.querySelectorAll('#repaso-opts .q-opt').forEach((btn,j)=>{if(j===d.a)btn.classList.add('correct');else if(j===i)btn.classList.add('wrong');btn.disabled=true;});
-      const fb=document.getElementById('fb-rep');
-      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 puntos';repPts+=10;addPoints(10);}
-      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
-      document.getElementById('repaso-pts').textContent=repPts;
+  if (repIdx >= repasoQ.length) {
+    showRepasoEnd();
+    return;
+  }
+  const d = repasoQ[repIdx];
+  document.getElementById('rep-emoji').textContent = d.emoji;
+  document.getElementById('repaso-q').textContent = '❓ ' + d.q;
+  const c = document.getElementById('repaso-opts');
+  c.innerHTML = '';
+  d.opts.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'q-opt';
+    b.textContent = o;
+    b.onclick = () => {
+      if (b.disabled) return;
+      reproducirSonido('click');
+      document.querySelectorAll('#repaso-opts .q-opt').forEach((btn, j) => {
+        if (j === d.a) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('wrong');
+        btn.disabled = true;
+      });
+      const fb = document.getElementById('fb-rep');
+      if (i === d.a) {
+        reproducirSonido('acierto');
+        fb.className = 'feedback show ok';
+        fb.textContent = '✅ ¡Correcto! +10 puntos';
+        repPts += 10;
+        addPoints(10);
+      } else {
+        reproducirSonido('error');
+        fb.className = 'feedback show fail';
+        fb.textContent = '❌ Incorrecto.';
+      }
+      document.getElementById('repaso-pts').textContent = repPts;
       repIdx++;
-      document.getElementById('rep-num').textContent=Math.min(repIdx+1,10);
-      document.getElementById('repaso-prog').style.width=((repIdx/10)*100)+'%';
-      setTimeout(loadRep,1100);
+      document.getElementById('rep-num').textContent = Math.min(repIdx + 1, 10);
+      document.getElementById('repaso-prog').style.width = ((repIdx / 10) * 100) + '%';
+      setTimeout(loadRep, 1100);
     };
     c.appendChild(b);
   });
-  document.getElementById('fb-rep').className='feedback';
+  document.getElementById('fb-rep').className = 'feedback';
 }
+
 function showRepasoEnd() {
-  document.getElementById('repaso-container').style.display='none';
-  document.getElementById('repaso-end').style.display='block';
-  document.getElementById('rep-final').textContent=repPts;
-  const badge=repPts>=80?'🥇 Artista Visual':repPts>=50?'🥈 Observador Experto':'🥉 Sigue Explorando';
-  document.getElementById('rep-badge').innerHTML=`<span class="badge">${badge}</span>`;
+  document.getElementById('repaso-container').style.display = 'none';
+  document.getElementById('repaso-end').style.display = 'block';
+  document.getElementById('rep-final').textContent = repPts;
+  const badge = repPts >= 80 ? '🥇 Artista Visual' : repPts >= 50 ? '🥈 Observador Experto' : '🥉 Sigue Explorando';
+  document.getElementById('rep-badge').innerHTML = `<span class="badge">${badge}</span>`;
+  completarSubactividad(4, 'repaso');
 }
+
 function restartRepaso() {
-  document.getElementById('repaso-container').style.display='block';
-  document.getElementById('repaso-end').style.display='none';
+  reproducirSonido('click');
+  document.getElementById('repaso-container').style.display = 'block';
+  document.getElementById('repaso-end').style.display = 'none';
   initRepaso();
 }
+
 initRepaso();
+syncLockedUI();
+
+const quizBtnVisualNoVerbalNormal = document.querySelector('.quiz-btn-footer');
+if (quizBtnVisualNoVerbalNormal) {
+  quizBtnVisualNoVerbalNormal.addEventListener('click', function(event) {
+    if (!todoCompletado()) {
+      event.preventDefault();
+      reproducirSonido('error');
+    } else {
+      reproducirSonido('click');
+    }
+  }, true);
+}
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

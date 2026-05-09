@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -112,7 +112,7 @@
       text-shadow: 2px 2px 0 #002171;
     }
 
-    /* IMÃGENES */
+    /* IM�GENES */
     .imagen-grande {
       background: #283593;
       border: 4px solid #ffd600;
@@ -415,7 +415,7 @@
     }
 
     .btn-quiz {
-      display: block;
+      display: none;
       width: fit-content;
       margin: 0 auto;
       background: #ffd600;
@@ -453,6 +453,7 @@
       .opciones-svg{ gap:14px; }
     }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -483,18 +484,23 @@
 <div class="contenedor">
 
   <!-- =====================================================
-       PÃGINA 1: ROTACIÃ“N
+       P�GINA 1: ROTACI�N
   ===================================================== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-visual">
       <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i> ROTACI&Oacute;N</h2>
 
       <div class="grid-2cols">
-        <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-          <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
-               alt="Rotaci&oacute;n" class="imagen-geo"
-               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
-          <div class="pie-imagen">&#127757; Gira sobre su propio eje</div>
+        <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+          <div class="ayuda-ampliar-media">
+            <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+              <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+                   alt="Rotaci&oacute;n" class="imagen-geo"
+                   onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+              <div class="pie-imagen">&#127757; Gira sobre su propio eje</div>
+            </div>
+          </div>
+          <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
         </div>
 
         <div>
@@ -530,7 +536,7 @@
         </p>
         <div class="opciones-svg">
 
-          <!-- Reloj A: 12 horas â€” INCORRECTO -->
+          <!-- Reloj A: 12 horas � INCORRECTO -->
           <div class="opcion-svg" id="r1A" onclick="responder1('A')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -550,7 +556,7 @@
             <span>12 horas</span>
           </div>
 
-          <!-- Reloj B: 24 horas â€” CORRECTO -->
+          <!-- Reloj B: 24 horas � CORRECTO -->
           <div class="opcion-svg" id="r1B" onclick="responder1('B')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -571,7 +577,7 @@
             <span>24 horas</span>
           </div>
 
-          <!-- Reloj C: 365 dias â€” INCORRECTO -->
+          <!-- Reloj C: 365 dias � INCORRECTO -->
           <div class="opcion-svg" id="r1C" onclick="responder1('C')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -598,7 +604,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 2: TRASLACIÃ“N
+       P�GINA 2: TRASLACI�N
   ===================================================== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-visual">
@@ -638,7 +644,7 @@
         </p>
         <div class="opciones-svg">
 
-          <!-- Calendario A: cada 2 aÃ±os â€” INCORRECTO -->
+          <!-- Calendario A: cada 2 a�os � INCORRECTO -->
           <div class="opcion-svg" id="r2A" onclick="responder2('A')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -657,7 +663,7 @@
             <span>Cada 2 a&ntilde;os</span>
           </div>
 
-          <!-- Calendario B: cada 4 aÃ±os â€” CORRECTO -->
+          <!-- Calendario B: cada 4 a�os � CORRECTO -->
           <div class="opcion-svg" id="r2B" onclick="responder2('B')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -672,7 +678,7 @@
             <span>Cada 4 a&ntilde;os</span>
           </div>
 
-          <!-- Calendario C: cada 10 aÃ±os â€” INCORRECTO -->
+          <!-- Calendario C: cada 10 a�os � INCORRECTO -->
           <div class="opcion-svg" id="r2C" onclick="responder2('C')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="18"/>
@@ -695,7 +701,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 3: ESTACIONES
+       P�GINA 3: ESTACIONES
   ===================================================== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-visual">
@@ -737,7 +743,7 @@
         <p class="fs-5">&#127474;&#127485; Norte &rarr; Verano &middot; &#127462;&#127479; Sur &rarr; Invierno</p>
       </div>
 
-      <!-- REFORZAMIENTO P3: dos globos que muestran hemisferios â€” el alumno elige en cual hay invierno -->
+      <!-- REFORZAMIENTO P3: dos globos que muestran hemisferios � el alumno elige en cual hay invierno -->
       <div class="reforzamiento">
         <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
         <p class="reforzamiento-instruccion">
@@ -745,7 +751,7 @@
         </p>
         <div class="opciones-svg" style="gap:40px;align-items:center;">
 
-          <!-- Hemisferio Norte con sol â€” el que tiene verano (INCORRECTO pues pregunta donde hay invierno) -->
+          <!-- Hemisferio Norte con sol � el que tiene verano (INCORRECTO pues pregunta donde hay invierno) -->
           <div class="hemi-opcion" id="h3N" onclick="responder3('N')">
             <svg width="150" height="170" viewBox="0 0 150 170">
               <defs>
@@ -775,7 +781,7 @@
             <span>Hemisferio Norte</span>
           </div>
 
-          <!-- Hemisferio Sur sin sol â€” el que tiene invierno (CORRECTO) -->
+          <!-- Hemisferio Sur sin sol � el que tiene invierno (CORRECTO) -->
           <div class="hemi-opcion" id="h3S" onclick="responder3('S')">
             <svg width="150" height="170" viewBox="0 0 150 170">
               <defs>
@@ -804,7 +810,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 4: ELEMENTOS DEL MAPA
+       P�GINA 4: ELEMENTOS DEL MAPA
   ===================================================== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-visual">
@@ -857,7 +863,7 @@
         </p>
         <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;">
 
-          <!-- Orientacion / rosa de vientos â€” CORRECTA -->
+          <!-- Orientacion / rosa de vientos � CORRECTA -->
           <div class="elem-opcion" id="e4A" onclick="responder4('A')">
             <svg width="120" height="130" viewBox="0 0 120 130">
               <rect width="120" height="130" fill="#283593" rx="14"/>
@@ -877,7 +883,7 @@
             <span>Elemento A</span>
           </div>
 
-          <!-- Escala / regla â€” INCORRECTO -->
+          <!-- Escala / regla � INCORRECTO -->
           <div class="elem-opcion" id="e4B" onclick="responder4('B')">
             <svg width="120" height="130" viewBox="0 0 120 130">
               <rect width="120" height="130" fill="#283593" rx="14"/>
@@ -900,7 +906,7 @@
             <span>Elemento B</span>
           </div>
 
-          <!-- SimbologÃ­a â€” INCORRECTO -->
+          <!-- Simbolog�a � INCORRECTO -->
           <div class="elem-opcion" id="e4C" onclick="responder4('C')">
             <svg width="120" height="130" viewBox="0 0 120 130">
               <rect width="120" height="130" fill="#283593" rx="14"/>
@@ -922,7 +928,7 @@
             <span>Elemento C</span>
           </div>
 
-          <!-- Coordenadas â€” INCORRECTO -->
+          <!-- Coordenadas � INCORRECTO -->
           <div class="elem-opcion" id="e4D" onclick="responder4('D')">
             <svg width="120" height="130" viewBox="0 0 120 130">
               <rect width="120" height="130" fill="#283593" rx="14"/>
@@ -936,8 +942,8 @@
               <line x1="83" y1="22" x2="83" y2="102" stroke="#4a6fa5" stroke-width="1" opacity="0.3"/>
               <!-- Punto de coordenada -->
               <circle cx="60" cy="62" r="5" fill="#4a6fa5"/>
-              <text x="65" y="56" font-family="Nunito" font-size="9" fill="#7a9cc5">19Â°N</text>
-              <text x="65" y="72" font-family="Nunito" font-size="9" fill="#7a9cc5">99Â°O</text>
+              <text x="65" y="56" font-family="Nunito" font-size="9" fill="#7a9cc5">19�N</text>
+              <text x="65" y="72" font-family="Nunito" font-size="9" fill="#7a9cc5">99�O</text>
               <text x="60" y="122" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="700" fill="#7a9cc5">Elemento D</text>
             </svg>
             <span>Elemento D</span>
@@ -984,10 +990,14 @@
 
   var sonidos = {
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
-    click:       new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    click:       new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
     completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
+
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
 
   function reproducirSonido(nombre) {
     try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
@@ -1004,7 +1014,6 @@
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_normal_visualnoverbal', paginaActual);
   }
 
   function actualizarUI() {
@@ -1024,6 +1033,9 @@
     el.className = 'feedback-ref ' + (ok ? 'ok' : 'err');
     el.innerHTML = msg;
     el.style.display = 'block';
+    if (!ok && window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorFromFeedback === 'function') {
+      window.laTierraTrackerHooks.addErrorFromFeedback(id, { origen: 'visual_no_verbal', tipo: 'seleccion_visual' });
+    }
   }
 
   /* P1: duracion de la rotacion */
@@ -1118,20 +1130,12 @@
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    var guardado = localStorage.getItem('progreso_normal_visualnoverbal');
-    if (guardado) {
-      var pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById('pagina' + paginaActual).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById('pagina' + paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

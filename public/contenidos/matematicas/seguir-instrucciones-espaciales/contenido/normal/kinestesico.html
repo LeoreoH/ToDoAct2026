@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instrucciones Espaciales · Normal · Kinestésico</title>
+  <title>Instrucciones Espaciales &middot; Normal &middot; Kinest&eacute;sico</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -264,10 +264,12 @@
     .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
     .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
 
-    .btn-quiz-wrap { margin-top:8px; display:none; }
-    .btn-quiz-wrap.visible { display:block; }
+    .btn-quiz-wrap { margin-top:8px; }
     .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:8px 20px; border-radius:40px; font-family:'Cinzel',serif; font-size:.85rem; letter-spacing:.05em; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
     .btn-quiz:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--verde-oscuro); color:white; }
+    .btn-quiz.bloqueado { background:#cbd5e1; color:#64748b; box-shadow:0 3px 0 #94a3b8; pointer-events:auto; }
+    .btn-quiz.bloqueado:hover { transform:none; box-shadow:0 3px 0 #94a3b8; color:#64748b; }
+    .texto-ayuda-quiz { margin-top:8px; font-size:.62rem; font-weight:800; color:#78716c; }
     .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 16px; font-weight:800; font-size:.7rem; cursor:pointer; margin-top:6px; transition:all .2s; display:none; }
     .btn-reintentar.visible { display:inline-block; }
     .btn-reintentar:hover { background:var(--verde-med); color:white; }
@@ -304,6 +306,9 @@
 <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
 <audio id="sndTada"  src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
 <audio id="sndStep"  src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505c"></script>
 
 <!-- CABECERA -->
 <div class="cabecera">
@@ -744,7 +749,8 @@
       </div>
       <div class="feedback-box" id="feedbackBox"></div>
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!</a>
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true"><i class="fas fa-puzzle-piece"></i> Ir al quiz</a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reiniciar()">
         <i class="fas fa-redo-alt me-1"></i> Intentar de nuevo
@@ -786,6 +792,10 @@
 
   var DESTINO = 'carrusel';
   var respondido = false;
+  var ejercicioCompletado = false;
+  var erroresKinestesico = 0;
+  var completadoRegistroKinestesico = false;
+  var quizTrackerAdjunto = false;
 
   /* Estado de Mateo */
   var estado = { x: 158, y: 350, rot: 0 }; // rot: 0=Norte,90=Este,180=Sur,270=Oeste
@@ -832,6 +842,111 @@
 
   /* ══ AUDIO ══ */
   function play(id){ try{ var s=document.getElementById(id); if(!s)return; s.currentTime=0; s.play(); }catch(e){} }
+
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+  var audioStep = document.getElementById('sndStep');
+
+  [audioClick, audioDing, audioError, audioTada, audioStep].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosKinestesico = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_ruta_jardin',
+      tipoActividad: 'kinestesico_ruta'
+    }
+  };
+
+  var trackerKinestesico = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'kinestesico',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'kinestesico_normal' },
+    apartados: ejerciciosKinestesico
+  }) : null;
+
+  var sessionTrackerKinestesico = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'kinestesico'
+  }) : null;
+
+  function registrarIntentoKinestesico(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerKinestesico) {
+      trackerKinestesico.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroKinestesico) {
+        completadoRegistroKinestesico = true;
+        if (trackerKinestesico) {
+          trackerKinestesico.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            actividad: 'ruta_y_destino',
+            errores_previos: erroresKinestesico,
+            destino_correcto: DESTINO,
+            destino_elegido: detalle.destino || null,
+            movimientos_realizados: movCount
+          });
+          trackerKinestesico.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'ruta_y_destino',
+              destino_correcto: DESTINO,
+              destino_elegido: detalle.destino || null,
+              movimientos_realizados: movCount
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresKinestesico += 1;
+    if (trackerKinestesico) {
+      trackerKinestesico.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'ruta_y_destino',
+        intento: erroresKinestesico,
+        destino_elegido: detalle.destino || null,
+        movimientos_realizados: movCount
+      });
+    }
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerKinestesico) {
+        sessionTrackerKinestesico.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
+    }
+  }
 
   /* ══ TOAST ══ */
   var toastTimer = null;
@@ -1071,8 +1186,8 @@
       document.getElementById('notaCompletaRuta').style.display = 'flex';
       ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled = true; });
       respondido = false;
+      ejercicioCompletado = false;
       document.getElementById('feedbackBox').className = 'feedback-box';
-      document.getElementById('btnQuizWrap').classList.remove('visible');
       document.getElementById('btnReintentar').classList.remove('visible');
       ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).className='destino-btn'; document.getElementById('dest-'+d).disabled=true; });
     }
@@ -1080,6 +1195,7 @@
     actualizarContador();
     renderProgreso();
     mostrarCasilla(accionActual);
+    actualizarBotonQuiz();
     showToast('↩️ Deshecho', 1200);
   }
 
@@ -1113,16 +1229,18 @@
     ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled=true; });
     var fb = document.getElementById('feedbackBox');
     if (id === DESTINO) {
+      ejercicioCompletado = true;
       play('sndTada');
       document.getElementById('marcadorDestino').setAttribute('opacity','1');
       document.getElementById('dest-carrusel').classList.add('correcta');
       ['fuente','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).classList.add('incorrecta'); });
       fb.className = 'feedback-box ok';
       fb.innerHTML = '🎠 ¡Correcto! Moviste a Mateo por los 5 pasos y llegaste al <strong>Carrusel</strong>. ¡Excelente trabajo kinestésico! ✨';
-      document.getElementById('btnQuizWrap').classList.add('visible');
+      registrarIntentoKinestesico(true, { destino: id });
+      actualizarBotonQuiz();
       lanzarConfeti();
-      localStorage.setItem('progreso_normal_kinesico_instrucciones','ok');
     } else {
+      registrarIntentoKinestesico(false, { destino: id });
       play('sndError');
       document.getElementById('dest-'+id).classList.add('incorrecta');
       respondido = false;
@@ -1140,7 +1258,7 @@
   /* ══ REINICIAR ══ */
   function reiniciar() {
     estado = { x: 158, y: 350, rot: 0 };
-    historial = []; accionActual = 0; movCount = 0; respondido = false;
+    historial = []; accionActual = 0; movCount = 0; respondido = false; ejercicioCompletado = false;
     moverMateo(158, 315, 0, false);
     actualizarBrujula(0, 'Norte ↑', 'Mateo está listo. ¡Muévelo!', false);
     limpiarRastro();
@@ -1152,10 +1270,10 @@
     });
     document.getElementById('feedbackBox').className='feedback-box';
     document.getElementById('btnReintentar').classList.remove('visible');
-    document.getElementById('btnQuizWrap').classList.remove('visible');
     document.getElementById('btnDeshacer').disabled = true;
     actualizarBadge(); actualizarContador(); renderProgreso();
     mostrarCasilla(0);
+    actualizarBotonQuiz();
     play('sndClick');
     showToast('🔄 ¡Reiniciado! Mueve a Mateo de nuevo', 2000);
   }
@@ -1199,8 +1317,21 @@
     actualizarBrujula(0, 'Norte ↑', 'Mateo está listo. ¡Muévelo!', false);
     actualizarBadge(); actualizarContador(); renderProgreso();
     mostrarCasilla(0);
-    if (localStorage.getItem('progreso_normal_kinesico_instrucciones')==='ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
+    actualizarBotonQuiz();
+    if (trackerKinestesico) {
+      trackerKinestesico.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+    if (sessionTrackerKinestesico) {
+      sessionTrackerKinestesico.start();
+    }
+    var botonQuizKinestesico = document.getElementById('botonQuiz');
+    if (botonQuizKinestesico) {
+      botonQuizKinestesico.addEventListener('click', function(event) {
+        if (!ejercicioCompletado) {
+          event.preventDefault();
+          play('sndError');
+        }
+      });
     }
   });
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas · Nivel Fácil · Kinestésico</title>
+    <title>Identificar coordenadas · Nivel Fácil · Kinestésico</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -152,9 +152,6 @@
             padding-left: 20px;
         }
 
-        /* ============================================
-           CONTENIDO (IGUAL A VISUAL/VERBAL)
-        ============================================ */
         .contenedor-imagen {
             text-align: center;
             margin: 25px 0;
@@ -169,6 +166,28 @@
             height: auto;
             border-radius: 15px;
             border: 3px solid #f97316;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .contenedor-imagen img.img-robot {
+            max-width: 200px;
+            width: 100%;
+        }
+
+        .contenedor-imagen img.ampliada {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fde68a;
         }
 
         .pie-imagen {
@@ -176,6 +195,17 @@
             font-weight: 600;
             color: #9a3412;
             font-style: italic;
+        }
+
+        body.imagen-ampliada::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
 
         .recuadro-info {
@@ -245,7 +275,6 @@
             margin-bottom: 20px;
         }
 
-        /* Página 1: Completar direcciones */
         .espacio-calle, .espacio-avenida {
             transition: all 0.3s;
         }
@@ -639,12 +668,257 @@
             background: white;
         }
 
+        .boton-quiz.bloqueado {
+            background: #e5e7eb;
+            color: #6b7280;
+            border-color: #9ca3af;
+            box-shadow: 0 8px 0 #9ca3af;
+            cursor: not-allowed;
+            pointer-events: auto;
+        }
+
+        .boton-quiz.bloqueado:hover {
+            transform: none;
+            background: #e5e7eb;
+            box-shadow: 0 8px 0 #9ca3af;
+        }
+
+        .texto-ayuda-quiz {
+            color: #9a3412;
+            font-weight: 800;
+            margin-top: 12px;
+            text-align: center;
+        }
+
         .feedback-kinestesico {
             margin-top: 15px;
             padding: 15px;
             border-radius: 15px;
             font-weight: 600;
             display: none;
+        }
+
+        .grid-retos-kin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .btn-opcion-kin {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 16px;
+            padding: 16px;
+            font-weight: 800;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 0 #fdba74;
+        }
+
+        .btn-opcion-kin:hover:not(:disabled) {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .btn-opcion-kin.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-opcion-kin.incorrecta {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        /* ============================================
+           RETO 2 — ESTILOS NUEVOS COMPARTIDOS
+        ============================================ */
+
+        /* P1 — mapa de tarjetas táctiles */
+        .mapa-postal-kin {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+        .celda-postal-kin {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 700;
+            color: #9a3412;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .celda-postal-kin:hover {
+            background: #fff7e6;
+            transform: translateY(-2px);
+        }
+        .celda-postal-kin.correcta-postal {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+        .celda-postal-kin.incorrecta-postal {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+        .celda-postal-icono { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+        .celda-postal-dir { font-size: 0.82rem; color: #c2410c; font-weight: 600; }
+        .celda-postal-kin.correcta-postal .celda-postal-dir { color: white; }
+        .celda-postal-kin.incorrecta-postal .celda-postal-dir { color: white; }
+
+        /* P2 — cuadrícula táctil fila */
+        .grid-toque-kin {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 18px 0;
+        }
+        .celda-toque-kin {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 12px;
+            padding: 16px 4px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #9a3412;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .celda-toque-kin:hover { background: #fff7e6; transform: translateY(-2px); }
+        .celda-toque-kin.marcada-toque { background: #4caf50; color: white; border-color: white; }
+        .celda-toque-kin.error-toque { background: #f44336; color: white; border-color: white; }
+
+        /* P3 — brújula interactiva */
+        .brujula-contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .brujula-svg-kin {
+            width: 140px;
+            height: 140px;
+            transition: transform 0.5s cubic-bezier(.34,1.56,.64,1);
+        }
+        .botones-brujula {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 380px;
+        }
+        .btn-brujula {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 14px;
+            padding: 12px 8px;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #fdba74;
+            text-align: center;
+        }
+        .btn-brujula:hover { background: #fde68a; transform: translateY(-2px); }
+        .btn-brujula.activo-brujula { background: #4caf50; color: white; border-color: white; }
+
+        /* P4 — sliders dobles */
+        .par-sliders-kin {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 18px 0;
+        }
+        .slider-kin-card {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .slider-kin-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #c2410c;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .slider-kin-label {
+            font-size: 0.85rem;
+            color: #9a3412;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .slider-kin-ok {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #4caf50;
+            display: none;
+        }
+
+        /* P5 — ordenar paradas */
+        .fichas-paradas {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+        .ficha-parada {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 50px;
+            padding: 10px 22px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .ficha-parada:hover { background: #fde68a; transform: translateY(-2px); }
+        .ficha-parada.usada-parada { opacity: 0.3; pointer-events: none; }
+        .zona-orden {
+            min-height: 60px;
+            background: #fff7e6;
+            border: 3px dashed #f97316;
+            border-radius: 18px;
+            padding: 12px 16px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 14px 0;
+        }
+        .chip-en-orden {
+            background: #4caf50;
+            color: white;
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-weight: 800;
+            font-size: 1rem;
+            animation: aparecer 0.2s ease;
+        }
+        .zona-inicio-label {
+            font-weight: 700;
+            color: #9a3412;
+            font-size: 0.95rem;
         }
 
         @keyframes brillo {
@@ -666,8 +940,12 @@
                 grid-template-columns: repeat(5, 45px);
                 grid-template-rows: repeat(5, 45px);
             }
+            .mapa-postal-kin { grid-template-columns: repeat(2, 1fr); }
+            .par-sliders-kin { grid-template-columns: 1fr; }
+            .botones-brujula { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
+    <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -678,7 +956,7 @@
 <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
 
 <div class="cabecera-facil">
-    <h1>🧭 COORDENADAS</h1>
+    <h1>🧭 IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Fácil · Ubicación en planos</p>
     <div>
         <span class="badge-estilo">✋ Kinestésico</span>
@@ -709,14 +987,18 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Calles y avenidas</h2>
 
-            <!-- CONTENIDO (INTACTO) -->
             <p class="lead">
                 En una ciudad, las <strong>calles</strong> y <strong>avenidas</strong> nos ayudan a ubicar lugares.
             </p>
 
-            <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Mapa de colonia con calles y avenidas">
-                <div class="pie-imagen">Las calles son verticales (números) y las avenidas son horizontales (nombres)</div>
+            <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+                <div class="ayuda-ampliar-media">
+                    <div class="contenedor-imagen">
+                        <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Mapa de colonia con calles y avenidas" onclick="ampliarImagen(this)">
+                        <div class="pie-imagen">Las calles son verticales (números) y las avenidas son horizontales (nombres)</div>
+                    </div>
+                </div>
+                <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
             </div>
 
             <div class="recuadro-info">
@@ -729,7 +1011,7 @@
                 </ul>
             </div>
 
-            <!-- ACTIVIDAD KINESTÉSICA: COMPLETAR DIRECCIONES CON FICHAS REUTILIZABLES -->
+            <!-- ACTIVIDAD 1: COMPLETAR DIRECCIONES CON FICHAS REUTILIZABLES -->
             <div class="actividad-kinestesica">
                 <h4><i class="fas fa-puzzle-piece me-2"></i>Actividad: Completa las direcciones</h4>
                 <p>Arrastra el número de calle y el nombre de avenida correctos para cada lugar. Las fichas se pueden usar varias veces.</p>
@@ -784,14 +1066,12 @@
                 <div style="background: #fed7aa; padding: 20px; border-radius: 20px; margin: 20px 0;">
                     <p style="font-weight: 700; margin-bottom: 15px;">Arrastra desde aquí (puedes usar cada ficha varias veces):</p>
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                        <!-- Números de calle -->
                         <div class="ficha-calle" draggable="true" ondragstart="dragStartCalle(event, '14')" style="width: 60px; height: 50px; background: #f97316; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; cursor: grab;">14</div>
                         <div class="ficha-calle" draggable="true" ondragstart="dragStartCalle(event, '18')" style="width: 60px; height: 50px; background: #f97316; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; cursor: grab;">18</div>
                         <div class="ficha-calle" draggable="true" ondragstart="dragStartCalle(event, '22')" style="width: 60px; height: 50px; background: #f97316; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; cursor: grab;">22</div>
                         <div class="ficha-calle" draggable="true" ondragstart="dragStartCalle(event, '24')" style="width: 60px; height: 50px; background: #f97316; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; cursor: grab;">24</div>
                     </div>
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
-                        <!-- Nombres de avenida -->
                         <div class="ficha-avenida" draggable="true" ondragstart="dragStartAvenida(event, 'Zapata')" style="padding: 10px 20px; background: #4caf50; color: white; border-radius: 10px; font-weight: 700; cursor: grab;">Zapata</div>
                         <div class="ficha-avenida" draggable="true" ondragstart="dragStartAvenida(event, 'Reforma')" style="padding: 10px 20px; background: #4caf50; color: white; border-radius: 10px; font-weight: 700; cursor: grab;">Reforma</div>
                         <div class="ficha-avenida" draggable="true" ondragstart="dragStartAvenida(event, '5 de Mayo')" style="padding: 10px 20px; background: #4caf50; color: white; border-radius: 10px; font-weight: 700; cursor: grab;">5 de Mayo</div>
@@ -800,6 +1080,48 @@
 
                 <div id="feedback-pagina1" class="feedback-kinestesico"></div>
                 <button class="btn-accion" onclick="reiniciarDirecciones()">↺ Reiniciar</button>
+            </div>
+
+            <!-- RETO 2 — PÁGINA 1: Toca el lugar correcto en el mapa -->
+            <div class="actividad-kinestesica mt-4">
+                <h4><i class="fas fa-hand-pointer me-2"></i>Reto 2: Toca el lugar correcto en el mapa</h4>
+                <p>Busca el lugar que esté en la <strong>Avenida Zapata</strong> y cuya calle sea <strong>mayor que 20 pero menor que 24</strong>. Toca la tarjeta correcta.</p>
+
+                <div class="mapa-postal-kin" id="mapa-p1-reto2">
+                    <div class="celda-postal-kin" data-correcto="false" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">🏫</span>
+                        <span>Calle 14</span><br>
+                        <span class="celda-postal-dir">Av. Reforma</span>
+                    </div>
+                    <div class="celda-postal-kin" data-correcto="false" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">🏥</span>
+                        <span>Calle 18</span><br>
+                        <span class="celda-postal-dir">Av. 5 de Mayo</span>
+                    </div>
+                    <div class="celda-postal-kin" data-correcto="true" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">🌳</span>
+                        <span>Calle 22</span><br>
+                        <span class="celda-postal-dir">Av. Zapata</span>
+                    </div>
+                    <div class="celda-postal-kin" data-correcto="false" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">🏪</span>
+                        <span>Calle 24</span><br>
+                        <span class="celda-postal-dir">Av. Zapata</span>
+                    </div>
+                    <div class="celda-postal-kin" data-correcto="false" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">🏢</span>
+                        <span>Calle 22</span><br>
+                        <span class="celda-postal-dir">Av. Reforma</span>
+                    </div>
+                    <div class="celda-postal-kin" data-correcto="false" onclick="tocarCeldaPostal(this, 'p1')">
+                        <span class="celda-postal-icono">⛪</span>
+                        <span>Calle 14</span><br>
+                        <span class="celda-postal-dir">Av. 5 de Mayo</span>
+                    </div>
+                </div>
+
+                <div id="feedback-pagina1b" class="feedback-kinestesico"></div>
+                <button class="btn-accion" onclick="reiniciarPostal('p1')">↺ Reiniciar</button>
             </div>
         </div>
     </div>
@@ -811,13 +1133,12 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-th me-3"></i>Cuadrícula simple</h2>
 
-            <!-- CONTENIDO (INTACTO) -->
             <p class="lead">
                 Una cuadrícula nos ayuda a ubicar lugares con <strong>coordenadas</strong>.
             </p>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/cuadricula-3x3-coordenadas.jpg" alt="Cuadrícula 3x3 con coordenadas">
+                <img src="/contenidos/matematicas/recursos/imagenes/cuadricula-3x3-coordenadas.jpg" alt="Cuadrícula 3x3 con coordenadas" onclick="ampliarImagen(this)">
                 <div class="pie-imagen">Las columnas son letras (A, B, C) y las filas son números (1, 2, 3)</div>
             </div>
 
@@ -830,7 +1151,7 @@
                 </ul>
             </div>
 
-            <!-- ACTIVIDAD KINESTÉSICA: RECORRIDO DEL ROBOT -->
+            <!-- ACTIVIDAD 1: RECORRIDO DEL ROBOT -->
             <div class="actividad-kinestesica">
                 <h4><i class="fas fa-robot me-2"></i>Actividad: Lleva el robot a D4</h4>
                 
@@ -844,14 +1165,22 @@
                     <div class="robot-recorrido" id="robot-recorrido" draggable="true" ondragstart="dragStartRobot(event)" ondragend="dragEndRobot(event)">
                         🤖
                     </div>
-
-                    <div class="cuadricula-recorrido-robot" id="cuadricula-recorrido-robot">
-                        <!-- Se genera con JS -->
-                    </div>
+                    <div class="cuadricula-recorrido-robot" id="cuadricula-recorrido-robot"></div>
                 </div>
 
                 <div id="feedback-pagina2" class="feedback-kinestesico"></div>
                 <button class="btn-accion" onclick="reiniciarRecorrido()">↺ Reiniciar</button>
+            </div>
+
+            <!-- RETO 2 — PÁGINA 2: Marca la fila que contiene B2 -->
+            <div class="actividad-kinestesica mt-4">
+                <h4><i class="fas fa-hand-pointer me-2"></i>Reto 2: Marca la fila donde está B2</h4>
+                <p>Toca todas las casillas que están <strong>a la misma altura que B2</strong>. No marques ninguna que quede arriba o abajo de esa fila.</p>
+
+                <div class="grid-toque-kin" id="grid-p2-reto2"></div>
+
+                <div id="feedback-pagina2b" class="feedback-kinestesico"></div>
+                <button class="btn-accion" onclick="reiniciarGridToque()">↺ Reiniciar</button>
             </div>
         </div>
     </div>
@@ -863,13 +1192,12 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-location-arrow me-3"></i>Direcciones</h2>
 
-            <!-- CONTENIDO (INTACTO) -->
             <p class="lead">
                 Las cuatro direcciones principales son: <strong>Norte, Sur, Este y Oeste</strong>.
             </p>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/flechas-direcciones-nseo.jpg" alt="Flechas con direcciones">
+                <img src="/contenidos/matematicas/recursos/imagenes/flechas-direcciones-nseo.jpg" alt="Flechas con direcciones" onclick="ampliarImagen(this)">
                 <div class="pie-imagen">Norte ↑ · Sur ↓ · Este → · Oeste ←</div>
             </div>
 
@@ -880,13 +1208,11 @@
                 <i class="fas fa-arrow-left"></i> Oeste = izquierda
             </div>
 
-            <!-- ACTIVIDAD KINESTÉSICA: MEMORIA DE DIRECCIONES -->
+            <!-- ACTIVIDAD 1: MEMORIA DE DIRECCIONES -->
             <div class="actividad-kinestesica">
                 <h4><i class="fas fa-brain me-2"></i>Actividad: Memoria de direcciones</h4>
                 
-                <div class="secuencia-mostrada-bonita" id="secuencia-mostrada-bonita">
-                    <!-- Aquí aparecerán las flechas de la secuencia -->
-                </div>
+                <div class="secuencia-mostrada-bonita" id="secuencia-mostrada-bonita"></div>
 
                 <div class="panel-secuencias-bonito">
                     <div class="btn-flecha-bonito" onclick="seleccionarFlechaMemoria('↑')">↑</div>
@@ -902,6 +1228,38 @@
 
                 <div id="feedback-pagina3" class="feedback-kinestesico"></div>
             </div>
+
+            <!-- RETO 2 — PÁGINA 3: Gira la brújula al Norte -->
+            <div class="actividad-kinestesica mt-4">
+                <h4><i class="fas fa-compass me-2"></i>Reto 2: Orienta la brújula</h4>
+                <p>La brújula está desorientada. Pulsa la dirección que queda <strong>opuesta al Sur</strong> para acomodar la flecha roja.</p>
+
+                <div class="brujula-contenedor">
+                    <svg class="brujula-svg-kin" id="brujula-kin" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(135deg);">
+                        <circle cx="70" cy="70" r="64" fill="#fff7e6" stroke="#f97316" stroke-width="3"/>
+                        <!-- aguja norte (roja) -->
+                        <polygon points="70,14 63,70 77,70" fill="#c2410c"/>
+                        <!-- aguja sur (amarilla) -->
+                        <polygon points="70,126 63,70 77,70" fill="#fde68a"/>
+                        <circle cx="70" cy="70" r="7" fill="#f97316"/>
+                        <!-- etiquetas -->
+                        <text x="70" y="11" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c" font-family="Nunito, sans-serif">N</text>
+                        <text x="70" y="135" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412" font-family="Nunito, sans-serif">S</text>
+                        <text x="130" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412" font-family="Nunito, sans-serif">E</text>
+                        <text x="10" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412" font-family="Nunito, sans-serif">O</text>
+                    </svg>
+
+                    <div class="botones-brujula">
+                        <button class="btn-brujula" id="btn-norte-kin" onclick="girarBrujulaKin(0)">↑ Norte</button>
+                        <button class="btn-brujula" id="btn-sur-kin" onclick="girarBrujulaKin(180)">↓ Sur</button>
+                        <button class="btn-brujula" id="btn-este-kin" onclick="girarBrujulaKin(90)">→ Este</button>
+                        <button class="btn-brujula" id="btn-oeste-kin" onclick="girarBrujulaKin(-90)">← Oeste</button>
+                    </div>
+                </div>
+
+                <div id="feedback-pagina3b" class="feedback-kinestesico"></div>
+                <button class="btn-accion" onclick="reiniciarBrujula()">↺ Reiniciar</button>
+            </div>
         </div>
     </div>
 
@@ -912,16 +1270,12 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>El robot</h2>
 
-            <!-- CONTENIDO (INTACTO) -->
             <p class="lead">
                 Un robot avanza <strong>2 unidades por cada paso</strong> que da.
             </p>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/robot-infantil-simple.jpg" alt="Robot infantil" style="max-width: 200px;">
-                <div style="margin-top: 15px;">
-                    <img src="/contenidos/matematicas/recursos/imagenes/libro-tabla-robot.jpg" alt="Tabla del robot" style="max-width: 300px; border-radius: 10px;">
-                </div>
+                <img src="/contenidos/matematicas/recursos/imagenes/robot-infantil-simple.jpg" alt="Robot infantil" class="img-robot" onclick="ampliarImagen(this)">
                 <div class="pie-imagen">El robot avanza 2 unidades por cada paso</div>
             </div>
 
@@ -929,27 +1283,79 @@
                 <strong>Regla:</strong> Pasos × 2 = Unidades avanzadas
             </div>
 
-            <!-- ACTIVIDAD KINESTÉSICA: SLIDER -->
-            <div class="actividad-kinestesica">
-                <h4><i class="fas fa-sliders-h me-2"></i>Actividad: Controla los pasos del robot</h4>
-                <p>Desliza para elegir los pasos y observa cómo avanza el robot</p>
+            <p class="fw-bold mt-4 mb-2" style="color:#c2410c;">Resuelve los dos retos. Cada uno tiene su propio control.</p>
 
-                <div class="robot-slider-bonito">
-                    <div class="robot-slider-imagen" id="robot-slider-imagen">
-                        🤖
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="actividad-kinestesica">
+                        <h4><i class="fas fa-sliders-h me-2"></i>Reto 1</h4>
+                        <p>Ajusta el control hasta que el robot recorra <strong>12 unidades</strong>.</p>
+
+                        <div class="robot-slider-bonito">
+                            <div class="robot-slider-imagen" id="robot-slider-a">🤖</div>
+                            <input type="range" min="0" max="10" value="0" class="slider-bonito" id="slider-pasos-a" oninput="moverRobotReto('a', this.value, 6, 12)">
+                            <div class="pista-avance-bonita">
+                                <div class="marcador-avance-bonito" id="marcador-avance-a" style="left: 0%;"></div>
+                            </div>
+                            <p id="info-pasos-a" style="font-size: 1.35rem; margin-top: 20px;"><strong>0 pasos</strong> = 0 unidades</p>
+                        </div>
+
+                        <div id="feedback-pagina4a" class="feedback-kinestesico"></div>
                     </div>
-
-                    <input type="range" min="0" max="10" value="0" class="slider-bonito" id="slider-pasos-bonito" oninput="moverRobotBonito(this.value)">
-
-                    <div class="pista-avance-bonita">
-                        <div class="marcador-avance-bonito" id="marcador-avance-bonito" style="left: 0%;"></div>
-                    </div>
-
-                    <p id="info-pasos-bonita" style="font-size: 1.5rem; margin-top: 20px;"><strong>0 pasos</strong> = 0 unidades</p>
                 </div>
 
-                <div id="feedback-pagina4" class="feedback-kinestesico"></div>
+                <div class="col-lg-6">
+                    <div class="actividad-kinestesica">
+                <h4><i class="fas fa-sliders-h me-2"></i>Reto 2</h4>
+                <p>Ajusta el control hasta que este robot avance <strong>2 unidades más que el del reto 1</strong>.</p>
+
+                        <div class="robot-slider-bonito">
+                            <div class="robot-slider-imagen" id="robot-slider-b">🦾</div>
+                            <input type="range" min="0" max="10" value="0" class="slider-bonito" id="slider-pasos-b" oninput="moverRobotReto('b', this.value, 7, 14)">
+                            <div class="pista-avance-bonita">
+                                <div class="marcador-avance-bonito" id="marcador-avance-b" style="left: 0%;"></div>
+                            </div>
+                            <p id="info-pasos-b" style="font-size: 1.35rem; margin-top: 20px;"><strong>0 pasos</strong> = 0 unidades</p>
+                        </div>
+
+                        <div id="feedback-pagina4b" class="feedback-kinestesico"></div>
+                    </div>
+                </div>
             </div>
+
+            <!-- DESAFÍO FINAL — PÁGINA 4: Ajusta dos robots a distintas metas -->
+            <div class="actividad-kinestesica mt-4">
+                <h4><i class="fas fa-hand-pointer me-2"></i>Desafío final: ¿Cuántos pasos necesita cada robot?</h4>
+                <p>Mueve cada control hasta que cada robot llegue a su meta.<br>
+                <strong>Robot A:</strong> debe recorrer 8 unidades &nbsp;·&nbsp; <strong>Robot B:</strong> debe recorrer 6 unidades.</p>
+
+                <div class="par-sliders-kin">
+                    <!-- Robot A -->
+                    <div class="slider-kin-card">
+                        <div class="slider-kin-num" id="num-reto2a">0 u.</div>
+                        <div class="slider-kin-label">🤖 Robot A &mdash; meta: 8 u.</div>
+                        <input type="range" min="0" max="10" step="1" value="0"
+                               style="width:100%;"
+                               oninput="moverSliderReto2('a', this.value, 4, 8)"
+                               id="sl-reto2a">
+                        <div class="slider-kin-ok" id="ok-reto2a">✔ ¡4 pasos = 8 unidades!</div>
+                    </div>
+                    <!-- Robot B -->
+                    <div class="slider-kin-card">
+                        <div class="slider-kin-num" id="num-reto2b">0 u.</div>
+                        <div class="slider-kin-label">🦾 Robot B &mdash; meta: 6 u.</div>
+                        <input type="range" min="0" max="10" step="1" value="0"
+                               style="width:100%;"
+                               oninput="moverSliderReto2('b', this.value, 3, 6)"
+                               id="sl-reto2b">
+                        <div class="slider-kin-ok" id="ok-reto2b">✔ ¡3 pasos = 6 unidades!</div>
+                    </div>
+                </div>
+
+                <div id="feedback-pagina4c" class="feedback-kinestesico"></div>
+            </div>
+
+            <div id="feedback-pagina4" class="feedback-kinestesico mt-3"></div>
         </div>
     </div>
 
@@ -960,25 +1366,22 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-flag-checkered me-3"></i>Punto A y B</h2>
 
-            <!-- CONTENIDO (INTACTO) -->
             <p class="lead">
                 Para ir de un lugar a otro necesitamos un <strong>punto de partida (A)</strong> y un <strong>punto de llegada (B)</strong>.
             </p>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/mapa-punto-a-b-camino.jpg" alt="Mapa con punto A y B">
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-punto-a-b-camino.jpg" alt="Mapa con punto A y B" onclick="ampliarImagen(this)">
                 <div class="pie-imagen">Del punto de inicio al punto de llegada</div>
             </div>
 
-            <!-- ACTIVIDAD KINESTÉSICA: RUTA MÚLTIPLE -->
+            <!-- ACTIVIDAD 1: RUTA MÚLTIPLE -->
             <div class="actividad-kinestesica">
                 <h4><i class="fas fa-route me-2"></i>Actividad: Encuentra una ruta de A1 a E3</h4>
                 <p>Construye una ruta para ir de <strong>A1 (inicio)</strong> a <strong>E3 (destino)</strong>. Hay varias formas correctas.</p>
 
                 <div class="text-center">
-                    <div class="cuadricula-ruta-corta" id="cuadricula-ruta-corta">
-                        <!-- Se genera con JS -->
-                    </div>
+                    <div class="cuadricula-ruta-corta" id="cuadricula-ruta-corta"></div>
                 </div>
 
                 <div class="panel-flechas-ruta-corta">
@@ -988,9 +1391,7 @@
                     <div class="flecha-ruta-corta" onclick="agregarFlechaRutaCorta('↑')">↑</div>
                 </div>
 
-                <div class="ruta-construida-corta" id="ruta-construida-corta">
-                    <!-- Aquí se muestran las flechas seleccionadas -->
-                </div>
+                <div class="ruta-construida-corta" id="ruta-construida-corta"></div>
 
                 <div class="text-center">
                     <button class="btn-accion" onclick="probarRutaCortaMultiple()">▶ Probar ruta</button>
@@ -1000,10 +1401,33 @@
                 <div id="feedback-pagina5" class="feedback-kinestesico"></div>
             </div>
 
+            <!-- RETO 2 — PÁGINA 5: Ordena las paradas del recorrido -->
+            <div class="actividad-kinestesica mt-4">
+                <h4><i class="fas fa-hand-pointer me-2"></i>Reto 2: Ordena las paradas del recorrido</h4>
+                <p>Empieza en <strong>A1</strong>. Sigue esta ruta: <strong>este, sur, este, sur</strong>. Toca las fichas en el orden en que vas pasando por cada parada.</p>
+
+                <div class="fichas-paradas" id="fichas-p5-reto2">
+                    <div class="ficha-parada" onclick="tocarParadaReto2(this, 'C3')">C3</div>
+                    <div class="ficha-parada" onclick="tocarParadaReto2(this, 'B1')">B1</div>
+                    <div class="ficha-parada" onclick="tocarParadaReto2(this, 'C2')">C2</div>
+                    <div class="ficha-parada" onclick="tocarParadaReto2(this, 'B2')">B2</div>
+                </div>
+
+                <div class="zona-orden" id="zona-orden-p5">
+                    <span class="zona-inicio-label">Inicio: A1 →</span>
+                </div>
+
+                <div id="feedback-pagina5b" class="feedback-kinestesico"></div>
+                <button class="btn-accion" onclick="reiniciarParadas()">↺ Reiniciar</button>
+            </div>
+
             <!-- BOTÓN PARA IR AL QUIZ -->
-            <a href="quiz.html" class="boton-quiz text-center">
+            <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz">
                 <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
             </a>
+            <div class="texto-ayuda-quiz" id="textoAyudaQuiz">
+                Completa los dos retos de esta página para activar el quiz.
+            </div>
         </div>
     </div>
 
@@ -1020,6 +1444,8 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
     // ============================================
     // VARIABLES GLOBALES
@@ -1027,32 +1453,141 @@
     let paginaActual = 1;
     const totalPaginas = 5;
     const audioWhoosh = document.getElementById('audioWhoosh');
-    const audioClick = document.getElementById('audioClick');
-    const audioDing = document.getElementById('audioDing');
-    const audioError = document.getElementById('audioError');
+    const audioClick  = document.getElementById('audioClick');
+    const audioDing   = document.getElementById('audioDing');
+    const audioError  = document.getElementById('audioError');
+    [audioWhoosh, audioClick, audioDing, audioError].forEach(audio => {
+        if (audio) audio.volume = 0.15;
+    });
 
-    let respuestasPagina = {
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false
+    let respuestasPagina = { 1: false, 2: false, 3: false, 4: false, 5: false };
+
+    // Registro de retos completados: pagina -> { a: bool, b: bool }
+    let estadoRetosKin = {
+        1: { a: false, b: false },
+        2: { a: false, b: false },
+        3: { a: false, b: false },
+        4: { a: false, b: false },
+        5: { a: false, b: false }
     };
+    let estadoPagina4Kinestesico = { a: false, b: false };
+    let estadoPagina4Reto2 = { a: false, b: false };
+
+    const ejerciciosFacilKinestesico = {
+        p1a: { pagina: 1, apartadoClave: 'pagina1_completar_direcciones', tipoActividad: 'kinestesico_arrastre' },
+        p1b: { pagina: 1, apartadoClave: 'pagina1_pistas_postales', tipoActividad: 'kinestesico_toque' },
+        p2a: { pagina: 2, apartadoClave: 'pagina2_recorrido_robot_d4', tipoActividad: 'kinestesico_arrastre_robot' },
+        p2b: { pagina: 2, apartadoClave: 'pagina2_fila_b2', tipoActividad: 'kinestesico_toque_cuadricula' },
+        p3a: { pagina: 3, apartadoClave: 'pagina3_memoria_direcciones', tipoActividad: 'kinestesico_secuencia' },
+        p3b: { pagina: 3, apartadoClave: 'pagina3_brujula_opuesta_sur', tipoActividad: 'kinestesico_brujula' },
+        p4a: { pagina: 4, apartadoClave: 'pagina4_pasos_unidades', tipoActividad: 'kinestesico_slider' },
+        p4b: { pagina: 4, apartadoClave: 'pagina4_sliders_dobles', tipoActividad: 'kinestesico_slider' },
+        p5a: { pagina: 5, apartadoClave: 'pagina5_ruta_e3', tipoActividad: 'kinestesico_ruta' },
+        p5b: { pagina: 5, apartadoClave: 'pagina5_orden_paradas', tipoActividad: 'kinestesico_orden' }
+    };
+    const completadosRegistroFacilKinestesico = Object.fromEntries(Object.keys(ejerciciosFacilKinestesico).map(clave => [clave, false]));
+    let sesionCompletadaFacilKinestesico = false;
+    const trackerFacilKinestesico = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'kinestesico',
+        trackTime: false,
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_facil' },
+        apartados: ejerciciosFacilKinestesico
+    }) : null;
+    const sessionTrackerFacilKinestesico = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'kinestesico',
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_facil' }
+    }) : null;
 
     // ============================================
     // NAVEGACIÓN
     // ============================================
+    function reproducir(audio) {
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    }
+
+    function paginaCompletaKin(pagina) {
+        return !!(estadoRetosKin[pagina] && estadoRetosKin[pagina].a && estadoRetosKin[pagina].b);
+    }
+
+    function todasPaginasCompletasKin() {
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+            if (!paginaCompletaKin(pagina)) return false;
+        }
+        return true;
+    }
+
+    function claveEjercicioKin(pagina, reto) {
+        return `p${pagina}${reto}`;
+    }
+
+    function registrarIntentoKin(pagina, reto, correcto, detalle = {}) {
+        const clave = claveEjercicioKin(pagina, reto);
+        const config = ejerciciosFacilKinestesico[clave];
+        if (!config) return;
+
+        if (trackerFacilKinestesico) {
+            trackerFacilKinestesico.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+        }
+
+        if (correcto) {
+            if (!completadosRegistroFacilKinestesico[clave]) {
+                completadosRegistroFacilKinestesico[clave] = true;
+                if (trackerFacilKinestesico) {
+                    trackerFacilKinestesico.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                }
+            }
+        } else if (trackerFacilKinestesico) {
+            trackerFacilKinestesico.addError(clave, { pagina, ejercicio: clave, ...detalle });
+        }
+
+        revisarSesionCompletadaKin();
+    }
+
+    function revisarSesionCompletadaKin() {
+        if (!sesionCompletadaFacilKinestesico && todasPaginasCompletasKin()) {
+            sesionCompletadaFacilKinestesico = true;
+            if (trackerFacilKinestesico) trackerFacilKinestesico.complete({ paginasCompletas: totalPaginas });
+            if (sessionTrackerFacilKinestesico) sessionTrackerFacilKinestesico.complete({ paginasCompletas: totalPaginas });
+        }
+    }
+
+    function prepararPaginaKin(pagina) {
+        if (pagina === 2) {
+            const gridRobot = document.getElementById('cuadricula-recorrido-robot');
+            const gridToque = document.getElementById('grid-p2-reto2');
+            if (gridRobot && !gridRobot.innerHTML.trim()) generarCuadriculaRecorridoRobot();
+            if (gridToque && !gridToque.innerHTML.trim()) buildGridToque();
+        }
+        if (pagina === 5) {
+            const gridRuta = document.getElementById('cuadricula-ruta-corta');
+            if (gridRuta && !gridRuta.innerHTML.trim()) generarCuadriculaRutaCortaMultiple();
+        }
+    }
+
     function cambiarPagina(direccion) {
+        if (direccion > 0 && !paginaCompletaKin(paginaActual)) {
+            reproducir(audioError);
+            const feedbackId = estadoRetosKin[paginaActual].a ? `feedback-pagina${paginaActual}b` : `feedback-pagina${paginaActual}`;
+            mostrarFeedback(feedbackId, false, 'Completa los dos retos de esta página antes de avanzar.');
+            return;
+        }
+
+        const siguientePagina = paginaActual + direccion;
+        if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
+
         document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual += direccion;
+        paginaActual = siguientePagina;
         document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        audioWhoosh.play();
+        reproducir(audioWhoosh);
         actualizarUI();
-        localStorage.setItem('progreso_facil_kinestesico_coordenadas', paginaActual);
-        
-        // Inicializar componentes según la página
-        if (paginaActual === 2) generarCuadriculaRecorridoRobot();
-        if (paginaActual === 5) generarCuadriculaRutaCortaMultiple();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        prepararPaginaKin(paginaActual);
     }
 
     function actualizarUI() {
@@ -1060,206 +1595,228 @@
             const numPagina = index + 1;
             punto.classList.remove('activo', 'completado');
             if (numPagina === paginaActual) punto.classList.add('activo');
-            else if (numPagina < paginaActual && respuestasPagina[numPagina]) punto.classList.add('completado');
-            else if (numPagina < paginaActual) punto.classList.add('activo');
+            else if (paginaCompletaKin(numPagina)) punto.classList.add('completado');
         });
-
         document.getElementById('paginaActualNum').innerText = paginaActual;
         document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
         document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !paginaCompletaKin(paginaActual));
+
+        const botonQuiz = document.getElementById('botonQuiz');
+        const textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+        if (botonQuiz && textoAyudaQuiz) {
+            if (todasPaginasCompletasKin()) {
+                botonQuiz.classList.remove('bloqueado');
+                textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+            } else {
+                botonQuiz.classList.add('bloqueado');
+                textoAyudaQuiz.textContent = 'Completa los dos retos de esta página para activar el quiz.';
+            }
+        }
+
+        if (trackerFacilKinestesico) {
+            trackerFacilKinestesico.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+        }
     }
 
-    function allowDrop(event) {
-        event.preventDefault();
+    function actualizarEstadoPaginaKin(pagina) {
+        respuestasPagina[pagina] = paginaCompletaKin(pagina);
+        revisarSesionCompletadaKin();
+        actualizarUI();
     }
+
+    function allowDrop(event) { event.preventDefault(); }
 
     // ============================================
-    // PÁGINA 1: COMPLETAR DIRECCIONES (FICHAS REUTILIZABLES)
+    // PÁGINA 1: ACTIVIDAD 1 — COMPLETAR DIRECCIONES
     // ============================================
     let respuestasDirecciones = {
-        escuela: { calle1: null, calle2: null, avenida1: null, avenida2: null },
-        parque: { calle1: null, calle2: null, avenida1: null },
+        escuela:  { calle1: null, calle2: null, avenida1: null, avenida2: null },
+        parque:   { calle1: null, calle2: null, avenida1: null },
         hospital: { calle1: null, calle2: null, avenida1: null }
     };
 
     const respuestasCorrectas = {
-        escuela: { calle1: '22', calle2: '18', avenida1: 'Zapata', avenida2: 'Reforma' },
-        parque: { calle1: '22', calle2: '14', avenida1: 'Zapata' },
+        escuela:  { calle1: '22', calle2: '18', avenida1: 'Zapata', avenida2: 'Reforma' },
+        parque:   { calle1: '22', calle2: '14', avenida1: 'Zapata' },
         hospital: { calle1: '24', calle2: '18', avenida1: '5 de Mayo' }
     };
 
-    function dragStartCalle(event, valor) {
-        event.dataTransfer.setData('text/plain', 'calle:' + valor);
+    function compararGrupoFlexibleKin(respuestasLugar, respuestasEsperadas, claves) {
+        return claves
+            .map(clave => String(respuestasLugar[clave] || ''))
+            .sort()
+            .join('|') === claves
+            .map(clave => String(respuestasEsperadas[clave] || ''))
+            .sort()
+            .join('|');
     }
 
-    function dragStartAvenida(event, valor) {
-        event.dataTransfer.setData('text/plain', 'avenida:' + valor);
+    function direccionCorrectaFlexibleKin(respuestasLugar, respuestasEsperadas) {
+        const callesOk = compararGrupoFlexibleKin(respuestasLugar, respuestasEsperadas, ['calle1', 'calle2']);
+        const clavesAvenida = Object.prototype.hasOwnProperty.call(respuestasEsperadas, 'avenida2')
+            ? ['avenida1', 'avenida2']
+            : ['avenida1'];
+        const avenidasOk = compararGrupoFlexibleKin(respuestasLugar, respuestasEsperadas, clavesAvenida);
+        return callesOk && avenidasOk;
     }
+
+    function dragStartCalle(event, valor) { event.dataTransfer.setData('text/plain', 'calle:' + valor); }
+    function dragStartAvenida(event, valor) { event.dataTransfer.setData('text/plain', 'avenida:' + valor); }
 
     function dropCalle(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData('text/plain');
-        
-        if (data.startsWith('calle:')) {
-            const valor = data.split(':')[1];
-            event.target.innerHTML = valor;
-            event.target.style.background = '#f97316';
-            event.target.style.color = 'white';
-            event.target.style.border = '3px solid white';
-            
-            const lugar = event.target.dataset.lugar;
-            const posicion = event.target.dataset.posicion;
-            respuestasDirecciones[lugar][posicion] = valor;
-            
-            audioClick.play();
-            verificarCompletadoPagina1();
-        }
+        if (!data.startsWith('calle:')) return;
+        const valor = data.split(':')[1];
+        event.target.innerHTML = valor;
+        event.target.style.background = '#f97316';
+        event.target.style.color = 'white';
+        event.target.style.border = '3px solid white';
+        const lugar = event.target.dataset.lugar;
+        const posicion = event.target.dataset.posicion;
+        respuestasDirecciones[lugar][posicion] = valor;
+        audioClick.play();
+        verificarCompletadoPagina1();
     }
 
     function dropAvenida(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData('text/plain');
-        
-        if (data.startsWith('avenida:')) {
-            const valor = data.split(':')[1];
-            event.target.innerHTML = valor;
-            event.target.style.background = '#4caf50';
-            event.target.style.color = 'white';
-            event.target.style.border = '3px solid white';
-            
-            const lugar = event.target.dataset.lugar;
-            const posicion = event.target.dataset.posicion;
-            respuestasDirecciones[lugar][posicion] = valor;
-            
-            audioClick.play();
-            verificarCompletadoPagina1();
-        }
+        if (!data.startsWith('avenida:')) return;
+        const valor = data.split(':')[1];
+        event.target.innerHTML = valor;
+        event.target.style.background = '#4caf50';
+        event.target.style.color = 'white';
+        event.target.style.border = '3px solid white';
+        const lugar = event.target.dataset.lugar;
+        const posicion = event.target.dataset.posicion;
+        respuestasDirecciones[lugar][posicion] = valor;
+        audioClick.play();
+        verificarCompletadoPagina1();
     }
 
     function verificarCompletadoPagina1() {
-        // Verificar si todos los espacios están llenos
-        const escuelaCompleta = respuestasDirecciones.escuela.calle1 && respuestasDirecciones.escuela.calle2 && 
-                               respuestasDirecciones.escuela.avenida1 && respuestasDirecciones.escuela.avenida2;
-        const parqueCompleto = respuestasDirecciones.parque.calle1 && respuestasDirecciones.parque.calle2 && 
-                              respuestasDirecciones.parque.avenida1;
-        const hospitalCompleto = respuestasDirecciones.hospital.calle1 && respuestasDirecciones.hospital.calle2 && 
-                                respuestasDirecciones.hospital.avenida1;
-        
-        if (escuelaCompleta && parqueCompleto && hospitalCompleto) {
-            // Verificar escuela
-            const escuelaOk = respuestasDirecciones.escuela.calle1 === respuestasCorrectas.escuela.calle1 &&
-                             respuestasDirecciones.escuela.calle2 === respuestasCorrectas.escuela.calle2 &&
-                             respuestasDirecciones.escuela.avenida1 === respuestasCorrectas.escuela.avenida1 &&
-                             respuestasDirecciones.escuela.avenida2 === respuestasCorrectas.escuela.avenida2;
-            
-            // Verificar parque
-            const parqueOk = respuestasDirecciones.parque.calle1 === respuestasCorrectas.parque.calle1 &&
-                            respuestasDirecciones.parque.calle2 === respuestasCorrectas.parque.calle2 &&
-                            respuestasDirecciones.parque.avenida1 === respuestasCorrectas.parque.avenida1;
-            
-            // Verificar hospital
-            const hospitalOk = respuestasDirecciones.hospital.calle1 === respuestasCorrectas.hospital.calle1 &&
-                              respuestasDirecciones.hospital.calle2 === respuestasCorrectas.hospital.calle2 &&
-                              respuestasDirecciones.hospital.avenida1 === respuestasCorrectas.hospital.avenida1;
-            
-            if (escuelaOk && parqueOk && hospitalOk) {
-                audioDing.play();
-                document.getElementById('feedback-pagina1').style.display = 'block';
-                document.getElementById('feedback-pagina1').className = 'feedback-kinestesico bg-success text-white';
-                document.getElementById('feedback-pagina1').innerHTML = '✅ ¡Muy bien! Completaste todas las direcciones correctamente.';
-                respuestasPagina[1] = true;
-                actualizarUI();
-            } else {
-                audioError.play();
-                document.getElementById('feedback-pagina1').style.display = 'block';
-                document.getElementById('feedback-pagina1').className = 'feedback-kinestesico bg-danger text-white';
-                document.getElementById('feedback-pagina1').innerHTML = '❌ Algunas direcciones no son correctas. Revisa el mapa.';
-            }
+        const escuelaCompleta  = respuestasDirecciones.escuela.calle1  && respuestasDirecciones.escuela.calle2  && respuestasDirecciones.escuela.avenida1  && respuestasDirecciones.escuela.avenida2;
+        const parqueCompleto   = respuestasDirecciones.parque.calle1   && respuestasDirecciones.parque.calle2   && respuestasDirecciones.parque.avenida1;
+        const hospitalCompleto = respuestasDirecciones.hospital.calle1 && respuestasDirecciones.hospital.calle2 && respuestasDirecciones.hospital.avenida1;
+
+        if (!(escuelaCompleta && parqueCompleto && hospitalCompleto)) return;
+
+        const escuelaOk  = direccionCorrectaFlexibleKin(respuestasDirecciones.escuela, respuestasCorrectas.escuela);
+        const parqueOk   = direccionCorrectaFlexibleKin(respuestasDirecciones.parque, respuestasCorrectas.parque);
+        const hospitalOk = direccionCorrectaFlexibleKin(respuestasDirecciones.hospital, respuestasCorrectas.hospital);
+
+        if (escuelaOk && parqueOk && hospitalOk) {
+            registrarIntentoKin(1, 'a', true, { actividad: 'completar_direcciones' });
+            audioDing.play();
+            mostrarFeedback('feedback-pagina1', true, '✅ ¡Muy bien! Completaste todas las direcciones correctamente.');
+            estadoRetosKin[1].a = true;
+            actualizarEstadoPaginaKin(1);
+        } else {
+            registrarIntentoKin(1, 'a', false, { actividad: 'completar_direcciones', error: 'direcciones_incorrectas' });
+            audioError.play();
+            mostrarFeedback('feedback-pagina1', false, '❌ Algunas direcciones no son correctas. Revisa el mapa.');
         }
     }
 
     function reiniciarDirecciones() {
         respuestasDirecciones = {
-            escuela: { calle1: null, calle2: null, avenida1: null, avenida2: null },
-            parque: { calle1: null, calle2: null, avenida1: null },
+            escuela:  { calle1: null, calle2: null, avenida1: null, avenida2: null },
+            parque:   { calle1: null, calle2: null, avenida1: null },
             hospital: { calle1: null, calle2: null, avenida1: null }
         };
-        
-        document.querySelectorAll('.espacio-calle, .espacio-avenida').forEach(espacio => {
-            espacio.innerHTML = '?';
-            espacio.style.background = 'white';
-            espacio.style.color = '#9a3412';
-            espacio.style.border = '3px dashed #f97316';
+        document.querySelectorAll('.espacio-calle, .espacio-avenida').forEach(e => {
+            e.innerHTML = '?';
+            e.style.background = 'white';
+            e.style.color = '#9a3412';
+            e.style.border = '3px dashed #f97316';
         });
-        
         document.getElementById('feedback-pagina1').style.display = 'none';
     }
 
     // ============================================
-    // PÁGINA 2: RECORRIDO DEL ROBOT
+    // PÁGINA 1: RETO 2 — MAPA POSTAL TÁCTIL
+    // ============================================
+    function tocarCeldaPostal(el, pagina) {
+        if (document.querySelector(`#mapa-${pagina}-reto2 .correcta-postal`)) return;
+        audioClick.play();
+        const fb = document.getElementById(`feedback-pagina${pagina === 'p1' ? '1b' : pagina}` );
+
+        if (el.dataset.correcto === 'true') {
+            registrarIntentoKin(1, 'b', true, { actividad: 'pistas_postales', seleccion: el.dataset.id || el.textContent.trim() });
+            audioDing.play();
+            el.classList.add('correcta-postal');
+            document.querySelectorAll(`#mapa-${pagina}-reto2 .celda-postal-kin`).forEach(c => {
+                if (c !== el) c.style.opacity = '0.4';
+            });
+            mostrarFeedback('feedback-pagina1b', true, '✅ ¡Correcto! Elegiste el único lugar que cumple las dos pistas.');
+            estadoRetosKin[1].b = true;
+            actualizarEstadoPaginaKin(1);
+        } else {
+            registrarIntentoKin(1, 'b', false, { actividad: 'pistas_postales', seleccion: el.dataset.id || el.textContent.trim() });
+            audioError.play();
+            el.classList.add('incorrecta-postal');
+            mostrarFeedback('feedback-pagina1b', false, '❌ Esa tarjeta no cumple las dos pistas. Revisa la avenida y también el número de la calle.');
+            setTimeout(() => el.classList.remove('incorrecta-postal'), 900);
+        }
+    }
+
+    function reiniciarPostal(pagina) {
+        document.querySelectorAll(`#mapa-${pagina}-reto2 .celda-postal-kin`).forEach(c => {
+            c.classList.remove('correcta-postal', 'incorrecta-postal');
+            c.style.opacity = '1';
+        });
+        document.getElementById('feedback-pagina1b').style.display = 'none';
+    }
+
+    // ============================================
+    // PÁGINA 2: ACTIVIDAD 1 — RECORRIDO DEL ROBOT
     // ============================================
     let recorridoRobot = ['A1'];
 
     function generarCuadriculaRecorridoRobot() {
         const cuadricula = document.getElementById('cuadricula-recorrido-robot');
         if (!cuadricula) return;
-        
         let html = '';
-        
         for (let fila = 1; fila <= 5; fila++) {
-            for (let columna = 1; columna <= 5; columna++) {
-                const letra = String.fromCharCode(64 + columna);
+            for (let col = 1; col <= 5; col++) {
+                const letra = String.fromCharCode(64 + col);
                 const id = `${letra}${fila}`;
                 let clases = 'celda-recorrido-robot';
                 if (id === 'A1') clases += ' inicio';
                 if (id === 'D4') clases += ' destino';
-                html += `<div class="${clases}" data-id="${id}" ondragover="allowDrop(event)" ondrop="dropRobotRecorridoRobot(event, '${id}')">${id === 'A1' ? '🤖' : ''}</div>`;
+                html += `<div class="${clases}" data-id="${id}" ondragover="allowDrop(event)" ondrop="dropRobotRecorridoRobot(event,'${id}')">${id === 'A1' ? '🤖' : ''}</div>`;
             }
         }
         cuadricula.innerHTML = html;
         recorridoRobot = ['A1'];
     }
 
-    function dragStartRobot(event) {
-        event.dataTransfer.setData('text', 'robot');
-        event.target.classList.add('dragging');
-    }
-
-    function dragEndRobot(event) {
-        event.target.classList.remove('dragging');
-    }
+    function dragStartRobot(event) { event.dataTransfer.setData('text', 'robot'); event.target.classList.add('dragging'); }
+    function dragEndRobot(event)   { event.target.classList.remove('dragging'); }
 
     function dropRobotRecorridoRobot(event, id) {
         event.preventDefault();
-        
-        const ultimaPosicion = recorridoRobot[recorridoRobot.length - 1];
-        const ultimaLetra = ultimaPosicion[0];
-        const ultimaFila = parseInt(ultimaPosicion[1]);
-        const nuevaLetra = id[0];
-        const nuevaFila = parseInt(id[1]);
-        
-        const diffLetra = Math.abs(nuevaLetra.charCodeAt(0) - ultimaLetra.charCodeAt(0));
-        const diffFila = Math.abs(nuevaFila - ultimaFila);
-        
-        if ((diffLetra === 1 && diffFila === 0) || (diffLetra === 0 && diffFila === 1)) {
+        const ultima = recorridoRobot[recorridoRobot.length - 1];
+        const dLetra = Math.abs(id.charCodeAt(0) - ultima.charCodeAt(0));
+        const dFila  = Math.abs(parseInt(id[1]) - parseInt(ultima[1]));
+
+        if ((dLetra === 1 && dFila === 0) || (dLetra === 0 && dFila === 1)) {
             recorridoRobot.push(id);
             event.target.innerHTML = '🤖';
             audioClick.play();
-            
             if (id === 'D4') {
+                registrarIntentoKin(2, 'a', true, { actividad: 'recorrido_robot', recorrido: recorridoRobot.join('>') });
                 audioDing.play();
-                document.getElementById('feedback-pagina2').style.display = 'block';
-                document.getElementById('feedback-pagina2').className = 'feedback-kinestesico bg-success text-white';
-                document.getElementById('feedback-pagina2').innerHTML = '✅ ¡Llegaste al destino D4!';
-                respuestasPagina[2] = true;
-                actualizarUI();
+                mostrarFeedback('feedback-pagina2', true, '✅ ¡Llegaste al destino D4!');
+                estadoRetosKin[2].a = true;
+                actualizarEstadoPaginaKin(2);
             }
         } else {
+            registrarIntentoKin(2, 'a', false, { actividad: 'recorrido_robot', desde: ultima, hacia: id, error: 'no_vecina' });
             audioError.play();
-            document.getElementById('feedback-pagina2').style.display = 'block';
-            document.getElementById('feedback-pagina2').className = 'feedback-kinestesico bg-danger text-white';
-            document.getElementById('feedback-pagina2').innerHTML = '❌ Solo puedes moverte a casillas vecinas';
+            mostrarFeedback('feedback-pagina2', false, '❌ Solo puedes moverte a casillas vecinas.');
         }
     }
 
@@ -1269,7 +1826,65 @@
     }
 
     // ============================================
-    // PÁGINA 3: MEMORIA DE DIRECCIONES
+    // PÁGINA 2: RETO 2 — CUADRÍCULA TÁCTIL FILA
+    // ============================================
+    const filaMeta = ['A2', 'B2', 'C2', 'D2'];
+    let marcadasP2 = new Set();
+
+    function buildGridToque() {
+        const g = document.getElementById('grid-p2-reto2');
+        if (!g) return;
+        g.innerHTML = '';
+        const cols = ['A', 'B', 'C', 'D'];
+        for (let f = 1; f <= 4; f++) {
+            for (let c = 0; c < 4; c++) {
+                const id = cols[c] + f;
+                const d = document.createElement('div');
+                d.className = 'celda-toque-kin';
+                d.textContent = id;
+                d.dataset.id = id;
+                d.onclick = () => marcarCeldaToque(d);
+                g.appendChild(d);
+            }
+        }
+        marcadasP2.clear();
+    }
+
+    function marcarCeldaToque(el) {
+        if (el.classList.contains('marcada-toque') || estadoRetosKin[2].b) return;
+        audioClick.play();
+        const fb = document.getElementById('feedback-pagina2b');
+
+        if (!filaMeta.includes(el.dataset.id)) {
+            registrarIntentoKin(2, 'b', false, { actividad: 'fila_b2', seleccion: el.dataset.id });
+            audioError.play();
+            el.classList.add('error-toque');
+            mostrarFeedback('feedback-pagina2b', false, `❌ ${el.dataset.id} no está a la misma altura que B2. Busca las casillas alineadas horizontalmente.`);
+            setTimeout(() => el.classList.remove('error-toque'), 800);
+            return;
+        }
+
+        el.classList.add('marcada-toque');
+        marcadasP2.add(el.dataset.id);
+
+        if (marcadasP2.size === filaMeta.length) {
+            registrarIntentoKin(2, 'b', true, { actividad: 'fila_b2', seleccion: Array.from(marcadasP2).join(',') });
+            audioDing.play();
+            mostrarFeedback('feedback-pagina2b', true, '✅ ¡Muy bien! Marcaste toda la fila correcta.');
+            estadoRetosKin[2].b = true;
+            actualizarEstadoPaginaKin(2);
+        } else {
+            mostrarFeedback('feedback-pagina2b', true, `Llevas ${marcadasP2.size} de 4. Sigue buscando las casillas que están a la misma altura que B2.`);
+        }
+    }
+
+    function reiniciarGridToque() {
+        buildGridToque();
+        document.getElementById('feedback-pagina2b').style.display = 'none';
+    }
+
+    // ============================================
+    // PÁGINA 3: ACTIVIDAD 1 — MEMORIA DE DIRECCIONES
     // ============================================
     let secuenciaMemoria = ['↑', '↑', '→', '↓'];
     let secuenciaUsuarioMemoria = [];
@@ -1277,59 +1892,40 @@
 
     function mostrarSecuenciaMemoria() {
         mostrandoMemoria = true;
-        const contenedor = document.getElementById('secuencia-mostrada-bonita');
-        contenedor.innerHTML = '';
-        
+        const c = document.getElementById('secuencia-mostrada-bonita');
+        c.innerHTML = '';
         secuenciaMemoria.forEach((flecha, index) => {
             setTimeout(() => {
                 const div = document.createElement('div');
                 div.className = 'flecha-temporal-bonita';
                 div.innerHTML = flecha;
-                contenedor.appendChild(div);
-                
-                setTimeout(() => {
-                    div.remove();
-                    if (index === secuenciaMemoria.length - 1) {
-                        mostrandoMemoria = false;
-                    }
-                }, 800);
+                c.appendChild(div);
+                setTimeout(() => { div.remove(); if (index === secuenciaMemoria.length - 1) mostrandoMemoria = false; }, 800);
             }, index * 1000);
         });
     }
 
     function seleccionarFlechaMemoria(flecha) {
         if (mostrandoMemoria) return;
-        
         audioClick.play();
         secuenciaUsuarioMemoria.push(flecha);
-        
-        const contenedor = document.getElementById('secuencia-mostrada-bonita');
+        const c = document.getElementById('secuencia-mostrada-bonita');
         const div = document.createElement('div');
         div.className = 'flecha-temporal-bonita';
         div.innerHTML = flecha;
-        contenedor.appendChild(div);
-        
+        c.appendChild(div);
+
         if (secuenciaUsuarioMemoria.length === secuenciaMemoria.length) {
-            let correcta = true;
-            for (let i = 0; i < secuenciaMemoria.length; i++) {
-                if (secuenciaUsuarioMemoria[i] !== secuenciaMemoria[i]) {
-                    correcta = false;
-                    break;
-                }
-            }
-            
+            const correcta = secuenciaMemoria.every((f, i) => f === secuenciaUsuarioMemoria[i]);
+            registrarIntentoKin(3, 'a', correcta, { actividad: 'memoria_direcciones', respuesta: secuenciaUsuarioMemoria.join('') });
             if (correcta) {
                 audioDing.play();
-                document.getElementById('feedback-pagina3').style.display = 'block';
-                document.getElementById('feedback-pagina3').className = 'feedback-kinestesico bg-success text-white';
-                document.getElementById('feedback-pagina3').innerHTML = '✅ ¡Secuencia correcta!';
-                respuestasPagina[3] = true;
-                actualizarUI();
+                mostrarFeedback('feedback-pagina3', true, '✅ ¡Secuencia correcta!');
+                estadoRetosKin[3].a = true;
+                actualizarEstadoPaginaKin(3);
             } else {
                 audioError.play();
-                document.getElementById('feedback-pagina3').style.display = 'block';
-                document.getElementById('feedback-pagina3').className = 'feedback-kinestesico bg-danger text-white';
-                document.getElementById('feedback-pagina3').innerHTML = '❌ Secuencia incorrecta';
+                mostrarFeedback('feedback-pagina3', false, '❌ Secuencia incorrecta. Intenta de nuevo.');
             }
         }
     }
@@ -1341,43 +1937,112 @@
     }
 
     // ============================================
-    // PÁGINA 4: SLIDER
+    // PÁGINA 3: RETO 2 — BRÚJULA INTERACTIVA
     // ============================================
-    function moverRobotBonito(pasos) {
-        const robot = document.getElementById('robot-slider-imagen');
-        const marcador = document.getElementById('marcador-avance-bonito');
-        const info = document.getElementById('info-pasos-bonita');
-        
-        const unidades = pasos * 2;
+    let anguloActualBrujula = 135;
+    let brujulaResuelta = false;
+
+    function girarBrujulaKin(angulo) {
+        if (brujulaResuelta) return;
+        anguloActualBrujula = angulo;
+        document.getElementById('brujula-kin').style.transform = `rotate(${angulo}deg)`;
+        audioClick.play();
+
+        document.querySelectorAll('.btn-brujula').forEach(b => b.classList.remove('activo-brujula'));
+        const mapa = { 0: 'btn-norte-kin', 180: 'btn-sur-kin', 90: 'btn-este-kin', '-90': 'btn-oeste-kin' };
+        if (mapa[String(angulo)]) document.getElementById(mapa[String(angulo)]).classList.add('activo-brujula');
+
+        if (angulo === 0) {
+            registrarIntentoKin(3, 'b', true, { actividad: 'brujula', angulo });
+            audioDing.play();
+            mostrarFeedback('feedback-pagina3b', true, '✅ ¡Correcto! Elegiste la dirección opuesta al Sur.');
+            brujulaResuelta = true;
+            estadoRetosKin[3].b = true;
+            actualizarEstadoPaginaKin(3);
+        } else {
+            registrarIntentoKin(3, 'b', false, { actividad: 'brujula', angulo });
+            mostrarFeedback('feedback-pagina3b', false, '❌ Esa no es la dirección opuesta al Sur. Sigue probando.');
+        }
+    }
+
+    function reiniciarBrujula() {
+        anguloActualBrujula = 135;
+        brujulaResuelta = false;
+        document.getElementById('brujula-kin').style.transform = 'rotate(135deg)';
+        document.querySelectorAll('.btn-brujula').forEach(b => b.classList.remove('activo-brujula'));
+        document.getElementById('feedback-pagina3b').style.display = 'none';
+    }
+
+    // ============================================
+    // PÁGINA 4: ACTIVIDAD 1 — SLIDERS ORIGINALES
+    // ============================================
+    function moverRobotReto(id, pasos, metaPasos, metaUnidades) {
+        const robot    = document.getElementById(`robot-slider-${id}`);
+        const marcador = document.getElementById(`marcador-avance-${id}`);
+        const info     = document.getElementById(`info-pasos-${id}`);
+        const feedback = document.getElementById(`feedback-pagina4${id}`);
+        const slider   = document.getElementById(`slider-pasos-${id}`);
+
+        const unidades   = pasos * 2;
         const porcentaje = (pasos / 10) * 100;
-        
+
         robot.style.transform = `translateX(${porcentaje * 2}px)`;
-        marcador.style.left = `${porcentaje}%`;
+        marcador.style.left   = `${porcentaje}%`;
         info.innerHTML = `<strong>${pasos} pasos</strong> = ${unidades} unidades`;
-        
-        if (pasos == 5) {
-            document.getElementById('feedback-pagina4').style.display = 'block';
-            document.getElementById('feedback-pagina4').className = 'feedback-kinestesico bg-success text-white';
-            document.getElementById('feedback-pagina4').innerHTML = '✅ 5 pasos = 10 unidades. ¡Bien!';
-            respuestasPagina[4] = true;
-            actualizarUI();
+
+        if (parseInt(pasos, 10) === metaPasos && !estadoPagina4Kinestesico[id]) {
+            audioDing.play();
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-kinestesico bg-success text-white';
+            feedback.innerHTML = `✅ Correcto. ${metaPasos} pasos equivalen a ${metaUnidades} unidades.`;
+            slider.disabled = true;
+            estadoPagina4Kinestesico[id] = true;
+        }
+
+        if (estadoPagina4Kinestesico.a && estadoPagina4Kinestesico.b && !estadoRetosKin[4].a) {
+            registrarIntentoKin(4, 'a', true, { actividad: 'pasos_unidades', robotA: true, robotB: true });
+            mostrarFeedback('feedback-pagina4', true, '✅ ¡Muy bien! Ya resolviste los dos retos de pasos y unidades.');
+            estadoRetosKin[4].a = true;
+            actualizarEstadoPaginaKin(4);
         }
     }
 
     // ============================================
-    // PÁGINA 5: RUTA MÚLTIPLE
+    // PÁGINA 4: RETO 2 — SLIDERS DOBLES INDEPENDIENTES
+    // ============================================
+    function moverSliderReto2(id, pasos, metaPasos, metaUnidades) {
+        const unidades = pasos * 2;
+        document.getElementById(`num-reto2${id}`).textContent = `${unidades} u.`;
+
+        if (parseInt(pasos, 10) === metaPasos && !estadoPagina4Reto2[id]) {
+            audioDing.play();
+            document.getElementById(`sl-reto2${id}`).disabled = true;
+            const okEl = document.getElementById(`ok-reto2${id}`);
+            okEl.textContent = `✔ ¡${metaPasos} pasos = ${metaUnidades} unidades!`;
+            okEl.style.display = 'block';
+            estadoPagina4Reto2[id] = true;
+
+            if (estadoPagina4Reto2.a && estadoPagina4Reto2.b && !estadoRetosKin[4].b) {
+                registrarIntentoKin(4, 'b', true, { actividad: 'sliders_dobles', robotA: true, robotB: true });
+                mostrarFeedback('feedback-pagina4c', true, '✅ ¡Perfecto! Ajustaste correctamente los dos robots.');
+                estadoRetosKin[4].b = true;
+                actualizarEstadoPaginaKin(4);
+            }
+        }
+    }
+
+    // ============================================
+    // PÁGINA 5: ACTIVIDAD 1 — RUTA MÚLTIPLE
     // ============================================
     let rutaCortaMultiple = [];
 
     function generarCuadriculaRutaCortaMultiple() {
         const cuadricula = document.getElementById('cuadricula-ruta-corta');
         if (!cuadricula) return;
-        
         let html = '';
-        
         for (let fila = 1; fila <= 5; fila++) {
-            for (let columna = 1; columna <= 5; columna++) {
-                const letra = String.fromCharCode(64 + columna);
+            for (let col = 1; col <= 5; col++) {
+                const letra = String.fromCharCode(64 + col);
                 const id = `${letra}${fila}`;
                 let clases = 'celda-ruta-corta';
                 if (id === 'A1') clases += ' inicio';
@@ -1393,45 +2058,33 @@
     function agregarFlechaRutaCorta(flecha) {
         audioClick.play();
         rutaCortaMultiple.push(flecha);
-        
-        const contenedor = document.getElementById('ruta-construida-corta');
+        const c = document.getElementById('ruta-construida-corta');
         const div = document.createElement('div');
         div.className = 'flecha-construida-corta';
         div.innerHTML = flecha;
-        contenedor.appendChild(div);
+        c.appendChild(div);
     }
 
     function probarRutaCortaMultiple() {
-        let este = 0;
-        let sur = 0;
-        let oeste = 0;
-        let norte = 0;
-        
+        let este = 0, sur = 0, oeste = 0, norte = 0;
         rutaCortaMultiple.forEach(f => {
             if (f === '→') este++;
             if (f === '↓') sur++;
             if (f === '←') oeste++;
             if (f === '↑') norte++;
         });
-        
-        const correcta = (este === 4 && sur === 2 && oeste === 0 && norte === 0);
-        
-        if (correcta) {
+        if (este === 4 && sur === 2 && oeste === 0 && norte === 0) {
+            registrarIntentoKin(5, 'a', true, { actividad: 'ruta_e3', ruta: rutaCortaMultiple.join('') });
             audioDing.play();
-            document.getElementById('feedback-pagina5').style.display = 'block';
-            document.getElementById('feedback-pagina5').className = 'feedback-kinestesico bg-success text-white';
-            document.getElementById('feedback-pagina5').innerHTML = '✅ ¡Ruta correcta! Llegaste a E3 en 6 pasos';
-            respuestasPagina[5] = true;
-            actualizarUI();
+            mostrarFeedback('feedback-pagina5', true, '✅ ¡Ruta correcta! Llegaste a E3 en 6 pasos.');
+            estadoRetosKin[5].a = true;
+            actualizarEstadoPaginaKin(5);
         } else {
+            registrarIntentoKin(5, 'a', false, { actividad: 'ruta_e3', ruta: rutaCortaMultiple.join(''), este, sur, oeste, norte });
             audioError.play();
-            let mensaje = '❌ Ruta incorrecta. Necesitas 4 este y 2 sur (pueden ir en cualquier orden)';
-            if (oeste > 0 || norte > 0) {
-                mensaje = '❌ No puedes ir hacia el oeste o norte. Debes ir solo este y sur';
-            }
-            document.getElementById('feedback-pagina5').style.display = 'block';
-            document.getElementById('feedback-pagina5').className = 'feedback-kinestesico bg-danger text-white';
-            document.getElementById('feedback-pagina5').innerHTML = mensaje;
+            let msg = '❌ Ruta incorrecta. Necesitas 4 pasos al este y 2 al sur (en cualquier orden).';
+            if (oeste > 0 || norte > 0) msg = '❌ No puedes ir hacia el oeste o norte. Solo este y sur.';
+            mostrarFeedback('feedback-pagina5', false, msg);
         }
     }
 
@@ -1442,22 +2095,103 @@
     }
 
     // ============================================
+    // PÁGINA 5: RETO 2 — ORDENAR PARADAS
+    // ============================================
+    const ordenCorrecto5 = ['B1', 'B2', 'C2', 'C3'];
+    let ordenUsuario5 = [];
+
+    function tocarParadaReto2(el, valor) {
+        if (el.classList.contains('usada-parada') || estadoRetosKin[5].b) return;
+        audioClick.play();
+        const siguiente = ordenCorrecto5[ordenUsuario5.length];
+
+        if (valor === siguiente) {
+            el.classList.add('usada-parada');
+            ordenUsuario5.push(valor);
+
+            const zona = document.getElementById('zona-orden-p5');
+            const chip = document.createElement('div');
+            chip.className = 'chip-en-orden';
+            chip.textContent = valor;
+            zona.appendChild(chip);
+
+            if (ordenUsuario5.length === ordenCorrecto5.length) {
+                registrarIntentoKin(5, 'b', true, { actividad: 'orden_paradas', respuesta: ordenUsuario5.join('>') });
+                audioDing.play();
+                mostrarFeedback('feedback-pagina5b', true, '✅ ¡Ruta correcta! Seguiste las paradas en el orden adecuado desde A1.');
+                estadoRetosKin[5].b = true;
+                actualizarEstadoPaginaKin(5);
+            } else {
+                mostrarFeedback('feedback-pagina5b', true, 'Bien. Sigue con la siguiente parada del recorrido.');
+            }
+        } else {
+            registrarIntentoKin(5, 'b', false, { actividad: 'orden_paradas', esperado: siguiente, seleccion: valor, avance: ordenUsuario5.join('>') });
+            audioError.play();
+            mostrarFeedback('feedback-pagina5b', false, '❌ Ese no es el siguiente punto del recorrido. Revisa los movimientos paso a paso desde A1.');
+        }
+    }
+
+    function reiniciarParadas() {
+        ordenUsuario5 = [];
+        document.querySelectorAll('#fichas-p5-reto2 .ficha-parada').forEach(c => c.classList.remove('usada-parada'));
+        const zona = document.getElementById('zona-orden-p5');
+        zona.innerHTML = '<span class="zona-inicio-label">Inicio: A1 →</span>';
+        document.getElementById('feedback-pagina5b').style.display = 'none';
+    }
+
+    // ============================================
+    // UTILIDAD: FEEDBACK GENÉRICO
+    // ============================================
+    function ampliarImagen(img) {
+        if (img.classList.contains('ampliada')) {
+            img.classList.remove('ampliada');
+            document.body.classList.remove('imagen-ampliada');
+        } else {
+            document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+            img.classList.add('ampliada');
+            document.body.classList.add('imagen-ampliada');
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('ampliada') && !e.target.closest('.contenedor-imagen')) {
+            document.querySelectorAll('.ampliada').forEach(img => img.classList.remove('ampliada'));
+            document.body.classList.remove('imagen-ampliada');
+        }
+    });
+
+    function mostrarFeedback(id, esOk, mensaje) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = 'block';
+        el.className = `feedback-kinestesico ${esOk ? 'bg-success' : 'bg-danger'} text-white`;
+        el.innerHTML = mensaje;
+    }
+
+    // ============================================
     // INICIALIZACIÓN
     // ============================================
     window.addEventListener('DOMContentLoaded', () => {
-        const guardado = localStorage.getItem('progreso_facil_kinestesico_coordenadas');
-        if (guardado) {
-            const pag = parseInt(guardado, 10);
-            if (pag >= 1 && pag <= totalPaginas) {
-                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-                paginaActual = pag;
-                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-            }
+        const botonQuiz = document.getElementById('botonQuiz');
+        if (botonQuiz) {
+            botonQuiz.addEventListener('click', event => {
+                if (botonQuiz.classList.contains('bloqueado')) {
+                    event.preventDefault();
+                    reproducir(audioError);
+                    mostrarFeedback('feedback-pagina5b', false, 'Completa los dos retos finales antes de entrar al quiz.');
+                }
+            });
         }
+
+        if (sessionTrackerFacilKinestesico) {
+            sessionTrackerFacilKinestesico.start();
+            sessionTrackerFacilKinestesico.attachQuizLinks('.boton-quiz', () => {
+                return { eventoCierre: 'quiz' };
+            });
+        }
+
         actualizarUI();
-        
-        if (paginaActual === 2) generarCuadriculaRecorridoRobot();
-        if (paginaActual === 5) generarCuadriculaRutaCortaMultiple();
+        prepararPaginaKin(paginaActual);
     });
 </script>
 

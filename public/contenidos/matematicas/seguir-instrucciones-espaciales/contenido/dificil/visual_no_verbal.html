@@ -1040,7 +1040,8 @@
 
 </div><!-- /layout -->
 
-<script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script>
 /* ══════════════════════════════════════════════════════════════
    LÓGICA IDÉNTICA AL VISUAL_VERBAL — solo cambia la key de localStorage
    y el tooltip de los lugares del mapa.
@@ -1054,6 +1055,9 @@
   var TOTAL         = 5;
   var rutaUsuario   = [];
   var juegoTerminado = false;
+  var ejercicioCompletado = false;
+  var erroresVisualNoVerbal = 0;
+  var completadoRegistroVisualNoVerbal = false;
 
   var LUGARES = {
     montana: { x:350, y:105, nombre:'⛰️ Montaña Calavera', cardinal:'norte'      },
@@ -1071,7 +1075,90 @@
   var DESTINO_FINAL      = 'cueva';
   var PASOS_OPTIMO       = 5;
 
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosVisualNoVerbal = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_ruta_tesoro',
+      tipoActividad: 'visual_no_verbal_ruta'
+    }
+  };
+
+  var trackerVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'dificil',
+    estilo: 'visual_no_verbal',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'visual_no_verbal_dificil' },
+    apartados: ejerciciosVisualNoVerbal
+  }) : null;
+
+  var sessionTrackerVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'dificil',
+    estilo: 'visual_no_verbal'
+  }) : null;
+
   function play(id){ try{ var s=document.getElementById(id); s.currentTime=0; s.play(); }catch(e){} }
+
+  function registrarIntentoVisualNoVerbal(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroVisualNoVerbal) {
+        completadoRegistroVisualNoVerbal = true;
+        if (trackerVisualNoVerbal) {
+          trackerVisualNoVerbal.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            errores_previos: erroresVisualNoVerbal,
+            actividad: 'trazar_ruta',
+            pasos: detalle.pasos || rutaUsuario.length,
+            pasos_optimos: detalle.pasos_optimos || PASOS_OPTIMO,
+            tipo_resultado: detalle.tipo || null,
+            ruta: detalle.ruta || []
+          });
+          trackerVisualNoVerbal.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'trazar_ruta',
+              pasos: detalle.pasos || rutaUsuario.length,
+              pasos_optimos: detalle.pasos_optimos || PASOS_OPTIMO,
+              tipo_resultado: detalle.tipo || null,
+              ruta: detalle.ruta || []
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresVisualNoVerbal += 1;
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'trazar_ruta',
+        intento: erroresVisualNoVerbal,
+        pasos: detalle.pasos || rutaUsuario.length,
+        razon: detalle.razon || null,
+        ruta: detalle.ruta || []
+      });
+    }
+  }
 
   /* ── Navegación instrucciones ── */
   function irSiguiente(){
@@ -1197,12 +1284,32 @@
     if(juegoTerminado) return;
     if(rutaUsuario[rutaUsuario.length-1]!==DESTINO_FINAL){
       play('sndError');
+      registrarIntentoVisualNoVerbal(false, {
+        razon: 'no_termina',
+        pasos: rutaUsuario.length,
+        ruta: rutaUsuario.slice()
+      });
       document.getElementById('estadoRuta').textContent='¡Debes terminar en la Cueva del Eco! 🌙';
       return;
     }
     juegoTerminado=true;
     play('sndClick');
     var resultado=evaluarRuta(rutaUsuario);
+    if(resultado.valida){
+      ejercicioCompletado = true;
+      registrarIntentoVisualNoVerbal(true, {
+        tipo: resultado.tipo,
+        pasos: resultado.pasos,
+        pasos_optimos: resultado.optimo,
+        ruta: rutaUsuario.slice()
+      });
+    } else {
+      registrarIntentoVisualNoVerbal(false, {
+        razon: resultado.razon || null,
+        pasos: rutaUsuario.length,
+        ruta: rutaUsuario.slice()
+      });
+    }
     mostrarFeedback(resultado);
     if(resultado.valida){
       document.getElementById('lugar-tesoro').style.display='';
@@ -1284,17 +1391,21 @@
     btnR.className='btn-accion-final reintentar'; btnR.innerHTML='↩ Intentar de nuevo';
     btnR.onclick=reiniciar;
     var btnS=document.createElement('a');
-    btnS.className='btn-accion-final siguiente'; btnS.href='quiz.html';
+    btnS.className='btn-accion-final siguiente boton-quiz'; btnS.href='quiz.html';
     btnS.innerHTML='<i class="fas fa-puzzle-piece me-1"></i> Ir al quiz';
     botonesDiv.innerHTML='';
     botonesDiv.appendChild(btnR);
     botonesDiv.appendChild(btnS);
 
-    localStorage.setItem('progreso_dificil_vnv_instrucciones','ok');
+    if (sessionTrackerVisualNoVerbal) {
+      sessionTrackerVisualNoVerbal.attachQuizLinks('.boton-quiz', function() {
+        return { eventoCierre: 'quiz' };
+      });
+    }
   }
 
   function reiniciar(){
-    juegoTerminado=false; rutaUsuario=[]; pasoActual=1;
+    juegoTerminado=false; rutaUsuario=[]; pasoActual=1; ejercicioCompletado=false;
     document.getElementById('rutaVisual').innerHTML='';
     document.getElementById('marcadoresPasos').innerHTML='';
     Object.keys(LUGARES).forEach(function(id){
@@ -1308,6 +1419,8 @@
     document.getElementById('rutaConstruida').innerHTML='<span class="placeholder">Haz clic en el mapa para empezar tu ruta →</span>';
     document.getElementById('pcNum').textContent='0';
     document.getElementById('feedbackEf').className='feedback-eficiencia';
+    document.getElementById('barraFill').style.width='0%';
+    document.getElementById('barraEstrellas').textContent='';
     document.getElementById('botonesFinales').innerHTML='';
     document.getElementById('btnDeshacer').disabled=true;
     document.getElementById('btnConfirmar').disabled=true;
@@ -1352,11 +1465,11 @@
 
   window.addEventListener('DOMContentLoaded',function(){
     resaltarPaso(1);
-    if(localStorage.getItem('progreso_dificil_vnv_instrucciones')==='ok'){
-      var div=document.getElementById('botonesFinales');
-      var a=document.createElement('a'); a.className='btn-accion-final siguiente';
-      a.href='quiz.html'; a.innerHTML='<i class="fas fa-puzzle-piece me-1"></i> Ir al quiz';
-      div.appendChild(a);
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+    if (sessionTrackerVisualNoVerbal) {
+      sessionTrackerVisualNoVerbal.start();
     }
   });
 </script>

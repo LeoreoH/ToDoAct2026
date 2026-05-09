@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas - Nivel Normal - Kinestesico</title>
+    <title>Identificar coordenadas - Nivel Normal - Kinestesico</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -122,6 +122,16 @@
             border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all .2s;
         }
         .boton-quiz:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
+        .boton-quiz.bloqueado {
+            background: #e5e7eb; color: #6b7280; border-color: #9ca3af;
+            box-shadow: 0 8px 0 #9ca3af; cursor: not-allowed; pointer-events: auto;
+        }
+        .boton-quiz.bloqueado:hover {
+            transform: none; background: #e5e7eb; box-shadow: 0 8px 0 #9ca3af;
+        }
+        .texto-ayuda-quiz {
+            color: #9a3412; font-weight: 800; margin-top: 12px; text-align: center;
+        }
 
         /* P1 - flechas ruta */
         .panel-flechas-ruta { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
@@ -266,13 +276,386 @@
         .badge-lado.izq { background: #3b82f6; color: white; }
         .badge-lado.der { background: #ef4444; color: white; }
 
+        /* Retos extra */
+        .actividad-kinestesica.reto-secundario {
+            background: linear-gradient(180deg, #fffaf0, #fff3e0);
+            border-color: #fb923c;
+        }
+        .panel-manipulacion {
+            background: white;
+            border: 2px solid #fed7aa;
+            border-radius: 22px;
+            padding: 20px;
+            margin: 18px 0;
+            box-shadow: inset 0 0 0 1px rgba(251,146,60,.08);
+        }
+        .banco-fichas-k {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .ficha-kin {
+            min-width: 148px;
+            max-width: 220px;
+            background: linear-gradient(180deg, #fff7e6, #ffffff);
+            border: 2px solid #f97316;
+            border-radius: 18px;
+            padding: 12px 14px;
+            font-weight: 700;
+            color: #9a3412;
+            text-align: center;
+            cursor: grab;
+            transition: transform .18s, box-shadow .18s, border-color .18s, opacity .18s;
+            box-shadow: 0 4px 0 #fed7aa;
+            user-select: none;
+        }
+        .ficha-kin:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #fed7aa; }
+        .ficha-kin strong { display: block; font-size: 1rem; }
+        .ficha-kin small { display: block; margin-top: 4px; color: #c2410c; font-weight: 700; line-height: 1.2; }
+        .ficha-kin.seleccionada {
+            border-color: #c2410c;
+            background: #fde68a;
+            transform: translateY(-2px) scale(1.02);
+        }
+        .ficha-kin.usada {
+            opacity: .35;
+            cursor: default;
+            pointer-events: none;
+            transform: none;
+            box-shadow: none;
+        }
+        .zona-slot-k {
+            display: grid;
+            gap: 14px;
+            align-items: stretch;
+        }
+        .slot-k {
+            min-height: 96px;
+            background: #fff7e6;
+            border: 3px dashed #fdba74;
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow .18s, border-color .18s, background .18s;
+        }
+        .slot-k:hover { box-shadow: 0 10px 20px rgba(249,115,22,.12); }
+        .slot-k.lleno {
+            border-style: solid;
+            border-color: #f97316;
+            background: #fff;
+        }
+        .slot-k.incompatible {
+            animation: sacudir .22s linear 2;
+            border-color: #ef4444;
+        }
+        .slot-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 78px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #c2410c;
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .3px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .slot-placeholder {
+            color: #c2410c;
+            font-weight: 700;
+            opacity: .72;
+            line-height: 1.25;
+        }
+        .slot-nota {
+            margin-top: 8px;
+            font-size: .82rem;
+            font-weight: 800;
+            color: #f97316;
+        }
+        .ruta-serpenteo {
+            grid-template-columns: repeat(3, minmax(150px, 1fr));
+        }
+        .ruta-serpenteo .slot-k:nth-child(2),
+        .ruta-serpenteo .slot-k:nth-child(4),
+        .ruta-serpenteo .slot-k:nth-child(6) {
+            transform: translateY(18px);
+        }
+        .campus-l {
+            grid-template-columns: repeat(5, minmax(120px, 1fr));
+            grid-template-rows: repeat(2, 1fr);
+            position: relative;
+        }
+        .campus-l::before {
+            content: '';
+            position: absolute;
+            left: 9%;
+            right: 9%;
+            bottom: 28%;
+            height: 12px;
+            background: linear-gradient(90deg, #fdba74, #f97316);
+            border-radius: 999px;
+            z-index: 0;
+        }
+        .campus-l::after {
+            content: '';
+            position: absolute;
+            right: 10%;
+            top: 18%;
+            bottom: 28%;
+            width: 12px;
+            background: linear-gradient(180deg, #fdba74, #f97316);
+            border-radius: 999px;
+            z-index: 0;
+        }
+        .campus-l .slot-k { position: relative; z-index: 1; }
+        .campus-l .slot-k:nth-child(1) { grid-column: 1; grid-row: 2; }
+        .campus-l .slot-k:nth-child(2) { grid-column: 2; grid-row: 2; }
+        .campus-l .slot-k:nth-child(3) { grid-column: 3; grid-row: 2; }
+        .campus-l .slot-k:nth-child(4) { grid-column: 4; grid-row: 2; }
+        .campus-l .slot-k:nth-child(5) { grid-column: 5; grid-row: 2; }
+        .campus-l .slot-k:nth-child(6) { grid-column: 5; grid-row: 1; }
+        .metro-andenes {
+            grid-template-columns: repeat(3, minmax(170px, 1fr));
+            position: relative;
+            padding-top: 22px;
+        }
+        .metro-andenes::before {
+            content: '';
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            top: 58%;
+            height: 12px;
+            background: linear-gradient(90deg, #3b82f6 0%, #3b82f6 33%, #fde68a 33%, #fde68a 66%, #10b981 66%, #10b981 100%);
+            border-radius: 999px;
+            z-index: 0;
+            box-shadow: 0 0 0 2px #fff inset;
+        }
+        .metro-andenes .slot-k { position: relative; z-index: 1; }
+        .podio-robots-slots {
+            grid-template-columns: repeat(4, minmax(130px, 1fr));
+            align-items: end;
+        }
+        .podio-robots-slots .slot-k:nth-child(1) { min-height: 124px; background: linear-gradient(180deg, #fff7e6, #fffbeb); }
+        .podio-robots-slots .slot-k:nth-child(2) { min-height: 154px; background: linear-gradient(180deg, #fff7e6, #fff4d6); }
+        .podio-robots-slots .slot-k:nth-child(3) { min-height: 184px; background: linear-gradient(180deg, #fff3e0, #ffe4bf); }
+        .podio-robots-slots .slot-k:nth-child(4) { min-height: 214px; background: linear-gradient(180deg, #ffedd5, #ffd7a8); }
+        .ticket-strip {
+            grid-template-columns: repeat(3, minmax(150px, 1fr));
+            background: linear-gradient(90deg, rgba(249,115,22,.06), rgba(251,191,36,.08));
+            border-radius: 20px;
+            padding: 14px;
+        }
+        .ticket-strip .slot-k {
+            min-height: 118px;
+            background: linear-gradient(180deg, #fffaf2, #fff7e6);
+        }
+        .banco-sello {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .sello-kin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 164px;
+            min-height: 74px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            border: 3px dashed #c2410c;
+            background: linear-gradient(180deg, #fff7e6, #fde68a);
+            color: #9a3412;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 6px 0 #fdba74;
+            cursor: grab;
+            user-select: none;
+        }
+        .grid-cartas-kin {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+        .carta-kin {
+            position: relative;
+            background: linear-gradient(180deg, #fffdf8, #fff7e6);
+            border: 2px solid #fdba74;
+            border-radius: 22px;
+            padding: 18px 16px;
+            min-height: 178px;
+            cursor: pointer;
+            transition: transform .18s, box-shadow .18s, border-color .18s;
+        }
+        .carta-kin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(194,65,12,.12);
+        }
+        .carta-kin.marcada {
+            border-color: #c2410c;
+            box-shadow: 0 0 0 3px rgba(249,115,22,.16);
+        }
+        .carta-kin .sello-kin {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            min-width: 118px;
+            min-height: 56px;
+            padding: 8px 12px;
+            font-size: .82rem;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .etiqueta-carta-kin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #c2410c;
+            font-size: .8rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .ruta-mini-metro {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .pill-estacion {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 800;
+            font-size: .88rem;
+            min-width: 88px;
+        }
+        .pill-estacion.azul { background: #2563eb; }
+        .pill-estacion.ambar { background: #d97706; }
+        .pill-estacion.verde { background: #059669; }
+        .pill-estacion.roja { background: #dc2626; }
+        .paso-ruta-mini {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #9a3412;
+        }
+        .nota-carta {
+            color: #9a3412;
+            font-weight: 700;
+            line-height: 1.35;
+            font-size: .92rem;
+            margin: 0;
+        }
+        .boleto-pack {
+            display: grid;
+            gap: 12px;
+        }
+        .boleto-fila {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #fff3e0;
+            color: #c2410c;
+            font-weight: 900;
+            width: fit-content;
+        }
+        .mini-pasillo {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+        .asiento-ticket {
+            border: 2px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 8px;
+            text-align: center;
+            background: white;
+            font-weight: 900;
+            color: #9a3412;
+        }
+        .asiento-ticket.izq { background: linear-gradient(180deg, #eff6ff, #dbeafe); }
+        .asiento-ticket.der { background: linear-gradient(180deg, #fff1f2, #ffe4e6); }
+        .pasillo-ticket {
+            border-radius: 14px;
+            background: #fed7aa;
+            color: #9a3412;
+            padding: 8px 10px;
+            font-size: .76rem;
+            font-weight: 900;
+            text-align: center;
+        }
+        .ayuda-reto {
+            background: #fff7e6;
+            color: #9a3412;
+            border: 2px dashed #fdba74;
+            border-radius: 16px;
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 700;
+            margin: 10px 0 0;
+        }
+        @keyframes sacudir {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+
         @media (max-width: 768px) {
             .cabecera-normal h1 { font-size: 2rem; }
             .navegador { flex-direction: column; }
             .titulo-pagina { font-size: 1.5rem; }
             .badge-nivel { margin-left: 0; margin-top: 10px; }
+            .ruta-serpenteo,
+            .metro-andenes,
+            .podio-robots-slots,
+            .ticket-strip,
+            .grid-cartas-kin {
+                grid-template-columns: 1fr;
+            }
+            .ruta-serpenteo .slot-k:nth-child(2),
+            .ruta-serpenteo .slot-k:nth-child(4),
+            .ruta-serpenteo .slot-k:nth-child(6) {
+                transform: none;
+            }
+            .campus-l {
+                grid-template-columns: 1fr;
+                grid-template-rows: none;
+            }
+            .campus-l::before,
+            .campus-l::after { display: none; }
+            .campus-l .slot-k:nth-child(1),
+            .campus-l .slot-k:nth-child(2),
+            .campus-l .slot-k:nth-child(3),
+            .campus-l .slot-k:nth-child(4),
+            .campus-l .slot-k:nth-child(5),
+            .campus-l .slot-k:nth-child(6) {
+                grid-column: auto;
+                grid-row: auto;
+            }
         }
     </style>
+    <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -282,7 +665,7 @@
 <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
 
 <div class="cabecera-normal">
-    <h1>&#9881; COORDENADAS</h1>
+    <h1>&#129517; IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Normal &middot; Planos y rutas</p>
     <div>
         <span class="badge-estilo">&#9995; Kinest&eacute;sico</span>
@@ -314,10 +697,15 @@
             Sebasti&aacute;n vive en la <strong>Calle Miguel Jacintez</strong> y quiere llegar al
             <strong>Parque Porfino Serrano</strong>. Observa el mapa y luego construye su ruta.
         </p>
-        <div class="contenedor-imagen">
-            <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg"
-                 alt="Mapa con la ruta de Sebastian" onclick="ampliarImagen(this)">
-            <div class="pie-imagen">Mapa de la colonia con la ruta de Sebastian al parque</div>
+        <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+            <div class="ayuda-ampliar-media">
+                <div class="contenedor-imagen">
+                    <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg"
+                         alt="Mapa con la ruta de Sebastian" onclick="ampliarImagen(this)">
+                    <div class="pie-imagen">Mapa de la colonia con la ruta de Sebastian al parque</div>
+                </div>
+            </div>
+            <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
         </div>
         <div class="recuadro-info">
             <h4><i class="fas fa-route me-2"></i>Recorrido de Sebasti&aacute;n</h4>
@@ -330,7 +718,7 @@
             </ul>
         </div>
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Construye la ruta</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Construye la ruta</h4>
             <p>Presiona los botones de direcci&oacute;n <strong>en el orden correcto</strong> para reproducir el
                recorrido de Sebasti&aacute;n. Son <strong>5 pasos</strong> en total.</p>
             <div class="contador-ruta" id="contador-ruta1">Pasos: 0 / 5</div>
@@ -348,6 +736,21 @@
                 <button class="btn-accion" onclick="limpiarRuta1()">&#8635; Limpiar</button>
             </div>
             <div id="feedback1" class="feedback-kinestesico"></div>
+        </div>
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-map-signs me-2"></i>Reto 2: Ordena los puntos del recorrido</h4>
+            <p>Arrastra o toca una ficha y luego un espacio para acomodar las calles y lugares
+               <strong>desde la casa de Sebasti&aacute;n hasta el parque</strong>. Hay <strong>2 fichas extra</strong>.</p>
+            <div class="panel-manipulacion">
+                <div class="banco-fichas-k" id="banco-ruta1b"></div>
+                <div class="zona-slot-k ruta-serpenteo" id="slots-ruta1b"></div>
+            </div>
+            <div class="ayuda-reto">Si te equivocas, toca un espacio ocupado para liberar esa ficha.</div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarActividadSlots('rutaSebastian2')">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarActividadSlots('rutaSebastian2')">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback1b" class="feedback-kinestesico"></div>
         </div>
     </div>
 </div>
@@ -373,7 +776,7 @@
             </ul>
         </div>
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-sort me-2"></i>Actividad: Ordena las paradas</h4>
+            <h4><i class="fas fa-sort me-2"></i>Reto 1: Ordena las paradas</h4>
             <p>Haz clic en cada parada del banco (en el <strong>orden correcto</strong> del recorrido) para a&ntilde;adirla a la ruta.</p>
             <div class="zona-ordenar">
                 <div class="banco-paradas">
@@ -390,6 +793,21 @@
                 <button class="btn-accion" onclick="reiniciarOrdenCU()">&#8635; Reiniciar</button>
             </div>
             <div id="feedback2" class="feedback-kinestesico"></div>
+        </div>
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-project-diagram me-2"></i>Reto 2: Reconstruye el mapa del trayecto</h4>
+            <p>Ahora coloca cada edificio sobre el <strong>camino en forma de L</strong>. La ruta va recto por varias facultades y
+               al final gira para subir a la meta. Hay <strong>2 edificios distractores</strong>.</p>
+            <div class="panel-manipulacion">
+                <div class="banco-fichas-k" id="banco-cu2"></div>
+                <div class="zona-slot-k campus-l" id="slots-cu2"></div>
+            </div>
+            <div class="ayuda-reto">Completa el camino desde el estacionamiento hasta veterinaria.</div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarActividadSlots('campusRuta2')">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarActividadSlots('campusRuta2')">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback2b" class="feedback-kinestesico"></div>
         </div>
     </div>
 </div>
@@ -505,7 +923,7 @@
             </ul>
         </div>
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Arma el trayecto</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Arma el trayecto</h4>
             <p>Toca las estaciones <strong>en orden</strong> para ir de
                <strong style="color:#3b82f6;">Tasquena (L2)</strong> a
                <strong style="color:#10b981;">Copilco (L3)</strong> haciendo transbordo en Balderas.
@@ -518,6 +936,83 @@
                 <button class="btn-accion" onclick="limpiarTrayecto()">&#8635; Limpiar</button>
             </div>
             <div id="feedback3" class="feedback-kinestesico"></div>
+        </div>
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-ticket-alt me-2"></i>Reto 2: Valida el pase correcto</h4>
+            <p>Arrastra el sello <strong>Ruta v&aacute;lida</strong> sobre la tarjeta de viaje que s&iacute; permite
+               salir de Tasque&ntilde;a, hacer <strong>un solo transbordo</strong> y llegar a Copilco.</p>
+            <div class="panel-manipulacion">
+                <div class="banco-sello" id="banco-sello-metro2">
+                    <div class="sello-kin" id="sello-metro2" draggable="true"
+                         ondragstart="iniciarArrastreSello(event,'metroPase2')">
+                        Ruta v&aacute;lida
+                    </div>
+                </div>
+                <div class="grid-cartas-kin">
+                    <div class="carta-kin" id="metro-opcion-a" data-sello-actividad="metroPase2"
+                         onclick="colocarSelloActividad('metroPase2','metro-opcion-a')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'metroPase2','metro-opcion-a')">
+                        <div class="etiqueta-carta-kin">Pase A</div>
+                        <div class="ruta-mini-metro">
+                            <span class="pill-estacion azul">Tasque&ntilde;a</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion ambar">Balderas</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta">Observa si el cambio y la llegada coinciden con el viaje pedido.</p>
+                    </div>
+                    <div class="carta-kin" id="metro-opcion-b" data-sello-actividad="metroPase2"
+                         onclick="colocarSelloActividad('metroPase2','metro-opcion-b')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'metroPase2','metro-opcion-b')">
+                        <div class="etiqueta-carta-kin">Pase B</div>
+                        <div class="ruta-mini-metro">
+                            <span class="pill-estacion azul">Tasque&ntilde;a</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion azul">Chabacano</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta">Observa si el cambio y la llegada coinciden con el viaje pedido.</p>
+                    </div>
+                    <div class="carta-kin" id="metro-opcion-c" data-sello-actividad="metroPase2"
+                         onclick="colocarSelloActividad('metroPase2','metro-opcion-c')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'metroPase2','metro-opcion-c')">
+                        <div class="etiqueta-carta-kin">Pase C</div>
+                        <div class="ruta-mini-metro">
+                            <span class="pill-estacion azul">Tasque&ntilde;a</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion azul">Ermita</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta">Observa si el cambio y la llegada coinciden con el viaje pedido.</p>
+                    </div>
+                    <div class="carta-kin" id="metro-opcion-d" data-sello-actividad="metroPase2"
+                         onclick="colocarSelloActividad('metroPase2','metro-opcion-d')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'metroPase2','metro-opcion-d')">
+                        <div class="etiqueta-carta-kin">Pase D</div>
+                        <div class="ruta-mini-metro">
+                            <span class="pill-estacion azul">Tasque&ntilde;a</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion ambar">Balderas</span>
+                            <span class="paso-ruta-mini">&#8594;</span>
+                            <span class="pill-estacion verde">Universidad</span>
+                        </div>
+                        <p class="nota-carta">Observa si el cambio y la llegada coinciden con el viaje pedido.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ayuda-reto">Toca una tarjeta para mover el sello si est&aacute;s en celular.</div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarActividadSello('metroPase2')">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarActividadSello('metroPase2')">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback3b" class="feedback-kinestesico"></div>
         </div>
     </div>
 </div>
@@ -539,7 +1034,7 @@
             <strong>Formula:</strong> Distancia total = Unidades por paso x Pasos dados
         </div>
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-sliders-h me-2"></i>Actividad: Mueve los pasos de cada robot</h4>
+            <h4><i class="fas fa-sliders-h me-2"></i>Reto 1: Mueve los pasos de cada robot</h4>
             <p>Arrastra el control de cada robot hasta el n&uacute;mero de pasos correcto (seg&uacute;n la tabla del libro)
                y observa la distancia total. Luego responde la pregunta.</p>
             <table class="tabla-robots-sliders">
@@ -557,6 +1052,21 @@
             <p style="font-weight:700;margin:20px 0 8px;">Cual robot avanzo <strong>MENOS</strong> distancia?</p>
             <div class="opciones-robots" id="opciones-robots"></div>
             <div id="feedback4" class="feedback-kinestesico"></div>
+        </div>
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-trophy me-2"></i>Reto 2: Ord&eacute;nalos por distancia</h4>
+            <p>Cuando ya tengas los pasos correctos, acomoda los robots
+               <strong>de menor a mayor distancia</strong> en este podio.</p>
+            <div class="panel-manipulacion">
+                <div class="banco-fichas-k" id="banco-robots2"></div>
+                <div class="zona-slot-k podio-robots-slots" id="slots-robots2"></div>
+            </div>
+            <div class="ayuda-reto">Solo quedar&aacute; bien si comparas todas las distancias, no solo la menor.</div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarActividadSlots('robotsOrden2')">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarActividadSlots('robotsOrden2')">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback4b" class="feedback-kinestesico"></div>
         </div>
     </div>
 </div>
@@ -585,7 +1095,7 @@
             </div>
         </div>
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Elige los asientos</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Elige los asientos</h4>
             <p>Dos amigos quieren sentarse <strong>juntos pero en lados opuestos del pasillo</strong>,
                lo m&aacute;s cerca posible del escenario.</p>
             <p style="margin-top:8px;">
@@ -610,9 +1120,89 @@
             </div>
             <div id="feedback5" class="feedback-kinestesico"></div>
         </div>
-        <a href="quiz.html" class="boton-quiz text-center">
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-ticket me-2"></i>Reto 2: Sella la mejor reserva</h4>
+            <p>Arrastra el sello <strong>Reservar</strong> al paquete de boletos que s&iacute; cumple
+               las condiciones del problema: misma fila, lados opuestos del pasillo y lo m&aacute;s cerca posible del escenario.</p>
+            <div class="panel-manipulacion">
+                <div class="banco-sello" id="banco-sello-teatro2">
+                    <div class="sello-kin" id="sello-teatro2" draggable="true"
+                         ondragstart="iniciarArrastreSello(event,'teatroReserva2')">
+                        Reservar
+                    </div>
+                </div>
+                <div class="grid-cartas-kin">
+                    <div class="carta-kin" id="teatro-opcion-a" data-sello-actividad="teatroReserva2"
+                         onclick="colocarSelloActividad('teatroReserva2','teatro-opcion-a')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'teatroReserva2','teatro-opcion-a')">
+                        <div class="etiqueta-carta-kin">Paquete A</div>
+                        <div class="boleto-pack">
+                            <div class="boleto-fila">Fila 1</div>
+                            <div class="mini-pasillo">
+                                <div class="asiento-ticket izq">Izq 1</div>
+                                <div class="pasillo-ticket">Pasillo</div>
+                                <div class="asiento-ticket der">Der 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-kin" id="teatro-opcion-b" data-sello-actividad="teatroReserva2"
+                         onclick="colocarSelloActividad('teatroReserva2','teatro-opcion-b')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'teatroReserva2','teatro-opcion-b')">
+                        <div class="etiqueta-carta-kin">Paquete B</div>
+                        <div class="boleto-pack">
+                            <div class="boleto-fila">Fila 2</div>
+                            <div class="mini-pasillo">
+                                <div class="asiento-ticket izq">Izq 1</div>
+                                <div class="pasillo-ticket">Pasillo</div>
+                                <div class="asiento-ticket der">Der 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-kin" id="teatro-opcion-c" data-sello-actividad="teatroReserva2"
+                         onclick="colocarSelloActividad('teatroReserva2','teatro-opcion-c')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'teatroReserva2','teatro-opcion-c')">
+                        <div class="etiqueta-carta-kin">Paquete C</div>
+                        <div class="boleto-pack">
+                            <div class="boleto-fila">Fila 1</div>
+                            <div class="mini-pasillo">
+                                <div class="asiento-ticket izq">Izq 3</div>
+                                <div class="pasillo-ticket">Pasillo</div>
+                                <div class="asiento-ticket der">Der 4</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-kin" id="teatro-opcion-d" data-sello-actividad="teatroReserva2"
+                         onclick="colocarSelloActividad('teatroReserva2','teatro-opcion-d')"
+                         ondragover="permitirSoltar(event)"
+                         ondrop="soltarSelloActividad(event,'teatroReserva2','teatro-opcion-d')">
+                        <div class="etiqueta-carta-kin">Paquete D</div>
+                        <div class="boleto-pack">
+                            <div class="boleto-fila">Fila 1</div>
+                            <div class="mini-pasillo">
+                                <div class="asiento-ticket izq">Izq 1</div>
+                                <div class="pasillo-ticket">Pasillo</div>
+                                <div class="asiento-ticket der">Der 4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ayuda-reto">Todas las opciones parecen cercanas, pero solo una cumple las tres condiciones al mismo tiempo.</div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarActividadSello('teatroReserva2')">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarActividadSello('teatroReserva2')">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback5b" class="feedback-kinestesico"></div>
+        </div>
+        <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz" aria-disabled="true">
             <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">
+            Completa los dos retos finales para activar el quiz.
+        </div>
     </div>
 </div>
 
@@ -628,29 +1218,103 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
 var paginaActual = 1;
 var totalPaginas = 5;
 var respuestasPagina = {1:false,2:false,3:false,4:false,5:false};
+var progresoActividades = {
+    1:{reto1:false, reto2:false},
+    2:{reto1:false, reto2:false},
+    3:{reto1:false, reto2:false},
+    4:{reto1:false, reto2:false},
+    5:{reto1:false, reto2:false}
+};
+var fichaActiva = { actividad:null, item:null };
 
 var audioClick  = document.getElementById('audioClick');
 var audioDing   = document.getElementById('audioDing');
 var audioError  = document.getElementById('audioError');
 var audioWhoosh = document.getElementById('audioWhoosh');
 
+var audiosNivel = [audioClick, audioDing, audioError, audioWhoosh];
+for (var ai = 0; ai < audiosNivel.length; ai++) {
+    if (audiosNivel[ai]) audiosNivel[ai].volume = 0.15;
+}
+
+var ejerciciosNormalKinestesico = {
+    p1reto1:{ pagina:1, apartadoClave:'pagina1_ruta_sebastian', tipoActividad:'kinestesico_ruta' },
+    p1reto2:{ pagina:1, apartadoClave:'pagina1_reconstruir_recorrido', tipoActividad:'kinestesico_slots' },
+    p2reto1:{ pagina:2, apartadoClave:'pagina2_orden_campus', tipoActividad:'kinestesico_orden' },
+    p2reto2:{ pagina:2, apartadoClave:'pagina2_reconstruir_campus', tipoActividad:'kinestesico_slots' },
+    p3reto1:{ pagina:3, apartadoClave:'pagina3_trayecto_metro', tipoActividad:'kinestesico_trayecto' },
+    p3reto2:{ pagina:3, apartadoClave:'pagina3_sello_metro', tipoActividad:'kinestesico_sello' },
+    p4reto1:{ pagina:4, apartadoClave:'pagina4_robot_menor_distancia', tipoActividad:'kinestesico_slider' },
+    p4reto2:{ pagina:4, apartadoClave:'pagina4_orden_robots', tipoActividad:'kinestesico_slots' },
+    p5reto1:{ pagina:5, apartadoClave:'pagina5_asientos_teatro', tipoActividad:'kinestesico_seleccion' },
+    p5reto2:{ pagina:5, apartadoClave:'pagina5_sello_teatro', tipoActividad:'kinestesico_sello' }
+};
+var completadosRegistroNormalKinestesico = {};
+var sesionCompletadaNormalKinestesico = false;
+var trackerNormalKinestesico = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 5,
+    nivel: 'normal',
+    estilo: 'kinestesico',
+    trackTime: false,
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_normal' },
+    apartados: ejerciciosNormalKinestesico
+}) : null;
+var sessionTrackerNormalKinestesico = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 5,
+    nivel: 'normal',
+    estilo: 'kinestesico',
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_normal' }
+}) : null;
+
 function safePlay(a) { try { if (a) { a.currentTime = 0; a.play(); } } catch(e) {} }
 
+function shuffleArray(arr) {
+    var copy = arr.slice();
+    for (var i = copy.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = tmp;
+    }
+    return copy;
+}
+
+function actividadResuelta(pagina, reto) {
+    return !!(progresoActividades[pagina] && progresoActividades[pagina][reto]);
+}
+
+function actualizarEstadoPagina(pagina) {
+    respuestasPagina[pagina] = paginaCompletaNormalKinestesico(pagina);
+}
+
+function marcarActividad(pagina, reto) {
+    progresoActividades[pagina][reto] = true;
+    actualizarEstadoPagina(pagina);
+    revisarSesionCompletadaNormalKinestesico();
+    actualizarUI();
+}
+
 function cambiarPagina(dir) {
+    if (dir > 0 && !paginaCompletaNormalKinestesico(paginaActual)) {
+        safePlay(audioError);
+        var feedbackBloqueo = actividadResuelta(paginaActual, 'reto1') ? 'feedback' + paginaActual + 'b' : 'feedback' + paginaActual;
+        mostrarFeedback(feedbackBloqueo, 'error', 'Completa los dos retos de esta pagina antes de avanzar.');
+        return;
+    }
+    var siguientePagina = paginaActual + dir;
+    if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
     document.getElementById('pagina' + paginaActual).classList.remove('activa');
-    paginaActual += dir;
+    paginaActual = siguientePagina;
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     safePlay(audioWhoosh);
     actualizarUI();
-    localStorage.setItem('progreso_normal_kinestesico_coordenadas', paginaActual);
     window.scrollTo({top:0, behavior:'smooth'});
-    if (paginaActual === 2) iniciarOrdenCU();
-    if (paginaActual === 4) iniciarRobots();
-    if (paginaActual === 5) generarTeatro();
 }
 
 function actualizarUI() {
@@ -659,13 +1323,82 @@ function actualizarUI() {
         var n = i + 1;
         puntos[i].classList.remove('activo','completado');
         if (n === paginaActual) puntos[i].classList.add('activo');
-        else if (n < paginaActual && respuestasPagina[n]) puntos[i].classList.add('completado');
-        else if (n < paginaActual) puntos[i].classList.add('activo');
+        else if (paginaCompletaNormalKinestesico(n)) puntos[i].classList.add('completado');
     }
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText  = paginaActual + '/' + totalPaginas;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !paginaCompletaNormalKinestesico(paginaActual));
+
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+    if (botonQuiz && textoAyudaQuiz) {
+        if (todasPaginasCompletasNormalKinestesico()) {
+            botonQuiz.classList.remove('bloqueado');
+            botonQuiz.setAttribute('aria-disabled', 'false');
+            textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+        } else {
+            botonQuiz.classList.add('bloqueado');
+            botonQuiz.setAttribute('aria-disabled', 'true');
+            textoAyudaQuiz.textContent = 'Completa los dos retos finales para activar el quiz.';
+        }
+    }
+
+    if (trackerNormalKinestesico) {
+        trackerNormalKinestesico.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+    }
+}
+
+function paginaCompletaNormalKinestesico(pagina) {
+    return actividadResuelta(pagina, 'reto1') && actividadResuelta(pagina, 'reto2');
+}
+
+function todasPaginasCompletasNormalKinestesico() {
+    for (var i = 1; i <= totalPaginas; i++) {
+        if (!paginaCompletaNormalKinestesico(i)) return false;
+    }
+    return true;
+}
+
+function claveEjercicioNormalKinestesico(pagina, reto) {
+    return 'p' + pagina + reto;
+}
+
+function detalleConBaseNormalKinestesico(pagina, reto, detalle) {
+    var clave = claveEjercicioNormalKinestesico(pagina, reto);
+    var base = { pagina: pagina, ejercicio: clave };
+    detalle = detalle || {};
+    for (var k in detalle) {
+        if (Object.prototype.hasOwnProperty.call(detalle, k)) base[k] = detalle[k];
+    }
+    return base;
+}
+
+function registrarIntentoNormalKinestesico(pagina, reto, correcto, detalle) {
+    var clave = claveEjercicioNormalKinestesico(pagina, reto);
+    var config = ejerciciosNormalKinestesico[clave];
+    if (!config) return;
+
+    var detalleFinal = detalleConBaseNormalKinestesico(pagina, reto, detalle);
+    if (trackerNormalKinestesico) {
+        trackerNormalKinestesico.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+        if (correcto) {
+            if (!completadosRegistroNormalKinestesico[clave]) {
+                trackerNormalKinestesico.addCorrect(clave, detalleFinal);
+                completadosRegistroNormalKinestesico[clave] = true;
+            }
+        } else {
+            trackerNormalKinestesico.addError(clave, detalleFinal);
+        }
+    }
+}
+
+function revisarSesionCompletadaNormalKinestesico() {
+    if (sesionCompletadaNormalKinestesico || !todasPaginasCompletasNormalKinestesico()) return;
+    sesionCompletadaNormalKinestesico = true;
+    if (sessionTrackerNormalKinestesico) {
+        sessionTrackerNormalKinestesico.complete({ paginasCompletas: totalPaginas });
+    }
 }
 
 function ampliarImagen(img) {
@@ -706,7 +1439,7 @@ var RUTA_CORRECTA_1 = ['N','E','N','E','N'];
 var ruta1 = [];
 
 function agregarPaso1(letra, clase) {
-    if (respuestasPagina[1] || ruta1.length >= 5) return;
+    if (actividadResuelta(1, 'reto1') || ruta1.length >= 5) return;
     safePlay(audioClick);
     ruta1.push(letra);
 
@@ -724,6 +1457,11 @@ function agregarPaso1(letra, clase) {
 
 function verificarRuta1() {
     if (ruta1.length < 5) {
+        registrarIntentoNormalKinestesico(1, 'reto1', false, {
+            actividad: 'ruta_sebastian',
+            respuesta: ruta1.join('>'),
+            error: 'ruta_incompleta'
+        });
         mostrarFeedback('feedback1','error','Necesitas exactamente 5 pasos. Completa la ruta.');
         return;
     }
@@ -731,17 +1469,22 @@ function verificarRuta1() {
     for (var i = 0; i < ruta1.length; i++) {
         if (ruta1[i] !== RUTA_CORRECTA_1[i]) { ok = false; break; }
     }
+    registrarIntentoNormalKinestesico(1, 'reto1', ok, {
+        actividad: 'ruta_sebastian',
+        respuesta: ruta1.join('>')
+    });
     if (ok) {
         safePlay(audioDing);
         mostrarFeedback('feedback1','ok','Correcto! La ruta de Sebastian es: Norte, Este, Norte, Este, Norte. Exactamente 5 pasos!');
-        respuestasPagina[1] = true; actualizarUI();
+        marcarActividad(1, 'reto1');
     } else {
         safePlay(audioError);
-        mostrarFeedback('feedback1','error','Esa no es la ruta correcta. Recuerda: Norte - Este - Norte - Este - Norte. Limpia e intentalo de nuevo.');
+        mostrarFeedback('feedback1','error','Esa ruta no coincide. Revisa en que momentos subes y en que momentos avanzas al este para llegar al parque.');
     }
 }
 
 function limpiarRuta1() {
+    if (actividadResuelta(1, 'reto1')) return;
     ruta1 = [];
     document.getElementById('ruta-construida1').innerHTML =
         '<span style="color:#fdba74;font-weight:600;">Toca las flechas para construir la ruta...</span>';
@@ -793,6 +1536,7 @@ function iniciarOrdenCU() {
 }
 
 function agregarParadaCU(id) {
+    if (actividadResuelta(2, 'reto1')) return;
     if (ordenUsuarioCU.length >= 6) return;
     if (ordenUsuarioCU.indexOf(id) !== -1) return;
     safePlay(audioClick);
@@ -814,6 +1558,11 @@ function agregarParadaCU(id) {
 
 function verificarOrdenCU() {
     if (ordenUsuarioCU.length < 6) {
+        registrarIntentoNormalKinestesico(2, 'reto1', false, {
+            actividad: 'orden_campus',
+            respuesta: ordenUsuarioCU.join('>'),
+            error: 'orden_incompleto'
+        });
         mostrarFeedback('feedback2','error','Coloca todas las paradas antes de verificar.');
         return;
     }
@@ -821,10 +1570,14 @@ function verificarOrdenCU() {
     for (var i = 0; i < ordenUsuarioCU.length; i++) {
         if (ordenUsuarioCU[i] !== ORDEN_CORRECTO_CU[i]) { ok = false; break; }
     }
+    registrarIntentoNormalKinestesico(2, 'reto1', ok, {
+        actividad: 'orden_campus',
+        respuesta: ordenUsuarioCU.join('>')
+    });
     if (ok) {
         safePlay(audioDing);
         mostrarFeedback('feedback2','ok','Correcto! El orden es: Estacionamiento - Estadio - Trabajo Social - Contaduria - Ciencias del Mar - Veterinaria.');
-        respuestasPagina[2] = true; actualizarUI();
+        marcarActividad(2, 'reto1');
     } else {
         safePlay(audioError);
         mostrarFeedback('feedback2','error','El orden no es correcto. Observa el mapa y recuerda que el recorrido va hacia el este, luego al norte para llegar a Veterinaria.');
@@ -832,6 +1585,7 @@ function verificarOrdenCU() {
 }
 
 function reiniciarOrdenCU() {
+    if (actividadResuelta(2, 'reto1')) return;
     iniciarOrdenCU();
 }
 
@@ -842,7 +1596,7 @@ function reiniciarOrdenCU() {
 var trayecto3 = [];
 
 function seleccionarEstacion(nombre, clase) {
-    if (respuestasPagina[3]) return;
+    if (actividadResuelta(3, 'reto1')) return;
     if (trayecto3.length >= 3) {
         mostrarFeedback('feedback3','error','Ya tienes 3 estaciones. Verifica o limpia para reintentar.');
         return;
@@ -870,6 +1624,11 @@ function seleccionarEstacion(nombre, clase) {
 
 function verificarTrayecto() {
     if (trayecto3.length < 3) {
+        registrarIntentoNormalKinestesico(3, 'reto1', false, {
+            actividad: 'trayecto_metro',
+            respuesta: trayecto3.map(function(e) { return e.nombre; }).join('>'),
+            error: 'trayecto_incompleto'
+        });
         mostrarFeedback('feedback3','error','Necesitas seleccionar 3 estaciones: Tasquena - Balderas - Copilco.');
         return;
     }
@@ -877,17 +1636,22 @@ function verificarTrayecto() {
     var n1 = trayecto3[1].nombre;
     var n2 = trayecto3[2].nombre;
     var ok = (n0 === 'Tasquena' && n1 === 'Balderas' && n2 === 'Copilco');
+    registrarIntentoNormalKinestesico(3, 'reto1', ok, {
+        actividad: 'trayecto_metro',
+        respuesta: trayecto3.map(function(e) { return e.nombre; }).join('>')
+    });
     if (ok) {
         safePlay(audioDing);
         mostrarFeedback('feedback3','ok','Correcto! Trayecto: Tasquena (L2) -> Balderas (transbordo L2 a L3) -> Copilco (L3). Solo 1 transbordo.');
-        respuestasPagina[3] = true; actualizarUI();
+        marcarActividad(3, 'reto1');
     } else {
         safePlay(audioError);
-        mostrarFeedback('feedback3','error','Ese no es el trayecto correcto. Recuerda: empieza en Tasquena (L2 azul), cambia en Balderas y termina en Copilco (L3 verde).');
+        mostrarFeedback('feedback3','error','Ese trayecto no coincide. Empieza en la linea azul, cambia una sola vez en una estacion compartida y termina en la linea verde.');
     }
 }
 
 function limpiarTrayecto() {
+    if (actividadResuelta(3, 'reto1')) return;
     trayecto3 = [];
     document.getElementById('trayecto-construido').innerHTML =
         '<span style="color:#fdba74;font-weight:600;">Toca las estaciones en el mapa...</span>';
@@ -929,6 +1693,10 @@ function iniciarRobots() {
             '<td style="min-width:100px;"><div class="barra-dist-wrap"><div class="barra-dist-fill" id="barra-' + r.id + '" style="width:0%;"></div></div></td>';
         tbody.appendChild(tr);
 
+    });
+
+    var robotsMezclados = shuffleArray(ROBOTS);
+    robotsMezclados.forEach(function(r) {
         var btn = document.createElement('button');
         btn.className = 'btn-accion';
         btn.id = 'btn-robot-' + r.id;
@@ -939,6 +1707,7 @@ function iniciarRobots() {
 }
 
 function actualizarRobot(id, pasos) {
+    if (actividadResuelta(4, 'reto1')) return;
     var robot = null;
     for (var i = 0; i < ROBOTS.length; i++) { if (ROBOTS[i].id === id) { robot = ROBOTS[i]; break; } }
     var dist = robot.uPaso * parseInt(pasos);
@@ -950,7 +1719,7 @@ function actualizarRobot(id, pasos) {
 }
 
 function elegirRobotMenos(id) {
-    if (respuestasPagina[4]) return;
+    if (actividadResuelta(4, 'reto1')) return;
     safePlay(audioClick);
 
     var todosOk = true;
@@ -959,21 +1728,38 @@ function elegirRobotMenos(id) {
         if (parseInt(s.value) !== ROBOTS[i].pasosCorrectos) { todosOk = false; break; }
     }
     if (!todosOk) {
+        registrarIntentoNormalKinestesico(4, 'reto1', false, {
+            actividad: 'robot_menor_distancia',
+            seleccion: id,
+            error: 'sliders_incompletos'
+        });
         mostrarFeedback('feedback4','error','Primero pon cada slider en el numero de pasos correcto segun la tabla del libro antes de responder.');
         return;
     }
 
+    registrarIntentoNormalKinestesico(4, 'reto1', id === ROBOT_MENOS, {
+        actividad: 'robot_menor_distancia',
+        seleccion: id
+    });
     if (id === ROBOT_MENOS) {
         safePlay(audioDing);
         document.getElementById('badge-' + id).classList.add('visible');
         mostrarFeedback('feedback4','ok','Correcto! Robot A avanzo solo 5 unidades (1x5). Es menos que Robot F (10), Robot G (9) y Robot B (14).');
-        respuestasPagina[4] = true; actualizarUI();
+        marcarActividad(4, 'reto1');
+        bloquearSlidersRobots();
     } else {
         safePlay(audioError);
         var robot = null;
         for (var i = 0; i < ROBOTS.length; i++) { if (ROBOTS[i].id === id) { robot = ROBOTS[i]; break; } }
         var distElegida = robot.uPaso * robot.pasosCorrectos;
         mostrarFeedback('feedback4','error',robot.nombre + ' avanzo ' + distElegida + ' unidades. Compara todas las distancias y busca la menor.');
+    }
+}
+
+function bloquearSlidersRobots() {
+    for (var i = 0; i < ROBOTS.length; i++) {
+        var slider = document.getElementById('slider-' + ROBOTS[i].id);
+        if (slider) slider.disabled = true;
     }
 }
 
@@ -1019,7 +1805,7 @@ function generarTeatro() {
 }
 
 function seleccionarAsiento(fila, lado, num) {
-    if (respuestasPagina[5]) return;
+    if (actividadResuelta(5, 'reto1')) return;
     safePlay(audioClick);
 
     if (selTeatro[lado]) {
@@ -1042,6 +1828,13 @@ function seleccionarAsiento(fila, lado, num) {
 
 function verificarAsientos() {
     if (!selTeatro.izq || !selTeatro.der) {
+        safePlay(audioError);
+        registrarIntentoNormalKinestesico(5, 'reto1', false, {
+            actividad: 'asientos_teatro',
+            izquierda: !!selTeatro.izq,
+            derecha: !!selTeatro.der,
+            error: 'seleccion_incompleta'
+        });
         mostrarFeedback('feedback5','error','Debes seleccionar un asiento de cada lado (azul = izquierda, rojo = derecha).');
         return;
     }
@@ -1050,26 +1843,50 @@ function verificarAsientos() {
 
     if (iz.fila !== de.fila) {
         safePlay(audioError);
+        registrarIntentoNormalKinestesico(5, 'reto1', false, {
+            actividad: 'asientos_teatro',
+            izquierda: 'F' + iz.fila + '-' + iz.num,
+            derecha: 'F' + de.fila + '-' + de.num,
+            error: 'filas_distintas'
+        });
         mostrarFeedback('feedback5','error','Los asientos deben estar en la misma fila para que los amigos esten juntos.');
         return;
     }
     if (iz.fila !== 1) {
         safePlay(audioError);
-        mostrarFeedback('feedback5','error','Elegiste la fila ' + iz.fila + ', pero la fila mas cercana al escenario es la fila 1. Busca mas arriba!');
+        registrarIntentoNormalKinestesico(5, 'reto1', false, {
+            actividad: 'asientos_teatro',
+            izquierda: 'F' + iz.fila + '-' + iz.num,
+            derecha: 'F' + de.fila + '-' + de.num,
+            error: 'fila_no_cercana'
+        });
+        mostrarFeedback('feedback5','error','Todavia no. Busca la fila que esta mas cerca del escenario para cumplir la condicion principal.');
         return;
     }
     if (iz.num !== 1 || de.num !== 2) {
         safePlay(audioError);
-        mostrarFeedback('feedback5','error','Elegiste asientos ' + iz.num + ' (izq) y ' + de.num + ' (der) en fila 1. Para estar lo mas juntos al pasillo deben elegir el asiento 1 (izq) y el 2 (der), que son los pegados al pasillo central.');
+        registrarIntentoNormalKinestesico(5, 'reto1', false, {
+            actividad: 'asientos_teatro',
+            izquierda: 'F' + iz.fila + '-' + iz.num,
+            derecha: 'F' + de.fila + '-' + de.num,
+            error: 'asientos_no_pegados_pasillo'
+        });
+        mostrarFeedback('feedback5','error','Todavia no. En esa fila necesitas los dos asientos pegados al pasillo central: uno impar a la izquierda y uno par a la derecha.');
         return;
     }
 
+    registrarIntentoNormalKinestesico(5, 'reto1', true, {
+        actividad: 'asientos_teatro',
+        izquierda: 'F' + iz.fila + '-' + iz.num,
+        derecha: 'F' + de.fila + '-' + de.num
+    });
     safePlay(audioDing);
     mostrarFeedback('feedback5','ok','Correcto! Fila 1, asiento 1 (izquierda) y asiento 2 (derecha). Son los mas cercanos al escenario y quedan uno a cada lado del pasillo.');
-    respuestasPagina[5] = true; actualizarUI();
+    marcarActividad(5, 'reto1');
 }
 
 function limpiarAsientos() {
+    if (actividadResuelta(5, 'reto1')) return;
     selTeatro = { izq: null, der: null };
     var asientos = document.querySelectorAll('.asiento-k');
     for (var i = 0; i < asientos.length; i++) {
@@ -1080,22 +1897,467 @@ function limpiarAsientos() {
 }
 
 /* ============================================
+   RETOS 2 - MANIPULACION DE FICHAS
+============================================ */
+var ACTIVIDADES_SLOTS = {
+    rutaSebastian2: {
+        pagina: 1,
+        reto: 'reto2',
+        bankId: 'banco-ruta1b',
+        slotsId: 'slots-ruta1b',
+        feedbackId: 'feedback1b',
+        items: [
+            { id:'miguel',  html:'<strong>&#127968; Miguel Jacintez</strong>' },
+            { id:'luis',    html:'<strong>Luis Preciado</strong>' },
+            { id:'o156',    html:'<strong>Oriente 156</strong>' },
+            { id:'eje1',    html:'<strong>Eje 1 Norte</strong>' },
+            { id:'o170',    html:'<strong>Oriente 170</strong>' },
+            { id:'parque',  html:'<strong>&#127795; Parque Porfino</strong>' },
+            { id:'o152',    html:'<strong>Oriente 152</strong>' },
+            { id:'mercado', html:'<strong>Mercado Juarez</strong>' }
+        ],
+        correct: ['miguel','luis','o156','eje1','o170','parque'],
+        user: [null,null,null,null,null,null],
+        slotLabels: ['1','2','3','4','5','6'],
+        placeholders: ['Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha'],
+        success: 'Correcto! Reconstruiste el recorrido desde la casa de Sebastian hasta el parque.',
+        error: 'Todavia no coincide. Sigue el camino y revisa en que orden aparecen las calles y el parque.',
+        emptyMessage: 'Completa los 6 espacios del recorrido antes de verificar.'
+    },
+    campusRuta2: {
+        pagina: 2,
+        reto: 'reto2',
+        bankId: 'banco-cu2',
+        slotsId: 'slots-cu2',
+        feedbackId: 'feedback2b',
+        items: [
+            { id:'estacionamiento', html:'<strong>&#128663; Estacionamiento</strong>' },
+            { id:'estadio',         html:'<strong>Estadio de Practicas</strong>' },
+            { id:'trabajo-social',  html:'<strong>Trabajo Social</strong>' },
+            { id:'contaduria',      html:'<strong>Contaduria</strong>' },
+            { id:'ciencias-mar',    html:'<strong>Ciencias del Mar</strong>' },
+            { id:'veterinaria',     html:'<strong>Veterinaria</strong>' },
+            { id:'rectoria',        html:'<strong>Rectoria</strong>' },
+            { id:'biblioteca',      html:'<strong>Biblioteca</strong>' }
+        ],
+        correct: ['estacionamiento','estadio','trabajo-social','contaduria','ciencias-mar','veterinaria'],
+        user: [null,null,null,null,null,null],
+        slotLabels: ['1','2','3','4','5','6'],
+        placeholders: ['Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha','Coloca una ficha'],
+        success: 'Muy bien! Reconstruiste el trayecto de CU sobre el mapa del recorrido.',
+        error: 'Ese mapa no coincide. Revisa el avance hacia el este y el giro final al norte.',
+        emptyMessage: 'Completa el camino completo antes de verificar.'
+    },
+    robotsOrden2: {
+        pagina: 4,
+        reto: 'reto2',
+        bankId: 'banco-robots2',
+        slotsId: 'slots-robots2',
+        feedbackId: 'feedback4b',
+        beforeVerify: robotsListosParaOrden,
+        items: [
+            { id:'A', html:'<strong>&#129302; Robot A</strong>' },
+            { id:'F', html:'<strong>&#129302; Robot F</strong>' },
+            { id:'G', html:'<strong>&#129302; Robot G</strong>' },
+            { id:'B', html:'<strong>&#129302; Robot B</strong>' }
+        ],
+        correct: ['A','G','F','B'],
+        user: [null,null,null,null],
+        slotLabels: ['1','2','3','4'],
+        placeholders: ['Posicion 1','Posicion 2','Posicion 3','Posicion 4'],
+        success: 'Correcto! El orden de menor a mayor distancia es A, G, F y B.',
+        error: 'Ese orden no coincide. Compara las distancias totales y vuelve a acomodarlos.',
+        emptyMessage: 'Completa los 4 lugares del podio antes de verificar.'
+    }
+};
+
+var ACTIVIDADES_SELLO = {
+    metroPase2: {
+        pagina: 3,
+        reto: 'reto2',
+        stampId: 'sello-metro2',
+        bankId: 'banco-sello-metro2',
+        feedbackId: 'feedback3b',
+        target: null,
+        correct: 'metro-opcion-a',
+        success: 'Correcto! Ese pase usa el cambio adecuado y termina en Copilco.',
+        error: 'Ese pase no cumple el viaje pedido. Revisa donde se hace el cambio y en que estacion termina.',
+        emptyMessage: 'Coloca el sello sobre una tarjeta antes de verificar.'
+    },
+    teatroReserva2: {
+        pagina: 5,
+        reto: 'reto2',
+        stampId: 'sello-teatro2',
+        bankId: 'banco-sello-teatro2',
+        feedbackId: 'feedback5b',
+        target: null,
+        correct: 'teatro-opcion-a',
+        success: 'Muy bien! Ese paquete es el unico que cumple fila mas cercana y asientos pegados al pasillo.',
+        error: 'Ese paquete no cumple todas las condiciones al mismo tiempo. Compara fila, lado y cercania al pasillo.',
+        emptyMessage: 'Coloca el sello sobre un paquete antes de verificar.'
+    }
+};
+
+function buscarItemActividad(cfg, id) {
+    for (var i = 0; i < cfg.items.length; i++) {
+        if (cfg.items[i].id === id) return cfg.items[i];
+    }
+    return null;
+}
+
+function prepararActividadSlots(nombre) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    cfg.displayOrder = shuffleArray(cfg.items.map(function(item) { return item.id; }));
+    cfg.selected = null;
+}
+
+function fichaUsadaEnActividad(cfg, id) {
+    for (var i = 0; i < cfg.user.length; i++) {
+        if (cfg.user[i] === id) return true;
+    }
+    return false;
+}
+
+function limpiarSeleccionGlobal() {
+    if (!fichaActiva.actividad) return;
+    var previa = ACTIVIDADES_SLOTS[fichaActiva.actividad];
+    if (previa) {
+        previa.selected = null;
+        renderActividadSlots(fichaActiva.actividad);
+    }
+    fichaActiva = { actividad:null, item:null };
+}
+
+function renderActividadSlots(nombre) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    var banco = document.getElementById(cfg.bankId);
+    var slots = document.getElementById(cfg.slotsId);
+    if (!banco || !slots) return;
+
+    banco.innerHTML = '';
+    var displayOrder = cfg.displayOrder || cfg.items.map(function(item) { return item.id; });
+    for (var i = 0; i < displayOrder.length; i++) {
+        var item = buscarItemActividad(cfg, displayOrder[i]);
+        var usado = fichaUsadaEnActividad(cfg, item.id);
+        var ficha = document.createElement('div');
+        ficha.className = 'ficha-kin' + (usado ? ' usada' : '') + (cfg.selected === item.id ? ' seleccionada' : '');
+        ficha.innerHTML = item.html;
+        ficha.draggable = !usado && !actividadResuelta(cfg.pagina, cfg.reto);
+        ficha.onclick = (function(n, id) { return function() { seleccionarFichaActividad(n, id); }; })(nombre, item.id);
+        ficha.ondragstart = (function(n, id) { return function(e) { iniciarArrastreActividad(e, n, id); }; })(nombre, item.id);
+        banco.appendChild(ficha);
+    }
+
+    slots.innerHTML = '';
+    for (var s = 0; s < cfg.correct.length; s++) {
+        var slot = document.createElement('div');
+        var itemSlot = cfg.user[s] ? buscarItemActividad(cfg, cfg.user[s]) : null;
+        slot.className = 'slot-k' + (itemSlot ? ' lleno' : '');
+        slot.ondragover = permitirSoltar;
+        slot.ondrop = (function(n, idx) { return function(e) { soltarFichaActividad(e, n, idx); }; })(nombre, s);
+        slot.onclick = (function(n, idx) { return function() { colocarFichaSeleccionada(n, idx); }; })(nombre, s);
+
+        var contenido = '<span class="slot-tag">' + cfg.slotLabels[s] + '</span>';
+        if (itemSlot) contenido += itemSlot.html;
+        else contenido += '<span class="slot-placeholder">' + cfg.placeholders[s] + '</span>';
+        slot.innerHTML = contenido;
+        slots.appendChild(slot);
+    }
+}
+
+function seleccionarFichaActividad(nombre, id) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto) || fichaUsadaEnActividad(cfg, id)) return;
+
+    if (fichaActiva.actividad && fichaActiva.actividad !== nombre) {
+        limpiarSeleccionGlobal();
+    }
+
+    safePlay(audioClick);
+    if (cfg.selected === id) {
+        cfg.selected = null;
+        fichaActiva = { actividad:null, item:null };
+    } else {
+        cfg.selected = id;
+        fichaActiva = { actividad:nombre, item:id };
+    }
+    renderActividadSlots(nombre);
+}
+
+function permitirSoltar(e) {
+    e.preventDefault();
+}
+
+function iniciarArrastreActividad(e, nombre, id) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto) || fichaUsadaEnActividad(cfg, id)) {
+        e.preventDefault();
+        return;
+    }
+    if (fichaActiva.actividad && fichaActiva.actividad !== nombre) {
+        limpiarSeleccionGlobal();
+    }
+    cfg.selected = id;
+    fichaActiva = { actividad:nombre, item:id };
+    if (e.dataTransfer) {
+        e.dataTransfer.setData('text/plain', nombre + '|' + id);
+        e.dataTransfer.effectAllowed = 'move';
+    }
+    renderActividadSlots(nombre);
+}
+
+function sacudirSlot(nombre, idx) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    var cont = document.getElementById(cfg.slotsId);
+    if (!cont || !cont.children[idx]) return;
+    cont.children[idx].classList.add('incompatible');
+    setTimeout(function() {
+        if (cont.children[idx]) cont.children[idx].classList.remove('incompatible');
+    }, 380);
+}
+
+function colocarFichaEnSlot(nombre, idx, id) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (!id || actividadResuelta(cfg.pagina, cfg.reto)) return;
+    var item = buscarItemActividad(cfg, id);
+    if (!item) return;
+    if (cfg.slotGroups && cfg.slotGroups[idx] && item.group !== cfg.slotGroups[idx]) {
+        safePlay(audioError);
+        sacudirSlot(nombre, idx);
+        return;
+    }
+    if (fichaUsadaEnActividad(cfg, id) && cfg.user[idx] !== id) return;
+
+    cfg.user[idx] = id;
+    cfg.selected = null;
+    fichaActiva = { actividad:null, item:null };
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function colocarFichaSeleccionada(nombre, idx) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto)) return;
+    if (cfg.user[idx] && !cfg.selected) {
+        removerFichaDeSlot(nombre, idx);
+        return;
+    }
+    if (!cfg.selected) return;
+    colocarFichaEnSlot(nombre, idx, cfg.selected);
+}
+
+function soltarFichaActividad(e, nombre, idx) {
+    e.preventDefault();
+    var data = e.dataTransfer ? e.dataTransfer.getData('text/plain') : '';
+    var partes = data ? data.split('|') : [];
+    if (partes.length === 2 && partes[0] !== nombre) return;
+    var id = partes.length === 2 ? partes[1] : ACTIVIDADES_SLOTS[nombre].selected;
+    colocarFichaEnSlot(nombre, idx, id);
+}
+
+function removerFichaDeSlot(nombre, idx) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto) || !cfg.user[idx]) return;
+    cfg.user[idx] = null;
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function reiniciarActividadSlots(nombre) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto)) return;
+    for (var i = 0; i < cfg.user.length; i++) cfg.user[i] = null;
+    prepararActividadSlots(nombre);
+    if (fichaActiva.actividad === nombre) fichaActiva = { actividad:null, item:null };
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function robotsListosParaOrden() {
+    for (var i = 0; i < ROBOTS.length; i++) {
+        var slider = document.getElementById('slider-' + ROBOTS[i].id);
+        if (!slider || parseInt(slider.value, 10) !== ROBOTS[i].pasosCorrectos) {
+            mostrarFeedback('feedback4b','error','Primero deja bien los pasos de cada robot en el reto 1 para poder ordenarlos por distancia.');
+            return false;
+        }
+    }
+    return true;
+}
+
+function verificarActividadSlots(nombre) {
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if (cfg.beforeVerify && !cfg.beforeVerify()) {
+        registrarIntentoNormalKinestesico(cfg.pagina, cfg.reto, false, {
+            actividad: nombre,
+            respuesta: cfg.user.filter(function(v) { return !!v; }).join('>'),
+            error: 'precondicion_incompleta'
+        });
+        return;
+    }
+
+    for (var i = 0; i < cfg.correct.length; i++) {
+        if (!cfg.user[i]) {
+            registrarIntentoNormalKinestesico(cfg.pagina, cfg.reto, false, {
+                actividad: nombre,
+                respuesta: cfg.user.filter(function(v) { return !!v; }).join('>'),
+                error: 'espacios_incompletos'
+            });
+            mostrarFeedback(cfg.feedbackId, 'error', cfg.emptyMessage || 'Completa todos los espacios antes de verificar.');
+            return;
+        }
+    }
+
+    var ok = true;
+    for (var j = 0; j < cfg.correct.length; j++) {
+        if (cfg.user[j] !== cfg.correct[j]) {
+            ok = false;
+            break;
+        }
+    }
+
+    registrarIntentoNormalKinestesico(cfg.pagina, cfg.reto, ok, {
+        actividad: nombre,
+        respuesta: cfg.user.join('>')
+    });
+    if (ok) {
+        safePlay(audioDing);
+        mostrarFeedback(cfg.feedbackId, 'ok', cfg.success);
+        marcarActividad(cfg.pagina, cfg.reto);
+        cfg.selected = null;
+        if (fichaActiva.actividad === nombre) fichaActiva = { actividad:null, item:null };
+        renderActividadSlots(nombre);
+    } else {
+        safePlay(audioError);
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.error);
+    }
+}
+
+function renderActividadSello(nombre) {
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    var stamp = document.getElementById(cfg.stampId);
+    var bank = document.getElementById(cfg.bankId);
+    if (!stamp || !bank) return;
+
+    var cartas = document.querySelectorAll('[data-sello-actividad="' + nombre + '"]');
+    for (var i = 0; i < cartas.length; i++) cartas[i].classList.remove('marcada');
+
+    var destino = cfg.target ? document.getElementById(cfg.target) : bank;
+    if (destino) destino.appendChild(stamp);
+    if (cfg.target) {
+        var carta = document.getElementById(cfg.target);
+        if (carta) carta.classList.add('marcada');
+    }
+}
+
+function mezclarCartasActividad(nombre) {
+    var cartas = Array.prototype.slice.call(document.querySelectorAll('[data-sello-actividad="' + nombre + '"]'));
+    if (!cartas.length) return;
+    var contenedor = cartas[0].parentNode;
+    var mezcladas = shuffleArray(cartas);
+    for (var i = 0; i < mezcladas.length; i++) contenedor.appendChild(mezcladas[i]);
+}
+
+function iniciarArrastreSello(e, nombre) {
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto)) {
+        e.preventDefault();
+        return;
+    }
+    if (e.dataTransfer) {
+        e.dataTransfer.setData('text/plain', nombre);
+        e.dataTransfer.effectAllowed = 'move';
+    }
+}
+
+function colocarSelloActividad(nombre, targetId) {
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto)) return;
+    cfg.target = targetId;
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSello(nombre);
+}
+
+function soltarSelloActividad(e, nombre, targetId) {
+    e.preventDefault();
+    var data = e.dataTransfer ? e.dataTransfer.getData('text/plain') : '';
+    if (data && data !== nombre) return;
+    colocarSelloActividad(nombre, targetId);
+}
+
+function reiniciarActividadSello(nombre) {
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if (actividadResuelta(cfg.pagina, cfg.reto)) return;
+    cfg.target = null;
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    mezclarCartasActividad(nombre);
+    renderActividadSello(nombre);
+}
+
+function verificarActividadSello(nombre) {
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if (!cfg.target) {
+        registrarIntentoNormalKinestesico(cfg.pagina, cfg.reto, false, {
+            actividad: nombre,
+            error: 'sin_sello'
+        });
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.emptyMessage);
+        return;
+    }
+    registrarIntentoNormalKinestesico(cfg.pagina, cfg.reto, cfg.target === cfg.correct, {
+        actividad: nombre,
+        seleccion: cfg.target
+    });
+    if (cfg.target === cfg.correct) {
+        safePlay(audioDing);
+        mostrarFeedback(cfg.feedbackId, 'ok', cfg.success);
+        marcarActividad(cfg.pagina, cfg.reto);
+        renderActividadSello(nombre);
+    } else {
+        safePlay(audioError);
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.error);
+    }
+}
+
+/* ============================================
    INIT
 ============================================ */
 window.addEventListener('DOMContentLoaded', function() {
-    var g = localStorage.getItem('progreso_normal_kinestesico_coordenadas');
-    if (g) {
-        var p = parseInt(g, 10);
-        if (p >= 1 && p <= totalPaginas) {
-            document.getElementById('pagina' + paginaActual).classList.remove('activa');
-            paginaActual = p;
-            document.getElementById('pagina' + paginaActual).classList.add('activa');
-        }
+    var botonQuiz = document.getElementById('botonQuiz');
+    if (botonQuiz) {
+        botonQuiz.addEventListener('click', function(event) {
+            if (botonQuiz.classList.contains('bloqueado')) {
+                event.preventDefault();
+                safePlay(audioError);
+                mostrarFeedback('feedback5b', 'error', 'Completa los dos retos finales antes de entrar al quiz.');
+            }
+        });
+    }
+
+    if (sessionTrackerNormalKinestesico) {
+        sessionTrackerNormalKinestesico.start();
+        sessionTrackerNormalKinestesico.attachQuizLinks('.boton-quiz', function() {
+            return { eventoCierre: 'quiz' };
+        });
+    }
+
+    iniciarOrdenCU();
+    iniciarRobots();
+    generarTeatro();
+    for (var nombre in ACTIVIDADES_SLOTS) {
+        prepararActividadSlots(nombre);
+        renderActividadSlots(nombre);
+    }
+    mezclarCartasActividad('metroPase2');
+    mezclarCartasActividad('teatroReserva2');
+    renderActividadSello('metroPase2');
+    renderActividadSello('teatroReserva2');
+    for (var pagina = 1; pagina <= totalPaginas; pagina++) {
+        actualizarEstadoPagina(pagina);
     }
     actualizarUI();
-    if (paginaActual === 2) iniciarOrdenCU();
-    if (paginaActual === 4) iniciarRobots();
-    if (paginaActual === 5) generarTeatro();
 });
 </script>
 

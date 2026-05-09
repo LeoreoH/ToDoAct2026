@@ -124,6 +124,23 @@
       gap: 6px;
     }
     .btn-audio:hover { background: #2563eb; transform: scale(1.02); }
+    .btn-audio-principal {
+      padding: 8px 20px;
+      font-size: 1.05rem;
+      border-radius: 999px;
+      font-weight: 800;
+      box-shadow: 0 3px 0 rgba(30,64,175,.28);
+    }
+    .btn-audio-brujula {
+      background: rgba(253,230,138,.14);
+      color: var(--dorado-claro);
+      border: 1.5px solid var(--dorado-claro);
+      box-shadow: 0 3px 0 rgba(28,10,0,.45);
+    }
+    .btn-audio-brujula:hover {
+      background: var(--dorado-claro);
+      color: var(--marron-dark);
+    }
 
     /* Tarjeta intro */
     .intro-card {
@@ -155,6 +172,7 @@
     .brujula-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; }
     .dir-actual { font-family:'Cinzel',serif; font-size:.95rem; color:var(--dorado-claro); font-weight:600; }
     .dir-sub    { font-size:.6rem; color:rgba(255,255,255,.55); font-weight:600; }
+    .brujula-audio-wrap { margin-top:6px; }
 
     /* Instrucciones */
     .tarjeta-instrucciones { background:white; border-radius:14px; border:3px solid #d97706; box-shadow:0 4px 0 #92400e; overflow:hidden; }
@@ -176,6 +194,9 @@
     .paso-item.completado { border-left-color:#86efac; opacity:.65; }
     .paso-item.completado::before { background:#4ade80; }
     .paso-item.inactivo { opacity:.3; }
+    .paso-item.solo-audio { gap:0; margin-left:0; border-left:none; padding:4px 0; }
+    .paso-item.solo-audio::before { display:none; }
+    .paso-item.solo-audio .btn-audio { min-width:170px; justify-content:center; }
 
     .paso-icono { font-size:.9rem; flex-shrink:0; width:24px; height:24px; background:var(--dorado-pale); border-radius:50%; display:flex; align-items:center; justify-content:center; border:1.5px solid var(--dorado-med); }
     .paso-contenido { flex:1; min-width:0; }
@@ -259,6 +280,21 @@
     .btn-accion-final.reintentar:hover { background:var(--dorado-med); color:white; }
     .btn-accion-final.siguiente  { background:linear-gradient(135deg,#16a34a,#15803d); color:white; box-shadow:0 3px 0 #14532d; text-decoration:none; }
     .btn-accion-final.siguiente:hover { transform:translateY(-1px); box-shadow:0 5px 0 #14532d; color:white; }
+    .btn-accion-final.siguiente.bloqueado {
+      background:#e5e7eb;
+      color:#9ca3af;
+      box-shadow:none;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
+    .btn-accion-final.siguiente.bloqueado:hover {
+      transform:none;
+      box-shadow:none;
+      color:#9ca3af;
+    }
+    .acciones-finales { display:flex; flex-wrap:wrap; gap:8px; }
+    .btn-quiz-wrap { margin-top:8px; display:block; }
+    .texto-ayuda-quiz { margin-top:8px; font-size:.68rem; font-weight:700; color:#4b5563; }
 
     .leyenda-mapa { background:linear-gradient(135deg,#451a03,#78350f); border-top:2px solid var(--dorado-claro); padding:6px 12px; display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
     .ley-titulo { font-family:'Cinzel',serif; font-size:.68rem; color:var(--dorado-claro); width:100%; margin-bottom:2px; letter-spacing:.06em; }
@@ -543,7 +579,7 @@
     <!-- Intro -->
     <div class="intro-card">
       <span><i class="fas fa-headphones"></i> Escucha la introducción</span>
-      <button class="btn-audio" id="btnIntro">🔊 Reproducir</button>
+      <button class="btn-audio btn-audio-principal" id="btnIntro" style="background:#1e40af; color:white; border:1.5px solid rgba(255,255,255,.6);">🎧 Intro</button>
     </div>
 
     <!-- Brújula -->
@@ -566,8 +602,10 @@
         <div class="brujula-label"><i class="fas fa-compass me-1"></i> ROSA DE LOS VIENTOS</div>
         <div class="dir-actual">Norte = ⛰️ Montaña</div>
         <div class="dir-sub">Sur = 🌊 Río · Este = ☀️ Puerto · Oeste = 🌙 Cueva</div>
+        <div class="brujula-audio-wrap">
+          <button class="btn-audio btn-audio-principal btn-audio-brujula" id="btnBrujula">🧭 Brújula</button>
+        </div>
       </div>
-      <button class="btn-audio" id="btnBrujula">🔊 Escuchar</button>
     </div>
 
     <!-- Instrucciones -->
@@ -586,58 +624,28 @@
         </div>
 
         <div class="pasos-lista">
-          <div class="paso-item activo" id="paso1">
-            <div class="paso-icono">⛰️</div>
-            <div class="paso-contenido">
-              <div class="paso-num-label">PASO 1</div>
-              <div class="paso-principal">Dirígete a la <em>Montaña Calavera</em></div>
-              <span class="tag-paso">🧭 Norte — ⛰️ referente principal</span>
-            </div>
-            <button class="btn-audio" data-audio="paso1" style="background:var(--azul-audio);">🔊 Escuchar paso 1</button>
+          <div class="paso-item activo solo-audio" id="paso1">
+            <button class="btn-audio" data-audio="paso1">🔊 Escuchar paso 1</button>
           </div>
           <div class="sep-paso"></div>
 
-          <div class="paso-item inactivo" id="paso2">
-            <div class="paso-icono">🌊</div>
-            <div class="paso-contenido">
-              <div class="paso-num-label">PASO 2</div>
-              <div class="paso-principal">Avanza <em>2 pasos al sur</em> hasta el Río Serpiente</div>
-              <span class="tag-paso">🧭 Sur · 2 pasos — 🌊 referente</span>
-            </div>
-            <button class="btn-audio" data-audio="paso2" style="background:var(--azul-audio);">🔊 Escuchar paso 2</button>
+          <div class="paso-item inactivo solo-audio" id="paso2">
+            <button class="btn-audio" data-audio="paso2">🔊 Escuchar paso 2</button>
           </div>
           <div class="sep-paso"></div>
 
-          <div class="paso-item inactivo" id="paso3">
-            <div class="paso-icono">☀️</div>
-            <div class="paso-contenido">
-              <div class="paso-num-label">PASO 3</div>
-              <div class="paso-principal">Ve al <em>Puerto del Sol</em>, al este del río</div>
-              <span class="tag-paso">🧭 Este — ☀️ referente costero</span>
-            </div>
-            <button class="btn-audio" data-audio="paso3" style="background:var(--azul-audio);">🔊 Escuchar paso 3</button>
+          <div class="paso-item inactivo solo-audio" id="paso3">
+            <button class="btn-audio" data-audio="paso3">🔊 Escuchar paso 3</button>
           </div>
           <div class="sep-paso"></div>
 
-          <div class="paso-item inactivo" id="paso4">
-            <div class="paso-icono">🌿</div>
-            <div class="paso-contenido">
-              <div class="paso-num-label">PASO 4</div>
-              <div class="paso-principal">Avanza <em>1 paso al norte</em></div>
-              <span class="tag-paso">🧭 Oeste · 1 paso — interior del bosque</span>
-            </div>
-            <button class="btn-audio" data-audio="paso4" style="background:var(--azul-audio);">🔊 Escuchar paso 4</button>
+          <div class="paso-item inactivo solo-audio" id="paso4">
+            <button class="btn-audio" data-audio="paso4">🔊 Escuchar paso 4</button>
           </div>
           <div class="sep-paso"></div>
 
-          <div class="paso-item inactivo" id="paso5">
-            <div class="paso-icono">🌙</div>
-            <div class="paso-contenido">
-              <div class="paso-num-label">PASO 5</div>
-              <div class="paso-principal">Finalmente, ve a la <em>Cueva del Eco</em></div>
-              <span class="tag-paso">🧭 Oeste — 🌙 ¡Destino final!</span>
-            </div>
-            <button class="btn-audio" data-audio="paso5" style="background:var(--azul-audio);">🔊 Escuchar paso 5</button>
+          <div class="paso-item inactivo solo-audio" id="paso5">
+            <button class="btn-audio" data-audio="paso5">🔊 Escuchar paso 5</button>
           </div>
         </div>
 
@@ -664,7 +672,7 @@
             en el orden correcto. Puedes usar los lugares que quieras,
             pero el pirata más hábil llega en <strong>5 pasos</strong>.
           </div>
-          <button class="btn-audio" id="btnPregunta" style="background:#16a34a; margin-top:6px;">🔊 Escuchar pregunta</button>
+          <button class="btn-audio btn-audio-principal" id="btnPregunta" style="background:#16a34a; margin-top:6px;">🔊 Escuchar pregunta</button>
         </div>
 
         <div class="ruta-construida" id="rutaConstruida">
@@ -691,7 +699,11 @@
           </div>
         </div>
 
-        <div id="botonesFinales"></div>
+        <div class="acciones-finales" id="botonesFinales"></div>
+        <div class="btn-quiz-wrap" id="btnQuizWrap">
+          <a href="quiz.html" class="btn-accion-final siguiente boton-quiz bloqueado" id="botonQuiz" aria-disabled="true"><i class="fas fa-puzzle-piece me-1"></i> Ir al quiz</a>
+          <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
+        </div>
 
       </div>
     </div>
@@ -699,12 +711,17 @@
   </div>
 </div>
 
-<script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script>
 /* LOGICA DEL JUEGO - MISMA QUE VISUAL_VERBAL */
 var pasoActual = 1;
 var TOTAL = 5;
 var rutaUsuario = [];
 var juegoTerminado = false;
+var ejercicioCompletado = false;
+var erroresAuditivo = 0;
+var completadoRegistroAuditivo = false;
+var quizTrackerAdjunto = false;
 
 var LUGARES = {
   montana:  { x:350, y:105, nombre:'⛰️ Montaña Calavera', cardinal:'norte'  },
@@ -721,6 +738,37 @@ var LUGARES = {
 var OBLIGATORIOS_ORDEN = ['montana','rio','puerto','cueva'];
 var DESTINO_FINAL = 'cueva';
 var PASOS_OPTIMO = 5;
+var audioClick = document.getElementById('sndClick');
+var audioDing = document.getElementById('sndDing');
+var audioError = document.getElementById('sndError');
+var audioTada = document.getElementById('sndTada');
+
+[audioClick, audioDing, audioError, audioTada].forEach(function(audio){
+  if (audio) audio.volume = 0.15;
+});
+
+var ejerciciosAuditivo = {
+  p1a: {
+    pagina: 1,
+    apartadoClave: 'pagina1_ruta_tesoro',
+    tipoActividad: 'audio_mapa'
+  }
+};
+
+var trackerAuditivo = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+  contenidoId: 7,
+  nivel: 'dificil',
+  estilo: 'auditivo',
+  trackTime: false,
+  detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'auditivo_dificil' },
+  apartados: ejerciciosAuditivo
+}) : null;
+
+var sessionTrackerAuditivo = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+  contenidoId: 7,
+  nivel: 'dificil',
+  estilo: 'auditivo'
+}) : null;
 
 function playAudio(id) {
   var audio = document.getElementById(id);
@@ -731,6 +779,85 @@ function playAudio(id) {
 }
 
 function playClick(){ try{ var s=document.getElementById('sndClick'); s.currentTime=0; s.play(); }catch(e){} }
+
+function registrarIntentoAuditivo(correcto, detalle) {
+  if (!detalle) detalle = {};
+
+  if (!correcto && completadoRegistroAuditivo) {
+    return;
+  }
+
+  if (trackerAuditivo) {
+    trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+  }
+
+  if (correcto) {
+    if (!completadoRegistroAuditivo) {
+      completadoRegistroAuditivo = true;
+      if (trackerAuditivo) {
+        trackerAuditivo.addCorrect('p1a', 1, {
+          pagina: 1,
+          ejercicio: 'p1a',
+          actividad: 'trazar_ruta',
+          errores_previos: erroresAuditivo,
+          tipo_resultado: detalle.tipo || null,
+          pasos: detalle.pasos || null,
+          pasos_optimos: detalle.pasos_optimos || PASOS_OPTIMO,
+          ruta: detalle.ruta || []
+        });
+        trackerAuditivo.complete('p1a', {
+          detalle: {
+            pagina: 1,
+            ejercicio: 'p1a',
+            actividad: 'trazar_ruta',
+            tipo_resultado: detalle.tipo || null,
+            pasos: detalle.pasos || null,
+            pasos_optimos: detalle.pasos_optimos || PASOS_OPTIMO,
+            ruta: detalle.ruta || []
+          }
+        });
+      }
+    }
+    return;
+  }
+
+  erroresAuditivo += 1;
+  if (trackerAuditivo) {
+    trackerAuditivo.addError('p1a', 1, {
+      pagina: 1,
+      ejercicio: 'p1a',
+      actividad: 'trazar_ruta',
+      intento: erroresAuditivo,
+      razon: detalle.razon || null,
+      pasos: detalle.pasos || null,
+      ruta: detalle.ruta || []
+    });
+  }
+}
+
+function actualizarBotonQuiz() {
+  var botonQuiz = document.getElementById('botonQuiz');
+  var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+  if (!botonQuiz || !textoAyudaQuiz) return;
+
+  if (ejercicioCompletado) {
+    botonQuiz.classList.remove('bloqueado');
+    botonQuiz.setAttribute('aria-disabled', 'false');
+    textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+    if (!quizTrackerAdjunto && sessionTrackerAuditivo) {
+      sessionTrackerAuditivo.attachQuizLinks('.boton-quiz', function() {
+        return { eventoCierre: 'quiz' };
+      });
+      quizTrackerAdjunto = true;
+    }
+  } else {
+    botonQuiz.classList.add('bloqueado');
+    botonQuiz.setAttribute('aria-disabled', 'true');
+    textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
+  }
+}
 
 function irSiguiente(){
   if(pasoActual>=TOTAL) return;
@@ -855,6 +982,11 @@ function deshacerPaso(){
 function confirmarRuta(){
   if(juegoTerminado) return;
   if(rutaUsuario[rutaUsuario.length-1]!==DESTINO_FINAL){
+    registrarIntentoAuditivo(false, {
+      razon: 'no_termina',
+      pasos: rutaUsuario.length,
+      ruta: rutaUsuario.slice()
+    });
     playAudio('audioIncorrecto');
     document.getElementById('estadoRuta').textContent='¡Debes terminar en la Cueva del Eco! 🌙';
     return;
@@ -863,7 +995,23 @@ function confirmarRuta(){
   playClick();
 
   var resultado = evaluarRuta(rutaUsuario);
+    if (resultado.valida) {
+      ejercicioCompletado = true;
+      registrarIntentoAuditivo(true, {
+        tipo: resultado.tipo,
+        pasos: resultado.pasos,
+        pasos_optimos: resultado.optimo,
+        ruta: rutaUsuario.slice()
+      });
+    } else {
+      registrarIntentoAuditivo(false, {
+        razon: resultado.razon || null,
+        pasos: rutaUsuario.length,
+        ruta: rutaUsuario.slice()
+    });
+  }
   mostrarFeedback(resultado);
+  actualizarBotonQuiz();
 
   if(resultado.valida){
     document.getElementById('lugar-tesoro').style.display='';
@@ -947,13 +1095,8 @@ function mostrarFeedback(resultado){
   var btnR=document.createElement('button');
   btnR.className='btn-accion-final reintentar'; btnR.innerHTML='↩ Intentar de nuevo';
   btnR.onclick=reiniciar;
-  var btnS=document.createElement('a');
-  btnS.className='btn-accion-final siguiente'; btnS.href='quiz.html';
-  btnS.innerHTML='<i class="fas fa-puzzle-piece me-1"></i> Ir al quiz';
   botonesDiv.innerHTML='';
   botonesDiv.appendChild(btnR);
-  botonesDiv.appendChild(btnS);
-  localStorage.setItem('progreso_dificil_aud_instrucciones','ok');
 }
 
 function reiniciar(){
@@ -973,6 +1116,7 @@ function reiniciar(){
   document.getElementById('rutaConstruida').innerHTML='<span class="placeholder">Haz clic en el mapa para empezar tu ruta →</span>';
   document.getElementById('pcNum').textContent='0';
   document.getElementById('feedbackEf').className='feedback-eficiencia';
+  document.getElementById('barraFill').style.width='0%';
   document.getElementById('botonesFinales').innerHTML='';
   document.getElementById('btnDeshacer').disabled=true;
   document.getElementById('btnConfirmar').disabled=true;
@@ -980,6 +1124,7 @@ function reiniciar(){
   document.getElementById('estadoRuta').style.color='rgba(255,255,255,.6)';
   document.getElementById('tituloEstado').textContent='Haz clic en los lugares en orden';
   resaltarPaso(1);
+  actualizarBotonQuiz();
 }
 
 function lanzarConfeti(){
@@ -999,17 +1144,22 @@ function lanzarConfeti(){
 
 window.addEventListener('DOMContentLoaded',function(){
   resaltarPaso(1);
-  if(localStorage.getItem('progreso_dificil_aud_instrucciones')==='ok'){
-    var div=document.getElementById('botonesFinales');
-    var a=document.createElement('a'); a.className='btn-accion-final siguiente';
-    a.href='quiz.html'; a.innerHTML='<i class="fas fa-puzzle-piece me-1"></i> Ir al quiz';
-    div.appendChild(a);
+  actualizarBotonQuiz();
+
+  if (trackerAuditivo) {
+    trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+  }
+  if (sessionTrackerAuditivo) {
+    sessionTrackerAuditivo.start();
   }
 
   document.getElementById('btnIntro').onclick = function() { playAudio('audioIntro'); };
   document.getElementById('btnBrujula').onclick = function() { playAudio('audioBrujula'); };
   document.getElementById('btnInstrucciones').onclick = function() { playAudio('audioInstrucciones'); };
   document.getElementById('btnPregunta').onclick = function() { playAudio('audioPregunta'); };
+  document.getElementById('botonQuiz').onclick = function(e) {
+    if (this.getAttribute('aria-disabled') === 'true') e.preventDefault();
+  };
   document.querySelectorAll('.btn-audio[data-audio]').forEach(function(btn) {
     var paso = btn.getAttribute('data-audio');
     btn.onclick = function() { playAudio('audio' + paso.charAt(0).toUpperCase() + paso.slice(1)); };

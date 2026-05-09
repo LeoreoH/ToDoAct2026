@@ -1,910 +1,1540 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equivalencias numéricas · Nivel Difícil · Visual/Verbal</title>
+  <title>Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil &middot; Visual Verbal</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #f7f1ff, #ede7f6);
-      color: #4a148c;
-      min-height: 100vh;
+    :root{
+      --m:#7b1fa2;
+      --m2:#5e35b1;
+      --ink:#4a148c;
+      --violet:#6a1b9a;
+      --soft:#f7f1ff;
+      --soft2:#ede7f6;
+      --line:#d1c4e9;
+      --gold:#ffd54f;
+      --gold2:#d39e00;
+      --ok:#43a047;
+      --bad:#e53935;
+      --blue:#1e88e5;
+      --orange:#fb8c00;
+      --cream:#fff8e1;
     }
 
-    .cabecera {
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-      border-bottom: 6px solid #ffd54f;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-      position: relative;
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Nunito',sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255,213,79,.34) 0 125px, transparent 128px),
+        radial-gradient(circle at 88% 8%, rgba(79,195,247,.24) 0 150px, transparent 153px),
+        linear-gradient(135deg,#f7f1ff,#ede7f6 56%,#f3e5f5);
+      overflow-x:hidden;
     }
 
-    .cabecera h1 {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.4rem;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    .cabecera{
+      position:relative;
+      text-align:center;
+      color:#fff;
+      padding:30px 20px 32px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,213,79,.32), transparent 26%),
+        radial-gradient(circle at 82% 12%, rgba(79,195,247,.24), transparent 30%),
+        linear-gradient(135deg,#8e24aa,#5e35b1);
+      border-bottom:6px solid var(--gold);
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      overflow:hidden;
     }
 
-    .cabecera .subtitulo {
-      margin-top: 10px;
-      font-size: 1.05rem;
-      font-weight: 700;
+    .cabecera::after{
+      content:"";
+      position:absolute;
+      inset:auto -40px -80px;
+      height:130px;
+      background:rgba(255,255,255,.08);
+      transform:rotate(-2deg);
     }
 
-    .badge-estilo {
-      display: inline-block;
-      margin-top: 14px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid white;
-      border-radius: 999px;
-      padding: 10px 24px;
-      font-weight: 800;
-      box-shadow: 0 4px 0 #d39e00;
+    .cabecera h1{
+      position:relative;
+      z-index:1;
+      margin:0;
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(2rem,5vw,3rem);
+      letter-spacing:.5px;
+      text-shadow:3px 3px 0 rgba(0,0,0,.16);
     }
 
-    .btn-volver-menu {
-      position: absolute;
-      top: 18px;
-      left: 18px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 3px solid white;
-      background: #ffd54f;
-      color: #4a148c;
-      font-size: 1.35rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #d39e00;
-      transition: .2s;
+    .subtitulo{
+      position:relative;
+      z-index:1;
+      margin-top:8px;
+      font-size:1.06rem;
+      font-weight:900;
     }
 
-    .btn-volver-menu:hover {
-      transform: translateY(-2px);
-      background: #fff3c4;
+    .badge-estilo{
+      position:relative;
+      z-index:1;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-top:14px;
+      background:var(--gold);
+      color:var(--ink);
+      border:3px solid #fff;
+      border-radius:999px;
+      padding:10px 22px;
+      font-weight:900;
+      box-shadow:0 4px 0 var(--gold2);
     }
 
-    .barra-progreso {
-      max-width: 980px;
-      margin: 24px auto 0;
-      background: white;
-      border-radius: 999px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 6px 0 #d1c4e9;
-      padding: 12px 18px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-wrap: wrap;
+    .btn-volver-menu{
+      position:absolute;
+      z-index:2;
+      top:16px;
+      left:16px;
+      width:54px;
+      height:54px;
+      border:3px solid #fff;
+      border-radius:50%;
+      background:var(--gold);
+      color:var(--ink);
+      font-size:1.15rem;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:0 4px 0 var(--gold2);
+      transition:.2s;
     }
 
-    .progreso-texto {
-      font-weight: 800;
-      color: #6a1b9a;
-      white-space: nowrap;
+    .btn-volver-menu:hover{
+      transform:translateY(-2px);
+      background:#fff3c4;
     }
 
-    .barra-fondo {
-      flex: 1;
-      min-width: 140px;
-      height: 14px;
-      background: #ede7f6;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #d1c4e9;
+    .barra-progreso{
+      max-width:1080px;
+      margin:24px auto 0;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:999px;
+      box-shadow:0 6px 0 var(--line);
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
-    .barra-relleno {
-      width: 12.5%;
-      height: 100%;
-      background: linear-gradient(90deg, #ab47bc, #7e57c2);
-      transition: width .3s;
+    .progreso-texto{
+      font-weight:900;
+      color:var(--violet);
+      white-space:nowrap;
     }
 
-    .progreso-num {
-      background: #7b1fa2;
-      color: white;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-weight: 800;
+    .barra-fondo{
+      flex:1;
+      min-width:150px;
+      height:14px;
+      background:var(--soft2);
+      border:2px solid var(--line);
+      border-radius:999px;
+      overflow:hidden;
     }
 
-    .contenedor {
-      max-width: 980px;
-      margin: 26px auto 42px;
-      padding: 0 16px;
+    .barra-relleno{
+      width:12.5%;
+      height:100%;
+      background:linear-gradient(90deg,#ab47bc,#7e57c2);
+      transition:width .3s;
     }
 
-    .pagina {
-      display: none;
-      animation: aparecer .35s ease;
+    .progreso-num{
+      background:var(--m);
+      color:#fff;
+      padding:7px 14px;
+      border-radius:999px;
+      font-weight:900;
     }
 
-    .pagina.activa {
-      display: block;
+    .contenedor{
+      width:min(1120px,calc(100% - 32px));
+      margin:26px auto 42px;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    .pagina{
+      display:none;
+      animation:aparecer .35s ease;
     }
 
-    .tarjeta {
-      background: white;
-      border-radius: 28px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 10px 0 #d1c4e9;
-      padding: 26px;
+    .pagina.activa{display:block}
+
+    @keyframes aparecer{
+      from{opacity:0;transform:translateY(12px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.95rem;
-      color: #6a1b9a;
-      margin-bottom: 16px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 18px;
+    .tarjeta{
+      position:relative;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:32px;
+      box-shadow:0 10px 0 var(--line);
+      padding:28px;
+      overflow:hidden;
     }
 
-    .texto-destacado {
-      background: #faf5ff;
-      border: 2px dashed #ce93d8;
-      border-radius: 18px;
-      padding: 16px 18px;
-      color: #5e35b1;
-      font-weight: 700;
-      margin-bottom: 18px;
+    .tarjeta::before{
+      content:"";
+      position:absolute;
+      right:-72px;
+      top:-72px;
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(255,213,79,.38),rgba(255,213,79,0) 68%);
+      pointer-events:none;
     }
 
-    .recuadro {
-      background: #f7f1ff;
-      border-radius: 20px;
-      padding: 18px;
-      border-left: 7px solid #ffd54f;
-      margin: 18px 0;
+    .titulo-pagina{
+      position:relative;
+      margin:0 0 18px;
+      padding-left:18px;
+      border-left:8px solid var(--gold);
+      font-family:'Fredoka One',cursive;
+      color:var(--violet);
+      font-size:clamp(1.65rem,3.2vw,2.1rem);
     }
 
-    .recuadro h4 {
-      margin-top: 0;
-      color: #6a1b9a;
-      font-weight: 800;
+    .texto-destacado{
+      position:relative;
+      background:#faf5ff;
+      border:2px dashed #ce93d8;
+      border-radius:20px;
+      padding:16px 18px;
+      color:#5e35b1;
+      font-weight:900;
+      line-height:1.45;
+      text-align:center;
+      margin-bottom:18px;
     }
 
-    .equivalencia-grande {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #5e35b1;
-      margin: 12px 0;
+    .regla,
+    .zona-juego{
+      position:relative;
+      border-radius:24px;
+      padding:18px;
+      margin-bottom:18px;
     }
 
-    .tarjeta-equivalencia {
-      min-width: 105px;
-      padding: 14px 16px;
-      background: #faf5ff;
-      border: 3px solid #ba68c8;
-      border-radius: 18px;
-      box-shadow: 0 5px 0 #d1c4e9;
-      text-align: center;
+    .regla{
+      background:linear-gradient(135deg,#fff8e1,#fff);
+      border:3px solid #ffe082;
     }
 
-    .igual {
-      font-size: 1.9rem;
-      color: #8e24aa;
-      font-weight: 900;
+    .zona-juego{
+      background:linear-gradient(135deg,#faf5ff,#f3e5f5);
+      border:3px dashed #ba68c8;
     }
 
-    .actividad {
-      background: #faf5ff;
-      border: 3px dashed #ba68c8;
-      border-radius: 24px;
-      padding: 20px;
-      margin-top: 22px;
+    .regla h3,
+    .zona-juego h3{
+      margin:0 0 14px;
+      color:#6a1b9a;
+      font-weight:900;
+      font-size:1.35rem;
+      text-align:center;
     }
 
-    .actividad h3 {
-      text-align: center;
-      color: #6a1b9a;
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin-bottom: 16px;
+    .instruccion-corta{
+      color:#6a1b9a;
+      font-weight:900;
+      text-align:center;
+      margin-bottom:14px;
+      line-height:1.45;
     }
 
-    .opciones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
+    .rule-strip{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+      gap:12px;
+      margin-bottom:4px;
     }
 
-    .opcion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #d1c4e9;
-      transition: .2s;
+    .rule-card{
+      background:#fff;
+      border:3px solid #eadcf7;
+      border-radius:20px;
+      padding:14px;
+      text-align:center;
+      box-shadow:0 5px 0 #e1bee7;
+      font-weight:900;
+      color:#5e35b1;
     }
 
-    .opcion:hover {
-      transform: translateY(-2px);
-      background: #f7f1ff;
+    .rule-card strong{
+      display:block;
+      color:#6a1b9a;
+      font-size:1.08rem;
+      margin-bottom:5px;
     }
 
-    .opcion.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
+    .model-row,
+    .answer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      align-items:stretch;
     }
 
-    .opcion.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
+    .answer-grid.narrow{
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      justify-content:center;
     }
 
-    .mensaje-feedback {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      text-align: center;
-      display: none;
+    .model-card,
+    .choice-card,
+    .coupon-card,
+    .case-card,
+    .sequence-card,
+    .sign-card{
+      background:#fff;
+      border:3px solid var(--line);
+      border-radius:24px;
+      padding:16px;
+      box-shadow:0 6px 0 #e1bee7;
+      text-align:center;
+      color:var(--ink);
+      font-weight:900;
     }
 
-    .mensaje-feedback.visible {
-      display: block;
+    .model-card{
+      display:grid;
+      align-content:center;
+      justify-items:center;
+      gap:12px;
+      min-height:170px;
     }
 
-    .mensaje-ok {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 2px solid #43a047;
+    .choice-card{
+      display:grid;
+      align-content:center;
+      justify-items:center;
+      gap:12px;
     }
 
-    .mensaje-warn {
-      background: #fff8e1;
-      color: #8d6e00;
-      border: 2px solid #ffd54f;
+    .model-card h4,
+    .choice-card h4{
+      margin:0;
+      font-size:1rem;
+      color:#6a1b9a;
+      font-weight:900;
     }
 
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 14px 20px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      margin-top: 16px;
-      flex-wrap: wrap;
+    .choice-card,
+    .coupon-card,
+    .case-card,
+    .sequence-card,
+    .sign-card{
+      cursor:pointer;
+      transition:.18s;
     }
 
-    .btn-nav {
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-weight: 800;
-      transition: .2s;
+    .choice-card:hover,
+    .coupon-card:hover,
+    .case-card:hover,
+    .sequence-card:hover,
+    .sign-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--m);
+      box-shadow:0 9px 0 #d1c4e9;
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: #5e35b1;
-      transform: translateY(-2px);
+    .choice-card:disabled,
+    .coupon-card:disabled,
+    .case-card:disabled,
+    .sequence-card:disabled,
+    .sign-card:disabled{
+      cursor:not-allowed;
     }
 
-    .btn-nav:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+    .choice-card.correct,
+    .coupon-card.correct,
+    .case-card.correct,
+    .sequence-card.correct,
+    .sign-card.correct{
+      border-color:var(--ok);
+      background:#e8f5e9;
+      box-shadow:0 6px 0 #a5d6a7;
     }
 
-    .contador {
-      font-weight: 800;
-      color: #6a1b9a;
-      background: #f3e5f5;
-      border: 2px solid #ce93d8;
-      padding: 8px 16px;
-      border-radius: 999px;
+    .choice-card.wrong,
+    .coupon-card.wrong,
+    .case-card.wrong,
+    .sequence-card.wrong,
+    .sign-card.wrong{
+      border-color:var(--bad);
+      background:#ffebee;
+      animation:shake .32s ease;
     }
 
-    .boton-quiz {
-      display: inline-block;
-      margin: 28px auto 0;
-      text-decoration: none;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 4px solid #7b1fa2;
-      padding: 16px 34px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      box-shadow: 0 7px 0 #d39e00;
-      transition: .2s;
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-5px)}
+      75%{transform:translateX(5px)}
     }
 
-    .boton-quiz:hover {
-      transform: translateY(-3px);
-      background: #fff3c4;
+    .mini-chip,
+    .value-chip,
+    .fraction-chip,
+    .percent-chip,
+    .podio-token{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:32px;
+      border-radius:999px;
+      padding:7px 13px;
+      background:#fff;
+      border:3px solid var(--m);
+      color:var(--ink);
+      font-weight:900;
+      box-shadow:0 3px 0 var(--line);
     }
 
-    .boton-quiz.bloqueado {
-      opacity: .55;
-      cursor: not-allowed;
-      background: #e0e0e0;
-      color: #7a7a7a;
-      border-color: #bdbdbd;
-      box-shadow: 0 7px 0 #9e9e9e;
+    .fraction-chip,
+    .percent-chip{
+      background:#fff8df;
+      border-color:var(--gold);
+      box-shadow:0 3px 0 rgba(211,158,0,.25);
     }
 
-    .boton-quiz.bloqueado:hover {
-      transform: none;
-      background: #e0e0e0;
+    .percent-chip{
+      min-width:96px;
+      font-size:1.14rem;
     }
 
-    .tabla-mini {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 10px;
-      margin-top: 12px;
+    .value-chip.big,
+    .fraction-chip.big,
+    .percent-chip.big{
+      font-size:1.35rem;
+      padding:10px 16px;
     }
 
-    .tabla-mini td, .tabla-mini th {
-      background: #fff;
-      border: 2px solid #d1c4e9;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
+    .eq-row,
+    .sequence-line,
+    .podio-row{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .caso {
-      background: linear-gradient(135deg, #fffdf7, #faf5ff);
-      border: 2px solid #d1c4e9;
-      border-radius: 18px;
-      padding: 16px;
-      margin-top: 14px;
-      color: #5e35b1;
-      font-weight: 700;
+    .eq-symbol,
+    .arrow{
+      color:var(--m);
+      font-weight:900;
+      font-size:1.35rem;
     }
 
-    .pasos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 14px;
+    .pizza-circle{
+      width:min(178px,100%);
+      aspect-ratio:1;
+      position:relative;
+      border-radius:50%;
+      border:8px solid #c96f24;
+      background:
+        repeating-conic-gradient(from -90deg, rgba(91,45,9,.58) 0deg 2deg, transparent 2deg var(--slice-angle)),
+        conic-gradient(from -90deg, #fb8c00 0deg var(--used-angle), #fff0be var(--used-angle) 360deg);
+      box-shadow:inset 0 0 0 8px #ffd180, 0 8px 0 rgba(146,78,22,.25);
+      overflow:hidden;
     }
 
-    .paso {
-      background: white;
-      border: 2px solid #d1c4e9;
-      border-radius: 18px;
-      padding: 14px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
+    .pizza-circle::before{
+      content:"";
+      position:absolute;
+      inset:22px;
+      border-radius:50%;
+      border:2px dashed rgba(95,52,12,.34);
     }
 
-    .mision {
-      background: linear-gradient(135deg, #fff8e1, #faf5ff);
-      border: 3px solid #ffd54f;
-      border-radius: 20px;
-      padding: 16px;
-      margin: 18px 0;
-      color: #6a1b9a;
-      font-weight: 800;
-      text-align: center;
+    .pizza-circle::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 56% 21%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 72% 39%, #2e7d32 0 4px, transparent 5px),
+        radial-gradient(circle at 54% 56%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 35% 35%, #2e7d32 0 4px, transparent 5px),
+        radial-gradient(circle at 32% 72%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 73% 70%, #2e7d32 0 4px, transparent 5px);
     }
 
-    @media (max-width: 768px) {
-      .cabecera h1 { font-size: 2rem; }
-      .titulo-pagina { font-size: 1.55rem; }
-      .equivalencia-grande { font-size: 1.12rem; }
-      .tarjeta-equivalencia { min-width: 88px; padding: 12px 14px; }
-      .btn-volver-menu {
-        top: 12px;
-        left: 12px;
-        width: 46px;
-        height: 46px;
-        font-size: 1.1rem;
-      }
+    .hundred-grid{
+      width:min(226px,100%);
+      aspect-ratio:1;
+      display:grid;
+      grid-template-columns:repeat(10,minmax(0,1fr));
+      grid-template-rows:repeat(10,minmax(0,1fr));
+      gap:2px;
+      padding:8px;
+      margin:0 auto;
+      background:#fff;
+      border:4px solid var(--m);
+      border-radius:22px;
+      box-shadow:0 4px 0 var(--line);
+      overflow:hidden;
+    }
+
+    .hundred-grid.mini{
+      width:min(170px,100%);
+      border-width:3px;
+      border-radius:18px;
+      padding:7px;
+    }
+
+    .hundred-cell{
+      min-width:0;
+      min-height:0;
+      border-radius:3px;
+      background:#f1eef8;
+      border:1px solid #d7c6ec;
+    }
+
+    .hundred-cell.fill{
+      background:linear-gradient(135deg,#64b5f6,#1e88e5);
+      border-color:#1976d2;
+    }
+
+    .part-bar{
+      width:min(260px,100%);
+      display:grid;
+      grid-template-columns:repeat(var(--parts,5),minmax(0,1fr));
+      gap:4px;
+      padding:8px;
+      background:#ede7f6;
+      border:3px solid var(--m);
+      border-radius:18px;
+      box-shadow:inset 0 0 0 2px #fff;
+    }
+
+    .part-cell{
+      min-height:58px;
+      border-radius:10px;
+      background:#fff;
+      border:1px solid rgba(94,53,177,.18);
+    }
+
+    .part-cell.fill{
+      background:linear-gradient(135deg,#ffb74d,#fb8c00);
+      border-color:#ef6c00;
+    }
+
+    .recta-wrap{
+      background:#fff;
+      border:3px solid var(--line);
+      border-radius:24px;
+      box-shadow:0 6px 0 #e1bee7;
+      padding:24px 18px 36px;
+      margin:10px 0 16px;
+    }
+
+    .number-line{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(11,1fr);
+      min-height:112px;
+      padding-top:32px;
+    }
+
+    .number-line::before{
+      content:"";
+      position:absolute;
+      left:4.5%;
+      right:4.5%;
+      top:54px;
+      height:8px;
+      border-radius:999px;
+      background:var(--m);
+      box-shadow:0 3px 0 var(--line);
+    }
+
+    .tick{
+      position:relative;
+      z-index:1;
+      display:grid;
+      justify-items:center;
+      height:88px;
+    }
+
+    .tick::before{
+      content:"";
+      width:4px;
+      height:46px;
+      background:var(--m);
+      border-radius:999px;
+    }
+
+    .tick-label{
+      position:absolute;
+      top:72px;
+      font-weight:900;
+      color:#6a1b9a;
+      background:#fff;
+      border:2px solid var(--line);
+      border-radius:999px;
+      padding:2px 8px;
+      white-space:nowrap;
+    }
+
+    .route-point{
+      position:absolute;
+      z-index:2;
+      top:16px;
+      left:68.2%;
+      transform:translateX(-50%);
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:4px solid var(--m);
+      background:var(--gold);
+      color:var(--ink);
+      box-shadow:0 5px 0 var(--gold2);
+    }
+
+    .compare-row{
+      display:grid;
+      grid-template-columns:minmax(220px,1fr) 96px minmax(220px,1fr);
+      gap:16px;
+      align-items:center;
+      margin:18px 0;
+    }
+
+    .compare-symbol{
+      width:86px;
+      min-height:86px;
+      border-radius:24px;
+      border:3px dashed #ab47bc;
+      background:#fffdf7;
+      display:grid;
+      place-items:center;
+      color:#8e24aa;
+      font-family:'Fredoka One',cursive;
+      font-size:2.2rem;
+      justify-self:center;
+    }
+
+    .jarra{
+      width:92px;
+      height:128px;
+      margin:0 auto 8px;
+      border:4px solid var(--m);
+      border-radius:18px 18px 12px 12px;
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(to top,#81d4fa 0%,#1e88e5 var(--fill),#fff var(--fill),#fff 100%);
+      box-shadow:0 5px 0 rgba(126,87,194,.18);
+    }
+
+    .jarra .line{
+      position:absolute;
+      left:0;
+      right:0;
+      height:2px;
+      background:#ce93d8;
+    }
+
+    .jarra .l1{top:25%}
+    .jarra .l2{top:50%}
+    .jarra .l3{top:75%}
+
+    .sign-card{
+      min-height:94px;
+      font-family:'Fredoka One',cursive;
+      font-size:3rem;
+      display:grid;
+      place-items:center;
+      color:#6a1b9a;
+    }
+
+    .coupon-card{
+      background:
+        radial-gradient(circle at 0 50%, transparent 0 12px, #fff 13px),
+        radial-gradient(circle at 100% 50%, transparent 0 12px, #fff 13px),
+        linear-gradient(180deg,#fff,#faf5ff);
+      min-height:180px;
+    }
+
+    .coupon-brand{color:#6a1b9a}
+
+    .coupon-value{
+      color:var(--ink);
+      font-family:'Fredoka One',cursive;
+      font-size:2.15rem;
+      margin:8px 0;
+    }
+
+    .case-card{
+      background:linear-gradient(180deg,#fff,#faf5ff);
+      display:grid;
+      gap:12px;
+      align-content:center;
+    }
+
+    .case-stamp{
+      width:48px;
+      height:48px;
+      margin:0 auto;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      background:var(--gold);
+      color:var(--ink);
+      border:3px solid var(--m);
+    }
+
+    .sequence-card{
+      min-height:112px;
+      display:grid;
+      place-items:center;
+    }
+
+    .podio-label{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:#fff8df;
+      border:2px solid var(--gold);
+      color:#6a1b9a;
+      font-weight:900;
+    }
+
+    .mensaje-feedback{
+      display:none;
+      margin-top:16px;
+      padding:13px 16px;
+      border-radius:18px;
+      font-weight:900;
+      text-align:center;
+      line-height:1.45;
+    }
+
+    .mensaje-feedback.visible{display:block}
+
+    .mensaje-ok{
+      background:#e8f5e9;
+      color:#2e7d32;
+      border:2px solid var(--ok);
+    }
+
+    .mensaje-warn{
+      background:#fff8e1;
+      color:#8d6e00;
+      border:2px solid var(--gold);
+    }
+
+    .navegador{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:999px;
+      padding:14px 20px;
+      box-shadow:0 6px 0 var(--line);
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+
+    .btn-nav{
+      border:0;
+      border-radius:999px;
+      background:var(--m);
+      color:#fff;
+      padding:12px 24px;
+      font-weight:900;
+      transition:.18s;
+    }
+
+    .btn-nav:hover:not(:disabled){
+      background:var(--m2);
+      transform:translateY(-2px);
+    }
+
+    .btn-nav:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .contador{
+      font-weight:900;
+      color:#6a1b9a;
+      background:#f3e5f5;
+      border:2px solid #ce93d8;
+      padding:8px 16px;
+      border-radius:999px;
+    }
+
+    .boton-quiz{
+      display:flex;
+      width:fit-content;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin:28px auto 0;
+      text-decoration:none;
+      background:var(--gold);
+      color:var(--ink);
+      border:4px solid var(--m);
+      padding:16px 34px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:1.2rem;
+      box-shadow:0 7px 0 var(--gold2);
+      transition:.18s;
+    }
+
+    .boton-quiz:hover:not(.bloqueado){
+      transform:translateY(-3px);
+      background:#fff3c4;
+      color:var(--ink);
+    }
+
+    .boton-quiz.bloqueado{
+      opacity:.55;
+      cursor:not-allowed;
+      pointer-events:auto;
+      background:#e0e0e0;
+      color:#777;
+      border-color:#bdbdbd;
+      box-shadow:0 7px 0 #9e9e9e;
+    }
+
+    @media (max-width:880px){
+      .compare-row{grid-template-columns:1fr}
+      .compare-symbol{margin:0 auto}
+    }
+
+    @media (max-width:640px){
+      .cabecera{padding-top:76px}
+      .tarjeta{padding:22px 18px}
+      .zona-juego{padding:18px 14px}
+      .hundred-grid{width:min(270px,100%)}
+      .navegador{border-radius:28px}
+      .btn-nav,.contador{width:100%;text-align:center}
     }
   </style>
 </head>
-<body>
 
+<body>
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/equivalencias-numericas/recursos/js/equivalencias-tracking.js?v=20260506c"></script>
   <header class="cabecera">
-    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" aria-label="Volver al men&uacute;">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <h1>🟣 EQUIVALENCIAS</h1>
-    <div class="subtitulo">Equivalencias numéricas · Nivel Difícil</div>
-    <div class="badge-estilo">👁️ Visual / Verbal</div>
+    <h1>Equivalencias Num&eacute;ricas</h1>
+    <div class="subtitulo">Nivel Dif&iacute;cil &middot; Fracci&oacute;n, decimal y porcentaje</div>
+    <div class="badge-estilo"><i class="fas fa-book-open"></i> Visual Verbal</div>
   </header>
 
   <div class="barra-progreso">
-    <span class="progreso-texto" id="progresoTexto">Página 1 de 8</span>
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
     <div class="barra-fondo">
       <div class="barra-relleno" id="barraRelleno"></div>
     </div>
     <span class="progreso-num" id="progresoNum">13%</span>
   </div>
 
-  <div class="contenedor">
-
-    <!-- PAGINA 1 -->
+  <main class="contenedor">
     <section class="pagina activa" id="pagina1">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-map me-2"></i>Ruta del nivel difícil</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-pizza-slice me-2"></i>1. Pizzer&iacute;a de equivalencias</h2>
 
         <div class="texto-destacado">
-          En este nivel vas a mezclar fracciones, decimales, porcentajes y razonamiento. No es para correr: es para observar, comparar y decidir con calma.
+          Una misma porci&oacute;n puede escribirse como fracci&oacute;n, decimal y porcentaje. La fracci&oacute;n dice partes usadas sobre partes totales; el decimal se obtiene dividiendo; el porcentaje expresa esa cantidad como partes de cada 100.
         </div>
 
-        <div class="equivalencia-grande">
-          <div class="tarjeta-equivalencia">2/5</div>
-          <div class="igual">=</div>
-          <div class="tarjeta-equivalencia">0.4</div>
-          <div class="igual">=</div>
-          <div class="tarjeta-equivalencia">40%</div>
+        <div class="regla">
+          <h3>Ejemplo distinto al reto</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>3/4</strong>3 rebanadas usadas de 4</div>
+            <div class="rule-card"><strong>3 &divide; 4 = 0.75</strong>decimal de la fracci&oacute;n</div>
+            <div class="rule-card"><strong>75%</strong>equivale a 75 de cada 100</div>
+          </div>
         </div>
 
-        <div class="recuadro">
-          <h4>Idea clave</h4>
-          <p class="mb-0">
-            En este nivel aparecerán equivalencias que no son tan conocidas como 1/2 o 1/4.
-            Por ejemplo, <strong>2/5</strong> equivale a <strong>0.4</strong> y a <strong>40%</strong>.
-          </p>
-        </div>
+        <div class="zona-juego">
+          <h3>Reto 1</h3>
+          <div class="instruccion-corta">Selecciona la pizza que representa <strong>5/8 = 0.625 = 62.5%</strong>.</div>
 
-        <div class="pasos">
-          <div class="paso">1. Lee la fracción</div>
-          <div class="paso">2. Busca su decimal</div>
-          <div class="paso">3. Revisa el porcentaje</div>
-          <div class="paso">4. Comprueba que digan lo mismo</div>
-        </div>
+          <div class="answer-grid shuffle-group" id="opcionesP1">
+            <button class="choice-card" data-page="1" data-value="pizza-4-8" type="button">
+              <h4>Pizza A</h4>
+              <div class="pizza-circle" style="--used-angle:180deg;--slice-angle:45deg"></div>
+            </button>
+            <button class="choice-card" data-page="1" data-value="pizza-5-8" data-correct="1" type="button">
+              <h4>Pizza B</h4>
+              <div class="pizza-circle" style="--used-angle:225deg;--slice-angle:45deg"></div>
+            </button>
+            <button class="choice-card" data-page="1" data-value="pizza-6-8" type="button">
+              <h4>Pizza C</h4>
+              <div class="pizza-circle" style="--used-angle:270deg;--slice-angle:45deg"></div>
+            </button>
+          </div>
 
-        <div class="mision">
-          Hoy vas a resolver misiones de detective, comparaciones, pistas y decisiones rápidas.
+          <div id="ok1" class="mensaje-feedback mensaje-ok">Correcto. La pizza tiene 5 de 8 rebanadas coloreadas: 5/8 = 0.625 = 62.5%.</div>
+          <div id="warn1" class="mensaje-feedback mensaje-warn">Cuenta las rebanadas coloreadas y las rebanadas totales. El pedido necesita exactamente 5 de 8.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 2 -->
     <section class="pagina" id="pagina2">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-link me-2"></i>Misión 1: el trío verdadero</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-id-card me-2"></i>2. Placas de cien</h2>
 
         <div class="texto-destacado">
-          Solo una de estas cadenas de equivalencias está completa y correcta.
+          Una placa de cien espacios permite conectar porcentaje, decimal y fracci&oacute;n. Por ejemplo, si una placa tiene 45 de 100 espacios marcados, se escribe <strong>45%</strong>, tambi&eacute;n <strong>0.45</strong>, y como fracci&oacute;n simplificada queda <strong>9/20</strong>.
         </div>
 
-        <div class="actividad">
-          <h3>¿Cuál grupo sí coincide?</h3>
+        <div class="regla">
+          <h3>Ejemplo distinto al reto</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>45 de 100</strong>se escribe 45%</div>
+            <div class="rule-card"><strong>0.45</strong>cuarenta y cinco cent&eacute;simos</div>
+            <div class="rule-card"><strong>45/100 = 9/20</strong>se simplifica dividiendo entre 5</div>
+          </div>
+        </div>
 
-          <div class="opciones" id="opcionesPagina2">
-            <div class="opcion" data-correcta="false">2/5 = 0.2 = 40%</div>
-            <div class="opcion" data-correcta="true">2/5 = 0.4 = 40%</div>
-            <div class="opcion" data-correcta="false">2/5 = 0.4 = 20%</div>
-            <div class="opcion" data-correcta="false">2/5 = 0.5 = 40%</div>
+        <div class="zona-juego">
+          <h3>Reto 2</h3>
+          <div class="instruccion-corta">Elige la placa que re&uacute;ne las tres formas correctas para <strong>68 de cada 100</strong>.</div>
+
+          <div class="answer-grid shuffle-group" id="opcionesP2">
+            <button class="case-card" data-page="2" data-value="a" type="button">
+              <span class="case-stamp"><i class="fas fa-table-cells"></i></span>
+              <div class="hundred-grid mini render-grid" data-fill="68"></div>
+              <div class="eq-row"><span class="percent-chip">68%</span><span class="value-chip">0.86</span><span class="fraction-chip">17/25</span></div>
+            </button>
+            <button class="case-card" data-page="2" data-value="b" data-correct="1" type="button">
+              <span class="case-stamp"><i class="fas fa-table-cells"></i></span>
+              <div class="hundred-grid mini render-grid" data-fill="68"></div>
+              <div class="eq-row"><span class="percent-chip">68%</span><span class="value-chip">0.68</span><span class="fraction-chip">17/25</span></div>
+            </button>
+            <button class="case-card" data-page="2" data-value="c" type="button">
+              <span class="case-stamp"><i class="fas fa-table-cells"></i></span>
+              <div class="hundred-grid mini render-grid" data-fill="68"></div>
+              <div class="eq-row"><span class="percent-chip">68%</span><span class="value-chip">0.68</span><span class="fraction-chip">16/25</span></div>
+            </button>
           </div>
 
-          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Correcto! 2/5 equivale a 0.4 y también a 40%.
-          </div>
-
-          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Revisa con calma el decimal y el porcentaje. Uno de ellos está cambiando la cantidad.
-          </div>
+          <div id="ok2" class="mensaje-feedback mensaje-ok">Bien. 68 de 100 coincide con 68%, 0.68 y 17/25.</div>
+          <div id="warn2" class="mensaje-feedback mensaje-warn">Revisa las dos equivalencias: el decimal debe hablar de 68 cent&eacute;simos y la fracci&oacute;n debe ser equivalente a 68/100.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 3 -->
     <section class="pagina" id="pagina3">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-pen me-2"></i>Misión 2: completa la cadena</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-magnifying-glass-chart me-2"></i>3. Inspector de conversiones</h2>
 
         <div class="texto-destacado">
-          Cuando ya conoces dos formas de una cantidad, puedes descubrir la tercera.
+          Para convertir una fracci&oacute;n a decimal, divide numerador entre denominador. Despu&eacute;s, para escribir el porcentaje, interpreta el decimal como una cantidad de cada 100.
         </div>
 
-        <div class="equivalencia-grande">
-          <div class="tarjeta-equivalencia">7/10</div>
-          <div class="igual">=</div>
-          <div class="tarjeta-equivalencia">0.7</div>
-          <div class="igual">=</div>
-          <div class="tarjeta-equivalencia">?</div>
+        <div class="regla">
+          <h3>Ejemplo distinto al reto</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>2/5</strong>haz 2 &divide; 5</div>
+            <div class="rule-card"><strong>0.40</strong>cuarenta cent&eacute;simos</div>
+            <div class="rule-card"><strong>40%</strong>40 de cada 100</div>
+          </div>
         </div>
 
-        <div class="recuadro">
-          <h4>Pista rápida</h4>
-          <p class="mb-0">Siete décimos significan setenta de cada cien.</p>
-        </div>
+        <div class="zona-juego">
+          <h3>Reto 3</h3>
+          <div class="instruccion-corta">El inspector revisa <strong>3/5</strong>. Selecciona la tarjeta que corrige correctamente el decimal y el porcentaje.</div>
 
-        <div class="actividad">
-          <h3>¿Qué porcentaje falta?</h3>
-
-          <div class="opciones" id="opcionesPagina3">
-            <div class="opcion" data-correcta="false">7%</div>
-            <div class="opcion" data-correcta="false">17%</div>
-            <div class="opcion" data-correcta="true">70%</div>
-            <div class="opcion" data-correcta="false">700%</div>
+          <div class="answer-grid shuffle-group" id="opcionesP3">
+            <button class="case-card" data-page="3" data-value="a" type="button">
+              <span class="case-stamp"><i class="fas fa-clipboard-question"></i></span>
+              <div class="part-bar render-parts" data-total="5" data-fill="3"></div>
+              <div class="eq-row"><span class="fraction-chip">3/5</span><span class="eq-symbol">=</span><span class="value-chip">0.35</span><span class="eq-symbol">=</span><span class="percent-chip">35%</span></div>
+            </button>
+            <button class="case-card" data-page="3" data-value="b" data-correct="1" type="button">
+              <span class="case-stamp"><i class="fas fa-clipboard-check"></i></span>
+              <div class="part-bar render-parts" data-total="5" data-fill="3"></div>
+              <div class="eq-row"><span class="fraction-chip">3/5</span><span class="eq-symbol">=</span><span class="value-chip">0.60</span><span class="eq-symbol">=</span><span class="percent-chip">60%</span></div>
+            </button>
+            <button class="case-card" data-page="3" data-value="c" type="button">
+              <span class="case-stamp"><i class="fas fa-clipboard-question"></i></span>
+              <div class="part-bar render-parts" data-total="5" data-fill="3"></div>
+              <div class="eq-row"><span class="fraction-chip">3/5</span><span class="eq-symbol">=</span><span class="value-chip">0.50</span><span class="eq-symbol">=</span><span class="percent-chip">50%</span></div>
+            </button>
           </div>
 
-          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Muy bien! 7/10 equivale a 0.7 y a 70%.
-          </div>
-
-          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Recuerda: 0.7 representa setenta centésimos, no siete por ciento.
-          </div>
+          <div id="ok3" class="mensaje-feedback mensaje-ok">Correcto. 3 &divide; 5 = 0.60, y 0.60 representa 60 de cada 100.</div>
+          <div id="warn3" class="mensaje-feedback mensaje-warn">Divide 3 entre 5 antes de elegir. Luego lee el decimal como cent&eacute;simos para obtener el porcentaje.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 4 -->
     <section class="pagina" id="pagina4">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-user-secret me-2"></i>Misión 3: detective de errores</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-route me-2"></i>4. Ruta en la recta</h2>
 
         <div class="texto-destacado">
-          Una parte de esta equivalencia se equivocó. Encuentra exactamente cuál.
+          Un mismo punto de la recta puede tener tres nombres. Si el recorrido de 0 a 1 se divide en 10 partes iguales, cada marca vale un d&eacute;cimo.
         </div>
 
-        <div class="caso">
-          <strong>Caso del detective:</strong><br>
-          <strong>3/5 = 0.6 = 30%</strong>
+        <div class="regla">
+          <h3>Ejemplo distinto al reto</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>3/4</strong>tres de cuatro partes del recorrido</div>
+            <div class="rule-card"><strong>0.75</strong>setenta y cinco cent&eacute;simos</div>
+            <div class="rule-card"><strong>75%</strong>75 de cada 100</div>
+          </div>
         </div>
 
-        <div class="pasos">
-          <div class="paso">3/5 sí equivale a 0.6</div>
-          <div class="paso">Ahora revisa el porcentaje</div>
-        </div>
+        <div class="zona-juego">
+          <h3>Reto 4</h3>
+          <div class="instruccion-corta">El punto est&aacute; en siete de diez partes del recorrido. Elige el grupo con sus tres nombres correctos.</div>
 
-        <div class="actividad">
-          <h3>¿Qué parte está mal?</h3>
-
-          <div class="opciones" id="opcionesPagina4">
-            <div class="opcion" data-correcta="false">3/5</div>
-            <div class="opcion" data-correcta="false">0.6</div>
-            <div class="opcion" data-correcta="true">30%</div>
-            <div class="opcion" data-correcta="false">Todo está correcto</div>
+          <div class="recta-wrap">
+            <div class="number-line">
+              <div class="route-point"><i class="fas fa-map-pin"></i></div>
+              <div class="tick"><span class="tick-label">0</span></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"><span class="tick-label">1/2</span></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"></div>
+              <div class="tick"><span class="tick-label">1</span></div>
+            </div>
           </div>
 
-          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
-            ✅ Exacto. 3/5 y 0.6 sí coinciden, pero el porcentaje correcto sería 60%, no 30%.
+          <div class="answer-grid shuffle-group" id="opcionesP4">
+            <button class="sequence-card" data-page="4" data-value="a" type="button">
+              <div class="sequence-line"><span class="fraction-chip big">7/100</span><span class="arrow">&rarr;</span><span class="value-chip big">0.07</span><span class="arrow">&rarr;</span><span class="percent-chip big">7%</span></div>
+            </button>
+            <button class="sequence-card" data-page="4" data-value="b" data-correct="1" type="button">
+              <div class="sequence-line"><span class="fraction-chip big">7/10</span><span class="arrow">&rarr;</span><span class="value-chip big">0.70</span><span class="arrow">&rarr;</span><span class="percent-chip big">70%</span></div>
+            </button>
+            <button class="sequence-card" data-page="4" data-value="c" type="button">
+              <div class="sequence-line"><span class="fraction-chip big">7/10</span><span class="arrow">&rarr;</span><span class="value-chip big">0.07</span><span class="arrow">&rarr;</span><span class="percent-chip big">70%</span></div>
+            </button>
           </div>
 
-          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Primero verifica si la fracción y el decimal sí combinan. Después revisa el porcentaje.
-          </div>
+          <div id="ok4" class="mensaje-feedback mensaje-ok">Correcto. Siete de diez se escribe 7/10, 0.70 y 70%.</div>
+          <div id="warn4" class="mensaje-feedback mensaje-warn">La recta est&aacute; dividida en d&eacute;cimos. Cuenta las marcas desde 0 y elige nombres para siete d&eacute;cimos.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 5 -->
     <section class="pagina" id="pagina5">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-scale-balanced me-2"></i>Misión 4: comparar sin miedo</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-flask me-2"></i>5. Frascos en la misma escala</h2>
 
         <div class="texto-destacado">
-          En esta misión no basta con reconocer equivalencias: hay que decidir cuál cantidad es mayor.
+          Para comparar cantidades escritas de forma distinta, primero conviene llevarlas a una misma escala. Por ejemplo, una fracci&oacute;n puede pasarse a porcentaje antes de compararla con otro porcentaje.
         </div>
 
-        <div class="caso">
-          Compara estas dos cantidades:
-          <br><strong>A = 3/5</strong>
-          <br><strong>B = 50%</strong>
+        <div class="regla">
+          <h3>Ejemplo distinto al reto</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>1/2</strong>1 &divide; 2 = 0.50</div>
+            <div class="rule-card"><strong>0.50</strong>50 de cada 100</div>
+            <div class="rule-card"><strong>50% &gt; 40%</strong>ya est&aacute;n en la misma escala</div>
+          </div>
         </div>
 
-        <div class="recuadro">
-          <h4>Pista</h4>
-          <p class="mb-0">Si conviertes 3/5, obtienes 0.6, o sea 60%.</p>
-        </div>
+        <div class="zona-juego">
+          <h3>Reto 5</h3>
+          <div class="instruccion-corta">Compara <strong>3/5</strong> con <strong>58%</strong>. Elige el signo correcto entre los frascos.</div>
 
-        <div class="actividad">
-          <h3>¿Qué afirmación es correcta?</h3>
-
-          <div class="opciones" id="opcionesPagina5">
-            <div class="opcion" data-correcta="true">3/5 es mayor que 50%</div>
-            <div class="opcion" data-correcta="false">50% es mayor que 3/5</div>
-            <div class="opcion" data-correcta="false">Son iguales</div>
-            <div class="opcion" data-correcta="false">No se pueden comparar</div>
+          <div class="compare-row">
+            <div class="model-card">
+              <h4>Frasco A</h4>
+              <div class="jarra" style="--fill:60%"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div></div>
+              <span class="fraction-chip">3/5</span>
+            </div>
+            <div class="compare-symbol">?</div>
+            <div class="model-card">
+              <h4>Frasco B</h4>
+              <div class="jarra" style="--fill:58%"><div class="line l1"></div><div class="line l2"></div><div class="line l3"></div></div>
+              <span class="percent-chip">58%</span>
+            </div>
           </div>
 
-          <div id="feedback5ok" class="mensaje-feedback mensaje-ok">
-            ✅ Correcto. 3/5 equivale a 60%, y 60% es mayor que 50%.
+          <div class="answer-grid narrow shuffle-group" id="opcionesP5">
+            <button class="sign-card" data-page="5" data-value="lt" type="button">&lt;</button>
+            <button class="sign-card" data-page="5" data-value="eq" type="button">=</button>
+            <button class="sign-card" data-page="5" data-value="gt" data-correct="1" type="button">&gt;</button>
           </div>
 
-          <div id="feedback5warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Convierte primero 3/5 a porcentaje y luego compara.
-          </div>
+          <div id="ok5" class="mensaje-feedback mensaje-ok">Bien. 3/5 equivale a 60%, y 60% es mayor que 58%.</div>
+          <div id="warn5" class="mensaje-feedback mensaje-warn">Convierte 3/5 antes de comparar: 3 &divide; 5 = 0.60, que corresponde a 60%.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 6 -->
     <section class="pagina" id="pagina6">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-store me-2"></i>Misión 5: escaparate de descuentos</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-ranking-star me-2"></i>6. Podio de cantidades</h2>
 
         <div class="texto-destacado">
-          Tres tiendas anuncian descuentos con diferentes formas de escribir la misma idea.
+          Para ordenar cantidades mezcladas, conviene llevarlas mentalmente a una misma forma. Por ejemplo, <strong>20%</strong> puede pensarse como 0.20, <strong>3/10</strong> como 0.30 y <strong>0.45</strong> ya est&aacute; escrito en decimal.
         </div>
 
-        <table class="tabla-mini">
-          <tr>
-            <th>Tienda</th>
-            <th>Anuncio</th>
-          </tr>
-          <tr>
-            <td>A</td>
-            <td>40% de descuento</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>0.4 del precio</td>
-          </tr>
-          <tr>
-            <td>C</td>
-            <td>2/5 del precio</td>
-          </tr>
-        </table>
+        <div class="zona-juego">
+          <h3>Reto 6</h3>
+          <div class="instruccion-corta">Selecciona la fila donde las cuatro cantidades est&aacute;n ordenadas de menor a mayor.</div>
 
-        <div class="recuadro">
-          <h4>Pregunta</h4>
-          <p class="mb-0">Si los tres anuncios hablan de la misma parte del precio, entonces representan descuentos iguales.</p>
-        </div>
-
-        <div class="actividad">
-          <h3>¿Qué afirmación es correcta?</h3>
-
-          <div class="opciones" id="opcionesPagina6">
-            <div class="opcion" data-correcta="true">Las tres tiendas muestran el mismo descuento</div>
-            <div class="opcion" data-correcta="false">Solo A y B muestran lo mismo</div>
-            <div class="opcion" data-correcta="false">Solo B y C muestran lo mismo</div>
-            <div class="opcion" data-correcta="false">Las tres muestran descuentos diferentes</div>
+          <div class="answer-grid shuffle-group" id="opcionesP6">
+            <button class="sequence-card" data-page="6" data-value="a" type="button">
+              <div class="sequence-line"><span class="mini-chip">Menor</span><span class="podio-token">1/2</span><span class="arrow">&rarr;</span><span class="podio-token">25%</span><span class="arrow">&rarr;</span><span class="podio-token">0.65</span><span class="arrow">&rarr;</span><span class="podio-token">3/4</span><span class="mini-chip">Mayor</span></div>
+            </button>
+            <button class="sequence-card" data-page="6" data-value="b" data-correct="1" type="button">
+              <div class="sequence-line"><span class="mini-chip">Menor</span><span class="podio-token">25%</span><span class="arrow">&rarr;</span><span class="podio-token">1/2</span><span class="arrow">&rarr;</span><span class="podio-token">0.65</span><span class="arrow">&rarr;</span><span class="podio-token">3/4</span><span class="mini-chip">Mayor</span></div>
+            </button>
+            <button class="sequence-card" data-page="6" data-value="c" type="button">
+              <div class="sequence-line"><span class="mini-chip">Menor</span><span class="podio-token">25%</span><span class="arrow">&rarr;</span><span class="podio-token">0.65</span><span class="arrow">&rarr;</span><span class="podio-token">1/2</span><span class="arrow">&rarr;</span><span class="podio-token">3/4</span><span class="mini-chip">Mayor</span></div>
+            </button>
           </div>
 
-          <div id="feedback6ok" class="mensaje-feedback mensaje-ok">
-            ✅ Muy bien. 40%, 0.4 y 2/5 representan la misma cantidad.
-          </div>
-
-          <div id="feedback6warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Convierte una sola forma y compárala con las otras dos.
-          </div>
+          <div id="ok6" class="mensaje-feedback mensaje-ok">Correcto. El orden es 25%, 1/2, 0.65 y 3/4.</div>
+          <div id="warn6" class="mensaje-feedback mensaje-warn">Revisa el orden convirtiendo todo a decimal: 0.25, 0.50, 0.65 y 0.75.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 7 -->
     <section class="pagina" id="pagina7">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-chess me-2"></i>Misión 6: estrategia doble</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-ticket me-2"></i>7. Cupones de descuento</h2>
 
         <div class="texto-destacado">
-          Aquí debes pensar en dos pasos: primero detectar equivalencias y luego decidir cuál opción completa mejor la situación.
+          En descuentos, lo importante es cu&aacute;nto representa cada oferta en la misma escala. Por ejemplo, <strong>1/2</strong> equivale a 50%, <strong>0.30</strong> equivale a 30% y <strong>1/5</strong> equivale a 20%.
         </div>
 
-        <div class="caso">
-          Un tablero tiene pintadas <strong>6 de 10 partes</strong>.
-          Un alumno escribió:
-          <br><strong>6/10 = 0.6 = 60%</strong>
-          <br>Otro alumno dijo: “Entonces también es mayor que 1/2”.
+        <div class="regla">
+          <h3>Tabla de apoyo</h3>
+          <div class="rule-strip">
+            <div class="rule-card"><strong>1/2</strong>50%</div>
+            <div class="rule-card"><strong>0.30</strong>30%</div>
+            <div class="rule-card"><strong>1/5</strong>20%</div>
+          </div>
         </div>
 
-        <div class="actividad">
-          <h3>¿Cuál afirmación es correcta?</h3>
+        <div class="zona-juego">
+          <h3>Reto 7</h3>
+          <div class="instruccion-corta">Selecciona el cup&oacute;n con el descuento mayor.</div>
 
-          <div class="opciones" id="opcionesPagina7">
-            <div class="opcion" data-correcta="true">Sí, porque 60% es mayor que 50%</div>
-            <div class="opcion" data-correcta="false">No, porque 6/10 es menor que 1/2</div>
-            <div class="opcion" data-correcta="false">No, porque 0.6 equivale a 6%</div>
-            <div class="opcion" data-correcta="false">Sí, pero solo si 1/2 fuera 60%</div>
+          <div class="answer-grid shuffle-group" id="opcionesP7">
+            <button class="coupon-card" data-page="7" data-value="sol" type="button">
+              <div class="coupon-brand">Tienda Sol</div>
+              <div class="coupon-value">1/4</div>
+              <span class="mini-chip">Cup&oacute;n</span>
+            </button>
+            <button class="coupon-card" data-page="7" data-value="luna" data-correct="1" type="button">
+              <div class="coupon-brand">Tienda Luna</div>
+              <div class="coupon-value">0.40</div>
+              <span class="mini-chip">Cup&oacute;n</span>
+            </button>
+            <button class="coupon-card" data-page="7" data-value="cometa" type="button">
+              <div class="coupon-brand">Tienda Cometa</div>
+              <div class="coupon-value">3/8</div>
+              <span class="mini-chip">Cup&oacute;n</span>
+            </button>
           </div>
 
-          <div id="feedback7ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! 6/10 equivale a 60%, y 60% sí es mayor que 50%.
-          </div>
-
-          <div id="feedback7warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Compara 60% con 50%, que es la mitad.
-          </div>
+          <div id="ok7" class="mensaje-feedback mensaje-ok">Correcto. 0.40 equivale a 40%, y 40% es el descuento mayor.</div>
+          <div id="warn7" class="mensaje-feedback mensaje-warn">Convierte cada cup&oacute;n a porcentaje antes de decidir cu&aacute;l descuenta m&aacute;s.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 8 -->
     <section class="pagina" id="pagina8">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-crown me-2"></i>Misión final del nivel</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-folder-open me-2"></i>8. Rescate final</h2>
 
         <div class="texto-destacado">
-          Último reto: revisar varias equivalencias y descubrir cuál personaje se equivocó.
+          Una equivalencia final solo es correcta si la fracci&oacute;n, el decimal y el porcentaje representan exactamente la misma cantidad. Si una escritura cambia el valor, el expediente no sirve.
         </div>
 
-        <div class="caso">
-          Cuatro jugadores escribieron esto:
-          <ul style="margin-top: 10px; padding-left: 22px;">
-            <li><strong>Luna:</strong> 2/5 = 0.4 = 40%</li>
-            <li><strong>Diego:</strong> 7/10 = 0.7 = 70%</li>
-            <li><strong>Rafa:</strong> 3/5 = 0.6 = 30%</li>
-            <li><strong>Ana:</strong> 1/4 = 0.25 = 25%</li>
-          </ul>
-        </div>
+        <div class="zona-juego">
+          <h3>Reto final</h3>
+          <div class="instruccion-corta">Selecciona el expediente donde coinciden <strong>4/5</strong>, su decimal y su porcentaje.</div>
 
-        <div class="mision">
-          Solo uno cometió un error. Encuéntralo y abrirás el mini-quiz.
-        </div>
-
-        <div class="actividad">
-          <h3>¿Quién escribió mal su equivalencia?</h3>
-
-          <div class="opciones" id="opcionesPagina8">
-            <div class="opcion" data-correcta="false">Luna</div>
-            <div class="opcion" data-correcta="false">Diego</div>
-            <div class="opcion" data-correcta="true">Rafa</div>
-            <div class="opcion" data-correcta="false">Ana</div>
+          <div class="answer-grid shuffle-group" id="opcionesP8">
+            <button class="case-card" data-page="8" data-value="a" type="button">
+              <span class="case-stamp"><i class="fas fa-file-circle-question"></i></span>
+              <div class="eq-row"><span class="fraction-chip big">4/5</span><span class="eq-symbol">=</span><span class="value-chip big">0.75</span><span class="eq-symbol">=</span><span class="percent-chip big">75%</span></div>
+            </button>
+            <button class="case-card" data-page="8" data-value="b" data-correct="1" type="button">
+              <span class="case-stamp"><i class="fas fa-file-circle-check"></i></span>
+              <div class="eq-row"><span class="fraction-chip big">4/5</span><span class="eq-symbol">=</span><span class="value-chip big">0.80</span><span class="eq-symbol">=</span><span class="percent-chip big">80%</span></div>
+            </button>
+            <button class="case-card" data-page="8" data-value="c" type="button">
+              <span class="case-stamp"><i class="fas fa-file-circle-question"></i></span>
+              <div class="eq-row"><span class="fraction-chip big">4/5</span><span class="eq-symbol">=</span><span class="value-chip big">0.80</span><span class="eq-symbol">=</span><span class="percent-chip big">60%</span></div>
+            </button>
           </div>
 
-          <div id="feedback8ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Lo lograste! Rafa se equivocó: 3/5 equivale a 60%, no a 30%.
-          </div>
-
-          <div id="feedback8warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Revisa quién cambió el porcentaje correcto de su fracción.
-          </div>
+          <div id="ok8" class="mensaje-feedback mensaje-ok">Excelente. 4/5, 0.80 y 80% representan la misma cantidad. Mini-quiz desbloqueado.</div>
+          <div id="warn8" class="mensaje-feedback mensaje-warn">Divide 4 entre 5. El resultado decimal debe coincidir con el porcentaje de cada 100.</div>
         </div>
 
-        <div class="text-center">
-          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarMiniQuiz(event)">
-            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
-          </a>
-        </div>
+        <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarQuiz(event)" aria-disabled="true">
+          <i class="fas fa-puzzle-piece"></i> Ir al Mini-Quiz
+        </a>
       </div>
     </section>
 
     <div class="navegador">
       <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
-        ← Anterior
+        <i class="fas fa-arrow-left me-2"></i>Anterior
       </button>
       <span class="contador" id="contadorPagina">1/8</span>
       <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
-        Siguiente →
+        Siguiente<i class="fas fa-arrow-right ms-2"></i>
       </button>
     </div>
-  </div>
+  </main>
 
   <script>
-    let paginaActual = 1;
     const totalPaginas = 8;
+    let paginaActual = 1;
 
-    const paginasConActividad = [2, 3, 4, 5, 6, 7];
-    const actividadesResueltas = {
-      2: false,
-      3: false,
-      4: false,
-      5: false,
-      6: false,
-      7: false,
-      8: false
+    const state = {
+      solved:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false}
     };
 
-    function cambiarPagina(direccion) {
-      document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
-      document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      actualizarNavegacion();
+    const intentosPagina = {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0};
+
+    const apartadosVisualVerbal = {
+      p1: { pagina:1, apartadoClave:'p1_pizzeria_equivalencias_visual_verbal', tipoActividad:'equivalencia_fraccion_decimal_porcentaje' },
+      p2: { pagina:2, apartadoClave:'p2_placas_de_cien_visual_verbal', tipoActividad:'equivalencia_centecimos' },
+      p3: { pagina:3, apartadoClave:'p3_inspector_conversiones_visual_verbal', tipoActividad:'convertir_fraccion' },
+      p4: { pagina:4, apartadoClave:'p4_ruta_en_recta_visual_verbal', tipoActividad:'ubicar_equivalencia' },
+      p5: { pagina:5, apartadoClave:'p5_frascos_misma_escala_visual_verbal', tipoActividad:'comparar_equivalencias' },
+      p6: { pagina:6, apartadoClave:'p6_podio_cantidades_visual_verbal', tipoActividad:'ordenar_cantidades' },
+      p7: { pagina:7, apartadoClave:'p7_cupones_descuento_visual_verbal', tipoActividad:'comparar_descuentos' },
+      p8: { pagina:8, apartadoClave:'p8_rescate_final_visual_verbal', tipoActividad:'equivalencia_final' }
+    };
+
+    let trackerVisualVerbal = null;
+    let sessionTrackerVisualVerbal = null;
+    let quizTrackerAdjunto = false;
+
+    function qs(selector){ return document.querySelector(selector); }
+    function qsa(selector){ return Array.from(document.querySelectorAll(selector)); }
+
+    [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+      if(audio) audio.volume = 0.15;
+    });
+
+    function reproducir(id){
+      try{
+        const audio = document.getElementById(id);
+        if(!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if(promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
     }
 
-    function actualizarNavegacion() {
-      document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
-      document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-
-      const porcentaje = (paginaActual / totalPaginas) * 100;
-      document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
-      document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
-
-      const btnAnterior = document.getElementById('btnAnterior');
-      const btnSiguiente = document.getElementById('btnSiguiente');
-
-      btnAnterior.disabled = paginaActual === 1;
-      btnSiguiente.disabled = paginaActual === totalPaginas;
-
-      if (paginasConActividad.includes(paginaActual)) {
-        btnSiguiente.disabled = !actividadesResueltas[paginaActual];
-      }
+    function flash(el){
+      if(!el) return;
+      el.classList.add('wrong');
+      setTimeout(() => el.classList.remove('wrong'), 750);
     }
 
-    function volverAlMenu() {
-      window.location.href = '../../menu.html';
-    }
-
-    function validarMiniQuiz(event) {
-      if (!actividadesResueltas[8]) {
-        event.preventDefault();
-        return false;
-      }
-      return true;
-    }
-
-    function desbloquearMiniQuiz() {
-      const btnMiniQuiz = document.getElementById('btnMiniQuiz');
-      if (btnMiniQuiz) btnMiniQuiz.classList.remove('bloqueado');
-    }
-
-    function marcarActividadResuelta(numeroPagina) {
-      actividadesResueltas[numeroPagina] = true;
-      if (numeroPagina === 8) desbloquearMiniQuiz();
-      actualizarNavegacion();
-    }
-
-    function inicializarActividad(selector, okId, warnId, numeroPagina) {
-      const opciones = document.querySelectorAll(selector + ' .opcion');
-      const ok = document.getElementById(okId);
-      const warn = document.getElementById(warnId);
-
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (actividadesResueltas[numeroPagina]) return;
-
-          if (op.dataset.correcta === 'true') {
-            opciones.forEach(x => x.style.pointerEvents = 'none');
-            op.classList.add('correcta');
-            warn.classList.remove('visible');
-            ok.classList.add('visible');
-            marcarActividadResuelta(numeroPagina);
-          } else {
-            op.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
-          }
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerVisualVerbal = window.createReforzamientoTracker({
+          contenidoId: 6,
+          nivel: 'dificil',
+          estilo: 'visual_verbal',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'equivalencias_numericas',
+            variante: 'visual_verbal_dificil'
+          },
+          apartados: apartadosVisualVerbal
         });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerVisualVerbal = window.createReforzamientoSessionTracker({
+          contenidoId: 6,
+          nivel: 'dificil',
+          estilo: 'visual_verbal'
+        });
+      }
+    }
+
+    function clavePagina(page){
+      return 'p' + page;
+    }
+
+    function marcarPaginaVisible(page, detalleExtra){
+      if(!trackerVisualVerbal) return;
+      trackerVisualVerbal.markVisible(clavePagina(page), {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        ...detalleExtra
       });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      paginaActual = 1;
-      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
-      document.getElementById('pagina1').classList.add('activa');
+    function registrarError(page, detalle){
+      intentosPagina[page] += 1;
+      if(!trackerVisualVerbal) return;
+      trackerVisualVerbal.addError(clavePagina(page), 1, {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        intento: intentosPagina[page],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(page, detalle){
+      if(state.solved[page]) return;
+      state.solved[page] = true;
+
+      if(trackerVisualVerbal){
+        trackerVisualVerbal.addCorrect(clavePagina(page), 1, {
+          pagina: page,
+          ejercicio: clavePagina(page),
+          errores_previos: intentosPagina[page],
+          ...detalle
+        });
+
+        await trackerVisualVerbal.complete(clavePagina(page), {
+          detalle: {
+            pagina: page,
+            ejercicio: clavePagina(page),
+            ...detalle
+          }
+        });
+      }
+
+      if(page === totalPaginas){
+        reproducir('sndTada');
+      } else {
+        reproducir('sndDing');
+      }
 
       actualizarNavegacion();
-      inicializarActividad('#opcionesPagina2', 'feedback2ok', 'feedback2warn', 2);
-      inicializarActividad('#opcionesPagina3', 'feedback3ok', 'feedback3warn', 3);
-      inicializarActividad('#opcionesPagina4', 'feedback4ok', 'feedback4warn', 4);
-      inicializarActividad('#opcionesPagina5', 'feedback5ok', 'feedback5warn', 5);
-      inicializarActividad('#opcionesPagina6', 'feedback6ok', 'feedback6warn', 6);
-      inicializarActividad('#opcionesPagina7', 'feedback7ok', 'feedback7warn', 7);
-      inicializarActividad('#opcionesPagina8', 'feedback8ok', 'feedback8warn', 8);
+    }
+
+    function shuffleChildren(target){
+      const el = typeof target === 'string' ? qs(target) : target;
+      if(!el) return;
+      const items = Array.from(el.children);
+      for(let i = items.length - 1; i > 0; i -= 1){
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
+      }
+      items.forEach(item => el.appendChild(item));
+    }
+
+    function renombrarTarjetas(selector, prefijo){
+      const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      qsa(selector).forEach((card, index) => {
+        const titulo = card.querySelector('h4');
+        if(titulo) titulo.innerText = prefijo + ' ' + letras[index];
+      });
+    }
+
+    function mezclarOpciones(){
+      qsa('.shuffle-group').forEach(shuffleChildren);
+      renombrarTarjetas('#opcionesP1 .choice-card', 'Pizza');
+    }
+
+    function renderGrid(el){
+      const fill = Number(el.dataset.fill || 0);
+      el.innerHTML = Array.from({ length: 100 }, (_, index) =>
+        '<span class="hundred-cell' + (index < fill ? ' fill' : '') + '"></span>'
+      ).join('');
+    }
+
+    function renderParts(el){
+      const total = Number(el.dataset.total || 5);
+      const fill = Number(el.dataset.fill || 0);
+      el.style.setProperty('--parts', total);
+      el.innerHTML = Array.from({ length: total }, (_, index) =>
+        '<span class="part-cell' + (index < fill ? ' fill' : '') + '"></span>'
+      ).join('');
+    }
+
+    function renderModelos(){
+      qsa('.render-grid').forEach(renderGrid);
+      qsa('.render-parts').forEach(renderParts);
+    }
+
+    function limpiarFeedback(page){
+      qs('#ok' + page)?.classList.remove('visible');
+      qs('#warn' + page)?.classList.remove('visible');
+    }
+
+    function mostrarFeedback(page, ok){
+      qs('#ok' + page)?.classList.toggle('visible', Boolean(ok));
+      qs('#warn' + page)?.classList.toggle('visible', !ok);
+    }
+
+    function bloquearPagina(page){
+      qsa('[data-page="' + page + '"]').forEach(item => {
+        item.disabled = true;
+      });
+    }
+
+    function actividadPagina(page){
+      const mapa = {
+        1: 'equivalencia_fraccion_decimal_porcentaje',
+        2: 'equivalencia_centecimos',
+        3: 'convertir_fraccion',
+        4: 'ubicar_equivalencia',
+        5: 'comparar_equivalencias',
+        6: 'ordenar_cantidades',
+        7: 'comparar_descuentos',
+        8: 'equivalencia_final'
+      };
+      return mapa[page] || 'actividad_visual';
+    }
+
+    async function manejarChoice(btn){
+      const page = Number(btn.dataset.page);
+      if(!page || state.solved[page]) return;
+      reproducir('sndClick');
+      limpiarFeedback(page);
+
+      if(btn.dataset.correct === '1'){
+        btn.classList.add('correct');
+        bloquearPagina(page);
+        mostrarFeedback(page, true);
+        await completarPagina(page, {
+          actividad: actividadPagina(page),
+          respuesta: btn.dataset.value
+        });
+      } else {
+        mostrarFeedback(page, false);
+        reproducir('sndError');
+        registrarError(page, {
+          actividad: actividadPagina(page),
+          respuesta: btn.dataset.value
+        });
+        flash(btn);
+      }
+    }
+
+    function todasResueltas(){
+      return Object.values(state.solved).every(Boolean);
+    }
+
+    function actualizarBotonQuiz(){
+      const btnQuiz = qs('#btnMiniQuiz');
+      if(!btnQuiz) return;
+      const listo = todasResueltas();
+      btnQuiz.classList.toggle('bloqueado', !listo);
+      btnQuiz.setAttribute('aria-disabled', String(!listo));
+
+      if(listo && !quizTrackerAdjunto && sessionTrackerVisualVerbal){
+        sessionTrackerVisualVerbal.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+        quizTrackerAdjunto = true;
+      }
+    }
+
+    function actualizarNavegacion(){
+      qs('#progresoTexto').innerText = 'P\u00e1gina ' + paginaActual + ' de ' + totalPaginas;
+      qs('#contadorPagina').innerText = paginaActual + '/' + totalPaginas;
+      const porcentaje = (paginaActual / totalPaginas) * 100;
+      qs('#barraRelleno').style.width = porcentaje + '%';
+      qs('#progresoNum').innerText = Math.round(porcentaje) + '%';
+      qs('#btnAnterior').disabled = paginaActual === 1;
+      qs('#btnSiguiente').disabled = paginaActual === totalPaginas || !state.solved[paginaActual];
+      actualizarBotonQuiz();
+    }
+
+    function cambiarPagina(direccion){
+      if(direccion === 1 && !state.solved[paginaActual]) return;
+      const destino = paginaActual + direccion;
+      if(destino < 1 || destino > totalPaginas) return;
+      reproducir('sndClick');
+      qs('#pagina' + paginaActual).classList.remove('activa');
+      paginaActual = destino;
+      qs('#pagina' + paginaActual).classList.add('activa');
+      actualizarNavegacion();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverAlMenu(){
+      reproducir('sndClick');
+      window.location.href = '../../menu.html';
+    }
+
+    function validarQuiz(event){
+      if(!todasResueltas()){
+        event.preventDefault();
+        reproducir('sndError');
+        return false;
+      }
+      reproducir('sndClick');
+      return true;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initTrackers();
+      renderModelos();
+      mezclarOpciones();
+
+      qsa('.choice-card, .coupon-card, .case-card, .sequence-card, .sign-card').forEach(btn => {
+        btn.addEventListener('click', () => manejarChoice(btn));
+      });
+
+      qsa('.pagina').forEach(pagina => pagina.classList.remove('activa'));
+      qs('#pagina1').classList.add('activa');
+      paginaActual = 1;
+      actualizarBotonQuiz();
+      actualizarNavegacion();
+      marcarPaginaVisible(1);
+
+      if(sessionTrackerVisualVerbal){
+        sessionTrackerVisualVerbal.start();
+      }
     });
   </script>
 </body>

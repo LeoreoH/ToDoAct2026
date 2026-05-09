@@ -736,6 +736,14 @@
 </head>
 <body>
 
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/exito.mp3"></audio>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
+
   <header class="cabecera">
     <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú">
       <i class="fas fa-arrow-left"></i>
@@ -1212,16 +1220,140 @@
     const actividadesResueltas = {
       1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false, 8:false
     };
+    const intentosPagina = {
+      1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0
+    };
+    const apartadosKinestesico = {
+      p1: { pagina:1, apartadoClave:'p1_mismo_denominador_kin', tipoActividad:'seleccionar_opcion' },
+      p2: { pagina:2, apartadoClave:'p2_mismo_numerador_kin', tipoActividad:'seleccionar_opcion' },
+      p3: { pagina:3, apartadoClave:'p3_construir_fraccion_mayor_kin', tipoActividad:'seleccionar_partes' },
+      p4: { pagina:4, apartadoClave:'p4_recta_numerica_kin', tipoActividad:'ubicar_en_recta' },
+      p5: { pagina:5, apartadoClave:'p5_numerador_denominador_kin', tipoActividad:'arrastrar_etiquetas' },
+      p6: { pagina:6, apartadoClave:'p6_ordenar_fracciones_kin', tipoActividad:'ordenar_fracciones' },
+      p7: { pagina:7, apartadoClave:'p7_signo_correcto_kin', tipoActividad:'arrastrar_simbolo' },
+      p8: { pagina:8, apartadoClave:'p8_reglas_comparacion_kin', tipoActividad:'arrastrar_reglas' }
+    };
+    let trackerKinestesico = null;
+    let sessionTrackerKinestesico = null;
+    let quizTrackerAdjunto = false;
+
+    const qs = (selector) => document.querySelector(selector);
+    const qsa = (selector) => Array.from(document.querySelectorAll(selector));
+
+    [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+      if (audio) audio.volume = 0.15;
+    });
+
+    function playFx(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
+    }
+
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerKinestesico = window.createReforzamientoTracker({
+          contenidoId: 4,
+          nivel: 'normal',
+          estilo: 'kinestesico',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'reconocer_fracciones',
+            variante: 'kinestesico_normal'
+          },
+          apartados: apartadosKinestesico
+        });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerKinestesico = window.createReforzamientoSessionTracker({
+          contenidoId: 4,
+          nivel: 'normal',
+          estilo: 'kinestesico'
+        });
+      }
+    }
+
+    function clavePagina(page) {
+      return 'p' + page;
+    }
+
+    function marcarPaginaVisible(page, detalleExtra) {
+      if (!trackerKinestesico) return;
+      trackerKinestesico.markVisible(clavePagina(page), {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        ...detalleExtra
+      });
+    }
+
+    function registrarError(page, detalle) {
+      intentosPagina[page] += 1;
+      if (!trackerKinestesico) return;
+      trackerKinestesico.addError(clavePagina(page), 1, {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        intento: intentosPagina[page],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(page, respuesta, detalleExtra) {
+      if (actividadesResueltas[page]) return;
+
+      actividadesResueltas[page] = true;
+
+      if (trackerKinestesico) {
+        trackerKinestesico.addCorrect(clavePagina(page), 1, {
+          pagina: page,
+          ejercicio: clavePagina(page),
+          respuesta,
+          errores_previos: intentosPagina[page],
+          ...detalleExtra
+        });
+
+        await trackerKinestesico.complete(clavePagina(page), {
+          detalle: {
+            pagina: page,
+            ejercicio: clavePagina(page),
+            respuesta,
+            ...detalleExtra
+          }
+        });
+      }
+
+      if (page === 8) {
+        playFx('sndTada');
+        actualizarEstadoQuiz();
+      } else {
+        playFx('sndDing');
+      }
+
+      actualizarNavegacion();
+    }
 
     function volverAlMenu() {
+      playFx('sndClick');
       window.location.href = '../../menu.html';
     }
 
     function cambiarPagina(direccion) {
+      if (direccion === 1 && !actividadesResueltas[paginaActual]) return;
+      const destino = paginaActual + direccion;
+      if (destino < 1 || destino > totalPaginas) return;
+
+      playFx('sndClick');
       document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
+      paginaActual = destino;
       document.getElementById(`pagina${paginaActual}`).classList.add('activa');
       actualizarNavegacion();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function actualizarNavegacion() {
@@ -1232,24 +1364,35 @@
       document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
       document.getElementById('btnAnterior').disabled = paginaActual === 1;
       document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !actividadesResueltas[paginaActual]);
-    }
-
-    function resolverPagina(numero) {
-      actividadesResueltas[numero] = true;
-      if (numero === 8) desbloquearMiniQuiz();
-      actualizarNavegacion();
+      actualizarEstadoQuiz();
     }
 
     function validarMiniQuiz(event) {
-      if (!actividadesResueltas[8]) {
+      if (!Object.values(actividadesResueltas).every(Boolean)) {
         event.preventDefault();
+        playFx('sndError');
         return false;
       }
+      playFx('sndClick');
       return true;
     }
 
-    function desbloquearMiniQuiz() {
-      document.getElementById('btnMiniQuiz').classList.remove('bloqueado');
+    function actualizarEstadoQuiz() {
+      const botonQuiz = document.getElementById('btnMiniQuiz');
+      if (!botonQuiz) return;
+
+      if (Object.values(actividadesResueltas).every(Boolean)) {
+        botonQuiz.classList.remove('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'false');
+
+        if (!quizTrackerAdjunto && sessionTrackerKinestesico) {
+          sessionTrackerKinestesico.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+          quizTrackerAdjunto = true;
+        }
+      } else {
+        botonQuiz.classList.add('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'true');
+      }
     }
 
     function resetEstado() {
@@ -1292,10 +1435,15 @@
       }
 
       const slotSim = document.getElementById('slotSimbolo7');
-      if (slotSim) slotSim.textContent = 'Suelta aquí';
+      if (slotSim) {
+        slotSim.textContent = 'Suelta aquí';
+        slotSim.classList.remove('correcto');
+      }
 
       document.querySelectorAll('.slot-regla').forEach(slot => {
         slot.textContent = 'Suelta aquí';
+        slot.classList.remove('correcto');
+        delete slot.dataset.lleno;
       });
       document.querySelectorAll('.ficha-regla').forEach(x => x.style.display = '');
       document.querySelectorAll('.ficha-simbolo').forEach(x => x.style.display = '');
@@ -1309,18 +1457,26 @@
       const warn = document.getElementById(warnId);
 
       opciones.forEach(op => {
-        op.addEventListener('click', () => {
+        op.addEventListener('click', async () => {
           if (actividadesResueltas[pagina]) return;
+          playFx('sndClick');
 
           if (op.dataset.correcta === 'true') {
             op.classList.add('correct-choice');
             opciones.forEach(x => x.style.pointerEvents = 'none');
             warn.classList.remove('visible');
             ok.classList.add('visible');
-            resolverPagina(pagina);
+            await completarPagina(pagina, op.textContent.trim(), {
+              actividad: 'seleccionar_opcion'
+            });
           } else {
             op.classList.add('wrong-choice');
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(pagina, {
+              actividad: 'seleccionar_opcion',
+              respuesta: op.textContent.trim()
+            });
             setTimeout(() => op.classList.remove('wrong-choice'), 700);
           }
         });
@@ -1334,8 +1490,9 @@
       const warn = document.getElementById('feedback3warn');
 
       piezas.forEach(p => {
-        p.addEventListener('click', () => {
+        p.addEventListener('click', async () => {
           if (actividadesResueltas[3]) return;
+          playFx('sndClick');
 
           p.classList.toggle('fill');
           const total = document.querySelectorAll('#barraP3 .tira-piece.fill').length;
@@ -1344,16 +1501,28 @@
           if (total === 5) {
             warn.classList.remove('visible');
             ok.classList.add('visible');
-            resolverPagina(3);
+            await completarPagina(3, '5/6', {
+              actividad: 'seleccionar_partes',
+              partes_tomadas: total,
+              total_partes: 6
+            });
           } else {
             ok.classList.remove('visible');
             warn.classList.add('visible');
+            if (total > 5) {
+              playFx('sndError');
+              registrarError(3, {
+                actividad: 'seleccionar_partes',
+                partes_tomadas: total,
+                total_partes: 6
+              });
+            }
           }
         });
       });
     }
 
-    function initDragMatch(selectorEtiquetas, selectorSlots, okId, warnId, pagina) {
+    function initDragMatch(selectorEtiquetas, selectorSlots, okId, warnId, pagina, actividad, respuestaFinal) {
       const etiquetas = document.querySelectorAll(selectorEtiquetas);
       const slots = document.querySelectorAll(selectorSlots);
       const ok = document.getElementById(okId);
@@ -1361,6 +1530,7 @@
 
       etiquetas.forEach(et => {
         et.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('palabra', et.dataset.palabra);
           e.dataTransfer.setData('texto', et.textContent.trim());
         });
@@ -1368,7 +1538,7 @@
 
       slots.forEach(slot => {
         slot.addEventListener('dragover', e => e.preventDefault());
-        slot.addEventListener('drop', e => {
+        slot.addEventListener('drop', async e => {
           e.preventDefault();
           if (slot.dataset.lleno === 'true' || actividadesResueltas[pagina]) return;
 
@@ -1379,6 +1549,7 @@
             slot.textContent = texto;
             slot.classList.add('correcto');
             slot.dataset.lleno = 'true';
+            warn.classList.remove('visible');
 
             document.querySelectorAll(selectorEtiquetas).forEach(et => {
               if (et.dataset.palabra === palabra) et.style.display = 'none';
@@ -1388,10 +1559,18 @@
             if (completos === slots.length) {
               warn.classList.remove('visible');
               ok.classList.add('visible');
-              resolverPagina(pagina);
+              await completarPagina(pagina, respuestaFinal, {
+                actividad
+              });
             }
           } else {
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(pagina, {
+              actividad,
+              palabra,
+              esperado: slot.dataset.esperado
+            });
           }
         });
       });
@@ -1405,6 +1584,7 @@
 
       tarjetas.forEach(card => {
         card.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('orden', card.dataset.orden);
           e.dataTransfer.setData('texto', card.textContent.trim());
         });
@@ -1412,7 +1592,7 @@
 
       slots.forEach(slot => {
         slot.addEventListener('dragover', e => e.preventDefault());
-        slot.addEventListener('drop', e => {
+        slot.addEventListener('drop', async e => {
           e.preventDefault();
           if (slot.dataset.lleno === 'true' || actividadesResueltas[6]) return;
 
@@ -1423,6 +1603,7 @@
             slot.textContent = texto;
             slot.classList.add('correcto');
             slot.dataset.lleno = 'true';
+            warn.classList.remove('visible');
 
             tarjetas.forEach(card => {
               if (card.textContent.trim() === texto) card.style.display = 'none';
@@ -1432,10 +1613,18 @@
             if (completos === 3) {
               warn.classList.remove('visible');
               ok.classList.add('visible');
-              resolverPagina(6);
+              await completarPagina(6, '1/5_1/2_3/5', {
+                actividad: 'ordenar_fracciones'
+              });
             }
           } else {
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(6, {
+              actividad: 'ordenar_fracciones',
+              respuesta: texto,
+              posicion_esperada: slot.dataset.esperado
+            });
           }
         });
       });
@@ -1462,6 +1651,7 @@
 
       ficha.addEventListener('pointerdown', (e) => {
         if (actividadesResueltas[4]) return;
+        playFx('sndClick');
         dragging = true;
         ficha.setPointerCapture(e.pointerId);
       });
@@ -1480,8 +1670,9 @@
         setFichaByClientX(e.clientX);
       });
 
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', async () => {
         if (actividadesResueltas[4]) return;
+        playFx('sndClick');
         const left = parseFloat(ficha.style.left);
         const target = 76.4;
         if (Math.abs(left - target) <= 5) {
@@ -1489,10 +1680,19 @@
           ficha.classList.add('locked');
           warn.classList.remove('visible');
           ok.classList.add('visible');
-          resolverPagina(4);
+          await completarPagina(4, '4/5', {
+            actividad: 'ubicar_en_recta',
+            posicion: left
+          });
         } else {
           ok.classList.remove('visible');
           warn.classList.add('visible');
+          playFx('sndError');
+          registrarError(4, {
+            actividad: 'ubicar_en_recta',
+            posicion: left,
+            objetivo: target
+          });
         }
       });
     }
@@ -1505,13 +1705,14 @@
 
       fichas.forEach(f => {
         f.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('simbolo', f.dataset.simbolo);
           e.dataTransfer.setData('texto', f.textContent.trim());
         });
       });
 
       slot.addEventListener('dragover', e => e.preventDefault());
-      slot.addEventListener('drop', e => {
+      slot.addEventListener('drop', async e => {
         e.preventDefault();
         if (actividadesResueltas[7]) return;
 
@@ -1524,9 +1725,17 @@
           ok.classList.add('visible');
           warn.classList.remove('visible');
           fichas.forEach(x => x.style.display = 'none');
-          resolverPagina(7);
+          await completarPagina(7, simbolo, {
+            actividad: 'arrastrar_simbolo'
+          });
         } else {
           warn.classList.add('visible');
+          playFx('sndError');
+          registrarError(7, {
+            actividad: 'arrastrar_simbolo',
+            simbolo,
+            esperado: slot.dataset.esperado
+          });
         }
       });
     }
@@ -1539,6 +1748,7 @@
 
       fichas.forEach(f => {
         f.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('regla', f.dataset.regla);
           e.dataTransfer.setData('texto', f.textContent.trim());
         });
@@ -1546,7 +1756,7 @@
 
       slots.forEach(slot => {
         slot.addEventListener('dragover', e => e.preventDefault());
-        slot.addEventListener('drop', e => {
+        slot.addEventListener('drop', async e => {
           e.preventDefault();
           if (slot.dataset.lleno === 'true' || actividadesResueltas[8]) return;
 
@@ -1557,6 +1767,7 @@
             slot.textContent = texto;
             slot.classList.add('correcto');
             slot.dataset.lleno = 'true';
+            warn.classList.remove('visible');
 
             document.querySelectorAll('.ficha-regla').forEach(f => {
               if (f.dataset.regla === regla) f.style.display = 'none';
@@ -1566,25 +1777,40 @@
             if (completos === slots.length) {
               ok.classList.add('visible');
               warn.classList.remove('visible');
-              resolverPagina(8);
+              await completarPagina(8, 'reglas_completas', {
+                actividad: 'arrastrar_reglas'
+              });
             }
           } else {
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(8, {
+              actividad: 'arrastrar_reglas',
+              regla,
+              esperado: slot.dataset.esperado
+            });
           }
         });
       });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      initTrackers();
       resetEstado();
       marcarOpcion('#opcionesP1', 'feedback1ok', 'feedback1warn', 1);
       marcarOpcion('#opcionesP2', 'feedback2ok', 'feedback2warn', 2);
       initP3();
       initRectaLibre();
-      initDragMatch('#pagina5 .etiqueta-arrastre', '#pagina5 .slot-palabra', 'feedback5ok', 'feedback5warn', 5);
+      initDragMatch('#pagina5 .etiqueta-arrastre', '#pagina5 .slot-palabra', 'feedback5ok', 'feedback5warn', 5, 'arrastrar_etiquetas', 'numerador_denominador');
       initOrden();
       initSimbolo();
       initReglas();
+      actualizarEstadoQuiz();
+      marcarPaginaVisible(1);
+
+      if (sessionTrackerKinestesico) {
+        sessionTrackerKinestesico.start();
+      }
     });
   </script>
 </body>

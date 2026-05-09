@@ -325,7 +325,7 @@
 
     .btn-quiz-wrap {
       margin-top: 15px;
-      display: none;
+      display: block;
     }
     .btn-quiz-wrap.visible { display: block; }
     .btn-quiz {
@@ -345,6 +345,23 @@
       transform: translateY(-3px);
       box-shadow: 0 9px 0 var(--naranja-med);
       color: white;
+    }
+    .btn-quiz.bloqueado {
+      background: #cbd5e1;
+      box-shadow: 0 6px 0 #94a3b8;
+      color: white;
+      cursor: not-allowed;
+    }
+    .btn-quiz.bloqueado:hover {
+      transform: none;
+      box-shadow: 0 6px 0 #94a3b8;
+      color: white;
+    }
+    .texto-ayuda-quiz {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #9a3412;
     }
 
     .btn-reintentar {
@@ -409,7 +426,11 @@
       40%{ transform: translateY(-15px) rotate(5deg); }
       60%{ transform: translateY(-8px); }
     }
-    .luna-anim { animation: lunaSalta .5s cubic-bezier(0.34, 1.2, 0.64, 1); }
+    .luna-anim .luna-cuerpo {
+      animation: lunaSalta .5s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform-box: fill-box;
+      transform-origin: center;
+    }
 
     @keyframes confetiFall {
       0%  { transform: translateY(-10px) rotate(0deg); opacity: 1; }
@@ -732,6 +753,7 @@
 
         <!-- LUNA PERSONAJE -->
         <g id="lunaPersonaje" transform="translate(390,260)">
+          <g class="luna-cuerpo">
           <rect x="-34" y="-26" width="68" height="16" rx="5" fill="#fde68a" stroke="#c2410c" stroke-width="1.5"/>
           <text x="0" y="-14" font-family="Fredoka One,cursive" font-size="8" fill="#7c2d12" text-anchor="middle">⭐ LUNA ⭐</text>
           <line x1="0" y1="-8" x2="0" y2="0" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="2,2"/>
@@ -758,6 +780,7 @@
           <rect x="10"  y="18" width="10" height="6" rx="3" fill="#1d4ed8" transform="rotate(-20,10,18)"/>
           <circle cx="-18" cy="28" r="4" fill="#fbbf24"/>
           <circle cx="20"  cy="28" r="4" fill="#fbbf24"/>
+          </g>
         </g>
       </svg>
 
@@ -836,9 +859,10 @@
       <div class="feedback-box" id="feedbackBox"></div>
 
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz">
-          <i class="fas fa-puzzle-piece"></i> Ir al ejercicio
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true">
+          <i class="fas fa-puzzle-piece"></i> Ir al quiz
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">
         <i class="fas fa-redo-alt"></i> Reintentar
@@ -848,9 +872,15 @@
   </div>
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505b"></script>
 <script>
   var DESTINO_CORRECTO = 'hel';
   var respondido = false;
+  var ejercicioCompletado = false;
+  var erroresVisualNoVerbal = 0;
+  var completadoRegistroVisualNoVerbal = false;
+  var quizTrackerAdjunto = false;
 
   var POSICIONES_LUNA = {
     pan:   'translate(55,160)',
@@ -862,8 +892,109 @@
     inicio:'translate(390,260)'
   };
 
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosVisualNoVerbal = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_destino_pueblo_magico',
+      tipoActividad: 'visual_no_verbal_seleccion'
+    }
+  };
+
+  var trackerVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'visual_no_verbal',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'visual_no_verbal_facil' },
+    apartados: ejerciciosVisualNoVerbal
+  }) : null;
+
+  var sessionTrackerVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'visual_no_verbal'
+  }) : null;
+
   function play(id) {
     try { var s = document.getElementById(id); s.currentTime = 0; s.play(); } catch(e){}
+  }
+
+  function registrarIntentoVisualNoVerbal(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroVisualNoVerbal) {
+        completadoRegistroVisualNoVerbal = true;
+        if (trackerVisualNoVerbal) {
+          trackerVisualNoVerbal.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            errores_previos: erroresVisualNoVerbal,
+            actividad: 'seleccionar_destino',
+            destino_correcto: DESTINO_CORRECTO,
+            destino_elegido: detalle.destino || null
+          });
+          trackerVisualNoVerbal.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'seleccionar_destino',
+              destino_correcto: DESTINO_CORRECTO,
+              destino_elegido: detalle.destino || null
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresVisualNoVerbal += 1;
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'seleccionar_destino',
+        intento: erroresVisualNoVerbal,
+        destino_elegido: detalle.destino || null
+      });
+    }
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerVisualNoVerbal) {
+        sessionTrackerVisualNoVerbal.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
+    }
   }
 
   function moverLuna(destId) {
@@ -913,7 +1044,7 @@
   });
 
   function elegirDestino(id) {
-    if (respondido) return;
+    if (respondido || ejercicioCompletado) return;
     play('sndClick');
     respondido = true;
     desactivarHotspots();
@@ -924,6 +1055,7 @@
     moverLuna(id);
 
     if (id === DESTINO_CORRECTO) {
+      ejercicioCompletado = true;
       play('sndTada');
       hs.classList.add('correcto');
       var ind = document.getElementById('ind-'+id);
@@ -931,11 +1063,11 @@
 
       fb.className = 'feedback-box ok';
       fb.innerHTML = '✅ ¡Correcto! Luna subió 1 cuadra → Heladería ROSA 🍦';
-      document.getElementById('btnQuizWrap').classList.add('visible');
       document.getElementById('paso1').classList.remove('resaltado');
       document.getElementById('paso1').classList.add('completado');
       document.getElementById('paso2').classList.add('resaltado');
-      localStorage.setItem('progreso_facil_vnv_instrucciones', 'ok');
+      registrarIntentoVisualNoVerbal(true, { destino: id });
+      actualizarBotonQuiz();
       lanzarConfeti();
 
       ['pan','jug','far','esc','hel2'].forEach(function(otro){
@@ -947,6 +1079,7 @@
       play('sndError');
       hs.classList.add('incorrecto');
       respondido = false;
+      registrarIntentoVisualNoVerbal(false, { destino: id });
 
       var pistas = {
         pan: '❌ Panadería. Luna está en la columna derecha y subió ⬆️',
@@ -975,6 +1108,7 @@
   }
 
   function reintentar() {
+    if (ejercicioCompletado) return;
     respondido = false;
     moverLuna('inicio');
     desactivarHotspots();
@@ -1018,14 +1152,28 @@
   document.getElementById('hs-esc').onclick = function() { elegirDestino('esc'); };
   document.getElementById('hs-hel2').onclick = function() { elegirDestino('hel2'); };
 
+  var botonQuizVisualNoVerbal = document.getElementById('botonQuiz');
+  if (botonQuizVisualNoVerbal) {
+    botonQuizVisualNoVerbal.addEventListener('click', function(event) {
+      if (!ejercicioCompletado) {
+        event.preventDefault();
+        play('sndError');
+        return;
+      }
+      play('sndClick');
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', function() {
     activarHotspots();
-    var guardado = localStorage.getItem('progreso_facil_vnv_instrucciones');
-    if (guardado === 'ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
-      document.getElementById('paso1').classList.remove('resaltado');
-      document.getElementById('paso1').classList.add('completado');
-      document.getElementById('paso2').classList.add('resaltado');
+    actualizarBotonQuiz();
+
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (sessionTrackerVisualNoVerbal) {
+      sessionTrackerVisualNoVerbal.start();
     }
   });
 </script>

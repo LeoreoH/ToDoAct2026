@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -128,7 +128,7 @@
     .btn-respuesta.correcto  { background: #1b5e20; border-color: #4caf50; color: #a5d6a7; }
     .btn-respuesta.incorrecto { background: #7f0000; border-color: #ef5350; color: #ffcdd2; }
 
-    /* Tarjetas de aÃ±o (P2) */
+    /* Tarjetas de a�o (P2) */
     .anios-grid { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
     .card-anio {
       background: #283593; border: 3px solid #7986cb; border-radius: 20px;
@@ -204,7 +204,7 @@
       border-radius: 40px; font-weight: 800; font-size: 1.3rem; border: 3px solid #1976d2;
     }
     .btn-quiz {
-      display: block; width: fit-content; margin: 0 auto;
+      display: none; width: fit-content; margin: 0 auto;
       background: #ffd600; color: #01579b; border: none;
       padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
       text-decoration: none; border: 4px solid #1976d2; box-shadow: 0 6px 0 #0d47a1; transition: all 0.2s;
@@ -218,6 +218,7 @@
     }
     .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #0d47a1; }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -254,7 +255,7 @@
 <div class="contenedor">
 
   <!-- =====================================================
-       PÃGINA 1: ROTACIÃ“N
+       P�GINA 1: ROTACI�N
   ===================================================== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-audio">
@@ -265,11 +266,16 @@
       <div class="audio-control">
         <audio controls><source src="audios/01-rotacion.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
-             alt="Rotaci&oacute;n" class="imagen-geo"
-             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
-        <div class="pie-imagen">&#127757; La Tierra gira sobre su propio eje</div>
+      <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+        <div class="ayuda-ampliar-media">
+          <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
+                 alt="Rotaci&oacute;n" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
+            <div class="pie-imagen">&#127757; La Tierra gira sobre su propio eje</div>
+          </div>
+        </div>
+        <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
       </div>
     </div>
 
@@ -307,7 +313,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 2: TRASLACIÃ“N
+       P�GINA 2: TRASLACI�N
   ===================================================== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-audio">
@@ -359,7 +365,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 3: ESTACIONES
+       P�GINA 3: ESTACIONES
   ===================================================== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-audio">
@@ -420,7 +426,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 4: ELEMENTOS DE MAPAS
+       P�GINA 4: ELEMENTOS DE MAPAS
   ===================================================== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-audio">
@@ -506,6 +512,11 @@
     completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
+
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
+
   function reproducirSonido(nombre){ try{ sonidos[nombre].currentTime=0; sonidos[nombre].play(); }catch(e){} }
 
   var paginaActual = 1;
@@ -525,7 +536,6 @@
     document.getElementById('pagina'+paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({top:0, behavior:'smooth'});
-    localStorage.setItem('progreso_normal_auditivo', paginaActual);
   }
 
   function actualizarUI() {
@@ -680,20 +690,12 @@
   }, true);
 
   window.addEventListener('DOMContentLoaded', function() {
-    var guardado = localStorage.getItem('progreso_normal_auditivo');
-    if (guardado) {
-      var pag = parseInt(guardado);
-      if (pag>=1&&pag<=totalPaginas) {
-        document.getElementById('pagina'+paginaActual).classList.remove('activa');
-        paginaActual=pag;
-        document.getElementById('pagina'+paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

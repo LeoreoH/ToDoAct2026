@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aprendizaje Kinestésico 🖐️</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Países Poblados · Kinestésico · Nivel Normal</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --guindo: #6B0F2B;
@@ -418,6 +418,20 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
   .quiz-btn-footer:hover { background: var(--gold); color: var(--guindo-dark); }
+  .quiz-btn-footer.bloqueado {
+    background: #b9bcc7 !important;
+    border-color: #8f94a3 !important;
+    color: #f6f7fb !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
+  .quiz-btn-footer.bloqueado:hover {
+    background: #b9bcc7 !important;
+    color: #f6f7fb !important;
+    transform: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
 
   /* QUIZ OPTIONS */
   .q-opt {
@@ -451,6 +465,119 @@
     .nav-prev-btn, .nav-next-btn { padding: 8px 14px; font-size: 0.82rem; }
   }
 </style>
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-base.css">
+<style>
+  .kin-info-box {
+    background: var(--pm-gris-bg) !important;
+    border: 1px solid #d0d0de !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    font-size: 0.9rem !important;
+    line-height: 1.75 !important;
+    color: var(--pm-gris) !important;
+  }
+  .kin-info-box,
+  .kin-info-box p,
+  .kin-info-box div,
+  .kin-info-box span {
+    color: var(--pm-gris) !important;
+  }
+  .kin-info-box strong {
+    color: var(--pm-guindo) !important;
+  }
+
+  .game-body .drag-chip,
+  .game-body .drag-chip * {
+    color: var(--white) !important;
+  }
+  .game-body .drag-chip.correct,
+  .game-body .drag-chip.correct * {
+    background: var(--pm-ok-bg) !important;
+    border-color: var(--pm-ok) !important;
+    color: #1a7a46 !important;
+  }
+  .game-body .drag-chip.wrong,
+  .game-body .drag-chip.wrong * {
+    background: var(--pm-err-bg) !important;
+    border-color: var(--pm-err) !important;
+    color: #a93226 !important;
+  }
+
+  .sort-item {
+    background: #fff !important;
+    border: 3px solid var(--pm-guindo) !important;
+    color: var(--pm-guindo) !important;
+    box-shadow: none !important;
+  }
+  .sort-item,
+  .sort-item * {
+    color: var(--pm-guindo) !important;
+  }
+  .sort-item:hover {
+    background: #fdf5f6 !important;
+    border-color: var(--pm-guindo-light) !important;
+  }
+  .sort-item .drag-handle {
+    color: var(--pm-guindo) !important;
+    opacity: 0.75;
+  }
+
+  .build-panel,
+  .city-preview {
+    background: var(--pm-gris-bg) !important;
+    border: 1px solid #d0d0de !important;
+  }
+  .build-title {
+    color: var(--pm-guindo) !important;
+  }
+  .build-item {
+    background: #fff !important;
+    border: 2px solid var(--pm-guindo) !important;
+    color: var(--pm-guindo) !important;
+  }
+  .build-item,
+  .build-item * {
+    color: var(--pm-guindo) !important;
+  }
+  .build-item:hover {
+    background: #fdf5f6 !important;
+    color: var(--pm-guindo) !important;
+  }
+  .build-item.added,
+  .build-item.added * {
+    background: var(--pm-ok-bg) !important;
+    border-color: var(--pm-ok) !important;
+    color: #1a7a46 !important;
+  }
+  .city-stat {
+    background: #fff !important;
+    border: 1px solid #d0d0de !important;
+    color: var(--pm-gris) !important;
+  }
+  .city-stat,
+  .city-stat * {
+    color: var(--pm-gris) !important;
+  }
+  .city-stat .stat-val {
+    color: var(--pm-guindo) !important;
+  }
+
+  .rep-meta-text {
+    color: var(--pm-gris) !important;
+    font-size: 0.88rem !important;
+  }
+  .repaso-q-box {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: var(--pm-gris) !important;
+    margin-bottom: 14px !important;
+    line-height: 1.55 !important;
+    background: #fdf5f6 !important;
+    border-left: 4px solid var(--pm-guindo) !important;
+    padding: 12px !important;
+    border-radius: 0 10px 10px 0 !important;
+  }
+</style>
 </head>
 <body>
 
@@ -458,19 +585,19 @@
 
 <!-- ══════════ TOP HEADER ══════════ -->
 <div class="top-header">
-  <div class="top-header-icon">🖐️</div>
-  <h1>Aprendo Haciendo</h1>
-  <div class="top-header-sub">Bloque II — Geografía · 5to Primaria</div>
+  <div class="top-header-icon">KIN</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="top-header-sub">Bloque · Nivel Normal · Geografía 5°</div>
   <div class="header-badges">
-    <div class="header-badge">🖐️ Estilo Kinestésico</div>
-    <div class="header-badge secondary">🟢 Nivel Normal</div>
+    <div class="header-badge">Estilo Kinestésico</div>
+    <div class="header-badge secondary">Nivel Normal</div>
   </div>
 </div>
 
 <!-- ══════════ HUD BAR ══════════ -->
 <div class="hud-bar">
   <div class="hud-left">
-    <div class="hud-icon">🤲</div>
+    <div class="hud-icon">KIN</div>
     <div class="page-dots">
       <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
       <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
@@ -504,11 +631,11 @@
         <span class="game-title">Distribución Poblacional Mundial</span>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
-          <p>🌍 <strong style="color:var(--gold)">Distribución:</strong> La distribución poblacional es desigual. Factores como clima, agua, suelo y economía determinan dónde vive más gente.</p>
-          <p>🔴 <strong style="color:var(--gold)">Los 5 más poblados:</strong> India 🇮🇳, China 🇨🇳, EE.UU 🇺🇸, Indonesia 🇮🇩, Pakistán 🇵🇰</p>
-          <p>🔵 <strong style="color:var(--gold)">Los 5 menos poblados:</strong> Vaticano 🇻🇦, Nauru 🇳🇷, Tuvalu 🇹🇻, Palau 🇵🇼, San Marino 🇸🇲</p>
-          <p>⚠️ <strong style="color:var(--gold)">Problemas de concentración:</strong> hacinamiento, contaminación, desempleo, falta de agua, tráfico y exclusión social.</p>
+        <div class="kin-info-box">
+          <p>🌍 <strong>Distribución:</strong> La distribución poblacional es desigual. Factores como clima, agua, suelo y economía determinan dónde vive más gente.</p>
+          <p>🔴 <strong>Los 5 más poblados:</strong> India 🇮🇳, China 🇨🇳, EE.UU 🇺🇸, Indonesia 🇮🇩, Pakistán 🇵🇰</p>
+          <p>🔵 <strong>Los 5 menos poblados:</strong> Vaticano 🇻🇦, Nauru 🇳🇷, Tuvalu 🇹🇻, Palau 🇵🇼, San Marino 🇸🇲</p>
+          <p>⚠️ <strong>Problemas de concentración:</strong> hacinamiento, contaminación, desempleo, falta de agua, tráfico y exclusión social.</p>
         </div>
       </div>
     </div>
@@ -590,11 +717,11 @@
         <span class="game-title">Ciudad y Campo</span>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
-          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, industria, comercio, servicios, transporte masivo.</p>
-          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, naturaleza, actividades primarias, comunidades pequeñas.</p>
-          <p>🔄 <strong style="color:var(--gold)">Relación campo-ciudad:</strong> el campo provee alimentos; la ciudad provee manufactura, tecnología y servicios.</p>
-          <p>🚶 <strong style="color:var(--gold)">Éxodo rural:</strong> migración del campo a la ciudad en busca de mejores oportunidades.</p>
+        <div class="kin-info-box">
+          <p>🏙️ <strong>Espacio urbano:</strong> alta densidad, industria, comercio, servicios, transporte masivo.</p>
+          <p>🌾 <strong>Espacio rural:</strong> baja densidad, naturaleza, actividades primarias, comunidades pequeñas.</p>
+          <p>🔄 <strong>Relación campo-ciudad:</strong> el campo provee alimentos; la ciudad provee manufactura, tecnología y servicios.</p>
+          <p>🚶 <strong>Éxodo rural:</strong> migración del campo a la ciudad en busca de mejores oportunidades.</p>
         </div>
       </div>
     </div>
@@ -648,13 +775,13 @@
           <div class="build-panel">
             <div class="build-title">🧱 Elementos disponibles</div>
             <div class="build-items">
-              <div class="build-item" onclick="addCity('hospital','🏥 Hospital',+20)">🏥 Hospital <span style="color:var(--success)">+Salud</span></div>
-              <div class="build-item" onclick="addCity('escuela','🏫 Escuela',+15)">🏫 Escuela <span style="color:var(--success)">+Educación</span></div>
-              <div class="build-item" onclick="addCity('fabrica','🏭 Fábrica',+10)">🏭 Fábrica <span style="color:var(--success)">+Economía</span></div>
-              <div class="build-item" onclick="addCity('parque','🌳 Parque',+12)">🌳 Parque <span style="color:var(--success)">+Bienestar</span></div>
-              <div class="build-item" onclick="addCity('transporte','🚇 Metro',+18)">🚇 Metro <span style="color:var(--success)">+Transporte</span></div>
-              <div class="build-item" onclick="addCity('contaminacion','⚠️ Sin filtros',-15)">⚠️ Sin filtros <span style="color:var(--danger)">-Calidad</span></div>
-              <div class="build-item" onclick="addCity('hacinamiento','🏘️ Sin planif.',-10)">🏘️ Sin planif. <span style="color:var(--danger)">-Espacio</span></div>
+              <div class="build-item" onclick="addCity('hospital','🏥 Hospital',+20)">🏥 Hospital <span style="color:var(--success)!important">+Salud</span></div>
+              <div class="build-item" onclick="addCity('escuela','🏫 Escuela',+15)">🏫 Escuela <span style="color:var(--success)!important">+Educación</span></div>
+              <div class="build-item" onclick="addCity('fabrica','🏭 Fábrica',+10)">🏭 Fábrica <span style="color:var(--success)!important">+Economía</span></div>
+              <div class="build-item" onclick="addCity('parque','🌳 Parque',+12)">🌳 Parque <span style="color:var(--success)!important">+Bienestar</span></div>
+              <div class="build-item" onclick="addCity('transporte','🚇 Metro',+18)">🚇 Metro <span style="color:var(--success)!important">+Transporte</span></div>
+              <div class="build-item" onclick="addCity('contaminacion','⚠️ Sin filtros',-15)">⚠️ Sin filtros <span style="color:var(--danger)!important">-Calidad</span></div>
+              <div class="build-item" onclick="addCity('hacinamiento','🏘️ Sin planif.',-10)">🏘️ Sin planif. <span style="color:var(--danger)!important">-Espacio</span></div>
             </div>
           </div>
           <div class="build-panel">
@@ -680,11 +807,11 @@
       </div>
       <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave del tema.</span></div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
-          <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
-          <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
-          <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
-          <p>🚶 <strong style="color:var(--gold)">Migración:</strong> movimiento campo → ciudad en busca de mejores oportunidades.</p>
+        <div class="kin-info-box">
+          <p>🏙️ <strong>Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
+          <p>🌾 <strong>Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
+          <p>🔄 <strong>Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
+          <p>🚶 <strong>Migración:</strong> movimiento campo → ciudad en busca de mejores oportunidades.</p>
         </div>
       </div>
     </div>
@@ -701,10 +828,10 @@
         <span class="game-title">Culturas del Mundo</span>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
-          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> más de 7,000 idiomas, miles de etnias, tradiciones, gastronomías, artes y religiones.</p>
-          <p>🤝 <strong style="color:var(--gold)">Multiculturalismo:</strong> convivencia de culturas. La interculturalidad es el diálogo y respeto mutuo entre ellas.</p>
-          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural material e inmaterial de la humanidad.</p>
+        <div class="kin-info-box">
+          <p>🌍 <strong>Diversidad cultural:</strong> más de 7,000 idiomas, miles de etnias, tradiciones, gastronomías, artes y religiones.</p>
+          <p>🤝 <strong>Multiculturalismo:</strong> convivencia de culturas. La interculturalidad es el diálogo y respeto mutuo entre ellas.</p>
+          <p>🏛️ <strong>UNESCO:</strong> protege el patrimonio cultural material e inmaterial de la humanidad.</p>
         </div>
       </div>
     </div>
@@ -781,11 +908,11 @@
       <div class="game-card-header"><span class="game-number">Repaso</span><span class="game-title">¿Qué aprendiste? — Culturas</span></div>
       <div class="game-instruction"><span class="instr-icon">📖</span><span>Conceptos clave de diversidad cultural.</span></div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
-          <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
-          <p>🗣️ <strong style="color:var(--gold)">Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
-          <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
-          <p>🤝 <strong style="color:var(--gold)">Interculturalidad:</strong> respeto, diálogo e intercambio entre culturas.</p>
+        <div class="kin-info-box">
+          <p>🌍 <strong>Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
+          <p>🗣️ <strong>Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
+          <p>🏛️ <strong>UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
+          <p>🤝 <strong>Interculturalidad:</strong> respeto, diálogo e intercambio entre culturas.</p>
         </div>
       </div>
     </div>
@@ -807,10 +934,10 @@
         <div id="repaso-container">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
             <div class="hud-chip">⭐ Puntos del repaso: <span id="repaso-pts">0</span></div>
-            <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 9</div>
+            <div class="rep-meta-text">Pregunta <span id="rep-num">1</span> de 9</div>
           </div>
           <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:11%"></div></div>
-          <div id="repaso-q" style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.55;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:12px;border-radius:0 8px 8px 0;"></div>
+          <div id="repaso-q" class="repaso-q-box"></div>
           <div id="repaso-opts"></div>
           <div class="feedback" id="fb-rep"></div>
         </div>
@@ -885,7 +1012,7 @@
   <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div class="footer-center" id="footerPageNum">1/4</div>
-    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL RETO</button>
+    <a class="quiz-btn-footer" href="quiz.html">🎮 IR AL QUIZ</a>
   </div>
   <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
 </div>
@@ -902,6 +1029,71 @@ const PAGE_LABELS = [
   { icon:'🌍', title:'Las Culturas del Mundo' },
   { icon:'🎮', title:'Repaso Final' },
 ];
+const progresoKinestesico = {
+  1: { drag: false, sort: false },
+  2: { match: false, city: false },
+  3: { culturas: false, actitudes: false },
+  4: { repaso: false, match: false, sort: false }
+};
+const paginasCelebradas = new Set();
+const sonidos = {
+  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+};
+
+Object.values(sonidos).forEach(audio => {
+  if (audio && audio.src) audio.volume = 0.15;
+});
+
+function reproducirSonido(nombre) {
+  const audio = sonidos[nombre];
+  if (!audio || !audio.src) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+function paginaCompleta(numero) {
+  return Object.values(progresoKinestesico[numero] || {}).every(Boolean);
+}
+
+function todoCompletado() {
+  return Object.keys(progresoKinestesico).every(numero => paginaCompleta(Number(numero)));
+}
+
+function completarSubactividad(pagina, clave) {
+  if (!progresoKinestesico[pagina] || progresoKinestesico[pagina][clave]) return;
+  progresoKinestesico[pagina][clave] = true;
+  if (paginaCompleta(pagina) && !paginasCelebradas.has(pagina)) {
+    paginasCelebradas.add(pagina);
+    reproducirSonido('tada');
+  }
+  syncLockedUI();
+}
+
+function puedeIrAPagina(destino) {
+  if (destino <= currentPage) return true;
+  for (let idx = currentPage; idx < destino; idx++) {
+    if (!paginaCompleta(idx + 1)) return false;
+  }
+  return true;
+}
+
+function syncLockedUI() {
+  document.getElementById('prevBtn').disabled = (currentPage === 0);
+  document.getElementById('nextBtn').disabled = (currentPage === TOTAL_PAGES - 1) || !paginaCompleta(currentPage + 1);
+
+  const quizBtn = document.querySelector('.quiz-btn-footer');
+  if (quizBtn) {
+    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'inline-flex' : 'none';
+    const bloqueado = !todoCompletado();
+    quizBtn.classList.toggle('bloqueado', bloqueado);
+    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
+    quizBtn.tabIndex = bloqueado ? -1 : 0;
+    quizBtn.title = bloqueado ? 'Completa todas las paginas para desbloquear el quiz' : '';
+  }
+}
 
 // ───── POINTS ─────
 function addPoints(n) {
@@ -918,22 +1110,26 @@ function addPoints(n) {
 
 // ───── PAGE NAVIGATION ─────
 function goToPage(n) {
+  if (!puedeIrAPagina(n)) {
+    reproducirSonido('error');
+    return;
+  }
   currentPage = n;
+  reproducirSonido('click');
   document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
   document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
   document.getElementById('pagLabel').textContent = `Pág ${n+1}/${TOTAL_PAGES}`;
   document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
   document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
   document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[n].icon;
-  document.getElementById('prevBtn').disabled = (n === 0);
-  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
+  syncLockedUI();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
 
 // ───── DRAG AND DROP ─────
 let draggedEl = null;
-function dragStart(e) { draggedEl = e.target; e.target.classList.add('dragging'); }
+function dragStart(e) { reproducirSonido('click'); draggedEl = e.target; e.target.classList.add('dragging'); }
 function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('dragover'); }
 function dropItem(e, cat) {
   e.preventDefault();
@@ -949,14 +1145,18 @@ function checkDrag1() {
   const mas = document.querySelectorAll('#drop-mas .drag-chip');
   const menos = document.querySelectorAll('#drop-menos .drag-chip');
   let ok = 0, total = 8;
+  document.querySelectorAll('#drop-mas .drag-chip,#drop-menos .drag-chip').forEach(c => c.classList.remove('correct','wrong'));
   mas.forEach(c => { if(c.dataset.cat==='mas'){c.classList.add('correct');ok++;}else c.classList.add('wrong'); });
   menos.forEach(c => { if(c.dataset.cat==='menos'){c.classList.add('correct');ok++;}else c.classList.add('wrong'); });
   const fb = document.getElementById('fb-d1');
   fb.className = 'feedback show ' + (ok===total?'ok':'fail');
   fb.textContent = ok===total ? '🎉 ¡Perfecto! +25 puntos' : `✏️ ${ok}/${total} correctos. Revisa los marcados en rojo.`;
-  if (ok===total) addPoints(25);
+  if (ok===total) { reproducirSonido('acierto'); addPoints(25); completarSubactividad(1, 'drag'); }
+  else reproducirSonido('error');
+  syncLockedUI();
 }
 function resetDrag1() {
+  reproducirSonido('click');
   const src = document.getElementById('paises-source');
   document.querySelectorAll('#drop-mas .drag-chip,#drop-menos .drag-chip').forEach(c => {
     c.classList.remove('correct','wrong','dragging'); src.appendChild(c);
@@ -966,7 +1166,7 @@ function resetDrag1() {
 
 // ───── SORT ─────
 let sortDragEl = null;
-function sortDragStart(e) { sortDragEl = e.currentTarget; e.currentTarget.classList.add('dragging'); }
+function sortDragStart(e) { reproducirSonido('click'); sortDragEl = e.currentTarget; e.currentTarget.classList.add('dragging'); }
 function sortDragOver(e) {
   e.preventDefault();
   const over = e.currentTarget;
@@ -987,9 +1187,12 @@ function checkSort() {
   const fb = document.getElementById('fb-sort');
   fb.className = 'feedback show ' + (correct?'ok':'fail');
   fb.textContent = correct ? '🥇 ¡Orden correcto! +20 puntos' : '❌ El orden no es correcto. Intenta de nuevo.';
-  if (correct) addPoints(20);
+  if (correct) { reproducirSonido('acierto'); addPoints(20); completarSubactividad(1, 'sort'); }
+  else reproducirSonido('error');
+  syncLockedUI();
 }
 function shuffleSort() {
+  reproducirSonido('click');
   const list = document.getElementById('sort-ranking');
   const items = [...list.children];
   for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));list.appendChild(items[j]);}
@@ -1001,13 +1204,16 @@ function checkSortFinal() {
   const fb = document.getElementById('fb-sort-final');
   fb.className = 'feedback show ' + (correct?'ok':'fail');
   fb.textContent = correct ? '🥇 ¡Excelente! +20 puntos' : '❌ No es correcto. ¡Sigue intentando!';
-  if (correct) addPoints(20);
+  if (correct) { reproducirSonido('acierto'); addPoints(20); completarSubactividad(4, 'sort'); }
+  else reproducirSonido('error');
+  syncLockedUI();
 }
 
 // ───── MATCH GAME ─────
 let matchSelected = null, matchContext = '', matchedPairs = new Set();
 function matchClick(el, side) {
   if (el.classList.contains('matched')) return;
+  reproducirSonido('click');
   if (matchSelected === null) {
     matchSelected = el; matchContext = side; el.classList.add('selected');
   } else {
@@ -1017,6 +1223,7 @@ function matchClick(el, side) {
     }
     const id1 = matchSelected.dataset.id, id2 = el.dataset.id;
     if (id1 === id2) {
+      reproducirSonido('acierto');
       matchSelected.classList.remove('selected'); matchSelected.classList.add('matched');
       el.classList.add('matched');
       matchedPairs.add(id1);
@@ -1027,19 +1234,23 @@ function matchClick(el, side) {
         fb.className = 'feedback show ok';
         fb.textContent = '🎉 ¡Todas las parejas encontradas! +Bonus';
         addPoints(10);
+        completarSubactividad(2, 'match');
       }
     } else {
+      reproducirSonido('error');
       el.classList.add('wrong-flash'); matchSelected.classList.add('wrong-flash');
       setTimeout(() => { el.classList.remove('wrong-flash'); matchSelected.classList.remove('selected','wrong-flash'); }, 500);
     }
     matchSelected = null; matchContext = '';
   }
+  syncLockedUI();
 }
 
 // MATCH REP
 let repMatchSelected = null, repMatchContext = '', repMatchPairs = new Set();
 function matchClickRep(el, side) {
   if (el.classList.contains('matched')) return;
+  reproducirSonido('click');
   if (repMatchSelected === null) {
     repMatchSelected = el; repMatchContext = side; el.classList.add('selected');
   } else {
@@ -1049,6 +1260,7 @@ function matchClickRep(el, side) {
     }
     const id1 = repMatchSelected.dataset.id, id2 = el.dataset.id;
     if (id1 === id2) {
+      reproducirSonido('acierto');
       repMatchSelected.classList.remove('selected'); repMatchSelected.classList.add('matched');
       el.classList.add('matched');
       repMatchPairs.add(id1);
@@ -1059,19 +1271,25 @@ function matchClickRep(el, side) {
         fb.className = 'feedback show ok';
         fb.textContent = '🎉 ¡Todas las parejas! +Bonus';
         addPoints(10);
+        completarSubactividad(4, 'match');
       }
     } else {
+      reproducirSonido('error');
       el.classList.add('wrong-flash'); repMatchSelected.classList.add('wrong-flash');
       setTimeout(() => { el.classList.remove('wrong-flash'); repMatchSelected.classList.remove('selected','wrong-flash'); }, 500);
     }
     repMatchSelected = null; repMatchContext = '';
   }
+  syncLockedUI();
 }
 
 // ───── CULTURAS ─────
 function checkCulturasDrag() {
   const zones = {mexico:'#drop-mexico',japon:'#drop-japon',india:'#drop-india',brasil:'#drop-brasil'};
   let ok = 0, total = 8;
+  Object.values(zones).forEach(sel => {
+    document.querySelectorAll(sel + ' .drag-chip').forEach(c => c.classList.remove('correct','wrong'));
+  });
   Object.entries(zones).forEach(([cat,sel]) => {
     document.querySelectorAll(sel+' .drag-chip').forEach(c => {
       if(c.dataset.cat===cat){c.classList.add('correct');ok++;}
@@ -1081,9 +1299,12 @@ function checkCulturasDrag() {
   const fb = document.getElementById('fb-cult');
   fb.className = 'feedback show ' + (ok===total?'ok':'fail');
   fb.textContent = ok===total ? '🌍 ¡Perfecto! +25 puntos' : `✏️ ${ok}/${total} correctos.`;
-  if (ok===total) addPoints(25);
+  if (ok===total) { reproducirSonido('acierto'); addPoints(25); completarSubactividad(3, 'culturas'); }
+  else reproducirSonido('error');
+  syncLockedUI();
 }
 function resetCulturas() {
+  reproducirSonido('click');
   const src = document.getElementById('cultura-source');
   ['mexico','japon','india','brasil'].forEach(cat => {
     document.querySelectorAll(`#drop-${cat} .drag-chip`).forEach(c => { c.classList.remove('correct','wrong'); src.appendChild(c); });
@@ -1096,15 +1317,19 @@ function checkActitudes() {
   const pos = document.querySelectorAll('#drop-positivo .drag-chip');
   const neg = document.querySelectorAll('#drop-negativo .drag-chip');
   let ok = 0;
+  document.querySelectorAll('#drop-positivo .drag-chip,#drop-negativo .drag-chip').forEach(c => c.classList.remove('correct','wrong'));
   pos.forEach(c => { if(c.dataset.cat==='positivo'){c.classList.add('correct');ok++;}else c.classList.add('wrong'); });
   neg.forEach(c => { if(c.dataset.cat==='negativo'){c.classList.add('correct');ok++;}else c.classList.add('wrong'); });
   const total = document.querySelectorAll('#drop-positivo .drag-chip,#drop-negativo .drag-chip').length;
   const fb = document.getElementById('fb-act');
   fb.className = 'feedback show ' + (ok===7?'ok':'fail');
   fb.textContent = ok===7 ? '🤝 ¡Excelente actitud intercultural! +25 puntos' : `✏️ ${ok} correctos. Revisa los marcados.`;
-  if (ok===7) addPoints(25);
+  if (ok===7) { reproducirSonido('acierto'); addPoints(25); completarSubactividad(3, 'actitudes'); }
+  else reproducirSonido('error');
+  syncLockedUI();
 }
 function resetActitudes() {
+  reproducirSonido('click');
   const src = document.getElementById('actitudes-source');
   ['positivo','negativo'].forEach(cat => {
     document.querySelectorAll(`#drop-${cat} .drag-chip`).forEach(c => { c.classList.remove('correct','wrong'); src.appendChild(c); });
@@ -1116,9 +1341,11 @@ function resetActitudes() {
 let cityQuality = 50, cityAdded = {};
 function addCity(id, name, val) {
   if (cityAdded[id]) {
+    reproducirSonido('error');
     const fb = document.getElementById('fb-city');
     fb.className = 'feedback show fail'; fb.textContent = 'Ya agregaste este elemento.'; return;
   }
+  reproducirSonido('click');
   cityAdded[id] = true;
   cityQuality = Math.max(0, Math.min(100, cityQuality + val));
   document.getElementById('city-quality').textContent = cityQuality;
@@ -1130,9 +1357,17 @@ function addCity(id, name, val) {
   const fb = document.getElementById('fb-city');
   fb.className = 'feedback show ' + (cityQuality>=70?'ok':'fail');
   fb.textContent = cityQuality>=80?'🌟 ¡Ciudad excelente!':cityQuality>=60?'✅ Ciudad buena':cityQuality<40?'⚠️ Tu ciudad necesita mejoras':'🏙️ Sigue construyendo...';
-  if (val>0) addPoints(5);
+  if (val>0) {
+    reproducirSonido('acierto');
+    addPoints(5);
+  } else {
+    reproducirSonido('error');
+  }
+  if (cityQuality >= 80) completarSubactividad(2, 'city');
+  syncLockedUI();
 }
 function resetCity() {
+  reproducirSonido('click');
   cityQuality=50; cityAdded={};
   document.getElementById('city-quality').textContent=50;
   document.getElementById('city-elements').innerHTML='';
@@ -1153,7 +1388,7 @@ const repasoQ = [
   {q:'La diferencia entre ciudad y campo se basa principalmente en:', opts:['Color del suelo','Densidad poblacional y actividades económicas','Idioma','Temperatura'], a:1},
 ];
 let repIdx=0, repPts=0;
-function initRepaso() { repIdx=0; repPts=0; loadRep(); }
+function initRepaso() { repIdx=0; repPts=0; document.getElementById('repaso-pts').textContent = 0; document.getElementById('rep-num').textContent = 1; document.getElementById('repaso-prog').style.width = '11%'; loadRep(); }
 function loadRep() {
   if (repIdx>=repasoQ.length) { showRepasoEnd(); return; }
   const d = repasoQ[repIdx];
@@ -1162,12 +1397,14 @@ function loadRep() {
   d.opts.forEach((o,i) => {
     const b = document.createElement('button'); b.className = 'q-opt'; b.textContent = o;
     b.onclick = () => {
+      if (b.disabled) return;
+      reproducirSonido('click');
       document.querySelectorAll('#repaso-opts .q-opt').forEach((btn,j) => {
         if(j===d.a) btn.classList.add('correct'); else if(j===i) btn.classList.add('wrong'); btn.disabled=true;
       });
       const fb = document.getElementById('fb-rep');
-      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';repPts+=10;addPoints(10);}
-      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
+      if(i===d.a){reproducirSonido('acierto');fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';repPts+=10;addPoints(10);}
+      else{reproducirSonido('error');fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
       document.getElementById('repaso-pts').textContent = repPts;
       repIdx++;
       document.getElementById('rep-num').textContent = Math.min(repIdx+1,9);
@@ -1184,13 +1421,30 @@ function showRepasoEnd() {
   document.getElementById('rep-final').textContent = repPts;
   const badge = repPts>=80?'🥇 Maestro Kinestésico':repPts>=50?'🥈 Aprendiz Activo':'🥉 En Movimiento';
   document.getElementById('rep-badge').innerHTML = `<span class="badge">${badge}</span>`;
+  completarSubactividad(4, 'repaso');
 }
 function restartRepaso() {
+  reproducirSonido('click');
   document.getElementById('repaso-container').style.display = 'block';
   document.getElementById('repaso-end').style.display = 'none';
   initRepaso();
 }
 initRepaso();
+syncLockedUI();
+
+const quizBtnKinestesicoNormal = document.querySelector('.quiz-btn-footer');
+if (quizBtnKinestesicoNormal) {
+  quizBtnKinestesicoNormal.addEventListener('click', function(event) {
+    if (!todoCompletado()) {
+      event.preventDefault();
+      reproducirSonido('error');
+    } else {
+      reproducirSonido('click');
+    }
+  }, true);
+}
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

@@ -1,92 +1,2337 @@
-const pathParts = window.location.pathname.split('/');
-const SLUG_CONTENIDO = 'POBLACIÓN-mundial';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migración, ciudades y población · Auditivo · Nivel Difícil</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --guindo: #6B0F2B;
+    --guindo-dark: #4A0A1E;
+    --guindo-light: #8B1A3A;
+    --guindo-mid: #7A1230;
+    --gris: #4A4A5A;
+    --gris-light: #6E6E80;
+    --gris-pale: #C8C8D4;
+    --gris-dark: #2A2A3A;
+    --gold: #F4C842;
+    --accent: #E85D8A;
+    --white: #F5F0F2;
+    --success: #2ECC71;
+    --danger: #E74C3C;
+    --info: #3498DB;
+    --bg: #3A0A1A;
+    --card-bg: #FFF8F6;
+    --card-line: #E5CDD2;
+  }
 
-const nombresBloques = {
-    'POBLACIÓN-mundial': 'Bloque III: Población Mundial'
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: linear-gradient(160deg, var(--bg) 0%, #2A2A3A 50%, var(--guindo-dark) 100%);
+    min-height: 100vh;
+    color: var(--white);
+  }
+
+  .top-header {
+    background: linear-gradient(135deg, var(--guindo-dark) 0%, var(--gris-dark) 50%, var(--guindo-dark) 100%);
+    text-align: center;
+    padding: 22px 20px 14px;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .top-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.55rem, 4vw, 2.3rem);
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(244, 200, 66, 0.35);
+    margin: 4px 0;
+  }
+
+  .top-header-sub {
+    font-size: 0.82rem;
+    color: var(--gris-pale);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .header-badge {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.84rem;
+    padding: 6px 18px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .header-badge.secondary {
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+  }
+
+  .progreso {
+    background: #fff;
+    border-radius: 60px;
+    margin: 20px auto;
+    max-width: 860px;
+    padding: 13px 26px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 3px solid var(--guindo);
+    box-shadow: 0 5px 0 var(--guindo-dark);
+  }
+
+  .puntos {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .punto {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f5dbe2;
+    border: 3px solid var(--guindo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--guindo-dark);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .punto.activo {
+    background: var(--gold);
+    transform: scale(1.2);
+  }
+
+  .punto.completado {
+    background: #ccefdc;
+    border-color: #fff;
+    color: #1f5a38;
+  }
+
+  .badge-pag {
+    background: var(--guindo);
+    color: #fff;
+    font-size: 0.92rem;
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .section-title-bar {
+    background: linear-gradient(90deg, var(--guindo-mid), var(--gris), var(--guindo-mid));
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(244, 200, 66, 0.2);
+    border-bottom: 1px solid rgba(244, 200, 66, 0.2);
+    margin: 0 0 16px;
+  }
+
+  .section-title-bar .sicon {
+    font-size: 1.1rem;
+  }
+
+  .section-title-bar span {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  .main-wrap {
+    max-width: 780px;
+    margin: 0 auto 28px;
+    padding: 0 14px;
+  }
+
+  .page {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .game-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-line);
+    border-radius: 16px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  }
+
+  .page .game-card:last-child {
+    margin-bottom: 14px;
+  }
+
+  .game-card-header {
+    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark));
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid rgba(244, 200, 66, 0.3);
+  }
+
+  .game-number {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.78rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .game-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.02rem;
+    color: var(--white);
+    flex: 1;
+  }
+
+  .game-instruction {
+    padding: 10px 18px 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--gris);
+    background: #fff4f1;
+    border-bottom: 1px solid rgba(107, 15, 43, 0.08);
+  }
+
+  .instr-icon {
+    font-size: 1rem;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .game-body {
+    padding: 16px 18px;
+    color: var(--gris);
+  }
+
+  .topic-hero {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 14px;
+  }
+
+  .topic-hero img {
+    width: 100%;
+    min-height: 190px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid #d4b8b8;
+    background: #fff;
+    display: block;
+  }
+
+  .hero-copy {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: var(--guindo-dark);
+  }
+
+  .hero-copy h3 {
+    margin: 0 0 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    color: var(--guindo-dark);
+  }
+
+  .hero-copy p {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    line-height: 1.62;
+    color: var(--gris);
+  }
+
+  .hero-mini-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .hero-mini-list span {
+    display: block;
+    background: #fdf5f6;
+    border: 1px solid #ead2d7;
+    border-radius: 10px;
+    padding: 8px 10px;
+    color: var(--gris);
+    font-size: 0.83rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .insight-card {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--gris);
+  }
+
+  .insight-card strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--guindo-dark);
+    font-size: 0.88rem;
+  }
+
+  .insight-card span {
+    color: var(--gris);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .data-note {
+    background: #fdf5f6;
+    border-left: 4px solid var(--guindo);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 14px;
+    color: var(--gris);
+    line-height: 1.6;
+    font-size: 0.9rem;
+    margin-top: 12px;
+  }
+
+  .data-note strong {
+    color: var(--guindo-dark);
+  }
+
+  .audio-box {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .audio-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .audio-head strong {
+    color: var(--guindo-dark);
+    font-size: 0.95rem;
+  }
+
+  .audio-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--guindo);
+    color: var(--gold);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .audio-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .audio-play-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--guindo), var(--guindo-light));
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(107, 15, 43, 0.22);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .audio-play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 16px rgba(107, 15, 43, 0.25);
+  }
+
+  .audio-play-btn.playing {
+    background: linear-gradient(135deg, var(--gold), #ffd86c);
+    color: var(--guindo-dark);
+  }
+
+  .audio-track {
+    min-width: 0;
+  }
+
+  .audio-progress {
+    height: 12px;
+    border-radius: 999px;
+    background: #ecdce1;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(107, 15, 43, 0.12);
+  }
+
+  .audio-progress-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+  }
+
+  .audio-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.79rem;
+    color: #7a5a63;
+  }
+
+  .audio-status {
+    font-weight: 700;
+  }
+
+  .score-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff4cc;
+    border: 1px solid #e6c98b;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    color: var(--guindo-dark);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .word-chip {
+    border: none;
+    background: #fff;
+    color: var(--guindo-dark);
+    border: 2px solid #e1c3cb;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .word-chip:hover {
+    border-color: var(--guindo);
+    transform: translateY(-1px);
+  }
+
+  .word-chip.selected {
+    background: #f7dce6;
+    border-color: var(--accent);
+  }
+
+  .word-chip.used {
+    opacity: 0.38;
+    cursor: default;
+    transform: none;
+  }
+
+  .cloze-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .cloze-line {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .cloze-blank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    padding: 4px 10px;
+    border-bottom: 3px solid var(--guindo);
+    font-weight: 800;
+    color: var(--guindo-dark);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: center;
+  }
+
+  .cloze-blank.filled {
+    background: #fff1f4;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .cloze-blank.correct-blank {
+    background: rgba(46, 204, 113, 0.16);
+    border-color: var(--success);
+    color: #1f7c44;
+  }
+
+  .cloze-blank.wrong-blank {
+    background: rgba(231, 76, 60, 0.12);
+    border-color: var(--danger);
+    color: #aa3328;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  .btn-green {
+    background: var(--success);
+    color: #fff;
+  }
+
+  .btn-plain {
+    background: #ecd9df;
+    color: var(--guindo-dark);
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--guindo-dark);
+  }
+
+  .btn-maroon {
+    background: var(--guindo);
+    color: #fff;
+  }
+
+  .q-panel,
+  .ritmo-stage,
+  .summary-box {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .q-question {
+    font-family: 'Fredoka One', cursive;
+    color: var(--guindo-dark);
+    font-size: 1rem;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .q-opt-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .q-opt {
+    border: 2px solid #ead2d7;
+    background: #fdf5f6;
+    color: var(--gris);
+    border-radius: 12px;
+    padding: 11px 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.18s ease;
+  }
+
+  .q-opt:hover:not(:disabled) {
+    border-color: var(--guindo);
+    transform: translateY(-1px);
+  }
+
+  .q-opt.correct {
+    background: rgba(46, 204, 113, 0.12);
+    border-color: var(--success);
+    color: #1f7c44;
+  }
+
+  .q-opt.wrong {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: var(--danger);
+    color: #a53a31;
+  }
+
+  .scenario-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff1f4;
+    color: var(--guindo-dark);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .ritmo-prompt {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--guindo-dark);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .choice-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .choice-btn {
+    flex: 1 1 180px;
+    border: 2px solid #ead2d7;
+    background: #fdf5f6;
+    color: var(--gris);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    border-color: var(--guindo);
+  }
+
+  .choice-btn.correct {
+    background: rgba(46, 204, 113, 0.12);
+    border-color: var(--success);
+    color: #1f7c44;
+  }
+
+  .choice-btn.wrong {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: var(--danger);
+    color: #a53a31;
+  }
+
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .support-card {
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .support-card strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--guindo-dark);
+    font-size: 0.87rem;
+  }
+
+  .support-card span {
+    color: var(--gris);
+    font-size: 0.81rem;
+    line-height: 1.5;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .summary-box strong {
+    display: block;
+    color: var(--guindo-dark);
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .summary-box p,
+  .summary-box li {
+    font-size: 0.84rem;
+    color: var(--gris);
+    line-height: 1.55;
+  }
+
+  .summary-box ul {
+    padding-left: 16px;
+  }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    display: none;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    font-weight: 700;
+  }
+
+  .feedback.show {
+    display: block;
+  }
+
+  .feedback.ok {
+    background: rgba(46, 204, 113, 0.14);
+    color: #1f7c44;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+  }
+
+  .feedback.fail {
+    background: rgba(231, 76, 60, 0.12);
+    color: #a53a31;
+    border: 1px solid rgba(231, 76, 60, 0.28);
+  }
+
+  .final-meter {
+    background: #ecdce1;
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .final-meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+    border-radius: inherit;
+  }
+
+  .final-panel {
+    display: none;
+    margin-top: 14px;
+    background: #fff;
+    border: 2px solid #ead2d7;
+    border-radius: 16px;
+    padding: 18px;
+    color: var(--gris);
+    text-align: center;
+  }
+
+  .final-panel.show {
+    display: block;
+  }
+
+  .final-panel h3 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--guindo-dark);
+    margin-bottom: 8px;
+  }
+
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0 14px;
+    background: #fff;
+    padding: 13px 26px;
+    border-radius: 60px;
+    border: 3px solid var(--guindo);
+    box-shadow: 0 5px 0 var(--guindo-dark);
+  }
+
+  .btn-nav {
+    background: var(--gold);
+    color: var(--guindo-dark);
+    border: 3px solid var(--guindo);
+    padding: 10px 24px;
+    border-radius: 38px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--guindo-dark);
+    transition: all 0.2s;
+  }
+
+  .btn-nav:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--guindo-dark);
+  }
+
+  .btn-nav:disabled {
+    background: #e0e0e0;
+    color: #9e9e9e;
+    border-color: #bdbdbd;
+    box-shadow: none;
+    cursor: default;
+  }
+
+  .ind-pag {
+    font-size: 1.15rem;
+    font-weight: 800;
+    background: #f2dce2;
+    color: var(--guindo-dark);
+    padding: 8px 24px;
+    border-radius: 36px;
+    border: 3px solid var(--guindo);
+  }
+
+  .boton-quiz {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 36px;
+    background: var(--gold);
+    color: var(--guindo-dark);
+    padding: 14px 46px;
+    border-radius: 60px;
+    font-weight: 800;
+    font-size: 1.18rem;
+    text-decoration: none;
+    border: 4px solid var(--guindo);
+    box-shadow: 0 8px 0 var(--guindo-dark);
+    transition: all 0.2s;
+  }
+
+  .boton-quiz:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 11px 0 var(--guindo-dark);
+  }
+
+  .boton-quiz.bloqueado {
+    opacity: 0.5;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  .toast-hint {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(74, 10, 30, 0.96);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  }
+
+  .toast-hint.on {
+    opacity: 1;
+  }
+
+  @media (max-width: 760px) {
+    .topic-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-mini-list,
+    .insight-grid,
+    .support-grid,
+    .summary-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .progreso {
+      padding: 12px;
+      gap: 8px;
+    }
+
+    .nav-bar {
+      padding: 12px;
+      gap: 8px;
+    }
+
+    .punto {
+      width: 32px;
+      height: 32px;
+      font-size: 0.9rem;
+    }
+
+    .btn-nav {
+      padding: 9px 18px;
+      font-size: 0.92rem;
+    }
+
+    .ind-pag {
+      font-size: 1rem;
+      padding: 7px 16px;
+    }
+
+    .boton-quiz {
+      font-size: 1rem;
+      padding: 12px 28px;
+    }
+
+    .audio-controls {
+      grid-template-columns: 1fr;
+    }
+
+    .audio-play-btn {
+      width: 52px;
+      height: 52px;
+    }
+  }
+</style>
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-base.css">
+<style>
+  .topic-hero {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin-bottom: 14px;
+  }
+
+  .topic-hero img {
+    width: 100%;
+    min-height: 190px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid #d4b8b8 !important;
+    background: #fff !important;
+  }
+
+  .hero-copy {
+    background: #fff !important;
+    border: 2px solid #ead2d7 !important;
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: var(--guindo-dark) !important;
+  }
+
+  .hero-copy h3 {
+    margin: 0 0 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    color: var(--guindo-dark) !important;
+  }
+
+  .hero-copy p {
+    margin: 0 0 8px;
+    color: var(--gris) !important;
+    line-height: 1.65;
+    font-size: 0.9rem;
+  }
+
+  .hero-mini-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .hero-mini-list span {
+    display: block;
+    background: #fdf5f6 !important;
+    border: 1px solid #ead2d7 !important;
+    border-radius: 10px;
+    padding: 8px 10px;
+    color: var(--gris) !important;
+    font-size: 0.83rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .insight-card {
+    background: #fff !important;
+    border: 2px solid #ead2d7 !important;
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--gris) !important;
+  }
+
+  .insight-card strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--guindo-dark) !important;
+    font-size: 0.88rem;
+  }
+
+  .insight-card span {
+    color: var(--gris) !important;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .data-note {
+    background: #fdf5f6 !important;
+    border-left: 4px solid var(--guindo) !important;
+    border-radius: 0 10px 10px 0;
+    padding: 12px 14px;
+    color: var(--gris) !important;
+    line-height: 1.65;
+    font-size: 0.9rem;
+    margin-top: 12px;
+  }
+
+  .data-note strong {
+    color: var(--guindo-dark) !important;
+  }
+
+  .audio-box,
+  .q-panel,
+  .ritmo-stage,
+  .summary-box,
+  .support-card,
+  .final-panel,
+  .cloze-line {
+    background: #fff !important;
+    border: 2px solid #ead2d7 !important;
+    color: var(--gris) !important;
+  }
+
+  .audio-head strong,
+  .q-question,
+  .support-card strong,
+  .summary-box strong {
+    color: var(--guindo-dark) !important;
+  }
+
+  .audio-meta {
+    color: #7f5f68 !important;
+  }
+
+  .score-counter {
+    background: #fff4cc !important;
+    border: 1px solid #e6c98b !important;
+    color: var(--guindo-dark) !important;
+  }
+
+  .word-chip {
+    background: #fff !important;
+    border: 2px solid #e1c3cb !important;
+    color: var(--guindo-dark) !important;
+  }
+
+  .word-chip.selected {
+    background: #f7dce6 !important;
+    border-color: var(--accent) !important;
+  }
+
+  .q-opt,
+  .choice-btn {
+    background: #fdf5f6 !important;
+    border: 2px solid #ead2d7 !important;
+    color: var(--gris) !important;
+  }
+
+  .scenario-pill {
+    background: #fdf5f6 !important;
+    color: var(--guindo-dark) !important;
+    border: 1px solid #ead2d7 !important;
+  }
+
+  .cloze-blank {
+    color: var(--guindo-dark) !important;
+  }
+
+  .support-card span,
+  .summary-box p,
+  .summary-box li {
+    color: var(--gris) !important;
+  }
+
+  @media (max-width: 640px) {
+    .topic-hero,
+    .insight-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-mini-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-header">
+  <h1>MIGRACIÓN, CIUDADES Y POBLACIÓN</h1>
+  <div class="top-header-sub">Bloque III · Nivel Difícil · Geografía 5°</div>
+  <div class="header-badges">
+    <div class="header-badge">🎧 Estilo Auditivo</div>
+    <div class="header-badge secondary">Nivel Difícil</div>
+  </div>
+</div>
+
+<div class="progreso">
+  <span style="font-size:2rem;line-height:1;">🎧</span>
+  <div class="puntos" id="puntosDiv">
+    <div class="punto activo" onclick="goToPage(0)">1</div>
+    <div class="punto" onclick="goToPage(1)">2</div>
+    <div class="punto" onclick="goToPage(2)">3</div>
+    <div class="punto" onclick="goToPage(3)">4</div>
+  </div>
+  <span class="badge-pag">Pág <span id="numActual">1</span>/4</span>
+</div>
+
+<div class="section-title-bar">
+  <span class="sicon">🚶</span>
+  <span id="sectionTitle">Migración humana</span>
+</div>
+
+<div class="main-wrap">
+  <div class="page active" id="page-0">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Migración: moverse para vivir mejor</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">👀</span>
+        <span>Observa la escena y escucha el audio principal. Aquí solo dejamos palabras clave para acompañar la explicación.</span>
+      </div>
+      <div class="game-body">
+        <div class="topic-hero">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg" alt="Estación con personas en movimiento" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg'">
+          <div class="hero-copy">
+            <h3>Escucha el contenido</h3>
+            <div class="audio-box" data-audio-key="c1"></div>
+            <p><strong>Observa:</strong> quién sale, hacia dónde se mueve y qué busca al llegar.</p>
+            <div class="hero-mini-list">
+              <span><strong>Emigrar:</strong> salir del lugar de origen.</span>
+              <span><strong>Inmigrar:</strong> llegar y establecerse.</span>
+              <span><strong>Expulsión:</strong> empuja a salir.</span>
+              <span><strong>Atracción:</strong> anima a llegar.</span>
+            </div>
+          </div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-card"><strong>Salida</strong><span>Sequía, violencia, desempleo o pocos servicios.</span></div>
+          <div class="insight-card"><strong>Llegada</strong><span>Hospitales, escuelas, trabajo y reunificación familiar.</span></div>
+          <div class="insight-card"><strong>Cambio visible</strong><span>Las ciudades receptoras crecen y necesitan planeación.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 1</span>
+        <span class="game-title">Escucha y completa las ideas clave</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎙️</span>
+        <span>Escucha el audio y usa las tarjetas para completar las frases. Si una palabra no va, puedes tocar el espacio para vaciarlo.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="1"></div>
+        <div class="score-counter">✅ Correctas: <span id="c1-score">0/5</span></div>
+        <div class="cloze-list" data-cloze="1">
+          <div class="cloze-line">Cuando una persona <span class="cloze-blank" data-bank="1" onclick="fillBlank(this,1)">_____</span> de su lugar de origen, se habla de emigración.</div>
+          <div class="cloze-line">Cuando una familia llega a un nuevo lugar para vivir, ocurre la <span class="cloze-blank" data-bank="1" onclick="fillBlank(this,1)">_____</span>.</div>
+          <div class="cloze-line">La falta de empleo o la violencia son factores de <span class="cloze-blank" data-bank="1" onclick="fillBlank(this,1)">_____</span>.</div>
+          <div class="cloze-line">Los hospitales y la escuela funcionan como factores de <span class="cloze-blank" data-bank="1" onclick="fillBlank(this,1)">_____</span>.</div>
+          <div class="cloze-line">Cuando muchas personas dejan el campo para ir a la ciudad se produce un <span class="cloze-blank" data-bank="1" onclick="fillBlank(this,1)">_____</span>.</div>
+        </div>
+        <div class="word-bank" id="wb1"></div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(1,'c1-score')">✅ Verificar frases</button>
+          <button class="btn btn-plain" onclick="resetCloze(1,'c1-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-c1"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 2</span>
+        <span class="game-title">Casos de migración</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎧</span>
+        <span>Escucha la guía, lee el caso y elige la mejor respuesta. Si te equivocas, solo se desactiva esa opción para que vuelvas a intentar.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="2"></div>
+        <div class="score-counter">🌟 Casos resueltos: <span id="q1-hits">0</span>/5</div>
+        <div class="q-panel">
+          <div class="scenario-pill">Caso <span id="q1-step">1</span> de 5</div>
+          <div class="q-question" id="q1-text"></div>
+          <div class="q-opt-grid" id="q1-opts"></div>
+          <div class="btn-row">
+            <button class="btn btn-gold" id="q1-next" onclick="nextQ1()">Siguiente caso →</button>
+          </div>
+        </div>
+        <div class="feedback" id="fb-q1"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">Ideas que conviene recordar</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🔁</span>
+        <span>Vuelve a escuchar el repaso si quieres reforzar la diferencia entre salir, llegar y reconocer los factores que influyen en una migración.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="r1"></div>
+        <div class="support-grid">
+          <div class="support-card"><strong>Origen</strong><span>Es el lugar del que sale la persona o familia.</span></div>
+          <div class="support-card"><strong>Destino</strong><span>Es el lugar al que llega y donde espera vivir mejor.</span></div>
+          <div class="support-card"><strong>Motivo</strong><span>Nos ayuda a distinguir expulsión y atracción.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-1">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Retos urbanos: problemas y mejoras</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🏙️</span>
+        <span>Escucha el audio principal y observa la escena. Aquí solo se muestran pistas visuales breves para acompañar la explicación.</span>
+      </div>
+      <div class="game-body">
+        <div class="topic-hero">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg" alt="Tráfico intenso en la ciudad" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg'">
+          <div class="hero-copy">
+            <h3>Escucha el contenido</h3>
+            <div class="audio-box" data-audio-key="c2"></div>
+            <p><strong>Observa:</strong> qué se siente como problema urbano y qué se ve como una mejora para la ciudad.</p>
+            <div class="hero-mini-list">
+              <span><strong>Reto:</strong> tráfico, basura, contaminación, falta de vivienda.</span>
+              <span><strong>Mejora:</strong> parques, clínicas, transporte, agua potable.</span>
+              <span><strong>Planeación:</strong> organiza el crecimiento de la ciudad.</span>
+              <span><strong>Servicios:</strong> mejoran la calidad de vida.</span>
+            </div>
+          </div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-card"><strong>Problema</strong><span>La ciudad crece, pero los servicios no alcanzan.</span></div>
+          <div class="insight-card"><strong>Efecto</strong><span>La movilidad, la salud y la vivienda se vuelven más difíciles.</span></div>
+          <div class="insight-card"><strong>Respuesta</strong><span>Hace falta planeación urbana y participación ciudadana.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 3</span>
+        <span class="game-title">¿Es un reto o una mejora?</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🔊</span>
+        <span>Escucha la guía y luego clasifica cada situación. Si fallas, esa opción se marca y podrás probar con la otra.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="3"></div>
+        <div class="score-counter">🏙️ Aciertos: <span id="ritmo-score">0</span>/6</div>
+        <div class="ritmo-stage">
+          <div class="scenario-pill">Situación <span id="ritmo-round">1</span> de 6</div>
+          <div class="ritmo-prompt" id="ritmo-display"></div>
+          <div class="choice-row">
+            <button class="choice-btn" id="ritmo-reto" onclick="answerRitmo('reto')">⚠️ Reto urbano</button>
+            <button class="choice-btn" id="ritmo-mejora" onclick="answerRitmo('mejora')">✨ Mejora urbana</button>
+          </div>
+        </div>
+        <div class="feedback" id="fb-ritmo"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 4</span>
+        <span class="game-title">Completa las soluciones urbanas</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🧩</span>
+        <span>Escucha el audio y usa las tarjetas para completar las ideas. Aquí importa reconocer qué acciones ayudan a que una ciudad funcione mejor.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="4"></div>
+        <div class="score-counter">✅ Correctas: <span id="c2-score">0/5</span></div>
+        <div class="cloze-list" data-cloze="2">
+          <div class="cloze-line">Cuando una ciudad piensa antes de crecer, aplica <span class="cloze-blank" data-bank="2" onclick="fillBlank(this,2)">_____</span>.</div>
+          <div class="cloze-line">El agua potable, drenaje y recolección de basura son <span class="cloze-blank" data-bank="2" onclick="fillBlank(this,2)">_____</span>.</div>
+          <div class="cloze-line">Para mover a muchas personas sin tantos autos, se necesita <span class="cloze-blank" data-bank="2" onclick="fillBlank(this,2)">_____</span>.</div>
+          <div class="cloze-line">Los parques y árboles mejoran el ambiente y aportan <span class="cloze-blank" data-bank="2" onclick="fillBlank(this,2)">_____</span>.</div>
+          <div class="cloze-line">Una ciudad mejora más cuando existe <span class="cloze-blank" data-bank="2" onclick="fillBlank(this,2)">_____</span>.</div>
+        </div>
+        <div class="word-bank" id="wb2"></div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(2,'c2-score')">✅ Verificar frases</button>
+          <button class="btn btn-plain" onclick="resetCloze(2,'c2-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-c2"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">Qué observar en una ciudad</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🔁</span>
+        <span>Reproduce el repaso si quieres reforzar la diferencia entre problema urbano y mejora urbana.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="r2"></div>
+        <div class="support-grid">
+          <div class="support-card"><strong>Movilidad</strong><span>El tráfico y los traslados dicen mucho sobre la ciudad.</span></div>
+          <div class="support-card"><strong>Servicios</strong><span>Agua, salud y vivienda muestran si el crecimiento fue suficiente.</span></div>
+          <div class="support-card"><strong>Ambiente</strong><span>Menos contaminación y más áreas verdes mejoran la calidad de vida.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-2">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Contenido</span>
+        <span class="game-title">Análisis de población: leer datos sin memorizar</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">📊</span>
+        <span>Escucha el audio principal y usa la imagen como apoyo. Las palabras clave quedan visibles para no depender tanto de texto largo.</span>
+      </div>
+      <div class="game-body">
+        <div class="topic-hero">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="Luces nocturnas en la Tierra" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg'">
+          <div class="hero-copy">
+            <h3>Escucha el contenido</h3>
+            <div class="audio-box" data-audio-key="c3"></div>
+            <p><strong>Observa:</strong> dónde hay mucha gente, dónde hay poca y cómo cambian los datos con el tiempo.</p>
+            <div class="hero-mini-list">
+              <span><strong>Densidad:</strong> habitantes por kilómetro cuadrado.</span>
+              <span><strong>Concentración:</strong> mucha gente en poco espacio.</span>
+              <span><strong>Dispersión:</strong> pocas personas alejadas entre sí.</span>
+              <span><strong>Crecimiento:</strong> aumento de población con el tiempo.</span>
+            </div>
+          </div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight-card"><strong>Mapa</strong><span>Ayuda a ver dónde se distribuye la población.</span></div>
+          <div class="insight-card"><strong>Gráfica</strong><span>Permite notar si los habitantes aumentan o disminuyen.</span></div>
+          <div class="insight-card"><strong>Comparación</strong><span>Sirve para no sacar conclusiones con un solo dato.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 5</span>
+        <span class="game-title">¿Qué concepto describe mejor la pista?</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎧</span>
+        <span>Escucha primero el audio guía y luego identifica el concepto correcto en cada pista.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="5"></div>
+        <div class="score-counter">📌 Conceptos resueltos: <span id="cultura-score">0</span>/5</div>
+        <div class="q-panel">
+          <div class="scenario-pill">Pista <span id="cultura-step">1</span> de 5</div>
+          <div class="q-question" id="cultura-pista"></div>
+          <div class="q-opt-grid" id="cultura-opciones"></div>
+          <div class="btn-row">
+            <button class="btn btn-gold" id="cultura-next" onclick="nextCultura()">Siguiente pista →</button>
+          </div>
+        </div>
+        <div class="feedback" id="fb-cultura"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Juego 6</span>
+        <span class="game-title">Completa las ideas del análisis poblacional</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🧠</span>
+        <span>Escucha el apoyo auditivo y completa las frases con los conceptos correctos.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="6"></div>
+        <div class="support-grid" style="margin-top:0;margin-bottom:14px;">
+          <div class="support-card"><strong>Mapa lleno</strong><span>Puede sugerir concentración de población.</span></div>
+          <div class="support-card"><strong>Casas separadas</strong><span>Nos orienta hacia dispersión.</span></div>
+          <div class="support-card"><strong>Línea que sube</strong><span>Se relaciona con crecimiento poblacional.</span></div>
+        </div>
+        <div class="score-counter">✅ Correctas: <span id="c3-score">0/5</span></div>
+        <div class="cloze-list" data-cloze="3">
+          <div class="cloze-line">La <span class="cloze-blank" data-bank="3" onclick="fillBlank(this,3)">_____</span> compara habitantes con el tamaño del territorio.</div>
+          <div class="cloze-line">Si muchas personas viven en poco espacio, hay <span class="cloze-blank" data-bank="3" onclick="fillBlank(this,3)">_____</span>.</div>
+          <div class="cloze-line">Si pocas personas viven repartidas en una zona amplia, hay <span class="cloze-blank" data-bank="3" onclick="fillBlank(this,3)">_____</span>.</div>
+          <div class="cloze-line">Cuando la cantidad de habitantes aumenta con el tiempo, observamos <span class="cloze-blank" data-bank="3" onclick="fillBlank(this,3)">_____</span>.</div>
+          <div class="cloze-line">La densidad suele expresarse en habitantes por <span class="cloze-blank" data-bank="3" onclick="fillBlank(this,3)">_____</span>.</div>
+        </div>
+        <div class="word-bank" id="wb3"></div>
+        <div class="btn-row">
+          <button class="btn btn-green" onclick="checkCloze(3,'c3-score')">✅ Verificar frases</button>
+          <button class="btn btn-plain" onclick="resetCloze(3,'c3-score')">🔄 Limpiar</button>
+        </div>
+        <div class="feedback" id="fb-c3"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso</span>
+        <span class="game-title">Cómo leer la población con más seguridad</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🔁</span>
+        <span>Si todavía dudas entre densidad, concentración y dispersión, vuelve a escuchar este repaso.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="r3"></div>
+        <div class="support-grid">
+          <div class="support-card"><strong>Compara</strong><span>No te quedes con un solo número o una sola imagen.</span></div>
+          <div class="support-card"><strong>Ubica</strong><span>Piensa siempre si la gente está junta o repartida.</span></div>
+          <div class="support-card"><strong>Observa el tiempo</strong><span>Las gráficas muestran si la población cambia o permanece igual.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-3">
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Resumen</span>
+        <span class="game-title">Lo que aprendiste en este nivel</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🏁</span>
+        <span>Antes del reto final, recuerda qué aprendiste sobre migración, retos urbanos y análisis de población.</span>
+      </div>
+      <div class="game-body">
+        <div class="summary-grid">
+          <div class="summary-box">
+            <strong>Migración</strong>
+            <p>Implica salir de un lugar y llegar a otro por factores de expulsión y atracción.</p>
+          </div>
+          <div class="summary-box">
+            <strong>Retos urbanos</strong>
+            <p>Aparecen cuando la ciudad crece rápido y necesita más vivienda, transporte y servicios.</p>
+          </div>
+          <div class="summary-box">
+            <strong>Análisis de población</strong>
+            <p>Se apoya en densidad, concentración, dispersión y crecimiento para entender cómo vive la gente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Audio final</span>
+        <span class="game-title">Escucha el repaso general</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🎧</span>
+        <span>Usa este audio como repaso completo antes de contestar el reto final.</span>
+      </div>
+      <div class="game-body">
+        <div class="audio-box" data-audio-key="final"></div>
+      </div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-card-header">
+        <span class="game-number">Repaso final</span>
+        <span class="game-title">Escucha, piensa y elige el mejor destino</span>
+      </div>
+      <div class="game-instruction">
+        <span class="instr-icon">🧭</span>
+        <span>Contesta con calma. Si una respuesta es incorrecta, podrás seguir intentando hasta encontrar la correcta.</span>
+      </div>
+      <div class="game-body">
+        <div class="score-counter">⭐ Aciertos del repaso: <span id="repaso-pts">0</span>/10</div>
+        <div class="final-meter"><div class="final-meter-fill" id="repaso-prog"></div></div>
+        <div class="q-panel">
+          <div class="scenario-pill">Pregunta <span id="rep-num">1</span> de 10</div>
+          <div class="q-question" id="rep-q"></div>
+          <div class="q-opt-grid" id="rep-opts"></div>
+        </div>
+        <div class="feedback" id="fb-rep"></div>
+        <div class="final-panel" id="final-panel">
+          <h3>¡Reto completado!</h3>
+          <p>Ya completaste el repaso del nivel difícil. El botón del quiz final quedó desbloqueado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="btn-nav" id="btnAnt" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+    <span class="ind-pag" id="indPag">1/4</span>
+    <button class="btn-nav" id="btnSig" onclick="changePage(1)">SIGUIENTE →</button>
+  </div>
+
+  <a class="boton-quiz" href="quiz.html">IR AL QUIZ</a>
+</div>
+
+<div class="toast-hint" id="toastHint"></div>
+
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
+<script>
+const TOTAL_PAGES = 4;
+let currentPage = 0;
+const pageProgress = {
+  1: { cloze: false, quiz: false },
+  2: { ritmo: false, cloze: false },
+  3: { cultura: false, cloze: false },
+  4: { repaso: false }
+};
+const celebradas = new Set();
+const PAGE_LABELS = [
+  { icon: '🚶', title: 'Migración humana' },
+  { icon: '🏙️', title: 'Retos urbanos' },
+  { icon: '📊', title: 'Análisis de población' },
+  { icon: '🏁', title: 'Repaso final' }
+];
+
+const fx = {
+  sndClick: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+  sndDing: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+  sndError: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+  sndTada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
 };
 
-let estadoContenido = null;
+Object.values(fx).forEach(audio => {
+  if (audio && audio.src) audio.volume = 0.15;
+});
 
-async function cargarEstadoContenido() {
-    try {
-        const res = await fetch(
-            `/api/contenido/GEOGRAFÍA/${SLUG_CONTENIDO}`,
-            { credentials: 'include' }
-        );
+function playFx(name) {
+  const audio = fx[name];
+  if (!audio || !audio.src) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
 
-        if (!res.ok) return;
+function showToast(msg) {
+  const t = document.getElementById('toastHint');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => t.classList.remove('on'), 2200);
+}
 
-        estadoContenido = await res.json();
+function pageComplete(page) {
+  return Object.values(pageProgress[page] || {}).every(Boolean);
+}
 
-        actualizarBotones();
+function allComplete() {
+  return Object.keys(pageProgress).every(page => pageComplete(Number(page)));
+}
 
-    } catch (e) {
-        console.error(e);
+function completeSubactivity(page, key) {
+  if (!pageProgress[page] || pageProgress[page][key]) return;
+  pageProgress[page][key] = true;
+  if (pageComplete(page) && !celebradas.has(page)) {
+    celebradas.add(page);
+    playFx('sndTada');
+  }
+  syncLockedUI();
+}
+
+function canGoToPage(target) {
+  if (target <= currentPage) return true;
+  for (let idx = currentPage; idx < target; idx++) {
+    if (!pageComplete(idx + 1)) return false;
+  }
+  return true;
+}
+
+function syncLockedUI() {
+  document.getElementById('btnAnt').disabled = currentPage === 0;
+  document.getElementById('btnSig').disabled = currentPage === TOTAL_PAGES - 1 || !pageComplete(currentPage + 1);
+
+  document.querySelectorAll('.punto').forEach((dot, index) => {
+    dot.classList.remove('activo', 'completado');
+    if (index === currentPage) dot.classList.add('activo');
+    else if (index < currentPage) dot.classList.add('completado');
+  });
+
+  document.getElementById('numActual').textContent = String(currentPage + 1);
+  document.getElementById('indPag').textContent = `${currentPage + 1}/${TOTAL_PAGES}`;
+  document.getElementById('sectionTitle').textContent = PAGE_LABELS[currentPage].title;
+  document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[currentPage].icon;
+
+  const quizBtn = document.querySelector('.boton-quiz');
+  if (quizBtn) {
+    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'block' : 'none';
+    const blocked = !allComplete();
+    quizBtn.classList.toggle('bloqueado', blocked);
+    quizBtn.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+    quizBtn.title = blocked ? 'Completa todas las páginas para desbloquear el quiz.' : '';
+  }
+}
+
+function goToPage(page) {
+  if (!canGoToPage(page)) {
+    playFx('sndError');
+    showToast('Completa la página actual para avanzar.');
+    syncLockedUI();
+    return;
+  }
+  if (page !== currentPage) playFx('sndClick');
+  currentPage = page;
+  document.querySelectorAll('.page').forEach((el, index) => el.classList.toggle('active', index === page));
+  syncLockedUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changePage(dir) {
+  goToPage(Math.max(0, Math.min(TOTAL_PAGES - 1, currentPage + dir)));
+}
+
+function normalizeText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function shuffleArray(list) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function prepareQuestionBank(items) {
+  return shuffleArray(items).map(item => {
+    const opts = shuffleArray(item.opts);
+    return {
+      q: item.q,
+      opts,
+      a: opts.indexOf(item.answer)
+    };
+  });
+}
+
+const STATIC_AUDIO_FILES = {
+  'c1': { src: 'audios/contenido1.mp3', label: 'Escucha el contenido' },
+  '1': { src: 'audios/juego1.mp3', label: 'Escucha con atención' },
+  '2': { src: 'audios/juego2.mp3', label: 'Escucha la pregunta' },
+  'r1': { src: 'audios/repaso1.mp3', label: 'Escucha el repaso' },
+  'c2': { src: 'audios/contenido2.mp3', label: 'Escucha el contenido' },
+  '3': { src: 'audios/juego3.mp3', label: 'Escucha con atención' },
+  '4': { src: 'audios/juego4.mp3', label: 'Escucha con atención' },
+  'r2': { src: 'audios/repaso2.mp3', label: 'Escucha el repaso' },
+  'c3': { src: 'audios/contenido3.mp3', label: 'Escucha el contenido' },
+  '5': { src: 'audios/juego5.mp3', label: 'Escucha con atención' },
+  '6': { src: 'audios/juego6.mp3', label: 'Escucha con atención' },
+  'r3': { src: 'audios/repaso3.mp3', label: 'Escucha el repaso' },
+  'final': { src: 'audios/repasofinal.mp3', label: 'Escucha el reto final' }
+};
+
+let activeAudioKey = null;
+
+function renderAudioBox(box) {
+  const key = box.dataset.audioKey;
+  const config = STATIC_AUDIO_FILES[key];
+  if (!config) return;
+
+  box.innerHTML = `
+    <div class="audio-controls">
+      <button type="button" class="audio-play-btn" id="play-${key}" aria-label="Reproducir audio">▶</button>
+      <div class="audio-track">
+        <div class="audio-progress" id="prog-${key}">
+          <div class="audio-progress-fill" id="fill-${key}"></div>
+        </div>
+        <div class="audio-meta">
+          <span class="audio-status" id="status-${key}">Pulsa ▶ para escuchar</span>
+          <span id="time-${key}">0:00 / 0:00</span>
+        </div>
+      </div>
+      <audio id="audio-${key}" preload="metadata"></audio>
+    </div>
+  `;
+
+  const audio = box.querySelector(`#audio-${key}`);
+  const button = box.querySelector(`#play-${key}`);
+  const fill = box.querySelector(`#fill-${key}`);
+  const progress = box.querySelector(`#prog-${key}`);
+  const status = box.querySelector(`#status-${key}`);
+  const time = box.querySelector(`#time-${key}`);
+
+  audio.src = config.src;
+  audio.volume = 1;
+
+  audio.addEventListener('loadedmetadata', () => {
+    time.textContent = `0:00 / ${formatTime(audio.duration)}`;
+    status.textContent = 'Pulsa ▶ para escuchar';
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    fill.style.width = `${pct}%`;
+    time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+  });
+
+  audio.addEventListener('ended', () => {
+    fill.style.width = '0%';
+    button.textContent = '▶';
+    button.classList.remove('playing');
+    status.textContent = 'Pulsa ▶ para escuchar';
+    if (activeAudioKey === key) activeAudioKey = null;
+  });
+
+  audio.addEventListener('error', () => {
+    status.textContent = 'Audio pendiente por agregar en la carpeta audios';
+  });
+
+  button.addEventListener('click', () => toggleAudio(key));
+  progress.addEventListener('click', event => seekAudio(event, key));
+}
+
+function initAudioBoxes() {
+  document.querySelectorAll('.audio-box').forEach(renderAudioBox);
+}
+
+function formatTime(seconds) {
+  if (!isFinite(seconds)) return '0:00';
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${String(sec).padStart(2, '0')}`;
+}
+
+function stopAudio(key) {
+  const audio = document.getElementById(`audio-${key}`);
+  const button = document.getElementById(`play-${key}`);
+  const status = document.getElementById(`status-${key}`);
+  if (!audio || !button) return;
+  audio.pause();
+  button.textContent = '▶';
+  button.classList.remove('playing');
+  if (status) status.textContent = 'Pulsa ▶ para escuchar';
+}
+
+function toggleAudio(key) {
+  const audio = document.getElementById(`audio-${key}`);
+  const button = document.getElementById(`play-${key}`);
+  const status = document.getElementById(`status-${key}`);
+  if (!audio || !button) return;
+
+  if (!audio.src || audio.error) {
+    playFx('sndError');
+    showToast('Ese audio todavía no está disponible.');
+    return;
+  }
+
+  if (activeAudioKey && activeAudioKey !== key) {
+    stopAudio(activeAudioKey);
+  }
+
+  if (audio.paused) {
+    audio.play().then(() => {
+      button.textContent = '⏸';
+      button.classList.add('playing');
+      if (status) status.textContent = 'Reproduciendo audio';
+      activeAudioKey = key;
+    }).catch(() => {
+      playFx('sndError');
+      showToast('No se pudo reproducir el audio.');
+    });
+  } else {
+    audio.pause();
+    button.textContent = '▶';
+    button.classList.remove('playing');
+    if (status) status.textContent = 'Pulsa ▶ para escuchar';
+    activeAudioKey = null;
+  }
+}
+
+function seekAudio(event, key) {
+  const audio = document.getElementById(`audio-${key}`);
+  const fill = document.getElementById(`fill-${key}`);
+  if (!audio || !audio.duration) return;
+  const rect = event.currentTarget.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const pct = Math.max(0, Math.min(1, x / rect.width));
+  audio.currentTime = pct * audio.duration;
+  fill.style.width = `${pct * 100}%`;
+}
+
+const selectedWords = {
+  1: null,
+  2: null,
+  3: null
+};
+
+const wordBanks = {
+  1: ['expulsión', 'inmigración', 'éxodo rural', 'atracción', 'emigración'],
+  2: ['participación ciudadana', 'planeación urbana', 'servicios básicos', 'áreas verdes', 'transporte público'],
+  3: ['dispersión', 'kilómetro cuadrado', 'crecimiento', 'concentración', 'densidad']
+};
+
+const clozeAnswers = {
+  1: ['emigración', 'inmigración', 'expulsión', 'atracción', 'éxodo rural'],
+  2: ['planeación urbana', 'servicios básicos', 'transporte público', 'áreas verdes', 'participación ciudadana'],
+  3: ['densidad', 'concentración', 'dispersión', 'crecimiento', 'kilómetro cuadrado']
+};
+
+function renderWordBank(bankNumber) {
+  const root = document.getElementById(`wb${bankNumber}`);
+  if (!root) return;
+  root.innerHTML = '';
+  shuffleArray(wordBanks[bankNumber]).forEach(word => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'word-chip';
+    chip.textContent = word;
+    chip.dataset.word = word;
+    chip.onclick = () => selectWord(chip, bankNumber);
+    root.appendChild(chip);
+  });
+  selectedWords[bankNumber] = null;
+}
+
+function renderAllWordBanks() {
+  renderWordBank(1);
+  renderWordBank(2);
+  renderWordBank(3);
+}
+
+function selectWord(chip, bankNumber) {
+  if (chip.classList.contains('used')) return;
+  document.querySelectorAll(`#wb${bankNumber} .word-chip`).forEach(el => el.classList.remove('selected'));
+  chip.classList.add('selected');
+  selectedWords[bankNumber] = chip;
+}
+
+function clearBlank(blank, bankNumber) {
+  const value = blank.dataset.filled || '';
+  if (!value) return;
+  const chip = Array.from(document.querySelectorAll(`#wb${bankNumber} .word-chip`)).find(el => el.dataset.word === value && el.classList.contains('used'));
+  if (chip) chip.classList.remove('used', 'selected');
+  blank.textContent = '_____';
+  blank.dataset.filled = '';
+  blank.classList.remove('filled', 'correct-blank', 'wrong-blank');
+}
+
+function fillBlank(blank, bankNumber) {
+  if (blank.dataset.filled) {
+    clearBlank(blank, bankNumber);
+    return;
+  }
+  const chip = selectedWords[bankNumber];
+  if (!chip || chip.classList.contains('used')) return;
+  blank.textContent = chip.dataset.word;
+  blank.dataset.filled = chip.dataset.word;
+  blank.classList.add('filled');
+  chip.classList.add('used');
+  chip.classList.remove('selected');
+  selectedWords[bankNumber] = null;
+}
+
+function checkCloze(number, scoreId) {
+  playFx('sndClick');
+  const root = document.querySelector(`[data-cloze="${number}"]`);
+  if (!root) return;
+  const blanks = Array.from(root.querySelectorAll('.cloze-blank'));
+  const answers = clozeAnswers[number];
+  let correct = 0;
+
+  blanks.forEach((blank, index) => {
+    const filled = normalizeText(blank.dataset.filled);
+    const expected = normalizeText(answers[index]);
+    blank.classList.remove('correct-blank', 'wrong-blank');
+    if (filled && filled === expected) {
+      blank.classList.add('correct-blank');
+      correct++;
+    } else {
+      blank.classList.add('wrong-blank');
     }
+  });
+
+  const fb = document.getElementById(`fb-c${number}`);
+  if (scoreId) document.getElementById(scoreId).textContent = `${correct}/${answers.length}`;
+
+  if (correct === answers.length) {
+    playFx('sndDing');
+    fb.className = 'feedback show ok';
+    fb.textContent = '¡Muy bien! Completaste correctamente esta parte.';
+    completeSubactivity(number, 'cloze');
+  } else {
+    playFx('sndError');
+    fb.className = 'feedback show fail';
+    fb.textContent = `Llevas ${correct} de ${answers.length} correctas. Ajusta solo las marcadas y vuelve a intentar.`;
+  }
 }
 
-function mostrarContenidos(){
-    document.getElementById('bloque-contenidos').style.display = 'block';
+function resetCloze(number, scoreId) {
+  playFx('sndClick');
+  const root = document.querySelector(`[data-cloze="${number}"]`);
+  if (!root) return;
+  root.querySelectorAll('.cloze-blank').forEach(blank => {
+    blank.textContent = '_____';
+    blank.dataset.filled = '';
+    blank.classList.remove('filled', 'correct-blank', 'wrong-blank');
+  });
+  renderWordBank(number);
+  if (scoreId) document.getElementById(scoreId).textContent = `0/${clozeAnswers[number].length}`;
+  document.getElementById(`fb-c${number}`).className = 'feedback';
 }
 
-function actualizarBotones() {
-    const btnFacil   = document.getElementById('btn-facil');
-    const btnNormal  = document.getElementById('btn-normal');
-    const btnDificil = document.getElementById('btn-dificil');
+const q1data = prepareQuestionBank([
+  { q: 'Una familia deja su comunidad porque la sequía dañó la cosecha y ya no encuentra trabajo. ¿Qué factor aparece con más fuerza?', opts: ['Atracción', 'Expulsión', 'Concentración', 'Crecimiento'], answer: 'Expulsión' },
+  { q: 'Una niña se muda con su familia de Chiapas a Monterrey sin salir de México. ¿Qué tipo de migración es?', opts: ['Interna', 'Externa', 'Internacional', 'Dispersa'], answer: 'Interna' },
+  { q: 'Un hospital, una universidad y nuevos empleos en una ciudad funcionan como factores de...', opts: ['Aislamiento', 'Atracción', 'Expulsión', 'Sequía'], answer: 'Atracción' },
+  { q: 'Si una persona sale por unos meses para trabajar y luego regresa a su comunidad, se trata de una migración...', opts: ['Temporal', 'Permanente', 'Dispersa', 'Externa fija'], answer: 'Temporal' },
+  { q: 'Cuando muchas personas dejan el campo para vivir en la ciudad ocurre...', opts: ['Dispersión', 'Éxodo rural', 'Crecimiento natural', 'Reforestación'], answer: 'Éxodo rural' }
+]);
+let q1idx = 0;
+let q1CurrentResolved = false;
+const q1CorrectSet = new Set();
 
-    btnFacil.disabled = true;
-    btnNormal.disabled = true;
-    btnDificil.disabled = true;
+function loadQ1() {
+  const fb = document.getElementById('fb-q1');
+  if (q1CorrectSet.size >= q1data.length) {
+    document.getElementById('q1-text').textContent = '¡Ya resolviste todos los casos de migración!';
+    document.getElementById('q1-opts').innerHTML = '';
+    document.getElementById('q1-next').disabled = true;
+    document.getElementById('q1-step').textContent = q1data.length;
+    fb.className = 'feedback show ok';
+    fb.textContent = 'Excelente. Ya identificas mejor origen, destino y motivo.';
+    completeSubactivity(1, 'quiz');
+    return;
+  }
 
-    if (!estadoContenido || !estadoContenido.diagnostico_realizado) return;
+  const current = q1data[q1idx];
+  q1CurrentResolved = false;
+  document.getElementById('q1-step').textContent = String(q1CorrectSet.size + 1);
+  document.getElementById('q1-text').textContent = current.q;
+  document.getElementById('q1-next').disabled = true;
+  const opts = document.getElementById('q1-opts');
+  opts.innerHTML = '';
 
-    const nivelAsignado = estadoContenido.nivel_asignado;
+  current.opts.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'q-opt';
+    button.textContent = option;
+    button.onclick = () => answerQ1(index, button);
+    opts.appendChild(button);
+  });
 
-    if (nivelAsignado === 'facil') {
-        btnFacil.disabled = false;
+  fb.className = 'feedback';
+}
+
+function answerQ1(index, button) {
+  if (button.disabled || q1CurrentResolved) return;
+  playFx('sndClick');
+  const current = q1data[q1idx];
+  const fb = document.getElementById('fb-q1');
+
+  if (index === current.a) {
+    playFx('sndDing');
+    q1CurrentResolved = true;
+    q1CorrectSet.add(q1idx);
+    document.getElementById('q1-hits').textContent = String(q1CorrectSet.size);
+    document.querySelectorAll('#q1-opts .q-opt').forEach((btn, idx) => {
+      if (idx === current.a) btn.classList.add('correct');
+      btn.disabled = true;
+    });
+    document.getElementById('q1-next').disabled = false;
+    fb.className = 'feedback show ok';
+    fb.textContent = q1CorrectSet.size === q1data.length
+      ? '¡Correcto! Ya terminaste esta actividad.'
+      : '¡Correcto! Ahora pasa al siguiente caso.';
+    if (q1CorrectSet.size === q1data.length) completeSubactivity(1, 'quiz');
+  } else {
+    playFx('sndError');
+    button.classList.add('wrong');
+    button.disabled = true;
+    fb.className = 'feedback show fail';
+    fb.textContent = 'Esa no es. Prueba con otra opción.';
+  }
+  syncLockedUI();
+}
+
+function nextQ1() {
+  if (q1CorrectSet.size >= q1data.length) {
+    completeSubactivity(1, 'quiz');
+    return;
+  }
+  if (!q1CurrentResolved) {
+    playFx('sndError');
+    showToast('Primero resuelve el caso actual.');
+    return;
+  }
+  playFx('sndClick');
+  for (let step = 1; step <= q1data.length; step++) {
+    const next = (q1idx + step) % q1data.length;
+    if (!q1CorrectSet.has(next)) {
+      q1idx = next;
+      loadQ1();
+      return;
     }
+  }
+}
 
-    if (nivelAsignado === 'normal') {
-        btnFacil.disabled = false;
-        btnNormal.disabled = false;
+let ritmoItems = shuffleArray([
+  { text: 'Las calles están llenas de humo por demasiados autos y casi no hay transporte público.', ans: 'reto' },
+  { text: 'Se abrió una nueva línea de autobuses que conecta colonias alejadas con hospitales y escuelas.', ans: 'mejora' },
+  { text: 'Muchas familias no encuentran vivienda suficiente y aparecen asentamientos muy apretados.', ans: 'reto' },
+  { text: 'La ciudad construyó parques y reforestó varias avenidas para bajar la temperatura.', ans: 'mejora' },
+  { text: 'La basura permanece varios días en las calles y obstruye desagües.', ans: 'reto' },
+  { text: 'Se mejoró el acceso al agua potable y al drenaje en barrios con pocos servicios.', ans: 'mejora' }
+]);
+let ritmoIdx = 0;
+let ritmoScore = 0;
+let ritmoResolved = false;
+let ritmoActive = true;
+
+function showRitmoItem() {
+  if (ritmoIdx >= ritmoItems.length) {
+    document.getElementById('ritmo-display').textContent = '¡Terminaste todas las situaciones!';
+    document.getElementById('fb-ritmo').className = 'feedback show ok';
+    document.getElementById('fb-ritmo').textContent = 'Excelente. Ya distingues mejor entre problema urbano y mejora urbana.';
+    document.getElementById('ritmo-reto').disabled = true;
+    document.getElementById('ritmo-mejora').disabled = true;
+    completeSubactivity(2, 'ritmo');
+    return;
+  }
+
+  ritmoResolved = false;
+  document.getElementById('ritmo-round').textContent = String(ritmoIdx + 1);
+  document.getElementById('ritmo-display').textContent = ritmoItems[ritmoIdx].text;
+  document.getElementById('fb-ritmo').className = 'feedback';
+  ['ritmo-reto', 'ritmo-mejora'].forEach(id => {
+    const btn = document.getElementById(id);
+    btn.disabled = false;
+    btn.classList.remove('correct', 'wrong');
+  });
+}
+
+function answerRitmo(choice) {
+  if (!ritmoActive || ritmoResolved || ritmoIdx >= ritmoItems.length) return;
+  playFx('sndClick');
+  const current = ritmoItems[ritmoIdx];
+  const fb = document.getElementById('fb-ritmo');
+  const retoBtn = document.getElementById('ritmo-reto');
+  const mejoraBtn = document.getElementById('ritmo-mejora');
+  const clicked = choice === 'reto' ? retoBtn : mejoraBtn;
+  const correctBtn = current.ans === 'reto' ? retoBtn : mejoraBtn;
+
+  if (choice === current.ans) {
+    playFx('sndDing');
+    ritmoResolved = true;
+    ritmoScore++;
+    document.getElementById('ritmo-score').textContent = String(ritmoScore);
+    correctBtn.classList.add('correct');
+    retoBtn.disabled = true;
+    mejoraBtn.disabled = true;
+    fb.className = 'feedback show ok';
+    fb.textContent = current.ans === 'reto'
+      ? 'Correcto. Esa situación describe un problema de la ciudad.'
+      : 'Correcto. Esa situación muestra una mejora urbana.';
+    ritmoIdx++;
+    setTimeout(showRitmoItem, 850);
+  } else {
+    playFx('sndError');
+    clicked.classList.add('wrong');
+    clicked.disabled = true;
+    fb.className = 'feedback show fail';
+    fb.textContent = 'Intenta de nuevo con la otra opción.';
+  }
+}
+
+const culturas = prepareQuestionBank([
+  { q: 'Una zona muestra muchísima gente viviendo en un espacio pequeño. ¿Qué concepto describe mejor esa pista?', opts: ['Concentración', 'Dispersión', 'Crecimiento', 'Migración'], answer: 'Concentración' },
+  { q: 'Un dato compara habitantes con el tamaño del territorio. ¿Qué concepto es?', opts: ['Densidad', 'Atracción', 'Planeación', 'Éxodo rural'], answer: 'Densidad' },
+  { q: 'Las viviendas están muy separadas y hay pocas personas en un área amplia. ¿Qué observas?', opts: ['Dispersión', 'Concentración', 'Expulsión', 'Movilidad'], answer: 'Dispersión' },
+  { q: 'Una gráfica sube año tras año y muestra más habitantes. ¿Qué proceso representa?', opts: ['Crecimiento', 'Dispersión', 'Atracción', 'Hacinamiento'], answer: 'Crecimiento' },
+  { q: 'Las luces nocturnas y los edificios se agrupan en una parte pequeña del mapa. ¿Qué idea se refuerza?', opts: ['Concentración', 'Dispersión', 'Vaciamiento', 'Aislamiento'], answer: 'Concentración' }
+]);
+let cultIdx = 0;
+let culturaActual = -1;
+let culturaResuelta = false;
+const culturaCorrectSet = new Set();
+
+function loadCultura(index) {
+  const fb = document.getElementById('fb-cultura');
+  culturaActual = index;
+  cultIdx = index + 1;
+  culturaResuelta = false;
+
+  const current = culturas[index];
+  document.getElementById('cultura-step').textContent = String(culturaCorrectSet.size + 1);
+  document.getElementById('cultura-pista').textContent = current.q;
+  document.getElementById('cultura-next').disabled = true;
+
+  const root = document.getElementById('cultura-opciones');
+  root.innerHTML = '';
+  current.opts.forEach((option, optIndex) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'q-opt';
+    button.textContent = option;
+    button.onclick = () => answerCultura(optIndex, button);
+    root.appendChild(button);
+  });
+  fb.className = 'feedback';
+}
+
+function answerCultura(index, button) {
+  if (button.disabled || culturaResuelta) return;
+  playFx('sndClick');
+  const current = culturas[culturaActual];
+  const fb = document.getElementById('fb-cultura');
+
+  if (index === current.a) {
+    playFx('sndDing');
+    culturaResuelta = true;
+    culturaCorrectSet.add(culturaActual);
+    document.getElementById('cultura-score').textContent = String(culturaCorrectSet.size);
+    document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn, idx) => {
+      if (idx === current.a) btn.classList.add('correct');
+      btn.disabled = true;
+    });
+    document.getElementById('cultura-next').disabled = false;
+    fb.className = 'feedback show ok';
+    fb.textContent = culturaCorrectSet.size === culturas.length
+      ? '¡Correcto! Ya resolviste todas las pistas.'
+      : '¡Correcto! Avanza a la siguiente pista.';
+    if (culturaCorrectSet.size === culturas.length) completeSubactivity(3, 'cultura');
+  } else {
+    playFx('sndError');
+    button.classList.add('wrong');
+    button.disabled = true;
+    fb.className = 'feedback show fail';
+    fb.textContent = 'Esa no es. Observa la pista otra vez y vuelve a intentar.';
+  }
+  syncLockedUI();
+}
+
+function nextCultura() {
+  if (culturaCorrectSet.size >= culturas.length) {
+    completeSubactivity(3, 'cultura');
+    document.getElementById('cultura-pista').textContent = '¡Ya completaste todas las pistas de análisis!';
+    document.getElementById('cultura-opciones').innerHTML = '';
+    document.getElementById('cultura-next').disabled = true;
+    return;
+  }
+  if (!culturaResuelta) {
+    playFx('sndError');
+    showToast('Resuelve la pista actual antes de avanzar.');
+    return;
+  }
+  playFx('sndClick');
+  for (let step = 1; step <= culturas.length; step++) {
+    const next = (culturaActual + step) % culturas.length;
+    if (!culturaCorrectSet.has(next)) {
+      loadCultura(next);
+      return;
     }
-
-    if (nivelAsignado === 'dificil') {
-        btnFacil.disabled = false;
-        btnNormal.disabled = false;
-        btnDificil.disabled = false;
-    }
+  }
 }
 
-function irADiagnostico() {
-    window.location.href = `diagnostico/index.html`;
+const repasoQ = prepareQuestionBank([
+  { q: 'Cuando una familia sale de su comunidad por sequía o desempleo, actúa un factor de...', opts: ['Atracción', 'Expulsión', 'Concentración', 'Planeación'], answer: 'Expulsión' },
+  { q: 'Llegar a otro lugar para vivir se llama...', opts: ['Inmigración', 'Dispersión', 'Urbanización', 'Densidad'], answer: 'Inmigración' },
+  { q: '¿Cuál es un reto urbano?', opts: ['Parques nuevos', 'Transporte público eficiente', 'Tráfico intenso', 'Agua potable para más colonias'], answer: 'Tráfico intenso' },
+  { q: '¿Cuál opción describe una mejora urbana?', opts: ['Basura acumulada', 'Falta de vivienda', 'Ampliación del drenaje', 'Contaminación del aire'], answer: 'Ampliación del drenaje' },
+  { q: 'La densidad compara...', opts: ['Escuelas y hospitales', 'Habitantes y territorio', 'Calles y edificios', 'Migración y turismo'], answer: 'Habitantes y territorio' },
+  { q: 'Mucha gente viviendo en poco espacio indica...', opts: ['Dispersión', 'Concentración', 'Despoblamiento', 'Reforestación'], answer: 'Concentración' },
+  { q: 'Pocas personas repartidas en un territorio amplio muestran...', opts: ['Crecimiento', 'Concentración', 'Dispersión', 'Aislamiento urbano'], answer: 'Dispersión' },
+  { q: 'Si una gráfica aumenta con el tiempo, la población presenta...', opts: ['Descenso total', 'Crecimiento', 'Expulsión', 'Dispersión'], answer: 'Crecimiento' },
+  { q: 'Cuando muchas personas dejan el campo para ir a la ciudad se habla de...', opts: ['Éxodo rural', 'Aislamiento', 'Densidad baja', 'Interculturalidad'], answer: 'Éxodo rural' },
+  { q: 'Para entender un cambio de población conviene observar origen, destino y...', opts: ['Número de árboles', 'Motivo del movimiento', 'Color del mapa', 'Longitud de las calles'], answer: 'Motivo del movimiento' }
+]);
+let repIdx = 0;
+let repCorrect = 0;
+
+function initRepaso() {
+  loadRep();
 }
 
-async function abrirNivel(nivel) {
-    try {
-        const res = await fetch(
-            `/api/contenido/archivo/${SLUG_CONTENIDO}/${nivel}`,
-            { credentials: 'include' }
-        );
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            alert(data.error || 'No disponible');
-            return;
-        }
-
-        window.location.href = data.archivo;
-
-    } catch (e) {
-        console.error(e);
-        alert('Error al abrir contenido');
-    }
+function loadRep() {
+  if (repIdx >= repasoQ.length) {
+    showRepasoEnd();
+    return;
+  }
+  const current = repasoQ[repIdx];
+  document.getElementById('rep-num').textContent = String(repIdx + 1);
+  document.getElementById('rep-q').textContent = current.q;
+  document.getElementById('repaso-prog').style.width = `${(repIdx / repasoQ.length) * 100}%`;
+  const root = document.getElementById('rep-opts');
+  const fb = document.getElementById('fb-rep');
+  root.innerHTML = '';
+  current.opts.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'q-opt';
+    button.textContent = option;
+    button.onclick = () => answerRepaso(index, button);
+    root.appendChild(button);
+  });
+  fb.className = 'feedback';
 }
 
-function volver() {
-    window.location.href = '/contenidos/GEOGRAFÍA/menu.html';
+function answerRepaso(index, button) {
+  if (button.disabled || repIdx >= repasoQ.length) return;
+  playFx('sndClick');
+  const current = repasoQ[repIdx];
+  const fb = document.getElementById('fb-rep');
+  if (index === current.a) {
+    playFx('sndDing');
+    repCorrect++;
+    document.getElementById('repaso-pts').textContent = String(repCorrect);
+    document.querySelectorAll('#rep-opts .q-opt').forEach((btn, idx) => {
+      if (idx === current.a) btn.classList.add('correct');
+      btn.disabled = true;
+    });
+    fb.className = 'feedback show ok';
+    fb.textContent = '¡Correcto! Vamos con la siguiente pregunta.';
+    repIdx++;
+    document.getElementById('repaso-prog').style.width = `${(repIdx / repasoQ.length) * 100}%`;
+    setTimeout(loadRep, 850);
+  } else {
+    playFx('sndError');
+    button.classList.add('wrong');
+    button.disabled = true;
+    fb.className = 'feedback show fail';
+    fb.textContent = 'Esa no es. Todavía puedes intentarlo con otra opción.';
+  }
 }
 
-document.addEventListener('DOMContentLoaded', cargarEstadoContenido);
+function showRepasoEnd() {
+  document.getElementById('rep-q').textContent = '¡Terminaste el repaso final!';
+  document.getElementById('rep-opts').innerHTML = '';
+  document.getElementById('repaso-prog').style.width = '100%';
+  document.getElementById('fb-rep').className = 'feedback show ok';
+  document.getElementById('fb-rep').textContent = `Lograste ${repCorrect} de ${repasoQ.length} aciertos en el repaso final.`;
+  document.getElementById('final-panel').classList.add('show');
+  playFx('sndTada');
+  completeSubactivity(4, 'repaso');
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  initAudioBoxes();
+  renderAllWordBanks();
+  loadQ1();
+  showRitmoItem();
+  loadCultura(0);
+  initRepaso();
+  syncLockedUI();
+
+  const quizBtn = document.querySelector('.boton-quiz');
+  if (quizBtn) {
+    quizBtn.addEventListener('click', event => {
+      if (!allComplete()) {
+        event.preventDefault();
+        playFx('sndError');
+        showToast('Completa todo el nivel antes de ir al quiz.');
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

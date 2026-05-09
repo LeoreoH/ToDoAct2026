@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -228,7 +228,7 @@
     }
 
     .btn-quiz {
-      display: block; width: fit-content; margin: 0 auto;
+      display: none; width: fit-content; margin: 0 auto;
       background: #ffd600; color: #0d47a1; border: none;
       padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
       text-decoration: none; border: 4px solid white;
@@ -248,6 +248,7 @@
 
     @media(max-width:600px){ .opciones-svg{ gap:14px; } }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -278,17 +279,22 @@
 <div class="contenedor">
 
   <!-- =====================================================
-       PÃGINA 1: COORDENADAS GEOGRÃFICAS
+       P�GINA 1: COORDENADAS GEOGR�FICAS
   ===================================================== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-visual">
       <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>COORDENADAS GEOGR&Aacute;FICAS</h2>
 
-      <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg"
-             alt="Coordenadas" class="imagen-geo"
-             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
-        <div class="pie-imagen">Latitud y longitud</div>
+      <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+        <div class="ayuda-ampliar-media">
+          <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg"
+                 alt="Coordenadas" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
+            <div class="pie-imagen">Latitud y longitud</div>
+          </div>
+        </div>
+        <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
       </div>
 
       <div class="row">
@@ -322,7 +328,7 @@
         </p>
         <div class="opciones-svg">
 
-          <!-- Planeta A: lineas horizontales = latitud â€” CORRECTA -->
+          <!-- Planeta A: lineas horizontales = latitud � CORRECTA -->
           <div class="opcion-svg" id="op1A" onclick="responder1('A')">
             <svg width="160" height="180" viewBox="0 0 160 180">
               <defs>
@@ -347,7 +353,7 @@
             <span></span>
           </div>
 
-          <!-- Planeta B: lineas verticales = longitud â€” INCORRECTA -->
+          <!-- Planeta B: lineas verticales = longitud � INCORRECTA -->
           <div class="opcion-svg" id="op1B" onclick="responder1('B')">
             <svg width="160" height="180" viewBox="0 0 160 180">
               <defs>
@@ -380,7 +386,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 2: LATITUD Y PARALELOS
+       P�GINA 2: LATITUD Y PARALELOS
   ===================================================== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-visual">
@@ -405,7 +411,7 @@
         Los paralelos determinan las zonas clim&aacute;ticas: tropical, templada y polar.
       </div>
 
-      <!-- REFORZAMIENTO P2: globo SVG con 5 paralelos, todos iguales â€” clic en el de 23Â°27'N -->
+      <!-- REFORZAMIENTO P2: globo SVG con 5 paralelos, todos iguales � clic en el de 23�27'N -->
       <div class="reforzamiento">
         <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
         <p class="reforzamiento-instruccion">
@@ -431,13 +437,13 @@
               <text x="248" y="82" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P1</text>
             </g>
 
-            <!-- Paralelo 2: Tropico de Cancer (y~108, aprox 23N) â€” CORRECTO -->
+            <!-- Paralelo 2: Tropico de Cancer (y~108, aprox 23N) � CORRECTO -->
             <g class="paralelo-linea" id="pl2" onclick="responder2('pl2')">
               <ellipse cx="140" cy="108" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
               <text x="242" y="112" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P2</text>
             </g>
 
-            <!-- Paralelo 3: Ecuador (y~148, 0Â°) -->
+            <!-- Paralelo 3: Ecuador (y~148, 0�) -->
             <g class="paralelo-linea" id="pl3" onclick="responder2('pl3')">
               <ellipse cx="140" cy="148" rx="108" ry="28" fill="none" stroke="#4a6fa5" stroke-width="3.5" clip-path="url(#cParal)" style="cursor:pointer;"/>
               <text x="252" y="152" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P3</text>
@@ -467,7 +473,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 3: LONGITUD Y MERIDIANOS
+       P�GINA 3: LONGITUD Y MERIDIANOS
   ===================================================== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-visual">
@@ -507,7 +513,7 @@
         </p>
         <div class="opciones-svg">
 
-          <!-- Opcion A: 10 grados â€” INCORRECTO -->
+          <!-- Opcion A: 10 grados � INCORRECTO -->
           <div class="opcion-svg" id="g3A" onclick="responder3('A')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="14"/>
@@ -546,7 +552,7 @@
             <span>10 grados</span>
           </div>
 
-          <!-- Opcion B: 15 grados â€” CORRECTO -->
+          <!-- Opcion B: 15 grados � CORRECTO -->
           <div class="opcion-svg" id="g3B" onclick="responder3('B')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="14"/>
@@ -578,7 +584,7 @@
             <span>15 grados</span>
           </div>
 
-          <!-- Opcion C: 30 grados â€” INCORRECTO -->
+          <!-- Opcion C: 30 grados � INCORRECTO -->
           <div class="opcion-svg" id="g3C" onclick="responder3('C')">
             <svg width="140" height="160" viewBox="0 0 140 160">
               <rect width="140" height="160" fill="#283593" rx="14"/>
@@ -609,7 +615,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 4: PROYECCIONES CARTOGRÃFICAS
+       P�GINA 4: PROYECCIONES CARTOGR�FICAS
   ===================================================== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-visual">
@@ -661,7 +667,7 @@
         </p>
         <div class="opciones-svg" style="gap:16px;">
 
-          <!-- Mapa A: Mercator â€” Groenlandia ENORME, Africa pequena â€” INCORRECTO -->
+          <!-- Mapa A: Mercator � Groenlandia ENORME, Africa pequena � INCORRECTO -->
           <div class="opcion-svg" id="m4A" onclick="responder4('A')">
             <svg width="155" height="130" viewBox="0 0 155 130">
               <rect width="155" height="130" fill="#283593" rx="12"/>
@@ -685,7 +691,7 @@
             <span>Mapa A</span>
           </div>
 
-          <!-- Mapa B: Robinson â€” equilibrado â€” INCORRECTO -->
+          <!-- Mapa B: Robinson � equilibrado � INCORRECTO -->
           <div class="opcion-svg" id="m4B" onclick="responder4('B')">
             <svg width="155" height="130" viewBox="0 0 155 130">
               <rect width="155" height="130" fill="#283593" rx="12"/>
@@ -705,7 +711,7 @@
             <span>Mapa B</span>
           </div>
 
-          <!-- Mapa C: Peters â€” Africa MUY GRANDE y alargada, Groenlandia pequena â€” CORRECTO -->
+          <!-- Mapa C: Peters � Africa MUY GRANDE y alargada, Groenlandia pequena � CORRECTO -->
           <div class="opcion-svg" id="m4C" onclick="responder4('C')">
             <svg width="155" height="130" viewBox="0 0 155 130">
               <rect width="155" height="130" fill="#283593" rx="12"/>
@@ -774,6 +780,10 @@
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
+
   function reproducirSonido(nombre) {
     try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
   }
@@ -789,7 +799,6 @@
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({top:0, behavior:'smooth'});
-    localStorage.setItem('progreso_dificil_visualnoverbal', paginaActual);
   }
 
   function actualizarUI() {
@@ -809,6 +818,9 @@
     el.className = 'feedback-ref ' + (ok ? 'ok' : 'err');
     el.innerHTML = msg;
     el.style.display = 'block';
+    if (!ok && window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorFromFeedback === 'function') {
+      window.laTierraTrackerHooks.addErrorFromFeedback(id, { origen: 'visual_no_verbal', tipo: 'seleccion_visual' });
+    }
   }
 
   /* P1: latitud (lineas horizontales = Planeta A) vs longitud (lineas verticales = Planeta B) */
@@ -912,20 +924,12 @@
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    var g = localStorage.getItem('progreso_dificil_visualnoverbal');
-    if (g) {
-      var p = parseInt(g);
-      if (p >= 1 && p <= totalPaginas) {
-        document.getElementById('pagina' + paginaActual).classList.remove('activa');
-        paginaActual = p;
-        document.getElementById('pagina' + paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

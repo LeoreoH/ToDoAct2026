@@ -1,461 +1,109 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas · Nivel Fácil · Auditivo</title>
+    <title>Identificar coordenadas · Nivel Fácil · Auditivo</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #fff7e6, #ffedd5);
-            color: #9a3412;
-            min-height: 100vh;
-        }
-
-        .cabecera-facil {
-            background: linear-gradient(135deg, #f97316, #c2410c);
-            padding: 25px 20px;
-            border-bottom: 6px solid #fde68a;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
-            color: white;
-        }
-
-        .cabecera-facil h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2.8rem;
-            color: white;
-            text-shadow: 3px 3px 0 #9a3412;
-            margin-bottom: 8px;
-        }
-
-        .badge-estilo {
-            background: #fde68a;
-            color: #9a3412;
-            padding: 10px 30px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            display: inline-block;
-            border: 4px solid white;
-            margin-top: 10px;
-        }
-
-        .badge-nivel {
-            background: #9a3412;
-            color: white;
-            padding: 8px 25px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1rem;
-            display: inline-block;
-            margin-left: 15px;
-            border: 2px solid #fde68a;
-        }
-
-        .barra-progreso {
-            background: white;
-            border-radius: 60px;
-            margin: 25px auto;
-            max-width: 950px;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border: 3px solid #f97316;
-            box-shadow: 0 5px 0 #fed7aa;
-            flex-wrap: wrap;
-        }
-
-        .puntos-progreso {
-            display: flex;
-            gap: 12px;
-            flex: 1;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .punto {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #ffedd5;
-            border: 3px solid #f97316;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #9a3412;
-            transition: all 0.3s;
-        }
-
-        .punto.activo {
-            background: #fde68a;
-            border-color: #c2410c;
-            color: #7b341e;
-            transform: scale(1.15);
-        }
-
-        .punto.completado {
-            background: #4caf50;
-            border-color: white;
-            color: white;
-        }
-
-        .contenedor-paginas {
-            max-width: 1000px;
-            margin: 0 auto 40px;
-            padding: 0 20px;
-        }
-
-        .pagina {
-            display: none;
-            animation: aparecer 0.5s ease;
-        }
-
-        .pagina.activa {
-            display: block;
-        }
-
-        @keyframes aparecer {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tarjeta-contenido {
-            background: white;
-            border-radius: 30px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 3px solid #f97316;
-            box-shadow: 0 8px 0 #fed7aa;
-        }
-
-        .titulo-pagina {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2rem;
-            color: #c2410c;
-            margin-bottom: 22px;
-            border-left: 8px solid #fde68a;
-            padding-left: 20px;
-        }
-
-        .contenedor-imagen {
-            text-align: center;
-            margin: 25px 0;
-            padding: 20px;
-            background: #fff7e6;
-            border-radius: 20px;
-            border: 2px solid #fed7aa;
-        }
-
-        .contenedor-imagen img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            border: 3px solid #f97316;
-        }
-
-        .pie-imagen {
-            margin-top: 10px;
-            font-weight: 600;
-            color: #9a3412;
-            font-style: italic;
-        }
-
-        /* Reproductor de audio personalizado */
-        .audio-player {
-            background: #fff3e0;
-            border: 3px solid #f97316;
-            border-radius: 60px;
-            padding: 15px 25px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-audio {
-            background: #f97316;
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 3px solid #fde68a;
-        }
-
-        .btn-audio:hover {
-            background: #c2410c;
-            transform: scale(1.1);
-        }
-
-        .btn-audio.playing {
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); background: #fde68a; color: #f97316; }
-        }
-
-        .audio-label {
-            font-weight: 700;
-            color: #9a3412;
-            flex: 1;
-        }
-
-        /* Actividad de reforzamiento auditivo */
-        .reforzamiento-auditivo {
-            background: #fff3e0;
-            border: 3px solid #f97316;
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 30px;
-        }
-
-        .reforzamiento-auditivo h4 {
-            color: #c2410c;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .opciones-audio {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .btn-opcion-audio {
-            background: white;
-            border: 2px solid #f97316;
-            border-radius: 15px;
-            padding: 15px;
-            font-weight: 600;
-            color: #9a3412;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-opcion-audio:hover {
-            background: #fde68a;
-            transform: translateY(-2px);
-        }
-
-        .btn-opcion-audio.correcta {
-            background: #4caf50;
-            color: white;
-            border-color: white;
-        }
-
-        .btn-opcion-audio.incorrecta {
-            background: #f44336;
-            color: white;
-            border-color: white;
-        }
-
-        .btn-opcion-audio i {
-            font-size: 1.2rem;
-        }
-
-        .feedback-audio {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 15px;
-            font-weight: 600;
-            display: none;
-        }
-
-        /* Mapa interactivo para seguimiento de instrucciones (página 5) */
-        .mapa-instrucciones {
-            display: inline-grid;
-            grid-template-columns: repeat(5, 70px);
-            grid-template-rows: repeat(5, 70px);
-            gap: 5px;
-            background: #fed7aa;
-            padding: 15px;
-            border-radius: 20px;
-            margin: 20px auto;
-        }
-
-        .celda-mapa {
-            background: white;
-            border: 2px solid #f97316;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #9a3412;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .celda-mapa:hover {
-            background: #fde68a;
-        }
-
-        .celda-mapa.ruta {
-            background: #4caf50;
-            color: white;
-            border-color: white;
-        }
-
-        .celda-mapa.inicio {
-            background: #f97316;
-            color: white;
-            border-color: white;
-            animation: brillo 1s infinite;
-        }
-
-        @keyframes brillo {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
-        }
-
-        .instruccion-paso {
-            background: #fff3e0;
-            border: 2px dashed #f97316;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #c2410c;
-        }
-
-        .navegador {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 40px 0 20px;
-            background: white;
-            padding: 15px 30px;
-            border-radius: 60px;
-            border: 3px solid #f97316;
-            box-shadow: 0 5px 0 #fed7aa;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn-nav {
-            background: #fde68a;
-            color: #9a3412;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-weight: 800;
-            font-size: 1.15rem;
-            border: 3px solid #f97316;
-            transition: all 0.2s;
-        }
-
-        .btn-nav:hover:not(:disabled) {
-            background: white;
-            transform: scale(1.05);
-        }
-
-        .btn-nav:disabled {
-            background: #e0e0e0;
-            color: #9e9e9e;
-            border-color: #bdbdbd;
-        }
-
-        .indicador-pagina {
-            font-size: 1.35rem;
-            font-weight: 800;
-            background: #ffedd5;
-            color: #9a3412;
-            padding: 8px 26px;
-            border-radius: 40px;
-            border: 3px solid #f97316;
-        }
-
-        .boton-quiz {
-            display: block;
-            width: fit-content;
-            margin: 30px auto 0;
-            background: #fde68a;
-            color: #9a3412;
-            border: none;
-            padding: 18px 42px;
-            border-radius: 60px;
-            font-weight: 800;
-            font-size: 1.45rem;
-            text-decoration: none;
-            border: 4px solid #f97316;
-            box-shadow: 0 8px 0 #fdba74;
-            transition: all 0.2s;
-        }
-
-        .boton-quiz:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 0 #fdba74;
-            background: white;
-        }
-
-        @media (max-width: 768px) {
-            .cabecera-facil h1 { font-size: 2rem; }
-            .navegador { flex-direction: column; }
-            .titulo-pagina { font-size: 1.5rem; }
-            .badge-nivel { margin-left: 0; margin-top: 10px; }
-            .mapa-instrucciones {
-                grid-template-columns: repeat(5, 50px);
-                grid-template-rows: repeat(5, 50px);
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #fff7e6, #ffedd5); color: #9a3412; min-height: 100vh; }
+        .cabecera-facil { background: linear-gradient(135deg, #f97316, #c2410c); padding: 25px 20px; border-bottom: 6px solid #fde68a; text-align: center; box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3); color: white; }
+        .cabecera-facil h1 { font-family: 'Fredoka One', cursive; font-size: 2.8rem; color: white; text-shadow: 3px 3px 0 #9a3412; margin-bottom: 8px; }
+        .badge-estilo { background: #fde68a; color: #9a3412; padding: 10px 30px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; display: inline-block; border: 4px solid white; margin-top: 10px; }
+        .badge-nivel { background: #9a3412; color: white; padding: 8px 25px; border-radius: 40px; font-weight: 700; font-size: 1rem; display: inline-block; margin-left: 15px; border: 2px solid #fde68a; }
+        .barra-progreso { background: white; border-radius: 60px; margin: 25px auto; max-width: 950px; padding: 15px 25px; display: flex; align-items: center; gap: 20px; border: 3px solid #f97316; box-shadow: 0 5px 0 #fed7aa; flex-wrap: wrap; }
+        .puntos-progreso { display: flex; gap: 12px; flex: 1; justify-content: center; flex-wrap: wrap; }
+        .punto { width: 40px; height: 40px; border-radius: 50%; background: #ffedd5; border: 3px solid #f97316; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: #9a3412; transition: all 0.3s; }
+        .punto.activo { background: #fde68a; border-color: #c2410c; color: #7b341e; transform: scale(1.15); }
+        .punto.completado { background: #4caf50; border-color: white; color: white; }
+        .contenedor-paginas { max-width: 1000px; margin: 0 auto 40px; padding: 0 20px; }
+        .pagina { display: none; animation: aparecer 0.5s ease; }
+        .pagina.activa { display: block; }
+        @keyframes aparecer { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .tarjeta-contenido { background: white; border-radius: 30px; padding: 30px; margin-bottom: 25px; border: 3px solid #f97316; box-shadow: 0 8px 0 #fed7aa; }
+        .titulo-pagina { font-family: 'Fredoka One', cursive; font-size: 2rem; color: #c2410c; margin-bottom: 22px; border-left: 8px solid #fde68a; padding-left: 20px; }
+        .contenedor-imagen { text-align: center; margin: 25px 0; padding: 20px; background: #fff7e6; border-radius: 20px; border: 2px solid #fed7aa; position: relative; }
+        .contenedor-imagen img { max-width: 100%; height: auto; border-radius: 15px; border: 3px solid #f97316; cursor: pointer; transition: all 0.3s; }
+        .contenedor-imagen img.img-robot { max-width: 340px; width: 100%; }
+        .contenedor-imagen img.ampliada { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90vw; max-height: 90vh; width: auto; height: auto; object-fit: contain; z-index: 1000; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); border: 4px solid #fde68a; }
+        .pie-imagen { margin-top: 10px; font-weight: 600; color: #9a3412; font-style: italic; font-size: 0.95rem; }
+        body.imagen-ampliada::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
+        .recuadro-info { background: #fff7e6; border-radius: 20px; padding: 20px; margin: 20px 0; border-left: 8px solid #fde68a; }
+        .recuadro-info h4 { color: #c2410c; font-weight: 800; margin-bottom: 15px; }
+        .lista-iconos { list-style: none; padding: 0; margin: 0; }
+        .lista-iconos li { padding: 8px 0; display: flex; align-items: flex-start; gap: 15px; border-bottom: 1px solid #fed7aa; }
+        .lista-iconos li:last-child { border-bottom: none; }
+        .lista-iconos i { color: #fde68a; font-size: 1.2rem; width: 28px; margin-top: 2px; flex-shrink: 0; }
+        .pregunta-auditiva { background: #fff3e0; border: 3px solid #f97316; border-radius: 20px; padding: 25px; margin-top: 30px; }
+        .pregunta-auditiva h4 { color: #c2410c; font-weight: 800; margin-bottom: 15px; }
+        .audio-player { background: #fff7e6; border: 2px solid #f97316; border-radius: 60px; padding: 12px 20px; margin: 15px 0; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .btn-audio { background: #f97316; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: all 0.2s; border: 3px solid #fde68a; flex-shrink: 0; }
+        .btn-audio:hover { background: #c2410c; transform: scale(1.1); }
+        .btn-audio.playing { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); background: #fde68a; color: #f97316; } }
+        .audio-label { font-weight: 600; color: #9a3412; flex: 1; }
+        .opciones-auditivas { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 20px 0; }
+        .btn-opcion-aud { background: white; border: 2px solid #f97316; border-radius: 15px; padding: 15px; font-weight: 600; color: #9a3412; transition: all 0.2s; width: 100%; text-align: left; cursor: pointer; }
+        .btn-opcion-aud:hover:not(:disabled) { background: #fde68a; transform: translateY(-2px); }
+        .btn-opcion-aud.correcta { background: #4caf50; color: white; border-color: white; }
+        .btn-opcion-aud.incorrecta { background: #f44336; color: white; border-color: white; }
+        .btn-opcion-aud:disabled { cursor: not-allowed; opacity: 0.85; }
+        .feedback-auditivo { margin-top: 15px; padding: 15px; border-radius: 15px; font-weight: 600; display: none; }
+        .apoyo-cuadricula-ruta { background: #fff7e6; border: 2px dashed #f97316; border-radius: 20px; padding: 18px; margin: 22px 0 28px; }
+        .apoyo-cuadricula-ruta h4 { color: #c2410c; font-weight: 800; margin-bottom: 10px; text-align: center; }
+        .apoyo-cuadricula-ruta p { margin-bottom: 14px; text-align: center; color: #9a3412; font-weight: 600; }
+        .grid-ruta-apoyo-aud { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; max-width: 460px; margin: 0 auto; }
+        .celda-ruta-apoyo-aud { background: white; border: 2px solid #f97316; border-radius: 14px; min-height: 56px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #9a3412; box-shadow: 0 4px 0 #fed7aa; }
+        .nota-cuadricula-ruta { margin-top: 12px; text-align: center; color: #9a3412; font-size: 0.92rem; font-weight: 700; }
+        .boton-quiz { display: block; width: fit-content; margin: 30px auto 0; background: #fde68a; color: #9a3412; padding: 18px 42px; border-radius: 60px; font-weight: 800; font-size: 1.45rem; text-decoration: none; border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all 0.2s; }
+        .boton-quiz:hover:not(.bloqueado) { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
+        .boton-quiz.bloqueado { opacity: 0.5; pointer-events: none; }
+        .texto-ayuda-quiz { margin-top: 12px; text-align: center; color: #9a3412; font-weight: 700; }
+        .navegador { display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px; background: white; padding: 15px 30px; border-radius: 60px; border: 3px solid #f97316; box-shadow: 0 5px 0 #fed7aa; gap: 15px; flex-wrap: wrap; }
+        .btn-nav { background: #fde68a; color: #9a3412; padding: 12px 30px; border-radius: 40px; font-weight: 800; font-size: 1.15rem; border: 3px solid #f97316; transition: all 0.2s; }
+        .btn-nav:hover:not(:disabled) { background: white; transform: scale(1.05); }
+        .btn-nav:disabled { background: #e0e0e0; color: #9e9e9e; border-color: #bdbdbd; }
+        .indicador-pagina { font-size: 1.35rem; font-weight: 800; background: #ffedd5; color: #9a3412; padding: 8px 26px; border-radius: 40px; border: 3px solid #f97316; }
+        @media (max-width: 768px) { .cabecera-facil h1 { font-size: 2rem; } .navegador { flex-direction: column; } .titulo-pagina { font-size: 1.5rem; } .badge-nivel { margin-left: 0; margin-top: 10px; } }
+        @media (max-width: 576px) { .grid-ruta-apoyo-aud { gap: 6px; } .celda-ruta-apoyo-aud { min-height: 48px; font-size: 0.85rem; } }
     </style>
+    <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
-<!-- AUDIOS (desde la carpeta de recursos) -->
 <audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
 <audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
 <audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
 <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
 
-<!-- Audios específicos del nivel fácil (estilo auditivo) -->
-<audio id="audioPagina1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina1-contenido.mp3"></audio>
-<audio id="audioPagina1Ref" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina1-reforzamiento.mp3"></audio>
-<audio id="audioPagina2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina2-contenido.mp3"></audio>
-<audio id="audioPagina2Ref" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina2-reforzamiento.mp3"></audio>
-<audio id="audioPagina3" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina3-contenido.mp3"></audio>
-<audio id="audioPagina3Ref" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina3-reforzamiento.mp3"></audio>
-<audio id="audioPagina4" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina4-contenido.mp3"></audio>
-<audio id="audioPagina4Ref" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina4-reforzamiento.mp3"></audio>
-<audio id="audioPagina5" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina5-contenido.mp3"></audio>
-<audio id="audioPagina5Ref" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/pagina5-reforzamiento.mp3"></audio>
+<audio id="audP1c" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p1_intro.mp3"></audio>
+<audio id="audP1r1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p1_ej1.mp3"></audio>
+<audio id="audP1r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p1_ej2.mp3"></audio>
+<audio id="audP2c" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p2_intro.mp3"></audio>
+<audio id="audP2r1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p2_ej1.mp3"></audio>
+<audio id="audP2r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p2_ej2.mp3"></audio>
+<audio id="audP3c" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p3_intro.mp3"></audio>
+<audio id="audP3r1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p3_ej1.mp3"></audio>
+<audio id="audP3r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p3_ej2.mp3"></audio>
+<audio id="audP4c" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p4_intro.mp3"></audio>
+<audio id="audP4r1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p4_ej1.mp3"></audio>
+<audio id="audP4r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p4_ej2.mp3"></audio>
+<audio id="audP5c" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p5_intro.mp3"></audio>
+<audio id="audP5r1" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p5_ej1.mp3"></audio>
+<audio id="audP5r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/facil/audios/coord_facil_p5_ej2.mp3"></audio>
 
 <div class="cabecera-facil">
-    <h1>🧭 COORDENADAS</h1>
-    <p class="lead text-white">Nivel Fácil · Ubicación en planos</p>
+    <h1>IDENTIFICAR COORDENADAS</h1>
+    <p class="lead text-white">Nivel F&aacute;cil &middot; Ubicaci&oacute;n en planos</p>
     <div>
-        <span class="badge-estilo">🎧 Auditivo</span>
-        <span class="badge-nivel">🌱 Principiante</span>
+        <span class="badge-estilo">&#127911; Auditivo</span>
+        <span class="badge-nivel">&#11088; B&aacute;sico</span>
     </div>
 </div>
 
@@ -469,476 +117,594 @@
         <div class="punto" data-pagina="5">5</div>
     </div>
     <span class="badge" style="background: #f97316; color: white; font-size: 1.1rem; padding: 8px 20px;">
-        Página <span id="paginaActualNum">1</span>/5
+        P&aacute;gina <span id="paginaActualNum">1</span>/5
     </span>
 </div>
 
 <div class="contenedor-paginas">
-
-    <!-- PÁGINA 1: CALLES Y AVENIDAS -->
     <div class="pagina activa" id="pagina1">
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Calles y avenidas</h2>
 
-            <!-- Reproductor de audio - Contenido -->
-            <div class="audio-player">
-                <button class="btn-audio" onclick="reproducirAudio('audioPagina1', this)">
-                    <i class="fas fa-play"></i>
-                </button>
-                <div class="audio-label">
-                    <i class="fas fa-info-circle me-2"></i> Escucha la explicación
-                </div>
-            </div>
-
-            <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Mapa de colonia con calles y avenidas">
-                <div class="pie-imagen">Las calles son verticales y las avenidas horizontales</div>
-            </div>
-
-            <!-- Reforzamiento auditivo -->
-            <div class="reforzamiento-auditivo">
-                <h4><i class="fas fa-ear-listen me-2"></i>Escucha y responde</h4>
-                
-                <div class="audio-player" style="margin-top: 0;">
-                    <button class="btn-audio" onclick="reproducirAudio('audioPagina1Ref', this)">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-label">
-                        <i class="fas fa-question-circle me-2"></i> Pregunta: ¿Dónde está la casa?
+            <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+                <div class="ayuda-ampliar-media">
+                    <div class="contenedor-imagen">
+                        <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Plano con calles y avenidas" onclick="ampliarImagen(this)">
+                        <div class="pie-imagen">Observa c&oacute;mo se cruzan las calles y las avenidas del plano.</div>
                     </div>
                 </div>
+                <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
+            </div>
 
-                <div class="opciones-audio" id="reforzamiento1">
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(1, 0, false)">
-                        <i class="fas fa-arrow-up"></i> Entre calles
-                    </button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(1, 1, true)">
-                        <i class="fas fa-arrow-left"></i> Entre avenidas
-                    </button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(1, 2, false)">
-                        <i class="fas fa-map-pin"></i> En una esquina
-                    </button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(1, 3, false)">
-                        <i class="fas fa-circle"></i> En el centro
-                    </button>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP1c', this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-info-circle me-2"></i>Escucha la explicaci&oacute;n del plano</div>
+            </div>
+
+            <div class="recuadro-info">
+                <h4><i class="fas fa-map-marked-alt me-2"></i>Ideas clave</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-thumbtack"></i>Una sola referencia puede no ser suficiente para ubicar un lugar.</li>
+                    <li><i class="fas fa-plus"></i>Combinar una calle y una avenida ayuda a encontrar mejor una ubicaci&oacute;n.</li>
+                    <li><i class="fas fa-search-location"></i>La ubicaci&oacute;n se vuelve m&aacute;s precisa cuando usas dos datos.</li>
+                </ul>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 1</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP1r1', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
                 </div>
+                <div class="opciones-auditivas" id="opc-p1e1">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e1', 0, false)">A) Solo una calle</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e1', 1, false)">B) Solo una avenida</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e1', 2, true)">C) Una calle y una avenida</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e1', 3, false)">D) El color del lugar</button>
+                </div>
+                <div id="feedback-p1e1" class="feedback-auditivo"></div>
+            </div>
 
-                <div id="feedback1" class="feedback-audio"></div>
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP1r2', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p1e2">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e2', 0, false)">A) Calle 2 y Calle 4</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e2', 1, false)">B) Avenida A y Avenida D</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e2', 2, true)">C) Calle 3 y Avenida A</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p1e2', 3, false)">D) Fila 2 y Columna 4</button>
+                </div>
+                <div id="feedback-p1e2" class="feedback-auditivo"></div>
             </div>
         </div>
     </div>
 
-    <!-- PÁGINA 2: CUADRÍCULAS SIMPLES -->
     <div class="pagina" id="pagina2">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-th me-3"></i>Cuadrículas simples</h2>
-
-            <div class="audio-player">
-                <button class="btn-audio" onclick="reproducirAudio('audioPagina2', this)">
-                    <i class="fas fa-play"></i>
-                </button>
-                <div class="audio-label">
-                    <i class="fas fa-info-circle me-2"></i> Escucha la explicación
-                </div>
-            </div>
+            <h2 class="titulo-pagina"><i class="fas fa-border-all me-3"></i>Cuadr&iacute;cula</h2>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/cuadricula-3x3-coordenadas.jpg" alt="Cuadrícula 3x3 con coordenadas">
-                <div class="pie-imagen">Cuadrícula con filas (1,2,3) y columnas (A,B,C)</div>
+                <img src="/contenidos/matematicas/recursos/imagenes/cuadricula-3x3-coordenadas.jpg" alt="Cuadr&iacute;cula de coordenadas" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">La letra marca la columna y el n&uacute;mero marca la fila.</div>
             </div>
 
-            <div class="reforzamiento-auditivo">
-                <h4><i class="fas fa-ear-listen me-2"></i>Escucha y responde</h4>
-                
-                <div class="audio-player" style="margin-top: 0;">
-                    <button class="btn-audio" onclick="reproducirAudio('audioPagina2Ref', this)">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-label">
-                        <i class="fas fa-question-circle me-2"></i> ¿Cuál es la coordenada?
-                    </div>
-                </div>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP2c', this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-info-circle me-2"></i>Escucha la explicaci&oacute;n de la cuadr&iacute;cula</div>
+            </div>
 
-                <div class="opciones-audio" id="reforzamiento2">
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(2, 0, false)">2,C</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(2, 1, true)">C,2</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(2, 2, false)">C2</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(2, 3, false)">2C</button>
-                </div>
+            <div class="recuadro-info">
+                <h4><i class="fas fa-table me-2"></i>Ideas clave</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-font"></i>Las columnas se identifican con letras.</li>
+                    <li><i class="fas fa-hashtag"></i>Las filas se identifican con n&uacute;meros.</li>
+                    <li><i class="fas fa-arrow-right"></i>La coordenada se lee primero por columna y despu&eacute;s por fila.</li>
+                </ul>
+            </div>
 
-                <div id="feedback2" class="feedback-audio"></div>
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 1</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP2r1', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p2e1">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e1', 0, false)">A) 2,C</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e1', 1, true)">B) C,2</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e1', 2, false)">C) C2</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e1', 3, false)">D) 2C</button>
+                </div>
+                <div id="feedback-p2e1" class="feedback-auditivo"></div>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP2r2', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p2e2">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e2', 0, false)">A) Primero la fila y luego la columna</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e2', 1, true)">B) Primero la columna y luego la fila</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e2', 2, false)">C) Primero el n&uacute;mero mayor</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p2e2', 3, false)">D) El orden no importa</button>
+                </div>
+                <div id="feedback-p2e2" class="feedback-auditivo"></div>
             </div>
         </div>
     </div>
-
-    <!-- PÁGINA 3: DIRECCIONES -->
     <div class="pagina" id="pagina3">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-location-arrow me-3"></i>Direcciones</h2>
-
-            <div class="audio-player">
-                <button class="btn-audio" onclick="reproducirAudio('audioPagina3', this)">
-                    <i class="fas fa-play"></i>
-                </button>
-                <div class="audio-label">
-                    <i class="fas fa-info-circle me-2"></i> Escucha la explicación
-                </div>
-            </div>
+            <h2 class="titulo-pagina"><i class="fas fa-compass me-3"></i>Direcciones</h2>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/flechas-direcciones-nseo.jpg" alt="Flechas con direcciones">
-                <div class="pie-imagen">Norte ↑ Sur ↓ Este → Oeste ←</div>
+                <img src="/contenidos/matematicas/recursos/imagenes/flechas-direcciones-nseo.jpg" alt="Direcciones cardinales" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Norte, sur, este y oeste ayudan a seguir instrucciones en el plano.</div>
             </div>
 
-            <div class="reforzamiento-auditivo">
-                <h4><i class="fas fa-ear-listen me-2"></i>Escucha y responde</h4>
-                
-                <div class="audio-player" style="margin-top: 0;">
-                    <button class="btn-audio" onclick="reproducirAudio('audioPagina3Ref', this)">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-label">
-                        <i class="fas fa-question-circle me-2"></i> ¿Primera dirección?
-                    </div>
-                </div>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP3c', this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-info-circle me-2"></i>Escucha la explicaci&oacute;n de las direcciones</div>
+            </div>
 
-                <div class="opciones-audio" id="reforzamiento3">
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(3, 0, true)"><i class="fas fa-arrow-up"></i> Norte</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(3, 1, false)"><i class="fas fa-arrow-down"></i> Sur</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(3, 2, false)"><i class="fas fa-arrow-right"></i> Este</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(3, 3, false)"><i class="fas fa-arrow-left"></i> Oeste</button>
-                </div>
+            <div class="recuadro-info">
+                <h4><i class="fas fa-location-arrow me-2"></i>Ideas clave</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-up"></i>Norte apunta hacia arriba.</li>
+                    <li><i class="fas fa-arrow-down"></i>Sur apunta hacia abajo.</li>
+                    <li><i class="fas fa-arrow-right"></i>Este va hacia la derecha y oeste hacia la izquierda.</li>
+                </ul>
+            </div>
 
-                <div id="feedback3" class="feedback-audio"></div>
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 1</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP3r1', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p3e1">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e1', 0, true)">A) Hacia arriba</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e1', 1, false)">B) Hacia abajo</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e1', 2, false)">C) Hacia la izquierda</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e1', 3, false)">D) Hacia la derecha</button>
+                </div>
+                <div id="feedback-p3e1" class="feedback-auditivo"></div>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP3r2', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p3e2">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e2', 0, true)">A) Derecha, derecha y abajo</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e2', 1, false)">B) Izquierda, izquierda y arriba</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e2', 2, false)">C) Arriba, arriba y derecha</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p3e2', 3, false)">D) Derecha, abajo y abajo</button>
+                </div>
+                <div id="feedback-p3e2" class="feedback-auditivo"></div>
             </div>
         </div>
     </div>
 
-    <!-- PÁGINA 4: EL ROBOT -->
     <div class="pagina" id="pagina4">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>El robot</h2>
-
-            <div class="audio-player">
-                <button class="btn-audio" onclick="reproducirAudio('audioPagina4', this)">
-                    <i class="fas fa-play"></i>
-                </button>
-                <div class="audio-label">
-                    <i class="fas fa-info-circle me-2"></i> Escucha la explicación
-                </div>
-            </div>
+            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Pasos y unidades</h2>
 
             <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/robot-infantil-simple.jpg" alt="Robot infantil" style="max-width: 200px;">
-                <div style="margin-top: 15px;">
-                    <img src="/contenidos/matematicas/recursos/imagenes/libro-tabla-robot.jpg" alt="Tabla del robot" style="max-width: 300px; border-radius: 10px;">
-                </div>
-                <div class="pie-imagen">El robot avanza 2 unidades por paso</div>
+                <img src="/contenidos/matematicas/recursos/imagenes/robot-infantil-simple.jpg" alt="Robot infantil" class="img-robot" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Cada paso del robot vale la misma cantidad de unidades.</div>
             </div>
 
-            <div class="reforzamiento-auditivo">
-                <h4><i class="fas fa-ear-listen me-2"></i>Escucha y responde</h4>
-                
-                <div class="audio-player" style="margin-top: 0;">
-                    <button class="btn-audio" onclick="reproducirAudio('audioPagina4Ref', this)">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-label">
-                        <i class="fas fa-question-circle me-2"></i> ¿Cuántas unidades?
-                    </div>
-                </div>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP4c', this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-info-circle me-2"></i>Escucha la explicaci&oacute;n del robot</div>
+            </div>
 
-                <div class="opciones-audio" id="reforzamiento4">
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(4, 0, false)">6 unidades</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(4, 1, true)">8 unidades</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(4, 2, false)">10 unidades</button>
-                    <button class="btn-opcion-audio" onclick="responderReforzamiento(4, 3, false)">12 unidades</button>
-                </div>
+            <div class="recuadro-info">
+                <h4><i class="fas fa-calculator me-2"></i>Ideas clave</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-shoe-prints"></i>Cada paso del robot vale 2 unidades.</li>
+                    <li><i class="fas fa-times"></i>Si conoces los pasos, multiplicas para obtener la distancia.</li>
+                    <li><i class="fas fa-divide"></i>Si conoces la distancia, divides para obtener los pasos.</li>
+                </ul>
+            </div>
 
-                <div id="feedback4" class="feedback-audio"></div>
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 1</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP4r1', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p4e1">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e1', 0, false)">A) 8 unidades</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e1', 1, false)">B) 10 unidades</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e1', 2, true)">C) 12 unidades</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e1', 3, false)">D) 14 unidades</button>
+                </div>
+                <div id="feedback-p4e1" class="feedback-auditivo"></div>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP4r2', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p4e2">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e2', 0, false)">A) 3 pasos</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e2', 1, false)">B) 4 pasos</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e2', 2, true)">C) 5 pasos</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p4e2', 3, false)">D) 6 pasos</button>
+                </div>
+                <div id="feedback-p4e2" class="feedback-auditivo"></div>
             </div>
         </div>
     </div>
 
-    <!-- PÁGINA 5: PUNTO A Y B (RUTA GUIADA CORREGIDA: A5 a E1) -->
     <div class="pagina" id="pagina5">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-flag-checkered me-3"></i>Punto A y B</h2>
-
-            <div class="audio-player">
-                <button class="btn-audio" onclick="reproducirAudio('audioPagina5', this)">
-                    <i class="fas fa-play"></i>
-                </button>
-                <div class="audio-label">
-                    <i class="fas fa-info-circle me-2"></i> Escucha la explicación
-                </div>
-            </div>
+            <h2 class="titulo-pagina"><i class="fas fa-route me-3"></i>Seguir una ruta</h2>
 
             <div class="contenedor-imagen">
-                <div style="display: flex; justify-content: center;">
-                    <div class="mapa-instrucciones" id="mapaRuta">
-                        <!-- Se genera con JS -->
-                    </div>
-                </div>
-                <div class="pie-imagen">Sigue las instrucciones para trazar la ruta</div>
+                <img src="/contenidos/matematicas/recursos/imagenes/mapa-punto-a-b-camino.jpg" alt="Ruta en cuadr&iacute;cula" onclick="ampliarImagen(this)">
+                <div class="pie-imagen">Sigue los movimientos en el orden correcto hasta encontrar el punto final.</div>
             </div>
 
-            <div class="reforzamiento-auditivo">
-                <h4><i class="fas fa-ear-listen me-2"></i>Escucha y traza la ruta</h4>
-                
-                <div class="audio-player" style="margin-top: 0;">
-                    <button class="btn-audio" onclick="reproducirAudio('audioPagina5Ref', this)">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-label">
-                        <i class="fas fa-route me-2"></i> Instrucciones: "4 pasos al este, luego 4 pasos al norte"
-                    </div>
-                </div>
-
-                <div class="instruccion-paso" id="instruccionPaso">
-                    <i class="fas fa-volume-up me-2"></i> Punto de inicio: A5. Escucha las instrucciones y haz clic en las casillas para trazar la ruta.
-                </div>
-
-                <div class="opciones-audio" style="grid-template-columns: repeat(2, 1fr);">
-                    <button class="btn-opcion-audio" onclick="reiniciarRuta()">
-                        <i class="fas fa-undo"></i> Reiniciar
-                    </button>
-                    <button class="btn-opcion-audio" onclick="verificarRuta()">
-                        <i class="fas fa-check"></i> Verificar
-                    </button>
-                </div>
-
-                <div id="feedback5" class="feedback-audio"></div>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP5c', this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-info-circle me-2"></i>Escucha la explicaci&oacute;n de la ruta</div>
             </div>
 
-            <!-- BOTÓN PARA IR AL QUIZ -->
-            <a href="quiz.html" class="boton-quiz text-center">
-                <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
-            </a>
+            <div class="recuadro-info">
+                <h4><i class="fas fa-map-signs me-2"></i>Ideas clave</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-play"></i>En ambos retos se inicia desde A5.</li>
+                    <li><i class="fas fa-arrow-right"></i>Avanzar al este significa moverse hacia la derecha.</li>
+                    <li><i class="fas fa-arrow-up"></i>Avanzar al norte significa subir en la cuadr&iacute;cula.</li>
+                </ul>
+            </div>
+
+            <div class="apoyo-cuadricula-ruta">
+                <h4><i class="fas fa-border-all me-2"></i>Cuadr&iacute;cula de apoyo para los dos retos</h4>
+                <p>Usa esta cuadr&iacute;cula para ubicar el punto de inicio, seguir movimientos y comprobar las coordenadas finales.</p>
+                <div class="grid-ruta-apoyo-aud">
+                    <div class="celda-ruta-apoyo-aud">A1</div>
+                    <div class="celda-ruta-apoyo-aud">B1</div>
+                    <div class="celda-ruta-apoyo-aud">C1</div>
+                    <div class="celda-ruta-apoyo-aud">D1</div>
+                    <div class="celda-ruta-apoyo-aud">E1</div>
+                    <div class="celda-ruta-apoyo-aud">A2</div>
+                    <div class="celda-ruta-apoyo-aud">B2</div>
+                    <div class="celda-ruta-apoyo-aud">C2</div>
+                    <div class="celda-ruta-apoyo-aud">D2</div>
+                    <div class="celda-ruta-apoyo-aud">E2</div>
+                    <div class="celda-ruta-apoyo-aud">A3</div>
+                    <div class="celda-ruta-apoyo-aud">B3</div>
+                    <div class="celda-ruta-apoyo-aud">C3</div>
+                    <div class="celda-ruta-apoyo-aud">D3</div>
+                    <div class="celda-ruta-apoyo-aud">E3</div>
+                    <div class="celda-ruta-apoyo-aud">A4</div>
+                    <div class="celda-ruta-apoyo-aud">B4</div>
+                    <div class="celda-ruta-apoyo-aud">C4</div>
+                    <div class="celda-ruta-apoyo-aud">D4</div>
+                    <div class="celda-ruta-apoyo-aud">E4</div>
+                    <div class="celda-ruta-apoyo-aud">A5</div>
+                    <div class="celda-ruta-apoyo-aud">B5</div>
+                    <div class="celda-ruta-apoyo-aud">C5</div>
+                    <div class="celda-ruta-apoyo-aud">D5</div>
+                    <div class="celda-ruta-apoyo-aud">E5</div>
+                </div>
+                <div class="nota-cuadricula-ruta">Recuerda: en esta cuadr&iacute;cula el norte sube y el este avanza hacia la derecha.</div>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 1</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP5r1', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p5e1">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e1', 0, false)">A) A1</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e1', 1, false)">B) C3</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e1', 2, false)">C) D3</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e1', 3, true)">D) E1</button>
+                </div>
+                <div id="feedback-p5e1" class="feedback-auditivo"></div>
+            </div>
+
+            <div class="pregunta-auditiva">
+                <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+                <div class="audio-player">
+                    <button class="btn-audio" onclick="reproducirAudio('audP5r2', this)"><i class="fas fa-play"></i></button>
+                    <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+                </div>
+                <div class="opciones-auditivas" id="opc-p5e2">
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e2', 0, false)">A) B4</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e2', 1, false)">B) C2</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e2', 2, true)">C) D3</button>
+                    <button class="btn-opcion-aud" onclick="seleccionarRespuesta('p5e2', 3, false)">D) E2</button>
+                </div>
+                <div id="feedback-p5e2" class="feedback-auditivo"></div>
+            </div>
+
+            <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
+            <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Resuelve los dos retos de esta p&aacute;gina para activar el quiz.</div>
         </div>
     </div>
 
-    <!-- NAVEGADOR -->
     <div class="navegador">
-        <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
-            <i class="fas fa-arrow-left me-2"></i> ANTERIOR
-        </button>
+        <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled><i class="fas fa-arrow-left me-2"></i> ANTERIOR</button>
         <span class="indicador-pagina" id="contadorPagina">1/5</span>
-        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
-            SIGUIENTE <i class="fas fa-arrow-right ms-2"></i>
-        </button>
+        <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE <i class="fas fa-arrow-right ms-2"></i></button>
     </div>
-
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
-    // ============================================
-    // NAVEGACIÓN ENTRE PÁGINAS
-    // ============================================
     let paginaActual = 1;
     const totalPaginas = 5;
     const audioWhoosh = document.getElementById('audioWhoosh');
     const audioClick = document.getElementById('audioClick');
     const audioDing = document.getElementById('audioDing');
     const audioError = document.getElementById('audioError');
+    let audioActual = null;
+    let botonActual = null;
+    let ultimoCambioPagina = 0;
 
-    // Estado de respuestas por página
-    let respuestasPagina = {
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false
+    [audioClick, audioDing, audioError, audioWhoosh].forEach(audio => {
+        if (audio) audio.volume = 0.15;
+    });
+
+    const respuestas = {
+        p1e1: false, p1e2: false,
+        p2e1: false, p2e2: false,
+        p3e1: false, p3e2: false,
+        p4e1: false, p4e2: false,
+        p5e1: false, p5e2: false
     };
 
-    // Estado para la ruta de la página 5
-    let rutaUsuario = [];
-    let rutaCorrecta = ['A5', 'B5', 'C5', 'D5', 'E5', 'E4', 'E3', 'E2', 'E1']; // 4 este + 4 norte
-    let audioActual = null;
+    const errores = {
+        p1e1: 0, p1e2: 0,
+        p2e1: 0, p2e2: 0,
+        p3e1: 0, p3e2: 0,
+        p4e1: 0, p4e2: 0,
+        p5e1: 0, p5e2: 0
+    };
 
-    function cambiarPagina(direccion) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual += direccion;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        audioWhoosh.play();
-        actualizarUI();
-        localStorage.setItem('progreso_facil_auditivo_coordenadas', paginaActual);
-        
-        if (paginaActual === 5) {
-            generarMapaRuta();
-        }
+    const ejerciciosPorPagina = {
+        1: ['p1e1', 'p1e2'],
+        2: ['p2e1', 'p2e2'],
+        3: ['p3e1', 'p3e2'],
+        4: ['p4e1', 'p4e2'],
+        5: ['p5e1', 'p5e2']
+    };
+    const mensajes = {
+        p1e1: { ok: '✅ Correcto. Dos referencias ayudan a ubicar mejor el lugar.', bad: '❌ A&uacute;n no. La ubicaci&oacute;n m&aacute;s precisa usa una calle y una avenida.' },
+        p1e2: { ok: '✅ Correcto. Esa opci&oacute;n s&iacute; combina una calle con una avenida.', bad: '❌ Revisa otra vez. Debe ser una calle junto con una avenida.' },
+        p2e1: { ok: '✅ Correcto. La coordenada correcta es C,2.', bad: '❌ Todav&iacute;a no. Recuerda: primero la letra y luego el n&uacute;mero.' },
+        p2e2: { ok: '✅ Correcto. La coordenada se lee por columna y luego por fila.', bad: '❌ A&uacute;n no. El orden correcto empieza con la columna.' },
+        p3e1: { ok: '✅ Correcto. Norte corresponde a subir en el plano.', bad: '❌ Todav&iacute;a no. Norte no baja ni va hacia los lados.' },
+        p3e2: { ok: '✅ Correcto. El recorrido es derecha, derecha y abajo.', bad: '❌ Revisa otra vez. El recorrido va dos veces al este y luego una al sur.' },
+        p4e1: { ok: '✅ Correcto. Seis pasos de dos unidades suman 12.', bad: '❌ Todav&iacute;a no. Multiplica 6 por 2.' },
+        p4e2: { ok: '✅ Correcto. Diez unidades entre dos dan 5 pasos.', bad: '❌ A&uacute;n no. Divide 10 entre 2 para hallar los pasos.' },
+        p5e1: { ok: '✅ Correcto. Cuatro al este y cuatro al norte te llevan a E1.', bad: '❌ A&uacute;n no. Desde A5 debes llegar a E1 con ese recorrido.' },
+        p5e2: { ok: '✅ Correcto. Dos al este, dos al norte y uno al este terminan en D3.', bad: '❌ Todav&iacute;a no. Sigue el orden: dos al este, dos al norte y uno m&aacute;s al este.' }
+    };
+
+    const configEjercicios = {
+        p1e1: { pagina: 1, apartadoClave: 'pagina1_precision', tipoActividad: 'audio_opcion' },
+        p1e2: { pagina: 1, apartadoClave: 'pagina1_combinacion', tipoActividad: 'audio_opcion' },
+        p2e1: { pagina: 2, apartadoClave: 'pagina2_c2', tipoActividad: 'audio_opcion' },
+        p2e2: { pagina: 2, apartadoClave: 'pagina2_orden', tipoActividad: 'audio_opcion' },
+        p3e1: { pagina: 3, apartadoClave: 'pagina3_norte', tipoActividad: 'audio_opcion' },
+        p3e2: { pagina: 3, apartadoClave: 'pagina3_recorrido', tipoActividad: 'audio_opcion' },
+        p4e1: { pagina: 4, apartadoClave: 'pagina4_distancia', tipoActividad: 'audio_opcion' },
+        p4e2: { pagina: 4, apartadoClave: 'pagina4_pasos', tipoActividad: 'audio_opcion' },
+        p5e1: { pagina: 5, apartadoClave: 'pagina5_destino1', tipoActividad: 'audio_opcion' },
+        p5e2: { pagina: 5, apartadoClave: 'pagina5_destino2', tipoActividad: 'audio_opcion' }
+    };
+
+    const tracker = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'auditivo',
+        trackTime: false,
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'auditivo_facil' },
+        apartados: configEjercicios
+    }) : null;
+
+    const sessionTracker = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'auditivo',
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'auditivo_facil' }
+    }) : null;
+
+    function paginaCompleta(numeroPagina) {
+        return ejerciciosPorPagina[numeroPagina].every(clave => respuestas[clave]);
     }
 
     function actualizarUI() {
-        document.querySelectorAll('.punto').forEach((punto, index) => {
-            const numPagina = index + 1;
+        document.querySelectorAll('.punto').forEach((punto, indice) => {
+            const numPagina = indice + 1;
             punto.classList.remove('activo', 'completado');
             if (numPagina === paginaActual) punto.classList.add('activo');
-            else if (numPagina < paginaActual && respuestasPagina[numPagina]) punto.classList.add('completado');
-            else if (numPagina < paginaActual) punto.classList.add('activo');
+            else if (paginaCompleta(numPagina)) punto.classList.add('completado');
         });
 
         document.getElementById('paginaActualNum').innerText = paginaActual;
         document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-        document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+        document.getElementById('btnAnterior').disabled = paginaActual === 1;
+        document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas || !paginaCompleta(paginaActual);
+
+        const botonQuiz = document.getElementById('botonQuiz');
+        const textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+        if (botonQuiz) {
+            if (paginaCompleta(5)) {
+                botonQuiz.classList.remove('bloqueado');
+                textoAyudaQuiz.innerHTML = 'Ya puedes entrar al quiz.';
+            } else {
+                botonQuiz.classList.add('bloqueado');
+                textoAyudaQuiz.innerHTML = 'Resuelve los dos retos de esta p&aacute;gina para activar el quiz.';
+            }
+        }
+
+        if (tracker) tracker.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
     }
 
-    function reproducirAudio(audioId, boton) {
+    function detenerAudio() {
         if (audioActual) {
             audioActual.pause();
             audioActual.currentTime = 0;
-            document.querySelectorAll('.btn-audio').forEach(btn => btn.classList.remove('playing'));
         }
-        
+        if (botonActual) botonActual.classList.remove('playing');
+        audioActual = null;
+        botonActual = null;
+    }
+
+    function reproducirAudio(audioId, boton) {
+        detenerAudio();
         audioActual = document.getElementById(audioId);
-        audioActual.play();
+        botonActual = boton;
+        if (!audioActual) return;
+        audioActual.play().catch(() => {});
         boton.classList.add('playing');
-        
         audioActual.onended = () => {
-            boton.classList.remove('playing');
+            if (botonActual) botonActual.classList.remove('playing');
             audioActual = null;
+            botonActual = null;
         };
     }
 
-    function responderReforzamiento(pagina, opcion, esCorrecta) {
-        if (respuestasPagina[pagina]) return;
-        
-        audioClick.play();
-        
-        const feedback = document.getElementById(`feedback${pagina}`);
-        const botones = document.querySelectorAll(`#reforzamiento${pagina} .btn-opcion-audio`);
-        
-        botones.forEach(btn => btn.disabled = true);
-        botones[opcion].classList.add(esCorrecta ? 'correcta' : 'incorrecta');
-        
-        if (esCorrecta) {
-            audioDing.play();
-            feedback.style.display = 'block';
-            feedback.className = 'feedback-audio bg-success text-white';
-            feedback.innerHTML = '✅ ¡Correcto!';
-            respuestasPagina[pagina] = true;
+    function ampliarImagen(img) {
+        if (img.classList.contains('ampliada')) {
+            img.classList.remove('ampliada');
+            document.body.classList.remove('imagen-ampliada');
         } else {
-            audioError.play();
+            document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+            img.classList.add('ampliada');
+            document.body.classList.add('imagen-ampliada');
+        }
+    }
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.classList.contains('ampliada') && !event.target.closest('.contenedor-imagen')) {
+            document.querySelectorAll('.ampliada').forEach(img => img.classList.remove('ampliada'));
+            document.body.classList.remove('imagen-ampliada');
+        }
+    });
+
+    function mostrarPagina(numeroPagina) {
+        document.querySelectorAll('.pagina').forEach(pagina => pagina.classList.remove('activa'));
+        const destino = document.getElementById(`pagina${numeroPagina}`);
+        if (!destino) return false;
+        destino.classList.add('activa');
+        paginaActual = numeroPagina;
+        return true;
+    }
+
+    function cambiarPagina(direccion) {
+        const ahora = Date.now();
+        if (ahora - ultimoCambioPagina < 250) return;
+
+        const siguientePagina = paginaActual + direccion;
+        if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
+
+        if (direccion > 0 && !paginaCompleta(paginaActual)) {
+            audioError.play().catch(() => {});
+            const pendiente = ejerciciosPorPagina[paginaActual].find(clave => !respuestas[clave]);
+            const feedback = pendiente ? document.getElementById(`feedback-${pendiente}`) : null;
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.className = 'feedback-auditivo bg-danger text-white';
+                feedback.innerHTML = 'Completa los dos retos de esta pagina antes de avanzar.';
+            }
+            return;
+        }
+
+        ultimoCambioPagina = ahora;
+        detenerAudio();
+
+        if (!mostrarPagina(siguientePagina)) return;
+
+        audioWhoosh.play().catch(() => {});
+        actualizarUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function desactivarOpciones(clave) {
+        document.querySelectorAll(`#opc-${clave} .btn-opcion-aud`).forEach(boton => {
+            boton.disabled = true;
+        });
+    }
+
+    function seleccionarRespuesta(clave, opcion, esCorrecta) {
+        if (respuestas[clave]) return;
+
+        audioClick.play().catch(() => {});
+
+        const config = configEjercicios[clave];
+        const botones = document.querySelectorAll(`#opc-${clave} .btn-opcion-aud`);
+        const feedback = document.getElementById(`feedback-${clave}`);
+
+        if (tracker) tracker.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+
+        botones.forEach(boton => boton.classList.remove('correcta', 'incorrecta'));
+
+        if (esCorrecta) {
+            botones[opcion].classList.add('correcta');
             feedback.style.display = 'block';
-            feedback.className = 'feedback-audio bg-danger text-white';
-            feedback.innerHTML = '❌ Incorrecto. La respuesta correcta está marcada.';
-            
-            botones.forEach((btn, idx) => {
-                if (idx === getRespuestaCorrecta(pagina)) {
-                    btn.classList.add('correcta');
-                }
+            feedback.className = 'feedback-auditivo bg-success text-white';
+            feedback.innerHTML = mensajes[clave].ok;
+            respuestas[clave] = true;
+            desactivarOpciones(clave);
+            audioDing.play().catch(() => {});
+
+            if (tracker) {
+                tracker.addCorrect(clave, 1, { pagina: config.pagina, ejercicio: clave, respuesta: opcion + 1, errores_previos: errores[clave] });
+                tracker.complete(clave, { detalle: { pagina: config.pagina, ejercicio: clave } });
+            }
+        } else {
+            botones[opcion].classList.add('incorrecta');
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-auditivo bg-danger text-white';
+            feedback.innerHTML = mensajes[clave].bad;
+            errores[clave] += 1;
+            audioError.play().catch(() => {});
+
+            if (tracker) tracker.addError(clave, 1, { pagina: config.pagina, ejercicio: clave, respuesta: opcion + 1 });
+
+            setTimeout(() => {
+                if (!respuestas[clave]) botones[opcion].classList.remove('incorrecta');
+            }, 900);
+        }
+
+        actualizarUI();
+    }
+
+    document.getElementById('botonQuiz').addEventListener('click', function(event) {
+        if (!paginaCompleta(5)) {
+            event.preventDefault();
+            audioError.play().catch(() => {});
+            return;
+        }
+        audioClick.play().catch(() => {});
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+        if (sessionTracker) {
+            sessionTracker.start();
+            sessionTracker.attachQuizLinks('.boton-quiz', function() {
+                return { eventoCierre: 'quiz' };
             });
         }
-        
+
         actualizarUI();
-    }
-
-    function getRespuestaCorrecta(pagina) {
-        const correctas = {
-            1: 1, // Entre avenidas
-            2: 1, // C,2
-            3: 0, // Norte
-            4: 1  // 8 unidades (4 pasos × 2)
-        };
-        return correctas[pagina];
-    }
-
-    // ============================================
-    // MAPA PARA RUTA GUIADA (PÁGINA 5) - CORREGIDO: A5 a E1
-    // ============================================
-    function generarMapaRuta() {
-        const mapa = document.getElementById('mapaRuta');
-        if (!mapa) return;
-        
-        let html = '';
-        const filas = 5;
-        const columnas = 5;
-        
-        for (let i = 1; i <= filas; i++) {
-            for (let j = 1; j <= columnas; j++) {
-                const letra = String.fromCharCode(64 + j); // A, B, C, D, E
-                const id = `${letra}${i}`;
-                const esInicio = (id === 'A5'); // Punto A en A5 (abajo izquierda)
-                html += `<div class="celda-mapa ${esInicio ? 'inicio' : ''}" data-id="${id}" onclick="seleccionarCeldaRuta('${id}')">${id}</div>`;
-            }
-        }
-        mapa.innerHTML = html;
-        rutaUsuario = [];
-    }
-
-    function seleccionarCeldaRuta(id) {
-        audioClick.play();
-        const celda = document.querySelector(`.celda-mapa[data-id="${id}"]`);
-        
-        if (celda.classList.contains('ruta')) {
-            celda.classList.remove('ruta');
-            rutaUsuario = rutaUsuario.filter(c => c !== id);
-        } else {
-            celda.classList.add('ruta');
-            rutaUsuario.push(id);
-        }
-    }
-
-    function reiniciarRuta() {
-        document.querySelectorAll('.celda-mapa').forEach(celda => {
-            celda.classList.remove('ruta');
-        });
-        rutaUsuario = [];
-        audioClick.play();
-        document.getElementById('feedback5').style.display = 'none';
-    }
-
-function verificarRuta() {
-    // Ruta correcta: primero este luego norte (8 movimientos)
-    const rutaCorrectaEsteNorte = ['B5', 'C5', 'D5', 'E5', 'E4', 'E3', 'E2', 'E1'];
-    
-    // Ruta alternativa válida: primero norte luego este (8 movimientos)
-    const rutaCorrectaNorteEste = ['A4', 'A3', 'A2', 'A1', 'B1', 'C1', 'D1', 'E1'];
-    
-    // Verificar si coincide con primera opción
-    const coincideEsteNorte = rutaUsuario.length === rutaCorrectaEsteNorte.length && 
-                              rutaUsuario.every((id, idx) => id === rutaCorrectaEsteNorte[idx]);
-    
-    // Verificar si coincide con segunda opción
-    const coincideNorteEste = rutaUsuario.length === rutaCorrectaNorteEste.length && 
-                              rutaUsuario.every((id, idx) => id === rutaCorrectaNorteEste[idx]);
-    
-    const feedback = document.getElementById('feedback5');
-    
-    if (coincideEsteNorte || coincideNorteEste) {
-        audioDing.play();
-        feedback.style.display = 'block';
-        feedback.className = 'feedback-audio bg-success text-white';
-        feedback.innerHTML = '✅ ¡Ruta correcta! Llegaste a E1 siguiendo las instrucciones.';
-        respuestasPagina[5] = true;
-        actualizarUI();
-    } else {
-        audioError.play();
-        feedback.style.display = 'block';
-        feedback.className = 'feedback-audio bg-danger text-white';
-        feedback.innerHTML = '❌ La ruta no es correcta. Debes hacer 4 clics al este y 4 al norte desde A5 (8 movimientos en total).';
-    }
-}
-
-    // ============================================
-    // INICIALIZACIÓN
-    // ============================================
-    window.addEventListener('DOMContentLoaded', () => {
-        const guardado = localStorage.getItem('progreso_facil_auditivo_coordenadas');
-        if (guardado) {
-            const pag = parseInt(guardado, 10);
-            if (pag >= 1 && pag <= totalPaginas) {
-                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-                paginaActual = pag;
-                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-            }
-        }
-        actualizarUI();
-        
-        if (paginaActual === 5) {
-            generarMapaRuta();
-        }
     });
 </script>
 

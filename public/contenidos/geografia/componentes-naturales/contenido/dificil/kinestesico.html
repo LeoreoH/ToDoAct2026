@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -12,73 +12,63 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Nunito',sans-serif;background:#e8f5e9;color:#1b5e20;min-height:100vh;}
 
-    /* ── HEADER ── */
     .cabecera{background:linear-gradient(135deg,#2e7d32,#1b5e20);padding:28px 20px;border-bottom:6px solid #ffea00;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,.3);}
     .cabecera h1{font-family:'Fredoka One',cursive;font-size:2.5rem;color:#fff;text-shadow:3px 3px 0 #1b5e20;}
     .cabecera .sub{color:#c8e6c9;font-weight:700;font-size:1rem;margin-top:4px;}
     .badge-estilo{background:#ffea00;color:#1b5e20;padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.1rem;display:inline-block;border:4px solid #fff;margin-top:10px;}
 
-    /* ── PROGRESS ── */
     .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:900px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid #2e7d32;box-shadow:0 5px 0 #1b5e20;}
     .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
     .punto{width:38px;height:38px;border-radius:50%;background:#c8e6c9;border:3px solid #2e7d32;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#1b5e20;transition:all .3s;}
     .punto.activo{background:#ffea00;transform:scale(1.2);}
     .punto.completado{background:#66bb6a;border-color:#fff;color:#fff;}
 
-    /* ── LAYOUT ── */
     .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
     .pagina{display:none;animation:aparecer .45s ease;}
     .pagina.activa{display:block;}
     @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+    @keyframes tiembla{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 
-    /* ── CARD ── */
     .card-kine{background:#fff;border-radius:26px;padding:24px;margin-bottom:20px;border:3px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;}
     .titulo-pag{font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1b5e20;margin-bottom:8px;border-left:8px solid #ffea00;padding-left:16px;}
     .subtitulo-tema{background:#e8f5e9;border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:#2e7d32;margin-bottom:14px;display:inline-block;border:2px solid #a5d6a7;}
 
-    /* ── INFO PILLS ── */
     .info-pill{display:inline-flex;align-items:center;gap:8px;background:#f1f8e9;border-radius:40px;padding:9px 15px;margin:5px 4px;border:2px solid #a5d6a7;font-weight:700;font-size:.9rem;color:#1b5e20;}
     .info-pill .ico{font-size:1.3rem;}
     .info-bloque{margin:12px 0 8px;}
     .info-titulo{font-weight:800;font-size:.95rem;color:#2e7d32;margin-bottom:6px;}
 
-    /* ── DATO BOX ── */
     .dato-box{background:#f1f8e9;border-radius:16px;padding:14px 16px;border-left:6px solid #ffea00;margin:10px 0;font-size:.93rem;}
     .dato-box strong{color:#2e7d32;}
     .dato-img{width:40px;height:40px;object-fit:cover;margin-right:8px;vertical-align:middle;border-radius:4px;}
 
-    /* ── PISTA BANNER ── */
     .pista-banner{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;border-radius:18px;padding:13px 18px;margin:0 0 12px;text-align:center;}
     .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
     .pista-banner small{opacity:.9;font-size:.85rem;}
 
-    /* ── ACTIVIDAD ── */
     .actividad{background:#fffde7;border-radius:26px;padding:20px;margin-top:16px;border:4px dashed #ffea00;}
     .act-titulo{font-size:1.2rem;font-weight:800;color:#1b5e20;margin-bottom:12px;text-align:center;}
 
-    /* ── FOTOS GRID ── */
     .foto-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-
     .foto-celda{border-radius:13px;border:3px solid #2e7d32;aspect-ratio:4/3;background:#c8e6c9;overflow:hidden;position:relative;transition:transform .2s;}
-
     .foto-celda img{width:100%;height:100%;object-fit:cover;display:block;}
-
     .foto-pie{position:absolute;bottom:0;left:0;right:0;background:rgba(27,94,32,.88);color:#fff;font-size:.73rem;font-weight:700;padding:5px 8px;text-align:center;}
 
-    /* ── JUEGO LETRAS ── */
     .respuesta-row{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
     .casilla{width:40px;height:48px;background:#fff;border:3px solid #2e7d32;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:#1b5e20;cursor:pointer;box-shadow:0 3px 0 #1b5e20;transition:all .15s;flex-shrink:0;}
     .casilla.llena{background:#dcedc8;}
     .casilla.llena:hover{background:#ffcdd2;}
     .casilla.ok-letra{background:#c8e6c9!important;border-color:#43a047;}
+    .casilla.drag-sobre{background:#fff8e1;border-color:#ffb300;transform:translateY(-2px);}
     .letras-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;}
     .letra-btn{width:42px;height:42px;background:#2e7d32;color:#fff;border:none;border-radius:9px;font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .15s;flex-shrink:0;}
     .letra-btn:hover:not(:disabled){transform:translateY(-2px);background:#43a047;}
     .letra-btn.usada{background:#bdbdbd;box-shadow:none;cursor:default;}
+    .letra-btn.seleccionada{background:#ffea00;color:#1b5e20;box-shadow:0 4px 0 #f9a825;}
     .btn-borrar{background:#ef5350;color:#fff;border:none;padding:8px 18px;border-radius:26px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #b71c1c;transition:all .15s;margin-top:4px;}
     .btn-borrar:hover{transform:translateY(-2px);}
 
-    /* ── ROMPECABEZAS ── */
     .prog-rondas-kine{display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
     .prk{background:#fff;border:3px solid #2e7d32;border-radius:14px;padding:8px 16px;font-weight:800;font-size:.85rem;color:#2e7d32;min-width:100px;text-align:center;transition:all .2s;}
     .prk.activo{background:#ffea00;border-color:#f9a825;}
@@ -88,30 +78,16 @@
     .celda-p.ocupada{cursor:default;}
     .celda-p.ocupada:hover{transform:none;}
     .celda-p.ok-celda{border-color:#43a047;border-width:3px;}
+    .celda-p.drag-sobre{border-color:#ffea00;border-width:3px;background:#fff8e1;transform:scale(1.03);}
     .celda-p.err-celda{border-color:#ef5350;border-width:3px;animation:tiembla .3s ease;}
-    @keyframes tiembla{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
     .banco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
-    
     .pieza-banco:hover{transform:scale(1.05);box-shadow:0 5px 0 #1b5e20;}
     .pieza-banco.seleccionada{border-color:#ffea00;outline:4px solid #ffea00;transform:scale(1.08);}
     .pieza-banco.usada{opacity:.3;cursor:default;box-shadow:none;}
     .pieza-banco.usada:hover{transform:none;}
+    .pieza-banco{border-radius:10px;border:3px solid #2e7d32;cursor:grab;user-select:none;}
+    .tablero-puzzle{display:grid;gap:5px;margin:20px auto;justify-content:center;}
 
-    .pieza-banco{
-  border-radius:10px;
-  border:3px solid #2e7d32;
-}
-
-    .tablero-puzzle{
-  display:grid;
-  gap:5px;
-  margin:20px auto;
-  justify-content:center;
-}
-
-
-
-    /* ── CLASIFICACIÓN ── */
     .banco-clasif{display:flex;flex-wrap:wrap;gap:8px;background:#f1f8e9;border-radius:16px;padding:12px;border:3px dashed #a5d6a7;min-height:70px;}
     .elem-clasif{background:#fff;border:3px solid #2e7d32;border-radius:40px;padding:7px 13px;font-weight:700;font-size:.83rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;display:flex;align-items:center;gap:5px;user-select:none;}
     .elem-clasif:hover{transform:translateY(-2px);background:#f1f8e9;}
@@ -120,6 +96,7 @@
     .elem-clasif.oculto{display:none;}
     .grupo-clasif{border-radius:16px;padding:12px;border:3px solid;min-height:90px;transition:all .2s;cursor:pointer;}
     .grupo-clasif:hover{filter:brightness(.97);}
+    .grupo-clasif.drag-sobre{outline:4px solid #ffea00;outline-offset:2px;transform:scale(1.02);}
     .grupo-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
     .grupo-icon-big{font-size:1.5rem;}
     .grupo-nombre{font-family:'Fredoka One',cursive;font-size:1rem;}
@@ -134,7 +111,6 @@
     .progreso-barra-clasif{background:#a5d6a7;border-radius:30px;height:10px;margin-bottom:10px;overflow:hidden;}
     .progreso-fill-clasif{background:#2e7d32;height:100%;border-radius:30px;transition:width .4s ease;}
 
-    /* ── EMPAREJAR (Pag 4) ── */
     .par-col{display:flex;flex-direction:column;gap:8px;}
     .pieza-par{background:#ffea00;color:#1b5e20;padding:10px 12px;border-radius:13px;font-weight:700;text-align:center;cursor:pointer;border:3px solid #2e7d32;box-shadow:0 4px 0 #1b5e20;transition:all .2s;font-size:.88rem;}
     .pieza-par:hover:not(.emparejada){transform:scale(1.03);}
@@ -142,19 +118,18 @@
     .pieza-par.emparejada{background:#bdbdbd;cursor:default;opacity:.5;box-shadow:none;}
     .pieza-par.flash-err{background:#ef9a9a!important;border-color:#c62828!important;}
 
-    /* ── FEEDBACK ── */
     .fb-ok{background:#43a047;color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
     .fb-ok.on{display:block;animation:aparecer .4s ease;}
     .fb-err{background:#ef5350;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
     .fb-err.on{display:block;}
 
-    /* ── NAV ── */
     .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid #2e7d32;box-shadow:0 5px 0 #1b5e20;}
     .btn-nav{background:#ffea00;color:#1b5e20;border:3px solid #2e7d32;padding:10px 24px;border-radius:38px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;}
     .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 #1b5e20;}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;box-shadow:none;cursor:default;}
+    .btn-nav.bloqueado{filter:grayscale(.15);opacity:.72;}
     .ind-pag{font-size:1.25rem;font-weight:800;background:#dcedc8;color:#1b5e20;padding:8px 24px;border-radius:36px;border:3px solid #2e7d32;}
-    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
+    .boton-quiz{display:none;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
     .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 #1b5e20;background:#fff;color:#1b5e20;}
 
     .toast-hint{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#ef5350;color:#fff;padding:10px 20px;border-radius:20px;font-weight:700;z-index:999;font-size:.9rem;pointer-events:none;opacity:0;transition:opacity .3s;}
@@ -170,14 +145,12 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="cabecera">
   <h1>👐 COMPONENTES NATURALES DE LA TIERRA</h1>
   <div class="sub">Bloque II · Nivel Difícil</div>
   <div class="badge-estilo">✋ Estilo Kinestésico</div>
 </div>
 
-<!-- BARRA DE PROGRESO -->
 <div class="progreso">
   <i class="fas fa-hand-paper fa-2x" style="color:#2e7d32;"></i>
   <div class="puntos" id="puntosDiv">
@@ -192,10 +165,6 @@
 </div>
 <div class="contenedor">
 
-<!-- ══════════════════════════════════════════════════
-     PÁGINA 1 · SIMÓN DICE
-     7 preguntas con imágenes, temporizador 12 segundos
-     ══════════════════════════════════════════════════ -->
 <div class="pagina activa" id="pagina1">
   <div class="card-kine">
     <h2 class="titulo-pag"><i class="fas fa-layer-group me-2"></i>Los tesoros naturales del planeta</h2>
@@ -215,7 +184,6 @@
     </div>
 
     <div class="actividad">
-      <!-- PANTALLA INICIO SIMÓN -->
       <div id="simonInicio" style="text-align:center;padding:20px 0;">
         <div style="font-size:3.5rem;margin-bottom:10px;animation:bounce 1s infinite alternate;">🌿</div>
         <h3 style="font-family:'Fredoka One',cursive;font-size:1.6rem;color:#1b5e20;margin-bottom:8px;">¡Simón Dice!</h3>
@@ -223,7 +191,6 @@
         <button style="background:#ffea00;color:#1b5e20;border:4px solid #2e7d32;padding:13px 36px;border-radius:50px;font-weight:900;font-size:1.1rem;cursor:pointer;box-shadow:0 6px 0 #1b5e20;" onclick="simonIniciar()">▶ JUGAR</button>
       </div>
 
-      <!-- PREGUNTA SIMÓN -->
       <div id="simonPregunta" style="display:none;">
         <div style="background:#1b5e20;border-radius:18px;padding:16px 18px;color:#fff;text-align:center;margin-bottom:12px;border:3px solid #ffea00;">
           <div style="font-size:2.2rem;margin-bottom:5px;" id="simEmoji">🌿</div>
@@ -247,7 +214,6 @@
         </div>
       </div>
 
-      <!-- RESULTADO SIMÓN -->
       <div id="simonResultado" style="display:none;text-align:center;padding:20px 0;">
         <div style="font-size:3rem;margin-bottom:8px;" id="simResEmoji">🏆</div>
         <div style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1b5e20;margin-bottom:6px;" id="simResTitulo"></div>
@@ -259,17 +225,13 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════════
-     PÁGINA 2 · ROMPECABEZAS (3 niveles)
-     ══════════════════════════════════════════════════ -->
 <div class="pagina" id="pagina2">
   <div class="card-kine">
     <h2 class="titulo-pag"><i class="fas fa-puzzle-piece me-2"></i>Regiones naturales</h2>
-    <span class="subtitulo-tema">🧩 Actividad 2 de 4 · 3 Rompecabezas </span>
+    <span class="subtitulo-tema">🧩 Actividad 2 de 4 · 3 Rompecabezas</span>
 
     <div style="background:#f1f8e9;border-radius:16px;border:2px solid #a5d6a7;padding:12px;margin-bottom:12px;font-size:.88rem;color:#1b5e20;font-weight:600;">
-      💡 Lee la pista → adivina qué región es → arma el rompecabezas con las piezas para confirmar tu respuesta.
+      💡 Lee la pista → adivina qué región es → arrastra cada pieza al espacio correcto para armar la imagen.
     </div>
 
     <div class="prog-rondas-kine" id="progRompe"></div>
@@ -291,9 +253,7 @@
               <span style="background:#2e7d32;color:#ffea00;padding:4px 12px;border-radius:20px;font-weight:800;font-size:.82rem;" id="rompeContador">0/9</span>
             </div>
           </div>
-          <div style="background:#e8f5e9;border-radius:10px;padding:8px;border:none;text-align:center;margin-top:8px;">
-            
-          </div>
+          <div style="background:#e8f5e9;border-radius:10px;padding:8px;border:none;text-align:center;margin-top:8px;"></div>
         </div>
         <div>
           <div style="font-weight:800;color:#2e7d32;font-size:.88rem;text-align:center;margin-bottom:6px;">🧩 Piezas</div>
@@ -314,17 +274,12 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════════
-     PÁGINA 3 · CLASIFICACIÓN EN GRUPOS
-     5 grupos, 25 elementos
-     ══════════════════════════════════════════════════ -->
 <div class="pagina" id="pagina3">
   <div class="card-kine">
     <h2 class="titulo-pag"><i class="fas fa-layer-group me-2"></i>Regiones naturales</h2>
     <span class="subtitulo-tema">🗂️ Actividad 3 de 4 · Clasifica las Características</span>
 
-    <p style="font-size:.9rem;color:#388e3c;margin-bottom:10px;">Toca una característica del banco → luego toca el grupo de región al que pertenece. ¡Clasifica las 25!</p>
+    <p style="font-size:.9rem;color:#388e3c;margin-bottom:10px;">Arrastra una característica del banco al grupo de región al que pertenece. Si prefieres, también puedes tocar primero la tarjeta y luego el grupo.</p>
 
     <div class="progreso-barra-clasif"><div class="progreso-fill-clasif" id="clasifFill" style="width:0%"></div></div>
     <div style="text-align:center;font-family:'Fredoka One',cursive;font-size:1.1rem;color:#2e7d32;margin-bottom:10px;" id="clasifPunt">0 / 25 clasificados correctamente</div>
@@ -341,10 +296,6 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════════
-     PÁGINA 4 · 4 FOTOS 1 PALABRA (3 rondas)
-     ══════════════════════════════════════════════════ -->
 <div class="pagina" id="pagina4">
   <div class="card-kine">
     <h2 class="titulo-pag"><i class="fas fa-images me-2"></i>Regiones naturales</h2>
@@ -367,7 +318,7 @@
     <div class="actividad">
       <div class="pista-banner" id="fotosBanner">
         <p id="fotosBannerP"></p>
-        <small>Observa las 4 fotos → forma la palabra tocando las letras</small>
+        <small>Observa las 4 fotos → arrastra las letras a las casillas o tócalas para formar la palabra</small>
       </div>
       <div style="font-weight:800;color:#2e7d32;font-size:.9rem;text-align:center;margin-bottom:8px;">✏️ Forma la palabra:</div>
       <div class="respuesta-row" id="fotosRespuesta"></div>
@@ -382,7 +333,6 @@
       </div>
     </div>
 
-    <!-- FINAL FOTOS -->
     <div id="fotosFinalpanel" style="display:none;text-align:center;padding:16px 0;">
       <div style="font-size:3.5rem;margin-bottom:10px;">🏆</div>
       <div style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#1b5e20;margin-bottom:8px;">¡Completaste las 3 Rondas!</div>
@@ -396,8 +346,6 @@
   </div>
 </div>
 
-
-<!-- NAVEGADOR -->
 <div class="nav-bar">
   <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
   <span class="ind-pag" id="indPag">1/4</span>
@@ -406,24 +354,44 @@
 <a href="quiz.html" class="boton-quiz text-center">
   <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
 </a>
-</div><!-- /contenedor -->
+</div>
 
 <div id="toastHint" class="toast-hint"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-/* ══════════ PAGINACIÓN ══════════ */
 let pag = 1;
 const TOTAL_PAGS = 4;
-function cambiarPag(d){
-  document.getElementById('pagina'+pag).classList.remove('activa');
-  pag += d;
-  document.getElementById('pagina'+pag).classList.add('activa');
-  syncUI();
-  window.scrollTo({top:0,behavior:'smooth'});
+function onPaginaCambiada(){
   if(pag===2 && rompeActual===0) rompeInit();
   if(pag===3 && clasifIniciado===false) clasifInit();
   if(pag===4 && fotosRondaActual===0) fotosCargar();
+}
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(TOTAL_PAGS, Number(nuevaPagina) || 1));
+  if(destino===pag){
+    syncUI();
+    onPaginaCambiada();
+    return false;
+  }
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag = destino;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  syncUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+  onPaginaCambiada();
+  return true;
+}
+function cambiarPag(d){
+  const destino = pag + d;
+  if(destino < 1 || destino > TOTAL_PAGS){
+    syncUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function syncUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{
@@ -440,73 +408,70 @@ function showEl(id){const e=document.getElementById(id);if(e){e.classList.add('o
 function hideEl(id){const e=document.getElementById(id);if(e){e.classList.remove('on');e.style.display='none';}}
 function showToast(msg){const t=document.getElementById('toastHint');t.innerText=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500);}
 
-/* ═══════════════════════════════════════════════
-   JUEGO 1 · SIMÓN DICE
-═══════════════════════════════════════════════ */
 const SIMON_TIEMPO = 12;
 const simonPreguntas = [
   { emoji:"🌧️", texto:"Simón dice: Toca la región con lluvias TODO el año, clima CÁLIDO y HÚMEDO, localizada cerca del Ecuador",
     pista:"Pista: es la región con mayor biodiversidad del planeta",
     correcta:1,
     opciones:[
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🌿 Selva ", img:"https://thefreenature.com/wp-content/uploads/2022/05/selvatropical6-1024x640.jpg"},
-      {txt:"❄️ Tundra", img:"https://humanidades.com/wp-content/uploads/2017/05/Tundra-1-e1702495490128-800x400.jpg"},
-      {txt:"🌾 Sabana", img:"https://i.pinimg.com/originals/4e/7e/1e/4e7e1e34df9c77f3bccdd4158e8d55cc.jpg"}],
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🌿 Selva ", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},
+      {txt:"❄️ Tundra", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"},
+      {txt:"🌾 Sabana", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/4e7e1e34df9c77f3bccdd4158e8d55cc-bc13c3a6a9.jpg"}],
     expl:"¡La SELVA TROPICAL llueve todo el año y es la región más biodiversa del planeta!" },
   { emoji:"☀️", texto:"Simón dice: Señala la región donde casi NO llueve (&lt;250mm/año), hay calor extremo de día y frío de noche",
     pista:"Pista: el Sahara es el ejemplo más grande",
     correcta:2,
     opciones:[
-      {txt:"🌿 Selva", img:"https://thefreenature.com/wp-content/uploads/2022/05/selvatropical6-1024x640.jpg"},
-      {txt:"🌲 Taiga", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"},
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🦁 Sabana", img:"https://i.pinimg.com/originals/4e/7e/1e/4e7e1e34df9c77f3bccdd4158e8d55cc.jpg"}],
+      {txt:"🌿 Selva", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},
+      {txt:"🌲 Taiga", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🦁 Sabana", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/4e7e1e34df9c77f3bccdd4158e8d55cc-bc13c3a6a9.jpg"}],
     expl:"¡El DESIERTO tiene clima seco, temperaturas extremas y muy poca vegetación!" },
   { emoji:"❄️", texto:"Simón dice: Encuentra la región POLAR con suelo nevado casi todo el año y solo musgos y líquenes",
     pista:"Pista: Alaska, Siberia y Groenlandia la tienen",
     correcta:0,
     opciones:[
-      {txt:"❄️ Tundra", img:"https://humanidades.com/wp-content/uploads/2017/05/Tundra-1-e1702495490128-800x400.jpg"},
-      {txt:"🌿 Selva", img:"https://thefreenature.com/wp-content/uploads/2022/05/selvatropical6-1024x640.jpg"},
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🌲 Taiga", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"}],
+      {txt:"❄️ Tundra", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"},
+      {txt:"🌿 Selva", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🌲 Taiga", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"}],
     expl:"¡La TUNDRA tiene permafrost, clima polar y solo crecen plantas muy pequeñas!" },
   { emoji:"🦁", texto:"Simón dice: Toca la región con PASTOS ALTOS, lluvias solo en VERANO y fauna como leones y jirafas",
     pista:"Pista: se extiende por gran parte de África",
     correcta:3,
     opciones:[
-      {txt:"❄️ Tundra", img:"https://humanidades.com/wp-content/uploads/2017/05/Tundra-1-e1702495490128-800x400.jpg"},
-      {txt:"🌲 Taiga", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"},
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🦁 Sabana", img:"https://i.pinimg.com/originals/4e/7e/1e/4e7e1e34df9c77f3bccdd4158e8d55cc.jpg"}],
+      {txt:"❄️ Tundra", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"},
+      {txt:"🌲 Taiga", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🦁 Sabana", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/4e7e1e34df9c77f3bccdd4158e8d55cc-bc13c3a6a9.jpg"}],
     expl:"¡La SABANA tiene pastos altos, estación seca marcada y es hogar de grandes mamíferos!" },
   { emoji:"🌲", texto:"Simón dice: Señala el BOSQUE más extenso del mundo con clima frío, pinos y abetos, en norte de Rusia y Canadá",
     pista:"Pista: también se llama bosque boreal",
     correcta:1,
     opciones:[
-      {txt:"🌿 Selva", img:"https://tse1.mm.bing.net/th/id/OIP.MyWlfDqE0HvRlf7QLno_BQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"},
-      {txt:"🌲 Taiga / Bosque Boreal", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"},
-      {txt:"🦁 Sabana", img:"https://i.pinimg.com/originals/4e/7e/1e/4e7e1e34df9c77f3bccdd4158e8d55cc.jpg"},
-      {txt:"❄️ Tundra", img:"https://humanidades.com/wp-content/uploads/2017/05/Tundra-1-e1702495490128-800x400.jpg"}],
+      {txt:"🌿 Selva", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-d568d8268c.webp"},
+      {txt:"🌲 Taiga / Bosque Boreal", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},
+      {txt:"🦁 Sabana", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/4e7e1e34df9c77f3bccdd4158e8d55cc-bc13c3a6a9.jpg"},
+      {txt:"❄️ Tundra", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"}],
     expl:"¡La TAIGA cubre el 25% de los bosques mundiales con pinos y abetos en clima frío!" },
   { emoji:"🫒", texto:"Simón dice: Identifica la región con lluvias en INVIERNO, veranos SECOS y vegetación resistente al fuego, alrededor del Mar Mediterráneo",
     pista:"Pista: también existe en California y Chile",
     correcta:2,
     opciones:[
-      {txt:"🌾 Estepa", img:"https://tse2.mm.bing.net/th/id/OIP.qTPAZCj-p26ga5Gnwlb3MwHaDt?rs=1&pid=ImgDetMain&o=7&rm=3"},
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🫒 Mediterráneo", img:"https://tse2.mm.bing.net/th/id/OIP.aSpJeE5Lbc8OGoeAzzbOcgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"},
-      {txt:"🌲 Taiga", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"}],
+      {txt:"🌾 Estepa", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-a12a892211.webp"},
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🫒 Mediterráneo", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-554f650739.webp"},
+      {txt:"🌲 Taiga", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"}],
     expl:"¡La región MEDITERRÁNEA tiene lluvias en invierno, veranos secos y vegetación resistente al fuego!" },
   { emoji:"💧", texto:"Simón dice: Elige la región donde el AGUA es el elemento principal — pantanos, ciénagas y marismas con enorme biodiversidad",
     pista:"Pista: el Pantanal de Brasil es el ejemplo más grande del mundo",
     correcta:0,
     opciones:[
-      {txt:"💧 Humedales", img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pantanal_-_portal.jpg/400px-Pantanal_-_portal.jpg"},
-      {txt:"🏜️ Desierto", img:"https://cdn.pixabay.com/photo/2023/11/15/14/05/desert-8390138_960_720.jpg"},
-      {txt:"🌾 Pradera", img:"https://ecosistemas.ovacen.com/wp-content/uploads/2018/01/flora-pradera.jpg"},
-      {txt:"🌲 Taiga", img:"https://facts.net/wp-content/uploads/2022/09/River-Flowing-Through-a-Valley-in-Boreal-Forest-Alaska-USA-1320x880.jpg"}],
+      {txt:"💧 Humedales", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/lago-bled-eslovenia-bb7a5817a4.webp"},
+      {txt:"🏜️ Desierto", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},
+      {txt:"🌾 Pradera", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-pradera-690a746e2a.jpg"},
+      {txt:"🌲 Taiga", img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"}],
     expl:"¡Los HUMEDALES son zonas con agua abundante como pantanos y ciénagas!" }
 ];
 let simonQ=0, simonCorrectas=0, simonResps=[], simonTimer=null, simonTiempo=12, simonRespondida=false;
@@ -608,30 +573,31 @@ function simonReiniciar(){
   simonIniciar();
 }
 
-/* ═══════════════════════════════════════════════
-   JUEGO 2 · ROMPECABEZAS
-═══════════════════════════════════════════════ */
 const ROMPE_PUZZLES = [
   { icon:"🌿", preg:"¿Cuál es la región más húmeda y biodiversa del planeta, localizada cerca del Ecuador?",
     desc:"Clima cálido y húmedo · llueve todo el año · vegetación densa de 30-50m · alberga +50% de las especies.",
     obj:"🎯 Arma la imagen: la región más biodiversa",
-    nombre:"", emoji:"",
+    nombre:"Selva Tropical", emoji:"🌿",
     dato:"La selva tropical alberga más del 50% de las especies del planeta en solo el 6% de la superficie terrestre.",
-    img:"https://www.postposmo.com/wp-content/uploads/2020/08/animales-de-la-selva-tropical-8.jpg" },
+    img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/animales-de-la-selva-tropical-8-bc6e0cd318.jpg" },
   { icon:"🏜️", preg:"¿Qué región tiene clima seco, menos de 250mm de lluvia al año y temperaturas muy extremas?",
     desc:"Muy poca lluvia · calor extremo de día · frío extremo de noche · cactus y plantas muy resistentes.",
     obj:"🎯 Arma la imagen: la región más árida",
-    nombre:"", emoji:"",
+    nombre:"Desierto", emoji:"🏜️",
     dato:"Los desiertos cubren el 33% de la superficie terrestre. El Sahara es el más grande del mundo.",
-    img:"https://tse3.mm.bing.net/th/id/OIP.HpRsqiWO2KLVY4ywPdeVZwHaFL?rs=1&pid=ImgDetMain&o=7&rm=3" },
+    img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-5aeab2fe69.webp" },
   { icon:"❄️", preg:"¿Cuál es la región polar donde el suelo está nevado casi todo el año y solo crecen musgos y líquenes?",
     desc:"Clima polar extremo · permafrost · invierno casi todo el año · Alaska, Siberia y Groenlandia.",
     obj:"🎯 Arma la imagen: la región más fría sin bosque",
-    nombre:"", emoji:"",
+    nombre:"Tundra", emoji:"❄️",
     dato:"La tundra cubre el 20% de la superficie terrestre. El permafrost puede tener miles de años.",
-    img:"https://tse4.mm.bing.net/th/id/OIP.oVxl6qAjLQuODWl-LXqeSAHaEO?rs=1&pid=ImgDetMain&o=7&rm=3" }
+    img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-5e82807417.webp" }
 ];
-let rompeActual=0, rompePiezaSel=null, rompeColocadas=0, rompeCompletados=[false,false,false];
+let rompeActual=0, rompePiezaSel=null, rompeColocadas=0, rompeCompletados=[false,false,false], rompeEstado=[], rompeCelSize=0;
+
+function rompeLimpiarSeleccion(){
+  document.querySelectorAll('#rompeBanco .pieza-banco').forEach(p=>p.classList.remove('seleccionada'));
+}
 
 function rompeInit(){
   const pd=ROMPE_PUZZLES;
@@ -644,7 +610,7 @@ function rompeInit(){
 }
 function rompeCargar(){
   const pd=ROMPE_PUZZLES[rompeActual];
-  rompePiezaSel=null;rompeColocadas=0;
+  rompePiezaSel=null;rompeColocadas=0;rompeEstado=new Array(9).fill(-1);
   document.querySelectorAll('.prk').forEach((e,i)=>{e.classList.remove('activo','ok');if(i===rompeActual)e.classList.add('activo');else if(rompeCompletados[i])e.classList.add('ok');});
   document.getElementById('rompeIcon').innerText=pd.icon;
   document.getElementById('rompePregunta').innerText=pd.preg;
@@ -652,18 +618,19 @@ function rompeCargar(){
   document.getElementById('rompeObj').innerText=pd.obj;
   document.getElementById('rompeFbOk').classList.remove('on');
   document.getElementById('rompeCompletado').style.display='none';
-  const celSize=Math.min(130,Math.floor((window.innerWidth/2-60)/3));
+  rompeCelSize=Math.min(130,Math.floor((window.innerWidth/2-60)/3));
   const tab=document.getElementById('rompeTablero');
-  tab.style.gridTemplateColumns=`repeat(3,${celSize}px)`;tab.innerHTML='';
-  const estado=new Array(9).fill(-1);
-  const celdas=[];
+  tab.style.gridTemplateColumns=`repeat(3,${rompeCelSize}px)`;tab.innerHTML='';
   for(let i=0;i<9;i++){
     const c=document.createElement('div');c.className='celda-p';
-    c.style.cssText=`width:${celSize}px;height:${celSize}px;`;
+    c.style.cssText=`width:${rompeCelSize}px;height:${rompeCelSize}px;`;
     c.dataset.idx=i;
     c.innerHTML=`<span style="font-size:.62rem;font-weight:700;color:#a5d6a7;">${i+1}</span>`;
-    c.addEventListener('click',()=>rompeColocar(i,c,celSize,estado,pd));
-    tab.appendChild(c);celdas.push(c);
+    c.addEventListener('click',()=>rompeColocar(i,c));
+    c.addEventListener('dragover',e=>rompePermitirDrop(e,c));
+    c.addEventListener('dragleave',()=>c.classList.remove('drag-sobre'));
+    c.addEventListener('drop',e=>rompeSoltar(e,i,c));
+    tab.appendChild(c);
   }
   const ids=[0,1,2,3,4,5,6,7,8];
   const barajados=[...ids].sort(()=>Math.random()-.5);
@@ -678,29 +645,65 @@ function rompeCargar(){
     const inner=document.createElement('div');
     inner.style.cssText=`width:100%;height:100%;background-image:url(${pd.img});background-size:${bgSize}px ${bgSize}px;background-position:${-col*sz}px ${-row*sz}px;background-repeat:no-repeat;border-radius:5px;`;
     d.appendChild(inner);
+    d.draggable=true;
     d.addEventListener('click',()=>rompeSelPieza(pIdx,d));
+    d.addEventListener('dragstart',e=>rompeArrastrarInicio(e,pIdx,d));
+    d.addEventListener('dragend',()=>d.classList.remove('seleccionada'));
     banco.appendChild(d);
   });
   document.getElementById('rompeContador').innerText='0/9';
 }
 function rompeSelPieza(pIdx,el){
   if(el.classList.contains('usada'))return;
-  document.querySelectorAll('#rompeBanco .pieza-banco').forEach(p=>p.classList.remove('seleccionada'));
+  rompeLimpiarSeleccion();
   if(rompePiezaSel===pIdx){rompePiezaSel=null;return;}
   el.classList.add('seleccionada');rompePiezaSel=pIdx;
 }
-function rompeColocar(cIdx,cEl,sz,estado,pd){
+function rompeAsignarPieza(pIdx,el){
+  if(!el||el.classList.contains('usada'))return;
+  rompeLimpiarSeleccion();
+  el.classList.add('seleccionada');
+  rompePiezaSel=pIdx;
+}
+function rompeArrastrarInicio(e,pIdx,el){
+  if(el.classList.contains('usada')){e.preventDefault();return;}
+  rompeAsignarPieza(pIdx,el);
+  if(e.dataTransfer){
+    e.dataTransfer.effectAllowed='move';
+    e.dataTransfer.setData('text/plain', String(pIdx));
+  }
+}
+function rompePermitirDrop(e,cEl){
+  if(cEl.classList.contains('ocupada'))return;
+  e.preventDefault();
+  cEl.classList.add('drag-sobre');
+}
+function rompeSoltar(e,cIdx,cEl){
+  e.preventDefault();
+  cEl.classList.remove('drag-sobre');
+  const dato=e.dataTransfer?e.dataTransfer.getData('text/plain'):'';
+  const pIdx=dato!==''?parseInt(dato,10):rompePiezaSel;
+  if(Number.isNaN(pIdx)||pIdx===null)return;
+  const piezaEl=Array.from(document.querySelectorAll('#rompeBanco .pieza-banco')).find(p=>parseInt(p.dataset.piezaIdx,10)===pIdx);
+  if(!piezaEl||piezaEl.classList.contains('usada'))return;
+  rompeAsignarPieza(pIdx,piezaEl);
+  rompeColocar(cIdx,cEl);
+}
+function rompeColocar(cIdx,cEl){
   if(rompePiezaSel===null)return;
-  if(estado[cIdx]!==-1){cEl.classList.add('err-celda');setTimeout(()=>cEl.classList.remove('err-celda'),400);return;}
+  cEl.classList.remove('drag-sobre');
+  if(rompeEstado[cIdx]!==-1){cEl.classList.add('err-celda');setTimeout(()=>cEl.classList.remove('err-celda'),400);return;}
+  const pd=ROMPE_PUZZLES[rompeActual];
   if(rompePiezaSel===cIdx){
+    const piezaActual=rompePiezaSel;
     const row=Math.floor(cIdx/3),col=cIdx%3;
-    const bgSize=3*sz;
+    const bgSize=3*rompeCelSize;
     cEl.innerHTML='';cEl.style.backgroundImage=`url(${pd.img})`;
     cEl.style.backgroundSize=`${bgSize}px ${bgSize}px`;
-    cEl.style.backgroundPosition=`${-col*sz}px ${-row*sz}px`;
+    cEl.style.backgroundPosition=`${-col*rompeCelSize}px ${-row*rompeCelSize}px`;
     cEl.style.backgroundRepeat='no-repeat';cEl.classList.add('ocupada','ok-celda');
-    estado[cIdx]=rompePiezaSel;
-    document.querySelectorAll('#rompeBanco .pieza-banco').forEach(p=>{if(parseInt(p.dataset.piezaIdx)===rompePiezaSel){p.classList.add('usada');p.classList.remove('seleccionada');}});
+    rompeEstado[cIdx]=piezaActual;
+    document.querySelectorAll('#rompeBanco .pieza-banco').forEach(p=>{if(parseInt(p.dataset.piezaIdx,10)===piezaActual){p.classList.add('usada');p.classList.remove('seleccionada');}});
     rompePiezaSel=null;rompeColocadas++;
     document.getElementById('rompeContador').innerText=`${rompeColocadas}/9`;
     if(rompeColocadas===9)setTimeout(()=>rompeMostrarComp(),500);
@@ -708,25 +711,30 @@ function rompeColocar(cIdx,cEl,sz,estado,pd){
     cEl.classList.add('err-celda');setTimeout(()=>cEl.classList.remove('err-celda'),400);
     showToast('❌ Esa pieza no va aquí. La posición debe coincidir con el número del espacio.');
     rompePiezaSel=null;
-    document.querySelectorAll('#rompeBanco .pieza-banco').forEach(p=>p.classList.remove('seleccionada'));
+    rompeLimpiarSeleccion();
   }
 }
 function rompeMostrarComp(){
   rompeCompletados[rompeActual]=true;
   const pd=ROMPE_PUZZLES[rompeActual];
   document.getElementById('rompeCompEmoji').innerText=pd.emoji;
-  document.getElementById('rompeCompTitulo').innerText='¡'+pd.nombre+' Completada!';
+  document.getElementById('rompeCompTitulo').innerText='¡'+pd.nombre+' completada!';
   document.getElementById('rompeCompDato').innerText=pd.dato;
   document.getElementById('rompeCompletado').style.display='block';
   const btn=document.getElementById('rompeBtnSig');
-  if(rompeActual>=2){btn.innerText='🏆 ¡Completaste los 3!';btn.onclick=()=>{showToast('🎉 ¡Excelente! Has completado todos los rompecabezas.');document.getElementById('rompeCompletado').innerHTML+='<br><div style="color:#ffea00;font-weight:700;">¡Pasea al siguiente juego!</div>';};}
-  else{btn.innerText='Siguiente Puzzle →';btn.onclick=rompeSiguiente;}
+  if(rompeActual>=2){
+    btn.innerText='🏆 ¡Completaste los 3!';
+    btn.onclick=()=>{
+      showToast('🎉 ¡Excelente! Has completado todos los rompecabezas.');
+      document.getElementById('rompeCompletado').innerHTML+='<br><div style="color:#ffea00;font-weight:700;">¡Pasa al siguiente juego!</div>';
+    };
+  }else{
+    btn.innerText='Siguiente Puzzle →';
+    btn.onclick=rompeSiguiente;
+  }
 }
 function rompeSiguiente(){rompeActual++;rompeInit();}
 
-/* ═══════════════════════════════════════════════
-   JUEGO 3 · CLASIFICACIÓN EN GRUPOS
-═══════════════════════════════════════════════ */
 const CLASIF_GRUPOS=[
   {id:"selva",nombre:"🌿 Selva Tropical",icon:"🌿",desc:"Cálida · húmeda · llueve todo el año",clase:"g0",color:"#c8e6c9"},
   {id:"desierto",nombre:"🏜️ Desierto",icon:"🏜️",desc:"Seco · muy poca lluvia · temperaturas extremas",clase:"g1",color:"#ffe082"},
@@ -741,7 +749,18 @@ const CLASIF_ELEMS=[
   {t:"Pastos altos y arbustos",g:"sabana",e:"🌾"},{t:"Lluvias solo en verano",g:"sabana",e:"🌦️"},{t:"Hogar de leones y jirafas",g:"sabana",e:"🦁"},{t:"África, Asia y América del Sur",g:"sabana",e:"🌍"},{t:"Época de sequía marcada",g:"sabana",e:"🔥"},
   {t:"Bosque de pinos y abetos",g:"taiga",e:"🌲"},{t:"Bosque más extenso del mundo (25%)",g:"taiga",e:"📏"},{t:"Clima frío con inviernos largos",g:"taiga",e:"🌨️"},{t:"Se extiende por Canadá y norte de Rusia",g:"taiga",e:"🏔️"},{t:"También llamado Bosque Boreal",g:"taiga",e:"🗺️"}
 ];
-let clasifSel=null,clasifCorrectos=0,clasifIniciado=false;
+let clasifSel=null,clasifCorrectos=0,clasifIniciado=false,clasifDragActivo=false;
+function clasifLimpiarSeleccion(){
+  document.querySelectorAll('.elem-clasif.seleccionado').forEach(e=>e.classList.remove('seleccionado'));
+  document.querySelectorAll('.grupo-clasif.drag-sobre').forEach(g=>g.classList.remove('drag-sobre'));
+}
+function clasifAutoScroll(e){
+  if(!clasifDragActivo||pag!==3)return;
+  const margen=120;
+  const paso=18;
+  if(e.clientY>window.innerHeight-margen)window.scrollBy(0,paso);
+  else if(e.clientY<margen)window.scrollBy(0,-paso);
+}
 function clasifInit(){
   clasifIniciado=true;clasifSel=null;clasifCorrectos=0;
   const barajado=[...CLASIF_ELEMS].sort(()=>Math.random()-.5);
@@ -750,7 +769,10 @@ function clasifInit(){
     const d=document.createElement('div');d.className='elem-clasif';
     d.id='ce'+idx;d.dataset.idx=idx;d.dataset.grupo=el.g;
     d.innerHTML=`<span>${el.e}</span>${el.t}`;
+    d.draggable=true;
     d.addEventListener('click',()=>clasifSeleccionar(idx,d));
+    d.addEventListener('dragstart',e=>clasifArrastrarInicio(e,idx,d));
+    d.addEventListener('dragend',()=>{clasifDragActivo=false;clasifLimpiarSeleccion();});
     banco.appendChild(d);
   });
   const gg=document.getElementById('clasifGrupos');gg.innerHTML='';
@@ -758,6 +780,9 @@ function clasifInit(){
     const d=document.createElement('div');d.className=`grupo-clasif ${g.clase}`;d.id='cg-'+g.id;
     d.innerHTML=`<div class="grupo-header"><span class="grupo-icon-big">${g.icon}</span><span class="grupo-nombre" style="font-family:'Fredoka One',cursive;">${g.nombre}</span></div><div class="grupo-desc-sm">${g.desc}</div><div class="grupo-contenido" id="gc-${g.id}"></div>`;
     d.addEventListener('click',()=>clasifColocar(g.id,g.color));
+    d.addEventListener('dragover',e=>clasifPermitirDrop(e,d));
+    d.addEventListener('dragleave',()=>d.classList.remove('drag-sobre'));
+    d.addEventListener('drop',e=>clasifSoltar(e,g.id,g.color,d));
     gg.appendChild(d);
   });
   document.getElementById('clasifFbOk').classList.remove('on');
@@ -765,15 +790,38 @@ function clasifInit(){
 }
 function clasifSeleccionar(idx,div){
   if(div.classList.contains('correcto')||div.classList.contains('oculto'))return;
-  document.querySelectorAll('.elem-clasif.seleccionado').forEach(e=>e.classList.remove('seleccionado'));
-  if(clasifSel===idx){clasifSel=null;return;}
+  const mismo=clasifSel===idx;
+  clasifLimpiarSeleccion();
+  if(mismo){clasifSel=null;return;}
   div.classList.add('seleccionado');clasifSel=idx;
 }
-function clasifColocar(gId,gColor){
-  if(clasifSel===null)return;
+function clasifArrastrarInicio(e,idx,div){
+  if(div.classList.contains('correcto')||div.classList.contains('oculto')){e.preventDefault();return;}
+  clasifDragActivo=true;
+  clasifSeleccionar(idx,div);
+  if(e.dataTransfer){
+    e.dataTransfer.effectAllowed='move';
+    e.dataTransfer.setData('text/plain', String(idx));
+  }
+}
+function clasifPermitirDrop(e,grupoEl){
+  e.preventDefault();
+  grupoEl.classList.add('drag-sobre');
+}
+function clasifSoltar(e,gId,gColor,grupoEl){
+  e.preventDefault();
+  clasifDragActivo=false;
+  grupoEl.classList.remove('drag-sobre');
+  const idx=parseInt(e.dataTransfer.getData('text/plain'),10);
+  if(Number.isNaN(idx))return;
+  clasifColocar(gId,gColor,idx);
+}
+function clasifColocar(gId,gColor,idxForzado=null){
+  const idx=idxForzado!==null?idxForzado:clasifSel;
+  if(idx===null)return;
   let elDiv=null,elData=null;
   document.querySelectorAll('.elem-clasif').forEach(el=>{
-    if(parseInt(el.dataset.idx)===clasifSel){elDiv=el;elData={t:el.innerText.replace(/^./,'').trim(),g:el.dataset.grupo};}
+    if(parseInt(el.dataset.idx,10)===idx){elDiv=el;elData={t:el.innerText.replace(/^./,'').trim(),g:el.dataset.grupo};}
   });
   if(!elDiv)return;
   const correcto=elData.g===gId;
@@ -791,6 +839,8 @@ function clasifColocar(gId,gColor){
     const gr=CLASIF_GRUPOS.find(g=>g.id===elData.g);
     showToast(`❌ Ese elemento pertenece a: ${gr.nombre}`);
   }
+  clasifLimpiarSeleccion();
+  clasifDragActivo=false;
   clasifSel=null;
 }
 function clasifActualizar(){
@@ -800,19 +850,16 @@ function clasifActualizar(){
 }
 function clasifReiniciar(){document.getElementById('clasifFbOk').classList.remove('on');clasifInit();}
 
-/* ═══════════════════════════════════════════════
-   JUEGO 4 · 4 FOTOS 1 PALABRA
-═══════════════════════════════════════════════ */
 const FOTOS_RONDAS=[
   { icon:"🌿", preg:"¿Cómo se llama la región HÚMEDA y BIODIVERSA cerca del Ecuador que llueve todo el año?",
     sub:"Las 4 fotos muestran esta región · forma la palabra con las letras",
     banner:"¿Qué región tropical llueve todo el año y tiene la mayor biodiversidad?",
     palabra:"SELVA",
     fotos:[
-      {url:"https://www.latinroutes.co.uk/media/jjfllgmq/brazil-amazon-rainforest-in-anavilhanas-national-park.jpeg",pie:"Amazonia, Brasil"},
-      {url:"https://img.freepik.com/fotos-premium/vista-aerea-exuberante-paisaje-selva-tropical-protegida_419341-64425.jpg",pie:"Vista aérea selva"},
-      {url:"https://thumbs.dreamstime.com/b/dentro-de-la-selva-amaz%C3%B3nica-cerco-de-la-vegetaci%C3%B3n-densa-en-el-parque-nacional-de-cuyabeno-suram%C3%A9rica-ecuador-94713720.jpg",pie:"Vegetación densa"},
-      {url:"https://www.postposmo.com/wp-content/uploads/2020/08/animales-de-la-selva-tropical-8.jpg",pie:"Fauna tropical"}],
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/brazil-amazon-rainforest-in-anavilhanas-national-c0dbfa894c.jpg",pie:"Amazonia, Brasil"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/vista-aerea-exuberante-paisaje-selva-tropical-pr-eb4f238569.jpg",pie:"Vista aérea selva"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/dentro-de-la-selva-amaz-c3-b3nica-cerco-de-la-ve-1cf49cab8e.jpg",pie:"Vegetación densa"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/animales-de-la-selva-tropical-8-bc6e0cd318.jpg",pie:"Fauna tropical"}],
     extra:['A','O','I','B','T','M','P','C','D'],
     expl:"¡La SELVA TROPICAL es la región más biodiversa con lluvias todo el año!" },
   { icon:"🏜️", preg:"¿Cómo se llama la región con clima SECO, poca lluvia, temperaturas extremas y escasa vegetación?",
@@ -820,10 +867,10 @@ const FOTOS_RONDAS=[
     banner:"¿Qué región tiene menos de 250mm de lluvia al año y temperaturas extremas?",
     palabra:"DESIERTO",
     fotos:[
-      {url:"https://wallpaperaccess.com/full/49838.jpg",pie:"Sahara, África"},
-      {url:"https://wikianimales.com/wp-content/uploads/2024/02/1709017462_584_12-ejemplos-de-adaptaciones-de-camellos.jpg",pie:"Camello adaptado"},
-      {url:"https://uploads.vibra.co/1/2021/02/cactus-del-desierto.jpg",pie:"Cactus xerófilo"},
-      {url:"https://cdn.audleytravel.com/2743/1960/79/15979542-flaming-cliffs-gobi-desert-mongolia.jpg",pie:"Desierto de Gobi"}],
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/49838-d608c0e88b.jpg",pie:"Sahara, África"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/1709017462-584-12-ejemplos-de-adaptaciones-de-ca-2eb526056b.jpg",pie:"Camello adaptado"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/cactus-del-desierto-71c9b6e074.jpg",pie:"Cactus xerófilo"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/15979542-flaming-cliffs-gobi-desert-mongolia-84a1f19ec8.jpg",pie:"Desierto de Gobi"}],
     extra:['A','B','L','G','C','K','N','V','X'],
     expl:"¡El DESIERTO es la región más seca con extremos de temperatura y poca vida!" },
   { icon:"❄️", preg:"¿Cómo se llama la región POLAR con suelo nevado casi todo el año y solo musgos y líquenes?",
@@ -831,14 +878,19 @@ const FOTOS_RONDAS=[
     banner:"¿Qué región polar tiene permafrost y solo vegetación rasante?",
     palabra:"TUNDRA",
     fotos:[
-      {url:"https://i.pinimg.com/originals/ff/b2/8d/ffb28da8d171a915c6c32b3a6ddf1dbf.jpg",pie:"Tundra en Siberia"},
-      {url:"https://img.freepik.com/fotos-premium/paisaje-artico-dominado-icebergs-flotantes_124507-231501.jpg",pie:"Paisaje ártico"},
-      {url:"https://tse2.mm.bing.net/th/id/OIP.hRTOeUjTskkHaORiwFMlxQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",pie:"Caribú / Reno"},
-      {url:"https://thumbs.dreamstime.com/b/liquen-y-vegetaci%C3%B3n-de-la-tundra-41845978.jpg",pie:"Líquenes en roca"}],
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/ffb28da8d171a915c6c32b3a6ddf1dbf-11e33d74a6.jpg",pie:"Tundra en Siberia"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/paisaje-artico-dominado-icebergs-flotantes-12450-b37778e140.jpg",pie:"Paisaje ártico"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-254160a6a4.webp",pie:"Caribú / Reno"},
+      {url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/liquen-y-vegetaci-c3-b3n-de-la-tundra-41845978-1ca11b8c67.jpg",pie:"Líquenes en roca"}],
     extra:['S','B','M','C','F','X','P','L','H'],
     expl:"¡La TUNDRA tiene permafrost, clima polar y solo musgos y líquenes en verano!" }
 ];
-let fotosRondaActual=0,fotosRespuesta=[],fotosUsados=[],fotosBarajadas=[],fotosRespondida=false;
+let fotosRondaActual=0,fotosRespuesta=[],fotosUsados=[],fotosBarajadas=[],fotosRespondida=false,fotosIgnorarClickHasta=0;
+
+function fotosLimpiarDragVisual(){
+  document.querySelectorAll('#fotosRespuesta .casilla.drag-sobre').forEach(c=>c.classList.remove('drag-sobre'));
+  document.querySelectorAll('#fotosLetras .letra-btn.seleccionada').forEach(b=>b.classList.remove('seleccionada'));
+}
 
 function barajar(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
 
@@ -869,33 +921,75 @@ function fotosCargar(){
   const casDiv=document.getElementById('fotosRespuesta');casDiv.innerHTML='';
   r.palabra.split('').forEach((ch,i)=>{
     const c=document.createElement('div');c.className='casilla';c.id='fca'+i;
-    c.addEventListener('click',()=>fotosBorrarCasilla(i));casDiv.appendChild(c);
+    c.addEventListener('click',()=>fotosBorrarCasilla(i));
+    c.addEventListener('dragover',e=>fotosPermitirDrop(e,c));
+    c.addEventListener('dragleave',()=>c.classList.remove('drag-sobre'));
+    c.addEventListener('drop',e=>fotosSoltar(e,i,c));
+    casDiv.appendChild(c);
   });
   const letDiv=document.getElementById('fotosLetras');letDiv.innerHTML='';
   fotosBarajadas.forEach((letra,idx)=>{
     const b=document.createElement('button');b.className='letra-btn';b.id='flb'+idx;b.innerText=letra;
+    b.draggable=true;
     b.addEventListener('click',()=>fotosElegir(letra,idx));letDiv.appendChild(b);
+    b.addEventListener('dragstart',e=>fotosArrastrarInicio(e,idx,b));
+    b.addEventListener('dragend',()=>fotosLimpiarDragVisual());
   });
+}
+function fotosColocarEnCasilla(pos,idx){
+  const letra=fotosBarajadas[idx];
+  if(letra===undefined)return;
+  if(fotosRespuesta[pos])fotosBorrarCasilla(pos);
+  fotosRespuesta[pos]=letra;fotosUsados[pos]=idx;
+  const c=document.getElementById('fca'+pos);c.innerText=letra;c.classList.add('llena');c.classList.remove('drag-sobre');
+  const btn=document.getElementById('flb'+idx);
+  if(btn){btn.classList.add('usada');btn.classList.remove('seleccionada');btn.disabled=true;}
+  document.getElementById('fotosFbErr').classList.remove('on');
 }
 function fotosElegir(letra,idx){
   if(fotosRespondida)return;
   const pos=fotosRespuesta.indexOf('');if(pos===-1)return;
-  fotosRespuesta[pos]=letra;fotosUsados[pos]=idx;
-  const c=document.getElementById('fca'+pos);c.innerText=letra;c.classList.add('llena');
-  document.getElementById('flb'+idx).classList.add('usada');document.getElementById('flb'+idx).disabled=true;
-  document.getElementById('fotosFbErr').classList.remove('on');
+  fotosColocarEnCasilla(pos,idx);
+  if(!fotosRespuesta.includes(''))fotosVerificar();
+}
+function fotosArrastrarInicio(e,idx,btn){
+  if(fotosRespondida||btn.disabled){e.preventDefault();return;}
+  fotosLimpiarDragVisual();
+  btn.classList.add('seleccionada');
+  if(e.dataTransfer){
+    e.dataTransfer.effectAllowed='move';
+    e.dataTransfer.setData('text/plain', String(idx));
+  }
+}
+function fotosPermitirDrop(e,casilla){
+  if(fotosRespondida)return;
+  e.preventDefault();
+  casilla.classList.add('drag-sobre');
+}
+function fotosSoltar(e,pos,casilla){
+  e.preventDefault();
+  casilla.classList.remove('drag-sobre');
+  if(fotosRespondida)return;
+  const idx=parseInt(e.dataTransfer.getData('text/plain'),10);
+  if(Number.isNaN(idx))return;
+  const btn=document.getElementById('flb'+idx);
+  if(!btn||btn.disabled)return;
+  fotosIgnorarClickHasta=Date.now()+250;
+  fotosColocarEnCasilla(pos,idx);
+  fotosLimpiarDragVisual();
   if(!fotosRespuesta.includes(''))fotosVerificar();
 }
 function fotosBorrarCasilla(pos){
   if(fotosRespondida)return;
+  if(Date.now()<fotosIgnorarClickHasta)return;
   if(!fotosRespuesta[pos])return;
   const idx=fotosUsados[pos];
   if(idx!==null){const b=document.getElementById('flb'+idx);if(b){b.classList.remove('usada');b.disabled=false;}}
   fotosRespuesta[pos]='';fotosUsados[pos]=null;
-  const c=document.getElementById('fca'+pos);c.innerText='';c.classList.remove('llena','ok-letra');
+  const c=document.getElementById('fca'+pos);c.innerText='';c.classList.remove('llena','ok-letra','drag-sobre');
   document.getElementById('fotosFbErr').classList.remove('on');
 }
-function fotosBorrarTodo(){for(let i=fotosRespuesta.length-1;i>=0;i--)fotosBorrarCasilla(i);}
+function fotosBorrarTodo(){for(let i=fotosRespuesta.length-1;i>=0;i--)fotosBorrarCasilla(i);fotosLimpiarDragVisual();}
 function fotosVerificar(){
   const r=FOTOS_RONDAS[fotosRondaActual];
   if(fotosRespuesta.join('')===r.palabra){
@@ -916,7 +1010,7 @@ function fotosSiguiente(){
   if(fotosRondaActual>=2){
     document.getElementById('fotosGrid').style.display='none';
     document.getElementById('fotosFinalpanel').style.display='block';
-    document.querySelector('.actividad').style.display='none';
+    document.querySelector('#pagina4 .actividad').style.display='none';
   }else{
     fotosRondaActual++;fotosCargar();
   }
@@ -925,12 +1019,26 @@ function fotosReiniciar(){
   fotosRondaActual=0;
   document.getElementById('fotosGrid').style.display='grid';
   document.getElementById('fotosFinalpanel').style.display='none';
-  document.querySelector('.actividad').style.display='block';
+  document.querySelector('#pagina4 .actividad').style.display='block';
   fotosCargar();
 }
 
-/* ══════════ INIT ══════════ */
-window.addEventListener('DOMContentLoaded',()=>{syncUI();});
+function runInitStep(nombre, fn){
+  try{ fn(); }
+  catch(error){ console.error('Error al iniciar '+nombre+':', error); }
+}
+function initPagina(){
+  runInitStep('ui', syncUI);
+  runInitStep('clasif auto scroll', ()=>document.addEventListener('dragover', clasifAutoScroll));
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initPagina, { once:true });
+} else {
+  initPagina();
+}
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260508a"></script>
 </body>
 </html>

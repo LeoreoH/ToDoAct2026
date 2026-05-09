@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aprendizaje Visual Verbal 📖</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Países Poblados · Visual Verbal · Nivel Normal</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --guindo: #6B0F2B;
@@ -39,7 +39,6 @@
     border-bottom: 3px solid var(--gold);
     position: relative;
   }
-  .top-header-icon { font-size: 1.6rem; }
   .top-header h1 {
     font-family: 'Fredoka One', cursive;
     font-size: clamp(1.6rem, 4vw, 2.4rem);
@@ -88,12 +87,15 @@
   }
   .hud-left { display: flex; align-items: center; gap: 10px; }
   .hud-icon {
-    width: 38px; height: 38px;
+    min-width: 70px; height: 38px;
+    padding: 0 12px;
     background: var(--guindo);
     border: 2px solid var(--gold);
-    border-radius: 50%;
+    border-radius: 999px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
   }
   .page-dots { display: flex; gap: 6px; align-items: center; }
   .page-dot {
@@ -245,6 +247,36 @@
 
   /* ── FILL FORM ── */
   .fill-form { display:grid; gap:10px; }
+  .answer-bank {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin: 0 0 14px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.16);
+    border: 1px solid rgba(244,200,66,0.18);
+  }
+  .answer-bank-title {
+    width: 100%;
+    color: var(--gris-pale);
+    font-size: 0.84rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .answer-card {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(244,200,66,0.12);
+    border: 1px solid rgba(244,200,66,0.3);
+    color: var(--gold);
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
   .form-row { display:grid; grid-template-columns:1fr 2fr; gap:10px; align-items:center; }
   .form-label { color:var(--gold); font-weight:700; font-size:0.88rem; line-height:1.4; }
   .form-input {
@@ -380,26 +412,87 @@
     .nav-prev-btn, .nav-next-btn { padding:8px 14px; font-size:0.82rem; }
   }
 </style>
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-base.css">
+<style>
+  .form-input {
+    background: #fff !important;
+    border: 2px solid #d4b8b8 !important;
+    color: var(--guindo-dark) !important;
+  }
+
+  .form-input::placeholder {
+    color: #8d6d75 !important;
+  }
+
+  .form-input:focus {
+    border-color: var(--gold) !important;
+  }
+
+  .form-input.correct {
+    color: #1a7a46 !important;
+    background: #eefaf3 !important;
+  }
+
+  .form-input.wrong {
+    color: #a93226 !important;
+    background: #fff1f1 !important;
+  }
+
+  .inline-input {
+    background: #fff !important;
+    color: var(--guindo-dark) !important;
+    border-bottom: 2px solid var(--gold) !important;
+  }
+
+  .inline-input::placeholder {
+    color: #8d6d75 !important;
+  }
+
+  .inline-input.correct {
+    color: #1a7a46 !important;
+    background: #eefaf3 !important;
+  }
+
+  .inline-input.wrong {
+    color: #a93226 !important;
+    background: #fff1f1 !important;
+  }
+
+  .quiz-btn-footer.bloqueado {
+    background: #b9bcc7 !important;
+    border-color: #8f94a3 !important;
+    color: #f6f7fb !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
+
+  .quiz-btn-footer.bloqueado:hover {
+    background: #b9bcc7 !important;
+    color: #f6f7fb !important;
+    transform: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+  }
+</style>
 </head>
 <body>
 
-<div class="score-popup" id="scorePopup">+10 ⭐</div>
+<div class="score-popup" id="scorePopup">+10 pts</div>
 
 <!-- ══════════ TOP HEADER ══════════ -->
 <div class="top-header">
-  <div class="top-header-icon">📖</div>
-  <h1>Aprendo Leyendo</h1>
-  <div class="top-header-sub">Bloque II — Geografía · 5to Primaria</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="top-header-sub">Bloque · Nivel Normal · Geografía 5°</div>
   <div class="header-badges">
-    <div class="header-badge">📖 Estilo Visual Verbal</div>
-    <div class="header-badge secondary">🟢 Nivel Normal</div>
+    <div class="header-badge">Estilo Visual Verbal</div>
+    <div class="header-badge secondary">Nivel Normal</div>
   </div>
 </div>
 
 <!-- ══════════ HUD BAR ══════════ -->
 <div class="hud-bar">
   <div class="hud-left">
-    <div class="hud-icon">👁️</div>
+    <div class="hud-icon">VV</div>
     <div class="page-dots">
       <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
       <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
@@ -408,15 +501,15 @@
     </div>
   </div>
   <div class="hud-pts-group">
-    <div class="hud-chip">⭐ <span id="pts">0</span></div>
-    <div class="hud-chip">🏆 <span id="insig">0</span></div>
+    <div class="hud-chip">Puntos: <span id="pts">0</span></div>
+    <div class="hud-chip">Insignias: <span id="insig">0</span></div>
   </div>
   <div class="hud-pag" id="pagLabel">Pág 1/4</div>
 </div>
 
 <!-- ══════════ SECTION TITLE BAR ══════════ -->
 <div class="section-title-bar" id="sectionBar">
-  <span class="sicon">🌐</span>
+  <span class="sicon">01</span>
   <span id="sectionTitle">Países Más y Menos Poblados</span>
 </div>
 
@@ -522,6 +615,9 @@
       </div>
       <div class="game-body">
         <div class="score-counter">✅ Correctas: <span id="f1-score">0/5</span></div>
+        <div class="answer-bank" id="f1-bank">
+          <div class="answer-bank-title">🧩 Tarjetas de apoyo: observa estas respuestas y úsalas para completar el esquema.</div>
+        </div>
         <div class="fill-form">
           <div class="form-row">
             <div class="form-label">País más poblado (2024):</div>
@@ -711,10 +807,13 @@
       </div>
       <div class="game-instruction">
         <span class="instr-icon">📖</span>
-        <span>Completa el párrafo con los términos geográficos correctos.</span>
+        <span>Completa el párrafo con los términos geográficos correctos. Usa las tarjetas de apoyo para orientarte.</span>
       </div>
       <div class="game-body">
         <div class="score-counter">✅ Correctas: <span id="tf-score">0/5</span></div>
+        <div class="answer-bank" id="tf-bank">
+          <div class="answer-bank-title">🧩 Tarjetas de apoyo: estas son las palabras clave que debes ubicar dentro del texto.</div>
+        </div>
         <div class="text-fill-para">
           El <input class="inline-input" id="ft1" data-answer="éxodo rural" style="width:110px"> es el fenómeno por el cual la población migra del campo hacia la ciudad. La ciudad se caracteriza por su alta <input class="inline-input" id="ft2" data-answer="densidad" style="width:90px"> poblacional y sus actividades <input class="inline-input" id="ft3" data-answer="terciarias" style="width:100px"> (comercio, servicios). El campo, en cambio, se basa en actividades <input class="inline-input" id="ft4" data-answer="primarias" style="width:90px"> como la agricultura. La relación entre ambos espacios es de <input class="inline-input" id="ft5" data-answer="interdependencia" style="width:130px">.
         </div>
@@ -738,7 +837,7 @@
           <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
           <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
           <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
-          <p>🚶 <strong style="color:var(--gold)">Migración:</strong> éxodo rural = movimiento campo → ciudad en busca de mejores oportunidades.</p>
+          <p>Migración: <strong style="color:var(--gold)">éxodo rural</strong> significa el movimiento del campo a la ciudad en busca de mejores oportunidades.</p>
         </div>
       </div>
     </div>
@@ -824,10 +923,13 @@
       </div>
       <div class="game-instruction">
         <span class="instr-icon">📝</span>
-        <span>Usa la información de las tablas y la línea del tiempo para completar el esquema.</span>
+        <span>Usa la información de las tablas y la línea del tiempo para completar el esquema. Apóyate en las tarjetas para ubicar mejor las respuestas.</span>
       </div>
       <div class="game-body">
         <div class="score-counter">✅ Correctas: <span id="f3-score">0/5</span></div>
+        <div class="answer-bank" id="f3-bank">
+          <div class="answer-bank-title">🧩 Tarjetas de apoyo: estas son las respuestas clave para completar el esquema cultural.</div>
+        </div>
         <div class="fill-form">
           <div class="form-row"><div class="form-label">Idiomas en el mundo (aprox.):</div><input class="form-input" id="f3_1" placeholder="número" data-answer="7000"></div>
           <div class="form-row"><div class="form-label">Organismo que protege la cultura:</div><input class="form-input" id="f3_2" placeholder="nombre del organismo" data-answer="unesco"></div>
@@ -863,7 +965,7 @@
   <div class="page" id="page-3">
     <div class="game-card">
       <div class="game-card-header">
-        <span class="game-number">🎮 Reto Final</span>
+        <span class="game-number">Reto final</span>
         <span class="game-title">Examen de Repaso Visual Verbal</span>
       </div>
       <div class="game-instruction">
@@ -873,7 +975,7 @@
       <div class="game-body">
         <div id="repaso-container">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
-            <div class="hud-chip">⭐ Puntos del repaso: <span id="repaso-pts">0</span></div>
+          <div class="hud-chip">Puntos del repaso: <span id="repaso-pts">0</span></div>
             <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 10</div>
           </div>
           <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:10%"></div></div>
@@ -895,12 +997,12 @@
 
 <!-- ══════════ FOOTER NAV ══════════ -->
 <div class="footer-nav">
-  <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+  <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>ANTERIOR</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div class="footer-center" id="footerPageNum">1/4</div>
-    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL QUIZ</button>
+    <a class="quiz-btn-footer" href="quiz.html">IR AL QUIZ</a>
   </div>
-  <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
+  <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE</button>
 </div>
 
 <script>
@@ -908,12 +1010,138 @@
 let totalPts = 0, totalInsig = 0;
 let currentPage = 0;
 const TOTAL_PAGES = 4;
+const progresoVisualVerbal = {
+  1: { form: false, quiz: false },
+  2: { form: false, text: false },
+  3: { cultura: false, form: false },
+  4: { repaso: false }
+};
+const paginasCelebradas = new Set();
+
+function mezclarLista(lista) {
+  const copia = [...lista];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+function normalizarTexto(valor) {
+  return String(valor || '')
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function renderTarjetasApoyoJuego1() {
+  const banco = document.getElementById('f1-bank');
+  if (!banco) return;
+  const palabras = mezclarLista(['India', 'Vaticano', 'Hacinamiento', 'Clima', 'Asia']);
+  banco.innerHTML = '<div class="answer-bank-title">🧩 Tarjetas de apoyo: observa estas respuestas y úsalas para completar el esquema.</div>';
+  palabras.forEach((palabra) => {
+    const chip = document.createElement('span');
+    chip.className = 'answer-card';
+    chip.textContent = palabra;
+    banco.appendChild(chip);
+  });
+}
+
+function renderTarjetasApoyoJuego4() {
+  const banco = document.getElementById('tf-bank');
+  if (!banco) return;
+  const palabras = mezclarLista(['Éxodo rural', 'Densidad', 'Terciarias', 'Primarias', 'Interdependencia']);
+  banco.innerHTML = '<div class="answer-bank-title">🧩 Tarjetas de apoyo: estas son las palabras clave que debes ubicar dentro del texto.</div>';
+  palabras.forEach((palabra) => {
+    const chip = document.createElement('span');
+    chip.className = 'answer-card';
+    chip.textContent = palabra;
+    banco.appendChild(chip);
+  });
+}
+
+function renderTarjetasApoyoJuego6() {
+  const banco = document.getElementById('f3-bank');
+  if (!banco) return;
+  const palabras = mezclarLista(['7000', 'UNESCO', 'Culturas', 'Tradiciones', 'Discriminación']);
+  banco.innerHTML = '<div class="answer-bank-title">🧩 Tarjetas de apoyo: estas son las respuestas clave para completar el esquema cultural.</div>';
+  palabras.forEach((palabra) => {
+    const chip = document.createElement('span');
+    chip.className = 'answer-card';
+    chip.textContent = palabra;
+    banco.appendChild(chip);
+  });
+}
+const q1CorrectSet = new Set();
+const culturaCorrectSet = new Set();
+let q1CurrentResolved = false;
+let culturaActual = -1;
+let culturaResuelta = false;
+const sonidos = {
+  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+};
+
+Object.values(sonidos).forEach(audio => {
+  if (audio && audio.src) audio.volume = 0.15;
+});
+
+function reproducirSonido(nombre) {
+  const audio = sonidos[nombre];
+  if (!audio || !audio.src) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
+function paginaCompleta(numero) {
+  return Object.values(progresoVisualVerbal[numero] || {}).every(Boolean);
+}
+
+function todoCompletado() {
+  return Object.keys(progresoVisualVerbal).every(numero => paginaCompleta(Number(numero)));
+}
+
+function completarSubactividad(pagina, clave) {
+  if (!progresoVisualVerbal[pagina] || progresoVisualVerbal[pagina][clave]) return;
+  progresoVisualVerbal[pagina][clave] = true;
+  if (paginaCompleta(pagina) && !paginasCelebradas.has(pagina)) {
+    paginasCelebradas.add(pagina);
+    reproducirSonido('tada');
+  }
+  syncLockedUI();
+}
+
+function puedeIrAPagina(destino) {
+  if (destino <= currentPage) return true;
+  for (let idx = currentPage; idx < destino; idx++) {
+    if (!paginaCompleta(idx + 1)) return false;
+  }
+  return true;
+}
+
+function syncLockedUI() {
+  document.getElementById('prevBtn').disabled = (currentPage === 0);
+  document.getElementById('nextBtn').disabled = (currentPage === TOTAL_PAGES - 1) || !paginaCompleta(currentPage + 1);
+
+  const quizBtn = document.querySelector('.quiz-btn-footer');
+  if (quizBtn) {
+    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'inline-flex' : 'none';
+    const bloqueado = !todoCompletado();
+    quizBtn.classList.toggle('bloqueado', bloqueado);
+    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
+    quizBtn.tabIndex = bloqueado ? -1 : 0;
+    quizBtn.title = bloqueado ? 'Completa todas las páginas para desbloquear el quiz' : '';
+  }
+}
 
 const PAGE_LABELS = [
-  { icon:'🌐', title:'Países Más y Menos Poblados' },
-  { icon:'🏙️', title:'Ciudad y Campo' },
-  { icon:'🌍', title:'Las Culturas del Mundo' },
-  { icon:'🎮', title:'Repaso Final' },
+  { icon:'01', title:'Países Más y Menos Poblados' },
+  { icon:'02', title:'Ciudad y Campo' },
+  { icon:'03', title:'Las Culturas del Mundo' },
+  { icon:'04', title:'Repaso Final' },
 ];
 
 // ───── POINTS ─────
@@ -924,13 +1152,19 @@ function addPoints(n) {
   if (totalPts >= 120 && totalInsig === 1) { totalInsig=2; document.getElementById('insig').textContent=2; }
   if (totalPts >= 200 && totalInsig < 3) { totalInsig=3; document.getElementById('insig').textContent=3; }
   const pop = document.getElementById('scorePopup');
-  pop.textContent = '+' + n + ' ⭐';
+  pop.textContent = '+' + n + ' pts';
   pop.classList.add('show');
   setTimeout(() => pop.classList.remove('show'), 1400);
 }
 
 // ───── PAGE NAVIGATION ─────
 function goToPage(n) {
+  if (!puedeIrAPagina(n)) {
+    reproducirSonido('error');
+    syncLockedUI();
+    return;
+  }
+  if (n !== currentPage) reproducirSonido('click');
   currentPage = n;
   document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
   document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
@@ -938,8 +1172,7 @@ function goToPage(n) {
   document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
   document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
   document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[n].icon;
-  document.getElementById('prevBtn').disabled = (n === 0);
-  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
+  syncLockedUI();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
@@ -952,12 +1185,13 @@ const formData = {
 };
 
 function checkForm(n, scoreId) {
+  reproducirSonido('click');
   const ids = formData[n].ids;
   let ok = 0;
   ids.forEach(id => {
     const el = document.getElementById(id);
-    const val = el.value.toLowerCase().trim();
-    const ans = el.dataset.answer.toLowerCase();
+    const val = normalizarTexto(el.value);
+    const ans = normalizarTexto(el.dataset.answer);
     el.classList.remove('correct','wrong');
     if (val.length > 1 && (val.includes(ans) || ans.includes(val))) {
       el.classList.add('correct'); ok++;
@@ -971,10 +1205,17 @@ function checkForm(n, scoreId) {
   fb.textContent = ok === ids.length
     ? '🎉 ¡Perfecto! Completaste toda la actividad. +20 pts'
     : `✏️ Tuviste ${ok}/${ids.length} correctas. ¡Revisa las marcadas en rojo!`;
-  if (ok === ids.length) addPoints(20);
+  if (ok === ids.length) {
+    reproducirSonido('acierto');
+    addPoints(20);
+    completarSubactividad(n, 'form');
+  } else {
+    reproducirSonido('error');
+  }
 }
 
 function resetForm(n, scoreId) {
+  reproducirSonido('click');
   formData[n].ids.forEach(id => {
     const el = document.getElementById(id);
     el.value = ''; el.classList.remove('correct','wrong');
@@ -985,6 +1226,7 @@ function resetForm(n, scoreId) {
 
 // ───── TEXT FILL ─────
 function checkTextFill() {
+  reproducirSonido('click');
   const fields = [
     {id:'ft1', ans:'éxodo rural'},
     {id:'ft2', ans:'densidad'},
@@ -995,9 +1237,10 @@ function checkTextFill() {
   let ok = 0;
   fields.forEach(f => {
     const el = document.getElementById(f.id);
-    const val = el.value.toLowerCase().trim();
+    const val = normalizarTexto(el.value);
+    const ans = normalizarTexto(f.ans);
     el.classList.remove('correct','wrong');
-    if (val.length > 2 && (val.includes(f.ans.split(' ')[0]) || f.ans.includes(val))) {
+    if (val.length > 2 && (val.includes(ans.split(' ')[0]) || ans.includes(val))) {
       el.classList.add('correct'); ok++;
     } else { el.classList.add('wrong'); }
   });
@@ -1005,9 +1248,16 @@ function checkTextFill() {
   const fb = document.getElementById('fb-tf');
   fb.className = 'feedback show ' + (ok === 5 ? 'ok' : 'fail');
   fb.textContent = ok === 5 ? '📚 ¡Excelente! +20 pts' : `✏️ ${ok}/5 correctos. ¡Sigue intentando!`;
-  if (ok === 5) addPoints(20);
+  if (ok === 5) {
+    reproducirSonido('acierto');
+    addPoints(20);
+    completarSubactividad(2, 'text');
+  } else {
+    reproducirSonido('error');
+  }
 }
 function resetTextFill() {
+  reproducirSonido('click');
   ['ft1','ft2','ft3','ft4','ft5'].forEach(id => {
     const el = document.getElementById(id);
     el.value = ''; el.classList.remove('correct','wrong');
@@ -1025,27 +1275,79 @@ const q1data = [
 ];
 let q1idx = 0, q1hits = 0;
 function loadQ1() {
+  if (q1CorrectSet.size >= q1data.length) {
+    document.getElementById('q1-text').textContent = '🎉 ¡Completaste todas las preguntas de esta sección!';
+    document.getElementById('q1-opts').innerHTML = '';
+    const fb = document.getElementById('fb-q1');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Ya resolviste correctamente todas las preguntas.';
+    q1CurrentResolved = true;
+    completarSubactividad(1, 'quiz');
+    return;
+  }
   const d = q1data[q1idx];
-  document.getElementById('q1-text').textContent = '❓ ' + d.q;
+  q1CurrentResolved = false;
+  document.getElementById('q1-text').textContent = 'Pregunta: ' + d.q;
   const c = document.getElementById('q1-opts'); c.innerHTML = '';
   d.opts.forEach((o,i) => {
     const b = document.createElement('button');
     b.className = 'q-opt'; b.textContent = o;
     b.onclick = () => {
-      document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
-        if(j===d.a) btn.classList.add('correct');
-        else if(j===i) btn.classList.add('wrong');
-        btn.disabled = true;
-      });
+      if (b.disabled || q1CurrentResolved) return;
+      reproducirSonido('click');
       const fb = document.getElementById('fb-q1');
-      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; q1hits++; document.getElementById('q1-hits').textContent=q1hits; addPoints(10); }
-      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta correcta está en verde.'; }
+      if(i===d.a){
+        reproducirSonido('acierto');
+        q1CurrentResolved = true;
+        if (!q1CorrectSet.has(q1idx)) {
+          q1CorrectSet.add(q1idx);
+          q1hits = q1CorrectSet.size;
+          document.getElementById('q1-hits').textContent = q1hits;
+          addPoints(10);
+        }
+        document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
+          if(j===d.a) btn.classList.add('correct');
+          btn.disabled = true;
+        });
+        fb.className='feedback show ok';
+        fb.textContent = q1CorrectSet.size === q1data.length
+          ? '✅ ¡Correcto! Ya completaste toda la ronda.'
+          : '✅ ¡Correcto! Presiona "Siguiente pregunta".';
+        if (q1CorrectSet.size === q1data.length) completarSubactividad(1, 'quiz');
+      }
+      else{
+        reproducirSonido('error');
+        b.classList.add('wrong');
+        b.disabled = true;
+        fb.className='feedback show fail';
+        fb.textContent='❌ Incorrecto. Intenta con otra opción.';
+      }
+      syncLockedUI();
     };
     c.appendChild(b);
   });
   document.getElementById('fb-q1').className = 'feedback';
 }
-function nextQ1() { q1idx = (q1idx+1) % q1data.length; loadQ1(); }
+function nextQ1() {
+  if (q1CorrectSet.size >= q1data.length) {
+    reproducirSonido('acierto');
+    completarSubactividad(1, 'quiz');
+    return;
+  }
+  if (!q1CurrentResolved) {
+    reproducirSonido('error');
+    return;
+  }
+  reproducirSonido('click');
+  for (let step = 1; step <= q1data.length; step++) {
+    const next = (q1idx + step) % q1data.length;
+    if (!q1CorrectSet.has(next)) {
+      q1idx = next;
+      loadQ1();
+      return;
+    }
+  }
+}
 loadQ1();
 
 // ───── CULTURAS ─────
@@ -1059,27 +1361,75 @@ const culturas = [
 ];
 let cultIdx = 0, cultScore = 0;
 function nextCultura() {
-  if (cultIdx >= culturas.length) {
+  if (culturaCorrectSet.size >= culturas.length) {
+    reproducirSonido('acierto');
     document.getElementById('cultura-pista').textContent = '🏆 ¡Terminaste todas las pistas!';
-    document.getElementById('cultura-opciones').innerHTML = ''; return;
+    document.getElementById('cultura-opciones').innerHTML = '';
+    document.getElementById('fb-cultura').className = 'feedback show ok';
+    document.getElementById('fb-cultura').textContent = '✅ Ya resolviste correctamente todas las pistas culturales.';
+    completarSubactividad(3, 'cultura');
+    return;
   }
-  const d = culturas[cultIdx];
+  if (culturaActual !== -1 && !culturaResuelta) {
+    reproducirSonido('error');
+    return;
+  }
+  reproducirSonido('click');
+  let nextIndex = 0;
+  if (culturaActual === -1) {
+    while (culturaCorrectSet.has(nextIndex) && nextIndex < culturas.length) nextIndex++;
+  } else {
+    for (let step = 1; step <= culturas.length; step++) {
+      const idx = (culturaActual + step) % culturas.length;
+      if (!culturaCorrectSet.has(idx)) {
+        nextIndex = idx;
+        break;
+      }
+    }
+  }
+  const d = culturas[nextIndex];
+  culturaActual = nextIndex;
+  cultIdx = nextIndex + 1;
+  culturaResuelta = false;
   document.getElementById('cultura-pista').textContent = d.pista;
   const c = document.getElementById('cultura-opciones'); c.innerHTML = '';
   d.opts.forEach((o,i) => {
     const b = document.createElement('button'); b.className = 'q-opt'; b.textContent = o;
     b.onclick = () => {
-      document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j) => {
-        if(j===d.a) btn.classList.add('correct'); else if(j===i) btn.classList.add('wrong'); btn.disabled=true;
-      });
+      if (b.disabled || culturaResuelta) return;
+      reproducirSonido('click');
       const fb = document.getElementById('fb-cultura');
-      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; cultScore++; document.getElementById('cultura-score').textContent=cultScore; addPoints(10); }
-      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta está en verde.'; }
+      if(i===d.a){
+        reproducirSonido('acierto');
+        culturaResuelta = true;
+        if (!culturaCorrectSet.has(nextIndex)) {
+          culturaCorrectSet.add(nextIndex);
+          cultScore = culturaCorrectSet.size;
+          document.getElementById('cultura-score').textContent = cultScore;
+          addPoints(10);
+        }
+        document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j) => {
+          if(j===d.a) btn.classList.add('correct');
+          btn.disabled = true;
+        });
+        fb.className='feedback show ok';
+        fb.textContent = culturaCorrectSet.size === culturas.length
+          ? '✅ ¡Correcto! Ya completaste todas las pistas culturales.'
+          : '✅ ¡Correcto! Presiona "Siguiente Pista".';
+        if (culturaCorrectSet.size === culturas.length) completarSubactividad(3, 'cultura');
+      }
+      else{
+        reproducirSonido('error');
+        b.classList.add('wrong');
+        b.disabled = true;
+        fb.className='feedback show fail';
+        fb.textContent='❌ Incorrecto. Intenta con otra opción.';
+      }
+      syncLockedUI();
     };
     c.appendChild(b);
   });
   document.getElementById('fb-cultura').className = 'feedback';
-  cultIdx++;
 }
 
 // ───── REPASO FINAL ─────
@@ -1087,7 +1437,7 @@ const repasoQ = [
   {q:'¿Cuál es el país más poblado del mundo en 2024?', opts:['China','India','EE.UU','Indonesia'], a:1},
   {q:'¿Qué significa "dispersión de la población"?', opts:['Concentración máxima','Poca gente en grandes territorios','Solo en ciudades','En zonas costeras'], a:1},
   {q:'El espacio urbano se caracteriza por:', opts:['Baja densidad y agricultura','Alta densidad e industria','Sólo naturaleza','Pocos servicios'], a:1},
-  {q:'¿Qué es el éxodo rural?', opts:['Llegada de extranjeros','Migración campo→ciudad','Turismo internacional','Reforestación'], a:1},
+  {q:'¿Qué es el éxodo rural?', opts:['Llegada de extranjeros','Migración del campo a la ciudad','Turismo internacional','Reforestación'], a:1},
   {q:'La interculturalidad promueve:', opts:['Eliminar culturas menores','Imponer una cultura','Diálogo y respeto entre culturas','Separar comunidades'], a:2},
   {q:'Un PROBLEMA de la concentración urbana es:', opts:['Abundancia de agua','Hacinamiento y contaminación','Bajo tráfico','Muchos empleos para todos'], a:1},
   {q:'¿Qué organismo protege el patrimonio cultural?', opts:['OMS','UNICEF','UNESCO','FMI'], a:2},
@@ -1096,21 +1446,30 @@ const repasoQ = [
   {q:'El multiculturalismo es la convivencia de:', opts:['Una sola religión','Varias culturas en un espacio','Países con el mismo idioma','Personas del mismo origen'], a:1},
 ];
 let repIdx = 0, repPts = 0;
-function initRepaso(){ repIdx=0; repPts=0; loadRep(); }
+function initRepaso(){
+  repIdx = 0;
+  repPts = 0;
+  document.getElementById('repaso-pts').textContent = repPts;
+  document.getElementById('rep-num').textContent = '1';
+  document.getElementById('repaso-prog').style.width = '10%';
+  loadRep();
+}
 function loadRep() {
   if (repIdx >= repasoQ.length) { showRepasoEnd(); return; }
   const d = repasoQ[repIdx];
-  document.getElementById('rep-q').textContent = '❓ ' + d.q;
+  document.getElementById('rep-q').textContent = 'Pregunta: ' + d.q;
   const c = document.getElementById('rep-opts'); c.innerHTML = '';
   d.opts.forEach((o,i) => {
     const b = document.createElement('button'); b.className = 'q-opt'; b.textContent = o;
     b.onclick = () => {
+      if (b.disabled) return;
+      reproducirSonido('click');
       document.querySelectorAll('#rep-opts .q-opt').forEach((btn,j) => {
         if(j===d.a) btn.classList.add('correct'); else if(j===i) btn.classList.add('wrong'); btn.disabled=true;
       });
       const fb = document.getElementById('fb-rep');
-      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; repPts+=10; addPoints(10); }
-      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto.'; }
+      if(i===d.a){ reproducirSonido('acierto'); fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; repPts+=10; addPoints(10); }
+      else{ reproducirSonido('error'); fb.className='feedback show fail'; fb.textContent='❌ Incorrecto.'; }
       document.getElementById('repaso-pts').textContent = repPts;
       repIdx++;
       document.getElementById('rep-num').textContent = Math.min(repIdx+1, 10);
@@ -1127,13 +1486,32 @@ function showRepasoEnd() {
   document.getElementById('rep-final').textContent = repPts;
   const badge = repPts>=80 ? '🥇 Lector Experto' : repPts>=50 ? '🥈 Estudiante Aplicado' : '🥉 Sigue Leyendo';
   document.getElementById('rep-badge').innerHTML = `<span class="badge">${badge}</span>`;
+  completarSubactividad(4, 'repaso');
 }
 function restartRepaso() {
+  reproducirSonido('click');
   document.getElementById('repaso-container').style.display = 'block';
   document.getElementById('repaso-end').style.display = 'none';
   initRepaso();
 }
+renderTarjetasApoyoJuego1();
+renderTarjetasApoyoJuego4();
+renderTarjetasApoyoJuego6();
 initRepaso();
+syncLockedUI();
+const quizBtnVisualVerbalNormal = document.querySelector('.quiz-btn-footer');
+if (quizBtnVisualVerbalNormal) {
+  quizBtnVisualVerbalNormal.addEventListener('click', function(event) {
+    if (!todoCompletado()) {
+      event.preventDefault();
+      reproducirSonido('error');
+    } else {
+      reproducirSonido('click');
+    }
+  }, true);
+}
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

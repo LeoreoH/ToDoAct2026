@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-05-07T01:49:12.461Z",
+  "dryRun": false,
+  "target": "poblacion-mundial",
+  "flags": [
+    {
+      "code": "br",
+      "remoteUrl": "https://flagcdn.com/br.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/br.svg"
+    },
+    {
+      "code": "cn",
+      "remoteUrl": "https://flagcdn.com/cn.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/cn.svg"
+    },
+    {
+      "code": "id",
+      "remoteUrl": "https://flagcdn.com/id.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/id.svg"
+    },
+    {
+      "code": "in",
+      "remoteUrl": "https://flagcdn.com/in.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/in.svg"
+    },
+    {
+      "code": "is",
+      "remoteUrl": "https://flagcdn.com/is.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/is.svg"
+    },
+    {
+      "code": "lu",
+      "remoteUrl": "https://flagcdn.com/lu.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/lu.svg"
+    },
+    {
+      "code": "mn",
+      "remoteUrl": "https://flagcdn.com/mn.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/mn.svg"
+    },
+    {
+      "code": "no",
+      "remoteUrl": "https://flagcdn.com/no.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/no.svg"
+    },
+    {
+      "code": "nr",
+      "remoteUrl": "https://flagcdn.com/nr.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg"
+    },
+    {
+      "code": "us",
+      "remoteUrl": "https://flagcdn.com/us.svg",
+      "localPath": "/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/us.svg"
+    }
+  ],
+  "assets": [],
+  "failures": [
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Siberia%2C_landscape.jpg/320px-Siberia%2C_landscape.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Mumbai_03-2016_30_Gateway_of_India.jpg/640px-Mumbai_03-2016_30_Gateway_of_India.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Mongolian_steppe.jpg/640px-Mongolian_steppe.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Seoul_Gangnam.jpg/320px-Seoul_Gangnam.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Mongolia_countryside.jpg/640px-Mongolia_countryside.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shanghaiviewfromthebund.jpg/640px-Shanghaiviewfromthebund.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/320px-Sahara_desert.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/640px-Sahara_desert.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Reykjavik_from_Hallgrimskirkja.jpg/640px-Reykjavik_from_Hallgrimskirkja.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Seoul%2C_Korea_1900.jpg/320px-Seoul%2C_Korea_1900.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Antarctica_from_the_Front.jpg/320px-Antarctica_from_the_Front.jpg",
+      "error": "HTTP 429"
+    },
+    {
+      "remoteUrl": "https://www.andbeyond.com/wp-content/uploads/sites/5/Chhatrapati-Shivaji-Terminus-railway-station-mumbai.jpg",
+      "error": "HTTP 403"
+    }
+  ]
+}

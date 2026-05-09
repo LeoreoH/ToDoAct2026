@@ -169,6 +169,13 @@
   </style>
 </head>
 <body>
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/exito.mp3"></audio>
+
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
 <header class="cabecera">
   <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú"><i class="fas fa-arrow-left"></i></button>
   <h1>🟣 FRACCIONES</h1>
@@ -507,182 +514,419 @@
   let paginaActual = 1;
   const totalPaginas = 8;
   const actividadesResueltas = {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false};
+  const intentosPagina = {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0};
   const sortAnswers = { ord12:0, ord58:1, ord23:2, ord34:3 };
+  const apartadosKinestesico = {
+    p1: { pagina:1, apartadoClave:'p1_pizzeria_escolar_kin', tipoActividad:'arrastrar_relacion' },
+    p2: { pagina:2, apartadoClave:'p2_jarras_referencia_kin', tipoActividad:'arrastrar_relacion' },
+    p3: { pagina:3, apartadoClave:'p3_recta_recorridos_kin', tipoActividad:'arrastrar_recta' },
+    p4: { pagina:4, apartadoClave:'p4_modelos_equivalentes_kin', tipoActividad:'clasificar_modelos' },
+    p5: { pagina:5, apartadoClave:'p5_ordenar_listones_kin', tipoActividad:'ordenar_fracciones' },
+    p6: { pagina:6, apartadoClave:'p6_cercania_mitad_kin', tipoActividad:'clasificar_referencias' },
+    p7: { pagina:7, apartadoClave:'p7_modelo_correcto_kin', tipoActividad:'seleccionar_modelo' },
+    p8: { pagina:8, apartadoClave:'p8_reto_final_kin', tipoActividad:'arrastrar_relacion' }
+  };
+  const dragResponses = {
+    1: { respuesta:'pedidos_pizza', actividad:'arrastrar_relacion' },
+    2: { respuesta:'jarras_referencia', actividad:'arrastrar_relacion' },
+    3: { respuesta:'recorridos_recta', actividad:'arrastrar_recta' },
+    4: { respuesta:'modelos_equivalentes', actividad:'clasificar_modelos' },
+    6: { respuesta:'cercania_mitad', actividad:'clasificar_referencias' },
+    8: { respuesta:'reto_final', actividad:'arrastrar_relacion' }
+  };
+  let trackerKinestesico = null;
+  let sessionTrackerKinestesico = null;
+  let quizTrackerAdjunto = false;
+  let dragged = null;
 
-  function volverAlMenu(){ window.location.href='../../menu.html'; }
+  const qs = (selector) => document.querySelector(selector);
+  const qsa = (selector) => Array.from(document.querySelectorAll(selector));
 
-  function cambiarPagina(dir){
+  [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+    if (audio) audio.volume = 0.15;
+  });
+
+  function playFx(id) {
+    try {
+      const audio = document.getElementById(id);
+      if (!audio) return;
+      audio.volume = 0.15;
+      audio.currentTime = 0;
+      const promesa = audio.play();
+      if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+    } catch (_) {}
+  }
+
+  function initTrackers() {
+    if (window.createReforzamientoTracker) {
+      trackerKinestesico = window.createReforzamientoTracker({
+        contenidoId: 4,
+        nivel: 'dificil',
+        estilo: 'kinestesico',
+        trackTime: true,
+        detalleBase: {
+          bloque: 'reconocer_fracciones',
+          variante: 'kinestesico_dificil'
+        },
+        apartados: apartadosKinestesico
+      });
+    }
+
+    if (window.createReforzamientoSessionTracker) {
+      sessionTrackerKinestesico = window.createReforzamientoSessionTracker({
+        contenidoId: 4,
+        nivel: 'dificil',
+        estilo: 'kinestesico'
+      });
+    }
+  }
+
+  function clavePagina(page) {
+    return 'p' + page;
+  }
+
+  function marcarPaginaVisible(page, detalleExtra) {
+    if (!trackerKinestesico) return;
+    trackerKinestesico.markVisible(clavePagina(page), {
+      pagina: page,
+      ejercicio: clavePagina(page),
+      ...detalleExtra
+    });
+  }
+
+  function registrarError(page, detalle) {
+    intentosPagina[page] += 1;
+    if (!trackerKinestesico) return;
+    trackerKinestesico.addError(clavePagina(page), 1, {
+      pagina: page,
+      ejercicio: clavePagina(page),
+      intento: intentosPagina[page],
+      ...detalle
+    });
+  }
+
+  async function completarPagina(page, respuesta, detalleExtra) {
+    if (actividadesResueltas[page]) return;
+
+    actividadesResueltas[page] = true;
+
+    if (trackerKinestesico) {
+      trackerKinestesico.addCorrect(clavePagina(page), 1, {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        respuesta,
+        errores_previos: intentosPagina[page],
+        ...detalleExtra
+      });
+
+      await trackerKinestesico.complete(clavePagina(page), {
+        detalle: {
+          pagina: page,
+          ejercicio: clavePagina(page),
+          respuesta,
+          ...detalleExtra
+        }
+      });
+    }
+
+    if (page === 8) {
+      playFx('sndTada');
+      actualizarEstadoQuiz();
+    } else {
+      playFx('sndDing');
+    }
+
+    actualizarNavegacion();
+  }
+
+  function volverAlMenu() {
+    playFx('sndClick');
+    window.location.href = '../../menu.html';
+  }
+
+  function cambiarPagina(dir) {
+    if (dir === 1 && !actividadesResueltas[paginaActual]) return;
+    const destino = paginaActual + dir;
+    if (destino < 1 || destino > totalPaginas) return;
+
+    playFx('sndClick');
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-    paginaActual += dir;
+    paginaActual = destino;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarNavegacion();
+    marcarPaginaVisible(paginaActual);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function actualizarNavegacion(){
+  function actualizarNavegacion() {
     document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-    const porcentaje = (paginaActual/totalPaginas)*100;
+    const porcentaje = (paginaActual / totalPaginas) * 100;
     document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
     document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
-    document.getElementById('btnAnterior').disabled = paginaActual===1;
-    document.getElementById('btnSiguiente').disabled = paginaActual===totalPaginas || !actividadesResueltas[paginaActual];
+    document.getElementById('btnAnterior').disabled = paginaActual === 1;
+    document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas || !actividadesResueltas[paginaActual];
+    actualizarEstadoQuiz();
   }
 
-  function resolverPagina(num){
-    actividadesResueltas[num] = true;
-    if(num===8) desbloquearMiniQuiz();
-    actualizarNavegacion();
-  }
-
-  function mostrarFeedback(num, ok){
+  function mostrarFeedback(num, ok) {
     const okEl = document.getElementById(`ok${num}`);
     const warnEl = document.getElementById(`warn${num}`);
-    if(okEl) okEl.classList.toggle('visible', ok);
-    if(warnEl) warnEl.classList.toggle('visible', !ok);
+    if (okEl) okEl.classList.toggle('visible', ok);
+    if (warnEl) warnEl.classList.toggle('visible', !ok);
   }
 
-  function validarMiniQuiz(event){
-    if(!actividadesResueltas[8]){ event.preventDefault(); return false; }
+  function validarMiniQuiz(event) {
+    if (!Object.values(actividadesResueltas).every(Boolean)) {
+      event.preventDefault();
+      playFx('sndError');
+      return false;
+    }
+    playFx('sndClick');
     return true;
   }
 
-  function desbloquearMiniQuiz(){ document.getElementById('btnMiniQuiz').classList.remove('bloqueado'); }
+  function actualizarEstadoQuiz() {
+    const botonQuiz = document.getElementById('btnMiniQuiz');
+    if (!botonQuiz) return;
 
-  let dragged = null;
-  document.addEventListener('dragstart', (e)=>{
-    const target = e.target.closest('[draggable="true"]');
-    if(!target) return;
-    dragged = target;
-    e.dataTransfer.setData('text/plain', target.dataset.value);
-  });
+    if (Object.values(actividadesResueltas).every(Boolean)) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
 
-  document.querySelectorAll('.dropzone,.drop-point,.drop-bucket,.slot-orden').forEach(zone=>{
-    zone.addEventListener('dragover', e=> e.preventDefault());
-    zone.addEventListener('drop', e=>{
-      e.preventDefault();
-      const droppedValue = e.dataTransfer.getData('text/plain');
-      if((!dragged || dragged.dataset.value !== droppedValue) && droppedValue){
-        dragged = document.querySelector(`[draggable="true"][data-value="${droppedValue}"]`);
+      if (!quizTrackerAdjunto && sessionTrackerKinestesico) {
+        sessionTrackerKinestesico.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+        quizTrackerAdjunto = true;
       }
-      if(!dragged) return;
-      if(zone.classList.contains('slot-orden')){
-        handleSortDrop(zone, dragged);
-        return;
-      }
-      const page = Number(zone.closest('[data-page]')?.dataset.page || zone.closest('.drag-task')?.dataset.page || zone.closest('.zona-clasifica')?.querySelector('[data-page]')?.dataset.page || zone.dataset.page || 0);
-      const accepted = (zone.dataset.match || '').split(',');
-      const value = dragged.dataset.value;
-      if(accepted.includes(value)){
-        const required = accepted.filter(Boolean).length;
-        const alreadyPlaced = zone.querySelector(`[data-value="${value}"]`);
-        if(alreadyPlaced){ dragged = null; return; }
-        if(zone.classList.contains('drop-bucket')){
-          const current = zone.querySelectorAll('.draggable-card').length;
-          if(current >= required){ zone.classList.add('error'); setTimeout(()=> zone.classList.remove('error'), 900); dragged = null; return; }
-          if(current === 0){ zone.innerHTML = ''; }
-          const clone = dragged.cloneNode(true);
-          clone.classList.remove('used');
-          clone.setAttribute('draggable','false');
-          zone.appendChild(clone);
-        } else {
-          zone.innerHTML = '';
-          const clone = dragged.cloneNode(true);
-          clone.classList.remove('used');
-          clone.setAttribute('draggable','false');
-          zone.appendChild(clone);
-        }
-        zone.classList.add('correcto');
-        zone.classList.remove('error');
-        dragged.classList.add('used');
-        dragged.setAttribute('draggable','false');
-        verificarDragPage(page);
-      } else {
-        zone.classList.add('error');
-        setTimeout(()=> zone.classList.remove('error'), 900);
-        if(page) mostrarFeedback(page,false);
-      }
-      dragged = null;
-    });
-  });
-
-  function verificarDragPage(page){
-    if(!page) return;
-    const section = document.getElementById(`pagina${page}`);
-    let ok = true;
-    if(page === 4 || page === 6){
-      section.querySelectorAll('.drop-bucket').forEach(bucket=>{
-        const required = bucket.dataset.match.split(',').length;
-        const current = bucket.querySelectorAll('.draggable-card').length;
-        if(current !== required) ok = false;
-      });
     } else {
-      section.querySelectorAll('.dropzone, .drop-point').forEach(zone=>{
-        if(!zone.classList.contains('correcto')) ok = false;
-      });
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
     }
-    mostrarFeedback(page, ok);
-    if(ok) resolverPagina(page);
   }
 
-  function handleSortDrop(slot, item){
-    const page = 5;
-    if(slot.querySelector('.draggable-card')) return;
+  async function verificarDragPage(page) {
+    if (!page || actividadesResueltas[page]) return;
+
+    const section = document.getElementById(`pagina${page}`);
+    let ok = true;
+
+    if (page === 4 || page === 6) {
+      section.querySelectorAll('.drop-bucket').forEach(bucket => {
+        const required = bucket.dataset.match.split(',').filter(Boolean).length;
+        const current = bucket.querySelectorAll('.draggable-card').length;
+        if (current !== required) ok = false;
+      });
+    } else {
+      section.querySelectorAll('.dropzone, .drop-point').forEach(zone => {
+        if (!zone.classList.contains('correcto')) ok = false;
+      });
+    }
+
+    mostrarFeedback(page, ok);
+    if (ok) {
+      const info = dragResponses[page];
+      await completarPagina(page, info.respuesta, {
+        actividad: info.actividad
+      });
+    }
+  }
+
+  async function handleSortDrop(slot, item) {
+    if (actividadesResueltas[5]) return;
+    if (slot.querySelector('.draggable-card')) return;
+
     slot.innerHTML = '';
     slot.appendChild(item);
     item.classList.remove('used');
-    item.setAttribute('draggable','true');
+    item.setAttribute('draggable', 'true');
     slot.classList.remove('error');
-    verificarOrden();
+    await verificarOrden();
     dragged = null;
   }
 
-  function verificarOrden(){
+  async function verificarOrden() {
+    if (actividadesResueltas[5]) return;
+
     let ok = true;
-    document.querySelectorAll('#pagina5 .slot-orden').forEach(slot=>{
+    let completos = 0;
+
+    qsa('#pagina5 .slot-orden').forEach(slot => {
       const card = slot.querySelector('.draggable-card');
-      if(!card){ ok = false; return; }
+      if (!card) {
+        ok = false;
+        return;
+      }
+
+      completos += 1;
       const pos = Number(slot.dataset.position);
-      if(sortAnswers[card.dataset.value] === pos){ slot.classList.add('correcto'); }
-      else { slot.classList.remove('correcto'); ok = false; }
+      if (sortAnswers[card.dataset.value] === pos) {
+        slot.classList.add('correcto');
+      } else {
+        slot.classList.remove('correcto');
+        ok = false;
+      }
     });
+
     mostrarFeedback(5, ok);
-    if(ok) resolverPagina(5);
+    if (ok) {
+      await completarPagina(5, 'ord12_ord58_ord23_ord34', {
+        actividad: 'ordenar_fracciones'
+      });
+    } else if (completos === 4) {
+      playFx('sndError');
+      registrarError(5, {
+        actividad: 'ordenar_fracciones',
+        estado: 'orden_incorrecto'
+      });
+    }
   }
 
-  function reiniciarOrden5(){
+  function reiniciarOrden5() {
+    playFx('sndClick');
+    if (actividadesResueltas[5]) return;
+
     const bank = document.getElementById('sortBank5');
-    document.querySelectorAll('#pagina5 .slot-orden').forEach(slot=>{
+    qsa('#pagina5 .slot-orden').forEach(slot => {
       const card = slot.querySelector('.draggable-card');
-      if(card){
+      if (card) {
         card.classList.remove('used');
-        card.setAttribute('draggable','true');
+        card.setAttribute('draggable', 'true');
         bank.appendChild(card);
       }
       slot.innerHTML = slot.dataset.position === '0' ? 'Menor' : slot.dataset.position === '1' ? 'Segundo' : slot.dataset.position === '2' ? 'Tercero' : 'Mayor';
       slot.classList.remove('correcto');
     });
-    mostrarFeedback(5,false);
-    actividadesResueltas[5] = false;
+    mostrarFeedback(5, false);
     actualizarNavegacion();
   }
 
-  document.querySelectorAll('#selector7 .opcion-grafica').forEach(card=>{
-    card.addEventListener('click', ()=>{
-      const wrap = document.getElementById('selector7');
-      const correct = wrap.dataset.correct;
-      wrap.querySelectorAll('.opcion-grafica').forEach(el=> el.classList.remove('correct-choice','wrong-choice'));
-      if(card.dataset.id === correct){
-        card.classList.add('correct-choice');
-        mostrarFeedback(7,true);
-        resolverPagina(7);
-      } else {
-        card.classList.add('wrong-choice');
-        mostrarFeedback(7,false);
-      }
-    });
-  });
+  window.addEventListener('DOMContentLoaded', () => {
+    initTrackers();
 
-  actualizarNavegacion();
+    document.addEventListener('dragstart', (e) => {
+      const target = e.target.closest('[draggable="true"]');
+      if (!target) return;
+      playFx('sndClick');
+      dragged = target;
+      e.dataTransfer.setData('text/plain', target.dataset.value);
+    });
+
+    qsa('.dropzone,.drop-point,.drop-bucket,.slot-orden').forEach(zone => {
+      zone.addEventListener('dragover', e => e.preventDefault());
+      zone.addEventListener('drop', async e => {
+        e.preventDefault();
+
+        const droppedValue = e.dataTransfer.getData('text/plain');
+        if ((!dragged || dragged.dataset.value !== droppedValue) && droppedValue) {
+          dragged = document.querySelector(`[draggable="true"][data-value="${droppedValue}"]`);
+        }
+        if (!dragged) return;
+
+        if (zone.classList.contains('slot-orden')) {
+          await handleSortDrop(zone, dragged);
+          return;
+        }
+
+        const page = Number(zone.dataset.page || zone.closest('.drag-task')?.dataset.page || zone.closest('[data-page]')?.dataset.page || 0);
+        const accepted = (zone.dataset.match || '').split(',').filter(Boolean);
+        const value = dragged.dataset.value;
+
+        if (accepted.includes(value)) {
+          const required = accepted.length;
+          const alreadyPlaced = zone.querySelector(`[data-value="${value}"]`);
+          if (alreadyPlaced) {
+            dragged = null;
+            return;
+          }
+
+          if (zone.classList.contains('drop-bucket')) {
+            const current = zone.querySelectorAll('.draggable-card').length;
+            if (current >= required) {
+              zone.classList.add('error');
+              setTimeout(() => zone.classList.remove('error'), 900);
+              playFx('sndError');
+              if (page) {
+                mostrarFeedback(page, false);
+                registrarError(page, {
+                  actividad: dragResponses[page]?.actividad || 'arrastrar_relacion',
+                  razon: 'bucket_lleno',
+                  respuesta: value
+                });
+              }
+              dragged = null;
+              return;
+            }
+
+            if (current === 0) zone.innerHTML = '';
+            const clone = dragged.cloneNode(true);
+            clone.classList.remove('used');
+            clone.setAttribute('draggable', 'false');
+            zone.appendChild(clone);
+          } else {
+            zone.innerHTML = '';
+            const clone = dragged.cloneNode(true);
+            clone.classList.remove('used');
+            clone.setAttribute('draggable', 'false');
+            zone.appendChild(clone);
+          }
+
+          zone.classList.add('correcto');
+          zone.classList.remove('error');
+          dragged.classList.add('used');
+          dragged.setAttribute('draggable', 'false');
+          await verificarDragPage(page);
+        } else {
+          zone.classList.add('error');
+          setTimeout(() => zone.classList.remove('error'), 900);
+          playFx('sndError');
+          if (page) {
+            mostrarFeedback(page, false);
+            registrarError(page, {
+              actividad: dragResponses[page]?.actividad || 'arrastrar_relacion',
+              respuesta: value,
+              esperado: zone.dataset.match || 'otro'
+            });
+          }
+        }
+        dragged = null;
+      });
+    });
+
+    qsa('#selector7 .opcion-grafica').forEach(card => {
+      card.addEventListener('click', async () => {
+        if (actividadesResueltas[7]) return;
+        playFx('sndClick');
+
+        const wrap = document.getElementById('selector7');
+        const correct = wrap.dataset.correct;
+        wrap.querySelectorAll('.opcion-grafica').forEach(el => el.classList.remove('correct-choice', 'wrong-choice'));
+
+        if (card.dataset.id === correct) {
+          card.classList.add('correct-choice');
+          mostrarFeedback(7, true);
+          await completarPagina(7, card.dataset.id, {
+            actividad: 'seleccionar_modelo'
+          });
+        } else {
+          card.classList.add('wrong-choice');
+          mostrarFeedback(7, false);
+          playFx('sndError');
+          registrarError(7, {
+            actividad: 'seleccionar_modelo',
+            respuesta: card.dataset.id
+          });
+        }
+      });
+    });
+
+    actualizarEstadoQuiz();
+    actualizarNavegacion();
+    marcarPaginaVisible(1);
+
+    if (sessionTrackerKinestesico) {
+      sessionTrackerKinestesico.start();
+    }
+  });
 </script>
 </body>
 </html>

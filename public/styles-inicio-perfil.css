@@ -24,6 +24,10 @@ body {
     padding-bottom: 70px;
 }
 
+body.perfil-page {
+    min-height: 100vh;
+}
+
 .contenedor {
     max-width: 960px;
     margin: 28px auto 90px;
@@ -31,6 +35,63 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 32px rgba(74, 20, 140, 0.13);
     padding: 32px 28px;
+}
+
+.perfil-page .contenedor {
+    width: min(960px, calc(100vw - 28px));
+    margin: 14px auto 70px;
+    padding: 22px 24px;
+}
+
+.perfil-page .contenedor-cerrar-sesion {
+    margin-bottom: 6px;
+}
+
+.perfil-page #perfil h2 {
+    font-size: 28px;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+}
+
+.perfil-page .perfil-layout {
+    grid-template-columns: 230px 1fr;
+}
+
+.perfil-page .perfil-izquierda {
+    padding: 26px 18px;
+    gap: 16px;
+}
+
+.perfil-page .imagen-mascota img {
+    width: 150px;
+    height: 150px;
+}
+
+.perfil-page .perfil-xp-badge {
+    font-size: 16px;
+    padding: 8px 20px;
+}
+
+.perfil-page .perfil-derecha {
+    padding: 24px 26px;
+}
+
+.perfil-page .campo-perfil {
+    padding: 12px 0;
+    gap: 4px;
+}
+
+.perfil-page .campo-valor {
+    font-size: 17px;
+}
+
+.perfil-page #estilo {
+    padding: 9px 12px;
+    font-size: 15px;
+}
+
+.perfil-page #guardarEstilo {
+    padding: 9px 20px;
 }
 
 .contenedor-cerrar-sesion {
@@ -75,7 +136,6 @@ body {
     overflow: hidden;
 }
 
-
 .perfil-izquierda {
     background: linear-gradient(160deg, var(--morado-oscuro) 0%, var(--morado-claro) 100%);
     display: flex;
@@ -107,12 +167,10 @@ body {
     letter-spacing: 0.04em;
 }
 
-
 .perfil-derecha {
     background-color: var(--blanco);
     padding: 36px 32px;
 }
-
 
 .info-perfil {
     display: flex;
@@ -145,7 +203,6 @@ body {
     font-weight: 400;
     color: var(--gris-texto);
 }
-
 
 .campo-estilo {
     gap: 10px;
@@ -191,7 +248,6 @@ body {
 #guardarEstilo:active {
     transform: scale(0.97);
 }
-
 
 .menu-inferior {
     position: fixed;
@@ -240,6 +296,7 @@ body {
     color: var(--morado-oscuro);
 }
 
+#contenidos h2,
 #actividades h2 {
     font-size: 24px;
     color: var(--morado-medio);
@@ -247,12 +304,14 @@ body {
     text-align: center;
 }
 
+.lista-contenidos,
 .lista-actividades {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
 }
 
+.contenido-card,
 .actividad {
     background-color: var(--morado-palido);
     border-radius: 14px;
@@ -263,23 +322,77 @@ body {
     border-left: 4px solid var(--morado-claro);
 }
 
+.contenido-card:hover,
 .actividad:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(74, 20, 140, 0.18);
 }
 
+.contenido-card h3,
 .actividad h3 {
     font-size: 19px;
     margin: 0 0 10px;
     color: var(--morado-oscuro);
 }
 
+.contenido-card p,
 .actividad p {
     margin: 0;
     color: var(--gris-texto);
     font-size: 15px;
 }
 
+.actividad-secundaria-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+.actividad-secundaria {
+    width: min(100%, 520px);
+    padding: 16px 18px;
+}
+
+.actividad-vark-card {
+    position: relative;
+    border-left-color: var(--morado-medio);
+    background: linear-gradient(160deg, #faf4ff 0%, #f3e5f5 100%);
+}
+
+.actividad-secundaria-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background-color: var(--morado-medio);
+    color: var(--blanco);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+.actividad-vark-card h3 {
+    padding-right: 108px;
+}
+
+.actividad-secundaria-btn {
+    margin-top: 14px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--morado-medio);
+    color: var(--blanco);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(74, 20, 140, 0.18);
+}
+
+.actividad-secundaria-btn:hover {
+    background-color: var(--morado-oscuro);
+}
 
 @media (max-width: 640px) {
     .contenedor {
@@ -312,12 +425,67 @@ body {
         font-size: 17px;
     }
 
+    .lista-contenidos,
     .lista-actividades {
         grid-template-columns: 1fr;
+    }
+
+    .actividad-secundaria {
+        width: 100%;
+    }
+
+    .actividad-secundaria-badge {
+        position: static;
+        display: inline-flex;
+        margin-bottom: 10px;
+    }
+
+    .actividad-vark-card h3 {
+        padding-right: 0;
     }
 
     .menu-item {
         font-size: 14px;
         padding: 8px;
+    }
+}
+
+@media (max-height: 820px) {
+    .perfil-page .contenedor {
+        margin: 10px auto 66px;
+        padding: 18px 20px;
+    }
+
+    .perfil-page #perfil h2 {
+        font-size: 26px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+    }
+
+    .perfil-page .perfil-layout {
+        grid-template-columns: 210px 1fr;
+    }
+
+    .perfil-page .perfil-izquierda {
+        padding: 20px 16px;
+        gap: 12px;
+    }
+
+    .perfil-page .imagen-mascota img {
+        width: 132px;
+        height: 132px;
+    }
+
+    .perfil-page .perfil-derecha {
+        padding: 20px 22px;
+    }
+
+    .perfil-page .campo-perfil {
+        padding: 10px 0;
+    }
+
+    .perfil-page .boton-cerrar-sesion {
+        padding: 9px 18px;
+        font-size: 14px;
     }
 }

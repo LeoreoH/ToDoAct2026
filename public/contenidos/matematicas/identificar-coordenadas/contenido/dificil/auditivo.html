@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas - Nivel Dificil - Auditivo</title>
+    <title>Identificar coordenadas · Nivel difícil · Auditivo</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -180,6 +180,135 @@
         .btn-opcion-aud:disabled { cursor: not-allowed; opacity: .8; }
         .feedback-auditivo { margin-top: 15px; padding: 15px; border-radius: 15px; font-weight: 600; display: none; }
 
+        .nota-ej2 {
+            margin: 10px 0 0;
+            background: #fff7e6;
+            border: 2px dashed #f97316;
+            border-radius: 14px;
+            padding: 10px 14px;
+            color: #9a3412;
+            font-weight: 700;
+        }
+        .controles-ej2 {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+        .btn-control {
+            background: white;
+            color: #9a3412;
+            border: 2px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .btn-control:hover {
+            background: #fde68a;
+            transform: translateY(-1px);
+        }
+        .mapa-hit {
+            fill: rgba(249,115,22,0);
+            stroke: transparent;
+            stroke-width: 3;
+            cursor: pointer;
+            transition: fill .2s, stroke .2s;
+        }
+        .mapa-hit:hover {
+            fill: rgba(249,115,22,.12);
+            stroke: #f97316;
+        }
+        .mapa-hit.correcto {
+            fill: rgba(34,197,94,.24);
+            stroke: #16a34a;
+        }
+        .mapa-hit.incorrecto {
+            fill: rgba(239,68,68,.18);
+            stroke: #dc2626;
+        }
+        .tablero-ej2-wrap {
+            margin-top: 16px;
+            background: #fff7e6;
+            border: 2px solid #fed7aa;
+            border-radius: 18px;
+            padding: 16px;
+            overflow-x: auto;
+        }
+        .tablero-ej2 {
+            display: grid;
+            grid-template-columns: 48px repeat(6, 64px);
+            gap: 6px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        .celda-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #9a3412;
+        }
+        .celda-tablero {
+            width: 64px;
+            height: 58px;
+            border: 2px solid #f97316;
+            border-radius: 12px;
+            background: white;
+            color: #9a3412;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .celda-tablero:hover {
+            background: #fde68a;
+            transform: translateY(-1px);
+        }
+        .celda-tablero.inicio {
+            box-shadow: inset 0 0 0 3px #3b82f6;
+        }
+        .celda-tablero.correcta {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+        .celda-tablero.incorrecta {
+            background: #fee2e2;
+            border-color: #dc2626;
+        }
+        .asiento-btn {
+            width: 26px;
+            height: 26px;
+            background: white;
+            border: 1.5px solid #f97316;
+            border-radius: 4px 4px 2px 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .58rem;
+            font-weight: 700;
+            color: #9a3412;
+            cursor: pointer;
+            padding: 0;
+            transition: all .15s ease;
+        }
+        .asiento-btn:hover {
+            background: #fde68a;
+            transform: translateY(-1px);
+        }
+        .asiento-btn.seleccionado {
+            background: #ffedd5;
+            border-color: #c2410c;
+        }
+        .asiento-btn.correcto {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+        .asiento-btn.incorrecto {
+            background: #fee2e2;
+            border-color: #dc2626;
+        }
+
         /* NAVIGATOR */
         .navegador {
             display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px;
@@ -202,6 +331,25 @@
             border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all .2s;
         }
         .boton-quiz:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
+        .boton-quiz.bloqueado {
+            background: #e5e7eb;
+            color: #78716c;
+            border-color: #bdbdbd;
+            box-shadow: 0 8px 0 #a8a29e;
+            cursor: not-allowed;
+            pointer-events: auto;
+        }
+        .boton-quiz.bloqueado:hover {
+            transform: none;
+            box-shadow: 0 8px 0 #a8a29e;
+            background: #e5e7eb;
+        }
+        .texto-ayuda-quiz {
+            text-align: center;
+            margin-top: 12px;
+            color: #9a3412;
+            font-weight: 800;
+        }
 
         @media (max-width: 768px) {
             .cabecera-dificil h1 { font-size: 2rem; }
@@ -230,10 +378,15 @@
 <audio id="audP4r"  src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/pagina4-reforzamiento.mp3"></audio>
 <audio id="audP5c"  src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/pagina5-contenido.mp3"></audio>
 <audio id="audP5r"  src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/pagina5-reforzamiento.mp3"></audio>
+<audio id="audP1r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/coord_dificil_p1_ej2.mp3"></audio>
+<audio id="audP2r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/coord_dificil_p2_ej2.mp3"></audio>
+<audio id="audP3r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/coord_dificil_p3_ej2.mp3"></audio>
+<audio id="audP4r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/coord_dificil_p4_ej2.mp3"></audio>
+<audio id="audP5r2" src="/contenidos/matematicas/identificar-coordenadas/contenido/dificil/audios/coord_dificil_p5_ej2.mp3"></audio>
 
 <!-- HEADER -->
 <div class="cabecera-dificil">
-    <h1>&#9881; COORDENADAS</h1>
+    <h1>&#9881; IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Dif&iacute;cil &middot; Planos y estrategia</p>
     <div>
         <span class="badge-estilo">&#127911; Auditivo</span>
@@ -330,6 +483,10 @@
                 <text x="180" y="490" font-family="Nunito" font-size="11" fill="#9a3412">Parque</text>
                 <line x1="245" y1="485" x2="275" y2="485" stroke="#c2410c" stroke-width="3"/>
                 <text x="283" y="490" font-family="Nunito" font-size="11" fill="#9a3412">Ruta</text>
+                <rect id="hit-p1-super" class="mapa-hit" x="196" y="196" width="48" height="48" rx="12" onclick="responderMapaP1('super')"/>
+                <rect id="hit-p1-escuela" class="mapa-hit" x="296" y="296" width="48" height="48" rx="12" onclick="responderMapaP1('escuela')"/>
+                <rect id="hit-p1-farmacia" class="mapa-hit" x="396" y="196" width="48" height="48" rx="12" onclick="responderMapaP1('farmacia')"/>
+                <circle id="hit-p1-parque" class="mapa-hit" cx="520" cy="420" r="26" onclick="responderMapaP1('parque')"/>
             </svg>
         </div>
 
@@ -360,6 +517,54 @@
                 <button class="btn-opcion-aud" onclick="responder(1,3,false)">D) Calle Cedro, Avenida Misisipi</button>
             </div>
             <div id="feedback1" class="feedback-auditivo"></div>
+        </div>
+
+        <div class="pregunta-auditiva">
+            <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP1r2',this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+            </div>
+            <div class="nota-ej2">Toca en este mapa.</div>
+            <div class="mapa-calles-wrap">
+                <svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" style="max-width:620px;width:100%;display:block;margin:0 auto;">
+                    <rect width="620" height="420" fill="#fffdf8" rx="18"/>
+                    <line x1="100" y1="50" x2="100" y2="360" stroke="#fed7aa" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="190" y1="50" x2="190" y2="360" stroke="#fed7aa" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="280" y1="50" x2="280" y2="360" stroke="#fed7aa" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="370" y1="50" x2="370" y2="360" stroke="#fed7aa" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="460" y1="50" x2="460" y2="360" stroke="#fed7aa" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="50" y1="100" x2="520" y2="100" stroke="#fdba74" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="50" y1="180" x2="520" y2="180" stroke="#fdba74" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="50" y1="260" x2="520" y2="260" stroke="#fdba74" stroke-width="12" stroke-linecap="round"/>
+                    <line x1="50" y1="340" x2="520" y2="340" stroke="#fdba74" stroke-width="12" stroke-linecap="round"/>
+                    <text x="100" y="34" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">Pino</text>
+                    <text x="190" y="34" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">Roble</text>
+                    <text x="280" y="34" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">Cedro</text>
+                    <text x="370" y="34" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">Fresno</text>
+                    <text x="460" y="34" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">Sauce</text>
+                    <text x="40" y="104" text-anchor="end" font-size="11" font-weight="800" fill="#9a3412">Amazonas</text>
+                    <text x="40" y="184" text-anchor="end" font-size="11" font-weight="800" fill="#9a3412">Nilo</text>
+                    <text x="40" y="264" text-anchor="end" font-size="11" font-weight="800" fill="#9a3412">Ganges</text>
+                    <text x="40" y="344" text-anchor="end" font-size="11" font-weight="800" fill="#9a3412">Misisipi</text>
+                    <circle cx="100" cy="100" r="16" fill="#4caf50" stroke="white" stroke-width="3"/>
+                    <text x="100" y="105" text-anchor="middle" font-size="13">🏠</text>
+                    <text x="128" y="96" font-size="10" font-weight="800" fill="#166534">Casa</text>
+                    <rect x="176" y="166" width="28" height="28" rx="6" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                    <text x="190" y="185" text-anchor="middle" font-size="13">🛒</text>
+                    <rect x="266" y="246" width="28" height="28" rx="6" fill="#8b5cf6" stroke="white" stroke-width="2"/>
+                    <text x="280" y="265" text-anchor="middle" font-size="12">🏫</text>
+                    <rect x="356" y="166" width="28" height="28" rx="6" fill="#ec4899" stroke="white" stroke-width="2"/>
+                    <text x="370" y="185" text-anchor="middle" font-size="13">💊</text>
+                    <circle cx="460" cy="340" r="16" fill="#10b981" stroke="white" stroke-width="3"/>
+                    <text x="460" y="345" text-anchor="middle" font-size="13">🌳</text>
+                    <rect id="hit2-p1-super" class="mapa-hit" x="166" y="156" width="48" height="48" rx="12" onclick="responderMapaP1('super')"/>
+                    <rect id="hit2-p1-escuela" class="mapa-hit" x="256" y="236" width="48" height="48" rx="12" onclick="responderMapaP1('escuela')"/>
+                    <rect id="hit2-p1-farmacia" class="mapa-hit" x="346" y="156" width="48" height="48" rx="12" onclick="responderMapaP1('farmacia')"/>
+                    <circle id="hit2-p1-parque" class="mapa-hit" cx="460" cy="340" r="26" onclick="responderMapaP1('parque')"/>
+                </svg>
+            </div>
+            <div id="feedback1b" class="feedback-auditivo"></div>
         </div>
     </div>
 </div>
@@ -436,6 +641,12 @@
                 <text x="80"  y="366" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Observatorio</text>
                 <circle cx="680" cy="380" r="9" fill="white" stroke="#f97316" stroke-width="3"/>
                 <text x="680" y="366" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Pantitlan</text>
+                <circle id="hit-p2-buenavista" class="mapa-hit" cx="230" cy="110" r="22" onclick="responderMetroP2('buenavista')"/>
+                <circle id="hit-p2-centro" class="mapa-hit" cx="560" cy="110" r="22" onclick="responderMetroP2('centro')"/>
+                <circle id="hit-p2-tacubaya" class="mapa-hit" cx="230" cy="190" r="18" onclick="responderMetroP2('tacubaya')"/>
+                <circle id="hit-p2-balderas" class="mapa-hit" cx="230" cy="380" r="24" onclick="responderMetroP2('balderas')"/>
+                <circle id="hit-p2-copilco" class="mapa-hit" cx="320" cy="380" r="18" onclick="responderMetroP2('copilco')"/>
+                <circle id="hit-p2-observatorio" class="mapa-hit" cx="80" cy="380" r="18" onclick="responderMetroP2('observatorio')"/>
             </svg>
         </div>
 
@@ -465,6 +676,42 @@
                 <button class="btn-opcion-aud" onclick="responder(2,3,false)">D) No es posible llegar a Copilco desde Insurgentes</button>
             </div>
             <div id="feedback2" class="feedback-auditivo"></div>
+        </div>
+
+        <div class="pregunta-auditiva">
+            <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP2r2',this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+            </div>
+            <div class="nota-ej2">Toca la estación final en este plano.</div>
+            <div class="mapa-metro-dificil">
+                <svg class="metro-svg" viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="760" height="280" fill="#fffdf8" rx="18"/>
+                    <line x1="90" y1="210" x2="650" y2="210" stroke="#f97316" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="250" y1="50" x2="250" y2="210" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M 250 210 Q 360 130, 470 70" stroke="#10b981" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <circle cx="90" cy="210" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                    <text x="90" y="194" text-anchor="middle" font-size="11" font-weight="800" fill="#7c2d12">Observatorio</text>
+                    <circle cx="250" cy="210" r="15" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="250" cy="210" r="6" fill="#3b82f6"/>
+                    <text x="250" y="238" text-anchor="middle" font-size="11" font-weight="800" fill="#9a3412">Balderas</text>
+                    <circle cx="470" cy="70" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="470" cy="70" r="6" fill="#ef4444"/>
+                    <text x="470" y="46" text-anchor="middle" font-size="11" font-weight="800" fill="#9a3412">Centro</text>
+                    <circle cx="250" cy="90" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                    <circle cx="250" cy="90" r="6" fill="#ef4444"/>
+                    <text x="250" y="64" text-anchor="middle" font-size="11" font-weight="800" fill="#9a3412">Buenavista</text>
+                    <circle cx="340" cy="150" r="10" fill="white" stroke="#10b981" stroke-width="3"/>
+                    <text x="340" y="134" text-anchor="middle" font-size="11" font-weight="800" fill="#065f46">Copilco</text>
+                    <rect id="hit2-p2-observatorio" class="mapa-hit" x="68" y="188" width="44" height="44" rx="14" onclick="responderMetroP2('observatorio')"/>
+                    <rect id="hit2-p2-balderas" class="mapa-hit" x="226" y="186" width="48" height="48" rx="14" onclick="responderMetroP2('balderas')"/>
+                    <rect id="hit2-p2-centro" class="mapa-hit" x="446" y="46" width="48" height="48" rx="14" onclick="responderMetroP2('centro')"/>
+                    <rect id="hit2-p2-buenavista" class="mapa-hit" x="226" y="66" width="48" height="48" rx="14" onclick="responderMetroP2('buenavista')"/>
+                    <rect id="hit2-p2-copilco" class="mapa-hit" x="318" y="128" width="44" height="44" rx="14" onclick="responderMetroP2('copilco')"/>
+                </svg>
+            </div>
+            <div id="feedback2b" class="feedback-auditivo"></div>
         </div>
     </div>
 </div>
@@ -513,6 +760,19 @@
             </div>
             <div id="feedback3" class="feedback-auditivo"></div>
         </div>
+
+        <div class="pregunta-auditiva">
+            <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP3r2',this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+            </div>
+            <div class="nota-ej2">Toca una coordenada en el tablero.</div>
+            <div class="tablero-ej2-wrap">
+                <div class="tablero-ej2" id="tablero-ej2"></div>
+            </div>
+            <div id="feedback3b" class="feedback-auditivo"></div>
+        </div>
     </div>
 </div>
 
@@ -557,6 +817,24 @@
                 <button class="btn-opcion-aud" onclick="responder(4,3,false)">D) Izquierda: 7, 9, 11 - Derecha: 8, 10</button>
             </div>
             <div id="feedback4" class="feedback-auditivo"></div>
+        </div>
+
+        <div class="pregunta-auditiva">
+            <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP4r2',this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+            </div>
+            <div class="nota-ej2">Toca cuatro asientos en este plano.</div>
+            <div class="teatro-wrap">
+                <div class="escenario-bar">&#127917; &nbsp; ESCENARIO &nbsp; &#127917;</div>
+                <div class="teatro-grid" id="teatro-grid-ej2"></div>
+            </div>
+            <div class="controles-ej2">
+                <button class="btn-control" onclick="reiniciarEj2P4()">↺ Reiniciar</button>
+                <button class="btn-control" onclick="verificarEj2P4()">Verificar</button>
+            </div>
+            <div id="feedback4b" class="feedback-auditivo"></div>
         </div>
     </div>
 </div>
@@ -660,6 +938,14 @@
                 <text x="636" y="244" font-family="Nunito" font-size="11" font-weight="800" fill="#b45309">&larr; Calle B</text>
                 <text x="636" y="364" font-family="Nunito" font-size="11" font-weight="800" fill="#1d4ed8">&rarr; Calle C</text>
                 <text x="636" y="464" font-family="Nunito" font-size="11" font-weight="800" fill="#b45309">&larr; Calle D</text>
+                <rect id="hit-p5-biblioteca" class="mapa-hit" x="36" y="76" width="88" height="88" rx="14" onclick="responderMapaP5('biblioteca')"/>
+                <rect id="hit-p5-rectoria" class="mapa-hit" x="296" y="76" width="88" height="88" rx="14" onclick="responderMapaP5('rectoria')"/>
+                <rect id="hit-p5-cafeteria" class="mapa-hit" x="166" y="196" width="88" height="88" rx="14" onclick="responderMapaP5('cafeteria')"/>
+                <rect id="hit-p5-laboratorio" class="mapa-hit" x="536" y="196" width="88" height="88" rx="14" onclick="responderMapaP5('laboratorio')"/>
+                <rect id="hit-p5-medicina" class="mapa-hit" x="36" y="316" width="88" height="88" rx="14" onclick="responderMapaP5('medicina')"/>
+                <rect id="hit-p5-artes" class="mapa-hit" x="296" y="316" width="88" height="88" rx="14" onclick="responderMapaP5('artes')"/>
+                <rect id="hit-p5-veterinaria" class="mapa-hit" x="426" y="416" width="88" height="88" rx="14" onclick="responderMapaP5('veterinaria')"/>
+                <rect id="hit-p5-agronomia" class="mapa-hit" x="166" y="416" width="88" height="88" rx="14" onclick="responderMapaP5('agronomia')"/>
             </svg>
         </div>
 
@@ -693,9 +979,78 @@
             <div id="feedback5" class="feedback-auditivo"></div>
         </div>
 
-        <a href="quiz.html" class="boton-quiz text-center">
+        <div class="pregunta-auditiva">
+            <h4><i class="fas fa-headphones me-2"></i>Reto 2</h4>
+            <div class="audio-player">
+                <button class="btn-audio" onclick="reproducirAudio('audP5r2',this)"><i class="fas fa-play"></i></button>
+                <div class="audio-label"><i class="fas fa-question-circle me-2"></i>Escucha la pregunta</div>
+            </div>
+            <div class="nota-ej2">Toca el edificio final en este mapa.</div>
+            <div class="cu-wrap">
+                <svg class="cu-svg" viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="620" height="420" fill="#f0f9ff" rx="18"/>
+                    <line x1="40" y1="90" x2="570" y2="90" stroke="#93c5fd" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="560,84 576,90 560,96" fill="#3b82f6"/>
+                    <text x="20" y="94" font-size="12" font-weight="800" fill="#1d4ed8">A</text>
+                    <line x1="570" y1="180" x2="40" y2="180" stroke="#fcd34d" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="50,174 34,180 50,186" fill="#f59e0b"/>
+                    <text x="20" y="184" font-size="12" font-weight="800" fill="#b45309">B</text>
+                    <line x1="40" y1="270" x2="570" y2="270" stroke="#93c5fd" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="560,264 576,270 560,276" fill="#3b82f6"/>
+                    <text x="20" y="274" font-size="12" font-weight="800" fill="#1d4ed8">C</text>
+                    <line x1="80" y1="40" x2="80" y2="380" stroke="#fca5a5" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="74,368 80,384 86,368" fill="#ef4444"/>
+                    <text x="80" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#b91c1c">1</text>
+                    <line x1="220" y1="380" x2="220" y2="40" stroke="#6ee7b7" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="214,52 220,36 226,52" fill="#10b981"/>
+                    <text x="220" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#065f46">2</text>
+                    <line x1="360" y1="40" x2="360" y2="380" stroke="#fca5a5" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="354,368 360,384 366,368" fill="#ef4444"/>
+                    <text x="360" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#b91c1c">3</text>
+                    <line x1="500" y1="380" x2="500" y2="40" stroke="#6ee7b7" stroke-width="10" stroke-linecap="round"/>
+                    <polygon points="494,52 500,36 506,52" fill="#10b981"/>
+                    <text x="500" y="28" text-anchor="middle" font-size="12" font-weight="800" fill="#065f46">4</text>
+                    <rect x="48" y="58" width="64" height="64" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                    <text x="80" y="88" text-anchor="middle" font-size="20">📚</text>
+                    <text x="80" y="104" text-anchor="middle" font-size="9" font-weight="800" fill="#9a3412">Biblioteca</text>
+                    <rect x="328" y="58" width="64" height="64" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                    <text x="360" y="88" text-anchor="middle" font-size="20">🏛️</text>
+                    <text x="360" y="104" text-anchor="middle" font-size="9" font-weight="800" fill="#9a3412">Rectoría</text>
+                    <rect x="188" y="148" width="64" height="64" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                    <text x="220" y="178" text-anchor="middle" font-size="20">☕</text>
+                    <text x="220" y="194" text-anchor="middle" font-size="9" font-weight="800" fill="#065f46">Cafetería</text>
+                    <rect x="468" y="148" width="64" height="64" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                    <text x="500" y="178" text-anchor="middle" font-size="20">🔬</text>
+                    <text x="500" y="194" text-anchor="middle" font-size="9" font-weight="800" fill="#065f46">Laboratorio</text>
+                    <rect x="48" y="238" width="64" height="64" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+                    <text x="80" y="268" text-anchor="middle" font-size="20">🏥</text>
+                    <text x="80" y="284" text-anchor="middle" font-size="9" font-weight="800" fill="#5b21b6">Medicina</text>
+                    <rect x="328" y="238" width="64" height="64" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+                    <text x="360" y="268" text-anchor="middle" font-size="20">🎨</text>
+                    <text x="360" y="284" text-anchor="middle" font-size="9" font-weight="800" fill="#5b21b6">Artes</text>
+                    <rect x="188" y="328" width="64" height="64" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+                    <text x="220" y="358" text-anchor="middle" font-size="20">🌿</text>
+                    <text x="220" y="374" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">Agronomía</text>
+                    <rect x="448" y="328" width="84" height="64" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2.5"/>
+                    <text x="490" y="358" text-anchor="middle" font-size="20">🐾</text>
+                    <text x="490" y="374" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">Veterinaria</text>
+                    <rect id="hit2-p5-biblioteca" class="mapa-hit" x="40" y="50" width="80" height="80" rx="14" onclick="responderMapaP5('biblioteca')"/>
+                    <rect id="hit2-p5-rectoria" class="mapa-hit" x="320" y="50" width="80" height="80" rx="14" onclick="responderMapaP5('rectoria')"/>
+                    <rect id="hit2-p5-cafeteria" class="mapa-hit" x="180" y="140" width="80" height="80" rx="14" onclick="responderMapaP5('cafeteria')"/>
+                    <rect id="hit2-p5-laboratorio" class="mapa-hit" x="460" y="140" width="80" height="80" rx="14" onclick="responderMapaP5('laboratorio')"/>
+                    <rect id="hit2-p5-medicina" class="mapa-hit" x="40" y="230" width="80" height="80" rx="14" onclick="responderMapaP5('medicina')"/>
+                    <rect id="hit2-p5-artes" class="mapa-hit" x="320" y="230" width="80" height="80" rx="14" onclick="responderMapaP5('artes')"/>
+                    <rect id="hit2-p5-agronomia" class="mapa-hit" x="180" y="320" width="80" height="80" rx="14" onclick="responderMapaP5('agronomia')"/>
+                    <rect id="hit2-p5-veterinaria" class="mapa-hit" x="440" y="320" width="100" height="80" rx="14" onclick="responderMapaP5('veterinaria')"/>
+                </svg>
+            </div>
+            <div id="feedback5b" class="feedback-auditivo"></div>
+        </div>
+
+        <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz">
             <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa los dos retos de esta pagina para activar el quiz.</div>
     </div>
 </div>
 
@@ -712,28 +1067,120 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
 var paginaActual = 1;
 var totalPaginas = 5;
-var respuestasPagina = {1:false,2:false,3:false,4:false,5:false};
+var respuestasPagina = {
+    1:{ej1:false,ej2:false},
+    2:{ej1:false,ej2:false},
+    3:{ej1:false,ej2:false},
+    4:{ej1:false,ej2:false},
+    5:{ej1:false,ej2:false}
+};
 var audioActual = null;
 var botonActual = null;
 var audioClick  = document.getElementById('audioClick');
 var audioDing   = document.getElementById('audioDing');
 var audioError  = document.getElementById('audioError');
 var audioWhoosh = document.getElementById('audioWhoosh');
+[audioClick,audioDing,audioError,audioWhoosh].forEach(function(audio){
+    if(audio) audio.volume = 0.15;
+});
+var ultimaSeleccionP3 = '';
+var asientosSeleccionadosP4 = [];
+var asientosCorrectosP4 = ['12-L-1','12-L-3','12-R-2','12-R-4'];
+var registrosCompletados = {};
+var sesionCompletada = false;
+var ejerciciosTracker = {
+    p1e1:{pagina:1,apartadoClave:'pagina1_ruta_opcion',tipoActividad:'audio_opcion'},
+    p1e2:{pagina:1,apartadoClave:'pagina1_ruta_mapa',tipoActividad:'audio_mapa'},
+    p2e1:{pagina:2,apartadoClave:'pagina2_transbordos_opcion',tipoActividad:'audio_opcion'},
+    p2e2:{pagina:2,apartadoClave:'pagina2_estacion_final',tipoActividad:'audio_mapa'},
+    p3e1:{pagina:3,apartadoClave:'pagina3_batalla_columna',tipoActividad:'audio_opcion'},
+    p3e2:{pagina:3,apartadoClave:'pagina3_tablero_final',tipoActividad:'audio_tablero'},
+    p4e1:{pagina:4,apartadoClave:'pagina4_teatro_opcion',tipoActividad:'audio_opcion'},
+    p4e2:{pagina:4,apartadoClave:'pagina4_asientos',tipoActividad:'audio_seleccion'},
+    p5e1:{pagina:5,apartadoClave:'pagina5_campus_ruta',tipoActividad:'audio_opcion'},
+    p5e2:{pagina:5,apartadoClave:'pagina5_edificio_final',tipoActividad:'audio_mapa'}
+};
+var tracker = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'auditivo',
+    trackTime: false,
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'auditivo_dificil' },
+    apartados: ejerciciosTracker
+}) : null;
+var sessionTracker = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'auditivo',
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'auditivo_dificil' }
+}) : null;
 function safePlay(a){try{if(a){a.currentTime=0;a.play();}}catch(e){}}
 
+function paginaCompleta(n){
+    return respuestasPagina[n].ej1 && respuestasPagina[n].ej2;
+}
+
+function todasPaginasCompletas(){
+    for(var n=1;n<=totalPaginas;n++){
+        if(!paginaCompleta(n)) return false;
+    }
+    return true;
+}
+
+function claveEjercicio(pagina, reto){
+    return 'p'+pagina+'e'+(reto==='ej2'?'2':'1');
+}
+
+function registrarIntento(pagina, reto, correcto, detalle){
+    var clave = claveEjercicio(pagina, reto);
+    var config = ejerciciosTracker[clave];
+    if(!config) return;
+    detalle = detalle || {};
+    if(tracker) tracker.markVisible(clave, { pagina: pagina, ejercicio: clave });
+    if(correcto){
+        if(!registrosCompletados[clave]){
+            registrosCompletados[clave] = true;
+            if(tracker){
+                tracker.addCorrect(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+            }
+        }
+    } else if(tracker) {
+        tracker.addError(clave, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+    }
+    if(!sesionCompletada && todasPaginasCompletas()){
+        sesionCompletada = true;
+        if(tracker) tracker.complete({ paginasCompletas: totalPaginas });
+        if(sessionTracker) sessionTracker.complete({ paginasCompletas: totalPaginas });
+    }
+}
+
+function mostrarBloqueoPagina(){
+    safePlay(audioError);
+    var feedbackId = respuestasPagina[paginaActual].ej1 ? 'feedback'+paginaActual+'b' : 'feedback'+paginaActual;
+    setFeedbackEj2(feedbackId,false,'Completa los dos retos de esta pagina antes de avanzar.');
+}
+
 function cambiarPagina(dir){
+    if(dir>0 && !paginaCompleta(paginaActual)){
+        mostrarBloqueoPagina();
+        return;
+    }
+    var siguiente = paginaActual + dir;
+    if(siguiente<1 || siguiente>totalPaginas) return;
     detenerAudio();
     document.getElementById('pagina'+paginaActual).classList.remove('activa');
-    paginaActual+=dir;
+    paginaActual=siguiente;
     document.getElementById('pagina'+paginaActual).classList.add('activa');
     safePlay(audioWhoosh);
     actualizarUI();
-    localStorage.setItem('progreso_dificil_auditivo_coordenadas',paginaActual);
     window.scrollTo({top:0,behavior:'smooth'});
     if(paginaActual===1) setTimeout(animarRuta,500);
+    if(paginaActual===3) renderTableroEj2();
     if(paginaActual===4) generarTeatro();
 }
 
@@ -743,13 +1190,24 @@ function actualizarUI(){
         var n=i+1;
         puntos[i].classList.remove('activo','completado');
         if(n===paginaActual) puntos[i].classList.add('activo');
-        else if(n<paginaActual&&respuestasPagina[n]) puntos[i].classList.add('completado');
-        else if(n<paginaActual) puntos[i].classList.add('activo');
+        else if(paginaCompleta(n)) puntos[i].classList.add('completado');
     }
     document.getElementById('paginaActualNum').innerText=paginaActual;
     document.getElementById('contadorPagina').innerText=paginaActual+'/'+totalPaginas;
     document.getElementById('btnAnterior').disabled=(paginaActual===1);
-    document.getElementById('btnSiguiente').disabled=(paginaActual===totalPaginas);
+    document.getElementById('btnSiguiente').disabled=(paginaActual===totalPaginas || !paginaCompleta(paginaActual));
+    var botonQuiz=document.getElementById('botonQuiz');
+    var textoAyudaQuiz=document.getElementById('textoAyudaQuiz');
+    if(botonQuiz&&textoAyudaQuiz){
+        if(todasPaginasCompletas()){
+            botonQuiz.classList.remove('bloqueado');
+            textoAyudaQuiz.innerText='Ya puedes entrar al quiz.';
+        } else {
+            botonQuiz.classList.add('bloqueado');
+            textoAyudaQuiz.innerText='Completa los dos retos de esta pagina para activar el quiz.';
+        }
+    }
+    if(tracker) tracker.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
 }
 
 /* AMPLIAR IMAGEN */
@@ -810,8 +1268,7 @@ function animarRuta(){
 
 /* TEATRO P4 */
 function generarTeatro(){
-    var c=document.getElementById('teatro-grid');
-    if(!c||c.innerHTML.trim()!=='') return;
+    var contenedores=['teatro-grid','teatro-grid-ej2'];
     var caps={1:24,2:24,3:24,4:24,5:24,6:28,7:28,8:28,9:28,10:28,11:32,12:32,13:32,14:32,15:32};
     var html='';
     for(var f=1;f<=12;f++){
@@ -819,21 +1276,45 @@ function generarTeatro(){
         html+='<div class="fila-teatro">';
         html+='<div class="fila-num">F'+f+'</div>';
         html+='<div class="bloque-izq">';
-        for(var i=mitad;i>=1;i--) html+='<div class="asiento">'+((i*2)-1)+'</div>';
+        for(var i=mitad;i>=1;i--){
+            var impar=((i*2)-1);
+            var keyIzq=f+'-L-'+impar;
+            var claseIzq='asiento-btn';
+            if(asientosSeleccionadosP4.indexOf(keyIzq)!==-1) claseIzq+=' seleccionado';
+            if(respuestasPagina[4].ej2&&asientosCorrectosP4.indexOf(keyIzq)!==-1) claseIzq+=' correcto';
+            html+='<button class="'+claseIzq+'" onclick="toggleAsientoEj2P4('+f+',\'L\','+impar+')" '+(respuestasPagina[4].ej2?'disabled':'')+'>'+impar+'</button>';
+        }
         html+='</div>';
         html+='<div class="pasillo">F'+f+'</div>';
         html+='<div class="bloque-der">';
-        for(var i=1;i<=mitad;i++) html+='<div class="asiento">'+(i*2)+'</div>';
+        for(var j=1;j<=mitad;j++){
+            var par=(j*2);
+            var keyDer=f+'-R-'+par;
+            var claseDer='asiento-btn';
+            if(asientosSeleccionadosP4.indexOf(keyDer)!==-1) claseDer+=' seleccionado';
+            if(respuestasPagina[4].ej2&&asientosCorrectosP4.indexOf(keyDer)!==-1) claseDer+=' correcto';
+            html+='<button class="'+claseDer+'" onclick="toggleAsientoEj2P4('+f+',\'R\','+par+')" '+(respuestasPagina[4].ej2?'disabled':'')+'>'+par+'</button>';
+        }
         html+='</div>';
         html+='</div>';
     }
     html+='<div style="text-align:center;padding:10px;color:#9a3412;font-weight:700;">... Filas 13 a 20 ...</div>';
-    c.innerHTML=html;
+    contenedores.forEach(function(id){
+        var c=document.getElementById(id);
+        if(c) c.innerHTML=html;
+    });
+}
+
+function setFeedbackEj2(id, ok, msg){
+    var feedback=document.getElementById(id);
+    feedback.style.display='block';
+    feedback.className='feedback-auditivo ' + (ok?'bg-success text-white':'bg-danger text-white');
+    feedback.innerHTML=msg;
 }
 
 /* RESPUESTAS */
 function responder(pagina, opcion, esCorrecta){
-    if(respuestasPagina[pagina]) return;
+    if(respuestasPagina[pagina].ej1) return;
     safePlay(audioClick);
     var feedback=document.getElementById('feedback'+pagina);
     var botones=document.querySelectorAll('#opc'+pagina+' .btn-opcion-aud');
@@ -860,9 +1341,11 @@ function responder(pagina, opcion, esCorrecta){
         feedback.style.display='block';
         feedback.className='feedback-auditivo bg-success text-white';
         feedback.innerHTML=msgs[pagina];
-        respuestasPagina[pagina]=true;
+        respuestasPagina[pagina].ej1=true;
+        registrarIntento(pagina,'ej1',true,{respuesta: opcion});
     } else {
         safePlay(audioError);
+        registrarIntento(pagina,'ej1',false,{respuesta: opcion});
         feedback.style.display='block';
         feedback.className='feedback-auditivo bg-danger text-white';
         feedback.innerHTML=errs[pagina];
@@ -874,20 +1357,202 @@ function responder(pagina, opcion, esCorrecta){
     actualizarUI();
 }
 
-/* INIT */
-window.addEventListener('DOMContentLoaded',function(){
-    var g=localStorage.getItem('progreso_dificil_auditivo_coordenadas');
-    if(g){
-        var p=parseInt(g,10);
-        if(p>=1&&p<=totalPaginas){
-            document.getElementById('pagina'+paginaActual).classList.remove('activa');
-            paginaActual=p;
-            document.getElementById('pagina'+paginaActual).classList.add('activa');
+function limpiarClases(ids){
+    ids.forEach(function(id){
+        var el=document.getElementById(id);
+        if(el) el.classList.remove('correcto','incorrecto');
+    });
+}
+
+function responderMapaP1(destino){
+    if(respuestasPagina[1].ej2) return;
+    safePlay(audioClick);
+    var ids=[
+        'hit-p1-super','hit-p1-escuela','hit-p1-farmacia','hit-p1-parque',
+        'hit2-p1-super','hit2-p1-escuela','hit2-p1-farmacia','hit2-p1-parque'
+    ];
+    limpiarClases(ids);
+    var targets=['hit-p1-'+destino,'hit2-p1-'+destino].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if(!targets.length) return;
+    var correcta = destino==='farmacia';
+    if(correcta){
+        targets.forEach(function(el){ el.classList.add('correcto'); });
+        safePlay(audioDing);
+        respuestasPagina[1].ej2=true;
+        registrarIntento(1,'ej2',true,{destino: destino});
+        setFeedbackEj2('feedback1b',true,'Correcto.');
+        actualizarUI();
+    } else {
+        targets.forEach(function(el){ el.classList.add('incorrecto'); });
+        safePlay(audioError);
+        registrarIntento(1,'ej2',false,{destino: destino});
+        setFeedbackEj2('feedback1b',false,'Vuelve a escuchar y sigue la ruta.');
+    }
+}
+
+function responderMetroP2(estacion){
+    if(respuestasPagina[2].ej2) return;
+    safePlay(audioClick);
+    var ids=[
+        'hit-p2-buenavista','hit-p2-centro','hit-p2-tacubaya','hit-p2-balderas','hit-p2-copilco','hit-p2-observatorio',
+        'hit2-p2-buenavista','hit2-p2-centro','hit2-p2-balderas','hit2-p2-copilco','hit2-p2-observatorio'
+    ];
+    limpiarClases(ids);
+    var targets=['hit-p2-'+estacion,'hit2-p2-'+estacion].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if(!targets.length) return;
+    var correcta = estacion==='copilco';
+    if(correcta){
+        targets.forEach(function(el){ el.classList.add('correcto'); });
+        safePlay(audioDing);
+        respuestasPagina[2].ej2=true;
+        registrarIntento(2,'ej2',true,{estacion: estacion});
+        setFeedbackEj2('feedback2b',true,'Correcto.');
+        actualizarUI();
+    } else {
+        targets.forEach(function(el){ el.classList.add('incorrecto'); });
+        safePlay(audioError);
+        registrarIntento(2,'ej2',false,{estacion: estacion});
+        setFeedbackEj2('feedback2b',false,'Esa no es la estación final.');
+    }
+}
+
+function renderTableroEj2(){
+    var c=document.getElementById('tablero-ej2');
+    if(!c) return;
+    var cols=['A','B','C','D','E','F'];
+    var html='<div class="celda-label"></div>';
+    for(var ci=0;ci<cols.length;ci++) html+='<div class="celda-label">'+cols[ci]+'</div>';
+    for(var fila=1;fila<=5;fila++){
+        html+='<div class="celda-label">'+fila+'</div>';
+        for(var col=0;col<cols.length;col++){
+            var coord=cols[col]+fila;
+            var clases='celda-tablero';
+            if(coord==='B2') clases+=' inicio';
+            if(ultimaSeleccionP3===coord){
+                clases+=coord==='D3'?' correcta':' incorrecta';
+            } else if(respuestasPagina[3].ej2 && coord==='D3'){
+                clases+=' correcta';
+            }
+            html+='<button class="'+clases+'" onclick="responderTableroP3(\''+coord+'\')" '+(respuestasPagina[3].ej2?'disabled':'')+'>'+(coord==='B2'?'★':'')+'</button>';
         }
     }
+    c.innerHTML=html;
+}
+
+function responderTableroP3(coord){
+    if(respuestasPagina[3].ej2) return;
+    safePlay(audioClick);
+    ultimaSeleccionP3=coord;
+    if(coord==='D3'){
+        safePlay(audioDing);
+        respuestasPagina[3].ej2=true;
+        registrarIntento(3,'ej2',true,{coordenada: coord});
+        setFeedbackEj2('feedback3b',true,'Correcto.');
+        actualizarUI();
+    } else {
+        safePlay(audioError);
+        registrarIntento(3,'ej2',false,{coordenada: coord});
+        setFeedbackEj2('feedback3b',false,'Esa no es la coordenada final.');
+    }
+    renderTableroEj2();
+}
+
+function toggleAsientoEj2P4(fila, lado, numero){
+    if(respuestasPagina[4].ej2) return;
+    safePlay(audioClick);
+    var key=fila+'-'+lado+'-'+numero;
+    var index=asientosSeleccionadosP4.indexOf(key);
+    if(index!==-1){
+        asientosSeleccionadosP4.splice(index,1);
+    } else if(asientosSeleccionadosP4.length<4){
+        asientosSeleccionadosP4.push(key);
+    }
+    generarTeatro();
+}
+
+function reiniciarEj2P4(){
+    if(respuestasPagina[4].ej2) return;
+    asientosSeleccionadosP4=[];
+    var feedback=document.getElementById('feedback4b');
+    feedback.style.display='none';
+    feedback.innerHTML='';
+    generarTeatro();
+}
+
+function verificarEj2P4(){
+    if(respuestasPagina[4].ej2) return;
+    if(asientosSeleccionadosP4.length!==4){
+        safePlay(audioError);
+        registrarIntento(4,'ej2',false,{seleccion: asientosSeleccionadosP4.slice().sort().join('|')});
+        setFeedbackEj2('feedback4b',false,'Selecciona cuatro asientos.');
+        return;
+    }
+    var actual=asientosSeleccionadosP4.slice().sort().join('|');
+    var correcto=asientosCorrectosP4.slice().sort().join('|');
+    if(actual===correcto){
+        safePlay(audioDing);
+        respuestasPagina[4].ej2=true;
+        registrarIntento(4,'ej2',true,{seleccion: actual});
+        setFeedbackEj2('feedback4b',true,'Correcto.');
+        actualizarUI();
+    } else {
+        safePlay(audioError);
+        registrarIntento(4,'ej2',false,{seleccion: actual});
+        setFeedbackEj2('feedback4b',false,'Revisa la fila y los asientos más cercanos al pasillo.');
+    }
+    generarTeatro();
+}
+
+function responderMapaP5(destino){
+    if(respuestasPagina[5].ej2) return;
+    safePlay(audioClick);
+    var ids=[
+        'hit-p5-biblioteca','hit-p5-rectoria','hit-p5-cafeteria','hit-p5-laboratorio',
+        'hit-p5-medicina','hit-p5-artes','hit-p5-veterinaria','hit-p5-agronomia',
+        'hit2-p5-biblioteca','hit2-p5-rectoria','hit2-p5-cafeteria','hit2-p5-laboratorio',
+        'hit2-p5-medicina','hit2-p5-artes','hit2-p5-veterinaria','hit2-p5-agronomia'
+    ];
+    limpiarClases(ids);
+    var targets=['hit-p5-'+destino,'hit2-p5-'+destino].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if(!targets.length) return;
+    var correcta = destino==='artes';
+    if(correcta){
+        targets.forEach(function(el){ el.classList.add('correcto'); });
+        safePlay(audioDing);
+        respuestasPagina[5].ej2=true;
+        registrarIntento(5,'ej2',true,{destino: destino});
+        setFeedbackEj2('feedback5b',true,'Correcto.');
+        actualizarUI();
+    } else {
+        targets.forEach(function(el){ el.classList.add('incorrecto'); });
+        safePlay(audioError);
+        registrarIntento(5,'ej2',false,{destino: destino});
+        setFeedbackEj2('feedback5b',false,'Ese no es el edificio final.');
+    }
+}
+
+/* INIT */
+window.addEventListener('DOMContentLoaded',function(){
+    var botonQuiz=document.getElementById('botonQuiz');
+    if(botonQuiz){
+        botonQuiz.addEventListener('click',function(event){
+            if(botonQuiz.classList.contains('bloqueado')){
+                event.preventDefault();
+                safePlay(audioError);
+                setFeedbackEj2('feedback5b',false,'Completa los dos retos finales antes de entrar al quiz.');
+            }
+        });
+    }
+    if(sessionTracker){
+        sessionTracker.start();
+        sessionTracker.attachQuizLinks('.boton-quiz',function(){
+            return { eventoCierre: 'quiz' };
+        });
+    }
     actualizarUI();
+    renderTableroEj2();
     if(paginaActual===1) setTimeout(animarRuta,600);
-    if(paginaActual===4) generarTeatro();
+    generarTeatro();
 });
 </script>
 

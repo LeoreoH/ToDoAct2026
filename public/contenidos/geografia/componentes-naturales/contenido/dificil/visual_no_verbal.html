@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -62,12 +62,13 @@
     .btn-nav{background:#ffea00;color:#1b5e20;border:3px solid #2e7d32;padding:10px 24px;border-radius:38px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .2s;}
     .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 #1b5e20;}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;box-shadow:none;cursor:default;}
+    .btn-nav.bloqueado{filter:grayscale(.15);opacity:.72;}
     .ind-pag{font-size:1.25rem;font-weight:800;background:#dcedc8;color:#1b5e20;padding:8px 24px;border-radius:36px;border:3px solid #2e7d32;}
     .btn-sig-r{background:#2e7d32;color:#fff;border:none;padding:11px 28px;border-radius:30px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #1b5e20;display:none;margin:10px auto;transition:all .2s;}
     .btn-sig-r:hover{transform:translateY(-2px);}
     .btn-jugar{background:#ffea00;color:#1b5e20;border:4px solid #2e7d32;padding:12px 34px;border-radius:50px;font-weight:900;font-size:1.1rem;cursor:pointer;box-shadow:0 6px 0 #1b5e20;transition:all .2s;}
     .btn-jugar:hover{transform:translateY(-2px);}
-    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
+    .boton-quiz{display:none;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
     .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 #1b5e20;background:#fff;color:#1b5e20;}
 
     /* ── DIFERENCIAS ── */
@@ -336,15 +337,36 @@
 /* ══════════ PAGINACIÓN ══════════ */
 let pag=1;
 const TOTAL_PAGS=4;
-function cambiarPag(d){
-  document.getElementById('pagina'+pag).classList.remove('activa');
-  pag+=d;
-  document.getElementById('pagina'+pag).classList.add('activa');
-  syncUI();window.scrollTo({top:0,behavior:'smooth'});
+function onPaginaCambiada(){
   if(pag===1&&difRonda===0)difInit();
   if(pag===2&&memTablero===0)memInit();
   if(pag===3&&labActual===0)labInit();
   if(pag===4&&ranaQ===0)ranaInit();
+}
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(TOTAL_PAGS, Number(nuevaPagina) || 1));
+  if(destino===pag){
+    syncUI();
+    onPaginaCambiada();
+    return false;
+  }
+  document.getElementById('pagina'+pag).classList.remove('activa');
+  pag=destino;
+  document.getElementById('pagina'+pag).classList.add('activa');
+  syncUI();window.scrollTo({top:0,behavior:'smooth'});
+  onPaginaCambiada();
+  return true;
+}
+function cambiarPag(d){
+  const destino = pag + d;
+  if(destino < 1 || destino > TOTAL_PAGS){
+    syncUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function syncUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{
@@ -362,8 +384,8 @@ function syncUI(){
 ════════════════════════════════════════════ */
 const DIF_RONDAS=[
   { titulo:"Ronda 1: 🌿 Selva Tropical vs 🦁 Sabana", desc:"Ambas son regiones tropicales, pero con diferencias importantes",
-    imgA:{url:"https://thefreenature.com/wp-content/uploads/2022/05/selvatropical6-1024x640.jpg",lbl:"🌿 Selva Tropical"},
-    imgB:{url:"https://ecosistemas.ovacen.com/wp-content/uploads/2018/02/flora-sabana.jpg",lbl:"🦁 Sabana"},
+    imgA:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg",lbl:"🌿 Selva Tropical"},
+    imgB:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg",lbl:"🦁 Sabana"},
     difs:[
       {t:"La selva llueve todo el año; la sabana solo en verano",real:true,z:"Precipitación"},
       {t:"La selva tiene vegetación densa y alta; la sabana pastos bajos",real:true,z:"Vegetación"},
@@ -376,8 +398,8 @@ const DIF_RONDAS=[
     ]
   },
   { titulo:"Ronda 2: ❄️ Tundra vs 🌲 Taiga (Bosque Boreal)", desc:"Dos regiones frías con diferencias clave de vegetación y temperatura",
-    imgA:{url:"https://humanidades.com/wp-content/uploads/2017/05/Tundra-1-e1702495490128-800x400.jpg",lbl:"❄️ Tundra"},
-    imgB:{url:"https://th.bing.com/th/id/R.9927723c4e2ff2a16671ad15b7f37c45?rik=%2foZuLr8blvW4EQ&riu=http%3a%2f%2fantropocene.it%2fwp-content%2fuploads%2f2017%2f05%2fTaiga.jpeg&ehk=mfmXqsVnbvdFGz%2fIjylrR9RzGGP5I7K3%2b5W37c%2fMpHE%3d&risl=&pid=ImgRaw&r=0",lbl:"🌲 Taiga"},
+    imgA:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg",lbl:"❄️ Tundra"},
+    imgB:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/r-fbc9b0263b.jpg",lbl:"🌲 Taiga"},
     difs:[
       {t:"La tundra tiene permafrost permanente; la taiga menos",real:true,z:"Suelo"},
       {t:"La taiga tiene árboles (coníferas); la tundra solo musgos",real:true,z:"Vegetación"},
@@ -390,8 +412,8 @@ const DIF_RONDAS=[
     ]
   },
   { titulo:"Ronda 3: 🏜️ Desierto vs 🌾 Pradera / Estepa", desc:"Dos regiones secas — ¿qué las diferencia realmente?",
-    imgA:{url:"https://unamglobal.unam.mx/wp-content/uploads/2023/09/destacada-desierto-vivo.jpg",lbl:"🏜️ Desierto"},
-    imgB:{url:"https://ecosistemas.ovacen.com/wp-content/uploads/2018/01/praderas.jpg",lbl:"🌾 Pradera"},
+    imgA:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/destacada-desierto-vivo-8cfc154ab8.jpg",lbl:"🏜️ Desierto"},
+    imgB:{url:"/contenidos/geografia/componentes-naturales/recursos/img/locales/praderas-a656c71915.jpg",lbl:"🌾 Pradera"},
     difs:[
       {t:"El desierto tiene menos lluvia que la pradera",real:true,z:"Lluvia"},
       {t:"La pradera tiene cobertura de hierbas; el desierto casi no",real:true,z:"Vegetación"},
@@ -452,36 +474,36 @@ const MEM_TABLEROS=[
   { titulo:"Tablero 1: Regiones Tropicales",desc:"Une imagen de región con su nombre o característica",
     fb:"¡Tablero 1 completado! Selva y Sabana son las regiones tropicales del planeta.",
     pares:[
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/300px-Amazon_CIAT_%281%29.jpg",lbl:"Selva Tropical",def:"Llueve todo el año · Ecuador"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/300px-Serengeti_Tanzania.jpg",lbl:"Sabana",def:"Pastos altos · lluvias en verano"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Amazon_rainforest_from_above.jpg/300px-Amazon_rainforest_from_above.jpg",lbl:"Amazonia",def:"Mayor biodiversidad"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pantanal_-_portal.jpg/300px-Pantanal_-_portal.jpg",lbl:"Humedales",def:"Pantanos y ciénagas"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Rainforest_frog_%28Litoria_infrafrenata%29.jpg/300px-Rainforest_frog_%28Litoria_infrafrenata%29.jpg",lbl:"Fauna tropical",def:"Miles de especies únicas"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/African_elephant_-_melbourne_zoo.jpg/300px-African_elephant_-_melbourne_zoo.jpg",lbl:"Elefante africano",def:"Animal de la sabana"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Scarlet-Macaw.jpg/300px-Scarlet-Macaw.jpg",lbl:"Guacamayo",def:"Ave de la selva"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/24701-nature-natural-beauty.jpg/300px-24701-nature-natural-beauty.jpg",lbl:"Vegetación densa",def:"Dosel 30-50 metros"}]},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg",lbl:"Selva Tropical",def:"Llueve todo el año · Ecuador"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg",lbl:"Sabana",def:"Pastos altos · lluvias en verano"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/brazil-amazon-rainforest-in-anavilhanas-national-c0dbfa894c.jpg",lbl:"Amazonia",def:"Mayor biodiversidad"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/lago-bled-eslovenia-bb7a5817a4.webp",lbl:"Humedales",def:"Pantanos y ciénagas"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/animales-de-la-selva-tropical-8-bc6e0cd318.jpg",lbl:"Fauna tropical",def:"Miles de especies únicas"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg",lbl:"Elefante africano",def:"Animal de la sabana"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/animales-de-la-selva-tropical-8-bc6e0cd318.jpg",lbl:"Guacamayo",def:"Ave de la selva"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/vista-aerea-exuberante-paisaje-selva-tropical-pr-eb4f238569.jpg",lbl:"Vegetación densa",def:"Dosel 30-50 metros"}]},
   { titulo:"Tablero 2: Regiones Frías",desc:"Une imagen de región fría con su nombre o característica",
     fb:"¡Tablero 2 completado! Tundra y Taiga son las dos grandes regiones frías del planeta.",
     pares:[
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/300px-Tundra_in_Siberia.jpg",lbl:"Tundra",def:"Suelo nevado · solo musgos"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/300px-Taiga_forest_%28a%29.jpg",lbl:"Taiga",def:"Bosque de coníferas"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Arctic_landscape.jpg/300px-Arctic_landscape.jpg",lbl:"Paisaje Ártico",def:"Zona polar extrema"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Caribou_herd.jpg/300px-Caribou_herd.jpg",lbl:"Caribú / Reno",def:"Fauna de la tundra"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Lichen_on_rock_in_Alaska.jpg/300px-Lichen_on_rock_in_Alaska.jpg",lbl:"Líquenes",def:"Vegetación de la tundra"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/ViennaUT_Narvik_spruce_forest.jpg/300px-ViennaUT_Narvik_spruce_forest.jpg",lbl:"Abetos / Pinos",def:"Árboles de la taiga"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Polar_bear.jpg/300px-Polar_bear.jpg",lbl:"Oso Polar",def:"Animal del Ártico"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Siberia_scenery.jpg/300px-Siberia_scenery.jpg",lbl:"Siberia",def:"Taiga más grande del mundo"}]},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg",lbl:"Tundra",def:"Suelo nevado · solo musgos"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg",lbl:"Taiga",def:"Bosque de coníferas"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/paisaje-artico-dominado-icebergs-flotantes-12450-b37778e140.jpg",lbl:"Paisaje Ártico",def:"Zona polar extrema"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-254160a6a4.webp",lbl:"Caribú / Reno",def:"Fauna de la tundra"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/liquen-y-vegetaci-c3-b3n-de-la-tundra-41845978-1ca11b8c67.jpg",lbl:"Líquenes",def:"Vegetación de la tundra"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg",lbl:"Abetos / Pinos",def:"Árboles de la taiga"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/paisaje-artico-dominado-icebergs-flotantes-12450-b37778e140.jpg",lbl:"Oso Polar",def:"Animal del Ártico"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg",lbl:"Siberia",def:"Taiga más grande del mundo"}]},
   { titulo:"Tablero 3: Regiones Secas",desc:"Une imagen de región seca con su nombre o característica",
     fb:"¡Tablero 3 completado! Desierto y Pradera son las regiones con menos lluvia del planeta.",
     pares:[
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/300px-Sahara_desert.jpg",lbl:"Desierto Sahara",def:"El más grande del mundo"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Steppe_of_Kazakhstan.jpg/300px-Steppe_of_Kazakhstan.jpg",lbl:"Estepa / Pradera",def:"Pastos en clima seco"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Saguaro_cactus_in_Saguaro_National_Park.jpg/300px-Saguaro_cactus_in_Saguaro_National_Park.jpg",lbl:"Cactus Saguaro",def:"Planta del desierto"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Camel_in_desert.jpg/300px-Camel_in_desert.jpg",lbl:"Camello",def:"Adaptado al desierto"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Gobi_desert_dawn.jpg/300px-Gobi_desert_dawn.jpg",lbl:"Desierto de Gobi",def:"Asia Central"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Mediterranean_shrubland_in_greece.jpg/300px-Mediterranean_shrubland_in_greece.jpg",lbl:"Región Mediterránea",def:"Veranos secos · inviernos lluviosos"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Dune_45_sossusvlei_Namibia_2.jpeg/300px-Dune_45_sossusvlei_Namibia_2.jpeg",lbl:"Dunas de arena",def:"Típica del desierto"},
-      {img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Bison_at_Yellowstone.jpg/300px-Bison_at_Yellowstone.jpg",lbl:"Bisonte",def:"Animal de la pradera"}]}
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg",lbl:"Desierto Sahara",def:"El más grande del mundo"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/praderas-a656c71915.jpg",lbl:"Estepa / Pradera",def:"Pastos en clima seco"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/cactus-del-desierto-71c9b6e074.jpg",lbl:"Cactus Saguaro",def:"Planta del desierto"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg",lbl:"Camello",def:"Adaptado al desierto"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/15979542-flaming-cliffs-gobi-desert-mongolia-84a1f19ec8.jpg",lbl:"Desierto de Gobi",def:"Asia Central"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-554f650739.webp",lbl:"Región Mediterránea",def:"Veranos secos · inviernos lluviosos"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg",lbl:"Dunas de arena",def:"Típica del desierto"},
+      {img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/praderas-a656c71915.jpg",lbl:"Bisonte",def:"Animal de la pradera"}]}
 ];
 let memTablero=0,memVoltadas=[],memEncontrados=0,memIntentos=0,memBloq=false;
 function memInit(){memBuild();}
@@ -646,18 +668,18 @@ document.addEventListener('keydown',e=>{
    JUEGO 4 · RANA SALTARINA
 ════════════════════════════════════════════ */
 const RANA_PREGS=[
-  {txt:"¿Qué región tiene clima CÁLIDO y HÚMEDO, llueve todo el año y alberga más del 50% de las especies del planeta?",pista:"Observa: vegetación densa, árboles altísimos, lluvia constante",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/400px-Amazon_CIAT_%281%29.jpg",
-   correcta:1,opc:[{t:"🏜️ Desierto",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/200px-Sahara_desert.jpg"},{t:"🌿 Selva Tropical",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/200px-Amazon_CIAT_%281%29.jpg"},{t:"❄️ Tundra",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/200px-Tundra_in_Siberia.jpg"},{t:"🌾 Sabana",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/200px-Serengeti_Tanzania.jpg"}],expl:"¡La SELVA TROPICAL es la región más biodiversa con lluvias todo el año!"},
-  {txt:"¿En qué región el suelo está cubierto de nieve casi todo el año y solo crecen musgos y líquenes?",pista:"Observa: paisaje nevado, casi sin vegetación, clima polar",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/400px-Tundra_in_Siberia.jpg",
-   correcta:2,opc:[{t:"🌲 Taiga",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/200px-Taiga_forest_%28a%29.jpg"},{t:"🌿 Selva",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/200px-Amazon_CIAT_%281%29.jpg"},{t:"❄️ Tundra",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/200px-Tundra_in_Siberia.jpg"},{t:"🦁 Sabana",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/200px-Serengeti_Tanzania.jpg"}],expl:"¡La TUNDRA tiene permafrost, clima polar y solo crece vegetación rasante!"},
-  {txt:"¿Qué región tiene PASTOS ALTOS, lluvias solo en verano y es hogar de leones, jirafas y elefantes?",pista:"Observa: pastizales abiertos, algunos árboles dispersos, animales salvajes",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/400px-Serengeti_Tanzania.jpg",
-   correcta:0,opc:[{t:"🦁 Sabana",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/200px-Serengeti_Tanzania.jpg"},{t:"🏜️ Desierto",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/200px-Sahara_desert.jpg"},{t:"🌲 Taiga",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/200px-Taiga_forest_%28a%29.jpg"},{t:"❄️ Tundra",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/200px-Tundra_in_Siberia.jpg"}],expl:"¡La SABANA tiene pastos altos, lluvias estacionales y es hogar de grandes mamíferos!"},
-  {txt:"¿Cuál es el BOSQUE más extenso del mundo con clima frío, pinos y abetos, al norte de Rusia y Canadá?",pista:"Observa: gran bosque de coníferas, nieve, clima muy frío",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/400px-Taiga_forest_%28a%29.jpg",
-   correcta:3,opc:[{t:"🌿 Selva",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/200px-Amazon_CIAT_%281%29.jpg"},{t:"🌾 Pradera",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Steppe_of_Kazakhstan.jpg/200px-Steppe_of_Kazakhstan.jpg"},{t:"🦁 Sabana",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Serengeti_Tanzania.jpg/200px-Serengeti_Tanzania.jpg"},{t:"🌲 Taiga / Bosque Boreal",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/200px-Taiga_forest_%28a%29.jpg"}],expl:"¡La TAIGA cubre el 25% de los bosques mundiales con pinos y abetos en clima frío!"},
-  {txt:"¿En qué región hay muy poca lluvia, temperaturas de +50°C de día y muy bajas de noche, y casi sin vegetación?",pista:"Observa: arena, dunas, sin vegetación, clima extremo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/400px-Sahara_desert.jpg",
-   correcta:1,opc:[{t:"🌿 Selva",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Amazon_CIAT_%281%29.jpg/200px-Amazon_CIAT_%281%29.jpg"},{t:"🏜️ Desierto",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/200px-Sahara_desert.jpg"},{t:"🌲 Taiga",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/200px-Taiga_forest_%28a%29.jpg"},{t:"❄️ Tundra",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Tundra_in_Siberia.jpg/200px-Tundra_in_Siberia.jpg"}],expl:"¡El DESIERTO tiene menos de 250mm de lluvia al año y extremos de temperatura!"},
-  {txt:"¿Qué región tiene agua abundante como pantanos y ciénagas, y alberga enorme biodiversidad acuática?",pista:"Observa: vegetación dentro del agua, aves acuáticas, mucha humedad",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pantanal_-_portal.jpg/400px-Pantanal_-_portal.jpg",
-   correcta:2,opc:[{t:"🏜️ Desierto",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Sahara_desert.jpg/200px-Sahara_desert.jpg"},{t:"🌾 Pradera",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Steppe_of_Kazakhstan.jpg/200px-Steppe_of_Kazakhstan.jpg"},{t:"💧 Humedales",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pantanal_-_portal.jpg/200px-Pantanal_-_portal.jpg"},{t:"🌲 Taiga",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Taiga_forest_%28a%29.jpg/200px-Taiga_forest_%28a%29.jpg"}],expl:"¡Los HUMEDALES son zonas con agua abundante — el Pantanal de Brasil es el más grande!"}
+  {txt:"¿Qué región tiene clima CÁLIDO y HÚMEDO, llueve todo el año y alberga más del 50% de las especies del planeta?",pista:"Observa: vegetación densa, árboles altísimos, lluvia constante",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg",
+   correcta:1,opc:[{t:"🏜️ Desierto",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},{t:"🌿 Selva Tropical",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},{t:"❄️ Tundra",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"},{t:"🌾 Sabana",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg"}],expl:"¡La SELVA TROPICAL es la región más biodiversa con lluvias todo el año!"},
+  {txt:"¿En qué región el suelo está cubierto de nieve casi todo el año y solo crecen musgos y líquenes?",pista:"Observa: paisaje nevado, casi sin vegetación, clima polar",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg",
+   correcta:2,opc:[{t:"🌲 Taiga",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},{t:"🌿 Selva",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},{t:"❄️ Tundra",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"},{t:"🦁 Sabana",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg"}],expl:"¡La TUNDRA tiene permafrost, clima polar y solo crece vegetación rasante!"},
+  {txt:"¿Qué región tiene PASTOS ALTOS, lluvias solo en verano y es hogar de leones, jirafas y elefantes?",pista:"Observa: pastizales abiertos, algunos árboles dispersos, animales salvajes",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg",
+   correcta:0,opc:[{t:"🦁 Sabana",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg"},{t:"🏜️ Desierto",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},{t:"🌲 Taiga",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},{t:"❄️ Tundra",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"}],expl:"¡La SABANA tiene pastos altos, lluvias estacionales y es hogar de grandes mamíferos!"},
+  {txt:"¿Cuál es el BOSQUE más extenso del mundo con clima frío, pinos y abetos, al norte de Rusia y Canadá?",pista:"Observa: gran bosque de coníferas, nieve, clima muy frío",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg",
+   correcta:3,opc:[{t:"🌿 Selva",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},{t:"🌾 Pradera",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/praderas-a656c71915.jpg"},{t:"🦁 Sabana",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/flora-sabana-71f159e9e6.jpg"},{t:"🌲 Taiga / Bosque Boreal",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"}],expl:"¡La TAIGA cubre el 25% de los bosques mundiales con pinos y abetos en clima frío!"},
+  {txt:"¿En qué región hay muy poca lluvia, temperaturas de +50°C de día y muy bajas de noche, y casi sin vegetación?",pista:"Observa: arena, dunas, sin vegetación, clima extremo",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg",
+   correcta:1,opc:[{t:"🌿 Selva",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/selvatropical6-1024x640-af9eb3d48a.jpg"},{t:"🏜️ Desierto",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},{t:"🌲 Taiga",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"},{t:"❄️ Tundra",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/tundra-1-e1702495490128-800x400-58caf1cfae.jpg"}],expl:"¡El DESIERTO tiene menos de 250mm de lluvia al año y extremos de temperatura!"},
+  {txt:"¿Qué región tiene agua abundante como pantanos y ciénagas, y alberga enorme biodiversidad acuática?",pista:"Observa: vegetación dentro del agua, aves acuáticas, mucha humedad",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/lago-bled-eslovenia-bb7a5817a4.webp",
+   correcta:2,opc:[{t:"🏜️ Desierto",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/desert-8390138-960-720-c246bab1fb.jpg"},{t:"🌾 Pradera",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/praderas-a656c71915.jpg"},{t:"💧 Humedales",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/lago-bled-eslovenia-bb7a5817a4.webp"},{t:"🌲 Taiga",img:"/contenidos/geografia/componentes-naturales/recursos/img/locales/river-flowing-through-a-valley-in-boreal-forest--1a7a1e1ff8.jpg"}],expl:"¡Los HUMEDALES son zonas con agua abundante — el Pantanal de Brasil es el más grande!"}
 ];
 const RANA_NEN=[{i:"🏠",l:"Inicio"},{i:"1",l:"P.1"},{i:"2",l:"P.2"},{i:"3",l:"P.3"},{i:"4",l:"P.4"},{i:"5",l:"P.5"},{i:"6",l:"P.6"},{i:"🏡",l:"¡Meta!"}];
 let ranaQ=0,ranaPos=0,ranaResps=[],ranaRespondida=false;
@@ -726,5 +748,8 @@ function ranaReiniciar(){ranaInit();}
 window.addEventListener('DOMContentLoaded',()=>{syncUI();difInit();ranaInit();});
 window.addEventListener('resize',()=>{if(pag===3)labDibujar();});
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260505c"></script>
 </body>
 </html>

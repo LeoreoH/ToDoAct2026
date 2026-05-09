@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · Instrucciones Espaciales · Nivel Normal</title>
+  <title>Quiz · Seguir Instrucciones Espaciales · Nivel Normal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -209,7 +209,7 @@
   <div class="mp" style="left:51%;top:37%;animation-delay:1.5s;"></div>
   <div class="mp" style="left:76%;top:64%;animation-delay:.4s;"></div>
   <div class="mp" style="left:91%;top:23%;animation-delay:1.1s;"></div>
-  <h1>🧭 Quiz · Instrucciones Espaciales</h1>
+  <h1>🧭 Quiz · Seguir Instrucciones Espaciales</h1>
   <p>El jardín encantado · Orientación relativa · 3 ejercicios</p>
   <div>
     <span class="bdg">🍃 Nivel Normal</span>
@@ -832,9 +832,38 @@ var DIRS={0:'Mira al norte',90:'Mira al este',180:'Mira al sur',270:'Mira al oes
 
 var fechaInicio=new Date();
 var puntos=[null,null,null];
+var estiloUsuario=null;
 
 /* ── audio ── */
-function play(id){try{var s=document.getElementById(id);s.currentTime=0;s.play();}catch(e){}}
+['sndClick','sndDing','sndError','sndTada'].forEach(function(id){
+  var audio=document.getElementById(id);
+  if(audio)audio.volume=0.15;
+});
+function play(id){
+  try{
+    var s=document.getElementById(id);
+    if(!s)return;
+    s.volume=0.15;
+    s.currentTime=0;
+    var p=s.play();
+    if(p&&typeof p.catch==='function')p.catch(function(){});
+  }catch(e){}
+}
+
+function normalizarEstilo(estilo){
+  var mapa={
+    visual_verbal:'visual_verbal',
+    'visual-verbal':'visual_verbal',
+    visualnoverbal:'visual_no_verbal',
+    visual_no_verbal:'visual_no_verbal',
+    'visual-no-verbal':'visual_no_verbal',
+    auditivo:'auditivo',
+    kinestesico:'kinestesico',
+    'kinestésico':'kinestesico'
+  };
+  var clave=(estilo||'').toString().trim().toLowerCase();
+  return mapa[clave]||'visual_verbal';
+}
 
 /* ── toast ── */
 var tTmr;
@@ -1363,7 +1392,7 @@ function reinEj3(){
 /* ══════════════════════════════════════════════
    RESULTADO FINAL
 ══════════════════════════════════════════════ */
-function mostrarResultado(){
+async function mostrarResultado(){
   for(var i=0;i<3;i++)if(puntos[i]===null)puntos[i]=false;
   var ac=puntos.filter(function(p){return p===true;}).length;
   var apr=ac>=2,t=Math.round((new Date()-fechaInicio)/1000);
@@ -1379,22 +1408,32 @@ function mostrarResultado(){
   ['1','2','3'].forEach(function(n,i){document.getElementById('des'+n).textContent='Ejercicio '+n+': '+(puntos[i]?'✅':'❌');});
   if(apr){play('sndTada');document.getElementById('btnSigN').style.display='inline-block';confeti();}
   else{play('sndError');document.getElementById('btnReinTodo').style.display='inline-block';}
-  guardarProgreso(ac,3,t,apr);
+  await guardarProgreso(ac,3,t,apr);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* API */
 async function guardarProgreso(aciertos,total,tiempo,aprobado){
   try{
+    var errores=Math.max(total-aciertos,0);
     await fetch('/api/progreso/nivel',{
       method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',
-      body:JSON.stringify({contenido_id:6,nivel_completado:'normal',puntaje:Math.round((aciertos/total)*100),aprobado:aprobado,aciertos:aciertos,total_preguntas:total,tiempo_segundos:tiempo})
+      body:JSON.stringify({contenido_id:7,nivel_completado:'normal',puntaje:Math.round((aciertos/total)*100),aprobado:aprobado,aciertos:aciertos,total_preguntas:total,errores:errores,tiempo_segundos:tiempo,fecha_inicio:fechaInicio.toISOString(),session_uuid:obtenerSessionUuidActual('normal')})
     });
   }catch(e){console.error('Error guardando progreso:',e);}
 }
-var estiloUsuario=null;
 async function obtenerEstiloUsuario(){
-  try{var r=await fetch('/api/usuario/estilo',{credentials:'include'});var d=await r.json();estiloUsuario=d.estilo||'visual_verbal';}catch(e){estiloUsuario='visual_verbal';}
+  try{var r=await fetch('/api/usuario/estilo',{credentials:'include'});var d=await r.json();estiloUsuario=normalizarEstilo(d.estilo||'visual_verbal');}catch(e){estiloUsuario='visual_verbal';}
+}
+function obtenerSessionUuidActual(nivel){
+  try{
+    var estilo=estiloUsuario||'visual_verbal';
+    var key=`reforzamiento_sesion_7_${nivel}_${estilo}`;
+    var raw=window.sessionStorage.getItem(key);
+    if(!raw)return null;
+    var meta=JSON.parse(raw);
+    return typeof meta.sessionUuid==='string'?meta.sessionUuid:null;
+  }catch(e){return null;}
 }
 function volverAlContenido(){window.location.href = '../../menu.html';}
 async function irNivelDificil(){if(!estiloUsuario)await obtenerEstiloUsuario();window.location.href='../dificil/'+estiloUsuario+'.html';}
@@ -1403,11 +1442,13 @@ function reiniciarTodo(){location.reload();}
 /* INIT */
 window.addEventListener('DOMContentLoaded',function(){
   ensureKF();
+  obtenerEstiloUsuario();
   moverSVG('M1','fl1',XI.izq,YI.med-35,0,false);
   updBrujula('ag1','dv1','ds1',0,false);
   applyE2(XI.cen,YI.med,90,false);
 });
 </script>
+<script src="/recursos/js/bayes-quiz-feedback.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

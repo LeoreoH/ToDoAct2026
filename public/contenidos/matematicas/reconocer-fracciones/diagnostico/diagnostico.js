@@ -1,21 +1,18 @@
-const slug = "reconocer-fracciones";
 const area = "matematicas";
+const slug = "reconocer-fracciones";
 
 let preguntas = [];
 let contenidoId = null;
-let fechaInicio = null;
+let diagnosticoInicio = null;
 
 async function cargarPreguntas() {
     try {
         document.getElementById("formulario").innerHTML =
             '<p style="text-align: center;">Cargando preguntas...</p>';
 
-        // Registrar fecha de inicio del diagnóstico
-        fechaInicio = new Date().toISOString();
-
-        // Obtener ID del contenido
         const contenidoRes = await fetch(`/api/contenido/${area}/${slug}`, {
-            credentials: 'include'
+            credentials: 'include',
+            cache: 'no-store'
         });
 
         if (!contenidoRes.ok) {
@@ -30,9 +27,9 @@ async function cargarPreguntas() {
 
         contenidoId = contenidoData.contenido_id;
 
-        // Obtener preguntas del diagnóstico
         const preguntasRes = await fetch(`/api/diagnostico/${contenidoId}`, {
-            credentials: 'include'
+            credentials: 'include',
+            cache: 'no-store'
         });
 
         if (!preguntasRes.ok) {
@@ -43,7 +40,7 @@ async function cargarPreguntas() {
 
         if (!preguntas || preguntas.length === 0) {
             document.getElementById("formulario").innerHTML =
-                '<p class="mensaje-error">No hay preguntas disponibles para este diagnóstico.</p>';
+                '<p class="mensaje-error">No hay preguntas disponibles para este contenido.</p>';
             return;
         }
 
@@ -69,8 +66,8 @@ function mostrarPreguntas() {
 
         ["A", "B", "C", "D"].forEach(letra => {
             const label = document.createElement("label");
-            const input = document.createElement("input");
 
+            const input = document.createElement("input");
             input.type = "radio";
             input.name = "p" + p.id;
             input.value = letra;
@@ -96,13 +93,9 @@ async function enviarDiagnostico() {
 
     if (sinResponder.length > 0) {
         document.getElementById("resultado").innerHTML =
-            `⚠️ Por favor responde todas las preguntas (faltan ${sinResponder.length})`;
+            `Por favor responde todas las preguntas (faltan ${sinResponder.length}).`;
         return;
     }
-
-    // Calcular tiempo transcurrido
-    const fechaFin = new Date();
-    const tiempoSegundos = fechaInicio ? Math.round((fechaFin - new Date(fechaInicio)) / 1000) : 0;
 
     const respuestas = {};
     preguntas.forEach(p => {
@@ -111,6 +104,9 @@ async function enviarDiagnostico() {
             respuestas[p.id] = seleccion.value;
         }
     });
+
+    const inicio = diagnosticoInicio || new Date();
+    const tiempoSegundos = Math.max(0, Math.round((Date.now() - inicio.getTime()) / 1000));
 
     const btn = document.getElementById("btn-enviar");
     btn.disabled = true;
@@ -123,9 +119,9 @@ async function enviarDiagnostico() {
             credentials: 'include',
             body: JSON.stringify({
                 contenido_id: contenidoId,
-                respuestas: respuestas,
+                respuestas,
                 tiempo_segundos: tiempoSegundos,
-                fecha_inicio: fechaInicio
+                fecha_inicio: inicio.toISOString()
             })
         });
 
@@ -136,30 +132,27 @@ async function enviarDiagnostico() {
         }
 
         const mensajesNivel = {
-            facil: "🟣 Comenzarás con ejercicios básicos para reconocer fracciones paso a paso.",
-            normal: "🟪 ¡Buen trabajo! Irás al nivel intermedio de fracciones.",
-            dificil: "⭐ ¡Excelente! Tienes un nivel avanzado en este tema."
+            facil: "Empezarás con reconocimiento básico de partes y representaciones sencillas.",
+            normal: "Trabajarás con comparación y lectura de fracciones de nivel intermedio.",
+            dificil: "Ya puedes avanzar a retos más complejos con fracciones."
         };
 
         document.getElementById("resultado").innerHTML = `
             <div style="text-align: center;">
-                <p style="font-size: 20px; margin-bottom: 10px;">✅ Diagnóstico completado</p>
+                <p style="font-size: 20px; margin-bottom: 10px;">Diagnóstico completado</p>
                 <p style="font-size: 18px;">Puntaje: <strong>${data.correctas}/${data.total}</strong></p>
-                <p style="font-size: 18px; color: #7b1fa2;">Nivel asignado: <strong>${data.nivel_asignado}</strong></p>
+                <p style="font-size: 18px; color: #6a1b9a;">Nivel asignado: <strong>${data.nivel_asignado}</strong></p>
                 <p style="margin-top: 15px;">${mensajesNivel[data.nivel_asignado] || ""}</p>
-                <p style="margin-top: 20px; font-size: 14px; color: #666;">Tiempo: ${tiempoSegundos} segundos</p>
-                <p style="margin-top: 10px; font-size: 14px; color: #666;">Redirigiendo al menú...</p>
+                <p style="margin-top: 20px; font-size: 14px; color: #666;">Redirigiendo al menú...</p>
             </div>
         `;
 
         setTimeout(() => {
             window.location.href = "../menu.html";
         }, 3000);
-
     } catch (e) {
         console.error("Error al enviar diagnóstico:", e);
-        document.getElementById("resultado").innerHTML =
-            `❌ Error: ${e.message}`;
+        document.getElementById("resultado").innerHTML = `Error: ${e.message}`;
         btn.disabled = false;
         btn.textContent = "Enviar respuestas";
     }
@@ -169,4 +162,7 @@ function volver() {
     window.location.href = "../menu.html";
 }
 
-document.addEventListener("DOMContentLoaded", cargarPreguntas);
+document.addEventListener("DOMContentLoaded", () => {
+    diagnosticoInicio = new Date();
+    cargarPreguntas();
+});

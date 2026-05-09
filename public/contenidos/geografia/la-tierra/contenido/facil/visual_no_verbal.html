@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Tierra Â· Nivel FÃ¡cil Â· Visual/No Verbal</title>
+  <title>La Tierra - Nivel Fácil - Visual/No Verbal</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -374,6 +374,7 @@
 
     .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #b26a00; }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -382,9 +383,9 @@
 </div>
 
 <div class="cabecera-visual">
-  <h1>ðŸŒ LA TIERRA</h1>
-  <p class="lead text-white">Bloque I Â· Nivel FÃ¡cil</p>
-  <div class="badge-estilo">ðŸ‘ï¸ Visual / No Verbal</div>
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I - Nivel Fácil</p>
+  <div class="badge-estilo">🖼️ Visual / No Verbal</div>
 </div>
 
 <div class="progreso-contenedor">
@@ -395,28 +396,33 @@
     <div class="punto">3</div>
     <div class="punto">4</div>
   </div>
-  <span class="badge" style="background: #ffd600; color: #0d47a1; padding: 8px 20px;">PÃ¡gina <span id="paginaActualNum">1</span>/4</span>
+  <span class="badge" style="background: #ffd600; color: #0d47a1; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
 </div>
 
 <div class="contenedor">
 
-  <!-- PÃGINA 1: LA TIERRA -->
+  <!-- P?GINA 1: LA TIERRA -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-visual">
       <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Nuestro Planeta</h2>
-      
+
       <div class="grid-2cols">
-        <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-          <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
-               alt="Tierra desde el espacio" class="imagen-geo"
-               onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
-          <div class="pie-imagen">ðŸŒ Vista satelital</div>
+        <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+          <div class="ayuda-ampliar-media">
+            <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+              <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg"
+                   alt="Tierra desde el espacio" class="imagen-geo"
+                   onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+              <div class="pie-imagen">&#127757; Vista satelital de la Tierra</div>
+            </div>
+          </div>
+          <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
         </div>
         <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-          <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg" 
+          <img src="/contenidos/geografia/recursos/imagenes/libro/forma-tierra.jpg"
                alt="Forma de la Tierra" class="imagen-geo"
                onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Earth_oblique.svg/800px-Earth_oblique.svg.png'">
-          <div class="pie-imagen">ðŸ“ Forma achatada</div>
+          <div class="pie-imagen">📐 Forma achatada en los polos</div>
         </div>
       </div>
 
@@ -424,7 +430,7 @@
         <div class="card-visual" onclick="reproducirSonido('click')">
           <i class="fas fa-ruler"></i>
           <span>12,742 km</span>
-          <small>DiÃ¡metro</small>
+          <small>Diámetro</small>
         </div>
         <div class="card-visual" onclick="reproducirSonido('click')">
           <i class="fas fa-water"></i>
@@ -434,7 +440,7 @@
         <div class="card-visual" onclick="reproducirSonido('click')">
           <i class="fas fa-clock"></i>
           <span>4.5B</span>
-          <small>AÃ±os</small>
+          <small>Años</small>
         </div>
       </div>
 
@@ -446,7 +452,7 @@
         </p>
         <div class="opciones-svg">
 
-          <!-- Figura A: esfera perfecta â€” INCORRECTA -->
+          <!-- Figura A: esfera perfecta � INCORRECTA -->
           <div class="opcion-svg" id="op1A" onclick="responder1('A')">
             <svg width="150" height="150" viewBox="0 0 150 150">
               <defs>
@@ -465,7 +471,7 @@
             <span>Figura A</span>
           </div>
 
-          <!-- Figura B: achatada en los polos â€” CORRECTA (mismo estilo visual, solo diferente geometria) -->
+          <!-- Figura B: achatada en los polos � CORRECTA (mismo estilo visual, solo diferente geometria) -->
           <div class="opcion-svg" id="op1B" onclick="responder1('B')">
             <svg width="150" height="150" viewBox="0 0 150 150">
               <defs>
@@ -492,16 +498,16 @@
     </div>
   </div>
 
-  <!-- PÃGINA 2: LÃNEAS IMAGINARIAS -->
+  <!-- P?GINA 2: L�NEAS IMAGINARIAS -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-visual">
-      <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>LÃ­neas Imaginarias</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-map-marked-alt me-3"></i>Líneas Imaginarias</h2>
+
       <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg" 
+        <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-meridianos.jpg"
              alt="Paralelos y meridianos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/6d/World_map_with_equator.jpg'">
-        <div class="pie-imagen">ðŸ—ºï¸ Paralelos y meridianos</div>
+        <div class="pie-imagen">🗺️ Paralelos y meridianos</div>
       </div>
 
       <div class="grid-2cols">
@@ -518,21 +524,21 @@
       </div>
 
       <div class="imagen-grande mt-3" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/globo-lineas.jpg" 
-             alt="Globo con lÃ­neas" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/globo-lineas.jpg"
+             alt="Globo con líneas" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/8d/Globo_terrestre.svg'">
-        <div class="pie-imagen">ðŸŒ Ecuador (Norte-Sur) Â· Greenwich (Este-Oeste)</div>
+        <div class="pie-imagen">🌐 Ecuador (Este-Oeste) · Greenwich (Norte-Sur)</div>
       </div>
 
       <!-- REFORZAMIENTO P2: dos globos con una linea, ambos neutros -->
       <div class="reforzamiento">
         <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
         <p class="reforzamiento-instruccion">
-          El Ecuador divide la Tierra en dos mitades. Haz clic en el globo que muestra como lo hace.
+          El Ecuador divide la Tierra en dos mitades. Haz clic en el globo que muestra cómo lo hace.
         </p>
         <div class="opciones-svg">
 
-          <!-- Globo A: linea horizontal = Ecuador dividiendo N y S â€” CORRECTA -->
+          <!-- Globo A: linea horizontal = Ecuador dividiendo N y S � CORRECTA -->
           <div class="opcion-svg" id="op2A" onclick="responder2('A')">
             <svg width="150" height="150" viewBox="0 0 150 150">
               <defs>
@@ -551,7 +557,7 @@
             <span>Globo A</span>
           </div>
 
-          <!-- Globo B: linea vertical = meridiano â€” INCORRECTA -->
+          <!-- Globo B: linea vertical = meridiano � INCORRECTA -->
           <div class="opcion-svg" id="op2B" onclick="responder2('B')">
             <svg width="150" height="150" viewBox="0 0 150 150">
               <defs>
@@ -577,16 +583,16 @@
     </div>
   </div>
 
-  <!-- PÃGINA 3: PUNTOS CARDINALES -->
+  <!-- P?GINA 3: PUNTOS CARDINALES -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-visual">
       <h2 class="titulo-pagina"><i class="fas fa-compass me-3"></i>Puntos Cardinales</h2>
-      
+
       <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png" 
+        <img src="/contenidos/geografia/recursos/imagenes/libro/rosa-nautica.png"
              alt="Rosa de los vientos" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Compass_Rose_English_North.svg/800px-Compass_Rose_English_North.svg.png'">
-        <div class="pie-imagen">ðŸ§­ Rosa de los vientos</div>
+        <div class="pie-imagen">🧭 Rosa de los vientos</div>
       </div>
 
       <div class="grid-4cols">
@@ -625,7 +631,7 @@
       <div class="reforzamiento">
         <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
         <p class="reforzamiento-instruccion">
-          En la rosa de abajo pasa el cursor sobre cada punta y haz clic en la direccion por donde sale el Sol cada manana.
+          En la rosa de abajo pasa el cursor sobre cada punta y haz clic en la dirección por donde sale el Sol cada mañana.
         </p>
         <div style="display:flex;justify-content:center;">
           <svg width="260" height="260" viewBox="0 0 260 260">
@@ -678,48 +684,48 @@
     </div>
   </div>
 
-  <!-- PÃGINA 4: ZONAS TÃ‰RMICAS -->
+  <!-- P?GINA 4: ZONAS T�RMICAS -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-visual">
-      <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas TÃ©rmicas</h2>
-      
+      <h2 class="titulo-pagina"><i class="fas fa-temperature-high me-3"></i>Zonas Térmicas</h2>
+
       <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg" 
-             alt="Zonas tÃ©rmicas" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zonas-termicas.jpg"
+             alt="Zonas térmicas" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Climate_zones.svg/800px-Climate_zones.svg.png'">
-        <div class="pie-imagen">ðŸŒ¡ï¸ 5 zonas tÃ©rmicas</div>
+        <div class="pie-imagen">☀️ 5 zonas térmicas de la Tierra</div>
       </div>
 
       <div class="grid-3cols">
         <div class="card-visual" style="background: #ff8a65;">
           <i class="fas fa-sun"></i>
-          <span>CÃLIDA</span>
+          <span>CÁLIDA</span>
           <small>Ecuador</small>
         </div>
         <div class="card-visual" style="background: #66bb6a;">
           <i class="fas fa-cloud-sun"></i>
           <span>TEMPLADA</span>
-          <small>Â¡MÃ©xico!</small>
+          <small>¡México!</small>
         </div>
         <div class="card-visual" style="background: #4fc3f7;">
           <i class="fas fa-snowflake"></i>
-          <span>FRÃA</span>
+          <span>FRÍA</span>
           <small>Polos</small>
         </div>
       </div>
 
       <div class="imagen-grande mt-3" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg" 
-             alt="Zona frÃ­a" class="imagen-geo"
+        <img src="/contenidos/geografia/recursos/imagenes/libro/zona-fria.jpg"
+             alt="Zona fría" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f6/Arctic_ice.jpg'">
-        <div class="pie-imagen">â„ï¸ Paisaje de zona frÃ­a</div>
+        <div class="pie-imagen">❄️ Paisaje de zona fría</div>
       </div>
 
       <!-- REFORZAMIENTO P4: 5 franjas identicas en color, alumno identifica en cual esta Mexico -->
       <div class="reforzamiento">
         <div class="reforzamiento-titulo"><i class="fas fa-hand-pointer"></i> Responde</div>
         <p class="reforzamiento-instruccion">
-          El diagrama muestra las 5 zonas termicas de la Tierra de polo a polo. Pasa el cursor sobre cada franja y haz clic en la zona donde se ubica Mexico.
+          El diagrama muestra las 5 zonas térmicas de la Tierra de polo a polo. Pasa el cursor sobre cada franja y haz clic en la zona donde se ubica México.
         </p>
         <div style="display:flex;justify-content:center;">
           <svg width="300" height="320" viewBox="0 0 300 320">
@@ -732,7 +738,7 @@
               <text x="150" y="50" text-anchor="middle" font-family="Nunito" font-size="11" fill="#b3c5f7">Polo Norte</text>
             </g>
 
-            <!-- Zona 2: Hemisferio Norte â€” CORRECTA -->
+            <!-- Zona 2: Hemisferio Norte � CORRECTA -->
             <g class="zona-fila" id="z2" onclick="responder4('z2')">
               <rect x="8" y="68"  width="284" height="52" rx="0" fill="#3a5a8a"/>
               <text x="150" y="90" text-anchor="middle" font-family="Fredoka One" font-size="14" fill="white">Zona 2</text>
@@ -790,6 +796,10 @@
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
+
   function reproducirSonido(nombre) {
     try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
   }
@@ -826,7 +836,6 @@
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_facil_visualnoverbal', paginaActual);
   }
 
   function actualizarUI() {
@@ -846,6 +855,9 @@
     el.className = 'feedback-ref ' + (ok ? 'ok' : 'err');
     el.innerHTML = msg;
     el.style.display = 'block';
+    if (!ok && window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorFromFeedback === 'function') {
+      window.laTierraTrackerHooks.addErrorFromFeedback(id, { origen: 'visual_no_verbal', tipo: 'seleccion_visual' });
+    }
   }
 
   /* P1: forma de la Tierra */
@@ -920,7 +932,7 @@
       reproducirSonido('completar');
       document.getElementById('z2').classList.add('correcto');
       ['z1','z3','z4','z5'].forEach(function(z) { document.getElementById(z).classList.add('incorrecto'); });
-      mostrarFeedback('fb4', true, '&#10003; Correcto! Mexico esta en la Zona 2, la zona Templada del Hemisferio Norte, por eso tiene estaciones y clima variado a lo largo del aÃ±o.');
+      mostrarFeedback('fb4', true, '&#10003; Correcto! Mexico esta en la Zona 2, la zona Templada del Hemisferio Norte, por eso tiene estaciones y clima variado a lo largo del año.');
       respondidas[4] = true; actualizarUI();
     } else {
       reproducirSonido('error');
@@ -935,20 +947,12 @@
   }
 
   window.addEventListener('DOMContentLoaded', function() {
-    var guardado = localStorage.getItem('progreso_facil_visualnoverbal');
-    if (guardado) {
-      var pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById('pagina' + paginaActual).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById('pagina' + paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

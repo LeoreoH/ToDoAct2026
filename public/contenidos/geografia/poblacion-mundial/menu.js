@@ -17,21 +17,19 @@ async function cargarEstadoContenido() {
         if (!res.ok) return;
 
         estadoContenido = await res.json();
-
         actualizarBotones();
-
     } catch (e) {
         console.error(e);
     }
 }
 
-function mostrarContenidos(){
+function mostrarContenidos() {
     document.getElementById('bloque-contenidos').style.display = 'block';
 }
 
 function actualizarBotones() {
-    const btnFacil   = document.getElementById('btn-facil');
-    const btnNormal  = document.getElementById('btn-normal');
+    const btnFacil = document.getElementById('btn-facil');
+    const btnNormal = document.getElementById('btn-normal');
     const btnDificil = document.getElementById('btn-dificil');
 
     btnFacil.disabled = true;
@@ -59,7 +57,7 @@ function actualizarBotones() {
 }
 
 function irADiagnostico() {
-    window.location.href = `diagnostico/index.html`;
+    window.location.href = 'diagnostico/index.html';
 }
 
 async function abrirNivel(nivel) {
@@ -77,7 +75,6 @@ async function abrirNivel(nivel) {
         }
 
         window.location.href = data.archivo;
-
     } catch (e) {
         console.error(e);
         alert('Error al abrir contenido');

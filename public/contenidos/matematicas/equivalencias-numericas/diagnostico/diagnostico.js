@@ -3,6 +3,7 @@ const slug = "equivalencias-numericas";
 
 let preguntas = [];
 let contenidoId = null;
+let diagnosticoInicio = null;
 
 async function cargarPreguntas() {
     try {
@@ -10,7 +11,8 @@ async function cargarPreguntas() {
             '<p style="text-align: center;">Cargando preguntas...</p>';
 
         const contenidoRes = await fetch(`/api/contenido/${area}/${slug}`, {
-            credentials: 'include'
+            credentials: 'include',
+            cache: 'no-store'
         });
 
         if (!contenidoRes.ok) {
@@ -26,7 +28,8 @@ async function cargarPreguntas() {
         contenidoId = contenidoData.contenido_id;
 
         const preguntasRes = await fetch(`/api/diagnostico/${contenidoId}`, {
-            credentials: 'include'
+            credentials: 'include',
+            cache: 'no-store'
         });
 
         if (!preguntasRes.ok) {
@@ -103,6 +106,9 @@ async function enviarDiagnostico() {
         }
     });
 
+    const inicio = diagnosticoInicio || new Date();
+    const tiempoSegundos = Math.max(0, Math.round((Date.now() - inicio.getTime()) / 1000));
+
     const btn = document.getElementById("btn-enviar");
     btn.disabled = true;
     btn.textContent = "Enviando...";
@@ -114,7 +120,9 @@ async function enviarDiagnostico() {
             credentials: 'include',
             body: JSON.stringify({
                 contenido_id: contenidoId,
-                respuestas: respuestas
+                respuestas: respuestas,
+                tiempo_segundos: tiempoSegundos,
+                fecha_inicio: inicio.toISOString()
             })
         });
 
@@ -157,4 +165,7 @@ function volver() {
     window.location.href = '../menu.html';
 }
 
-document.addEventListener('DOMContentLoaded', cargarPreguntas);
+document.addEventListener('DOMContentLoaded', () => {
+    diagnosticoInicio = new Date();
+    cargarPreguntas();
+});

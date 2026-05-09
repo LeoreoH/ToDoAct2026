@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -24,22 +24,22 @@
     .punto{width:38px;height:38px;border-radius:50%;background:#c8e6c9;border:3px solid #2e7d32;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#1b5e20;transition:all .3s;}
     .punto.activo{background:#ffea00;transform:scale(1.2);}
     .punto.completado{background:#66bb6a;border-color:#fff;color:#fff;}
-/*--3/5--*/
-  .pieza-img{
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  pointer-events: none;}
+    /* ── IMÁGENES DE APOYO ── */
+    .pieza-img{
+      width:45px;
+      height:45px;
+      object-fit:contain;
+      pointer-events:none;
+    }
 
-/*--4/5--*/
-.dato-img{
-  width:40px;
-  height:40px;
-  object-fit:cover;
-  margin-right:8px;
-  vertical-align:middle;
-  border-radius:4px;
-}
+    .dato-img{
+      width:40px;
+      height:40px;
+      object-fit:cover;
+      margin-right:8px;
+      vertical-align:middle;
+      border-radius:4px;
+    }
 
     /* ── LAYOUT ── */
     .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
@@ -82,11 +82,13 @@
     .respuesta-row{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
     .casilla{width:40px;height:48px;background:#fff;border:3px solid #2e7d32;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:#1b5e20;cursor:pointer;box-shadow:0 3px 0 #1b5e20;transition:all .15s;flex-shrink:0;}
     .casilla.llena{background:#dcedc8;}
+    .casilla.sobre{background:#fff8c4;border-color:#43a047;transform:translateY(-2px);}
     .casilla.llena:hover{background:#ffcdd2;}
     .casilla.ok-letra{background:#c8e6c9 !important;border-color:#43a047;color:#1b5e20;}
     .letras-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;}
-    .letra-btn{width:42px;height:42px;background:#2e7d32;color:#fff;border:none;border-radius:9px;font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:0 4px 0 #1b5e20;transition:all .15s;flex-shrink:0;}
+    .letra-btn{width:42px;height:42px;background:#2e7d32;color:#fff;border:none;border-radius:9px;font-weight:800;font-size:1.05rem;cursor:grab;box-shadow:0 4px 0 #1b5e20;transition:all .15s;flex-shrink:0;user-select:none;}
     .letra-btn:hover:not(:disabled){transform:translateY(-2px);background:#43a047;}
+    .letra-btn.dragging-letter{opacity:.5;transform:scale(.96);}
     .letra-btn.usada{background:#bdbdbd;box-shadow:none;cursor:default;}
     .btn-borrar{background:#ef5350;color:#fff;border:none;padding:8px 18px;border-radius:26px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #b71c1c;transition:all .15s;margin-top:4px;}
     .btn-borrar:hover{transform:translateY(-2px);}
@@ -102,29 +104,38 @@
 
     /* ── PUZZLE PIEZAS CON FOTO ── */
     .pieza-foto-wrap{text-align:center;}
-    .pieza-foto{width:78px;height:78px;overflow:hidden;border-radius:12px;border:3px solid #2e7d32;cursor:pointer;background:#c8e6c9;box-shadow:0 4px 0 #1b5e20;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto;}
+    .pieza-foto{width:86px;height:86px;overflow:hidden;border-radius:14px;border:3px solid #2e7d32;cursor:grab;background:#c8e6c9;box-shadow:0 4px 0 #1b5e20;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto;touch-action:none;}
     .pieza-foto img{width:100%;height:100%;object-fit:cover;pointer-events:none;}
     .pieza-foto:hover:not(.ok-pieza){transform:scale(1.07);}
     .pieza-foto.selec{border-color:#ffea00;outline:3px solid #ffea00;transform:scale(1.07);}
+    .pieza-foto.dragging{opacity:.55;transform:scale(1.04);cursor:grabbing;}
+    .pieza-foto-ghost{position:fixed;z-index:9999;pointer-events:none;width:86px;height:86px;border-radius:14px;border:3px solid #ffea00;box-shadow:0 10px 22px rgba(27,94,32,.35);overflow:hidden;background:#c8e6c9;transform:translate(-50%,-50%) scale(1.05);}
+    .pieza-foto-ghost img{width:100%;height:100%;object-fit:cover;}
     .pieza-foto.ok-pieza{opacity:.45;cursor:default;box-shadow:none;}
     .pieza-lbl{font-size:.72rem;font-weight:700;color:#2e7d32;margin-top:5px;}
 
-    .slots-grid-foto{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
-    .slot-foto{min-height:78px;background:#f1f8e9;border:3px dashed #2e7d32;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:6px;}
-    .slot-foto .snum{font-size:.65rem;font-weight:800;color:#43a047;}
-    .slot-foto .sdesc{font-size:.65rem;font-weight:700;color:#2e7d32;text-align:center;line-height:1.3;}
+    .slots-grid-foto{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0;}
+    .slots-grid-foto.modo-colocar .slot-foto:not(.ok-slot){background:#fffde7;border-style:solid;box-shadow:0 0 0 3px rgba(253,216,53,.35);}
+    .slot-foto{min-height:118px;background:#f1f8e9;border:3px dashed #2e7d32;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:10px;position:relative;}
+    .slot-foto .snum{font-size:.76rem;font-weight:800;color:#43a047;}
+    .slot-foto .sdesc{font-size:.74rem;font-weight:700;color:#2e7d32;text-align:center;line-height:1.35;}
+    .slot-foto.sobre{background:#dcedc8;border-style:solid;transform:translateY(-3px) scale(1.02);box-shadow:0 6px 0 rgba(27,94,32,.18);}
     .slot-foto.lleno{background:#dcedc8;border-style:solid;}
     .slot-foto.ok-slot{background:#c8e6c9;border-color:#43a047;}
     .slot-foto.err-slot{background:#ffcdd2;border-color:#e53935;}
-    .slot-foto .img-colocada{width:54px;height:54px;border-radius:8px;object-fit:cover;margin-top:3px;}
+    .slot-foto .img-colocada{width:68px;height:68px;border-radius:10px;object-fit:cover;margin-top:5px;}
 
     /* ── EMPAREJAR ── */
     .par-col{display:flex;flex-direction:column;gap:8px;}
     .pieza-par{background:#ffea00;color:#1b5e20;padding:10px 12px;border-radius:13px;font-weight:700;text-align:center;cursor:pointer;border:3px solid #2e7d32;box-shadow:0 4px 0 #1b5e20;transition:all .2s;font-size:.88rem;}
     .pieza-par:hover:not(.emparejada){transform:scale(1.03);}
     .pieza-par.sel{background:#43a047;color:#fff;}
+    .pieza-par.dragging{opacity:.55;cursor:grabbing;}
+    .pieza-par.drop-over{background:#fff8c4;border-color:#43a047;transform:translateY(-2px);}
     .pieza-par.emparejada{background:#bdbdbd;cursor:default;opacity:.5;box-shadow:none;}
+    .pieza-par.def-emparejada{background:#c8e6c9;border-color:#43a047;box-shadow:none;cursor:default;color:#1b5e20;opacity:1;}
     .pieza-par.flash-err{background:#ef9a9a !important;border-color:#c62828 !important;}
+    .par-chip{display:inline-block;margin-bottom:6px;padding:4px 10px;border-radius:999px;background:#2e7d32;color:#fff;font-size:.78rem;font-weight:800;}
 
     /* ── ORDENAR SECUENCIA ── */
     .seq-list{display:flex;flex-direction:column;gap:9px;margin:12px 0;}
@@ -148,7 +159,7 @@
     .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 #1b5e20;}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;box-shadow:none;cursor:default;}
     .ind-pag{font-size:1.25rem;font-weight:800;background:#dcedc8;color:#1b5e20;padding:8px 24px;border-radius:36px;border:3px solid #2e7d32;}
-    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
+    .boton-quiz{display:none;width:fit-content;margin:12px auto 38px;background:#ffea00;color:#1b5e20;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.35rem;text-decoration:none;border:4px solid #2e7d32;box-shadow:0 8px 0 #1b5e20;transition:all .2s;}
     .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 #1b5e20;background:#fff;color:#1b5e20;}
 
     @media(max-width:576px){
@@ -156,7 +167,9 @@
       .titulo-pag{font-size:1.4rem;}
       .casilla{width:32px;height:42px;font-size:.95rem;}
       .letra-btn{width:36px;height:36px;font-size:.9rem;}
-      .pieza-foto{width:62px;height:62px;}
+      .pieza-foto{width:70px;height:70px;}
+      .slots-grid-foto{grid-template-columns:1fr;gap:10px;}
+      .slot-foto{min-height:96px;}
     }
   </style>
 </head>
@@ -214,38 +227,38 @@
     <div class="actividad">
       <div class="pista-banner">
         <p> ¿Cómo se llama el conjunto de formas de la superficie terrestre?</p>
-        <small>Observa las 4 fotos → forma la palabra tocando las letras</small>
+        <small>Observa las 4 fotos → arrastra las letras hasta las casillas para formar la palabra</small>
       </div>
       <h3 class="act-titulo"><i class="fas fa-images me-2"></i>4 Fotos · 1 Palabra</h3>
 
       <div class="foto-grid">
         <div class="foto-celda">
-          <img src="https://images.ecestaticos.com/IDPOpCtpT77gMfYDzQd6SMkJKzI=/0x0:2097x1430/557x418/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F614%2F40c%2Ff02%2F61440cf024b55a412a97e4c4c59fffbd.jpg"
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/f-elconfidencial-com-2foriginal-2f614-2f40c-2ff0-29456194d7.jpg"
                alt="Montaña Everest"
                onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=\'font-size:3.5rem;\'>⛰️</span><div class=\'foto-pie\'>⛰️ Montaña</div>'">
           <div class="foto-pie">⛰️ Montaña</div>
         </div>
         <div class="foto-celda">
-          <img src="https://th.bing.com/th/id/R.8226d2d2b3984815c23bb5690348904c?rik=OmWLMz16bqGBHg&pid=ImgRaw&r=0"
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/r-fb620234fa.jpg"
                alt="Llanura"
                onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:3.5rem;\'>🌾</span><div class=\'foto-pie\'>🌾 Llanura</div>'">
           <div class="foto-pie">🌾 Llanura</div>
         </div>
         <div class="foto-celda">
-          <img src="https://cdn0.ecologiaverde.com/es/posts/1/1/2/valle_que_es_formacion_y_tipos_7211_orig.jpg"
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/valle-que-es-formacion-y-tipos-7211-orig-440355c572.jpg"
                alt="Valle"
                onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:3.5rem;\'>🌿</span><div class=\'foto-pie\'>🌿 Valle</div>'">
           <div class="foto-pie">🌿 Valle</div>
         </div>
         <div class="foto-celda">
-          <img src="https://www.gtush.com/wp-content/uploads/2019/07/ejemplos-de-mesetas-e1563667541870.jpg"
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/ejemplos-de-mesetas-e1563667541870-342a48fa0a.jpg"
                alt="Meseta"
                onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:3.5rem;\'>🏕️</span><div class=\'foto-pie\'>🏕️ Meseta</div>'">
           <div class="foto-pie">🏕️ Meseta</div>
         </div>
       </div>
 
-      <p class="text-center fw-bold mb-1" style="color:#2e7d32;">Toca las letras para formar la palabra ⬇️</p>
+      <p class="text-center fw-bold mb-1" style="color:#2e7d32;">Arrastra las letras a las casillas o tócalas si estás en móvil ⬇️</p>
       <div class="respuesta-row" id="casillasFotos"></div>
       <div class="text-center mb-2">
         <button class="btn-borrar" onclick="borrarTodo()">🗑️ Borrar todo</button>
@@ -278,7 +291,7 @@
   
   <div style="background:#fff;border:2px solid #2e7d32;border-radius:14px;padding:12px;text-align:center;">
     <div>
-      <img src="https://descubriendogalapagos.ec/wp-content/uploads/2014/07/es2a2i_limitedivergente.png" style="width:120px;">
+      <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/es2a2i-limitedivergente-cabc1fe87c.png" style="width:120px;">
     </div>
     <div style="font-weight:800;color:#2e7d32;font-size:.9rem;margin-top:4px;">DIVERGENTE</div>
     <div style="font-size:.75rem;color:#555;margin-top:4px;">Las placas se <strong>separan</strong>. Forman dorsales oceánicas y rift.</div>
@@ -286,7 +299,7 @@
 
   <div style="background:#fff;border:2px solid #2e7d32;border-radius:14px;padding:12px;text-align:center;">
     <div>
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjSQDTp5cuAbuKwdrOIZqjo_SRIBmM4L0loELSt8m-SrFNfU8Kax93RX-Y6tr8Zkd7Dq1jI8az975GGeMGqBpGs5tBf3ToE59AJ8pyqgCk73dSvmmGFq62wF8-VnqkGQboXvcn8n9FZNrM/s320/es2a2i_limiteconvergente%255B1%255D.png" style="width:120px;">
+      <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/es2a2i-limiteconvergente-255b1-255d-e3a7604083.png" style="width:120px;">
     </div>
     <div style="font-weight:800;color:#2e7d32;font-size:.9rem;margin-top:4px;">CONVERGENTE</div>
     <div style="font-size:.75rem;color:#555;margin-top:4px;">Las placas <strong>chocan</strong>. Forman montañas, volcanes y trincheras.</div>
@@ -294,7 +307,7 @@
 
   <div style="background:#fff;border:2px solid #2e7d32;border-radius:14px;padding:12px;text-align:center;">
     <div>
-      <img src="https://cdn.pruebat.org/recursos/recursos/html/CopiadeCC046/images/CC046_terremotos.jpg" style="width:130px;">
+      <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/cc046-terremotos-70957a326f.jpg" style="width:130px;">
     </div>
     <div style="font-weight:800;color:#2e7d32;font-size:.9rem;margin-top:4px;">DESLIZAMIENTO</div>
     <div style="font-size:.75rem;color:#555;margin-top:4px;">Las placas se <strong>rozan</strong> lateralmente. Causan sismos fuertes.</div>
@@ -372,53 +385,53 @@
 
     <div class="actividad">
       <h3 class="act-titulo"><i class="fas fa-puzzle-piece me-2"></i>Arma el Puzzle de los Sismos</h3>
-      <p class="text-center text-muted mb-2" style="font-size:.85rem;">Toca una pieza del lado izquierdo → luego su espacio numerado correcto</p>
+      <p class="text-center text-muted mb-2" style="font-size:.85rem;">Arrastra una pieza del lado izquierdo hasta su espacio numerado correcto</p>
 
       <div class="row g-3 align-items-start">
         <!-- PIEZAS -->
-<div class="col-6">
+<div class="col-12 col-md-6">
   <p class="text-center fw-bold mb-2" style="color:#2e7d32;font-size:.88rem;">🧩 Piezas</p>
 
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" id="piezasBanco3">
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="1" onclick="seleccionarPieza3(this)">
-        <img src="https://www.town.inagawa.lg.jp/material/images/group/41/d002136_001.jpg" class="pieza-img">
+      <div class="pieza-foto" data-id="1">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/d002136-001-6a16f40c15.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Prevención</div>
     </div>
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="2" onclick="seleccionarPieza3(this)">
-        <img src="https://img.freepik.com/fotos-premium/diagrama-que-muestra-epicentro-terremoto-ondas-choque-radiantes-que-afectan-alrededores_1314467-130856.jpg" class="pieza-img">
+      <div class="pieza-foto" data-id="2">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/diagrama-que-muestra-epicentro-terremoto-ondas-c-5f196ba2c3.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Epicentro</div>
     </div>
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="3" onclick="seleccionarPieza3(this)">
-        <img src="https://es-static.z-dn.net/files/dd6/ebedd55c8d2ef6f430556d6cc145b1dd.png" class="pieza-img">
+      <div class="pieza-foto" data-id="3">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/ebedd55c8d2ef6f430556d6cc145b1dd-1a73951082.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Ondas</div>
     </div>
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="4" onclick="seleccionarPieza3(this)">
-        <img src="https://lageografia.com/wp-content/uploads/partes-movimientos-sismicos-150x126.jpg" class="pieza-img">
+      <div class="pieza-foto" data-id="4">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/partes-movimientos-sismicos-150x126-17a0e842df.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Foco</div>
     </div>
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="5" onclick="seleccionarPieza3(this)">
-        <img src="https://1.bp.blogspot.com/-z1vgGlhWdqs/YL039_0bx4I/AAAAAAAAARo/j7zjkAjMwSUeuwgWlJCim7R6msxV_iMyACLcBGAsYHQ/w640-h608/escala-richter.webp" class="pieza-img">
+      <div class="pieza-foto" data-id="5">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/escala-richter-b3f4671508.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Magnitud</div>
     </div>
 
     <div class="pieza-foto-wrap">
-      <div class="pieza-foto" data-id="6" onclick="seleccionarPieza3(this)">
-        <img src="https://imgblog.interestingfacts.com/2023/04/GettyImages-648917542.jpg" class="pieza-img">
+      <div class="pieza-foto" data-id="6">
+        <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/gettyimages-648917542-066e92df58.jpg" class="pieza-img">
       </div>
       <div class="pieza-lbl">Cinturón</div>
     </div>
@@ -427,25 +440,25 @@
 </div>
 
         <!-- SLOTS -->
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <p class="text-center fw-bold mb-2" style="color:#2e7d32;font-size:.88rem;">📍 Espacios</p>
           <div class="slots-grid-foto" id="slots3">
-            <div class="slot-foto" data-slot="4" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="4">
               <div class="snum">1</div><div class="sdesc">Origen<br>del sismo</div>
             </div>
-            <div class="slot-foto" data-slot="2" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="2">
               <div class="snum">2</div><div class="sdesc">Superficie<br>más afectada</div>
             </div>
-            <div class="slot-foto" data-slot="3" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="3">
               <div class="snum">3</div><div class="sdesc">Vibraciones<br>que viajan</div>
             </div>
-            <div class="slot-foto" data-slot="6" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="6">
               <div class="snum">4</div><div class="sdesc">Zona más<br>activa</div>
             </div>
-            <div class="slot-foto" data-slot="5" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="5">
               <div class="snum">5</div><div class="sdesc">Fuerza del<br>sismo</div>
             </div>
-            <div class="slot-foto" data-slot="1" onclick="colocarEnSlot3(this)">
+            <div class="slot-foto" data-slot="1">
               <div class="snum">6</div><div class="sdesc">Reducir<br>daños</div>
             </div>
           </div>
@@ -476,21 +489,21 @@
       <div class="info-titulo" style="text-align:center;">🌋 Partes y datos del volcán — léelos, luego empareja</div>
       <div class="row g-2 mt-2">
         <div class="col-md-6">
-          <div class="dato-box"><img src="https://tse1.mm.bing.net/th/id/OIP.A9kC8b-ZCdVC0L1dKcfDxAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" class="dato-img"><strong>Cráter</strong> — abertura en la cima por donde sale el material volcánico</div>
-          <div class="dato-box"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Pahoehoe_toe.jpg" class="dato-img"><strong>Magma</strong> — roca fundida dentro del volcán; cuando sale se llama <em>lava</em></div>
-          <div class="dato-box"><img src="https://revista360grados.com.mx/wp-content/uploads/2024/03/ceniza_edited.jpg" class="dato-img"><strong>Ceniza volcánica</strong> — partículas finas expulsadas; los suelos de ceniza son muy fértiles</div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-beb2009cbf.webp" class="dato-img"><strong>Cráter</strong> — abertura en la cima por donde sale el material volcánico</div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/pahoehoe-toe-099ef89243.jpg" class="dato-img"><strong>Magma</strong> — roca fundida dentro del volcán; cuando sale se llama <em>lava</em></div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/ceniza-edited-5cd5fb3234.jpg" class="dato-img"><strong>Ceniza volcánica</strong> — partículas finas expulsadas; los suelos de ceniza son muy fértiles</div>
         </div>
         <div class="col-md-6">
-          <div class="dato-box"><img src="https://tse4.mm.bing.net/th/id/OIP.os63xwx6I4btl-e3girAgAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" class="dato-img"><strong>Cono volcánico</strong> — forma característica del volcán, creada por acumulación de lava</div>
-          <div class="dato-box"><img src="https://www.mexicodesconocido.com.mx/wp-content/uploads/2020/05/aguas-termales-900x618.jpg" class="dato-img"><strong>Aguas termales</strong> — zonas volcánicas tienen depósitos de agua caliente útiles para turismo y energía</div>
-          <div class="dato-box"><img src="https://2.bp.blogspot.com/-RF9HOmjwRto/VMuuby69DWI/AAAAAAAAAXQ/r06bZW4lYBM/s1600/Riesgo%2Bvolc%C3%A1nico.jpg" class="dato-img"><strong>Riesgo volcánico</strong> — la actividad volcánica modela el relieve pero también representa un peligro</div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/oip-21dbc2c5fe.webp" class="dato-img"><strong>Cono volcánico</strong> — forma característica del volcán, creada por acumulación de lava</div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/aguas-termales-900x618-477c5dc412.jpg" class="dato-img"><strong>Aguas termales</strong> — zonas volcánicas tienen depósitos de agua caliente útiles para turismo y energía</div>
+          <div class="dato-box"><img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/riesgo-2bvolc-c3-a1nico-f15f1d8138.jpg" class="dato-img"><strong>Riesgo volcánico</strong> — la actividad volcánica modela el relieve pero también representa un peligro</div>
         </div>
       </div>
     </div>
 
     <div class="actividad">
       <h3 class="act-titulo"><i class="fas fa-link me-2"></i>Une cada concepto con su descripción</h3>
-      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Toca un concepto izquierdo → luego la descripción correcta del lado derecho</p>
+      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Arrastra cada concepto del lado izquierdo hasta su descripción correcta o tócala y luego selecciona la definición</p>
 
       <div class="row g-2">
         <div class="col-6">
@@ -517,6 +530,7 @@
         </div>
       </div>
       <div class="fb-ok" id="fbPag4">🎉 ¡Perfecto! Conoces todas las partes y datos de los volcanes.</div>
+      <div class="fb-err" id="errPag4">❌ Ese concepto no corresponde con esa descripción. Intenta otra vez.</div>
     </div>
   </div>
 </div>
@@ -597,12 +611,29 @@
 /* ══════════ PAGINACIÓN ══════════ */
 let pag = 1;
 const TOTAL = 5;
-function cambiarPag(d){
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(TOTAL, Number(nuevaPagina) || 1));
+  if(destino === pag){
+    syncUI();
+    return false;
+  }
   document.getElementById('pagina'+pag).classList.remove('activa');
-  pag += d;
+  pag = destino;
   document.getElementById('pagina'+pag).classList.add('activa');
   syncUI();
   window.scrollTo({top:0,behavior:'smooth'});
+  return true;
+}
+function cambiarPag(d){
+  const destino = pag + d;
+  if(destino < 1 || destino > TOTAL){
+    syncUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function syncUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{
@@ -630,34 +661,65 @@ let letrasBarajadas = barajar(LETRAS_JUEGO);
 let respuesta = new Array(PALABRA.length).fill('');
 let usados = new Array(PALABRA.length).fill(null);
 
+function limpiarFeedbackFotos(){hide('fbFotos');hide('errFotos');}
+function colocarLetraEnCasilla(pos,idx){
+  const btn=document.getElementById('lb'+idx);
+  if(!btn||btn.disabled||respuesta[pos]) return;
+  const letra=letrasBarajadas[idx];
+  respuesta[pos]=letra; usados[pos]=idx;
+  const cas=document.getElementById('cas'+pos);
+  cas.innerText=letra;
+  cas.classList.add('llena');
+  cas.classList.remove('sobre');
+  btn.classList.add('usada');
+  btn.disabled=true;
+  limpiarFeedbackFotos();
+  if(!respuesta.includes('')) verificarFotos();
+}
 function initFotos(){
   const casDiv=document.getElementById('casillasFotos');
   casDiv.innerHTML='';
   for(let i=0;i<PALABRA.length;i++){
     const c=document.createElement('div');
     c.className='casilla'; c.id='cas'+i;
+    c.dataset.pos=i;
     c.addEventListener('click',()=>borrarCasilla(i));
+    c.addEventListener('dragover',e=>{
+      if(c.classList.contains('llena')) return;
+      e.preventDefault();
+      c.classList.add('sobre');
+    });
+    c.addEventListener('dragleave',()=>c.classList.remove('sobre'));
+    c.addEventListener('drop',e=>{
+      if(c.classList.contains('llena')) return;
+      e.preventDefault();
+      c.classList.remove('sobre');
+      const idx=Number(e.dataTransfer.getData('fotoIdx'));
+      if(Number.isInteger(idx)) colocarLetraEnCasilla(i,idx);
+    });
     casDiv.appendChild(c);
   }
   const letDiv=document.getElementById('letrasFotos');
   letDiv.innerHTML='';
   letrasBarajadas.forEach((letra,idx)=>{
     const b=document.createElement('button');
-    b.className='letra-btn'; b.id='lb'+idx; b.innerText=letra;
-    b.addEventListener('click',()=>elegirLetra(letra,idx));
+    b.type='button';
+    b.className='letra-btn'; b.id='lb'+idx; b.innerText=letra; b.draggable=true;
+    b.addEventListener('click',()=>elegirLetra(idx));
+    b.addEventListener('dragstart',e=>{
+      if(b.disabled){e.preventDefault();return;}
+      b.classList.add('dragging-letter');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('fotoIdx',String(idx));
+    });
+    b.addEventListener('dragend',()=>b.classList.remove('dragging-letter'));
     letDiv.appendChild(b);
   });
 }
-function elegirLetra(letra,idx){
+function elegirLetra(idx){
   const pos=respuesta.indexOf('');
   if(pos===-1) return;
-  respuesta[pos]=letra; usados[pos]=idx;
-  const cas=document.getElementById('cas'+pos);
-  cas.innerText=letra; cas.classList.add('llena');
-  document.getElementById('lb'+idx).classList.add('usada');
-  document.getElementById('lb'+idx).disabled=true;
-  hide('fbFotos'); hide('errFotos');
-  if(!respuesta.includes('')) verificarFotos();
+  colocarLetraEnCasilla(pos,idx);
 }
 function borrarCasilla(pos){
   if(!respuesta[pos]) return;
@@ -665,8 +727,8 @@ function borrarCasilla(pos){
   if(idx!==null){const b=document.getElementById('lb'+idx);if(b){b.classList.remove('usada');b.disabled=false;}}
   respuesta[pos]=''; usados[pos]=null;
   const cas=document.getElementById('cas'+pos);
-  cas.innerText=''; cas.classList.remove('llena','ok-letra');
-  hide('fbFotos'); hide('errFotos');
+  cas.innerText=''; cas.classList.remove('llena','ok-letra','sobre');
+  limpiarFeedbackFotos();
 }
 function borrarTodo(){for(let i=PALABRA.length-1;i>=0;i--)borrarCasilla(i);}
 function verificarFotos(){
@@ -741,63 +803,158 @@ function setMsg3(m) {
   const e = document.getElementById('piezaMsg3');
   if (e) e.innerText = m;
 }
+function limpiarSeleccionPuzzle3() {
+  document.querySelectorAll('#piezasBanco3 .pieza-foto').forEach(p => p.classList.remove('selec'));
+  activarModoColocarPuzzle3(false);
+}
+function limpiarSobrePuzzle3() {
+  document.querySelectorAll('#slots3 .slot-foto').forEach(s => s.classList.remove('sobre'));
+}
+function activarModoColocarPuzzle3(activo) {
+  const slots = document.getElementById('slots3');
+  if (!slots) return;
+  slots.classList.toggle('modo-colocar', activo);
+}
+let dragPuzzle3 = null;
+function crearGhostPuzzle3(pieza) {
+  const ghost = pieza.cloneNode(true);
+  ghost.classList.add('pieza-foto-ghost');
+  ghost.classList.remove('selec', 'dragging', 'ok-pieza');
+  document.body.appendChild(ghost);
+  return ghost;
+}
+function moverGhostPuzzle3(evento) {
+  if (!dragPuzzle3 || !dragPuzzle3.ghost) return;
+  dragPuzzle3.ghost.style.left = evento.clientX + 'px';
+  dragPuzzle3.ghost.style.top = evento.clientY + 'px';
+}
+function slotDesdePuntoPuzzle3(x, y) {
+  const elemento = document.elementFromPoint(x, y);
+  const slot = elemento && elemento.closest ? elemento.closest('#slots3 .slot-foto') : null;
+  if (!slot || slot.classList.contains('ok-slot')) return null;
+  return slot;
+}
+function prepararPiezaArrastre3(pieza) {
+  if (!pieza || pieza.classList.contains('ok-pieza')) return false;
+  limpiarSeleccionPuzzle3();
+  limpiarSobrePuzzle3();
+  hide('errPag3');
+  pieza.classList.add('selec', 'dragging');
+  piezaSel3 = pieza;
+  activarModoColocarPuzzle3(true);
+  const lbl = pieza.parentElement.querySelector('.pieza-lbl').innerText;
+  setMsg3('Arrastra "' + lbl + '" hasta el espacio correcto');
+  return true;
+}
+function limpiarArrastrePuzzle3() {
+  document.removeEventListener('pointermove', moverArrastrePuzzle3);
+  document.removeEventListener('pointerup', soltarArrastrePuzzle3);
+  document.removeEventListener('pointercancel', cancelarArrastrePuzzle3);
+  if (dragPuzzle3 && dragPuzzle3.ghost) dragPuzzle3.ghost.remove();
+  dragPuzzle3 = null;
+  limpiarSobrePuzzle3();
+}
+function moverArrastrePuzzle3(evento) {
+  if (!dragPuzzle3 || evento.pointerId !== dragPuzzle3.pointerId) return;
+  evento.preventDefault();
+  moverGhostPuzzle3(evento);
+  const slot = slotDesdePuntoPuzzle3(evento.clientX, evento.clientY);
+  limpiarSobrePuzzle3();
+  if (slot) slot.classList.add('sobre');
+}
+function soltarArrastrePuzzle3(evento) {
+  if (!dragPuzzle3 || evento.pointerId !== dragPuzzle3.pointerId) return;
+  evento.preventDefault();
+  const slot = slotDesdePuntoPuzzle3(evento.clientX, evento.clientY);
+  limpiarArrastrePuzzle3();
+  if (slot) {
+    colocarEnSlot3(slot);
+    return;
+  }
+  if (piezaSel3) piezaSel3.classList.remove('selec', 'dragging');
+  piezaSel3 = null;
+  activarModoColocarPuzzle3(false);
+  setMsg3('Suelta la pieza sobre uno de los espacios.');
+}
+function cancelarArrastrePuzzle3(evento) {
+  if (!dragPuzzle3 || evento.pointerId !== dragPuzzle3.pointerId) return;
+  limpiarArrastrePuzzle3();
+  if (piezaSel3) piezaSel3.classList.remove('selec', 'dragging');
+  piezaSel3 = null;
+  activarModoColocarPuzzle3(false);
+  setMsg3('');
+}
+function iniciarArrastrePuzzle3(evento) {
+  if (evento.button !== undefined && evento.button !== 0) return;
+  const pieza = evento.currentTarget;
+  if (!prepararPiezaArrastre3(pieza)) return;
+  evento.preventDefault();
+  dragPuzzle3 = {
+    pieza,
+    pointerId: evento.pointerId,
+    ghost: crearGhostPuzzle3(pieza)
+  };
+  moverGhostPuzzle3(evento);
+  document.addEventListener('pointermove', moverArrastrePuzzle3, { passive: false });
+  document.addEventListener('pointerup', soltarArrastrePuzzle3, { passive: false });
+  document.addEventListener('pointercancel', cancelarArrastrePuzzle3);
+}
+function initPuzzle3() {
+  shufflePuzzle3();
+  document.querySelectorAll('#piezasBanco3 .pieza-foto').forEach(p => {
+    p.draggable = false;
+    if (p.dataset.dragReady === '1') return;
+    p.dataset.dragReady = '1';
+    p.addEventListener('pointerdown', iniciarArrastrePuzzle3);
+  });
+  document.querySelectorAll('#slots3 .slot-foto').forEach(slot => {
+    if (slot.dataset.dragReady === '1') return;
+    slot.dataset.dragReady = '1';
+    slot.addEventListener('pointerenter', () => {
+      if (piezaSel3 && !slot.classList.contains('ok-slot')) slot.classList.add('sobre');
+    });
+    slot.addEventListener('pointerleave', () => slot.classList.remove('sobre'));
+  });
+}
 
 // --- LÓGICA DEL JUEGO ---
 
 function seleccionarPieza3(el) {
-  if (el.classList.contains('ok-pieza')) return;
-  
-  // Quitar selección visual a todas las piezas del banco
-  document.querySelectorAll('#piezasBanco3 .pieza-foto').forEach(p => p.classList.remove('selec'));
-  
-  // Si se toca la pieza ya seleccionada, se deselecciona
-  if (piezaSel3 === el) {
-    piezaSel3 = null;
-    setMsg3('');
-    return;
-  }
-  
-  el.classList.add('selec');
-  piezaSel3 = el;
-  
-  // Obtener nombre de la etiqueta debajo de la pieza
-  const lbl = el.parentElement.querySelector('.pieza-lbl').innerText;
-  setMsg3('✅ Seleccionaste: ' + lbl + ' → ahora toca el espacio correcto');
+  prepararPiezaArrastre3(el);
 }
 
 function colocarEnSlot3(slotEl) {
   if (!piezaSel3) {
-    setMsg3('⬅️ Primero toca una pieza');
+    setMsg3('Arrastra una pieza hasta este espacio.');
     return;
   }
-  
+
   if (slotEl.classList.contains('ok-slot')) return;
-  
+  slotEl.classList.remove('sobre');
   hide('errPag3');
 
-  const sNum = slotEl.dataset.slot; // ID que espera el cuadro
-  const pId = piezaSel3.dataset.id; // ID de la pieza que tienes en la mano
+  const sNum = slotEl.dataset.slot;
+  const pId = piezaSel3.dataset.id;
 
   if (sNum === pId) {
-    // ACIERTO
-    const emoji = piezaSel3.innerText;
-    const textoFrase = frasesSismos[pId]; // Sacamos la frase del diccionario
-
-    // Insertamos la frase y el emoji, eliminando el número original
+    const textoFrase = frasesSismos[pId];
+    const etiqueta = piezaSel3.parentElement.querySelector('.pieza-lbl').innerText;
+    const img = piezaSel3.querySelector('img');
+    const imgHtml = img
+      ? `<img class="img-colocada" src="${img.src}" alt="${etiqueta}">`
+      : `<div style="font-size:1rem;font-weight:800;margin-top:4px;">${etiqueta}</div>`;
     slotEl.innerHTML = `
       <div class="snum" style="line-height:1.1; font-size:0.75rem; margin-bottom:4px; color:#1b5e20;">
         ${textoFrase}
       </div>
-      <div style="font-size:1.6rem; margin-top:2px;">
-        ${emoji}
-      </div>
+      ${imgHtml}
     `;
-    
     slotEl.classList.add('lleno', 'ok-slot');
-    piezaSel3.classList.remove('selec');
+    piezaSel3.classList.remove('selec', 'dragging');
     piezaSel3.classList.add('ok-pieza');
-    
+    piezaSel3.draggable = false;
     piezaSel3 = null;
+    activarModoColocarPuzzle3(false);
     piezasOk3++;
     setMsg3('');
 
@@ -805,13 +962,11 @@ function colocarEnSlot3(slotEl) {
       show('fbPag3');
     }
   } else {
-    // ERROR
     slotEl.classList.add('err-slot');
     setTimeout(() => slotEl.classList.remove('err-slot'), 600);
-    
-    piezaSel3.classList.remove('selec');
+    piezaSel3.classList.remove('selec', 'dragging');
     piezaSel3 = null;
-    
+    activarModoColocarPuzzle3(false);
     show('errPag3');
     setMsg3('');
   }
@@ -833,32 +988,93 @@ function shufflePuzzle3() {
     }
 }
 
-// Ejecutar el mezclado cuando la ventana cargue
-window.addEventListener('load', shufflePuzzle3);
-
 /* ══════════════════════════════════
    PÁG 4 — EMPAREJAR VOLCANES
 ══════════════════════════════════ */
 let selPar4=null; let pares4=0; const TOTAL4=6;
+function limpiarSeleccionPar4(){
+  document.querySelectorAll('#col4Conc .pieza-par').forEach(p=>p.classList.remove('sel'));
+}
+function marcarErrorPar4(concepto,definicion){
+  [concepto,definicion].forEach(el=>{
+    if(!el) return;
+    el.classList.add('flash-err');
+    setTimeout(()=>el.classList.remove('flash-err'),500);
+  });
+  show('errPag4');
+}
+function vincularPar4(concepto,definicion){
+  if(!concepto||!definicion||concepto.classList.contains('emparejada')||definicion.classList.contains('def-emparejada')) return;
+  concepto.classList.remove('sel','dragging');
+  definicion.classList.remove('drop-over');
+  selPar4=null;
+  if(concepto.dataset.par!==definicion.dataset.par){
+    marcarErrorPar4(concepto,definicion);
+    return;
+  }
+  hide('errPag4');
+  concepto.classList.add('emparejada');
+  concepto.draggable=false;
+  definicion.classList.add('def-emparejada');
+  if(!definicion.querySelector('.par-chip')){
+    const chip=document.createElement('div');
+    chip.className='par-chip';
+    chip.innerText=concepto.innerText.trim();
+    definicion.insertBefore(chip,definicion.firstChild);
+  }
+  pares4++;
+  if(pares4===TOTAL4) show('fbPag4');
+}
 function initPares4(){
-  document.querySelectorAll('.pieza-par').forEach(p=>{
+  hide('errPag4');
+  document.querySelectorAll('#col4Conc .pieza-par').forEach(p=>{
+    p.draggable=!p.classList.contains('emparejada');
+    if(p.dataset.dragReady==='1') return;
+    p.dataset.dragReady='1';
     p.addEventListener('click',function(){
       if(this.classList.contains('emparejada')) return;
-      if(!selPar4){
-        this.classList.add('sel'); selPar4=this;
-      } else {
-        if(selPar4===this){this.classList.remove('sel');selPar4=null;return;}
-        if(selPar4.dataset.par===this.dataset.par){
-          selPar4.classList.remove('sel'); selPar4.classList.add('emparejada');
-          this.classList.add('emparejada'); pares4++;
-          if(pares4===TOTAL4) show('fbPag4');
-        } else {
-          selPar4.classList.remove('sel');
-          const err=this; err.classList.add('flash-err');
-          setTimeout(()=>err.classList.remove('flash-err'),500);
-        }
+      hide('errPag4');
+      if(selPar4===this){
+        this.classList.remove('sel');
         selPar4=null;
+        return;
       }
+      limpiarSeleccionPar4();
+      this.classList.add('sel');
+      selPar4=this;
+    });
+    p.addEventListener('dragstart',e=>{
+      if(p.classList.contains('emparejada')){
+        e.preventDefault();
+        return;
+      }
+      limpiarSeleccionPar4();
+      p.classList.add('sel','dragging');
+      selPar4=p;
+      hide('errPag4');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('parId',p.dataset.par);
+    });
+    p.addEventListener('dragend',()=>p.classList.remove('dragging'));
+  });
+  document.querySelectorAll('#col4Def .pieza-par').forEach(def=>{
+    if(def.dataset.dropReady==='1') return;
+    def.dataset.dropReady='1';
+    def.addEventListener('click',()=>{if(selPar4) vincularPar4(selPar4,def);});
+    def.addEventListener('dragover',e=>{
+      if(def.classList.contains('def-emparejada')) return;
+      e.preventDefault();
+      def.classList.add('drop-over');
+    });
+    def.addEventListener('dragleave',()=>def.classList.remove('drop-over'));
+    def.addEventListener('drop',e=>{
+      if(def.classList.contains('def-emparejada')) return;
+      e.preventDefault();
+      def.classList.remove('drop-over');
+      const parId=e.dataTransfer.getData('parId');
+      if(!parId) return;
+      const concepto=document.querySelector(`#col4Conc .pieza-par[data-par="${parId}"]:not(.emparejada)`);
+      vincularPar4(concepto,def);
     });
   });
 }
@@ -896,13 +1112,26 @@ function verificarSeq(){
 }
 
 /* ══════════ INIT ══════════ */
-window.addEventListener('DOMContentLoaded',()=>{
-  initFotos();
-  initDrag2();
-  initPares4();
-  initSeq();
-  syncUI();
-});
+function runInitStep(nombre, fn){
+  try{ fn(); }
+  catch(error){ console.error('Error al iniciar '+nombre+':', error); }
+}
+function initPagina(){
+  runInitStep('fotos', initFotos);
+  runInitStep('drag placas', initDrag2);
+  runInitStep('puzzle sismos', initPuzzle3);
+  runInitStep('pares volcanes', initPares4);
+  runInitStep('secuencia final', initSeq);
+  runInitStep('ui', syncUI);
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initPagina, { once:true });
+} else {
+  initPagina();
+}
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260505c"></script>
 </body>
 </html>

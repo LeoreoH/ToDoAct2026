@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Rana">
+  <defs>
+    <linearGradient id="frogBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7ed957"/>
+      <stop offset="100%" stop-color="#2e7d32"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="64" cy="74" rx="40" ry="28" fill="url(#frogBody)"/>
+  <circle cx="44" cy="42" r="16" fill="url(#frogBody)"/>
+  <circle cx="84" cy="42" r="16" fill="url(#frogBody)"/>
+  <circle cx="44" cy="42" r="9" fill="#ffffff"/>
+  <circle cx="84" cy="42" r="9" fill="#ffffff"/>
+  <circle cx="45" cy="43" r="4" fill="#1b1b1b"/>
+  <circle cx="83" cy="43" r="4" fill="#1b1b1b"/>
+  <ellipse cx="64" cy="62" rx="30" ry="20" fill="#8ff06a"/>
+  <path d="M46 84c-10 8-18 18-22 30" fill="none" stroke="#2e7d32" stroke-linecap="round" stroke-width="8"/>
+  <path d="M82 84c10 8 18 18 22 30" fill="none" stroke="#2e7d32" stroke-linecap="round" stroke-width="8"/>
+  <path d="M48 60c10 10 22 10 32 0" fill="none" stroke="#1b5e20" stroke-linecap="round" stroke-width="5"/>
+  <circle cx="54" cy="70" r="4" fill="#1b5e20" opacity=".25"/>
+  <circle cx="74" cy="70" r="4" fill="#1b5e20" opacity=".25"/>
+</svg>

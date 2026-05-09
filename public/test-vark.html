@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test VARK</title>
+  <link rel="stylesheet" href="styles-inicio-perfil.css">
+  <link rel="stylesheet" href="styles-vark.css">
+</head>
+<body class="vark-page">
+  <div class="contenedor">
+    <div class="contenedor-cerrar-sesion">
+      <button onclick="cerrarSesion()" class="boton-cerrar-sesion">Cerrar sesi&oacute;n</button>
+    </div>
+
+    <section class="vark-hero">
+      <a href="inicio.html" class="vark-back-link">&larr; Volver a actividades</a>
+      <p class="vark-eyebrow">Test VARK</p>
+      <h1 id="varkGreeting">Vamos a descubrir c&oacute;mo te gusta aprender</h1>
+      <p class="vark-lead">Este test tiene 16 preguntas cortas. Lee con calma y elige la opci&oacute;n que de verdad se parezca m&aacute;s a ti. Trata de responder con claridad para que tu resultado salga mejor.</p>
+    </section>
+
+    <section class="vark-info-grid">
+      <article class="vark-info-card">
+        <h2>&iquest;De qu&eacute; trata?</h2>
+        <p>Las preguntas te ayudan a mostrar c&oacute;mo entiendes mejor las cosas y c&oacute;mo te gusta aprender.</p>
+      </article>
+    </section>
+
+    <section class="vark-start-card">
+      <h2>&iquest;Listo para empezar?</h2>
+      <p>Cuando quieras, toca el bot&oacute;n y empieza a responder.</p>
+      <button type="button" class="vark-start-btn" id="btnVarkEmpezar">Empezar test</button>
+    </section>
+
+    <section class="vark-shell" id="varkShell" hidden></section>
+  </div>
+
+  <nav class="menu-inferior">
+    <a href="inicio.html" class="menu-item seleccionado">Actividades</a>
+    <a href="perfil.html" class="menu-item">Perfil</a>
+    <span id="xp-total" class="menu-item xp-item">XP: 0</span>
+  </nav>
+
+  <script src="configClient.js"></script>
+  <script src="script.js"></script>
+  <script src="vark.js"></script>
+</body>
+</html>

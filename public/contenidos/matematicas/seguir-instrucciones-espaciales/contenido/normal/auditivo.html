@@ -95,6 +95,11 @@
       text-align: center;
       font-family: 'Cinzel', serif;
       font-size: 0.75rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
     .audio-header i { font-size: 1.2rem; margin-right: 6px; }
 
@@ -113,6 +118,7 @@
     .direccion-info { flex:1; }
     .dir-label { font-size:.55rem; font-weight:800; color:rgba(255,255,255,.55); text-transform:uppercase; letter-spacing:.08em; }
     .dir-valor { font-family:'Cinzel',serif; font-size:.85rem; color:var(--dorado-claro); font-weight:600; }
+    .brujula-audio-wrap { margin-top:8px; }
 
     .instrucciones-card {
       background: white;
@@ -195,6 +201,24 @@
       white-space: nowrap;
     }
     .btn-audio-paso:hover { background: var(--azul-audio, #3b82f6); color: white; }
+    .btn-audio-principal {
+      padding: 8px 20px;
+      font-size: 1.05rem;
+      border-radius: 999px;
+      font-weight: 800;
+      box-shadow: 0 3px 0 rgba(30,64,175,.28);
+    }
+    .btn-audio-principal i { font-size: 1.05rem; }
+    .btn-audio-brujula {
+      background: rgba(253,230,138,.14);
+      border-color: var(--dorado-claro);
+      color: var(--dorado-claro);
+      box-shadow: 0 3px 0 rgba(5,46,22,.45);
+    }
+    .btn-audio-brujula:hover {
+      background: var(--dorado-claro);
+      color: var(--verde-oscuro);
+    }
 
     .nav-btns { display:flex; gap:6px; margin-top:10px; }
     .btn-nav { flex:1; padding:5px 8px; border-radius:30px; font-weight:800; font-size:.7rem; cursor:pointer; transition:all .2s; border:none; }
@@ -218,9 +242,11 @@
     .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
     .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
 
-    .btn-quiz-wrap { margin-top:8px; display:none; }
-    .btn-quiz-wrap.visible { display:block; }
+    .btn-quiz-wrap { margin-top:8px; display:block; }
     .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:8px 20px; border-radius:40px; font-family:'Cinzel',serif; font-size:.85rem; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
+    .btn-quiz.bloqueado { background:#e5e7eb; color:#9ca3af; box-shadow:none; cursor:not-allowed; }
+    .btn-quiz.bloqueado:hover { color:#9ca3af; transform:none; box-shadow:none; }
+    .texto-ayuda-quiz { margin-top:8px; font-size:.68rem; font-weight:700; color:#4b5563; }
     .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 16px; font-weight:800; font-size:.7rem; cursor:pointer; margin-top:6px; transition:all .2s; display:none; }
     .btn-reintentar.visible { display:inline-block; }
 
@@ -243,7 +269,6 @@
 <audio id="audioPaso3" src="audios/paso3.mp3"></audio>
 <audio id="audioPaso4" src="audios/paso4.mp3"></audio>
 <audio id="audioPaso5" src="audios/paso5.mp3"></audio>
-<audio id="audioDestino" src="audios/destino.mp3"></audio>
 <audio id="audioPregunta" src="audios/pregunta.mp3"></audio>
 
 <div class="cabecera">
@@ -519,8 +544,7 @@
 
     <div class="audio-header">
       <i class="fas fa-headphones"></i> Escucha las instrucciones
-      <button class="btn-audio-paso" id="btnIntro" style="background:#1e40af; color:white; border-color:white; margin-left:8px;">🎧 Intro</button>
-      <button class="btn-audio-paso" id="btnBrujula" style="background:#1e40af; color:white; border-color:white;">🧭 Brújula</button>
+      <button class="btn-audio-paso btn-audio-principal" id="btnIntro" style="background:#1e40af; color:white; border-color:white;">🎧 Intro</button>
     </div>
 
     <div class="brujula-card">
@@ -548,6 +572,9 @@
       <div class="direccion-info">
         <div class="dir-label"><i class="fas fa-compass"></i> Dirección actual</div>
         <div class="dir-valor" id="dirTextoAud">Norte ↑</div>
+        <div class="brujula-audio-wrap">
+          <button class="btn-audio-paso btn-audio-principal btn-audio-brujula" id="btnBrujula">🧭 Brújula</button>
+        </div>
       </div>
     </div>
 
@@ -568,27 +595,22 @@
         <div class="pasos-lista">
           <div class="paso-item activo" id="paso1Aud">
             <div class="paso-num">1</div>
-            <div class="paso-texto">Gira a la <em>derecha</em> — Norte → Este</div>
             <button class="btn-audio-paso" data-audio="paso1">🔊 Escuchar paso 1</button>
           </div>
           <div class="paso-item inactivo" id="paso2Aud">
             <div class="paso-num">2</div>
-            <div class="paso-texto">Avanza <em>2 cuadras</em> al este — puente 🌉 + castillo 💎</div>
             <button class="btn-audio-paso" data-audio="paso2">🔊 Escuchar paso 2</button>
           </div>
           <div class="paso-item inactivo" id="paso3Aud">
             <div class="paso-num">3</div>
-            <div class="paso-texto">Gira a la <em>izquierda</em> — Este → Norte</div>
             <button class="btn-audio-paso" data-audio="paso3">🔊 Escuchar paso 3</button>
           </div>
           <div class="paso-item inactivo" id="paso4Aud">
             <div class="paso-num">4</div>
-            <div class="paso-texto">Avanza <em>1 cuadra</em> al norte — camino superior 🌸</div>
             <button class="btn-audio-paso" data-audio="paso4">🔊 Escuchar paso 4</button>
           </div>
           <div class="paso-item inactivo" id="paso5Aud">
             <div class="paso-num">5</div>
-            <div class="paso-texto">Gira a la <em>derecha</em> + avanza <em>1 cuadra</em> — destino ✨</div>
             <button class="btn-audio-paso" data-audio="paso5">🔊 Escuchar paso 5</button>
           </div>
         </div>
@@ -602,10 +624,8 @@
     </div>
 
     <div class="tarjeta-pregunta">
-      <div class="pregunta-titulo">🌿 ¿A qué lugar llegó Mateo?</div>
       <div class="pregunta-sub">
-        <button class="btn-audio-paso" id="btnPregunta" style="margin-bottom:6px;">🔊 Escuchar pregunta</button>
-        <button class="btn-audio-paso" id="btnDestino" style="margin-bottom:6px;">🏁 Escuchar destino correcto</button>
+        <button class="btn-audio-paso btn-audio-principal" id="btnPregunta" style="margin-bottom:6px;">🔊 Escuchar pregunta</button>
       </div>
       <div class="destinos-grid">
         <button class="destino-btn" onclick="responder('fuente')" id="dest-fuente"><span class="dest-emoji">⛲</span> Fuente Mágica</button>
@@ -615,18 +635,25 @@
       </div>
       <div class="feedback-box" id="feedbackBox"></div>
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!</a>
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true"><i class="fas fa-puzzle-piece"></i> Ir al quiz</a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()"><i class="fas fa-redo-alt me-1"></i> Reintentar</button>
     </div>
   </div>
 </div>
 
-<script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505c"></script>
+  <script>
   var DESTINO = 'carrusel';
   var respondido = false;
   var pasoActual = 1;
   var TOTAL = 5;
+  var ejercicioCompletado = false;
+  var erroresAuditivo = 0;
+  var completadoRegistroAuditivo = false;
+  var quizTrackerAdjunto = false;
 
   var ESTADOS = [
     { x:158, y:315, rot:0,  dir:'Norte ↑', sub:'Mateo mira hacia la Fuente Mágica ⛲' },
@@ -637,6 +664,38 @@
   ];
   var ESTADO_FINAL = { x:618, y:88, rot:90, dir:'Este →', sub:'¡Llegó a su destino! 🎯✨' };
 
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosAuditivo = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_destino_jardin',
+      tipoActividad: 'audio_opcion'
+    }
+  };
+
+  var trackerAuditivo = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'auditivo',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'auditivo_normal' },
+    apartados: ejerciciosAuditivo
+  }) : null;
+
+  var sessionTrackerAuditivo = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'auditivo'
+  }) : null;
+
   function playAudio(id) {
     var audio = document.getElementById(id);
     if (audio) {
@@ -646,6 +705,75 @@
   }
 
   function playClick(){ try{ var s=document.getElementById('sndClick'); s.currentTime=0; s.play(); }catch(e){} }
+
+  function registrarIntentoAuditivo(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerAuditivo) {
+      trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroAuditivo) {
+        completadoRegistroAuditivo = true;
+        if (trackerAuditivo) {
+          trackerAuditivo.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            actividad: 'seleccionar_destino',
+            errores_previos: erroresAuditivo,
+            destino_correcto: DESTINO,
+            destino_elegido: detalle.destino || null
+          });
+          trackerAuditivo.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'seleccionar_destino',
+              destino_correcto: DESTINO,
+              destino_elegido: detalle.destino || null
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresAuditivo += 1;
+    if (trackerAuditivo) {
+      trackerAuditivo.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'seleccionar_destino',
+        intento: erroresAuditivo,
+        destino_elegido: detalle.destino || null
+      });
+    }
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerAuditivo) {
+        sessionTrackerAuditivo.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
+    }
+  }
 
   function actualizarBrujula(rot, dir, sub, anim) {
     var ag = document.getElementById('agujaGrandeAud');
@@ -720,13 +848,15 @@
   }
 
   function responder(id) {
-    if (respondido) return;
+    if (respondido || ejercicioCompletado) return;
     respondido = true;
     playClick();
     ['fuente','carrusel','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).disabled=true; });
     var fb = document.getElementById('feedbackBox');
 
     if (id === DESTINO) {
+      ejercicioCompletado = true;
+      registrarIntentoAuditivo(true, { destino: id });
       playAudio('sndTada');
       aplicarEstado(ESTADO_FINAL, true);
       var md = document.getElementById('marcadorDestino');
@@ -735,10 +865,10 @@
       ['fuente','castillo','estatua'].forEach(function(d){ document.getElementById('dest-'+d).classList.add('incorrecta'); });
       fb.className = 'feedback-box ok';
       fb.innerHTML = '🎠 ¡Correcto! Siguiendo los 5 pasos con orientación relativa, Mateo llegó al <strong>Carrusel</strong>. ¡Excelente! ✨';
-      document.getElementById('btnQuizWrap').classList.add('visible');
+      actualizarBotonQuiz();
       lanzarConfeti();
-      localStorage.setItem('progreso_normal_aud_instrucciones','ok');
     } else {
+      registrarIntentoAuditivo(false, { destino: id });
       playAudio('sndError');
       document.getElementById('dest-'+id).classList.add('incorrecta');
       respondido = false;
@@ -754,6 +884,7 @@
   }
 
   function reintentar() {
+    if (ejercicioCompletado) return;
     respondido = false; pasoActual = 1;
     aplicarEstado(ESTADOS[0], false); resaltarPaso(1);
     ['fuente','carrusel','castillo','estatua'].forEach(function(d){
@@ -761,7 +892,7 @@
     });
     document.getElementById('feedbackBox').className='feedback-box';
     document.getElementById('btnReintentar').classList.remove('visible');
-    document.getElementById('btnQuizWrap').classList.remove('visible');
+    actualizarBotonQuiz();
     var md=document.getElementById('marcadorDestino'); if(md) md.setAttribute('opacity','0');
     var g=document.getElementById('rastroSVG'); while(g.firstChild) g.removeChild(g.firstChild);
   }
@@ -781,18 +912,32 @@
     },idx*28); })(i); }
   }
 
+  var botonQuizAuditivo = document.getElementById('botonQuiz');
+  if (botonQuizAuditivo) {
+    botonQuizAuditivo.addEventListener('click', function(event) {
+      if (!ejercicioCompletado) {
+        event.preventDefault();
+        playAudio('sndError');
+      }
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', function(){
     ensureKF();
     aplicarEstado(ESTADOS[0], false);
     resaltarPaso(1);
-    if (localStorage.getItem('progreso_normal_aud_instrucciones')==='ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
+    actualizarBotonQuiz();
+
+    if (trackerAuditivo) {
+      trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+    if (sessionTrackerAuditivo) {
+      sessionTrackerAuditivo.start();
     }
 
     document.getElementById('btnIntro').onclick = function() { playAudio('audioIntro'); };
     document.getElementById('btnBrujula').onclick = function() { playAudio('audioBrujula'); };
     document.getElementById('btnPregunta').onclick = function() { playAudio('audioPregunta'); };
-    document.getElementById('btnDestino').onclick = function() { playAudio('audioDestino'); };
     document.querySelectorAll('.btn-audio-paso[data-audio]').forEach(function(btn) {
       var paso = btn.getAttribute('data-audio');
       btn.onclick = function() { playAudio('audio' + paso.charAt(0).toUpperCase() + paso.slice(1)); };

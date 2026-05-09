@@ -1,682 +1,721 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reconocer fracciones · Nivel Fácil · Visual/Verbal</title>
-
+  <title>Reconocer fracciones · Nivel Fácil · Visual Verbal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #f7f1ff, #ede7f6);
-      color: #4a148c;
-      min-height: 100vh;
-    }
-
-    .cabecera {
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-      border-bottom: 6px solid #ffd54f;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-    }
-
-    .cabecera h1 {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.5rem;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
-    }
-
-    .cabecera .subtitulo {
-      margin-top: 10px;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .badge-estilo {
-      display: inline-block;
-      margin-top: 14px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid white;
-      border-radius: 999px;
-      padding: 10px 24px;
-      font-weight: 800;
-      box-shadow: 0 4px 0 #d39e00;
-    }
-
-    .barra-progreso {
-      max-width: 920px;
-      margin: 24px auto 0;
-      background: white;
-      border-radius: 999px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 6px 0 #d1c4e9;
-      padding: 12px 18px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .progreso-texto {
-      font-weight: 800;
-      color: #6a1b9a;
-      white-space: nowrap;
-    }
-
-    .barra-fondo {
-      flex: 1;
-      min-width: 140px;
-      height: 14px;
-      background: #ede7f6;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #d1c4e9;
-    }
-
-    .barra-relleno {
-      width: 25%;
-      height: 100%;
-      background: linear-gradient(90deg, #ab47bc, #7e57c2);
-      transition: width 0.3s;
-    }
-
-    .progreso-num {
-      background: #7b1fa2;
-      color: white;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-weight: 800;
-    }
-
-    .contenedor {
-      max-width: 920px;
-      margin: 26px auto 42px;
-      padding: 0 16px;
-    }
-
-    .pagina {
-      display: none;
-      animation: aparecer .35s ease;
-    }
-
-    .pagina.activa {
-      display: block;
-    }
-
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .tarjeta {
-      background: white;
-      border-radius: 28px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 10px 0 #d1c4e9;
-      padding: 26px;
-    }
-
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2rem;
-      color: #6a1b9a;
-      margin-bottom: 16px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 18px;
-    }
-
-    .texto-destacado {
-      background: #faf5ff;
-      border: 2px dashed #ce93d8;
-      border-radius: 18px;
-      padding: 16px 18px;
-      color: #5e35b1;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .recuadro {
-      background: #f7f1ff;
-      border-radius: 20px;
-      padding: 18px;
-      border-left: 7px solid #ffd54f;
-      margin: 18px 0;
-    }
-
-    .recuadro h4 {
-      margin-top: 0;
-      color: #6a1b9a;
-      font-weight: 800;
-    }
-
-    .modelo-fraccion {
-      background: white;
-      border: 2px solid #d1c4e9;
-      border-radius: 22px;
-      padding: 18px;
-      margin: 18px 0;
-      text-align: center;
-    }
-
-    .barra-fraccion {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 14px 0;
-    }
-
-    .parte {
-      width: 84px;
-      height: 84px;
-      border-radius: 16px;
-      border: 3px solid #7b1fa2;
-      background: white;
-    }
-
-    .parte.coloreada {
-      background: linear-gradient(135deg, #ab47bc, #7e57c2);
-    }
-
-    .circulo {
-      border-radius: 50%;
-    }
-
-    .fraccion-grande {
-      display: inline-block;
-      font-size: 2rem;
-      font-weight: 800;
-      line-height: 1.1;
-      color: #5e35b1;
-      min-width: 100px;
-    }
-
-    .fraccion-grande .linea {
-      display: block;
-      height: 4px;
-      background: #5e35b1;
-      border-radius: 2px;
-      margin: 5px 0;
-    }
-
-    .lista-explicacion {
-      margin: 0;
-      padding-left: 22px;
-    }
-
-    .lista-explicacion li {
-      margin-bottom: 8px;
-      font-weight: 700;
-      color: #5e35b1;
-    }
-
-    .actividad {
-      background: #faf5ff;
-      border: 3px dashed #ba68c8;
-      border-radius: 24px;
-      padding: 20px;
-      margin-top: 22px;
-    }
-
-    .actividad h3 {
-      text-align: center;
-      color: #6a1b9a;
-      font-size: 1.35rem;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .opciones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    .opcion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #d1c4e9;
-      transition: .2s;
-    }
-
-    .opcion:hover {
-      transform: translateY(-2px);
-      background: #f7f1ff;
-    }
-
-    .opcion.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
-    }
-
-    .opcion.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
-    }
-
-    .mensaje-feedback {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      text-align: center;
-      display: none;
-    }
-
-    .mensaje-feedback.visible {
-      display: block;
-    }
-
-    .mensaje-ok {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 2px solid #43a047;
-    }
-
-    .mensaje-warn {
-      background: #fff8e1;
-      color: #8d6e00;
-      border: 2px solid #ffd54f;
-    }
-
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 14px 20px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-nav {
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-weight: 800;
-      transition: .2s;
-    }
-
-    .btn-nav:hover:not(:disabled) {
-      background: #5e35b1;
-      transform: translateY(-2px);
-    }
-
-    .btn-nav:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    .contador {
-      font-weight: 800;
-      color: #6a1b9a;
-      background: #f3e5f5;
-      border: 2px solid #ce93d8;
-      padding: 8px 16px;
-      border-radius: 999px;
-    }
-
-    .boton-quiz {
-      display: inline-block;
-      margin: 28px auto 0;
-      text-decoration: none;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 4px solid #7b1fa2;
-      padding: 16px 34px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      box-shadow: 0 7px 0 #d39e00;
-      transition: .2s;
-    }
-
-    .boton-quiz:hover {
-      transform: translateY(-3px);
-      background: #fff3c4;
-    }
-
-    @media (max-width: 768px) {
-      .cabecera h1 { font-size: 2rem; }
-      .titulo-pagina { font-size: 1.55rem; }
-      .parte { width: 62px; height: 62px; }
-    }
+    *{box-sizing:border-box} :root{--m:#7b1fa2;--m2:#5e35b1;--l:#ede7f6;--s:#d1c4e9;--a:#ffd54f;--v:#43a047;--r:#e53935;--t:#4a148c}
+    body{margin:0;min-height:100vh;font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#f3e5f5,#ede7f6);color:var(--t)}
+    .cabecera{position:relative;text-align:center;color:#fff;padding:28px 18px;background:linear-gradient(135deg,#8e24aa,#5e35b1);border-bottom:6px solid var(--a);box-shadow:0 10px 24px rgba(0,0,0,.16)}
+    .cabecera h1{margin:0;font-family:'Fredoka One',cursive;font-size:2.45rem}.subtitulo{margin-top:8px;font-weight:800}.badge-estilo{display:inline-block;margin-top:12px;padding:10px 22px;border-radius:999px;background:var(--a);color:var(--t);border:3px solid #fff;font-weight:800;box-shadow:0 4px 0 #d39e00}
+    .btn-volver-menu{position:absolute;top:16px;left:16px;width:54px;height:54px;border:3px solid #fff;border-radius:50%;background:var(--a);color:var(--t);display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 0 #d39e00}
+    .progreso,.navegador{max-width:1020px;margin:22px auto 0;padding:12px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#fff;border:3px solid var(--m);border-radius:999px;box-shadow:0 6px 0 var(--s)}
+    .navegador{justify-content:space-between;margin-top:16px;padding:14px 20px}.progreso-texto,.contador{font-weight:800;color:#6a1b9a}.contador{padding:8px 16px;border-radius:999px;background:#f3e5f5;border:2px solid #ce93d8}
+    .barra-fondo{flex:1;min-width:160px;height:14px;background:var(--l);border-radius:999px;overflow:hidden;border:2px solid var(--s)} .barra-relleno{width:14.28%;height:100%;background:linear-gradient(90deg,#ab47bc,#7e57c2);transition:width .3s}
+    .progreso-num{padding:7px 14px;border-radius:999px;background:var(--m);color:#fff;font-weight:800}
+    .contenedor{max-width:1080px;margin:24px auto 42px;padding:0 16px}.pagina{display:none;animation:aparecer .3s ease}.pagina.activa{display:block}@keyframes aparecer{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .tarjeta{background:#fff;border-radius:32px;border:3px solid var(--m);box-shadow:0 12px 0 var(--s);padding:34px 36px}.titulo-pagina{margin-bottom:20px;padding-left:18px;border-left:8px solid var(--a);font-family:'Fredoka One',cursive;font-size:2.08rem;color:#6a1b9a}
+    .texto-destacado,.actividad,.modelo,.panel,.recta-wrap{border-radius:24px}.texto-destacado{margin-bottom:24px;padding:20px 22px;background:#faf5ff;border:2px dashed #ce93d8;color:#5e35b1;font-weight:700;line-height:1.7}
+    .modelo,.panel,.recta-wrap,.mini-modelo{background:#fff;border:2px solid var(--s);padding:24px}.modelo{margin:24px 0 16px;text-align:center}.modelo h4,.mini-modelo h5{margin:0 0 14px;color:#6a1b9a;font-weight:900}.contexto-mini,.subtexto{margin-top:12px;font-weight:700;color:#7b1fa2;line-height:1.6}
+    .actividad{margin-top:28px;padding:26px;background:#faf5ff;border:3px dashed #ba68c8}.actividad h3{text-align:center;color:#6a1b9a;font-size:1.34rem;font-weight:900;margin:0 0 18px}
+    .mini-etiqueta{display:inline-block;margin-bottom:14px;padding:8px 16px;border-radius:999px;background:var(--l);border:2px solid var(--s);color:#6a1b9a;font-weight:800;font-size:.96rem}.texto-centro{text-align:center}
+    .tip,.feedback{margin-top:18px;padding:14px 18px;border-radius:18px;font-weight:800}.tip{background:#fff8e1;border:2px solid var(--a);color:#7b1fa2}.feedback{display:none;text-align:center}.feedback.visible{display:block}.ok{background:#e8f5e9;border:2px solid var(--v);color:#2e7d32}.warn{background:#fff8e1;border:2px solid var(--a);color:#8d6e00}
+    .escena,.selector-nombre,.orden-pool,.orden-slots{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}.escena{margin:20px 0 14px}.opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:18px}
+    .chip,.selector-btn,.tarjeta-fraccion,.tarjeta-orden,.btn-reiniciar,.boton-corte{padding:14px 18px;border-radius:18px;border:3px solid var(--m);background:#fff;color:#6a1b9a;font-weight:900;box-shadow:0 5px 0 var(--s);cursor:pointer;transition:.2s;min-height:68px;display:inline-flex;align-items:center;justify-content:center;text-align:center}.chip,.boton-corte,.tarjeta-fraccion{width:100%}.chip:hover,.selector-btn:hover,.tarjeta-fraccion:hover,.tarjeta-orden:hover,.btn-reiniciar:hover,.boton-corte:hover{transform:translateY(-2px)}
+    .activo{background:#ede7f6!important;border-color:#ab47bc!important;color:#6a1b9a!important}.correcto{background:var(--v)!important;border-color:#2e7d32!important;color:#fff!important}.incorrecto{background:#ef5350!important;border-color:#c62828!important;color:#fff!important}
+    .lectura,.zona-respuesta{min-height:104px;padding:20px 22px;border-radius:22px;background:#fdfbff;border:3px dashed #ba68c8;text-align:center;color:#7b1fa2;font-weight:800;line-height:1.6;max-width:920px;margin:0 auto}.zona-respuesta.correcta{background:#e8f5e9;border-color:var(--v);color:#2e7d32}
+    .fraccion{display:inline-block;min-width:92px;font-size:2rem;font-weight:900;line-height:1.05;color:#5e35b1}.fraccion .linea{display:block;height:4px;margin:4px 0;border-radius:2px;background:#5e35b1}
+    .fila-def{padding:18px 20px;border-radius:20px;background:#fff;border:2px solid var(--s);margin-bottom:18px}.fila-def p{margin:0 0 14px;text-align:center;color:#6a1b9a;font-weight:800}
+    .comparacion-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:940px;margin:22px auto 0}.mini-modelo{text-align:center;padding:22px 24px}.slot-orden{min-width:148px;min-height:72px;display:flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:18px;border:3px dashed #ba68c8;background:#fdfbff;color:#8e24aa;font-weight:900}
+    .barra{width:min(920px,100%);height:144px;border-radius:28px;overflow:hidden;display:flex;position:relative;margin:0 auto}.seg{flex:1;padding:0;border:0;border-right:3px solid rgba(0,0,0,.15);appearance:none;background:none}.seg:last-child{border-right:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff8e1;text-shadow:1px 1px 0 rgba(0,0,0,.3);font-size:1.12rem}
+    .objeto{position:relative;user-select:none}
+    .chocolate{width:min(760px,95%);height:120px;border-radius:26px;border:4px solid #4e342e;background:linear-gradient(180deg,#8d6e63,#6d4c41);box-shadow:0 8px 0 #4e342e;overflow:hidden;display:flex}
+    .choco-piece{flex:1;position:relative;border-right:3px solid rgba(78,52,46,.85);background:linear-gradient(180deg,#8d6e63,#6d4c41);transition:.2s}
+    .choco-piece:last-child{border-right:none}
+    .choco-piece::before{content:'';position:absolute;inset:12px 10px;border-radius:12px;background:linear-gradient(180deg,#9c7b71,#6d4c41);box-shadow:inset 0 4px 0 rgba(255,255,255,.18), inset 0 -4px 0 rgba(0,0,0,.12)}
+    .choco-piece.selected{background:linear-gradient(180deg,#b39ddb,#7e57c2)}
+    .choco-piece.selected::before{background:linear-gradient(180deg,#c5b4f2,#8e7cc3)}
+    .choco-whole-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff8e1;text-shadow:1px 1px 0 rgba(0,0,0,.35);pointer-events:none;font-size:1.15rem}
+    .sandwich{border:4px solid #b26a24;background:linear-gradient(180deg,#f4c67d,#e2a95a);box-shadow:0 10px 0 #d9a25d}.sandwich .seg{position:relative;background:linear-gradient(180deg,#f4c67d,#e2a95a);cursor:pointer}.sandwich .seg::before{content:'';position:absolute;left:0;right:0;top:34%;height:18px;background:linear-gradient(90deg,#ff8a65,#ff7043,#ef5350)}.sandwich .seg.fill{background:linear-gradient(180deg,#d1c4e9,#9575cd)}
+    .tira{height:100px;border:4px solid var(--m);background:#fff;box-shadow:0 8px 0 var(--s)}.tira .seg{background:#fff;border-right:3px solid var(--m)}.tira .seg.fill{background:linear-gradient(135deg,#ba68c8,#7e57c2)}
+    .cake-wrap{width:340px;height:340px;margin:0 auto}.cake-svg{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 0 #e6b36b)}
+    .recta{position:relative;max-width:900px;height:176px;margin:18px auto 6px}.linea-recta{position:absolute;left:6%;right:6%;top:88px;height:6px;border-radius:999px;background:var(--m)}.marca{position:absolute;top:58px;width:0;height:52px;border-left:4px solid var(--m);transform:translateX(-50%)}.marca span{position:absolute;top:56px;left:50%;transform:translateX(-50%);font-weight:900;color:#6a1b9a}
+    .marca-click{position:absolute;top:12px;width:74px;height:74px;border-radius:50%;border:3px dashed #ba68c8;background:rgba(255,255,255,.96);transform:translateX(-50%);display:flex;align-items:center;justify-content:center;text-align:center;color:#6a1b9a;font-weight:900;cursor:pointer;transition:.2s;padding:8px}.marca-click:hover{transform:translateX(-50%) translateY(-2px);background:#f3e5f5}
+    .btn-nav{padding:12px 24px;border:none;border-radius:999px;background:var(--m);color:#fff;font-weight:900}.btn-nav:disabled{opacity:.55;cursor:not-allowed}
+    .boton-quiz{display:inline-block;margin:26px auto 0;padding:16px 34px;text-decoration:none;border-radius:999px;background:var(--a);color:var(--t);border:4px solid var(--m);font-weight:900;font-size:1.12rem;box-shadow:0 7px 0 #d39e00}.boton-quiz.bloqueado{opacity:.55;cursor:not-allowed;background:#e0e0e0;color:#777;border-color:#bdbdbd;box-shadow:0 7px 0 #9e9e9e}
+    @media(max-width:768px){.cabecera h1{font-size:2rem}.contenedor{padding:0 14px}.tarjeta{padding:24px 18px}.titulo-pagina{font-size:1.55rem}.btn-volver-menu{width:46px;height:46px;top:12px;left:12px}.opciones{grid-template-columns:1fr}.barra{height:112px}.chocolate{height:96px}.tira{height:88px}.cake-wrap{width:250px;height:250px}.recta{height:156px}.linea-recta{top:80px}.marca{top:52px}.marca span{top:52px}.marca-click{width:58px;height:58px;font-size:.88rem}}
   </style>
 </head>
 <body>
-
   <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú"><i class="fas fa-arrow-left"></i></button>
     <h1>🟣 FRACCIONES</h1>
     <div class="subtitulo">Reconocer fracciones · Nivel Fácil</div>
-    <div class="badge-estilo">👁️ Visual / Verbal</div>
+    <div class="badge-estilo">👁️ Estilo Visual / Verbal</div>
   </header>
 
-  <div class="barra-progreso">
-    <span class="progreso-texto" id="progresoTexto">Página 1 de 4</span>
-    <div class="barra-fondo">
-      <div class="barra-relleno" id="barraRelleno"></div>
-    </div>
-    <span class="progreso-num" id="progresoNum">25%</span>
+  <div class="progreso">
+    <span class="progreso-texto" id="progresoTexto">Página 1 de 7</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">14%</span>
   </div>
 
   <div class="contenedor">
-
-    <!-- PAGINA 1 -->
     <section class="pagina activa" id="pagina1">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-shapes me-2"></i>¿Qué es una fracción?</h2>
-
-        <div class="texto-destacado">
-          Una fracción representa <strong>partes de un todo</strong>. Para que sea una fracción correcta,
-          el objeto debe estar dividido en <strong>partes iguales</strong>.
+        <h2 class="titulo-pagina"><i class="fas fa-candy-cane me-2"></i>Primero vemos la unidad</h2>
+        <div class="texto-destacado">Antes de reconocer una fracción, primero identificamos el objeto completo. Cuando el objeto todavía no se ha partido, leemos que vale <strong>1 unidad</strong>.</div>
+        <div class="modelo">
+          <h4>Esta barra completa vale 1</h4>
+          <div class="escena"><div id="demoP1"></div></div>
+          <div class="contexto-mini">Todavía no hay partes tomadas ni división. Solo vemos el entero.</div>
         </div>
-
-        <div class="modelo-fraccion">
-          <div class="barra-fraccion">
-            <div class="parte coloreada"></div>
-            <div class="parte"></div>
-            <div class="parte"></div>
-            <div class="parte"></div>
+        <div class="actividad">
+          <h3>Elige la lectura correcta del modelo</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Paso 1: reconocer el entero</span></div>
+          <div class="escena"><div id="interactP1"></div></div>
+          <div class="lectura" id="lecturaP1">Lectura del modelo: <strong>sin completar</strong></div>
+          <div class="opciones" id="opcionesP1">
+            <button class="chip" data-ok="1" data-texto="1 unidad completa">1 unidad completa</button>
+            <button class="chip" data-texto="4 partes iguales">4 partes iguales</button>
+            <button class="chip" data-texto="2 partes tomadas">2 partes tomadas</button>
           </div>
-
-          <div class="fraccion-grande">
-            <span>1</span>
-            <span class="linea"></span>
-            <span>4</span>
-          </div>
-        </div>
-
-        <div class="recuadro">
-          <h4>¿Qué nos dice esta imagen?</h4>
-          <ul class="lista-explicacion">
-            <li>El todo está dividido en <strong>4 partes iguales</strong>.</li>
-            <li>Solo <strong>1 parte</strong> está coloreada.</li>
-            <li>Por eso la fracción es <strong>1/4</strong>.</li>
-          </ul>
+          <div class="tip">Primero leemos el <strong>todo</strong>; después lo dividimos.</div>
+          <div class="feedback ok" id="ok1">✅ Muy bien. La barra representa <strong>1 unidad completa</strong>.</div>
+          <div class="feedback warn" id="warn1">⚠️ La barra sigue completa: todavía no hay partes tomadas.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 2 -->
     <section class="pagina" id="pagina2">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-arrow-up-1-9 me-2"></i>Numerador y denominador</h2>
-
-        <div class="texto-destacado">
-          En una fracción hay dos números importantes.
-        </div>
-
-        <div class="modelo-fraccion">
-          <div class="fraccion-grande">
-            <span style="color:#8e24aa;">3</span>
-            <span class="linea"></span>
-            <span style="color:#3949ab;">4</span>
-          </div>
-        </div>
-
-        <div class="row g-3 mt-2">
-          <div class="col-md-6">
-            <div class="recuadro" style="height: 100%;">
-              <h4 style="color:#8e24aa;">Numerador</h4>
-              <p class="mb-0">
-                Es el número de arriba. Indica <strong>cuántas partes se toman o se colorean</strong>.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="recuadro" style="height: 100%;">
-              <h4 style="color:#3949ab;">Denominador</h4>
-              <p class="mb-0">
-                Es el número de abajo. Indica <strong>en cuántas partes iguales se divide el todo</strong>.
-              </p>
-            </div>
-          </div>
-        </div>
-
+        <h2 class="titulo-pagina"><i class="fas fa-cut me-2"></i>La misma unidad se puede dividir</h2>
+        <div class="texto-destacado">Ahora trabajaremos con la misma barra, pero la vamos a repartir. La consigna dice que la unidad debe quedar en <strong>4 partes iguales</strong>.</div>
         <div class="actividad">
-          <h3>Elige la afirmación correcta</h3>
-
-          <div class="opciones" id="opcionesPagina2">
-            <div class="opcion" data-correcta="true">
-              En 3/4, el 3 es el numerador y el 4 es el denominador
-            </div>
-            <div class="opcion" data-correcta="false">
-              En 3/4, el 4 es el numerador y el 3 es el denominador
-            </div>
-            <div class="opcion" data-correcta="false">
-              En 3/4, ambos números indican partes coloreadas
-            </div>
+          <h3>Selecciona el corte correcto</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Paso 2: dividir el entero</span></div>
+          <div class="escena"><div id="barraP2"></div></div>
+          <div class="opciones" id="opcionesP2">
+            <button class="boton-corte" data-corte="2">Dividir en 2 partes</button>
+            <button class="boton-corte" data-corte="3">Dividir en 3 partes</button>
+            <button class="boton-corte" data-corte="4">Dividir en 4 partes</button>
           </div>
-
-          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Correcto! En <strong>3/4</strong>, el <strong>3</strong> es el numerador y el <strong>4</strong> es el denominador.
-          </div>
-
-          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Revisa otra vez: arriba va el número de partes tomadas y abajo el total de partes iguales.
-          </div>
+          <div class="tip">La unidad sigue siendo la misma. Lo que cambia es el número de partes iguales.</div>
+          <div class="feedback ok" id="ok2">✅ Exacto. La unidad quedó dividida en <strong>4 partes iguales</strong>.</div>
+          <div class="feedback warn" id="warn2">⚠️ Esa opción no deja la barra en 4 partes iguales.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 3 -->
     <section class="pagina" id="pagina3">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-eye me-2"></i>Leer fracciones en figuras</h2>
-
-        <div class="texto-destacado">
-          Para leer una fracción en una figura, primero observa cuántas partes hay en total y luego cuántas están coloreadas.
-        </div>
-
-        <div class="modelo-fraccion">
-          <div class="barra-fraccion">
-            <div class="parte circulo coloreada"></div>
-            <div class="parte circulo coloreada"></div>
-            <div class="parte circulo"></div>
-          </div>
-
-          <div class="recuadro" style="margin-bottom: 0;">
-            <h4>Paso a paso</h4>
-            <ul class="lista-explicacion">
-              <li>Hay <strong>3 partes iguales</strong> en total.</li>
-              <li>Hay <strong>2 partes coloreadas</strong>.</li>
-              <li>La fracción es <strong>2/3</strong>.</li>
-            </ul>
-          </div>
-        </div>
-
+        <h2 class="titulo-pagina"><i class="fas fa-bread-slice me-2"></i>Tomamos partes del todo</h2>
+        <div class="texto-destacado">La unidad ahora es un sándwich dividido en <strong>4 partes iguales</strong>. Marca exactamente <strong>2 partes</strong> para construir la fracción.</div>
         <div class="actividad">
-          <h3>¿Qué fracción ves aquí?</h3>
-
-          <div class="modelo-fraccion">
-            <div class="barra-fraccion">
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
+          <h3>Marca 2 partes del sándwich</h3>
+          <div class="escena">
+            <div class="barra sandwich" id="sandwichP3">
+              <button class="seg" data-p3="1"></button>
+              <button class="seg" data-p3="2"></button>
+              <button class="seg" data-p3="3"></button>
+              <button class="seg" data-p3="4"></button>
             </div>
           </div>
-
-          <div class="opciones" id="opcionesPagina3">
-            <div class="opcion" data-correcta="false">4/3</div>
-            <div class="opcion" data-correcta="true">3/4</div>
-            <div class="opcion" data-correcta="false">1/4</div>
-            <div class="opcion" data-correcta="false">2/4</div>
+          <div class="panel">
+            <div class="fraccion"><span id="numP3">?</span><span class="linea"></span><span>4</span></div>
+            <div class="subtexto" id="lecturaP3">El numerador aparecerá cuando marques las partes tomadas.</div>
           </div>
-
-          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Muy bien! Hay <strong>3 partes coloreadas</strong> de un total de <strong>4 partes</strong>: <strong>3/4</strong>.
-          </div>
-
-          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Cuenta otra vez: primero el total de partes y luego las partes coloreadas.
-          </div>
+          <div class="feedback ok" id="ok3">✅ Muy bien. Tomaste <strong>2</strong> partes de <strong>4</strong>. Esa fracción se escribe <strong>2/4</strong>.</div>
+          <div class="feedback warn" id="warn3">⚠️ Deben quedar marcadas exactamente <strong>2 partes</strong>.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 4 -->
     <section class="pagina" id="pagina4">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-star me-2"></i>La mitad y otras fracciones simples</h2>
-
-        <div class="texto-destacado">
-          Algunas fracciones aparecen muy seguido. Una de las más importantes es la <strong>mitad</strong>.
-        </div>
-
-        <div class="row g-4">
-          <div class="col-md-6">
-            <div class="modelo-fraccion">
-              <h5 class="fw-bold mb-3">La mitad = 1/2</h5>
-              <div class="barra-fraccion">
-                <div class="parte coloreada"></div>
-                <div class="parte"></div>
-              </div>
-              <p class="mb-0 fw-bold">1 parte coloreada de 2 partes iguales</p>
-            </div>
+        <h2 class="titulo-pagina"><i class="fas fa-cake-candles me-2"></i>Arriba y abajo en la fracción</h2>
+        <div class="texto-destacado">Observa el pastel: hay <strong>3 rebanadas marcadas</strong> de un total de <strong>4 rebanadas iguales</strong>. Ahora pon el nombre correcto a cada número.</div>
+        <div class="modelo">
+          <h4>El modelo representa 3/4</h4>
+          <div class="cake-wrap">
+            <svg class="cake-svg" viewBox="0 0 280 280" aria-label="Pastel dividido en 4 partes">
+              <circle cx="140" cy="140" r="120" fill="#ffe0b2" stroke="#d84315" stroke-width="8"/>
+              <path d="M140 140 L140 20 A120 120 0 0 1 260 140 Z" fill="#ff8a65"></path>
+              <path d="M140 140 L260 140 A120 120 0 0 1 140 260 Z" fill="#ff8a65"></path>
+              <path d="M140 140 L140 260 A120 120 0 0 1 20 140 Z" fill="#ff8a65"></path>
+              <path d="M140 140 L20 140 A120 120 0 0 1 140 20 Z" fill="#ffe0b2"></path>
+              <circle cx="140" cy="140" r="16" fill="#fff3e0"/>
+              <line x1="140" y1="140" x2="140" y2="20" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="260" y2="140" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="140" y2="260" stroke="#d84315" stroke-width="6"/>
+              <line x1="140" y1="140" x2="20" y2="140" stroke="#d84315" stroke-width="6"/>
+            </svg>
           </div>
-
-          <div class="col-md-6">
-            <div class="modelo-fraccion">
-              <h5 class="fw-bold mb-3">Un cuarto = 1/4</h5>
-              <div class="barra-fraccion">
-                <div class="parte coloreada"></div>
-                <div class="parte"></div>
-                <div class="parte"></div>
-                <div class="parte"></div>
-              </div>
-              <p class="mb-0 fw-bold">1 parte coloreada de 4 partes iguales</p>
-            </div>
-          </div>
+          <div class="panel"><div class="fraccion"><span>3</span><span class="linea"></span><span>4</span></div></div>
         </div>
-
         <div class="actividad">
-          <h3>Escoge la fracción que representa la mitad</h3>
-
-          <div class="opciones" id="opcionesPagina4">
-            <div class="opcion" data-correcta="false">1/4</div>
-            <div class="opcion" data-correcta="true">1/2</div>
-            <div class="opcion" data-correcta="false">2/1</div>
-            <div class="opcion" data-correcta="false">3/4</div>
+          <h3>Completa las etiquetas</h3>
+          <div class="fila-def">
+            <p>El <strong>3</strong>, que está arriba, se llama:</p>
+            <div class="selector-nombre">
+              <button class="selector-btn" data-slot="arriba" data-value="numerador">Numerador</button>
+              <button class="selector-btn" data-slot="arriba" data-value="denominador">Denominador</button>
+            </div>
           </div>
-
-          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! La mitad se representa con <strong>1/2</strong>.
+          <div class="fila-def">
+            <p>El <strong>4</strong>, que está abajo, se llama:</p>
+            <div class="selector-nombre">
+              <button class="selector-btn" data-slot="abajo" data-value="numerador">Numerador</button>
+              <button class="selector-btn" data-slot="abajo" data-value="denominador">Denominador</button>
+            </div>
           </div>
-
-          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Piensa en esto: mitad significa <strong>1 parte de 2 partes iguales</strong>.
-          </div>
+          <div class="tip"><strong>Numerador</strong> = partes tomadas. <strong>Denominador</strong> = total de partes iguales.</div>
+          <div class="feedback ok" id="ok4">✅ Excelente. <strong>3</strong> es el numerador y <strong>4</strong> es el denominador.</div>
+          <div class="feedback warn" id="warn4">⚠️ Arriba van las partes tomadas y abajo el total de partes iguales.</div>
         </div>
+      </div>
+    </section>
 
-        <div class="text-center">
-          <a href="quiz.html" class="boton-quiz">
-            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
-          </a>
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-puzzle-piece me-2"></i>Construimos la fracción</h2>
+        <div class="texto-destacado">Ya sabemos leer una representación: primero miramos cuántas partes hay en total y luego cuántas de esas partes están coloreadas.</div>
+        <div class="modelo">
+          <h4>Observa la tira y construye su fracción</h4>
+          <div class="escena">
+            <div class="barra tira">
+              <div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div>
+            </div>
+          </div>
+          <div class="contexto-mini">Hay 3 partes pintadas de un total de 4 partes iguales.</div>
         </div>
+        <div class="actividad">
+          <h3>Coloca la tarjeta correcta</h3>
+          <div class="opciones" id="opcionesP5">
+            <button class="tarjeta-fraccion" data-value="3/4">3/4</button>
+            <button class="tarjeta-fraccion" data-value="4/3">4/3</button>
+            <button class="tarjeta-fraccion" data-value="2/4">2/4</button>
+          </div>
+          <div class="zona-respuesta" id="respuesta5">Fracción escrita: <strong>sin completar</strong></div>
+          <div class="feedback ok" id="ok5">✅ Perfecto. La tira representa <strong>3/4</strong>.</div>
+          <div class="feedback warn" id="warn5">⚠️ Arriba van las partes pintadas y abajo el total de partes.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-sort-amount-down me-2"></i>Comparamos con la misma unidad</h2>
+        <div class="texto-destacado">Si las fracciones usan la misma unidad y la misma división, podemos ordenarlas comparando cuántas partes están coloreadas. Ordénalas de <strong>menor a mayor</strong>.</div>
+        <div class="comparacion-grid">
+          <div class="mini-modelo"><h5>A</h5><div class="barra tira" style="height:64px"><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div></div>
+          <div class="mini-modelo"><h5>B</h5><div class="barra tira" style="height:64px"><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div></div></div>
+          <div class="mini-modelo"><h5>C</h5><div class="barra tira" style="height:64px"><div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div></div></div>
+        </div>
+        <div class="actividad">
+          <h3>Toca las tarjetas en orden: menor → mayor</h3>
+          <div class="orden-pool" id="poolP6">
+            <button class="tarjeta-orden" data-value="2/4">2/4</button>
+            <button class="tarjeta-orden" data-value="3/4">3/4</button>
+            <button class="tarjeta-orden" data-value="1/4">1/4</button>
+          </div>
+          <div class="orden-slots">
+            <div class="slot-orden" id="slot1">1° lugar</div>
+            <div class="slot-orden" id="slot2">2° lugar</div>
+            <div class="slot-orden" id="slot3">3° lugar</div>
+          </div>
+          <div class="texto-centro"><button class="btn-reiniciar" id="resetP6" type="button">↺ Reiniciar orden</button></div>
+          <div class="feedback ok" id="ok6">✅ Muy bien. El orden correcto es <strong>1/4, 2/4, 3/4</strong>.</div>
+          <div class="feedback warn" id="warn6">⚠️ Observa cuál tira tiene menos partes pintadas y cuál tiene más.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-road me-2"></i>La fracción en la recta numérica</h2>
+        <div class="texto-destacado">Entre <strong>0</strong> y <strong>1</strong> hay una unidad completa. Si esa unidad se divide en 4 partes iguales, <strong>3/4</strong> queda en la tercera marca interior.</div>
+        <div class="recta-wrap">
+          <div class="texto-centro"><span class="mini-etiqueta">Último paso: ubicar 3/4 entre 0 y 1</span></div>
+          <div class="lectura" id="lecturaP7">Busca la marca que representa <strong>3/4</strong>.</div>
+          <div class="recta">
+            <div class="linea-recta"></div>
+            <div class="marca" style="left:6%"><span>0</span></div>
+            <div class="marca" style="left:28%"></div>
+            <div class="marca" style="left:50%"></div>
+            <div class="marca" style="left:72%"></div>
+            <div class="marca" style="left:94%"><span>1</span></div>
+            <button class="marca-click" data-value="1/4" style="left:28%"></button>
+            <button class="marca-click" data-value="2/4" style="left:50%"></button>
+            <button class="marca-click" data-value="3/4" style="left:72%"></button>
+          </div>
+          <div class="tip">Lee la recta de izquierda a derecha: 1/4, 2/4 y después 3/4.</div>
+        </div>
+        <div class="feedback ok" id="ok7">✅ Excelente. <strong>3/4</strong> está en la tercera marca interior.</div>
+        <div class="feedback warn" id="warn7">⚠️ Recorre la unidad desde 0: primera marca, segunda marca y luego tercera marca.</div>
+        <div class="text-center"><a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarMiniQuiz(event)"><i class="fas fa-star me-2"></i>Ir al Mini-Quiz</a></div>
       </div>
     </section>
 
     <div class="navegador">
-      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
-        ← Anterior
-      </button>
-      <span class="contador" id="contadorPagina">1/4</span>
-      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
-        Siguiente →
-      </button>
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← Anterior</button>
+      <span class="contador" id="contadorPagina">1/7</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente →</button>
     </div>
   </div>
 
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
   <script>
-    let paginaActual = 1;
-    const totalPaginas = 4;
+    let paginaActual = 1, ordenP6 = 0;
+    const totalPaginas = 7;
+    const esperadoP6 = ['1/4', '2/4', '3/4'];
+    const res = { 1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false };
+    const p4 = { arriba:null, abajo:null };
+    const intentosPagina = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
+    const apartadosVisualVerbal = {
+      p1: { pagina:1, apartadoClave:'p1_unidad_completa', tipoActividad:'reconocer_entero' },
+      p2: { pagina:2, apartadoClave:'p2_dividir_unidad', tipoActividad:'dividir_entero' },
+      p3: { pagina:3, apartadoClave:'p3_partes_tomadas', tipoActividad:'tomar_partes' },
+      p4: { pagina:4, apartadoClave:'p4_numerador_denominador', tipoActividad:'nombrar_partes' },
+      p5: { pagina:5, apartadoClave:'p5_construir_fraccion', tipoActividad:'escribir_fraccion' },
+      p6: { pagina:6, apartadoClave:'p6_ordenar_fracciones', tipoActividad:'ordenar_fracciones' },
+      p7: { pagina:7, apartadoClave:'p7_recta_numerica', tipoActividad:'ubicar_fraccion' }
+    };
+    let trackerVisualVerbal = null;
+    let sessionTrackerVisualVerbal = null;
+    let quizTrackerAdjunto = false;
 
-    function cambiarPagina(direccion) {
-      document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
-      document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      actualizarNavegacion();
-      localStorage.setItem('mate_fracciones_visualverbal_facil', paginaActual);
+    const q = s => document.querySelector(s);
+    const qa = s => [...document.querySelectorAll(s)];
+    const fb = (n, ok) => {
+      q('#ok' + n)?.classList.toggle('visible', ok);
+      q('#warn' + n)?.classList.toggle('visible', !ok);
+    };
+    const flash = el => {
+      el.classList.add('incorrecto');
+      setTimeout(() => el.classList.remove('incorrecto'), 700);
+    };
+    const htmlBar = (tipo, partes, pintadas = 0, label = '') => `<div class="barra ${tipo}">${Array.from({length:partes}, (_, i) => `<div class="seg ${i < pintadas ? 'fill' : ''}"></div>`).join('')}${label ? `<div class="overlay">${label}</div>` : ''}</div>`;
+
+    ['sndClick', 'sndDing', 'sndError', 'sndTada'].forEach(id => {
+      const audio = document.getElementById(id);
+      if (audio) audio.volume = 0.15;
+    });
+
+    function reproducir(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
     }
 
-    function actualizarNavegacion() {
-      document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
-      document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-
-      const porcentaje = (paginaActual / totalPaginas) * 100;
-      document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
-      document.getElementById('progresoNum').innerText = `${Math.round(porcentaje)}%`;
-
-      document.getElementById('btnAnterior').disabled = paginaActual === 1;
-      document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas;
-    }
-
-    function cargarProgreso() {
-      const guardado = localStorage.getItem('mate_fracciones_visualverbal_facil');
-      if (guardado) {
-        const pag = parseInt(guardado, 10);
-        if (pag >= 1 && pag <= totalPaginas) {
-          document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-          paginaActual = pag;
-          document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        }
-      }
-      actualizarNavegacion();
-    }
-
-    function inicializarActividad(selector, okId, warnId) {
-      const opciones = document.querySelectorAll(selector + ' .opcion');
-      const ok = document.getElementById(okId);
-      const warn = document.getElementById(warnId);
-
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (op.dataset.correcta === 'true') {
-            opciones.forEach(x => x.style.pointerEvents = 'none');
-            op.classList.add('correcta');
-            warn.classList.remove('visible');
-            ok.classList.add('visible');
-          } else {
-            op.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
-          }
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerVisualVerbal = window.createReforzamientoTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'visual_verbal',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'reconocer_fracciones',
+            variante: 'visual_verbal_facil'
+          },
+          apartados: apartadosVisualVerbal
         });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerVisualVerbal = window.createReforzamientoSessionTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'visual_verbal'
+        });
+      }
+    }
+
+    function clavePagina(n) {
+      return 'p' + n;
+    }
+
+    function marcarPaginaVisible(n, detalleExtra) {
+      if (!trackerVisualVerbal) return;
+      trackerVisualVerbal.markVisible(clavePagina(n), {
+        pagina: n,
+        ejercicio: clavePagina(n),
+        ...detalleExtra
       });
     }
 
+    function registrarError(n, detalle) {
+      intentosPagina[n] += 1;
+      if (!trackerVisualVerbal) return;
+      trackerVisualVerbal.addError(clavePagina(n), 1, {
+        pagina: n,
+        ejercicio: clavePagina(n),
+        intento: intentosPagina[n],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(n, detalle) {
+      if (res[n]) return;
+      res[n] = true;
+
+      if (trackerVisualVerbal) {
+        trackerVisualVerbal.addCorrect(clavePagina(n), 1, {
+          pagina: n,
+          ejercicio: clavePagina(n),
+          ...detalle
+        });
+
+        await trackerVisualVerbal.complete(clavePagina(n), {
+          detalle: {
+            pagina: n,
+            ejercicio: clavePagina(n),
+            ...detalle
+          }
+        });
+      }
+
+      if (n === 7) {
+        reproducir('sndTada');
+        actualizarEstadoQuiz();
+      } else {
+        reproducir('sndDing');
+      }
+
+      actualizarNav();
+    }
+
+    function renderChocolate(id, pieces = 1, selectedCount = 0, showWholeLabel = false) {
+      const el = q('#' + id);
+      el.className = 'objeto chocolate';
+      el.innerHTML = '';
+
+      for (let i = 0; i < pieces; i += 1) {
+        const div = document.createElement('div');
+        div.className = 'choco-piece' + (i < selectedCount ? ' selected' : '');
+        el.appendChild(div);
+      }
+
+      if (showWholeLabel) {
+        const label = document.createElement('div');
+        label.className = 'choco-whole-label';
+        label.textContent = '1 unidad completa';
+        el.appendChild(label);
+      }
+    }
+
+    function volverAlMenu() {
+      reproducir('sndClick');
+      window.location.href = '../../menu.html';
+    }
+
+    function actualizarEstadoQuiz() {
+      const botonQuiz = q('#btnMiniQuiz');
+      if (!botonQuiz) return;
+
+      if (res[7]) {
+        botonQuiz.classList.remove('bloqueado');
+
+        if (!quizTrackerAdjunto && sessionTrackerVisualVerbal) {
+          sessionTrackerVisualVerbal.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+          quizTrackerAdjunto = true;
+        }
+      } else {
+        botonQuiz.classList.add('bloqueado');
+      }
+    }
+
+    function actualizarNav() {
+      q('#progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
+      q('#contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
+      const p = paginaActual / totalPaginas * 100;
+      q('#barraRelleno').style.width = `${p}%`;
+      q('#progresoNum').innerText = `${Math.round(p)}%`;
+      q('#btnAnterior').disabled = paginaActual === 1;
+      q('#btnSiguiente').disabled = paginaActual === totalPaginas || !res[paginaActual];
+    }
+
+    function cambiarPagina(d) {
+      if (d === 1 && !res[paginaActual]) return;
+      const dest = paginaActual + d;
+      if (dest < 1 || dest > totalPaginas) return;
+
+      reproducir('sndClick');
+      q(`#pagina${paginaActual}`).classList.remove('activa');
+      paginaActual = dest;
+      q(`#pagina${paginaActual}`).classList.add('activa');
+      actualizarNav();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+
+    function validarMiniQuiz(e) {
+      if (!res[7]) {
+        e.preventDefault();
+        reproducir('sndError');
+        return false;
+      }
+      reproducir('sndClick');
+      return true;
+    }
+
+    function initP1() {
+      renderChocolate('demoP1', 1, 0, true);
+      renderChocolate('interactP1', 1);
+
+      qa('#opcionesP1 .chip').forEach(btn => btn.addEventListener('click', () => {
+        if (res[1]) return;
+        reproducir('sndClick');
+
+        if (btn.dataset.ok) {
+          btn.classList.add('correcto');
+          renderChocolate('interactP1', 1, 1, true);
+          q('#lecturaP1').innerHTML = 'Lectura del modelo: <strong>1 unidad completa</strong>';
+          fb(1, true);
+          completarPagina(1, {
+            actividad: 'leer_entero',
+            respuesta: btn.dataset.texto
+          });
+        } else {
+          fb(1, false);
+          reproducir('sndError');
+          registrarError(1, {
+            actividad: 'leer_entero',
+            respuesta: btn.dataset.texto
+          });
+          flash(btn);
+        }
+      }));
+    }
+
+    function initP2() {
+      renderChocolate('barraP2', 1, 0, true);
+
+      qa('#opcionesP2 .boton-corte').forEach(btn => btn.addEventListener('click', () => {
+        if (res[2]) return;
+        reproducir('sndClick');
+        qa('#opcionesP2 .boton-corte').forEach(b => b.classList.remove('activo'));
+        btn.classList.add('activo');
+        const c = Number(btn.dataset.corte);
+        renderChocolate('barraP2', c);
+
+        if (c === 4) {
+          fb(2, true);
+          completarPagina(2, {
+            actividad: 'dividir_entero',
+            corte: c
+          });
+        } else {
+          fb(2, false);
+          reproducir('sndError');
+          registrarError(2, {
+            actividad: 'dividir_entero',
+            corte: c
+          });
+        }
+      }));
+    }
+
+    function initP3() {
+      qa('#sandwichP3 .seg').forEach(seg => seg.addEventListener('click', () => {
+        if (res[3]) return;
+        reproducir('sndClick');
+        seg.classList.toggle('fill');
+        const n = qa('#sandwichP3 .seg.fill').length;
+        q('#numP3').textContent = n || '?';
+        q('#lecturaP3').innerHTML = n
+          ? `Hay <strong>${n}</strong> partes tomadas de <strong>4</strong> partes iguales.`
+          : 'El numerador aparecerá cuando marques las partes tomadas.';
+
+        if (n === 2) {
+          q('#lecturaP3').innerHTML = 'La fracción se lee como <strong>2/4</strong>: dos partes tomadas de cuatro partes iguales.';
+          fb(3, true);
+          completarPagina(3, {
+            actividad: 'marcar_partes',
+            partes_tomadas: n
+          });
+        } else {
+          fb(3, false);
+          if (n > 2) {
+            reproducir('sndError');
+            registrarError(3, {
+              actividad: 'marcar_partes',
+              partes_tomadas: n
+            });
+          }
+        }
+      }));
+    }
+
+    function revisarP4() {
+      if (!p4.arriba || !p4.abajo || res[4]) return;
+      const ok = p4.arriba === 'numerador' && p4.abajo === 'denominador';
+      fb(4, ok);
+
+      if (ok) {
+        completarPagina(4, {
+          actividad: 'nombrar_partes',
+          arriba: p4.arriba,
+          abajo: p4.abajo
+        });
+      } else {
+        reproducir('sndError');
+        registrarError(4, {
+          actividad: 'nombrar_partes',
+          arriba: p4.arriba,
+          abajo: p4.abajo
+        });
+      }
+    }
+
+    function initP4() {
+      qa('.selector-btn').forEach(btn => btn.addEventListener('click', () => {
+        if (res[4]) return;
+        reproducir('sndClick');
+        const s = btn.dataset.slot;
+        qa(`.selector-btn[data-slot="${s}"]`).forEach(x => x.classList.remove('activo'));
+        btn.classList.add('activo');
+        p4[s] = btn.dataset.value;
+        revisarP4();
+      }));
+    }
+
+    function initP5() {
+      qa('#opcionesP5 .tarjeta-fraccion').forEach(btn => btn.addEventListener('click', () => {
+        if (res[5]) return;
+        reproducir('sndClick');
+
+        if (btn.dataset.value === '3/4') {
+          btn.classList.add('correcto');
+          q('#respuesta5').classList.add('correcta');
+          q('#respuesta5').innerHTML = 'Fracción escrita: <strong>3/4</strong>';
+          fb(5, true);
+          completarPagina(5, {
+            actividad: 'construir_fraccion',
+            respuesta: btn.dataset.value
+          });
+        } else {
+          fb(5, false);
+          reproducir('sndError');
+          registrarError(5, {
+            actividad: 'construir_fraccion',
+            respuesta: btn.dataset.value
+          });
+          flash(btn);
+        }
+      }));
+    }
+
+    function resetP6() {
+      if (res[6]) return;
+      reproducir('sndClick');
+      ordenP6 = 0;
+      qa('#poolP6 .tarjeta-orden').forEach(b => {
+        b.disabled = false;
+        b.classList.remove('correcto', 'incorrecto');
+      });
+      ['#slot1', '#slot2', '#slot3'].forEach((id, i) => {
+        q(id).textContent = `${i + 1}° lugar`;
+        q(id).classList.remove('correcto');
+      });
+      q('#ok6').classList.remove('visible');
+      q('#warn6').classList.remove('visible');
+    }
+
+    function initP6() {
+      qa('#poolP6 .tarjeta-orden').forEach(btn => btn.addEventListener('click', () => {
+        if (res[6] || btn.disabled) return;
+        reproducir('sndClick');
+        const v = btn.dataset.value;
+
+        if (v === esperadoP6[ordenP6]) {
+          ordenP6 += 1;
+          btn.disabled = true;
+          btn.classList.add('correcto');
+          q('#slot' + ordenP6).textContent = v;
+          q('#slot' + ordenP6).classList.add('correcto');
+          q('#warn6').classList.remove('visible');
+
+          if (ordenP6 === 3) {
+            q('#ok6').classList.add('visible');
+            completarPagina(6, {
+              actividad: 'ordenar_fracciones',
+              orden: esperadoP6.join(',')
+            });
+          }
+        } else {
+          q('#warn6').classList.add('visible');
+          reproducir('sndError');
+          registrarError(6, {
+            actividad: 'ordenar_fracciones',
+            intento: v,
+            posicion: ordenP6 + 1
+          });
+          flash(btn);
+        }
+      }));
+
+      q('#resetP6').addEventListener('click', resetP6);
+    }
+
+    function initP7() {
+      qa('.marca-click').forEach(btn => btn.addEventListener('click', () => {
+        if (res[7]) return;
+        reproducir('sndClick');
+
+        if (btn.dataset.value === '3/4') {
+          btn.classList.add('correcto');
+          btn.textContent = '3/4';
+          q('#lecturaP7').innerHTML = '<strong>3/4</strong> es la tercera marca interior entre 0 y 1.';
+          fb(7, true);
+          completarPagina(7, {
+            actividad: 'recta_numerica',
+            respuesta: btn.dataset.value
+          });
+        } else {
+          fb(7, false);
+          reproducir('sndError');
+          registrarError(7, {
+            actividad: 'recta_numerica',
+            respuesta: btn.dataset.value
+          });
+          flash(btn);
+        }
+      }));
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      cargarProgreso();
-      inicializarActividad('#opcionesPagina2', 'feedback2ok', 'feedback2warn');
-      inicializarActividad('#opcionesPagina3', 'feedback3ok', 'feedback3warn');
-      inicializarActividad('#opcionesPagina4', 'feedback4ok', 'feedback4warn');
+      initTrackers();
+      initP1();
+      initP2();
+      initP3();
+      initP4();
+      initP5();
+      initP6();
+      initP7();
+      actualizarEstadoQuiz();
+      actualizarNav();
+      marcarPaginaVisible(1);
+
+      if (sessionTrackerVisualVerbal) {
+        sessionTrackerVisualVerbal.start();
+      }
     });
   </script>
 </body>

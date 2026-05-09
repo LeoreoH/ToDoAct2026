@@ -401,7 +401,11 @@
               ? optionsBuilder(link) || {}
               : {};
 
-          await complete(builtOptions);
+          const savePromise = complete(builtOptions);
+          await Promise.race([
+            savePromise,
+            new Promise((resolve) => setTimeout(resolve, 1200))
+          ]);
 
           window.location.href = href;
         });

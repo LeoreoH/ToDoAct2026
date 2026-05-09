@@ -3,188 +3,556 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · Equivalencias numéricas · Nivel Fácil</title>
+  <title>Quiz &middot; Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --morado: #7b1fa2;
+      --morado-oscuro: #4a148c;
+      --morado-medio: #5e35b1;
+      --lila: #ede7f6;
+      --lila-2: #d1c4e9;
+      --amarillo: #ffd54f;
+      --amarillo-sombra: #d39e00;
+      --verde: #43a047;
+      --rojo: #e53935;
+      --azul: #1e88e5;
+      --azul-claro: #bbdefb;
+      --tinta: #3b0d5d;
+    }
+
     body {
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
       min-height: 100vh;
-      color: white;
+      font-family: 'Nunito', sans-serif;
+      color: #fff;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 213, 79, .38) 0 120px, transparent 122px),
+        radial-gradient(circle at 85% 12%, rgba(129, 212, 250, .28) 0 150px, transparent 153px),
+        linear-gradient(135deg, #8e24aa 0%, #5e35b1 55%, #4527a0 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,.7) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.7) 25%, transparent 25%);
+      background-size: 34px 34px;
+      background-position: 0 0, 0 17px;
+      mask-image: linear-gradient(to bottom, #000, transparent 65%);
     }
 
     .quiz-container {
-      max-width: 800px;
-      margin: 50px auto;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 40px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      border: 4px solid #ffd54f;
+      width: min(980px, calc(100% - 32px));
+      margin: 34px auto 44px;
       position: relative;
+      z-index: 1;
+    }
+
+    .panel-principal {
+      background: rgba(255,255,255,.13);
+      backdrop-filter: blur(12px);
+      border: 4px solid var(--amarillo);
+      border-radius: 38px;
+      padding: 34px;
+      box-shadow: 0 24px 52px rgba(0,0,0,.28);
     }
 
     .quiz-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+    }
+
+    .icono-header {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      border: 4px solid #fff;
+      box-shadow: 0 7px 0 var(--amarillo-sombra);
+      transform: rotate(-4deg);
+      font-size: 2rem;
     }
 
     .quiz-header h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 3rem;
-      color: #ffd54f;
-      text-shadow: 3px 3px 0 #4a148c;
+      font-size: clamp(2.25rem, 5vw, 3.55rem);
+      color: var(--amarillo);
+      text-shadow: 4px 4px 0 rgba(74,20,140,.65);
+      margin-bottom: 6px;
+    }
+
+    .quiz-header .lead {
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
     }
 
     .badge-nivel {
-      background: #4a148c;
-      color: white;
-      padding: 8px 25px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      display: inline-block;
-      border: 2px solid #ffd54f;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      background: #fff;
+      color: var(--morado-oscuro);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 3px solid var(--amarillo);
+      box-shadow: 0 5px 0 rgba(0,0,0,.12);
     }
 
     .timer-container {
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 10px 20px;
-      margin: 20px 0;
+      background: rgba(255,255,255,.16);
+      border-radius: 22px;
+      padding: 12px 18px;
+      margin: 22px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 2px solid #ffd54f;
-    }
-
-    .timer-label {
-      font-size: 1.1rem;
-      font-weight: 700;
+      gap: 16px;
+      border: 2px solid rgba(255,255,255,.78);
+      font-weight: 900;
     }
 
     .timer-value {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #ffd54f;
-      font-family: monospace;
+      color: var(--amarillo);
+      font-size: 1.25rem;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
     }
 
     .progreso-quiz {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin: 30px 0;
+      margin: 26px 0;
+      flex-wrap: wrap;
     }
 
     .punto {
       width: 45px;
       height: 45px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: 3px solid white;
+      background: rgba(255,255,255,.18);
+      border: 3px solid #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 1.2rem;
+      font-weight: 900;
+      font-size: 1.1rem;
       color: white;
-      transition: all 0.3s;
+      transition: transform .2s, background .2s, color .2s;
     }
 
     .punto.activo {
-      background: #ffd54f;
-      border-color: white;
-      color: #4a148c;
-      transform: scale(1.2);
+      background: var(--amarillo);
+      border-color: #fff;
+      color: var(--morado-oscuro);
+      transform: scale(1.15);
     }
 
     .punto.respondido {
-      background: #4caf50;
-      border-color: white;
-      color: white;
+      background: var(--verde);
+      color: #fff;
     }
 
     .tarjeta-pregunta {
-      background: white;
-      border-radius: 30px;
-      padding: 30px;
-      margin-bottom: 25px;
-      border: 4px solid #ffd54f;
-      box-shadow: 0 8px 0 #d39e00;
-      color: #4a148c;
+      background: #fff;
+      border-radius: 32px;
+      padding: 28px;
+      border: 4px solid var(--amarillo);
+      box-shadow: 0 10px 0 var(--amarillo-sombra);
+      color: var(--morado-oscuro);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tarjeta-pregunta::before {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,213,79,.42), rgba(255,213,79,0) 68%);
     }
 
     .pregunta-numero {
-      font-size: 1rem;
-      color: #7b1fa2;
-      font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f7f1ff;
+      border: 2px solid var(--lila-2);
+      color: var(--morado);
+      font-size: .95rem;
+      font-weight: 900;
+      letter-spacing: .7px;
+      border-radius: 999px;
+      padding: 7px 14px;
+      margin-bottom: 14px;
     }
 
     .pregunta-texto {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-      line-height: 1.4;
+      position: relative;
+      font-size: clamp(1.16rem, 2vw, 1.38rem);
+      font-weight: 900;
+      line-height: 1.42;
+      margin-bottom: 20px;
+      color: var(--tinta);
+    }
+
+    .pista-corta {
+      position: relative;
+      background: #fff8df;
+      border: 2px dashed #f1b928;
+      color: #6d4c00;
+      font-weight: 900;
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin: 0 0 20px;
+    }
+
+    .recurso-visual {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(237,231,246,.98), rgba(255,248,225,.96));
+      border: 3px solid var(--lila-2);
+      border-radius: 26px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.7);
+    }
+
+    .recurso-titulo {
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 16px;
     }
 
     .opciones {
+      position: relative;
       display: grid;
-      gap: 12px;
+      gap: 14px;
+    }
+
+    .opciones.modelos {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      align-items: stretch;
+    }
+
+    .opciones.signos {
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
     }
 
     .opcion-btn {
-      background: #f3e5f5;
-      border: 3px solid #7b1fa2;
-      border-radius: 20px;
-      padding: 15px 20px;
-      color: #4a148c;
-      font-weight: 600;
-      font-size: 1.1rem;
-      text-align: left;
+      min-height: 76px;
+      background: #f7f1ff;
+      border: 3px solid var(--morado);
+      border-radius: 22px;
+      padding: 16px;
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      font-size: 1.05rem;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform .18s, background .18s, border-color .18s, box-shadow .18s;
       width: 100%;
+      box-shadow: 0 5px 0 #c7b7de;
     }
 
     .opcion-btn:hover:not(:disabled) {
-      background: #ffd54f;
-      transform: scale(1.02);
-      border-color: #4a148c;
+      background: #fff3c4;
+      border-color: var(--morado-oscuro);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 7px 0 #d39e00;
     }
 
     .opcion-btn.correcta {
-      background: #4caf50;
-      color: white;
-      border-color: white;
+      background: #43a047;
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 5px 0 #2e7d32;
     }
 
     .opcion-btn.incorrecta {
-      background: #f44336;
-      color: white;
-      border-color: white;
+      background: var(--rojo);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 5px 0 #b71c1c;
     }
 
     .opcion-btn:disabled {
       cursor: not-allowed;
-      opacity: 0.95;
+      opacity: 1;
+    }
+
+    .opcion-visual {
+      display: grid;
+      place-items: center;
+      min-height: 142px;
+      margin-bottom: 12px;
+    }
+
+    .opcion-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 28px;
+    }
+
+    .signo-grande {
+      display: block;
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      line-height: 1;
+      font-weight: 900;
+      font-family: Georgia, serif;
+    }
+
+    .decimal-bar {
+      width: min(300px, 100%);
+      height: 72px;
+      display: flex;
+      overflow: hidden;
+      border: 4px solid var(--morado);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 6px 0 var(--lila-2);
+    }
+
+    .decimal-bar.compacta {
+      width: min(250px, 100%);
+      height: 58px;
+      border-radius: 18px;
+      border-width: 3px;
+    }
+
+    .bar-cell {
+      flex: 1;
+      background: #fff;
+      position: relative;
+    }
+
+    .bar-cell + .bar-cell {
+      border-left: 3px solid var(--morado);
+    }
+
+    .bar-cell.fill {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.24), transparent 42%),
+        linear-gradient(135deg, #64b5f6, #1e88e5);
+    }
+
+    .hundred-grid {
+      width: min(218px, 100%);
+      aspect-ratio: 1;
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      grid-template-rows: repeat(10, minmax(0, 1fr));
+      gap: 2px;
+      padding: 8px;
+      border: 4px solid var(--morado);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 6px 0 var(--lila-2);
+      overflow: hidden;
+    }
+
+    .hundred-grid.compacta {
+      width: min(176px, 42vw);
+      border-width: 3px;
+      border-radius: 18px;
+      padding: 7px;
+      gap: 2px;
+    }
+
+    .grid-cell {
+      min-width: 0;
+      min-height: 0;
+      border-radius: 3px;
+      background: #f1eef8;
+      border: 1px solid #d7c6ec;
+    }
+
+    .grid-cell.fill {
+      background: linear-gradient(135deg, #ffd54f, #fb8c00);
+      border-color: #f57c00;
+    }
+
+    .comparacion-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .tarjeta-decimal {
+      width: min(250px, 100%);
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 3px solid var(--morado);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: 0 6px 0 var(--lila-2);
+    }
+
+    .tarjeta-decimal > span {
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      background: #f7f1ff;
+      border-radius: 999px;
+      padding: 7px 14px;
+    }
+
+    .signo-placeholder {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 4px dashed var(--morado);
+      color: var(--morado);
+      font-size: 2.1rem;
+      font-weight: 900;
+      background: #fff8df;
+    }
+
+    .recta-wrap {
+      position: relative;
+      width: min(720px, 100%);
+      height: 142px;
+      margin: 4px auto 0;
+      padding: 0 8px;
+    }
+
+    .linea-recta {
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      top: 66px;
+      height: 7px;
+      background: var(--morado);
+      border-radius: 999px;
+      box-shadow: 0 3px 0 var(--lila-2);
+    }
+
+    .marca-recta {
+      position: absolute;
+      top: 43px;
+      width: 0;
+      height: 48px;
+      border-left: 3px solid var(--morado);
+      transform: translateX(-50%);
+    }
+
+    .marca-recta span {
+      position: absolute;
+      top: 54px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 900;
+      color: var(--morado-oscuro);
+      white-space: nowrap;
+    }
+
+    .punto-recta {
+      position: absolute;
+      top: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transform: translateX(-50%);
+      border: 4px solid var(--morado);
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      box-shadow: 0 5px 0 var(--amarillo-sombra);
+    }
+
+    .secuencia-modelos,
+    .secuencia-opcion {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .mini-modelo {
+      width: min(230px, 100%);
+      background: #fff;
+      border: 3px solid var(--morado);
+      border-radius: 22px;
+      padding: 14px;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      box-shadow: 0 5px 0 var(--lila-2);
+    }
+
+    .mini-modelo .titulo-mini {
+      font-weight: 900;
+      color: var(--morado-oscuro);
+      background: #f7f1ff;
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+
+    .flecha-secuencia {
+      color: var(--morado);
+      font-weight: 900;
+      font-size: 1.65rem;
+    }
+
+    .chip-decimal {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 70px;
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: #fff;
+      border: 3px solid var(--morado);
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      box-shadow: 0 3px 0 var(--lila-2);
+    }
+
+    .opcion-btn.correcta .chip-decimal,
+    .opcion-btn.incorrecta .chip-decimal {
+      border-color: #fff;
+      color: var(--morado-oscuro);
     }
 
     .feedback {
       margin-top: 20px;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 600;
+      padding: 16px 18px;
+      border-radius: 18px;
+      font-weight: 900;
       display: none;
+      line-height: 1.45;
     }
 
     .feedback.visible {
@@ -192,14 +560,14 @@
     }
 
     .feedback.correcto {
-      background: #c8e6c9;
-      color: #2e7d32;
+      background: #d8f3dc;
+      color: #1b5e20;
       border-left: 8px solid #2e7d32;
     }
 
     .feedback.incorrecto {
-      background: #ffcdd2;
-      color: #c62828;
+      background: #ffdde0;
+      color: #b71c1c;
       border-left: 8px solid #c62828;
     }
 
@@ -212,42 +580,46 @@
       flex-wrap: wrap;
     }
 
-    .btn-nav {
-      background: #ffd54f;
-      color: #4a148c;
+    .btn-nav,
+    .btn-accion {
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
       border: none;
-      padding: 12px 30px;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 1.2rem;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.12rem;
       border: 3px solid white;
-      transition: all 0.2s;
+      transition: transform .18s, background .18s;
+      box-shadow: 0 5px 0 var(--amarillo-sombra);
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: white;
-      transform: scale(1.05);
+    .btn-nav:hover:not(:disabled),
+    .btn-accion:hover {
+      background: #fff3c4;
+      transform: translateY(-2px);
     }
 
     .btn-nav:disabled {
       background: #b0bec5;
-      opacity: 0.5;
+      color: #52616b;
+      opacity: .65;
       cursor: not-allowed;
+      box-shadow: 0 5px 0 #78909c;
     }
 
     .contador {
-      background: #4a148c;
+      background: var(--morado-oscuro);
       color: white;
-      padding: 8px 25px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      border: 2px solid #ffd54f;
+      padding: 9px 24px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 2px solid var(--amarillo);
     }
 
     .resultado {
       text-align: center;
-      padding: 30px;
+      padding: 28px;
       display: none;
     }
 
@@ -256,168 +628,364 @@
     }
 
     .resultado-emoji {
-      font-size: 5rem;
-      margin-bottom: 15px;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 34px;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      border: 4px solid #fff;
+      box-shadow: 0 8px 0 var(--amarillo-sombra);
+      font-size: 2.7rem;
     }
 
     .resultado-titulo {
       font-family: 'Fredoka One', cursive;
-      font-size: 2.5rem;
-      color: #ffd54f;
-      margin-bottom: 15px;
+      font-size: clamp(2.1rem, 5vw, 2.9rem);
+      color: var(--amarillo);
+      margin-bottom: 14px;
+      text-shadow: 3px 3px 0 rgba(74,20,140,.55);
     }
 
     .resultado-puntaje {
-      font-size: 4rem;
+      font-size: clamp(2.6rem, 8vw, 4rem);
       font-weight: 900;
       color: white;
-      background: #4a148c;
+      background: var(--morado-oscuro);
       display: inline-block;
-      padding: 20px 50px;
-      border-radius: 60px;
-      margin: 20px 0;
-      border: 4px solid #ffd54f;
+      padding: 16px 44px;
+      border-radius: 999px;
+      margin: 18px 0;
+      border: 4px solid var(--amarillo);
     }
 
-    .btn-accion {
-      background: #ffd54f;
-      color: #4a148c;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 60px;
+    .resultado p {
       font-weight: 800;
-      font-size: 1.3rem;
-      margin: 10px;
-      border: 4px solid white;
-      transition: all 0.2s;
     }
 
-    .btn-accion:hover {
-      transform: scale(1.05);
-      background: white;
+    .acciones-resultado {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
     }
 
-    @media (max-width: 768px) {
-      .quiz-container {
-        margin: 20px;
-        padding: 25px;
+    @media (max-width: 760px) {
+      .panel-principal {
+        padding: 22px;
+        border-radius: 30px;
       }
 
-      .quiz-header h1 {
-        font-size: 2.2rem;
+      .tarjeta-pregunta {
+        padding: 22px;
       }
 
+      .timer-container,
       .navegador-quiz {
         flex-direction: column;
+      }
+
+      .btn-nav,
+      .contador {
+        width: 100%;
+        text-align: center;
+      }
+
+      .comparacion-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .signo-placeholder {
+        transform: rotate(90deg);
+      }
+
+      .recta-wrap {
+        height: 132px;
+      }
+
+      .opcion-visual {
+        min-height: 120px;
       }
     }
   </style>
 </head>
 <body>
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
 
-<div class="quiz-container">
-  <div class="quiz-header">
-    <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
-    <h1>Mini-Quiz</h1>
-    <p class="lead">Equivalencias numéricas · Nivel Fácil</p>
-    <span class="badge-nivel">⭐ 5 preguntas · 4 correctas para avanzar</span>
-  </div>
+<main class="quiz-container">
+  <section class="panel-principal">
+    <div class="quiz-header">
+      <div class="icono-header"><i class="fas fa-ruler-combined"></i></div>
+      <h1>Mini-Quiz</h1>
+      <p class="lead">Equivalencias num&eacute;ricas &middot; Nivel F&aacute;cil</p>
+      <span class="badge-nivel"><i class="fas fa-star"></i> 6 retos visuales &middot; necesitas 5 correctas</span>
+    </div>
 
-  <div class="timer-container">
-    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
-    <span class="timer-value" id="timerDisplay">00:00</span>
-  </div>
+    <div class="timer-container">
+      <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i>Tiempo:</span>
+      <span class="timer-value" id="timerDisplay">00:00</span>
+    </div>
 
-  <div class="progreso-quiz" id="progresoQuiz">
-    <div class="punto activo" data-i="0">1</div>
-    <div class="punto" data-i="1">2</div>
-    <div class="punto" data-i="2">3</div>
-    <div class="punto" data-i="3">4</div>
-    <div class="punto" data-i="4">5</div>
-  </div>
+    <div class="progreso-quiz" id="progresoQuiz"></div>
 
-  <div id="preguntasContainer"></div>
+    <div id="preguntasContainer"></div>
 
-  <div class="navegador-quiz" id="navBotones">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>← Anterior</button>
-    <span class="contador" id="contadorPregunta">1/5</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)">Siguiente →</button>
-    <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;">Enviar</button>
-  </div>
+    <div class="navegador-quiz" id="navBotones">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>
+        <i class="fas fa-arrow-left me-2"></i>Anterior
+      </button>
+      <span class="contador" id="contadorPregunta">1/6</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)" disabled>
+        Siguiente<i class="fas fa-arrow-right ms-2"></i>
+      </button>
+      <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;" disabled>
+        Enviar<i class="fas fa-paper-plane ms-2"></i>
+      </button>
+    </div>
 
-  <div class="resultado" id="resultado">
-    <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
-    <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
-    <div class="resultado-puntaje" id="resultadoPuntaje">5/5</div>
-    <p class="mb-4" id="resultadoMensaje"></p>
-    <p class="text-white-50" id="resultadoTiempo"></p>
-    <button class="btn-accion" onclick="volverAlContenido()">
-      <i class="fas fa-arrow-left me-2"></i> Volver
-    </button>
-    <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
-      Nivel normal <i class="fas fa-arrow-right ms-2"></i>
-    </button>
-    <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
-      <i class="fas fa-redo me-2"></i> Reintentar
-    </button>
-  </div>
-</div>
+    <div class="resultado" id="resultado">
+      <div class="resultado-emoji" id="resultadoEmoji"><i class="fas fa-trophy"></i></div>
+      <div class="resultado-titulo" id="resultadoTitulo">&iexcl;Lo lograste!</div>
+      <div class="resultado-puntaje" id="resultadoPuntaje">6/6</div>
+      <p class="mb-2" id="resultadoMensaje"></p>
+      <p class="text-white-50" id="resultadoTiempo"></p>
+
+      <div class="acciones-resultado">
+        <button class="btn-accion" onclick="volverAlContenido()">
+          <i class="fas fa-arrow-left me-2"></i>Volver
+        </button>
+        <button class="btn-accion" id="btnSiguienteNivel" onclick="irSiguienteNivel()" style="display: none;">
+          Nivel normal <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+        <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+          <i class="fas fa-redo me-2"></i>Reintentar
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
 
 <script>
   let fechaInicio = new Date();
   let timerInterval = null;
   let estiloUsuario = null;
 
-  const preguntas = [
+  [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+    if (audio) audio.volume = 0.15;
+  });
+
+  function playFx(id) {
+    try {
+      const audio = document.getElementById(id);
+      if (!audio) return;
+      audio.volume = 0.15;
+      audio.currentTime = 0;
+      const promesa = audio.play();
+      if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+    } catch (_) {}
+  }
+
+  function normalizarSlugEstilo(valor) {
+    return String(valor || 'visual_verbal')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
+  }
+
+  function barra(fill, total, extraClass = "") {
+    return `<div class="decimal-bar ${extraClass}" data-fill="${fill}" data-total="${total}"></div>`;
+  }
+
+  function cuadricula(fill, extraClass = "") {
+    return `<div class="hundred-grid ${extraClass}" data-fill="${fill}"></div>`;
+  }
+
+  function comparacionDecimal() {
+    return `
+      <div class="recurso-titulo">Compara las dos cantidades del mismo entero</div>
+      <div class="comparacion-wrap">
+        <div class="tarjeta-decimal">
+          <span>0.45</span>
+          ${cuadricula(45, "compacta")}
+        </div>
+        <div class="signo-placeholder">?</div>
+        <div class="tarjeta-decimal">
+          <span>0.50</span>
+          ${cuadricula(50, "compacta")}
+        </div>
+      </div>
+    `;
+  }
+
+  function rectaDecimal() {
+    const marcas = Array.from({ length: 11 }, (_, i) => {
+      const left = 7 + i * 8.6;
+      const etiqueta = i === 0 ? "0" : (i === 10 ? "1" : "");
+      return `<div class="marca-recta" style="left:${left}%"><span>${etiqueta}</span></div>`;
+    }).join("");
+
+    return `
+      <div class="recurso-titulo">Recta de 0 a 1 dividida en d&eacute;cimos</div>
+      <div class="recta-wrap">
+        <div class="linea-recta"></div>
+        ${marcas}
+        <div class="punto-recta" style="left:${7 + 3 * 8.6}%">A</div>
+        <div class="punto-recta" style="left:${7 + 7 * 8.6}%">B</div>
+        <div class="punto-recta" style="left:${7 + 9 * 8.6}%">C</div>
+      </div>
+    `;
+  }
+
+  function secuenciaModelos() {
+    return `
+      <div class="recurso-titulo">Lee los modelos de izquierda a derecha</div>
+      <div class="secuencia-modelos">
+        <div class="mini-modelo">
+          <span class="titulo-mini">Modelo 1</span>
+          ${barra(10, 10, "compacta")}
+        </div>
+        <span class="flecha-secuencia">&rarr;</span>
+        <div class="mini-modelo">
+          <span class="titulo-mini">Modelo 2</span>
+          ${barra(6, 10, "compacta")}
+        </div>
+        <span class="flecha-secuencia">&rarr;</span>
+        <div class="mini-modelo">
+          <span class="titulo-mini">Modelo 3</span>
+          ${cuadricula(43, "compacta")}
+        </div>
+      </div>
+    `;
+  }
+
+  function secuenciaOpcion(valores) {
+    return `
+      <span class="secuencia-opcion">
+        <span class="chip-decimal">${valores[0]}</span>
+        <span class="flecha-secuencia">&rarr;</span>
+        <span class="chip-decimal">${valores[1]}</span>
+        <span class="flecha-secuencia">&rarr;</span>
+        <span class="chip-decimal">${valores[2]}</span>
+      </span>
+    `;
+  }
+
+  const basePreguntas = [
     {
-      texto: "¿Qué decimal equivale a 1/2?",
-      opciones: ["0.25", "0.5", "0.75"],
-      correcta: 1,
-      explicacion: "La mitad se puede escribir como 1/2, 0.5 o 50%."
-    },
-    {
-      texto: "¿Qué porcentaje equivale a 1/4?",
-      opciones: ["25%", "50%", "75%"],
-      correcta: 0,
-      explicacion: "Un cuarto equivale a 25%."
-    },
-    {
-      texto: "¿Qué fracción equivale a 0.75?",
-      opciones: ["1/4", "1/2", "3/4"],
-      correcta: 2,
-      explicacion: "0.75 representa tres cuartos, es decir, 3/4."
-    },
-    {
-      texto: "Completa la equivalencia: 1/2 = 0.5 =",
-      opciones: ["25%", "50%", "75%"],
-      correcta: 1,
-      explicacion: "La mitad equivale a 50%."
-    },
-    {
-      texto: "¿Cuál grupo muestra cantidades equivalentes?",
+      texto: "&iquest;Qu&eacute; modelo representa la unidad completa, es decir, 1.0?",
+      pista: "Observa todos los modelos antes de elegir.",
+      claseOpciones: "modelos",
       opciones: [
-        "1/4, 0.25, 25%",
-        "1/4, 0.5, 25%",
-        "3/4, 0.25, 75%"
+        { visual: barra(8, 10), correcta: false },
+        { visual: barra(10, 10), correcta: true },
+        { visual: barra(6, 10), correcta: false }
       ],
-      correcta: 0,
-      explicacion: "1/4, 0.25 y 25% representan la misma cantidad."
+      explicacion: "La unidad completa tiene todo el modelo lleno. Por eso se escribe 1.0."
+    },
+    {
+      texto: "&iquest;Qu&eacute; barra representa 0.6?",
+      pista: "Cuenta las partes coloreadas con cuidado.",
+      claseOpciones: "modelos",
+      opciones: [
+        { visual: barra(5, 10), correcta: false },
+        { visual: barra(6, 10), correcta: true },
+        { visual: barra(7, 10), correcta: false }
+      ],
+      explicacion: "0.6 representa 6 de 10 partes iguales coloreadas."
+    },
+    {
+      texto: "&iquest;Qu&eacute; cuadr&iacute;cula representa 0.43?",
+      pista: "Revisa cu&aacute;ntos cuadritos est&aacute;n coloreados.",
+      claseOpciones: "modelos",
+      opciones: [
+        { visual: cuadricula(34), correcta: false },
+        { visual: cuadricula(52), correcta: false },
+        { visual: cuadricula(43), correcta: true }
+      ],
+      explicacion: "0.43 son 43 cent&eacute;simas: 43 cuadritos coloreados de 100."
+    },
+    {
+      texto: "&iquest;Qu&eacute; signo compara correctamente 0.45 con 0.50?",
+      recurso: comparacionDecimal(),
+      claseOpciones: "signos",
+      opciones: [
+        { html: '<span class="signo-grande">&lt;</span>', correcta: true },
+        { html: '<span class="signo-grande">=</span>', correcta: false },
+        { html: '<span class="signo-grande">&gt;</span>', correcta: false }
+      ],
+      explicacion: "0.45 tiene menos parte coloreada que 0.50. Entonces 0.45 &lt; 0.50."
+    },
+    {
+      texto: "En la recta num&eacute;rica, &iquest;qu&eacute; punto marca 0.7?",
+      recurso: rectaDecimal(),
+      claseOpciones: "signos",
+      opciones: [
+        { texto: "Punto A", correcta: false },
+        { texto: "Punto B", correcta: true },
+        { texto: "Punto C", correcta: false }
+      ],
+      explicacion: "0.7 est&aacute; en la s&eacute;ptima marca despu&eacute;s del cero. Ese lugar corresponde al punto B."
+    },
+    {
+      texto: "&iquest;Qu&eacute; lista corresponde a los modelos de izquierda a derecha?",
+      recurso: secuenciaModelos(),
+      opciones: [
+        { html: secuenciaOpcion(["1.0", "0.6", "0.43"]), correcta: true },
+        { html: secuenciaOpcion(["0.6", "1.0", "0.43"]), correcta: false },
+        { html: secuenciaOpcion(["1.0", "0.43", "0.6"]), correcta: false }
+      ],
+      explicacion: "Los modelos muestran una unidad completa, luego seis d&eacute;cimas y al final cuarenta y tres cent&eacute;simas."
     }
   ];
+
+  function mezclar(array) {
+    const copia = [...array];
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  }
+
+  const preguntas = basePreguntas.map((pregunta) => ({
+    ...pregunta,
+    opciones: mezclar(pregunta.opciones)
+  }));
 
   let preguntaActual = 0;
   let respuestas = new Array(preguntas.length).fill(null);
   let aciertos = 0;
   const TOTAL = preguntas.length;
-  const MINIMO = 4;
+  const MINIMO = 5;
 
   async function obtenerEstiloUsuario() {
     try {
       const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
       const data = await res.json();
-      estiloUsuario = data.estilo || 'visual_verbal';
+      estiloUsuario = normalizarSlugEstilo(data.estilo || 'visual_verbal');
     } catch (e) {
       estiloUsuario = 'visual_verbal';
+    }
+  }
+
+  function obtenerSessionUuidActual(nivel) {
+    try {
+      const estilo = estiloUsuario || 'visual_verbal';
+      const key = `reforzamiento_sesion_6_${nivel}_${estilo}`;
+      const raw = window.sessionStorage.getItem(key);
+      if (!raw) return null;
+      const meta = JSON.parse(raw);
+      return typeof meta.sessionUuid === 'string' ? meta.sessionUuid : null;
+    } catch (e) {
+      return null;
     }
   }
 
@@ -429,62 +997,115 @@
     document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
+  function crearPuntos() {
+    const progreso = document.getElementById('progresoQuiz');
+    progreso.innerHTML = preguntas.map((_, i) => (
+      `<div class="punto ${i === 0 ? 'activo' : ''}" data-i="${i}">${i + 1}</div>`
+    )).join("");
+  }
+
+  function renderizarBarrasYCuadriculas() {
+    document.querySelectorAll('.decimal-bar').forEach((barraEl) => {
+      const total = Number(barraEl.dataset.total || 10);
+      const fill = Number(barraEl.dataset.fill || 0);
+      barraEl.innerHTML = Array.from({ length: total }, (_, i) => (
+        `<span class="bar-cell ${i < fill ? 'fill' : ''}"></span>`
+      )).join("");
+    });
+
+    document.querySelectorAll('.hundred-grid').forEach((gridEl) => {
+      const fill = Number(gridEl.dataset.fill || 0);
+      gridEl.innerHTML = Array.from({ length: 100 }, (_, i) => (
+        `<span class="grid-cell ${i < fill ? 'fill' : ''}"></span>`
+      )).join("");
+    });
+  }
+
+  function contenidoOpcion(opcion, idx, pregunta) {
+    const etiquetaModelo = pregunta.claseOpciones === "modelos" ? `Modelo ${String.fromCharCode(65 + idx)}` : "";
+    const visual = opcion.visual ? `<div class="opcion-visual">${opcion.visual}</div>` : "";
+    const contenido = opcion.html || opcion.texto || etiquetaModelo;
+    const etiqueta = opcion.visual ? `<span class="opcion-label">${etiquetaModelo}</span>` : `<span class="opcion-label">${contenido}</span>`;
+    return `${visual}${etiqueta}`;
+  }
+
   function mostrarPregunta() {
     const container = document.getElementById('preguntasContainer');
     const p = preguntas[preguntaActual];
     const respondida = respuestas[preguntaActual] !== null;
-    const esCorrecta = respondida ? respuestas[preguntaActual] === p.correcta : false;
+    const opcionElegida = respondida ? p.opciones[respuestas[preguntaActual]] : null;
+    const esCorrecta = Boolean(opcionElegida && opcionElegida.correcta);
 
-    let opcionesHTML = '';
-    p.opciones.forEach((opcion, idx) => {
+    const opcionesHTML = p.opciones.map((opcion, idx) => {
       let claseBtn = 'opcion-btn';
       if (respondida) {
-        if (idx === p.correcta) claseBtn += ' correcta';
-        if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
+        if (opcion.correcta) claseBtn += ' correcta';
+        if (idx === respuestas[preguntaActual] && !opcion.correcta) claseBtn += ' incorrecta';
       }
-      opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${String.fromCharCode(65 + idx)}) ${opcion}</button>`;
-    });
+
+      return `
+        <button class="${claseBtn}" onclick="seleccionarRespuesta(${idx})" ${respondida ? 'disabled' : ''}>
+          ${contenidoOpcion(opcion, idx, p)}
+        </button>
+      `;
+    }).join("");
 
     container.innerHTML = `
       <div class="tarjeta-pregunta">
-        <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+        <div class="pregunta-numero"><i class="fas fa-location-dot"></i> PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
-        <div class="opciones">${opcionesHTML}</div>
+        ${p.pista ? `<div class="pista-corta">${p.pista}</div>` : ""}
+        ${p.recurso ? `<div class="recurso-visual">${p.recurso}</div>` : ""}
+        <div class="opciones ${p.claseOpciones || ''}">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
-          ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
+          ${respondida ? (esCorrecta ? '<i class="fas fa-check-circle me-2"></i>' : '<i class="fas fa-circle-info me-2"></i>') + p.explicacion : ''}
         </div>
       </div>
     `;
 
+    renderizarBarrasYCuadriculas();
     actualizarPuntos();
-    document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
     actualizarBotones();
+    document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
   }
 
-  function seleccionarRespuesta(idxPregunta, idxOpcion) {
-    if (respuestas[idxPregunta] !== null) return;
-    respuestas[idxPregunta] = idxOpcion;
-    if (idxOpcion === preguntas[idxPregunta].correcta) aciertos++;
-    document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
+  function seleccionarRespuesta(idxOpcion) {
+    if (respuestas[preguntaActual] !== null) return;
+
+    playFx('sndClick');
+    respuestas[preguntaActual] = idxOpcion;
+    if (preguntas[preguntaActual].opciones[idxOpcion].correcta) {
+      aciertos++;
+      playFx('sndDing');
+    } else {
+      playFx('sndError');
+    }
+
+    const punto = document.querySelectorAll('.punto')[preguntaActual];
+    if (punto) punto.classList.add('respondido');
+
     mostrarPregunta();
   }
 
   function cambiarPregunta(direccion) {
     if (direccion === -1 && preguntaActual > 0) {
+      playFx('sndClick');
       preguntaActual--;
       mostrarPregunta();
-    } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
-      if (respuestas[preguntaActual] !== null) {
-        preguntaActual++;
-        mostrarPregunta();
-      }
+      return;
+    }
+
+    if (direccion === 1 && preguntaActual < TOTAL - 1 && respuestas[preguntaActual] !== null) {
+      playFx('sndClick');
+      preguntaActual++;
+      mostrarPregunta();
     }
   }
 
   function actualizarPuntos() {
     document.querySelectorAll('.punto').forEach((punto, i) => {
-      punto.classList.remove('activo');
-      if (i === preguntaActual) punto.classList.add('activo');
+      punto.classList.toggle('activo', i === preguntaActual);
+      punto.classList.toggle('respondido', respuestas[i] !== null);
     });
   }
 
@@ -494,74 +1115,83 @@
     const btnEnviar = document.getElementById('btnEnviar');
     const respondidaActual = respuestas[preguntaActual] !== null;
 
-    btnAnterior.disabled = (preguntaActual === 0);
+    btnAnterior.disabled = preguntaActual === 0;
 
     if (preguntaActual === TOTAL - 1) {
       btnSiguiente.style.display = 'none';
       btnEnviar.style.display = 'inline-block';
+      btnEnviar.disabled = !respondidaActual || respuestas.some((r) => r === null);
     } else {
       btnSiguiente.style.display = 'inline-block';
       btnEnviar.style.display = 'none';
+      btnSiguiente.disabled = !respondidaActual;
     }
   }
 
   async function enviarQuiz() {
-    const sinResponder = respuestas.filter(r => r === null).length;
+    const sinResponder = respuestas.filter((r) => r === null).length;
     if (sinResponder > 0) {
+      playFx('sndError');
       alert(`Te faltan ${sinResponder} preguntas por responder`);
       return;
     }
 
+    playFx('sndClick');
     if (timerInterval) clearInterval(timerInterval);
 
     const fechaFin = new Date();
     const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
+    const resultado = document.getElementById('resultado');
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
 
     document.getElementById('preguntasContainer').style.display = 'none';
     document.getElementById('progresoQuiz').style.display = 'none';
     document.getElementById('navBotones').style.display = 'none';
-
-    const resultado = document.getElementById('resultado');
     resultado.classList.add('visible');
 
-    const aprobado = aciertos >= MINIMO;
-    const pct = Math.round((aciertos / TOTAL) * 100);
-
     document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
-    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
-    document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
+    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '<i class="fas fa-trophy"></i>' : '<i class="fas fa-book-open"></i>';
+    document.getElementById('resultadoTiempo').innerHTML = `Tiempo: ${tiempoSegundos} segundos`;
 
     if (aprobado) {
-      document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Muy bien! El nivel normal está desbloqueado.`;
+      playFx('sndTada');
+      document.getElementById('resultadoTitulo').innerHTML = '&iexcl;Excelente!';
+      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Ya reconoces unidades, d&eacute;cimos y cent&eacute;simos en modelos visuales.`;
       document.getElementById('btnSiguienteNivel').style.display = 'inline-block';
       document.getElementById('btnReintentar').style.display = 'none';
-      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
     } else {
+      playFx('sndError');
       document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
       document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para avanzar.`;
       document.getElementById('btnSiguienteNivel').style.display = 'none';
       document.getElementById('btnReintentar').style.display = 'inline-block';
-      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
     }
+
+    await guardarProgreso(aciertos, TOTAL, tiempoSegundos, aprobado);
   }
 
   async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
+    const payload = {
+      contenido_id: 6,
+      nivel_completado: 'facil',
+      puntaje: Math.round((aciertos / total) * 100),
+      aprobado: aprobado,
+      aciertos: aciertos,
+      total_preguntas: total,
+      errores: Math.max(total - aciertos, 0),
+      tiempo_segundos: tiempoSegundos,
+      fecha_inicio: fechaInicio.toISOString(),
+      fecha_fin: new Date().toISOString(),
+      session_uuid: obtenerSessionUuidActual('facil')
+    };
+
     try {
       await fetch('/api/progreso/nivel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          contenido_id: 6,
-          nivel_completado: 'facil',
-          puntaje: Math.round((aciertos / total) * 100),
-          aprobado: aprobado,
-          aciertos: aciertos,
-          total_preguntas: total,
-          tiempo_segundos: tiempoSegundos,
-          fecha_inicio: fechaInicio.toISOString()
-        })
+        body: JSON.stringify(payload)
       });
     } catch (e) {
       console.error('Error guardando progreso:', e);
@@ -569,43 +1199,50 @@
   }
 
   function reiniciarQuiz() {
+    playFx('sndClick');
     preguntaActual = 0;
     respuestas = new Array(preguntas.length).fill(null);
     aciertos = 0;
     fechaInicio = new Date();
 
+    preguntas.forEach((pregunta) => {
+      pregunta.opciones = mezclar(pregunta.opciones);
+    });
+
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(actualizarTimer, 1000);
-
-    document.querySelectorAll('.punto').forEach((punto, i) => {
-      punto.classList.remove('respondido', 'activo');
-      if (i === 0) punto.classList.add('activo');
-    });
+    actualizarTimer();
 
     document.getElementById('preguntasContainer').style.display = 'block';
     document.getElementById('progresoQuiz').style.display = 'flex';
     document.getElementById('navBotones').style.display = 'flex';
     document.getElementById('resultado').classList.remove('visible');
 
+    crearPuntos();
     mostrarPregunta();
   }
 
   function volverAlContenido() {
+    playFx('sndClick');
     window.location.href = '/contenidos/matematicas/equivalencias-numericas/menu.html';
   }
 
   async function irSiguienteNivel() {
     if (!estiloUsuario) await obtenerEstiloUsuario();
+    playFx('sndClick');
     window.location.href = `../normal/${estiloUsuario}.html`;
   }
 
   (async function init() {
     await obtenerEstiloUsuario();
+    crearPuntos();
     mostrarPregunta();
+    actualizarTimer();
     timerInterval = setInterval(actualizarTimer, 1000);
   })();
 </script>
 
+<script src="/recursos/js/bayes-quiz-feedback.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

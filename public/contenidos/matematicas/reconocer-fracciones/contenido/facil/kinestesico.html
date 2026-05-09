@@ -798,6 +798,14 @@
 </head>
 <body>
 
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/exito.mp3"></audio>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
+
   <header class="cabecera">
     <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al menú">
       <i class="fas fa-arrow-left"></i>
@@ -1195,16 +1203,136 @@
     const actividadesResueltas = {
       1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false
     };
+    const intentosPagina = {
+      1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0
+    };
+    const apartadosKinestesico = {
+      p1: { pagina:1, apartadoClave:'p1_unidad_completa_kin', tipoActividad:'tocar_entero' },
+      p2: { pagina:2, apartadoClave:'p2_dividir_unidad_kin', tipoActividad:'seleccionar_division' },
+      p3: { pagina:3, apartadoClave:'p3_partes_del_todo_kin', tipoActividad:'seleccionar_partes' },
+      p4: { pagina:4, apartadoClave:'p4_numerador_denominador_kin', tipoActividad:'arrastrar_etiquetas' },
+      p5: { pagina:5, apartadoClave:'p5_construir_fraccion_kin', tipoActividad:'arrastrar_fraccion' },
+      p6: { pagina:6, apartadoClave:'p6_ordenar_fracciones_kin', tipoActividad:'ordenar_fracciones' },
+      p7: { pagina:7, apartadoClave:'p7_recta_numerica_kin', tipoActividad:'arrastrar_punto' }
+    };
+    let trackerKinestesico = null;
+    let sessionTrackerKinestesico = null;
+    let quizTrackerAdjunto = false;
+
+    [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+      if (audio) audio.volume = 0.15;
+    });
+
+    function playFx(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
+    }
+
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerKinestesico = window.createReforzamientoTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'kinestesico',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'reconocer_fracciones',
+            variante: 'kinestesico_facil'
+          },
+          apartados: apartadosKinestesico
+        });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerKinestesico = window.createReforzamientoSessionTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'kinestesico'
+        });
+      }
+    }
+
+    function clavePagina(page) {
+      return 'p' + page;
+    }
+
+    function marcarPaginaVisible(page, detalleExtra) {
+      if (!trackerKinestesico) return;
+      trackerKinestesico.markVisible(clavePagina(page), {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        ...detalleExtra
+      });
+    }
+
+    function registrarError(page, detalle) {
+      intentosPagina[page] += 1;
+      if (!trackerKinestesico) return;
+      trackerKinestesico.addError(clavePagina(page), 1, {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        intento: intentosPagina[page],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(page, respuesta, detalleExtra) {
+      if (actividadesResueltas[page]) return;
+
+      actividadesResueltas[page] = true;
+
+      if (trackerKinestesico) {
+        trackerKinestesico.addCorrect(clavePagina(page), 1, {
+          pagina: page,
+          ejercicio: clavePagina(page),
+          respuesta,
+          errores_previos: intentosPagina[page],
+          ...detalleExtra
+        });
+
+        await trackerKinestesico.complete(clavePagina(page), {
+          detalle: {
+            pagina: page,
+            ejercicio: clavePagina(page),
+            respuesta,
+            ...detalleExtra
+          }
+        });
+      }
+
+      if (page === 7) {
+        playFx('sndTada');
+        actualizarEstadoQuiz();
+      } else {
+        playFx('sndDing');
+      }
+
+      actualizarNavegacion();
+    }
 
     function volverAlMenu() {
+      playFx('sndClick');
       window.location.href = '../../menu.html';
     }
 
     function cambiarPagina(direccion) {
+      if (direccion === 1 && !actividadesResueltas[paginaActual]) return;
+      const destino = paginaActual + direccion;
+      if (destino < 1 || destino > totalPaginas) return;
+
+      playFx('sndClick');
       document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
+      paginaActual = destino;
       document.getElementById(`pagina${paginaActual}`).classList.add('activa');
       actualizarNavegacion();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function actualizarNavegacion() {
@@ -1217,24 +1345,35 @@
 
       document.getElementById('btnAnterior').disabled = paginaActual === 1;
       document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !actividadesResueltas[paginaActual]);
-    }
-
-    function resolverPagina(numero) {
-      actividadesResueltas[numero] = true;
-      if (numero === 7) desbloquearMiniQuiz();
-      actualizarNavegacion();
+      actualizarEstadoQuiz();
     }
 
     function validarMiniQuiz(event) {
-      if (!actividadesResueltas[7]) {
+      if (!Object.values(actividadesResueltas).every(Boolean)) {
         event.preventDefault();
+        playFx('sndError');
         return false;
       }
+      playFx('sndClick');
       return true;
     }
 
-    function desbloquearMiniQuiz() {
-      document.getElementById('btnMiniQuiz').classList.remove('bloqueado');
+    function actualizarEstadoQuiz() {
+      const botonQuiz = document.getElementById('btnMiniQuiz');
+      if (!botonQuiz) return;
+
+      if (Object.values(actividadesResueltas).every(Boolean)) {
+        botonQuiz.classList.remove('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'false');
+
+        if (!quizTrackerAdjunto && sessionTrackerKinestesico) {
+          sessionTrackerKinestesico.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+          quizTrackerAdjunto = true;
+        }
+      } else {
+        botonQuiz.classList.add('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'true');
+      }
     }
 
     function resetEstado() {
@@ -1272,11 +1411,14 @@
       const barra = document.getElementById('chocoInteractP1');
       const ok = document.getElementById('feedback1ok');
 
-      barra.addEventListener('click', () => {
+      barra.addEventListener('click', async () => {
         if (actividadesResueltas[1]) return;
+        playFx('sndClick');
         renderChocolate('chocoInteractP1', 1, 1, true, false);
         ok.classList.add('visible');
-        resolverPagina(1);
+        await completarPagina(1, 'unidad_completa', {
+          actividad: 'tocar_entero'
+        });
       });
     }
 
@@ -1288,8 +1430,9 @@
       const warn = document.getElementById('feedback2warn');
 
       botones.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           if (actividadesResueltas[2]) return;
+          playFx('sndClick');
 
           botones.forEach(b => b.classList.remove('activo'));
           btn.classList.add('activo');
@@ -1300,10 +1443,18 @@
           if (corte === 4) {
             warn.classList.remove('visible');
             ok.classList.add('visible');
-            resolverPagina(2);
+            await completarPagina(2, '4_partes', {
+              actividad: 'seleccionar_division',
+              division: corte
+            });
           } else {
             ok.classList.remove('visible');
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(2, {
+              actividad: 'seleccionar_division',
+              division: corte
+            });
           }
         });
       });
@@ -1316,8 +1467,9 @@
       const warn = document.getElementById('feedback3warn');
 
       piezas.forEach(p => {
-        p.addEventListener('click', () => {
+        p.addEventListener('click', async () => {
           if (actividadesResueltas[3]) return;
+          playFx('sndClick');
 
           p.classList.toggle('selected');
           const seleccionadas = document.querySelectorAll('#sandwichP3 .sandwich-piece.selected').length;
@@ -1326,10 +1478,22 @@
           if (seleccionadas === 2) {
             warn.classList.remove('visible');
             ok.classList.add('visible');
-            resolverPagina(3);
+            await completarPagina(3, '2_de_4', {
+              actividad: 'seleccionar_partes',
+              partes_tomadas: seleccionadas,
+              total_partes: 4
+            });
           } else {
             ok.classList.remove('visible');
             warn.classList.add('visible');
+            if (seleccionadas > 2) {
+              playFx('sndError');
+              registrarError(3, {
+                actividad: 'seleccionar_partes',
+                partes_tomadas: seleccionadas,
+                total_partes: 4
+              });
+            }
           }
         });
       });
@@ -1343,6 +1507,7 @@
 
       etiquetas.forEach(et => {
         et.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('palabra', et.dataset.palabra);
           e.dataTransfer.setData('texto', et.textContent.trim());
         });
@@ -1351,7 +1516,7 @@
       slots.forEach(slot => {
         slot.addEventListener('dragover', e => e.preventDefault());
 
-        slot.addEventListener('drop', e => {
+        slot.addEventListener('drop', async e => {
           e.preventDefault();
           if (slot.dataset.lleno === 'true') return;
 
@@ -1371,10 +1536,18 @@
             if (completos === 2) {
               warn.classList.remove('visible');
               ok.classList.add('visible');
-              resolverPagina(4);
+              await completarPagina(4, 'numerador_denominador', {
+                actividad: 'arrastrar_etiquetas'
+              });
             }
           } else {
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(4, {
+              actividad: 'arrastrar_etiquetas',
+              palabra,
+              esperado: slot.dataset.esperado
+            });
           }
         });
       });
@@ -1383,6 +1556,7 @@
     function initPagina5() {
       document.querySelectorAll('#zonaPiezas5 .pieza').forEach(pieza => {
         pieza.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('texto', pieza.dataset.texto);
         });
       });
@@ -1398,7 +1572,7 @@
 
       zona.addEventListener('dragleave', () => zona.classList.remove('sobre'));
 
-      zona.addEventListener('drop', e => {
+      zona.addEventListener('drop', async e => {
         e.preventDefault();
         zona.classList.remove('sobre');
 
@@ -1409,7 +1583,15 @@
           zona.classList.add('correcta');
           contenido.innerHTML = `<div class="respuesta-colocada">${texto}</div>`;
           ok.classList.add('visible');
-          resolverPagina(5);
+          await completarPagina(5, '3/4', {
+            actividad: 'arrastrar_fraccion'
+          });
+        } else {
+          playFx('sndError');
+          registrarError(5, {
+            actividad: 'arrastrar_fraccion',
+            respuesta: texto
+          });
         }
       });
     }
@@ -1422,6 +1604,7 @@
 
       tarjetas.forEach(card => {
         card.addEventListener('dragstart', e => {
+          playFx('sndClick');
           e.dataTransfer.setData('orden', card.dataset.orden);
           e.dataTransfer.setData('texto', card.textContent.trim());
         });
@@ -1430,7 +1613,7 @@
       slots.forEach(slot => {
         slot.addEventListener('dragover', e => e.preventDefault());
 
-        slot.addEventListener('drop', e => {
+        slot.addEventListener('drop', async e => {
           e.preventDefault();
           if (slot.dataset.lleno === 'true') return;
 
@@ -1450,10 +1633,18 @@
             if (completos === 3) {
               warn.classList.remove('visible');
               ok.classList.add('visible');
-              resolverPagina(6);
+              await completarPagina(6, '1/4_2/4_3/4', {
+                actividad: 'ordenar_fracciones'
+              });
             }
           } else {
             warn.classList.add('visible');
+            playFx('sndError');
+            registrarError(6, {
+              actividad: 'ordenar_fracciones',
+              respuesta: texto,
+              posicion_esperada: slot.dataset.esperado
+            });
           }
         });
       });
@@ -1465,12 +1656,13 @@
       const ok = document.getElementById('feedback7ok');
 
       ficha.addEventListener('dragstart', e => {
+        playFx('sndClick');
         e.dataTransfer.setData('punto', '3/4');
       });
 
       zona.addEventListener('dragover', e => e.preventDefault());
 
-      zona.addEventListener('drop', e => {
+      zona.addEventListener('drop', async e => {
         e.preventDefault();
         if (actividadesResueltas[7]) return;
 
@@ -1479,12 +1671,16 @@
           ficha.style.left = '72%';
           zona.classList.add('correcta');
           ok.classList.add('visible');
-          resolverPagina(7);
+          await completarPagina(7, '3/4', {
+            actividad: 'arrastrar_punto',
+            destino: '3/4'
+          });
         }
       });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      initTrackers();
       resetEstado();
       initPagina1();
       initPagina2();
@@ -1493,6 +1689,12 @@
       initPagina5();
       initPagina6();
       initPagina7();
+      actualizarEstadoQuiz();
+      marcarPaginaVisible(1);
+
+      if (sessionTrackerKinestesico) {
+        sessionTrackerKinestesico.start();
+      }
     });
   </script>
 </body>

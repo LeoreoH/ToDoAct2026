@@ -355,10 +355,13 @@
     .feedback-box.ok  { background:var(--verde-pale); color:var(--verde-oscuro); border:2px solid #86efac; display:block; }
     .feedback-box.err { background:var(--rojo-pale);  color:var(--rojo-err);    border:2px solid #fca5a5; display:block; }
 
-    .btn-quiz-wrap { margin-top:7px; display:none; }
+    .btn-quiz-wrap { margin-top:7px; display:block; }
     .btn-quiz-wrap.visible { display:block; }
     .btn-quiz { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--verde-med),var(--verde)); color:white; text-decoration:none; padding:7px 18px; border-radius:40px; font-family:'Cinzel',serif; font-size:.82rem; letter-spacing:.05em; box-shadow:0 3px 0 var(--verde-oscuro); transition:all .2s; border:none; }
     .btn-quiz:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--verde-oscuro); color:white; }
+    .btn-quiz.bloqueado { background:#cbd5e1; box-shadow:0 3px 0 #94a3b8; color:white; cursor:not-allowed; }
+    .btn-quiz.bloqueado:hover { transform:none; box-shadow:0 3px 0 #94a3b8; color:white; }
+    .texto-ayuda-quiz { margin-top:7px; font-size:.62rem; font-weight:800; color:#166534; }
     .btn-reintentar { background:var(--verde-pale); color:var(--verde); border:2px solid #86efac; border-radius:30px; padding:5px 14px; font-weight:800; font-size:.68rem; cursor:pointer; margin-top:5px; transition:all .2s; display:none; }
     .btn-reintentar.visible { display:inline-block; }
     .btn-reintentar:hover { background:var(--verde-med); color:white; }
@@ -858,7 +861,8 @@
       <div class="feedback-box" id="feedbackBox"></div>
 
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece"></i> ¡Al ejercicio!</a>
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true"><i class="fas fa-puzzle-piece"></i> Ir al quiz</a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Resuelve correctamente este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">
         <i class="fas fa-redo-alt me-1"></i> Reintentar
@@ -869,7 +873,9 @@
 
 </div><!-- /layout -->
 
-<script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505c"></script>
+  <script>
 /* ══════════════════════════════════════════════════════════════
    MISMA RUTA VERIFICADA QUE visual_verbal.html
 
@@ -886,6 +892,10 @@
 
   var DESTINO = 'carrusel';
   var respondido = false;
+  var ejercicioCompletado = false;
+  var erroresVisualNoVerbal = 0;
+  var completadoRegistroVisualNoVerbal = false;
+  var quizTrackerAdjunto = false;
   var pasoActual = 1;
   var TOTAL = 5;
 
@@ -903,7 +913,111 @@
   var ESTADO_FINAL = { x:618, y:88, rot:90 };
   var estadoActual = ESTADOS[0];
 
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosVisualNoVerbal = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_ruta_jardin',
+      tipoActividad: 'visual_no_verbal_seleccion'
+    }
+  };
+
+  var trackerVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'visual_no_verbal',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'visual_no_verbal_normal' },
+    apartados: ejerciciosVisualNoVerbal
+  }) : null;
+
+  var sessionTrackerVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'normal',
+    estilo: 'visual_no_verbal'
+  }) : null;
+
   function play(id){ try{ var s=document.getElementById(id); s.currentTime=0; s.play(); }catch(e){} }
+
+  function registrarIntentoVisualNoVerbal(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroVisualNoVerbal) {
+        completadoRegistroVisualNoVerbal = true;
+        if (trackerVisualNoVerbal) {
+          trackerVisualNoVerbal.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            errores_previos: erroresVisualNoVerbal,
+            actividad: 'seleccionar_destino',
+            destino_correcto: DESTINO,
+            destino_elegido: detalle.destino || null,
+            paso_final: pasoActual
+          });
+          trackerVisualNoVerbal.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'seleccionar_destino',
+              destino_correcto: DESTINO,
+              destino_elegido: detalle.destino || null,
+              paso_final: pasoActual
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresVisualNoVerbal += 1;
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'seleccionar_destino',
+        intento: erroresVisualNoVerbal,
+        destino_elegido: detalle.destino || null,
+        paso_actual: pasoActual
+      });
+    }
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerVisualNoVerbal) {
+        sessionTrackerVisualNoVerbal.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Resuelve correctamente este reto para activar el quiz.';
+    }
+  }
 
   /* ── Brújula + flecha enorme de dirección ── */
   function actualizarBrujula(rot, anim) {
@@ -1010,7 +1124,7 @@
 
   /* ── Responder ── */
   function responder(id) {
-    if (respondido) return;
+    if (respondido || ejercicioCompletado) return;
     respondido = true;
     play('sndClick');
     ['fuente','carrusel','castillo','estatua'].forEach(function(d) {
@@ -1019,6 +1133,7 @@
     var fb = document.getElementById('feedbackBox');
 
     if (id === DESTINO) {
+      ejercicioCompletado = true;
       play('sndTada');
       aplicarEstado(ESTADO_FINAL, true);
       var md = document.getElementById('marcadorDestino');
@@ -1029,9 +1144,9 @@
       });
       fb.className = 'feedback-box ok';
       fb.innerHTML = '🎠 ¡Correcto! Los 5 pasos llevan al <strong>Carrusel</strong>: ↻→ (P1), 👣→×2 (P2), ↺↑ (P3), 👣↑×1 (P4), ↻→ + 👣×1 (P5). ✨';
-      document.getElementById('btnQuizWrap').classList.add('visible');
+      registrarIntentoVisualNoVerbal(true, { destino: id });
+      actualizarBotonQuiz();
       lanzarConfeti();
-      localStorage.setItem('progreso_normal_vnv_instrucciones', 'ok');
     } else {
       play('sndError');
       document.getElementById('dest-' + id).classList.add('incorrecta');
@@ -1044,10 +1159,12 @@
       fb.className = 'feedback-box err';
       fb.innerHTML = '❌ ' + (exp[id] || 'No es ese.') + ' Revisa todos los pasos.';
       document.getElementById('btnReintentar').classList.add('visible');
+      registrarIntentoVisualNoVerbal(false, { destino: id });
     }
   }
 
   function reintentar() {
+    if (ejercicioCompletado) return;
     respondido = false; pasoActual = 1;
     aplicarEstado(ESTADOS[0], false);
     resaltarPaso(1);
@@ -1056,7 +1173,6 @@
     });
     document.getElementById('feedbackBox').className = 'feedback-box';
     document.getElementById('btnReintentar').classList.remove('visible');
-    document.getElementById('btnQuizWrap').classList.remove('visible');
     var md = document.getElementById('marcadorDestino'); if (md) md.setAttribute('opacity', '0');
     var g = document.getElementById('rastroSVG'); while(g.firstChild) g.removeChild(g.firstChild);
   }
@@ -1113,13 +1229,31 @@
     window.location.href = '../dificil/' + estiloUsuario + '.html';
   }
 
+  var botonQuizVisualNoVerbal = document.getElementById('botonQuiz');
+  if (botonQuizVisualNoVerbal) {
+    botonQuizVisualNoVerbal.addEventListener('click', function(event) {
+      if (!ejercicioCompletado) {
+        event.preventDefault();
+        play('sndError');
+        return;
+      }
+      play('sndClick');
+    });
+  }
+
   /* ── Init ── */
   window.addEventListener('DOMContentLoaded', function() {
     ensureKF();
     aplicarEstado(ESTADOS[0], false);
     resaltarPaso(1);
-    if (localStorage.getItem('progreso_normal_vnv_instrucciones') === 'ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
+    actualizarBotonQuiz();
+
+    if (trackerVisualNoVerbal) {
+      trackerVisualNoVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (sessionTrackerVisualNoVerbal) {
+      sessionTrackerVisualNoVerbal.start();
     }
   });
 </script>

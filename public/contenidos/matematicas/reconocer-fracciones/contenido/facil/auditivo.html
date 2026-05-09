@@ -1,626 +1,1533 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reconocer fracciones · Nivel Fácil · Auditivo</title>
+  <title>Reconocer fracciones &middot; Nivel F&aacute;cil &middot; Auditivo</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #ede7f6, #f3e5f5);
-      color: #4a148c;
-      min-height: 100vh;
+    :root{
+      --m:#7b1fa2;
+      --m2:#5e35b1;
+      --l:#ede7f6;
+      --s:#d1c4e9;
+      --a:#ffd54f;
+      --v:#43a047;
+      --r:#e53935;
+      --t:#4a148c;
+      --cream:#fff8e1;
+      --border:#ce93d8;
+      --brown1:#8d6e63;
+      --brown2:#6d4c41;
+      --brown3:#4e342e;
+      --blue:#4fc3f7;
+      --blue2:#81d4fa;
     }
 
-    .cabecera {
-      background: linear-gradient(135deg, #7b1fa2, #512da8);
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-      border-bottom: 6px solid #ffd54f;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Nunito',sans-serif;
+      background:linear-gradient(135deg,#ede7f6,#f3e5f5);
+      color:var(--t);
     }
 
-    .cabecera h1 {
-      margin: 0;
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.6rem;
-      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    .cabecera{
+      position:relative;
+      background:linear-gradient(135deg,#8e24aa,#5e35b1);
+      color:#fff;
+      text-align:center;
+      padding:28px 20px;
+      border-bottom:6px solid var(--a);
+      box-shadow:0 10px 24px rgba(0,0,0,.16);
     }
 
-    .cabecera .subtitulo {
-      margin-top: 8px;
-      font-weight: 700;
-      font-size: 1.05rem;
+    .cabecera h1{
+      margin:0;
+      font-family:'Fredoka One',cursive;
+      font-size:2.55rem;
+      text-shadow:3px 3px 0 rgba(0,0,0,.14);
     }
 
-    .badge-estilo {
-      display: inline-block;
-      margin-top: 14px;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 3px solid white;
-      border-radius: 999px;
-      padding: 10px 24px;
-      font-weight: 800;
-      box-shadow: 0 4px 0 #d39e00;
+    .cabecera .subtitulo{
+      margin-top:8px;
+      font-weight:800;
+      font-size:1.04rem;
     }
 
-    .progreso {
-      max-width: 920px;
-      margin: 24px auto 0;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
+    .badge-estilo{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-top:14px;
+      background:var(--a);
+      color:var(--t);
+      border:3px solid #fff;
+      border-radius:999px;
+      padding:10px 22px;
+      font-weight:800;
+      box-shadow:0 4px 0 #d39e00;
     }
 
-    .progreso .texto {
-      font-weight: 800;
-      color: #6a1b9a;
-      white-space: nowrap;
+    .progreso{
+      max-width:980px;
+      margin:24px auto 0;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:999px;
+      box-shadow:0 6px 0 var(--s);
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
-    .barra-fondo {
-      flex: 1;
-      min-width: 150px;
-      height: 14px;
-      background: #ede7f6;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 2px solid #d1c4e9;
+    .texto-progreso{
+      font-weight:800;
+      color:#6a1b9a;
+      white-space:nowrap;
     }
 
-    .barra-relleno {
-      width: 25%;
-      height: 100%;
-      background: linear-gradient(90deg, #ab47bc, #7e57c2);
-      transition: width .3s;
+    .barra-fondo{
+      flex:1;
+      min-width:150px;
+      height:14px;
+      background:var(--l);
+      border-radius:999px;
+      overflow:hidden;
+      border:2px solid var(--s);
     }
 
-    .porcentaje {
-      background: #7b1fa2;
-      color: white;
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-weight: 800;
+    .barra-relleno{
+      width:14.28%;
+      height:100%;
+      background:linear-gradient(90deg,#ab47bc,#7e57c2);
+      transition:width .3s;
     }
 
-    .contenedor {
-      max-width: 950px;
-      margin: 26px auto 42px;
-      padding: 0 16px;
+    .porcentaje{
+      background:var(--m);
+      color:#fff;
+      padding:7px 14px;
+      border-radius:999px;
+      font-weight:800;
     }
 
-    .pagina {
-      display: none;
-      animation: aparecer .35s ease;
+    .contenedor{
+      max-width:1020px;
+      margin:26px auto 42px;
+      padding:0 16px;
     }
 
-    .pagina.activa {
-      display: block;
+    .pagina{
+      display:none;
+      animation:aparecer .35s ease;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    .pagina.activa{display:block}
+
+    @keyframes aparecer{
+      from{opacity:0;transform:translateY(12px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
-    .tarjeta {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 30px;
-      box-shadow: 0 10px 0 #d1c4e9;
-      padding: 24px;
-      margin-bottom: 18px;
+    .tarjeta{
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:30px;
+      box-shadow:0 10px 0 var(--s);
+      padding:26px;
+      margin-bottom:18px;
     }
 
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      color: #6a1b9a;
-      font-size: 2rem;
-      margin-bottom: 18px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 18px;
+    .titulo-pagina{
+      font-family:'Fredoka One',cursive;
+      color:#6a1b9a;
+      font-size:2rem;
+      margin-bottom:18px;
+      border-left:8px solid var(--a);
+      padding-left:18px;
     }
 
-    .audio-bloque {
-      background: #faf5ff;
-      border: 2px dashed #ce93d8;
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 18px;
+    .franja-audio{
+      background:#faf5ff;
+      border:2px dashed var(--border);
+      border-radius:20px;
+      padding:16px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
     }
 
-    .audio-bloque h4 {
-      color: #6a1b9a;
-      font-weight: 800;
-      margin-top: 0;
-      margin-bottom: 10px;
+    .controles-audio{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    audio {
-      width: 100%;
-      margin-top: 8px;
-      border-radius: 12px;
+    .btn-audio{
+      width:56px;
+      height:56px;
+      border:3px solid var(--a);
+      border-radius:50%;
+      background:var(--m);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:1.08rem;
+      box-shadow:0 5px 0 var(--m2);
+      cursor:pointer;
+      transition:.2s;
     }
 
-    .apoyo-visual {
-      background: white;
-      border: 2px solid #d1c4e9;
-      border-radius: 20px;
-      padding: 18px;
-      text-align: center;
-      margin-top: 16px;
+    .btn-audio:hover{
+      transform:translateY(-2px);
+      background:var(--m2);
     }
 
-    .fila-partes {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 14px 0;
+    .btn-audio.playing{
+      animation:pulse 1s infinite;
     }
 
-    .parte {
-      width: 76px;
-      height: 76px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 14px;
+    @keyframes pulse{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.08)}
+      100%{transform:scale(1)}
     }
 
-    .parte.coloreada {
-      background: linear-gradient(135deg, #ab47bc, #7e57c2);
+    .nota-audio{
+      background:#fff;
+      border:2px dashed var(--m);
+      border-radius:16px;
+      padding:10px 14px;
+      font-weight:800;
+      color:#6a1b9a;
     }
 
-    .parte.circulo {
-      border-radius: 50%;
+    .micro-pistas{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .actividad {
-      background: #faf5ff;
-      border: 3px dashed #ba68c8;
-      border-radius: 24px;
-      padding: 20px;
-      margin-top: 20px;
+    .micro-pista{
+      background:#fff;
+      border:2px solid var(--s);
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:800;
+      color:#7b1fa2;
+      white-space:nowrap;
     }
 
-    .actividad h3 {
-      text-align: center;
-      color: #6a1b9a;
-      font-size: 1.35rem;
-      font-weight: 800;
-      margin-bottom: 16px;
+    .actividad{
+      background:#faf5ff;
+      border:3px dashed #ba68c8;
+      border-radius:24px;
+      padding:22px;
+      margin-top:22px;
     }
 
-    .btn-reproducir {
-      display: inline-block;
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 22px;
-      font-weight: 800;
-      margin: 0 auto 16px;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #5e35b1;
+    .actividad-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
     }
 
-    .btn-reproducir:hover {
-      background: #5e35b1;
+    .actividad h3{
+      margin:0;
+      color:#6a1b9a;
+      font-size:1.28rem;
+      font-weight:800;
     }
 
-    .opciones {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
+    .instruccion{
+      margin:0;
+      font-weight:800;
+      color:#7b1fa2;
     }
 
-    .opcion {
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #d1c4e9;
-      transition: .2s;
+    .opciones-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      gap:16px;
+      margin-top:8px;
     }
 
-    .opcion:hover {
-      transform: translateY(-2px);
-      background: #f7f1ff;
+    .option-card,
+    .fraction-card,
+    .relation-card,
+    .point-btn{
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:22px;
+      box-shadow:0 5px 0 var(--s);
+      cursor:pointer;
+      transition:.2s;
+      color:#6a1b9a;
     }
 
-    .opcion.correcta {
-      background: #e8f5e9;
-      border-color: #43a047;
-      color: #2e7d32;
+    .option-card:hover,
+    .fraction-card:hover,
+    .relation-card:hover,
+    .point-btn:hover{
+      transform:translateY(-2px);
+      background:#f7f1ff;
     }
 
-    .opcion.incorrecta {
-      background: #ffebee;
-      border-color: #e53935;
-      color: #c62828;
+    .option-card{
+      min-height:160px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .mensaje-feedback {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 800;
-      text-align: center;
-      display: none;
+    .fraction-card,
+    .relation-card{
+      min-height:156px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .mensaje-feedback.visible {
-      display: block;
+    .choice-correct{
+      background:#e8f5e9!important;
+      border-color:var(--v)!important;
+      color:#2e7d32!important;
+      cursor:not-allowed;
     }
 
-    .mensaje-ok {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 2px solid #43a047;
+    .choice-wrong{
+      background:#ffebee!important;
+      border-color:var(--r)!important;
+      color:#c62828!important;
     }
 
-    .mensaje-warn {
-      background: #fff8e1;
-      color: #8d6e00;
-      border: 2px solid #ffd54f;
+    .choice-disabled{
+      pointer-events:none;
     }
 
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 999px;
-      padding: 14px 20px;
-      box-shadow: 0 6px 0 #d1c4e9;
-      flex-wrap: wrap;
+    .mensaje-feedback{
+      margin-top:16px;
+      padding:12px 16px;
+      border-radius:16px;
+      font-weight:800;
+      text-align:center;
+      display:none;
     }
 
-    .btn-nav {
-      background: #7b1fa2;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-weight: 800;
-      transition: .2s;
+    .mensaje-feedback.visible{display:block}
+
+    .mensaje-ok{
+      background:#e8f5e9;
+      color:#2e7d32;
+      border:2px solid var(--v);
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: #5e35b1;
-      transform: translateY(-2px);
+    .mensaje-warn{
+      background:#fff8e1;
+      color:#8d6e00;
+      border:2px solid var(--a);
     }
 
-    .btn-nav:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+    .tip{
+      margin-top:16px;
+      padding:12px 16px;
+      border-radius:16px;
+      background:var(--cream);
+      border:2px solid var(--a);
+      color:#7b1fa2;
+      font-weight:800;
+      text-align:center;
     }
 
-    .contador {
-      font-weight: 800;
-      color: #6a1b9a;
-      background: #f3e5f5;
-      border: 2px solid #ce93d8;
-      padding: 8px 16px;
-      border-radius: 999px;
+    .whole-bar,
+    .half-bar{
+      border:4px solid var(--brown3);
+      background:linear-gradient(180deg,var(--brown1),var(--brown2));
+      box-shadow:0 6px 0 var(--brown3);
+      border-radius:24px;
+      overflow:hidden;
+      margin:0 auto;
+      position:relative;
     }
 
-    .boton-quiz {
-      display: inline-block;
-      margin: 28px auto 0;
-      text-decoration: none;
-      background: #ffd54f;
-      color: #4a148c;
-      border: 4px solid #7b1fa2;
-      padding: 16px 34px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      box-shadow: 0 7px 0 #d39e00;
-      transition: .2s;
+    .whole-bar{
+      width:142px;
+      height:92px;
     }
 
-    .boton-quiz:hover {
-      transform: translateY(-3px);
-      background: #fff3c4;
+    .whole-bar::before,
+    .half-bar::before{
+      content:'';
+      position:absolute;
+      inset:12px 10px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#9c7b71,#6d4c41);
+      box-shadow:inset 0 4px 0 rgba(255,255,255,.18), inset 0 -4px 0 rgba(0,0,0,.12);
     }
 
-    @media (max-width: 768px) {
-      .cabecera h1 { font-size: 2rem; }
-      .titulo-pagina { font-size: 1.55rem; }
-      .parte { width: 60px; height: 60px; }
+    .half-bar{
+      width:84px;
+      height:92px;
+    }
+
+    .piece-row{
+      width:142px;
+      display:flex;
+      gap:6px;
+      margin:0 auto;
+      justify-content:center;
+    }
+
+    .piece-row.loose{
+      width:124px;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .mini-piece,
+    .mini-slot{
+      flex:1;
+      height:82px;
+      border-radius:18px;
+      border:4px solid var(--brown3);
+      background:linear-gradient(180deg,var(--brown1),var(--brown2));
+      box-shadow:0 6px 0 var(--brown3);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .mini-piece::before{
+      content:'';
+      position:absolute;
+      inset:10px 8px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#9c7b71,#6d4c41);
+    }
+
+    .mini-slot{
+      border-style:dashed;
+      background:#faf5ff;
+      box-shadow:none;
+    }
+
+    .piece-row.loose .mini-piece,
+    .piece-row.loose .mini-slot{
+      flex:none;
+      width:52px;
+      height:60px;
+    }
+
+    .piece-row.loose .mini-piece:nth-child(1){transform:rotate(-8deg)}
+    .piece-row.loose .mini-piece:nth-child(2){transform:rotate(7deg)}
+    .piece-row.loose .mini-piece:nth-child(3){transform:rotate(5deg)}
+    .piece-row.loose .mini-piece:nth-child(4){transform:rotate(-6deg)}
+
+    .solo-piece{
+      width:58px;
+      height:82px;
+      flex:none;
+      margin:0 auto;
+    }
+
+    .solo-piece.missing-fragment::after{
+      content:'';
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      width:34px;
+      height:34px;
+      background:#fff;
+      border-left:4px solid var(--brown3);
+      border-bottom:4px solid var(--brown3);
+      border-bottom-left-radius:18px;
+      z-index:2;
+    }
+
+    .division-bar{
+      width:152px;
+      height:90px;
+      border:4px solid var(--m);
+      border-radius:22px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 6px 0 var(--s);
+      display:flex;
+      margin:0 auto;
+    }
+
+    .division-bar .cut{
+      background:#fff;
+      border-right:3px solid var(--m);
+      height:100%;
+    }
+
+    .division-bar .cut:last-child{border-right:none}
+
+    .strip{
+      width:154px;
+      height:44px;
+      border:4px solid var(--m);
+      border-radius:14px;
+      display:grid;
+      overflow:hidden;
+      margin:0 auto;
+      background:#fff;
+      box-shadow:0 6px 0 rgba(209,196,233,.8);
+    }
+
+    .strip.s4{grid-template-columns:repeat(4,1fr)}
+    .strip.s5{grid-template-columns:repeat(5,1fr)}
+
+    .strip .seg{
+      border-right:2px solid #d1c4e9;
+      background:#fff;
+    }
+
+    .strip .seg:last-child{border-right:none}
+
+    .strip .seg.fill{background:linear-gradient(135deg,var(--blue),var(--blue2))}
+
+    .modelo-box{
+      background:#fff;
+      border:2px solid var(--s);
+      border-radius:22px;
+      padding:18px;
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .modelo-box h4{
+      margin:0 0 14px;
+      color:#6a1b9a;
+      font-weight:900;
+    }
+
+    .fraccion-hero{
+      background:#fff;
+      border:2px solid var(--s);
+      border-radius:24px;
+      padding:22px 18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .hero-tag{
+      background:#f3e5f5;
+      border:2px solid var(--border);
+      border-radius:999px;
+      padding:7px 14px;
+      font-weight:800;
+      color:#7b1fa2;
+    }
+
+    .fraccion-grande{
+      display:inline-block;
+      min-width:110px;
+      font-size:2.4rem;
+      font-weight:900;
+      color:#5e35b1;
+      line-height:1.05;
+      text-align:center;
+    }
+
+    .fraccion-grande .linea{
+      display:block;
+      height:4px;
+      margin:6px 0;
+      border-radius:2px;
+      background:#5e35b1;
+    }
+
+    .relation-stack{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      width:100%;
+    }
+
+    .relation-row{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .num-chip{
+      min-width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:1.1rem;
+      color:#fff;
+      background:#7b1fa2;
+    }
+
+    .num-chip.alt{background:#ff8f00}
+
+    .label-chip{
+      border-radius:999px;
+      border:2px solid var(--s);
+      background:#fff;
+      padding:7px 12px;
+      font-weight:800;
+      color:#6a1b9a;
+    }
+
+    .fraction-stack{
+      display:inline-block;
+      min-width:68px;
+      text-align:center;
+      font-weight:900;
+      color:#5e35b1;
+      font-size:1.8rem;
+      line-height:1.05;
+    }
+
+    .fraction-stack .linea{
+      display:block;
+      height:4px;
+      margin:4px 0;
+      border-radius:2px;
+      background:#5e35b1;
+    }
+
+    .fraction-card .choice-wrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+    }
+
+    .recta-wrap{
+      background:#fff;
+      border:2px solid var(--s);
+      border-radius:24px;
+      padding:22px 18px 28px;
+      margin-bottom:18px;
+    }
+
+    .recta{
+      position:relative;
+      max-width:860px;
+      height:190px;
+      margin:0 auto;
+    }
+
+    .linea-base{
+      position:absolute;
+      left:7%;
+      right:7%;
+      top:108px;
+      height:8px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#5e35b1,#8e24aa);
+    }
+
+    .tick{
+      position:absolute;
+      top:86px;
+      width:0;
+      height:44px;
+      border-left:3px solid var(--m);
+      transform:translateX(-50%);
+    }
+
+    .tick .lab{
+      position:absolute;
+      top:48px;
+      left:50%;
+      transform:translateX(-50%);
+      font-weight:900;
+      color:#6a1b9a;
+      background:#fff;
+      border-radius:999px;
+      padding:2px 10px;
+      white-space:nowrap;
+    }
+
+    .point-btn{
+      position:absolute;
+      top:16px;
+      width:74px;
+      height:74px;
+      transform:translateX(-50%);
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:1.15rem;
+      font-weight:900;
+      padding:0;
+    }
+
+    .point-btn::after{
+      content:'';
+      position:absolute;
+      left:50%;
+      top:72px;
+      width:4px;
+      height:34px;
+      transform:translateX(-50%);
+      background:#ab47bc;
+      border-radius:4px;
+    }
+
+    .navegador{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:999px;
+      padding:14px 20px;
+      box-shadow:0 6px 0 var(--s);
+      flex-wrap:wrap;
+    }
+
+    .btn-nav{
+      background:var(--m);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:12px 24px;
+      font-weight:800;
+      transition:.2s;
+    }
+
+    .btn-nav:hover:not(:disabled){
+      background:var(--m2);
+      transform:translateY(-2px);
+    }
+
+    .btn-nav:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .contador{
+      font-weight:800;
+      color:#6a1b9a;
+      background:#f3e5f5;
+      border:2px solid var(--border);
+      padding:8px 16px;
+      border-radius:999px;
+    }
+
+    .boton-quiz{
+      display:flex;
+      width:fit-content;
+      margin:28px auto 0;
+      text-decoration:none;
+      background:var(--a);
+      color:var(--t);
+      border:4px solid var(--m);
+      padding:16px 34px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:1.12rem;
+      box-shadow:0 7px 0 #d39e00;
+      transition:.2s;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .boton-quiz:hover:not(.bloqueado){
+      transform:translateY(-3px);
+      background:#fff3c4;
+    }
+
+    .boton-quiz.bloqueado{
+      opacity:.55;
+      cursor:not-allowed;
+      background:#e0e0e0;
+      color:#777;
+      border-color:#bdbdbd;
+      box-shadow:0 7px 0 #9e9e9e;
+    }
+
+    @media (max-width:768px){
+      .cabecera h1{font-size:2rem}
+      .titulo-pagina{font-size:1.55rem}
+      .tarjeta{padding:22px 18px}
+      .opciones-grid{grid-template-columns:1fr}
+      .point-btn{width:60px;height:60px;font-size:1rem}
+      .point-btn::after{top:58px;height:40px}
+      .recta{height:200px}
+      .whole-bar{width:128px;height:82px}
+      .piece-row,.division-bar{width:128px}
+      .mini-piece,.mini-slot{height:72px}
     }
   </style>
 </head>
 <body>
+  <audio id="audioP1Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p1_intro.mp3"></audio>
+  <audio id="audioP1Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p1_ej1.mp3"></audio>
+  <audio id="audioP2Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p2_intro.mp3"></audio>
+  <audio id="audioP2Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p2_ej1.mp3"></audio>
+  <audio id="audioP3Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p3_intro.mp3"></audio>
+  <audio id="audioP3Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p3_ej1.mp3"></audio>
+  <audio id="audioP4Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p4_intro.mp3"></audio>
+  <audio id="audioP4Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p4_ej1.mp3"></audio>
+  <audio id="audioP5Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p5_intro.mp3"></audio>
+  <audio id="audioP5Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p5_ej1.mp3"></audio>
+  <audio id="audioP6Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p6_intro.mp3"></audio>
+  <audio id="audioP6Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p6_ej1.mp3"></audio>
+  <audio id="audioP7Intro" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p7_intro.mp3"></audio>
+  <audio id="audioP7Ej1" preload="none" src="/contenidos/matematicas/reconocer-fracciones/contenido/facil/audios/frac_facil_p7_ej1.mp3"></audio>
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/exito.mp3"></audio>
+
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
 
   <header class="cabecera">
-    <h1>🟣 FRACCIONES</h1>
-    <div class="subtitulo">Reconocer fracciones · Nivel Fácil</div>
-    <div class="badge-estilo">🎧 Auditivo</div>
+    <h1>FRACCIONES</h1>
+    <div class="subtitulo">Reconocer fracciones &middot; Nivel F&aacute;cil</div>
+    <div class="badge-estilo"><i class="fas fa-headphones"></i><span>Auditivo</span></div>
   </header>
 
   <div class="progreso">
-    <span class="texto" id="progresoTexto">Página 1 de 4</span>
-    <div class="barra-fondo">
-      <div class="barra-relleno" id="barraRelleno"></div>
-    </div>
-    <span class="porcentaje" id="progresoPorcentaje">25%</span>
+    <span class="texto-progreso" id="progresoTexto">P&aacute;gina 1 de 7</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="porcentaje" id="progresoPorcentaje">14%</span>
   </div>
 
   <div class="contenedor">
-
-    <!-- PAGINA 1 -->
     <section class="pagina activa" id="pagina1">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-headphones me-2"></i>Escucha qué es una fracción</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-cube me-2"></i>1. Unidad completa</h2>
 
-        <div class="audio-bloque">
-          <h4>Audio 1: Partes de un todo</h4>
-          <audio controls>
-            <source src="audios/01-que-es-una-fraccion.mp3" type="audio/mpeg">
-          </audio>
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP1Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Mira el todo</div>
+            <div class="micro-pista">🎧 Sigue el audio</div>
+            <div class="micro-pista">👆 Toca una figura</div>
+          </div>
         </div>
 
-        <div class="apoyo-visual">
-          <div class="fila-partes">
-            <div class="parte coloreada"></div>
-            <div class="parte"></div>
-            <div class="parte"></div>
-            <div class="parte"></div>
+        <div class="actividad">
+          <div class="actividad-head">
+            <h3>Respuesta visual</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP1Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
           </div>
-          <p class="fw-bold mb-0">1 parte coloreada de 4 partes iguales</p>
+
+          <div class="opciones-grid shuffle-group" id="opcionesP1">
+            <button class="option-card choice-item" data-page="1" data-value="split" aria-label="opcion" type="button">
+              <div class="piece-row loose">
+                <div class="mini-piece"></div><div class="mini-piece"></div><div class="mini-slot"></div><div class="mini-slot"></div>
+              </div>
+            </button>
+            <button class="option-card choice-item" data-page="1" data-value="whole" data-correct="1" aria-label="opcion correcta" type="button">
+              <div class="whole-bar"></div>
+            </button>
+            <button class="option-card choice-item" data-page="1" data-value="half" aria-label="opcion" type="button">
+              <div class="mini-piece solo-piece missing-fragment"></div>
+            </button>
+            <button class="option-card choice-item" data-page="1" data-value="missing" aria-label="opcion" type="button">
+              <div class="piece-row">
+                <div class="mini-piece"></div><div class="mini-piece"></div><div class="mini-piece"></div><div class="mini-slot"></div>
+              </div>
+            </button>
+          </div>
+
+          <div class="tip">La unidad es el objeto completo.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok1">✅ Muy bien. Identificaste el todo.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn1">⚠️ Vuelve a escuchar y busca la figura completa.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 2 -->
     <section class="pagina" id="pagina2">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-volume-up me-2"></i>Escucha y responde</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-grip-lines me-2"></i>2. Partes iguales</h2>
+
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP2Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Mira la divisi&oacute;n</div>
+            <div class="micro-pista">🧩 Partes iguales</div>
+            <div class="micro-pista">👆 Toca una barra</div>
+          </div>
+        </div>
 
         <div class="actividad">
-          <h3>¿Qué fracción escuchas?</h3>
+          <div class="actividad-head">
+            <h3>Respuesta visual</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP2Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
+          </div>
 
-          <div class="text-center">
-            <button class="btn-reproducir" onclick="reproducirAudio('audioPregunta2')">
-              🔊 Reproducir audio
+          <div class="opciones-grid shuffle-group" id="opcionesP2">
+            <button class="option-card choice-item" data-page="2" data-value="tres" type="button">
+              <div class="division-bar">
+                <div class="cut" style="width:33.33%"></div>
+                <div class="cut" style="width:33.33%"></div>
+                <div class="cut" style="width:33.33%"></div>
+              </div>
             </button>
-            <audio id="audioPregunta2">
-              <source src="audios/02-pregunta-un-medio.mp3" type="audio/mpeg">
-            </audio>
+            <button class="option-card choice-item" data-page="2" data-value="cuatro-desiguales" type="button">
+              <div class="division-bar">
+                <div class="cut" style="width:18%"></div>
+                <div class="cut" style="width:33%"></div>
+                <div class="cut" style="width:21%"></div>
+                <div class="cut" style="width:28%"></div>
+              </div>
+            </button>
+            <button class="option-card choice-item" data-page="2" data-value="cuatro-iguales" data-correct="1" type="button">
+              <div class="division-bar">
+                <div class="cut" style="width:25%"></div>
+                <div class="cut" style="width:25%"></div>
+                <div class="cut" style="width:25%"></div>
+                <div class="cut" style="width:25%"></div>
+              </div>
+            </button>
+            <button class="option-card choice-item" data-page="2" data-value="cinco" type="button">
+              <div class="division-bar">
+                <div class="cut" style="width:20%"></div>
+                <div class="cut" style="width:20%"></div>
+                <div class="cut" style="width:20%"></div>
+                <div class="cut" style="width:20%"></div>
+                <div class="cut" style="width:20%"></div>
+              </div>
+            </button>
           </div>
 
-          <div class="opciones" id="opcionesPagina2">
-            <div class="opcion" data-correcta="true">1/2</div>
-            <div class="opcion" data-correcta="false">1/4</div>
-            <div class="opcion" data-correcta="false">2/1</div>
-          </div>
-
-          <div id="feedback2ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Correcto! La respuesta es 1/2.
-          </div>
-
-          <div id="feedback2warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Escucha otra vez con atención.
-          </div>
+          <div class="tip">Para una fracci&oacute;n, las partes deben medir lo mismo.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok2">✅ Correcto. Esa barra s&iacute; tiene cuatro partes iguales.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn2">⚠️ Revisa si las cuatro partes son del mismo tama&ntilde;o.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 3 -->
     <section class="pagina" id="pagina3">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-microphone-alt me-2"></i>Numerador y denominador</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-fill-drip me-2"></i>3. Partes tomadas</h2>
 
-        <div class="audio-bloque">
-          <h4>Audio 2: Números de la fracción</h4>
-          <audio controls>
-            <source src="audios/03-numerador-denominador.mp3" type="audio/mpeg">
-          </audio>
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP3Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Mira el modelo</div>
+            <div class="micro-pista">🎨 Partes marcadas</div>
+            <div class="micro-pista">👆 Toca una opci&oacute;n</div>
+          </div>
         </div>
 
         <div class="actividad">
-          <h3>Escucha y elige la respuesta correcta</h3>
+          <div class="actividad-head">
+            <h3>Respuesta visual</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP3Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
+          </div>
 
-          <div class="text-center">
-            <button class="btn-reproducir" onclick="reproducirAudio('audioPregunta3')">
-              🔊 Reproducir audio
+          <div class="opciones-grid shuffle-group" id="opcionesP3">
+            <button class="option-card choice-item" data-page="3" data-value="uno-cuatro" type="button">
+              <div class="strip s4">
+                <div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div>
+              </div>
             </button>
-            <audio id="audioPregunta3">
-              <source src="audios/04-pregunta-denominador.mp3" type="audio/mpeg">
-            </audio>
+            <button class="option-card choice-item" data-page="3" data-value="dos-cuatro" data-correct="1" type="button">
+              <div class="strip s4">
+                <div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div>
+              </div>
+            </button>
+            <button class="option-card choice-item" data-page="3" data-value="tres-cuatro" type="button">
+              <div class="strip s4">
+                <div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div>
+              </div>
+            </button>
+            <button class="option-card choice-item" data-page="3" data-value="dos-cinco" type="button">
+              <div class="strip s5">
+                <div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div>
+              </div>
+            </button>
           </div>
 
-          <div class="opciones" id="opcionesPagina3">
-            <div class="opcion" data-correcta="false">El numerador</div>
-            <div class="opcion" data-correcta="true">El denominador</div>
-            <div class="opcion" data-correcta="false">El color</div>
-          </div>
-
-          <div id="feedback3ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Muy bien! El número de abajo es el denominador.
-          </div>
-
-          <div id="feedback3warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Recuerda: el número de abajo indica el total de partes iguales.
-          </div>
+          <div class="tip">Cuenta las partes marcadas y el total de partes.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok3">✅ Muy bien. Ese modelo muestra dos de cuatro.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn3">⚠️ Deben verse dos partes marcadas de un total de cuatro.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGINA 4 -->
     <section class="pagina" id="pagina4">
       <div class="tarjeta">
-        <h2 class="titulo-pagina"><i class="fas fa-assistive-listening-systems me-2"></i>Escucha y relaciona con la imagen</h2>
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-up-long me-2"></i>4. Arriba y abajo</h2>
 
-        <div class="actividad">
-          <h3>¿Cuál imagen coincide con el audio?</h3>
-
-          <div class="text-center">
-            <button class="btn-reproducir" onclick="reproducirAudio('audioPregunta4')">
-              🔊 Reproducir audio
-            </button>
-            <audio id="audioPregunta4">
-              <source src="audios/05-pregunta-dos-tercios.mp3" type="audio/mpeg">
-            </audio>
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP4Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
           </div>
-
-          <div class="opciones" id="opcionesPagina4">
-            <div class="opcion" data-correcta="false">
-              <div class="fila-partes">
-                <div class="parte coloreada"></div>
-                <div class="parte"></div>
-                <div class="parte"></div>
-              </div>
-            </div>
-
-            <div class="opcion" data-correcta="true">
-              <div class="fila-partes">
-                <div class="parte circulo coloreada"></div>
-                <div class="parte circulo coloreada"></div>
-                <div class="parte circulo"></div>
-              </div>
-            </div>
-
-            <div class="opcion" data-correcta="false">
-              <div class="fila-partes">
-                <div class="parte coloreada"></div>
-                <div class="parte coloreada"></div>
-                <div class="parte"></div>
-                <div class="parte"></div>
-              </div>
-            </div>
-          </div>
-
-          <div id="feedback4ok" class="mensaje-feedback mensaje-ok">
-            ✅ ¡Excelente! Esa imagen representa 2/3.
-          </div>
-
-          <div id="feedback4warn" class="mensaje-feedback mensaje-warn">
-            ⚠️ Escucha de nuevo y cuenta las partes coloreadas y el total.
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Mira la fracci&oacute;n</div>
+            <div class="micro-pista">⬆️ Arriba / abajo</div>
+            <div class="micro-pista">👆 Toca una opci&oacute;n</div>
           </div>
         </div>
 
-        <div class="text-center">
-          <a href="quiz.html" class="boton-quiz">
-            <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
+        <div class="actividad">
+          <div class="fraccion-hero">
+            <div class="hero-tag">arriba</div>
+            <div class="fraccion-grande"><span>3</span><span class="linea"></span><span>4</span></div>
+            <div class="hero-tag">abajo</div>
+          </div>
+
+          <div class="actividad-head">
+            <h3>Relaci&oacute;n correcta</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP4Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
+          </div>
+
+          <div class="opciones-grid shuffle-group" id="opcionesP4">
+            <button class="relation-card choice-item" data-page="4" data-value="correcta" data-correct="1" type="button">
+              <div class="relation-stack">
+                <div class="relation-row"><span class="num-chip">3</span><span class="label-chip">Numerador</span></div>
+                <div class="relation-row"><span class="num-chip alt">4</span><span class="label-chip">Denominador</span></div>
+              </div>
+            </button>
+            <button class="relation-card choice-item" data-page="4" data-value="invertida" type="button">
+              <div class="relation-stack">
+                <div class="relation-row"><span class="num-chip">3</span><span class="label-chip">Denominador</span></div>
+                <div class="relation-row"><span class="num-chip alt">4</span><span class="label-chip">Numerador</span></div>
+              </div>
+            </button>
+            <button class="relation-card choice-item" data-page="4" data-value="numeros-cambiados" type="button">
+              <div class="relation-stack">
+                <div class="relation-row"><span class="num-chip alt">4</span><span class="label-chip">Numerador</span></div>
+                <div class="relation-row"><span class="num-chip">3</span><span class="label-chip">Denominador</span></div>
+              </div>
+            </button>
+          </div>
+
+          <div class="tip">El numerador va arriba. El denominador va abajo.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok4">✅ Excelente. Relacionaste bien los dos n&uacute;meros.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn4">⚠️ Vuelve a mirar qu&eacute; n&uacute;mero est&aacute; arriba y cu&aacute;l abajo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-puzzle-piece me-2"></i>5. Construimos la fracci&oacute;n</h2>
+
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP5Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Cuenta marcadas</div>
+            <div class="micro-pista">🧩 Cuenta totales</div>
+            <div class="micro-pista">👆 Toca una tarjeta</div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <div class="modelo-box">
+            <h4>Modelo</h4>
+            <div class="strip s4">
+              <div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div>
+            </div>
+          </div>
+
+          <div class="actividad-head">
+            <h3>Tarjeta correcta</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP5Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
+          </div>
+
+          <div class="opciones-grid shuffle-group" id="opcionesP5">
+            <button class="fraction-card choice-item" data-page="5" data-value="3-4" data-correct="1" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>3</span><span class="linea"></span><span>4</span></div>
+              </div>
+            </button>
+            <button class="fraction-card choice-item" data-page="5" data-value="2-4" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>2</span><span class="linea"></span><span>4</span></div>
+              </div>
+            </button>
+            <button class="fraction-card choice-item" data-page="5" data-value="4-3" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>4</span><span class="linea"></span><span>3</span></div>
+              </div>
+            </button>
+            <button class="fraction-card choice-item" data-page="5" data-value="1-4" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>1</span><span class="linea"></span><span>4</span></div>
+              </div>
+            </button>
+          </div>
+
+          <div class="tip">Arriba van las partes marcadas. Abajo, las partes totales.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok5">✅ Muy bien. Construiste la fracci&oacute;n correcta.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn5">⚠️ Cuenta otra vez las partes marcadas y las totales.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-arrow-up-wide-short me-2"></i>6. Mismo denominador</h2>
+
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP6Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Mismo abajo</div>
+            <div class="micro-pista">🔢 Cambia arriba</div>
+            <div class="micro-pista">👆 Toca la mayor</div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <div class="actividad-head">
+            <h3>Fracci&oacute;n mayor</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP6Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca una opci&oacute;n.</p>
+            </div>
+          </div>
+
+          <div class="opciones-grid shuffle-group" id="opcionesP6">
+            <button class="fraction-card choice-item" data-page="6" data-value="1-4" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>1</span><span class="linea"></span><span>4</span></div>
+                <div class="strip s4">
+                  <div class="seg fill"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div>
+                </div>
+              </div>
+            </button>
+            <button class="fraction-card choice-item" data-page="6" data-value="3-4" data-correct="1" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>3</span><span class="linea"></span><span>4</span></div>
+                <div class="strip s4">
+                  <div class="seg fill"></div><div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div>
+                </div>
+              </div>
+            </button>
+            <button class="fraction-card choice-item" data-page="6" data-value="2-4" type="button">
+              <div class="choice-wrap">
+                <div class="fraction-stack"><span>2</span><span class="linea"></span><span>4</span></div>
+                <div class="strip s4">
+                  <div class="seg fill"></div><div class="seg fill"></div><div class="seg"></div><div class="seg"></div>
+                </div>
+              </div>
+            </button>
+          </div>
+
+          <div class="tip">Si el denominador es igual, la fracci&oacute;n mayor tiene m&aacute;s partes tomadas.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok6">✅ Exacto. Elegiste la fracci&oacute;n mayor.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn6">⚠️ Compara cu&aacute;ntas partes est&aacute;n tomadas en cada opci&oacute;n.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-ruler-horizontal me-2"></i>7. Recta num&eacute;rica</h2>
+
+        <div class="franja-audio">
+          <div class="controles-audio">
+            <button class="btn-audio" onclick="reproducirAudio('audioP7Intro', this)"><i class="fas fa-play"></i></button>
+            <div class="nota-audio">Escucha primero.</div>
+          </div>
+          <div class="micro-pistas">
+            <div class="micro-pista">👀 Entre 0 y 1</div>
+            <div class="micro-pista">➗ 4 partes</div>
+            <div class="micro-pista">👆 Toca un punto</div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <div class="recta-wrap">
+            <div class="recta">
+              <div class="linea-base"></div>
+              <div class="tick" style="left:7%"><span class="lab">0</span></div>
+              <div class="tick" style="left:28.5%"><span class="lab"></span></div>
+              <div class="tick" style="left:50%"><span class="lab"></span></div>
+              <div class="tick" style="left:71.5%"><span class="lab"></span></div>
+              <div class="tick" style="left:93%"><span class="lab">1</span></div>
+
+              <button class="point-btn choice-item" data-page="7" data-value="A" type="button" style="left:28.5%">A</button>
+              <button class="point-btn choice-item" data-page="7" data-value="B" type="button" style="left:50%">B</button>
+              <button class="point-btn choice-item" data-page="7" data-value="C" data-correct="1" type="button" style="left:71.5%">C</button>
+              <button class="point-btn choice-item" data-page="7" data-value="D" type="button" style="left:93%">D</button>
+            </div>
+          </div>
+
+          <div class="actividad-head">
+            <h3>Punto correcto</h3>
+            <div class="controles-audio">
+              <button class="btn-audio" onclick="reproducirAudio('audioP7Ej1', this)"><i class="fas fa-play"></i></button>
+              <p class="instruccion">Escucha y toca en la recta.</p>
+            </div>
+          </div>
+
+          <div class="tip">Desde 0 hasta 1 hay cuatro saltos iguales.</div>
+          <div class="mensaje-feedback mensaje-ok" id="ok7">✅ Muy bien. Ubicaste el punto correcto.</div>
+          <div class="mensaje-feedback mensaje-warn" id="warn7">⚠️ Cuenta los saltos iguales entre 0 y 1.</div>
+
+          <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarQuiz(event)">
+            <i class="fas fa-puzzle-piece"></i>
+            Ir al Mini-Quiz
           </a>
         </div>
       </div>
     </section>
 
     <div class="navegador">
-      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
-        ← Anterior
-      </button>
-      <span class="contador" id="contadorPagina">1/4</span>
-      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">
-        Siguiente →
-      </button>
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/7</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
     </div>
-
   </div>
 
   <script>
+    const totalPaginas = 7;
     let paginaActual = 1;
-    const totalPaginas = 4;
+    let audioActual = null;
+    const state = {
+      solved: { 1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false },
+      answers: {}
+    };
+    const intentosPagina = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0 };
+    const apartadosAuditivo = {
+      p1: { pagina:1, apartadoClave:'p1_unidad_completa_audio', tipoActividad:'escuchar_y_elegir' },
+      p2: { pagina:2, apartadoClave:'p2_dividir_unidad_audio', tipoActividad:'escuchar_y_elegir' },
+      p3: { pagina:3, apartadoClave:'p3_partes_tomadas_audio', tipoActividad:'escuchar_y_elegir' },
+      p4: { pagina:4, apartadoClave:'p4_arriba_abajo_audio', tipoActividad:'escuchar_y_elegir' },
+      p5: { pagina:5, apartadoClave:'p5_construir_fraccion_audio', tipoActividad:'escuchar_y_elegir' },
+      p6: { pagina:6, apartadoClave:'p6_mismo_denominador_audio', tipoActividad:'escuchar_y_elegir' },
+      p7: { pagina:7, apartadoClave:'p7_recta_numerica_audio', tipoActividad:'escuchar_y_elegir' }
+    };
+    let trackerAuditivo = null;
+    let sessionTrackerAuditivo = null;
+    let quizTrackerAdjunto = false;
 
-    function cambiarPagina(direccion) {
-      document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-      paginaActual += direccion;
-      document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    function qs(selector) { return document.querySelector(selector); }
+    function qsa(selector) { return Array.from(document.querySelectorAll(selector)); }
+
+    [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+      if (audio) audio.volume = 0.15;
+    });
+
+    function playFx(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
+    }
+
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerAuditivo = window.createReforzamientoTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'auditivo',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'reconocer_fracciones',
+            variante: 'auditivo_facil'
+          },
+          apartados: apartadosAuditivo
+        });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerAuditivo = window.createReforzamientoSessionTracker({
+          contenidoId: 4,
+          nivel: 'facil',
+          estilo: 'auditivo'
+        });
+      }
+    }
+
+    function clavePagina(page) {
+      return 'p' + page;
+    }
+
+    function marcarPaginaVisible(page, detalleExtra) {
+      if (!trackerAuditivo) return;
+      trackerAuditivo.markVisible(clavePagina(page), {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        ...detalleExtra
+      });
+    }
+
+    function registrarError(page, detalle) {
+      intentosPagina[page] += 1;
+      if (!trackerAuditivo) return;
+      trackerAuditivo.addError(clavePagina(page), 1, {
+        pagina: page,
+        ejercicio: clavePagina(page),
+        intento: intentosPagina[page],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(page, value, detalleExtra) {
+      if (state.solved[page]) return;
+
+      state.solved[page] = true;
+      state.answers[String(page)] = value;
+
+      if (trackerAuditivo) {
+        trackerAuditivo.addCorrect(clavePagina(page), 1, {
+          pagina: page,
+          ejercicio: clavePagina(page),
+          respuesta: value,
+          errores_previos: intentosPagina[page],
+          ...detalleExtra
+        });
+
+        await trackerAuditivo.complete(clavePagina(page), {
+          detalle: {
+            pagina: page,
+            ejercicio: clavePagina(page),
+            respuesta: value,
+            ...detalleExtra
+          }
+        });
+      }
+
+      if (page === 7) {
+        playFx('sndTada');
+        actualizarEstadoQuiz();
+      } else {
+        playFx('sndDing');
+      }
+
       actualizarNavegacion();
-      localStorage.setItem('mate_fracciones_auditivo_facil', paginaActual);
+    }
+
+    function shuffleChildren(target) {
+      const el = typeof target === 'string' ? qs(target) : target;
+      if (!el) return;
+      const items = Array.from(el.children);
+      for (let i = items.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
+      }
+      items.forEach(item => el.appendChild(item));
+    }
+
+    function detenerAudioActual() {
+      if (!audioActual) return;
+      audioActual.pause();
+      audioActual.currentTime = 0;
+      qsa('.btn-audio').forEach(btn => btn.classList.remove('playing'));
+      audioActual = null;
+    }
+
+    function reproducirAudio(audioId, boton) {
+      const audio = document.getElementById(audioId);
+      if (!audio) return;
+
+      playFx('sndClick');
+
+      if (audioActual && audioActual.id === audioId && !audio.paused) {
+        detenerAudioActual();
+        return;
+      }
+
+      detenerAudioActual();
+      audio.currentTime = 0;
+      const promesa = audio.play();
+      if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      if (boton) boton.classList.add('playing');
+      audioActual = audio;
+      audio.onended = () => {
+        if (boton) boton.classList.remove('playing');
+        if (audioActual && audioActual.id === audioId) {
+          audioActual = null;
+        }
+      };
+    }
+
+    function mostrarFeedback(page, ok) {
+      qs('#ok' + page)?.classList.toggle('visible', ok);
+      qs('#warn' + page)?.classList.toggle('visible', !ok);
+    }
+
+    function flashError(el) {
+      if (!el) return;
+      el.classList.add('choice-wrong');
+      setTimeout(() => el.classList.remove('choice-wrong'), 700);
+    }
+
+    function bloquearPagina(page) {
+      qsa('.choice-item[data-page="' + page + '"]').forEach(item => {
+        item.classList.add('choice-disabled');
+        item.disabled = true;
+      });
+    }
+
+    function todasResueltas() {
+      return Object.values(state.solved).every(Boolean);
+    }
+
+    function actualizarEstadoQuiz() {
+      const botonQuiz = qs('#btnMiniQuiz');
+      if (!botonQuiz) return;
+
+      if (todasResueltas()) {
+        botonQuiz.classList.remove('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'false');
+
+        if (!quizTrackerAdjunto && sessionTrackerAuditivo) {
+          sessionTrackerAuditivo.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+          quizTrackerAdjunto = true;
+        }
+      } else {
+        botonQuiz.classList.add('bloqueado');
+        botonQuiz.setAttribute('aria-disabled', 'true');
+      }
+    }
+
+    function manejarSeleccion(btn) {
+      const page = Number(btn.dataset.page);
+      if (state.solved[page]) return;
+
+      playFx('sndClick');
+
+      if (btn.dataset.correct === '1') {
+        btn.classList.add('choice-correct');
+        bloquearPagina(page);
+        mostrarFeedback(page, true);
+        completarPagina(page, btn.dataset.value, {
+          actividad: 'escuchar_y_elegir',
+          respuesta: btn.dataset.value
+        });
+      } else {
+        flashError(btn);
+        mostrarFeedback(page, false);
+        playFx('sndError');
+        registrarError(page, {
+          actividad: 'escuchar_y_elegir',
+          respuesta: btn.dataset.value
+        });
+      }
     }
 
     function actualizarNavegacion() {
-      document.getElementById('progresoTexto').innerText = `Página ${paginaActual} de ${totalPaginas}`;
-      document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-
+      qs('#progresoTexto').innerText = 'P\u00e1gina ' + paginaActual + ' de ' + totalPaginas;
+      qs('#contadorPagina').innerText = paginaActual + '/' + totalPaginas;
       const porcentaje = (paginaActual / totalPaginas) * 100;
-      document.getElementById('barraRelleno').style.width = `${porcentaje}%`;
-      document.getElementById('progresoPorcentaje').innerText = `${Math.round(porcentaje)}%`;
-
-      document.getElementById('btnAnterior').disabled = paginaActual === 1;
-      document.getElementById('btnSiguiente').disabled = paginaActual === totalPaginas;
+      qs('#barraRelleno').style.width = porcentaje + '%';
+      qs('#progresoPorcentaje').innerText = Math.round(porcentaje) + '%';
+      qs('#btnAnterior').disabled = paginaActual === 1;
+      qs('#btnSiguiente').disabled = paginaActual === totalPaginas || !state.solved[paginaActual];
+      actualizarEstadoQuiz();
     }
 
-    function cargarProgreso() {
-      const guardado = localStorage.getItem('mate_fracciones_auditivo_facil');
-      if (guardado) {
-        const pag = parseInt(guardado, 10);
-        if (pag >= 1 && pag <= totalPaginas) {
-          document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-          paginaActual = pag;
-          document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        }
-      }
+    function cambiarPagina(direccion) {
+      if (direccion === 1 && !state.solved[paginaActual]) return;
+      const destino = paginaActual + direccion;
+      if (destino < 1 || destino > totalPaginas) return;
+      playFx('sndClick');
+      detenerAudioActual();
+      qs('#pagina' + paginaActual).classList.remove('activa');
+      paginaActual = destino;
+      qs('#pagina' + paginaActual).classList.add('activa');
       actualizarNavegacion();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function reproducirAudio(id) {
-      const audio = document.getElementById(id);
-      if (!audio) return;
-
-      document.querySelectorAll('audio').forEach(a => {
-        if (a !== audio) {
-          a.pause();
-          a.currentTime = 0;
-        }
-      });
-
-      audio.play();
+    function validarQuiz(event) {
+      if (!todasResueltas()) {
+        event.preventDefault();
+        playFx('sndError');
+        return false;
+      }
+      detenerAudioActual();
+      playFx('sndClick');
+      return true;
     }
 
-    function inicializarActividad(selector, okId, warnId) {
-      const opciones = document.querySelectorAll(selector + ' .opcion');
-      const ok = document.getElementById(okId);
-      const warn = document.getElementById(warnId);
-
-      opciones.forEach(op => {
-        op.addEventListener('click', () => {
-          if (op.dataset.correcta === 'true') {
-            opciones.forEach(x => x.style.pointerEvents = 'none');
-            op.classList.add('correcta');
-            warn.classList.remove('visible');
-            ok.classList.add('visible');
-          } else {
-            op.classList.add('incorrecta');
-            warn.classList.add('visible');
-            setTimeout(() => op.classList.remove('incorrecta'), 700);
-          }
-        });
-      });
+    function volverAlMenu() {
+      detenerAudioActual();
+      playFx('sndClick');
+      window.location.href = '../../menu.html';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      cargarProgreso();
-      inicializarActividad('#opcionesPagina2', 'feedback2ok', 'feedback2warn');
-      inicializarActividad('#opcionesPagina3', 'feedback3ok', 'feedback3warn');
-      inicializarActividad('#opcionesPagina4', 'feedback4ok', 'feedback4warn');
+      initTrackers();
+      qsa('.shuffle-group').forEach(shuffleChildren);
+
+      qsa('.choice-item').forEach(btn => {
+        btn.addEventListener('click', () => manejarSeleccion(btn));
+      });
+
+      qsa('.pagina').forEach(pagina => pagina.classList.remove('activa'));
+      qs('#pagina1').classList.add('activa');
+      paginaActual = 1;
+      actualizarEstadoQuiz();
+      actualizarNavegacion();
+      marcarPaginaVisible(1);
+
+      if (sessionTrackerAuditivo) {
+        sessionTrackerAuditivo.start();
+      }
     });
   </script>
 </body>
