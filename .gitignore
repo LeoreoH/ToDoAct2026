@@ -44,3 +44,9 @@ tmp_*
 *.pre_patch.bak.html
 *.rebuild.tmp.html
 *.rebuild2.tmp.html
+_tmp*/
+_docx_prompt_extract/
+_prompts_reconstruccion_ACTUALIZADO.docx
+.edge-headless/
+.git_tmp*/
+_history_restore_backup/
