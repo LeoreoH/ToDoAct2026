@@ -1,20 +1,15 @@
 const slug = "la-tierra";
-const area = "geografia";
 
 let preguntas = [];
 let contenidoId = null;
-let fechaInicio = null;
+let diagnosticoInicio = null;
 
 async function cargarPreguntas() {
     try {
         document.getElementById("formulario").innerHTML =
             '<p style="text-align: center;">Cargando preguntas...</p>';
 
-        // Registrar fecha de inicio del diagnóstico
-        fechaInicio = new Date().toISOString();
-
-        // Obtener ID del contenido
-        const contenidoRes = await fetch(`/api/contenido/${area}/${slug}`, {
+        const contenidoRes = await fetch(`/api/contenido/geografia/${slug}`, {
             credentials: 'include'
         });
 
@@ -25,12 +20,11 @@ async function cargarPreguntas() {
         const contenidoData = await contenidoRes.json();
 
         if (!contenidoData.contenido_id) {
-            throw new Error("No se pudo obtener la información del contenido");
+            throw new Error("No se pudo obtener la informacion del contenido");
         }
 
         contenidoId = contenidoData.contenido_id;
 
-        // Obtener preguntas del diagnóstico
         const preguntasRes = await fetch(`/api/diagnostico/${contenidoId}`, {
             credentials: 'include'
         });
@@ -41,9 +35,9 @@ async function cargarPreguntas() {
 
         preguntas = await preguntasRes.json();
 
-        if (!preguntas || preguntas.length === 0) {
+        if (preguntas.length === 0) {
             document.getElementById("formulario").innerHTML =
-                '<p class="mensaje-error">No hay preguntas disponibles para este diagnóstico.</p>';
+                '<p class="mensaje-error">No hay preguntas disponibles para este bloque.</p>';
             return;
         }
 
@@ -70,7 +64,6 @@ function mostrarPreguntas() {
         ["A", "B", "C", "D"].forEach(letra => {
             const label = document.createElement("label");
             const input = document.createElement("input");
-
             input.type = "radio";
             input.name = "p" + p.id;
             input.value = letra;
@@ -96,13 +89,9 @@ async function enviarDiagnostico() {
 
     if (sinResponder.length > 0) {
         document.getElementById("resultado").innerHTML =
-            `⚠️ Por favor responde todas las preguntas (faltan ${sinResponder.length})`;
+            `Por favor responde todas las preguntas (faltan ${sinResponder.length}).`;
         return;
     }
-
-    // Calcular tiempo transcurrido
-    const fechaFin = new Date();
-    const tiempoSegundos = fechaInicio ? Math.round((fechaFin - new Date(fechaInicio)) / 1000) : 0;
 
     const respuestas = {};
     preguntas.forEach(p => {
@@ -111,6 +100,9 @@ async function enviarDiagnostico() {
             respuestas[p.id] = seleccion.value;
         }
     });
+
+    const inicio = diagnosticoInicio || new Date();
+    const tiempoSegundos = Math.max(0, Math.round((Date.now() - inicio.getTime()) / 1000));
 
     const btn = document.getElementById("btn-enviar");
     btn.disabled = true;
@@ -123,9 +115,9 @@ async function enviarDiagnostico() {
             credentials: 'include',
             body: JSON.stringify({
                 contenido_id: contenidoId,
-                respuestas: respuestas,
+                respuestas,
                 tiempo_segundos: tiempoSegundos,
-                fecha_inicio: fechaInicio
+                fecha_inicio: inicio.toISOString()
             })
         });
 
@@ -136,30 +128,27 @@ async function enviarDiagnostico() {
         }
 
         const mensajesNivel = {
-            facil: "🟢 Comenzarás con los conceptos básicos de La Tierra.",
-            normal: "🟡 ¡Buen trabajo! Irás al nivel intermedio.",
-            dificil: "🔴 ¡Excelente! Tienes un nivel avanzado en este tema."
+            facil: "Empezaras con los conceptos base sobre la Tierra y los mapas.",
+            normal: "Trabajaras un nivel intermedio con movimientos, estaciones y mapas.",
+            dificil: "Ya puedes avanzar al nivel mas retador de coordenadas y proyecciones."
         };
 
         document.getElementById("resultado").innerHTML = `
             <div style="text-align: center;">
-                <p style="font-size: 20px; margin-bottom: 10px;">✅ Diagnóstico completado</p>
+                <p style="font-size: 20px; margin-bottom: 10px;">Diagnostico completado</p>
                 <p style="font-size: 18px;">Puntaje: <strong>${data.correctas}/${data.total}</strong></p>
-                <p style="font-size: 18px; color: #2e7d32;">Nivel asignado: <strong>${data.nivel_asignado}</strong></p>
+                <p style="font-size: 18px; color: #0277bd;">Nivel asignado: <strong>${data.nivel_asignado}</strong></p>
                 <p style="margin-top: 15px;">${mensajesNivel[data.nivel_asignado] || ""}</p>
-                <p style="margin-top: 20px; font-size: 14px; color: #666;">Tiempo: ${tiempoSegundos} segundos</p>
-                <p style="margin-top: 10px; font-size: 14px; color: #666;">Redirigiendo al menú...</p>
+                <p style="margin-top: 20px; font-size: 14px; color: #666;">Redirigiendo al menu...</p>
             </div>
         `;
 
         setTimeout(() => {
             window.location.href = "../menu.html";
         }, 3000);
-
     } catch (e) {
-        console.error("Error al enviar diagnóstico:", e);
-        document.getElementById("resultado").innerHTML =
-            `❌ Error: ${e.message}`;
+        console.error("Error al enviar diagnostico:", e);
+        document.getElementById("resultado").innerHTML = `Error: ${e.message}`;
         btn.disabled = false;
         btn.textContent = "Enviar respuestas";
     }
@@ -169,4 +158,7 @@ function volver() {
     window.location.href = "../menu.html";
 }
 
-document.addEventListener("DOMContentLoaded", cargarPreguntas);
+document.addEventListener("DOMContentLoaded", () => {
+    diagnosticoInicio = new Date();
+    cargarPreguntas();
+});

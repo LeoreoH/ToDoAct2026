@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Agua · Visual Verbal · 5to Primaria</title>
+  <title>El Agua · Kinestésico · 5to Primaria</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -62,7 +62,7 @@
     ════════════════════════════════════════ */
     .sopa-wrap{overflow-x:auto;margin-bottom:12px;}
     .sopa-grid{display:inline-grid;gap:3px;background:var(--am5);padding:10px;border-radius:16px;border:3px solid var(--vd2);}
-    .sopa-cell{width:34px;height:34px;border-radius:7px;background:#fff;border:2px solid #95d5b2;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:var(--tx);cursor:pointer;user-select:none;transition:all .15s;position:relative;}
+    .sopa-cell{width:34px;height:34px;border-radius:7px;background:#fff;border:2px solid #95d5b2;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:var(--tx);cursor:pointer;user-select:none;touch-action:none;transition:all .15s;position:relative;}
     .sopa-cell:hover{background:var(--am5);border-color:var(--vd2);}
     .sopa-cell.sel{background:var(--am3);border-color:var(--vd1);transform:scale(1.08);}
     .sopa-cell.encontrada{background:var(--vd);border-color:var(--vd2);color:#fff;cursor:default;}
@@ -144,6 +144,7 @@
     .texto-roto{background:var(--am5);border:2.5px solid var(--vd2);border-radius:16px;padding:16px 18px;font-size:.97rem;font-weight:600;line-height:2.0;color:var(--tx);margin-bottom:10px;}
     .error-span{background:#ffebee;border:2px solid var(--ro);border-radius:8px;padding:2px 8px;cursor:pointer;color:var(--ro);font-weight:800;transition:all .2s;display:inline-block;}
     .error-span:hover{transform:scale(1.05);}
+    .error-span.drop-over{background:#fff8c4;border-color:var(--am2);box-shadow:0 0 0 4px rgba(253,216,53,.28);transform:scale(1.05);}
     .error-span.corregido{background:#e8f5e9;border-color:var(--vd);color:var(--vd2);}
     .error-span.incorrecto-escrito{background:#f8d7da;border-color:var(--ro);animation:shake .4s ease;}
     @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
@@ -154,6 +155,13 @@
     .input-correccion:focus{border-color:var(--am3);background:#fff;}
     .input-correccion.ok-inp{border-color:var(--vd);background:#e8f5e9;color:var(--vd2);}
     .input-correccion.mal-inp{border-color:var(--ro);background:#f8d7da;animation:shake .4s ease;}
+    .drag-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#f1f8e9;border:3px dashed #a5d6a7;border-radius:18px;padding:12px;margin:10px 0 12px;}
+    .drag-bank-title{width:100%;text-align:center;font-size:.84rem;font-weight:900;color:var(--vd1);margin-bottom:2px;}
+    .drag-word{background:linear-gradient(135deg,#fdd835,#fff176);color:#1b5e20;border:3px solid #1b5e20;border-radius:999px;padding:8px 16px;font-weight:900;cursor:grab;box-shadow:0 4px 0 #1b5e20;user-select:none;touch-action:none;transition:transform .16s, opacity .16s;}
+    .drag-word:hover:not(.usada){transform:translateY(-2px);}
+    .drag-word.dragging{opacity:.45;cursor:grabbing;}
+    .drag-word.usada{opacity:.38;cursor:default;box-shadow:none;filter:grayscale(.25);}
+    .drag-word-ghost{position:fixed;z-index:9999;pointer-events:none;background:linear-gradient(135deg,#fdd835,#fff176);color:#1b5e20;border:3px solid #1b5e20;border-radius:999px;padding:8px 16px;font-weight:900;box-shadow:0 10px 24px rgba(27,94,32,.32);transform:translate(-50%,-50%) scale(1.05);}
 
     /* ════════════════════════════════════════
        GENERAL RETRO / PUNTOS / NAV
@@ -172,7 +180,7 @@
     .btn-nav:hover:not(:disabled){background:#fff;transform:scale(1.05);}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
     .ind-pag{font-size:1.3rem;font-weight:800;background:var(--am5);color:var(--tx);padding:7px 22px;border-radius:40px;border:3px solid var(--vd2);}
-    .btn-quiz{display:block;width:fit-content;margin:16px auto 0;background:#fdd835;color:#1b5e20;padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd2);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
+    .btn-quiz{display:none;width:fit-content;margin:16px auto 0;background:#fdd835;color:#1b5e20;padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd2);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
     .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:#fff;}
 
     /* PANEL FINAL */
@@ -195,7 +203,7 @@
   <h1>💧 EL AGUA EN EL PLANETA</h1>
   <p>Bloque II · Geografía · 5to de Primaria</p>
   <div class="badges">
-    <span class="b1">📖 Visual Verbal</span>
+    <span class="b1">✋ Kinestésico</span>
     <span class="b2">⚡ Nivel Normal</span>
   </div>
 </div>
@@ -287,10 +295,17 @@
     </div>
 
     <!-- JUEGO 1: TEXTO CON ERRORES -->
-    <div class="juego-titulo">✏️ Juego 1 — ¡Hay 4 palabras equivocadas! Toca la palabra en rojo y escribe la correcta</div>
+    <div class="juego-titulo">✋ Juego 1 — Arrastra cada palabra correcta al error rojo</div>
     <div class="texto-roto-wrap">
+      <div class="drag-bank" id="drag_bank_relieve" data-randomize="true" aria-label="Banco de palabras correctas">
+        <div class="drag-bank-title">Arrastra una palabra y suéltala sobre el error que corrige</div>
+        <span class="drag-word" data-word="montañas">montañas</span>
+        <span class="drag-word" data-word="valles">valles</span>
+        <span class="drag-word" data-word="cuenca">cuenca</span>
+        <span class="drag-word" data-word="afluentes">afluentes</span>
+      </div>
       <div class="texto-roto" id="texto_roto_r">
-        Las <span class="error-span" data-c="bW9udGHDsWFz" data-actual="llanuras" onclick="corregirError(this)">llanuras</span> son importantes porque capturan la lluvia y la nieve. El agua baja por las laderas y se acumula en los <span class="error-span" data-c="dmFsbGVz" data-actual="mares" onclick="corregirError(this)">mares</span> formando ríos. El territorio completo donde el agua drena a un mismo río se llama <span class="error-span" data-c="Y3VlbmNh" data-actual="presa" onclick="corregirError(this)">presa</span> hidrográfica. Los ríos que desembocan en un río principal se llaman <span class="error-span" data-c="YWZsdWVudGVz" data-actual="océanos" onclick="corregirError(this)">océanos</span>.
+        Las <span class="error-span" data-c="bW9udGHDsWFz" data-actual="llanuras">llanuras</span> son importantes porque capturan la lluvia y la nieve. El agua baja por las laderas y se acumula en los <span class="error-span" data-c="dmFsbGVz" data-actual="mares">mares</span> formando ríos. El territorio completo donde el agua drena a un mismo río se llama <span class="error-span" data-c="Y3VlbmNh" data-actual="presa">presa</span> hidrográfica. Los ríos que desembocan en un río principal se llaman <span class="error-span" data-c="YWZsdWVudGVz" data-actual="océanos">océanos</span>.
       </div>
       <button class="btn-v" onclick="verificarTextoRoto('retro_tr','pts_tr')">✅ Verificar correcciones</button>
       <div class="retro" id="retro_tr"></div>
@@ -300,21 +315,21 @@
     <!-- JUEGO 2: CRUCIGRAMA -->
     <div class="juego-titulo" style="margin-top:20px;">📝 Juego 2 — Crucigrama del relieve</div>
     <div class="crucigrama-wrap">
-      <div class="crucigrama" id="cruc2" style="grid-template-columns:repeat(9,36px);"></div>
+      <div class="crucigrama" id="cruc2" style="grid-template-columns:repeat(8,36px);"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
-          <li><span>1.</span> Forma del terreno donde corren los ríos (5 letras)</li>
-          <li><span>3.</span> Río secundario que entra a otro mayor (8 letras)</li>
+          <li><span>1.</span> Río secundario que entra a otro mayor (8 letras)</li>
+          <li><span>3.</span> Zona donde toda el agua drena al mismo río (6 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Forma más alta del terreno, origen de ríos (7 letras)</li>
-          <li><span>4.</span> Zona donde toda el agua drena al mismo río (6 letras)</li>
+          <li><span>2.</span> Forma del terreno donde corren los ríos (5 letras)</li>
+          <li><span>4.</span> Forma más alta del terreno, origen de ríos (7 letras)</li>
         </ul>
       </div>
     </div>
@@ -430,20 +445,20 @@
     <!-- JUEGO 2: CRUCIGRAMA -->
     <div class="juego-titulo" style="margin-top:20px;">📝 Juego 2 — Crucigrama del agua</div>
     <div class="crucigrama-wrap">
-      <div class="crucigrama" id="cruc4" style="grid-template-columns:repeat(8,36px);"></div>
+      <div class="crucigrama" id="cruc4" style="grid-template-columns:repeat(7,36px);"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
-          <li><span>1.</span> Tipo de agua que NO tiene sal (5 letras)</li>
-          <li><span>3.</span> Donde está la mayor parte del agua del planeta (6 letras)</li>
+          <li><span>1.</span> Tipo de agua sin sal, como la de ríos y lagos (5 letras)</li>
+          <li><span>3.</span> Masa gigantesca de agua salada, mayor que un mar (6 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Gran masa de hielo con agua dulce congelada (8 letras)</li>
+          <li><span>2.</span> Gran masa de hielo con agua dulce congelada (7 letras)</li>
           <li><span>4.</span> Río más grande del mundo, en Sudamérica (8 letras)</li>
         </ul>
       </div>
@@ -492,10 +507,17 @@
     <div class="pts-ganados" id="pts_adiv5"></div>
 
     <!-- JUEGO 2: TEXTO CON ERRORES -->
-    <div class="juego-titulo" style="margin-top:20px;">✏️ Juego 2 — ¡Hay 4 palabras equivocadas! Toca cada una y escribe la palabra correcta</div>
+    <div class="juego-titulo" style="margin-top:20px;">✋ Juego 2 — Arrastra las palabras correctas al texto</div>
     <div class="texto-roto-wrap">
+      <div class="drag-bank" id="drag_bank_rios_lagos" data-randomize="true" aria-label="Banco de palabras correctas">
+        <div class="drag-bank-title">Elige con la mano: arrastra cada palabra hasta donde corresponde</div>
+        <span class="drag-word" data-word="corriente">corriente</span>
+        <span class="drag-word" data-word="movimiento">movimiento</span>
+        <span class="drag-word" data-word="desembocadura">desembocadura</span>
+        <span class="drag-word" data-word="quieta">quieta</span>
+      </div>
       <div class="texto-roto" id="texto_roto_rl">
-        Un río tiene <span class="error-span" data-c="Y29ycmllbnRl" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-c="bW92aW1pZW50bw==" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-c="ZGVzZW1ib2NhZHVyYQ==" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span> donde llega al mar. En cambio, un lago tiene agua <span class="error-span" data-c="cXVpZXRh" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
+        Un río tiene <span class="error-span" data-c="Y29ycmllbnRl" data-actual="calma">calma</span> constante y su agua siempre está en <span class="error-span" data-c="bW92aW1pZW50bw==" data-actual="reposo">reposo</span>. El río termina su recorrido en una <span class="error-span" data-c="ZGVzZW1ib2NhZHVyYQ==" data-actual="nacimiento">nacimiento</span> donde llega al mar. En cambio, un lago tiene agua <span class="error-span" data-c="cXVpZXRh" data-actual="rápida">rápida</span> y está completamente rodeado de tierra.
       </div>
       <button class="btn-v" onclick="verificarTextoRoto2('retro_tr_rl','pts_tr_rl')">✅ Verificar correcciones</button>
       <div class="retro" id="retro_tr_rl"></div>
@@ -613,7 +635,7 @@ const sopaData1 = {
     ['N','P','W','X','D','T','C','F','H','J'],
   ]
 };
-let sopaState1 = {seleccion:[],encontradas:new Set(),encontradasCeldas:new Set()};
+let sopaState1 = {seleccion:[],encontradas:new Set(),encontradasCeldas:new Set(),arrastre:null,suprimirClick:false};
 function initSopa(data,state){
   const grid=document.getElementById(data.id);
   grid.innerHTML='';
@@ -623,29 +645,30 @@ function initSopa(data,state){
       cell.className='sopa-cell';
       cell.innerText=letra;
       cell.dataset.r=r; cell.dataset.c=c;
-      cell.onclick=()=>celdaSopa(cell,data,state);
+      cell.onclick=(e)=>{
+        if(state.suprimirClick){e.preventDefault();return;}
+        celdaSopa(cell,data,state);
+      };
+      cell.addEventListener('pointerdown',e=>iniciarArrastreSopa(e,cell,data,state));
       grid.appendChild(cell);
     });
   });
 }
-function celdaSopa(cell,data,state){
-  if(state.encontradasCeldas.has(cell.dataset.r+'_'+cell.dataset.c))return;
-  const key=cell.dataset.r+'_'+cell.dataset.c;
-  if(cell.classList.contains('sel')){
-    cell.classList.remove('sel');
-    state.seleccion=state.seleccion.filter(c=>!(c.dataset.r===cell.dataset.r&&c.dataset.c===cell.dataset.c));
-    return;
-  }
-  cell.classList.add('sel');
-  state.seleccion.push(cell);
-  // check if form a word
+function claveCeldaSopa(cell){
+  return cell.dataset.r+'_'+cell.dataset.c;
+}
+function limpiarSeleccionSopa(state){
+  state.seleccion.forEach(c=>c.classList.remove('sel'));
+  state.seleccion=[];
+}
+function revisarSopa(data,state){
   const palabra=state.seleccion.map(c=>c.innerText).join('');
   const palabraRev=palabra.split('').reverse().join('');
   const encontrada=data.palabras.find(p=>p===palabra||p===palabraRev);
   if(encontrada){
     state.seleccion.forEach(c=>{
       c.classList.remove('sel'); c.classList.add('encontrada');
-      state.encontradasCeldas.add(c.dataset.r+'_'+c.dataset.c);
+      state.encontradasCeldas.add(claveCeldaSopa(c));
     });
     state.encontradas.add(encontrada);
     state.seleccion=[];
@@ -658,10 +681,82 @@ function celdaSopa(cell,data,state){
       r.className='retro ok'; r.innerHTML='🎉 ¡Encontraste todas las palabras! ¡Excelente!'; r.style.display='flex';
       sumarPts(30,'pts_s1');
     }
-  } else if(state.seleccion.length>=6){
-    state.seleccion.forEach(c=>c.classList.remove('sel'));
-    state.seleccion=[];
+    return true;
   }
+  if(state.seleccion.length>=6){
+    limpiarSeleccionSopa(state);
+  }
+  return false;
+}
+function agregarCeldaSopa(cell,data,state){
+  if(!cell||!cell.classList.contains('sopa-cell'))return false;
+  if(state.encontradasCeldas.has(claveCeldaSopa(cell)))return false;
+  if(state.seleccion.some(c=>claveCeldaSopa(c)===claveCeldaSopa(cell)))return false;
+  cell.classList.add('sel');
+  state.seleccion.push(cell);
+  return revisarSopa(data,state);
+}
+function celdaSopa(cell,data,state){
+  if(state.encontradasCeldas.has(cell.dataset.r+'_'+cell.dataset.c))return;
+  if(cell.classList.contains('sel')){
+    cell.classList.remove('sel');
+    state.seleccion=state.seleccion.filter(c=>!(c.dataset.r===cell.dataset.r&&c.dataset.c===cell.dataset.c));
+    return;
+  }
+  agregarCeldaSopa(cell,data,state);
+}
+function iniciarArrastreSopa(e,cell,data,state){
+  if(e.button!==undefined&&e.button!==0)return;
+  if(state.encontradasCeldas.has(claveCeldaSopa(cell)))return;
+  if(state.sopaMoveHandler)document.removeEventListener('pointermove',state.sopaMoveHandler);
+  if(state.sopaEndHandler){
+    document.removeEventListener('pointerup',state.sopaEndHandler);
+    document.removeEventListener('pointercancel',state.sopaEndHandler);
+  }
+  state.arrastre={pointerId:e.pointerId,startCell:cell,startX:e.clientX,startY:e.clientY,iniciado:false,terminado:false};
+  state.sopaMoveHandler=ev=>moverArrastreSopa(ev,data,state);
+  state.sopaEndHandler=ev=>terminarArrastreSopa(ev,state);
+  document.addEventListener('pointermove',state.sopaMoveHandler,{passive:false});
+  document.addEventListener('pointerup',state.sopaEndHandler);
+  document.addEventListener('pointercancel',state.sopaEndHandler);
+}
+function moverArrastreSopa(e,data,state){
+  const drag=state.arrastre;
+  if(!drag||drag.pointerId!==e.pointerId||drag.terminado)return;
+  const dx=e.clientX-drag.startX;
+  const dy=e.clientY-drag.startY;
+  if(!drag.iniciado){
+    if(Math.hypot(dx,dy)<8)return;
+    drag.iniciado=true;
+    state.suprimirClick=true;
+    limpiarSeleccionSopa(state);
+    if(agregarCeldaSopa(drag.startCell,data,state)){
+      drag.terminado=true;
+      return;
+    }
+  }
+  e.preventDefault();
+  const el=document.elementFromPoint(e.clientX,e.clientY);
+  const cell=el&&el.closest?el.closest('.sopa-cell'):null;
+  if(cell&&agregarCeldaSopa(cell,data,state)){
+    drag.terminado=true;
+  }
+}
+function terminarArrastreSopa(e,state){
+  const drag=state.arrastre;
+  if(!drag||drag.pointerId!==e.pointerId)return;
+  if(state.sopaMoveHandler)document.removeEventListener('pointermove',state.sopaMoveHandler);
+  if(state.sopaEndHandler){
+    document.removeEventListener('pointerup',state.sopaEndHandler);
+    document.removeEventListener('pointercancel',state.sopaEndHandler);
+  }
+  state.sopaMoveHandler=null;
+  state.sopaEndHandler=null;
+  if(drag.iniciado){
+    state.suprimirClick=true;
+    setTimeout(()=>{state.suprimirClick=false;},350);
+  }
+  state.arrastre=null;
 }
 
 // ══════════════════════════════════════════════════
@@ -690,6 +785,155 @@ function respAdiv(btn,grupoId,correctaId,retroId,ptsId){
 // ══════════════════════════════════════════════════
 // JUEGO: TEXTO CON ERRORES
 // ══════════════════════════════════════════════════
+function decodeBase64UTF8(value){
+  try{
+    return decodeURIComponent(Array.prototype.map.call(atob(value), ch => {
+      return '%' + ('00' + ch.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }catch(e){
+    try{return atob(value);}catch(err){return '';}
+  }
+}
+function normalizarTexto(txt){
+  return (txt||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function resolverTextoCorrecto(span){
+  if(!span)return '';
+  if(span.dataset.correcto)return span.dataset.correcto;
+  if(span.dataset.c){
+    span.dataset.correcto=decodeBase64UTF8(span.dataset.c);
+    return span.dataset.correcto;
+  }
+  return '';
+}
+let textoDrag=null;
+function crearGhostTexto(word){
+  const ghost=document.createElement('div');
+  ghost.className='drag-word-ghost';
+  ghost.innerText=word.dataset.word||word.innerText;
+  document.body.appendChild(ghost);
+  return ghost;
+}
+function moverGhostTexto(e){
+  if(!textoDrag||!textoDrag.ghost)return;
+  textoDrag.ghost.style.left=e.clientX+'px';
+  textoDrag.ghost.style.top=e.clientY+'px';
+}
+function errorSpanDesdePunto(x,y){
+  const el=document.elementFromPoint(x,y);
+  const span=el&&el.closest?el.closest('.error-span'):null;
+  if(!span||span.classList.contains('corregido'))return null;
+  return span;
+}
+function limpiarDropTexto(){
+  document.querySelectorAll('.error-span.drop-over').forEach(el=>el.classList.remove('drop-over'));
+}
+function aplicarPalabraArrastrada(span,wordEl){
+  if(!span||!wordEl||wordEl.classList.contains('usada'))return false;
+  const correcta=resolverTextoCorrecto(span);
+  const palabra=wordEl.dataset.word||wordEl.innerText;
+  if(normalizarTexto(palabra)===normalizarTexto(correcta)){
+    span.innerText=correcta;
+    span.classList.add('corregido');
+    span.classList.remove('incorrecto-escrito','drop-over');
+    wordEl.classList.add('usada');
+    wordEl.classList.remove('dragging');
+    wordEl.draggable=false;
+    return true;
+  }
+  span.classList.add('incorrecto-escrito');
+  setTimeout(()=>span.classList.remove('incorrecto-escrito'),650);
+  return false;
+}
+function iniciarArrastreTexto(e){
+  if(e.button!==undefined&&e.button!==0)return;
+  const word=e.currentTarget;
+  if(word.classList.contains('usada'))return;
+  e.preventDefault();
+  word.classList.add('dragging');
+  textoDrag={word,pointerId:e.pointerId,ghost:crearGhostTexto(word)};
+  moverGhostTexto(e);
+  document.addEventListener('pointermove',moverArrastreTexto,{passive:false});
+  document.addEventListener('pointerup',soltarArrastreTexto,{passive:false});
+  document.addEventListener('pointercancel',cancelarArrastreTexto);
+}
+function moverArrastreTexto(e){
+  if(!textoDrag||e.pointerId!==textoDrag.pointerId)return;
+  e.preventDefault();
+  moverGhostTexto(e);
+  limpiarDropTexto();
+  const span=errorSpanDesdePunto(e.clientX,e.clientY);
+  if(span)span.classList.add('drop-over');
+}
+function limpiarArrastreTexto(){
+  document.removeEventListener('pointermove',moverArrastreTexto);
+  document.removeEventListener('pointerup',soltarArrastreTexto);
+  document.removeEventListener('pointercancel',cancelarArrastreTexto);
+  limpiarDropTexto();
+  if(textoDrag&&textoDrag.ghost)textoDrag.ghost.remove();
+}
+function soltarArrastreTexto(e){
+  if(!textoDrag||e.pointerId!==textoDrag.pointerId)return;
+  e.preventDefault();
+  const span=errorSpanDesdePunto(e.clientX,e.clientY);
+  const word=textoDrag.word;
+  limpiarArrastreTexto();
+  aplicarPalabraArrastrada(span,word);
+  word.classList.remove('dragging');
+  textoDrag=null;
+}
+function cancelarArrastreTexto(e){
+  if(!textoDrag||e.pointerId!==textoDrag.pointerId)return;
+  const word=textoDrag.word;
+  limpiarArrastreTexto();
+  word.classList.remove('dragging');
+  textoDrag=null;
+}
+function initTextoArrastre(){
+  document.querySelectorAll('.error-span').forEach(span=>{
+    resolverTextoCorrecto(span);
+    if(span.dataset.dropReady==='1')return;
+    span.dataset.dropReady='1';
+    span.addEventListener('dragover',e=>{
+      if(span.classList.contains('corregido'))return;
+      e.preventDefault();
+      span.classList.add('drop-over');
+    });
+    span.addEventListener('dragleave',()=>span.classList.remove('drop-over'));
+    span.addEventListener('drop',e=>{
+      if(span.classList.contains('corregido'))return;
+      e.preventDefault();
+      span.classList.remove('drop-over');
+      const word=document.querySelector('.drag-word.dragging')||document.querySelector('.drag-word[data-word="'+e.dataTransfer.getData('word')+'"]');
+      aplicarPalabraArrastrada(span,word);
+      if(word)word.classList.remove('dragging');
+    });
+  });
+  document.querySelectorAll('.drag-word').forEach(word=>{
+    if(word.dataset.dragReady==='1')return;
+    word.dataset.dragReady='1';
+    word.draggable=true;
+    word.addEventListener('pointerdown',iniciarArrastreTexto);
+    word.addEventListener('dragstart',e=>{
+      if(word.classList.contains('usada')){e.preventDefault();return;}
+      word.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('word',word.dataset.word||word.innerText);
+    });
+    word.addEventListener('dragend',()=>word.classList.remove('dragging'));
+  });
+}
+function mezclarBancoArrastre(id){
+  const bank=document.getElementById(id);
+  if(!bank||bank.dataset.mezclado==='1')return;
+  const words=[...bank.querySelectorAll('.drag-word')];
+  for(let i=words.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [words[i],words[j]]=[words[j],words[i]];
+  }
+  words.forEach(word=>bank.appendChild(word));
+  bank.dataset.mezclado='1';
+}
 function corregirError(span){
   if(span.classList.contains('corregido'))return;
   if(span.querySelector('.input-correccion')) return; // ya tiene input
@@ -710,9 +954,10 @@ function corregirError(span){
 }
 function verificarInputCorreccion(span, inp){
   const escrito = inp.value.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  const correcto = span.dataset.correcto.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const correctoOriginal = resolverTextoCorrecto(span);
+  const correcto = correctoOriginal.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   if(escrito === correcto){
-    span.innerText = span.dataset.correcto;
+    span.innerText = correctoOriginal;
     span.classList.add('corregido');
     span.onclick = null;
   } else {
@@ -752,36 +997,31 @@ function verificarTextoRoto2(retroId,ptsId){
 
 // ══════════════════════════════════════════════════
 // JUEGO: CRUCIGRAMA RELIEVE (página 2)
-// Layout 9x7:
-// VALLE     fila 0, cols 0-4 (horizontal, #1)
-// MONTANA   fila 0-6, col 4 (vertical, #2) — 7 letras vert
-// AFLUENTE  fila 4, cols 0-7 (horizontal, #3) — 8 letras
-// CUENCA    fila 1-6, col 0 (vertical, #4) — 6 letras
+// Layout 8x7, tomado del visual verbal para que las palabras crucen con sentido:
+// AFLUENTE  fila 2, cols 0-7 (horizontal, #1)
+// VALLE     fila 0-4, col 2 (vertical, #2)
+// CUENCA    fila 4, cols 0-5 (horizontal, #3)
+// MONTAÑA   fila 0-6, col 5 (vertical, #4)
 // ══════════════════════════════════════════════════
 const cruc2Layout = (() => {
-  // 7 rows x 9 cols
-  const g=Array.from({length:7},()=>Array(9).fill(null));
-  // 1-H VALLE r0,c0-4
-  'VALLE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});
-  // 2-V MONTANA r0-6,c4
-  'MONTANA'.split('').forEach((l,i)=>{if(!g[i][4])g[i][4]={l,editable:true};else g[i][4].l=l;});
-  // 3-H AFLUENTE r4,c0-7
-  'AFLUENTE'.split('').forEach((l,i)=>{if(g[4][i])g[4][i].l=l;else g[4][i]={l,editable:true};});
-  // 4-V CUENCA r1-6,c0
-  'CUENCA'.split('').forEach((l,i)=>{const r=i+1;if(g[r][0])g[r][0].l=l;else g[r][0]={l,editable:true};});
+  const g=Array.from({length:7},()=>Array(8).fill(null));
+  'AFLUENTE'.split('').forEach((l,i)=>g[2][i]={l,editable:true});
+  'VALLE'.split('').forEach((l,i)=>{if(g[i][2])g[i][2].l=l;else g[i][2]={l,editable:true};});
+  'CUENCA'.split('').forEach((l,i)=>{if(g[4][i])g[4][i].l=l;else g[4][i]={l,editable:true};});
+  'MONTAÑA'.split('').forEach((l,i)=>{if(g[i][5])g[i][5].l=l;else g[i][5]={l,editable:true};});
   return g;
 })();
 const cruc4Layout = (() => {
-  // 8 rows x 8 cols
-  const g=Array.from({length:8},()=>Array(8).fill(null));
-  // 1-H DULCE r0,c0-4
-  'DULCE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});
-  // 2-V GLACIAR r0-7,c3 (8 letras)
-  'GLACIAR '.split('').forEach((l,i)=>{if(i<8){if(!g[i][3])g[i][3]={l,editable:true};else g[i][3].l=l;}});
-  // 3-H OCEANO r3,c0-5
-  'OCEANO'.split('').forEach((l,i)=>{if(g[3][i])g[3][i].l=l;else g[3][i]={l,editable:true};});
-  // 4-V AMAZONAS r0-7,c7 (8 letras)
-  'AMAZONAS'.split('').forEach((l,i)=>{if(!g[i][7])g[i][7]={l,editable:true};else g[i][7].l=l;});
+  // 8 rows x 7 cols, misma estructura que visual verbal.
+  const g=Array.from({length:8},()=>Array(7).fill(null));
+  // 1-H DULCE r2,c0-4
+  'DULCE'.split('').forEach((l,i)=>g[2][i]={l,editable:true});
+  // 2-V GLACIAR r1-7,c2
+  'GLACIAR'.split('').forEach((l,i)=>{if(g[i+1][2])g[i+1][2].l=l;else g[i+1][2]={l,editable:true};});
+  // 3-H OCEANO r4,c1-6
+  'OCEANO'.split('').forEach((l,i)=>{if(g[4][i+1])g[4][i+1].l=l;else g[4][i+1]={l,editable:true};});
+  // 4-V AMAZONAS r0-7,c6
+  'AMAZONAS'.split('').forEach((l,i)=>{if(g[i][6])g[i][6].l=l;else g[i][6]={l,editable:true};});
   return g;
 })();
 function buildCrucigrama(containerId,layout,numeracion){
@@ -982,12 +1222,18 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Sopa de letras
   initSopa(sopaData1,sopaState1);
   // Crucigramas
-  buildCrucigrama('cruc2',cruc2Layout,[{r:0,c:0,n:'1'},{r:0,c:4,n:'2'},{r:4,c:0,n:'3'},{r:1,c:0,n:'4'}]);
-  buildCrucigrama('cruc4',cruc4Layout,[{r:0,c:0,n:'1'},{r:0,c:3,n:'2'},{r:3,c:0,n:'3'},{r:0,c:7,n:'4'}]);
+  buildCrucigrama('cruc2',cruc2Layout,[{r:2,c:0,n:'1'},{r:0,c:2,n:'2'},{r:4,c:0,n:'3'},{r:0,c:5,n:'4'}]);
+  buildCrucigrama('cruc4',cruc4Layout,[{r:2,c:0,n:'1'},{r:1,c:2,n:'2'},{r:4,c:1,n:'3'},{r:0,c:6,n:'4'}]);
   // Ahorcado
   initAhorcado();
+  initTextoArrastre();
+  mezclarBancoArrastre('drag_bank_relieve');
+  mezclarBancoArrastre('drag_bank_rios_lagos');
   actualizarUI();
 });
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260505c"></script>
 </body>
 </html>

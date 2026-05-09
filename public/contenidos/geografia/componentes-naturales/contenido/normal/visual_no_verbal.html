@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -108,7 +108,7 @@
     .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
     .ind-pag{font-size:1.3rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:7px 22px;border-radius:40px;border:3px solid var(--vd2);}
-    .btn-quiz{display:block;width:fit-content;margin:16px auto 0;background:var(--am3);color:var(--vd1);padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd1);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
+    .btn-quiz{display:none;width:fit-content;margin:16px auto 0;background:var(--am3);color:var(--vd1);padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd1);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
     .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);}
 
     .panel-final{display:none;text-align:center;background:var(--bl);border-radius:26px;padding:36px;border:3px solid var(--am3);box-shadow:0 8px 0 var(--vd1);margin-top:16px;}
@@ -262,7 +262,7 @@
         <div class="pie-leg-item"><div class="pie-dot" style="background:#2e7d32;"></div>Agua salada (97%)</div>
         <div class="pie-leg-item"><div class="pie-dot" style="background:#fdd835;border:1px solid #ccc;"></div>Agua dulce (3%)</div>
       </div>
-  </div>
+    </div>
     <div class="retro" id="retro_pie"></div>
     <div class="pts-ganados" id="pts_pie"></div>
 
@@ -315,13 +315,6 @@
     <div class="retro" id="retro_mc_rl2"></div>
     <div class="pts-ganados" id="pts_mc_rl2"></div>
 
-    <div class="panel-final" id="panelFinal">
-      <div style="font-size:3rem;" id="estrellasFinales">⭐⭐⭐</div>
-      <h2>¡Increíble!</h2>
-      <p style="font-weight:700;color:#607d8b;margin:8px 0;">Tu puntuación final:</p>
-      <div class="big" id="scoreFinal">0</div>
-      <p style="font-weight:700;color:var(--vd1);">puntos</p>
-    </div>
   </div>
 </div>
 
@@ -330,19 +323,36 @@
   <span class="ind-pag" id="contPag">1/5</span>
   <button class="btn-nav" id="btnSiguiente" onclick="cambiarPag(1)">SIGUIENTE →</button>
 </div>
-<a href="quiz.html" class="btn-quiz" id="btnQuiz" style="display:none;"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
+<a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece" style="margin-right:8px;"></i>IR AL QUIZ</a>
 </div>
 
 <script>
 let pagActual=1,totalPags=5,score=0;
 let ordvState={},matchSel={};
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(totalPags, Number(nuevaPagina) || 1));
+  if(destino===pagActual){
+    actualizarUI();
+    return false;
+  }
+  document.getElementById('pagina'+pagActual).classList.remove('activa');
+  pagActual=destino;
+  document.getElementById('pagina'+pagActual).classList.add('activa');
+  actualizarUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+  return true;
+}
 
 function cambiarPag(dir){
-  document.getElementById('pagina'+pagActual).classList.remove('activa');
-  pagActual+=dir;
-  document.getElementById('pagina'+pagActual).classList.add('activa');
-  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
-  if(pagActual===5)setTimeout(mostrarFinal,2500);
+  const destino = pagActual + dir;
+  if(destino < 1 || destino > totalPags){
+    actualizarUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function actualizarUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{const n=i+1;p.classList.remove('activo','completado');if(n===pagActual)p.classList.add('activo');else if(n<pagActual)p.classList.add('completado');});
@@ -356,7 +366,7 @@ function sumarPts(pts,id){
   document.getElementById('estrellasMini').innerText=score>=150?'⭐⭐⭐':score>=80?'⭐⭐':score>=30?'⭐':'☆☆☆';
 }
 function mostrarFinal(){
-  const pf=document.getElementById('panelFinal');pf.style.display='block';
+  const pf=document.getElementById('panelFinal');if(!pf)return;pf.style.display='block';
   document.getElementById('scoreFinal').innerText=score;
   document.getElementById('estrellasFinales').innerText=score>=150?'⭐⭐⭐':score>=80?'⭐⭐':score>=30?'⭐':'☆';
 }
@@ -442,7 +452,8 @@ function selMatch(el,grupoId,lado){
 
 actualizarUI();
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/componentes-naturales/componentes-tracking.js"></script>
+    <script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260505c"></script>
 </body>
 </html>

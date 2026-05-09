@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -184,7 +184,7 @@
     .btn-nav:disabled { background: #e0e0e0; color: #9e9e9e; border-color: #bdbdbd; box-shadow: none; }
     .indicador { background: #bbdefb; color: #01579b; padding: 8px 30px; border-radius: 40px; font-weight: 800; font-size: 1.3rem; border: 3px solid #1976d2; }
     .btn-quiz {
-      display: block; width: fit-content; margin: 0 auto;
+      display: none; width: fit-content; margin: 0 auto;
       background: #ffd600; color: #01579b; border: none;
       padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
       text-decoration: none; border: 4px solid #1976d2; box-shadow: 0 6px 0 #0d47a1; transition: all 0.2s;
@@ -198,6 +198,7 @@
     }
     .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #0d47a1; }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -233,7 +234,7 @@
 <div class="contenedor">
 
   <!-- =====================================================
-       PÃGINA 1: COORDENADAS GEOGRÃFICAS
+       P�GINA 1: COORDENADAS GEOGR�FICAS
   ===================================================== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta-audio">
@@ -244,10 +245,15 @@
       <div class="audio-control">
         <audio controls><source src="audios/01-coordenadas.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" alt="Coordenadas" class="imagen-geo"
-             onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
-        <div class="pie-imagen">&#127758; Latitud y longitud</div>
+      <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+        <div class="ayuda-ampliar-media">
+          <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" alt="Coordenadas" class="imagen-geo"
+                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
+            <div class="pie-imagen">&#127758; Latitud y longitud</div>
+          </div>
+        </div>
+        <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
       </div>
     </div>
 
@@ -288,7 +294,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 2: LATITUD Y PARALELOS
+       P�GINA 2: LATITUD Y PARALELOS
   ===================================================== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta-audio">
@@ -337,7 +343,7 @@
             <ellipse cx="140" cy="78" rx="58" ry="14" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
             <text x="248" y="82" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P1</text>
           </g>
-          <!-- P2 Tropico de Cancer ~23N â€” CORRECTO -->
+          <!-- P2 Tropico de Cancer ~23N � CORRECTO -->
           <g class="paralelo-linea-aud" id="pa2" onclick="responderParalelo('pa2',true)">
             <ellipse cx="140" cy="108" rx="98" ry="22" fill="none" stroke="#4a6fa5" stroke-width="4" clip-path="url(#cPaud)" style="pointer-events:stroke;"/>
             <text x="242" y="112" font-family="Nunito" font-size="11" font-weight="700" fill="#7a9cc5">P2</text>
@@ -366,7 +372,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 3: LONGITUD Y MERIDIANOS
+       P�GINA 3: LONGITUD Y MERIDIANOS
   ===================================================== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta-audio">
@@ -405,7 +411,7 @@
       </div>
       <div class="relojes-wrap">
 
-        <!-- Reloj A: 11:00 â€” INCORRECTO (45/15=3h menos, no mas) -->
+        <!-- Reloj A: 11:00 � INCORRECTO (45/15=3h menos, no mas) -->
         <div class="reloj-opcion" id="relA" onclick="responderReloj('A',false)">
           <svg width="130" height="130" viewBox="0 0 130 130">
             <defs>
@@ -428,7 +434,7 @@
           <span>11:00</span>
         </div>
 
-        <!-- Reloj B: 12:00 â€” INCORRECTO (misma hora = 0 grados) -->
+        <!-- Reloj B: 12:00 � INCORRECTO (misma hora = 0 grados) -->
         <div class="reloj-opcion" id="relB" onclick="responderReloj('B',false)">
           <svg width="130" height="130" viewBox="0 0 130 130">
             <defs>
@@ -450,7 +456,7 @@
           <span>12:00</span>
         </div>
 
-        <!-- Reloj C: 15:00 â€” CORRECTO (45/15=3 horas mas al este) -->
+        <!-- Reloj C: 15:00 � CORRECTO (45/15=3 horas mas al este) -->
         <div class="reloj-opcion" id="relC" onclick="responderReloj('C',true)">
           <svg width="130" height="130" viewBox="0 0 130 130">
             <defs>
@@ -478,7 +484,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 4: PROYECCIONES CARTOGRÃFICAS
+       P�GINA 4: PROYECCIONES CARTOGR�FICAS
   ===================================================== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta-audio">
@@ -520,10 +526,10 @@
           Escuchar descripci&oacute;n
         </button>
       </div>
-      <!-- 3 mapas SVG esquematicos â€” el audio describe Peters (areas correctas, Africa grande) -->
+      <!-- 3 mapas SVG esquematicos � el audio describe Peters (areas correctas, Africa grande) -->
       <div class="proyecciones-wrap">
 
-        <!-- Mapa A: Mercator â€” Groenlandia enorme â€” INCORRECTO -->
+        <!-- Mapa A: Mercator � Groenlandia enorme � INCORRECTO -->
         <div class="mapa-opcion" id="mpA" onclick="responderProyeccion('A',false)">
           <svg width="148" height="118" viewBox="0 0 148 118">
             <rect width="148" height="118" fill="#283593" rx="10"/>
@@ -540,7 +546,7 @@
           <span>Mapa A</span>
         </div>
 
-        <!-- Mapa B: Robinson â€” equilibrio â€” INCORRECTO -->
+        <!-- Mapa B: Robinson � equilibrio � INCORRECTO -->
         <div class="mapa-opcion" id="mpB" onclick="responderProyeccion('B',false)">
           <svg width="148" height="118" viewBox="0 0 148 118">
             <rect width="148" height="118" fill="#283593" rx="10"/>
@@ -554,7 +560,7 @@
           <span>Mapa B</span>
         </div>
 
-        <!-- Mapa C: Peters â€” Africa MUY GRANDE â€” CORRECTO -->
+        <!-- Mapa C: Peters � Africa MUY GRANDE � CORRECTO -->
         <div class="mapa-opcion" id="mpC" onclick="responderProyeccion('C',true)">
           <svg width="148" height="118" viewBox="0 0 148 118">
             <rect width="148" height="118" fill="#283593" rx="10"/>
@@ -613,6 +619,9 @@
     completar:   new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
   function reproducirSonido(n){ try{ sonidos[n].currentTime=0; sonidos[n].play(); }catch(e){} }
 
   var paginaActual = 1;
@@ -632,7 +641,6 @@
     document.getElementById('pagina'+paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({top:0,behavior:'smooth'});
-    localStorage.setItem('progreso_dificil_auditivo', paginaActual);
   }
 
   function actualizarUI() {
@@ -798,20 +806,13 @@
   }, true);
 
   window.addEventListener('DOMContentLoaded', function() {
-    var g = localStorage.getItem('progreso_dificil_auditivo');
-    if (g) {
-      var p=parseInt(g);
-      if(p>=1&&p<=totalPaginas){
-        document.getElementById('pagina'+paginaActual).classList.remove('activa');
-        paginaActual=p;
-        document.getElementById('pagina'+paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+

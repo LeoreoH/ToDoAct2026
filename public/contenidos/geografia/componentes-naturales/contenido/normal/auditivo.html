@@ -95,6 +95,7 @@
     .banco-palabras{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:12px;}
     .palabra{background:var(--vd1);color:var(--am3);padding:8px 16px;border-radius:28px;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;}
     .palabra:hover{background:var(--vd2);transform:scale(1.06);}
+    .palabra.sel{background:var(--am3);color:var(--vd1);box-shadow:0 0 0 3px var(--vd2);}
     .palabra.usada{background:#bdbdbd;color:#777;pointer-events:none;}
 
     /* ── V/F ── */
@@ -151,7 +152,7 @@
     .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
     .ind-pag{font-size:1.4rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:8px 28px;border-radius:38px;border:3px solid var(--vd2);}
-    .btn-quiz{display:block;width:fit-content;margin:28px auto 0;background:var(--am3);color:var(--vd1);border:4px solid var(--vd1);padding:17px 48px;border-radius:58px;font-weight:800;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 0 var(--vd1);transition:all .2s;text-align:center;}
+    .btn-quiz{display:none;width:fit-content;margin:28px auto 0;background:var(--am3);color:var(--vd1);border:4px solid var(--vd1);padding:17px 48px;border-radius:58px;font-weight:800;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 0 var(--vd1);transition:all .2s;text-align:center;}
     .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);color:var(--vd1);}
 
     /* QUIZ RÁPIDO */
@@ -244,15 +245,15 @@
     <div class="juego-num">🎮 Escucha el audio y elige la palabra que completa cada frase.</div>
     <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio del tema</label><audio controls><source src="Audios/Juego2.mp3" type="audio/mpeg"></audio></div>
     <div class="banco-palabras" id="banco_p1">
-      <span class="palabra" onclick="usarPalabra(this,'evaporacion','b3_p1')">evaporación</span>
-      <span class="palabra" onclick="usarPalabra(this,'lluviosos','b1_p1')">lluviosos</span>
-      <span class="palabra" onclick="usarPalabra(this,'aridos','b2_p1')">áridos</span>
-      <span class="palabra" onclick="usarPalabra(this,'temperatura','b4_p1')">temperatura</span>
+      <span class="palabra" onclick="usarPalabra(this,'evaporacion')">evaporación</span>
+      <span class="palabra" onclick="usarPalabra(this,'lluviosos')">lluviosos</span>
+      <span class="palabra" onclick="usarPalabra(this,'aridos')">áridos</span>
+      <span class="palabra" onclick="usarPalabra(this,'temperatura')">temperatura</span>
     </div>
     <div class="frase-wrap">
-      Los climas <span class="blank" id="b1_p1" data-resp="lluviosos">_________</span> tienen más agua disponible.<br>
-      Los climas <span class="blank" id="b2_p1" data-resp="aridos">_________</span> tienen escasez de agua.<br>
-      La <span class="blank" id="b3_p1" data-resp="temperatura">_________</span> alta aumenta la <span class="blank" id="b4_p1" data-resp="evaporacion">_________</span> del agua.
+      Los climas <span class="blank" id="b1_p1" data-resp="lluviosos" onclick="colocarEnBlank('b1_p1')">_________</span> tienen más agua disponible.<br>
+      Los climas <span class="blank" id="b2_p1" data-resp="aridos" onclick="colocarEnBlank('b2_p1')">_________</span> tienen escasez de agua.<br>
+      La <span class="blank" id="b3_p1" data-resp="temperatura" onclick="colocarEnBlank('b3_p1')">_________</span> alta aumenta la <span class="blank" id="b4_p1" data-resp="evaporacion" onclick="colocarEnBlank('b4_p1')">_________</span> del agua.
     </div>
     <div style="text-align:center;">
       <button class="btn-j" onclick="verFrases(['b1_p1','b2_p1','b3_p1','b4_p1'],'fb_p1','pts_p1')">✅ Verificar frases</button>
@@ -330,19 +331,19 @@
     <div class="mw">
       <div class="mc" id="mi3">
         <div class="mi" data-id="rio" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
-          <img src="https://www.lifeder.com/wp-content/uploads/2022/11/partes-rio-1.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/partes-rio-1-3f79320f52.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
           <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/rio.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="lago" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
-          <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2022/04/08/lago-bled-eslovenia.jpeg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/lago-bled-eslovenia-bb7a5817a4.webp" style="width:100%;height:80px;object-fit:cover;display:block;">
           <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/lago.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="cuenca" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
-          <img src="https://www.gob.mx/cms/uploads/article/main_image/84153/que-es-una-cuenca-22.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/que-es-una-cuenca-22-4f2a10a39a.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
           <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/cuenca.mp3" type="audio/mpeg"></audio></div>
         </div>
         <div class="mi" data-id="glaciar" onclick="selMI(this,3)" style="padding:0;overflow:hidden;border-radius:13px;">
-          <img src="https://cdn0.ecologiaverde.com/es/posts/7/8/0/que_son_los_glaciares_2087_1200.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
+          <img src="/contenidos/geografia/componentes-naturales/recursos/img/locales/que-son-los-glaciares-2087-1200-3450f8f0a9.jpg" style="width:100%;height:80px;object-fit:cover;display:block;">
           <div style="padding:7px 10px;font-size:.82rem;font-weight:700;">🔊 <audio class="mini" controls onclick="event.stopPropagation()"><source src="Audios/glaciar.mp3" type="audio/mpeg"></audio></div>
         </div>
       </div>
@@ -437,16 +438,16 @@
     <div class="juego-num">🎮 Escucha el audio y completa cada frase con la palabra correcta.</div>
     <div class="ai" style="margin-bottom:14px;"><label>🔊 Audio sobre ríos y lagos</label><audio controls><source src="Audios/Juego9.mp3" type="audio/mpeg"></audio></div>
     <div class="banco-palabras" id="banco_p5">
-      <span class="palabra" onclick="usarPalabra(this,'rio','c1_p5')">RÍO</span>
-      <span class="palabra" onclick="usarPalabra(this,'lago','c2_p5')">LAGO</span>
-      <span class="palabra" onclick="usarPalabra(this,'rio','c3_p5')">RÍO</span>
-      <span class="palabra" onclick="usarPalabra(this,'lago','c4_p5')">LAGO</span>
+      <span class="palabra" onclick="usarPalabra(this,'rio')">RÍO</span>
+      <span class="palabra" onclick="usarPalabra(this,'lago')">LAGO</span>
+      <span class="palabra" onclick="usarPalabra(this,'rio')">RÍO</span>
+      <span class="palabra" onclick="usarPalabra(this,'lago')">LAGO</span>
     </div>
     <div class="frase-wrap">
-      Un <span class="blank" id="c1_p5" data-resp="rio">_____</span> tiene corriente constante y fluye hacia el mar.<br>
-      Un <span class="blank" id="c2_p5" data-resp="lago">_____</span> acumula agua quieta rodeado de tierra.<br>
-      El <span class="blank" id="c3_p5" data-resp="rio">_____</span> tiene desembocadura donde llega al mar.<br>
-      El <span class="blank" id="c4_p5" data-resp="lago">_____</span> no tiene salida natural al mar.
+      Un <span class="blank" id="c1_p5" data-resp="rio" onclick="colocarEnBlank('c1_p5')">_____</span> tiene corriente constante y fluye hacia el mar.<br>
+      Un <span class="blank" id="c2_p5" data-resp="lago" onclick="colocarEnBlank('c2_p5')">_____</span> acumula agua quieta rodeado de tierra.<br>
+      El <span class="blank" id="c3_p5" data-resp="rio" onclick="colocarEnBlank('c3_p5')">_____</span> tiene desembocadura donde llega al mar.<br>
+      El <span class="blank" id="c4_p5" data-resp="lago" onclick="colocarEnBlank('c4_p5')">_____</span> no tiene salida natural al mar.
     </div>
     <div style="text-align:center;">
       <button class="btn-j" onclick="verFrases(['c1_p5','c2_p5','c3_p5','c4_p5'],'fb_p5','pts_p5')">✅ Verificar</button>
@@ -467,11 +468,6 @@
     <div class="pts-lbl">⭐ Aciertos: <span id="ptsVF5">0</span>/<span id="totVF5">4</span></div>
   </div>
 
-  <div class="t tarjeta-fin">
-    <i class="fas fa-star fa-3x" style="color:var(--vd1);display:block;text-align:center;margin-bottom:10px;"></i>
-    <h3 style="font-family:'Fredoka One',cursive;color:var(--vd1);text-align:center;">¡Felicidades! 🎉</h3>
-    <p style="color:var(--vd1);font-weight:700;text-align:center;margin-top:8px;">Completaste El Agua en el Planeta</p>
-  </div>
 </div>
 
   <div class="nav-bar">
@@ -484,11 +480,29 @@
 
 <script>
 let pag=1;const tot=5;
-function cambiar(d){
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(tot, Number(nuevaPagina) || 1));
+  if(destino===pag){
+    actualizarUI();
+    return false;
+  }
   document.getElementById('pagina'+pag).classList.remove('activa');
-  pag+=d;
+  pag=destino;
   document.getElementById('pagina'+pag).classList.add('activa');
-  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
+  actualizarUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+  return true;
+}
+function cambiar(d){
+  const destino = pag + d;
+  if(destino < 1 || destino > tot){
+    actualizarUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function actualizarUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{
@@ -502,10 +516,8 @@ function actualizarUI(){
 }
 document.querySelectorAll('.punto').forEach(p=>{
   p.addEventListener('click',()=>{
-    document.getElementById('pagina'+pag).classList.remove('activa');
-    pag=parseInt(p.dataset.p);
-    document.getElementById('pagina'+pag).classList.add('activa');
-    actualizarUI();
+    const destino = Math.max(1, Math.min(tot, parseInt(p.dataset.p, 10) || 1));
+    irPagina(destino);
   });
 });
 document.addEventListener('play',e=>{
@@ -518,15 +530,37 @@ document.addEventListener('play',e=>{
 
 // ── COMPLETAR FRASES ────────────────────────────────────────────
 const blanks_usados={};
-function usarPalabra(el,palabra,blankId){
+let palabraSeleccionada=null;
+function usarPalabra(el,palabra){
   if(el.classList.contains('usada'))return;
+  document.querySelectorAll('.palabra.sel').forEach(p=>p.classList.remove('sel'));
+  if(palabraSeleccionada&&palabraSeleccionada.el===el){
+    palabraSeleccionada=null;
+    return;
+  }
+  el.classList.add('sel');
+  palabraSeleccionada={el,palabra};
+}
+function colocarEnBlank(blankId){
   const blank=document.getElementById(blankId);
-  if(blank.classList.contains('fill')||blank.classList.contains('wrong'))return;
-  // si ya tenía una palabra asignada, liberar
-  if(blanks_usados[blankId]){blanks_usados[blankId].classList.remove('usada');}
-  blanks_usados[blankId]=el;
-  el.classList.add('usada');
-  blank.innerText=palabra;blank.classList.add('fill');
+  if(!blank)return;
+  if(!palabraSeleccionada){
+    if(blanks_usados[blankId]){
+      blanks_usados[blankId].classList.remove('usada');
+      delete blanks_usados[blankId];
+    }
+    blank.innerText='_____';
+    blank.classList.remove('fill','wrong');
+    return;
+  }
+  if(blanks_usados[blankId])blanks_usados[blankId].classList.remove('usada');
+  blanks_usados[blankId]=palabraSeleccionada.el;
+  blank.innerText=palabraSeleccionada.palabra;
+  blank.classList.remove('wrong');
+  blank.classList.add('fill');
+  palabraSeleccionada.el.classList.remove('sel');
+  palabraSeleccionada.el.classList.add('usada');
+  palabraSeleccionada=null;
 }
 function verFrases(ids,fbId,ptsId){
   let ok=true;
@@ -547,7 +581,8 @@ function reinFrases(bancoId,ids,fbId){
     const b=document.getElementById(id);if(b){b.innerText='_____';b.classList.remove('fill','wrong');}
     if(blanks_usados[id]){blanks_usados[id].classList.remove('usada');delete blanks_usados[id];}
   });
-  document.querySelectorAll('#'+bancoId+' .palabra').forEach(p=>p.classList.remove('usada'));
+  document.querySelectorAll('#'+bancoId+' .palabra').forEach(p=>p.classList.remove('usada','sel'));
+  palabraSeleccionada=null;
   const fb=document.getElementById(fbId);if(fb)fb.style.display='none';
 }
 
@@ -747,5 +782,8 @@ window.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260508c"></script>
 </body>
 </html>

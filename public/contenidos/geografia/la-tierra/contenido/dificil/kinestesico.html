@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Tierra Â· Nivel DifÃ­cil Â· KinestÃ©sico</title>
+  <title>La Tierra · Nivel Difícil · Kinestésico</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -431,7 +431,7 @@
       box-shadow: 0 8px 0 #0d47a1;
     }
 
-    /* ===== ESTILOS ESPECÃFICOS PARA ACTIVIDADES KINESTÃ‰SICAS ===== */
+    /* ===== ESTILOS ESPECÍFICOS PARA ACTIVIDADES KINESTÉSICAS ===== */
     .zona-actividad {
       background: #fff3e0;
       border-radius: 30px;
@@ -523,13 +523,17 @@
       animation: popIn 0.3s;
     }
 
+    .elemento-colocado.error-temporal {
+      background: #f44336;
+    }
+
     @keyframes popIn {
       0% { transform: scale(0); }
       80% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
 
-    /* PÃGINA 1: ASOCIACIÃ“N COLOR-PAÃS (SIN PISTAS) */
+    /* PÁGINA 1: ASOCIACIÓN COLOR-PAÍS (SIN PISTAS) */
     .leyenda-colores {
       display: flex;
       justify-content: space-around;
@@ -570,9 +574,14 @@
         border: 2px dashed #1976d2;
     }
 
-    /* ===== PÃGINA 2: PARALELOS (CORREGIDO: CONTENEDORES MÃS ANCHOS) ===== */
+    .zona-drop-pais.incorrecta {
+        background: #ffcdd2;
+        border-color: #f44336;
+    }
+
+    /* ===== PÁGINA 2: PARALELOS (CORREGIDO: CONTENEDORES MÁS ANCHOS) ===== */
     .circulo-paralelos {
-      width: 350px;  /* Un poco mÃ¡s grande para dar espacio */
+      width: 350px;  /* Un poco más grande para dar espacio */
       height: 350px;
       border-radius: 50%;
       background: #e3f2fd;
@@ -601,8 +610,8 @@
       border: 3px dashed #ffd600;
       border-radius: 8px;
       padding: 8px 5px;
-      width: 140px;  /* MÃ¡s ancho */
-      min-height: 45px; /* Altura mÃ­nima para que se expanda */
+      width: 140px;  /* Más ancho */
+      min-height: 45px; /* Altura mínima para que se expanda */
       text-align: center;
       font-size: 0.8rem;
       font-weight: 700;
@@ -611,18 +620,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10; /* Para que estÃ© sobre las lÃ­neas */
+      z-index: 10; /* Para que esté sobre las líneas */
       word-wrap: break-word;
       line-height: 1.2;
     }
-    /* Ajuste de posiciÃ³n para compensar el nuevo ancho */
+
+    .hueco-paralelo.incorrecta {
+      background: rgba(244, 67, 54, 0.25);
+      border-color: #f44336;
+    }
+    /* Ajuste de posición para compensar el nuevo ancho */
     .hueco-ecuador { top: 50%; left: 50%; }
     .hueco-tcancer { top: 25%; left: 50%; }
     .hueco-tcapricornio { top: 75%; left: 50%; }
     .hueco-cpolarn { top: 10%; left: 50%; }
     .hueco-cpolars { top: 90%; left: 50%; }
 
-    /* PÃGINA 3: MEMORAMA (IMAGEN MÃS GRANDE) */
+    /* PÁGINA 3: MEMORAMA (IMAGEN MÁS GRANDE) */
     .grid-memorama {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -645,6 +659,8 @@
       transition: all 0.2s;
       box-shadow: 0 6px 0 #0d47a1;
       padding: 5px;
+      text-align: center;
+      line-height: 1.15;
     }
     .carta-memoria.volteada {
       background: white;
@@ -661,7 +677,7 @@
       font-size: 1rem;
     }
 
-    /* PÃGINA 4: PROYECCIONES */
+    /* PÁGINA 4: PROYECCIONES */
     .grid-proyecciones {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -697,20 +713,21 @@
         color: white;
     }
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
-<!-- BOTÃ“N PARA SUBIR -->
+<!-- BOTÓN PARA SUBIR -->
 <div class="btn-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
   <i class="fas fa-arrow-up"></i>
 </div>
 
 <div class="cabecera">
-  <h1>ðŸŒ LA TIERRA</h1>
-  <p class="lead text-white">Bloque I Â· Nivel DifÃ­cil</p>
+  <h1>🌍 LA TIERRA</h1>
+  <p class="lead text-white">Bloque I · Nivel Difícil</p>
   <div>
-    <span class="badge-estilo">âœ‹ KinestÃ©sico</span>
-    <span class="badge-nivel">ðŸ”¥ Avanzado</span>
+    <span class="badge-estilo">✋ Kinestésico</span>
+    <span class="badge-nivel">🔥 Avanzado</span>
   </div>
 </div>
 
@@ -722,64 +739,69 @@
     <div class="punto">3</div>
     <div class="punto">4</div>
   </div>
-  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">PÃ¡gina <span id="paginaActualNum">1</span>/4</span>
+  <span class="badge" style="background: #1976d2; color: white; padding: 8px 20px;">Página <span id="paginaActualNum">1</span>/4</span>
 </div>
 
 <div class="contenedor">
 
-  <!-- ===== PÃGINA 1: COORDENADAS ===== -->
+  <!-- ===== PÁGINA 1: COORDENADAS ===== -->
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Coordenadas geogrÃ¡ficas</h2>
+      <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Coordenadas geográficas</h2>
 
-      <!-- SECCIÃ“N VISUAL/VERBAL -->
+      <!-- SECCIÓN VISUAL/VERBAL -->
       <p class="texto-explicativo">
-        Las <strong>coordenadas geogrÃ¡ficas</strong> son un sistema que permite localizar cualquier punto exacto en la superficie terrestre. Se basan en dos medidas: <strong>latitud</strong> y <strong>longitud</strong>.
+        Las <strong>coordenadas geográficas</strong> son un sistema que permite localizar cualquier punto exacto en la superficie terrestre. Se basan en dos medidas: <strong>latitud</strong> y <strong>longitud</strong>.
       </p>
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
+          <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+            <div class="ayuda-ampliar-media">
+              <div class="imagen-marco">
             <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg"
-                 alt="Coordenadas geogrÃ¡ficas" class="imagen-geo"
+                 alt="Coordenadas geográficas" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
-            <div class="pie-imagen">ðŸŒ Latitud y longitud en un mapa</div>
+            <div class="pie-imagen">🌐 Latitud y longitud en un mapa</div>
+              </div>
+            </div>
+            <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
           </div>
         </div>
         <div class="col-md-6">
           <div class="recuadro">
             <h4><i class="fas fa-arrows-alt-h me-2"></i> LATITUD</h4>
             <p class="mb-2">Distancia desde el <strong>Ecuador</strong> hacia el Norte o Sur.</p>
-            <p class="mb-0 fw-bold">Ejemplo: MÃ©xico 23Â°N</p>
+            <p class="mb-0 fw-bold">Ejemplo: México 23°N</p>
           </div>
           <div class="recuadro mt-3">
             <h4><i class="fas fa-arrows-alt-v me-2"></i> LONGITUD</h4>
             <p class="mb-2">Distancia desde el <strong>Meridiano de Greenwich</strong> hacia el Este u Oeste.</p>
-            <p class="mb-0 fw-bold">Ejemplo: Londres 0Â°</p>
+            <p class="mb-0 fw-bold">Ejemplo: Londres 0°</p>
           </div>
         </div>
       </div>
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸŒŽ Cada punto en la Tierra tiene una coordenada Ãºnica. CDMX: 19Â°N, 99Â°O</p>
+        <p>🌎 Cada punto en la Tierra tiene una coordenada única. CDMX: 19°N, 99°O</p>
       </div>
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿QuÃ© coordenada indica la distancia al Ecuador?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Qué coordenada indica la distancia al Ecuador?</p>
         <div class="opciones-mini">
           <span class="btn-mini" onclick="responderMini(this, true)">Latitud</span>
           <span class="btn-mini" onclick="responderMini(this, false)">Longitud</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 1: ASOCIACIÃ“N COLOR-PAÃS -->
+      <!-- ACTIVIDAD KINESTÉSICA 1: ASOCIACIÓN COLOR-PAÍS -->
       <div class="zona-actividad">
-        <h3 class="actividad-titulo"><i class="fas fa-arrows-alt me-2"></i> Arrastra cada paÃ­s a su color</h3>
+        <h3 class="actividad-titulo"><i class="fas fa-arrows-alt me-2"></i> Arrastra cada país a su color</h3>
         <div class="row">
             <div class="col-md-6">
                 <div class="imagen-marco">
                     <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-paises-colores.png"
-                         alt="Mapa con paÃ­ses de colores" class="imagen-geo"
+                         alt="Mapa con países de colores" class="imagen-geo"
                          onerror="this.src='https://via.placeholder.com/400x200?text=Mapa+con+colores'">
-                    <div class="pie-imagen">ðŸ‡²ðŸ‡½ MÃ©xico Â· ðŸ‡ºðŸ‡¸ EE.UU. Â· ðŸ‡¯ðŸ‡µ JapÃ³n Â· ðŸ‡¦ðŸ‡º Australia</div>
+                    <div class="pie-imagen">🇲🇽 México · 🇺🇸 EE.UU. · 🇯🇵 Japón · 🇦🇺 Australia</div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -795,24 +817,24 @@
             </div>
         </div>
         <div class="d-flex justify-content-center gap-3 flex-wrap mt-4" id="paisesParaArrastrar">
-          <div class="elemento-arrastrable" draggable="true" data-pais="mexico" data-color="rojo">ðŸ‡²ðŸ‡½ MÃ‰XICO</div>
-          <div class="elemento-arrastrable" draggable="true" data-pais="usa" data-color="azul">ðŸ‡ºðŸ‡¸ EE.UU.</div>
-          <div class="elemento-arrastrable" draggable="true" data-pais="japon" data-color="rosa">ðŸ‡¯ðŸ‡µ JAPÃ“N</div>
-          <div class="elemento-arrastrable" draggable="true" data-pais="australia" data-color="verde">ðŸ‡¦ðŸ‡º AUSTRALIA</div>
+          <div class="elemento-arrastrable" draggable="true" data-pais="mexico" data-color="rojo">🇲🇽 MÉXICO</div>
+          <div class="elemento-arrastrable" draggable="true" data-pais="usa" data-color="azul">🇺🇸 EE.UU.</div>
+          <div class="elemento-arrastrable" draggable="true" data-pais="japon" data-color="rosa">🇯🇵 JAPÓN</div>
+          <div class="elemento-arrastrable" draggable="true" data-pais="australia" data-color="verde">🇦🇺 AUSTRALIA</div>
         </div>
-        <div class="mensaje-feedback" id="feedbackPagina1">ðŸŽ‰ Â¡Asociaste todos los paÃ­ses correctamente!</div>
+        <div class="mensaje-feedback" id="feedbackPagina1">🎉 ¡Asociaste todos los países correctamente!</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 2: PARALELOS (CON CONTENEDORES CORREGIDOS) ===== -->
+  <!-- ===== PÁGINA 2: PARALELOS (CON CONTENEDORES CORREGIDOS) ===== -->
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-h me-3"></i>Latitud y paralelos</h2>
 
-      <!-- SECCIÃ“N VISUAL/VERBAL -->
+      <!-- SECCIÓN VISUAL/VERBAL -->
       <p class="texto-explicativo">
-        La <strong>latitud</strong> se mide usando los <strong>paralelos</strong>, lÃ­neas horizontales que rodean la Tierra de este a oeste.
+        La <strong>latitud</strong> se mide usando los <strong>paralelos</strong>, líneas horizontales que rodean la Tierra de este a oeste.
       </p>
       <div class="row">
         <div class="col-md-6">
@@ -820,36 +842,36 @@
             <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg"
                  alt="Paralelos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
-            <div class="pie-imagen">ðŸ“ Principales paralelos</div>
+            <div class="pie-imagen">📏 Principales paralelos</div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="recuadro">
             <h4>PRINCIPALES PARALELOS</h4>
             <ul class="lista-iconos">
-              <li><i class="fas fa-circle"></i> <strong>Ecuador:</strong> 0Â°</li>
-              <li><i class="fas fa-circle"></i> <strong>TrÃ³pico de CÃ¡ncer:</strong> 23Â°27'N</li>
-              <li><i class="fas fa-circle"></i> <strong>TrÃ³pico de Capricornio:</strong> 23Â°27'S</li>
-              <li><i class="fas fa-circle"></i> <strong>CÃ­rculo Polar Ãrtico:</strong> 66Â°33'N</li>
-              <li><i class="fas fa-circle"></i> <strong>CÃ­rculo Polar AntÃ¡rtico:</strong> 66Â°33'S</li>
+              <li><i class="fas fa-circle"></i> <strong>Ecuador:</strong> 0°</li>
+              <li><i class="fas fa-circle"></i> <strong>Trópico de Cáncer:</strong> 23°27'N</li>
+              <li><i class="fas fa-circle"></i> <strong>Trópico de Capricornio:</strong> 23°27'S</li>
+              <li><i class="fas fa-circle"></i> <strong>Círculo Polar Ártico:</strong> 66°33'N</li>
+              <li><i class="fas fa-circle"></i> <strong>Círculo Polar Antártico:</strong> 66°33'S</li>
             </ul>
           </div>
         </div>
       </div>
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸŒ¡ï¸ Los paralelos determinan las zonas climÃ¡ticas: tropical, templada y polar.</p>
+        <p>🌡️ Los paralelos determinan las zonas climáticas: tropical, templada y polar.</p>
       </div>
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿QuÃ© paralelo estÃ¡ a 23Â°27'N?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Qué paralelo está a 23°27'N?</p>
         <div class="opciones-mini">
           <span class="btn-mini" onclick="responderMini(this, false)">Ecuador</span>
-          <span class="btn-mini" onclick="responderMini(this, true)">TrÃ³pico de CÃ¡ncer</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">TrÃ³pico de Capricornio</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">Trópico de Cáncer</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">Trópico de Capricornio</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 2: COLOCAR PARALELOS -->
+      <!-- ACTIVIDAD KINESTÉSICA 2: COLOCAR PARALELOS -->
       <div class="zona-actividad">
         <h3 class="actividad-titulo"><i class="fas fa-circle-dot me-2"></i> Coloca cada paralelo en su lugar</h3>
         <div class="circulo-paralelos" id="circuloParalelos">
@@ -858,7 +880,7 @@
           <div class="linea-paralelo linea-tropico-capricornio"></div>
           <div class="linea-paralelo linea-circulo-polar-artico"></div>
           <div class="linea-paralelo linea-circulo-polar-antartico"></div>
-          <!-- Zonas de drop (corregidas: mÃ¡s anchas) -->
+          <!-- Zonas de drop (corregidas: más anchas) -->
           <div class="hueco-paralelo hueco-ecuador" data-paralelo="ecuador"></div>
           <div class="hueco-paralelo hueco-tcancer" data-paralelo="tcancer"></div>
           <div class="hueco-paralelo hueco-tcapricornio" data-paralelo="tcapricornio"></div>
@@ -866,25 +888,25 @@
           <div class="hueco-paralelo hueco-cpolars" data-paralelo="cpolars"></div>
         </div>
         <div class="d-flex justify-content-center gap-2 flex-wrap mt-4" id="paralelosParaArrastrar">
-          <div class="elemento-arrastrable" draggable="true" data-paralelo="ecuador">ðŸŒ ECUADOR</div>
-          <div class="elemento-arrastrable" draggable="true" data-paralelo="tcancer">â˜€ï¸ TRÃ“PICO DE CÃNCER</div>
-          <div class="elemento-arrastrable" draggable="true" data-paralelo="tcapricornio">ðŸŒ¿ TRÃ“PICO DE CAPRICORNIO</div>
-          <div class="elemento-arrastrable" draggable="true" data-paralelo="cpolarn">â„ï¸ C. POLAR ÃRTICO</div>
-          <div class="elemento-arrastrable" draggable="true" data-paralelo="cpolars">ðŸ§Š C. POLAR ANTÃRTICO</div>
+          <div class="elemento-arrastrable" draggable="true" data-paralelo="ecuador">🌐 ECUADOR</div>
+          <div class="elemento-arrastrable" draggable="true" data-paralelo="tcancer">☀️ TRÓPICO DE CÁNCER</div>
+          <div class="elemento-arrastrable" draggable="true" data-paralelo="tcapricornio">🌿 TRÓPICO DE CAPRICORNIO</div>
+          <div class="elemento-arrastrable" draggable="true" data-paralelo="cpolarn">❄️ C. POLAR ÁRTICO</div>
+          <div class="elemento-arrastrable" draggable="true" data-paralelo="cpolars">🧊 C. POLAR ANTÁRTICO</div>
         </div>
-        <div class="mensaje-feedback" id="feedbackPagina2">ðŸŽ‰ Â¡Colocaste todos los paralelos correctamente!</div>
+        <div class="mensaje-feedback" id="feedbackPagina2">🎉 ¡Colocaste todos los paralelos correctamente!</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 3: LONGITUD Y HUSOS (CON IMAGEN MÃS GRANDE) ===== -->
+  <!-- ===== PÁGINA 3: LONGITUD Y HUSOS (CON IMAGEN MÁS GRANDE) ===== -->
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-clock me-3"></i>Longitud y husos horarios</h2>
 
-      <!-- SECCIÃ“N VISUAL/VERBAL -->
+      <!-- SECCIÓN VISUAL/VERBAL -->
       <p class="texto-explicativo">
-        La <strong>longitud</strong> se mide usando los <strong>meridianos</strong>, lÃ­neas verticales que van del Polo Norte al Polo Sur.
+        La <strong>longitud</strong> se mide usando los <strong>meridianos</strong>, líneas verticales que van del Polo Norte al Polo Sur.
       </p>
       <div class="row">
         <div class="col-md-6">
@@ -892,57 +914,57 @@
             <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg"
                  alt="Meridianos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
-            <div class="pie-imagen">ðŸ“ Meridianos y husos horarios</div>
+            <div class="pie-imagen">📍 Meridianos y husos horarios</div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="recuadro">
             <h4><i class="fas fa-map-pin me-2"></i> MERIDIANO DE GREENWICH</h4>
-            <p class="mb-0">Es el meridiano 0Â°. Divide la Tierra en hemisferio <strong>Este</strong> y <strong>Oeste</strong>.</p>
+            <p class="mb-0">Es el meridiano 0°. Divide la Tierra en hemisferio <strong>Este</strong> y <strong>Oeste</strong>.</p>
           </div>
           <div class="recuadro mt-3">
             <h4><i class="fas fa-clock me-2"></i> HUSOS HORARIOS</h4>
-            <p class="mb-0">Cada <strong>15Â°</strong> de longitud equivale a <strong>1 hora</strong> de diferencia.</p>
+            <p class="mb-0">Cada <strong>15°</strong> de longitud equivale a <strong>1 hora</strong> de diferencia.</p>
           </div>
         </div>
       </div>
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>ðŸ“… Meridiano 180Â° = LÃ­nea Internacional de Cambio de Fecha.</p>
+        <p>📅 Meridiano 180° = Línea Internacional de Cambio de Fecha.</p>
       </div>
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿CuÃ¡ntos grados de longitud equivalen a 1 hora?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Cuántos grados de longitud equivalen a 1 hora?</p>
         <div class="opciones-mini">
-          <span class="btn-mini" onclick="responderMini(this, true)">15Â°</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">30Â°</span>
-          <span class="btn-mini" onclick="responderMini(this, false)">10Â°</span>
+          <span class="btn-mini" onclick="responderMini(this, true)">15°</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">30°</span>
+          <span class="btn-mini" onclick="responderMini(this, false)">10°</span>
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 3: MEMORAMA (IMAGEN MÃS GRANDE) -->
+      <!-- ACTIVIDAD KINESTÉSICA 3: MEMORAMA (IMAGEN MÁS GRANDE) -->
       <div class="zona-actividad">
-        <h3 class="actividad-titulo"><i class="fas fa-memory me-2"></i> Memorama: Zona horaria â†” Estado</h3>
-        <div class="imagen-marco w-75 mx-auto"> <!-- MÃ¡s ancha: w-75 -->
+        <h3 class="actividad-titulo"><i class="fas fa-memory me-2"></i> Memorama: zona horaria ↔ estado</h3>
+        <div class="imagen-marco w-75 mx-auto"> <!-- Más ancha: w-75 -->
             <img src="/contenidos/geografia/recursos/imagenes/libro/mapa-mexico-husos.jpg"
-                 alt="Mapa de MÃ©xico con husos horarios" class="imagen-geo"
+                 alt="Mapa de México con husos horarios" class="imagen-geo"
                  style="max-height: 250px;"
-                 onerror="this.src='https://via.placeholder.com/600x250?text=Mapa+de+MÃ©xico:+3+zonas'">
-            <div class="pie-imagen">Consulta el mapa para ayudarte</div>
+                 onerror="this.src='https://via.placeholder.com/600x250?text=Mapa+de+México:+zonas+horarias'">
+            <div class="pie-imagen">Empareja cada zona horaria con un estado que pertenece a ella.</div>
         </div>
         <div class="grid-memorama" id="memoramaGrid"></div>
-        <div class="mensaje-feedback" id="feedbackPagina3">ðŸŽ‰ Â¡Encontraste todos los pares!</div>
+        <div class="mensaje-feedback" id="feedbackPagina3">🎉 ¡Relacionaste cada zona horaria con su estado!</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PÃGINA 4: PROYECCIONES ===== -->
+  <!-- ===== PÁGINA 4: PROYECCIONES ===== -->
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
-      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Proyecciones cartogrÃ¡ficas</h2>
+      <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Proyecciones cartográficas</h2>
 
-      <!-- SECCIÃ“N VISUAL/VERBAL -->
+      <!-- SECCIÓN VISUAL/VERBAL -->
       <p class="texto-explicativo">
-        La Tierra es esfÃ©rica, pero los mapas son planos. Las <strong>proyecciones cartogrÃ¡ficas</strong> intentan representar la superficie terrestre, pero siempre hay <strong>distorsiones</strong>.
+        La Tierra es esférica, pero los mapas son planos. Las <strong>proyecciones cartográficas</strong> intentan representar la superficie terrestre, pero siempre hay <strong>distorsiones</strong>.
       </p>
       <div class="row">
         <div class="col-md-4 mb-3">
@@ -970,17 +992,17 @@
       <div class="recuadro mt-3">
         <h4>Tipos de proyecciones</h4>
         <ul class="lista-iconos">
-          <li><i class="fas fa-map"></i> <strong>CilÃ­ndricas (Mercator):</strong> Ãštiles para navegaciÃ³n, distorsionan los polos.</li>
-          <li><i class="fas fa-map"></i> <strong>Robinson:</strong> Busca un equilibrio entre forma y tamaÃ±o.</li>
-          <li><i class="fas fa-map"></i> <strong>Peters:</strong> Muestra el tamaÃ±o real de los continentes, deforma formas.</li>
+          <li><i class="fas fa-map"></i> <strong>Cilíndricas (Mercator):</strong> Útiles para navegación, distorsionan los polos.</li>
+          <li><i class="fas fa-map"></i> <strong>Robinson:</strong> Busca un equilibrio entre forma y tamaño.</li>
+          <li><i class="fas fa-map"></i> <strong>Peters:</strong> Muestra el tamaño real de los continentes, deforma formas.</li>
         </ul>
       </div>
       <div class="dato-curioso">
         <i class="fas fa-lightbulb"></i>
-        <p>âš ï¸ Ninguna proyecciÃ³n es perfecta. Cada una sirve para diferentes propÃ³sitos.</p>
+        <p>⚠️ Ninguna proyección es perfecta. Cada una sirve para diferentes propósitos.</p>
       </div>
       <div class="mini-pregunta">
-        <p><i class="fas fa-question-circle"></i> Â¿QuÃ© proyecciÃ³n conserva Ã¡reas pero deforma formas?</p>
+        <p><i class="fas fa-question-circle"></i> ¿Qué proyección conserva áreas pero deforma formas?</p>
         <div class="opciones-mini">
           <span class="btn-mini" onclick="responderMini(this, false)">Mercator</span>
           <span class="btn-mini" onclick="responderMini(this, false)">Robinson</span>
@@ -988,26 +1010,26 @@
         </div>
       </div>
 
-      <!-- ACTIVIDAD KINESTÃ‰SICA 4: EMPAREJAR PROYECCIONES -->
+      <!-- ACTIVIDAD KINESTÉSICA 4: EMPAREJAR PROYECCIONES -->
       <div class="zona-actividad">
-        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> Â¿QuÃ© caracterÃ­stica tiene cada una?</h3>
-        <p class="text-center">1. Haz clic en una proyecciÃ³n (imagen). 2. Haz clic en su caracterÃ­stica.</p>
+        <h3 class="actividad-titulo"><i class="fas fa-puzzle-piece me-2"></i> ¿Qué característica tiene cada una?</h3>
+        <p class="text-center">1. Haz clic en una proyección (imagen). 2. Haz clic en su característica.</p>
         <div class="grid-proyecciones" id="proyeccionesImagenes">
           <div class="card-info" data-proyeccion="mercator"><i class="fas fa-map"></i><span>MERCATOR</span></div>
           <div class="card-info" data-proyeccion="robinson"><i class="fas fa-map"></i><span>ROBINSON</span></div>
           <div class="card-info" data-proyeccion="peters"><i class="fas fa-map"></i><span>PETERS</span></div>
         </div>
         <div class="grid-proyecciones mb-4" id="proyeccionesCaracteristicas"></div>
-        <div class="mensaje-feedback" id="feedbackPagina4">ðŸŽ‰ Â¡Correcto! Conoces las proyecciones.</div>
+        <div class="mensaje-feedback" id="feedbackPagina4">🎉 ¡Correcto! Conoces las proyecciones.</div>
       </div>
     </div>
   </div>
 
   <!-- NAVEGADOR -->
   <div class="navegador">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>â† ANTERIOR</button>
+    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
     <span class="indicador" id="contadorPagina">1/4</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE â†’</button>
+    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
   </div>
 
   <a href="quiz.html" class="btn-quiz"><i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ</a>
@@ -1020,11 +1042,12 @@
     pasarPagina: new Audio('/contenidos/geografia/recursos/sonidos/whoosh.mp3'),
     click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
     completar: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3')
+    correcto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+    error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
   Object.values(sonidos).forEach(s => {
-    if (s.src) s.volume = 0.2;
+    if (s.src) s.volume = 0.15;
   });
 
   function reproducirSonido(nombre) {
@@ -1034,7 +1057,33 @@
     }
   }
 
-  // ===== NAVEGACIÃ“N =====
+  function registrarErrorTracker(pagina, detalle) {
+    if (window.laTierraTrackerHooks && typeof window.laTierraTrackerHooks.addErrorByPage === 'function') {
+      window.laTierraTrackerHooks.addErrorByPage(pagina, {
+        origen: 'kinestesico',
+        ...(detalle || {})
+      });
+    }
+  }
+
+  function crearElementoTemporal(texto) {
+    const el = document.createElement('div');
+    el.className = 'elemento-colocado error-temporal';
+    el.innerText = texto;
+    return el;
+  }
+
+  function marcarDropIncorrecto(zona, texto) {
+    zona.classList.add('incorrecta');
+    const temporal = crearElementoTemporal(texto);
+    zona.appendChild(temporal);
+    window.setTimeout(() => {
+      zona.classList.remove('incorrecta');
+      if (temporal.parentNode === zona) temporal.remove();
+    }, 700);
+  }
+
+  // ===== NAVEGACIÓN =====
   let paginaActual = 1;
   const totalPaginas = 4;
 
@@ -1046,7 +1095,6 @@
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_dificil_kinestesico', paginaActual);
   }
 
   function actualizarUI() {
@@ -1082,7 +1130,7 @@
     }
   }
 
-  // ===== ACTIVIDAD 1: ASOCIACIÃ“N COLOR-PAÃS =====
+  // ===== ACTIVIDAD 1: ASOCIACIÓN COLOR-PAÍS =====
   function iniciarActividad1() {
     const elementos = document.querySelectorAll('#pagina1 .elemento-arrastrable');
     const zonas = {
@@ -1125,6 +1173,10 @@
             colocados++;
             if (colocados === total) document.getElementById('feedbackPagina1').classList.add('visible');
           }
+        } else {
+          reproducirSonido('error');
+          registrarErrorTracker(1, { actividad: 'asociacion_color_pais', resultado: 'incorrecto' });
+          marcarDropIncorrecto(this, textoElemento);
         }
       });
     });
@@ -1167,27 +1219,26 @@
             colocados++;
             if (colocados === total) document.getElementById('feedbackPagina2').classList.add('visible');
           }
+        } else {
+          reproducirSonido('error');
+          registrarErrorTracker(2, { actividad: 'clasificar_paralelos', resultado: 'incorrecto' });
+          marcarDropIncorrecto(this, textoElemento);
         }
       });
     });
   }
 
-  // ===== ACTIVIDAD 3: MEMORAMA (CON 6 PARES) =====
+  // ===== ACTIVIDAD 3: MEMORAMA (CON PARES ÚNICOS) =====
   function iniciarActividad3() {
     const pares = [
-      { tipo: 'zona', texto: 'CENTRO', parId: 0 },
+      { tipo: 'zona', texto: 'Tiempo Centro', parId: 0 },
       { tipo: 'estado', texto: 'Tamaulipas', parId: 0 },
-      { tipo: 'zona', texto: 'CENTRO', parId: 1 },
-      { tipo: 'estado', texto: 'Veracruz', parId: 1 },
-      { tipo: 'zona', texto: 'CENTRO', parId: 2 },
-      { tipo: 'estado', texto: 'Puebla', parId: 2 },
-      { tipo: 'zona', texto: 'MONTAÃ‘A', parId: 3 },
-      { tipo: 'estado', texto: 'Chihuahua', parId: 3 },
-      { tipo: 'zona', texto: 'MONTAÃ‘A', parId: 4 },
-      { tipo: 'estado', texto: 'Durango', parId: 4 },
-      { tipo: 'zona', texto: 'PACÃFICO', parId: 5 },
-      { tipo: 'estado', texto: 'Baja California', parId: 5 }
+      { tipo: 'zona', texto: 'Tiempo Montaña', parId: 1 },
+      { tipo: 'estado', texto: 'Chihuahua', parId: 1 },
+      { tipo: 'zona', texto: 'Tiempo Pacífico', parId: 2 },
+      { tipo: 'estado', texto: 'Baja California', parId: 2 }
     ];
+    const totalPares = pares.length / 2;
     let cartas = [...pares];
     // Barajar
     for (let i = cartas.length - 1; i > 0; i--) {
@@ -1225,7 +1276,7 @@
           const segunda = this;
 
           if (primera.dataset.parId === segunda.dataset.parId && primera.dataset.tipo !== segunda.dataset.tipo) {
-            // Â¡Correcto!
+            // ¡Correcto!
             setTimeout(() => {
               primera.classList.add('emparejada');
               segunda.classList.add('emparejada');
@@ -1233,7 +1284,7 @@
               segunda.classList.remove('volteada');
               reproducirSonido('completar');
               paresEncontrados++;
-              if (paresEncontrados === 6) {
+              if (paresEncontrados === totalPares) {
                 document.getElementById('feedbackPagina3').classList.add('visible');
               }
               cartaVolteada = null;
@@ -1241,6 +1292,7 @@
             }, 300);
           } else {
             // Incorrecto
+            registrarErrorTracker(3, { actividad: 'memorama_husos', resultado: 'incorrecto' });
             setTimeout(() => {
               primera.classList.remove('volteada');
               segunda.classList.remove('volteada');
@@ -1256,14 +1308,14 @@
     });
   }
 
-  // ===== ACTIVIDAD 4: PROYECCIONES (CARACTERÃSTICAS REVUELTAS) =====
+  // ===== ACTIVIDAD 4: PROYECCIONES (CARACTERÍSTICAS REVUELTAS) =====
   function iniciarActividad4() {
     const caracteristicasData = [
-        { texto: 'ðŸ“ FORMAS CORRECTAS', subtitulo: 'TamaÃ±os falsos', data: 'mercator' },
-        { texto: 'âš–ï¸ EQUILIBRIO', subtitulo: 'NavegaciÃ³n', data: 'robinson' },
-        { texto: 'ðŸ“ TAMAÃ‘OS REALES', subtitulo: 'Formas raras', data: 'peters' }
+        { texto: '📐 FORMAS CORRECTAS', subtitulo: 'Tamaños falsos', data: 'mercator' },
+        { texto: '⚖️ EQUILIBRIO', subtitulo: 'Navegación', data: 'robinson' },
+        { texto: '📏 TAMAÑOS REALES', subtitulo: 'Formas raras', data: 'peters' }
     ];
-    // Barajar las caracterÃ­sticas
+    // Barajar las características
     for (let i = caracteristicasData.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [caracteristicasData[i], caracteristicasData[j]] = [caracteristicasData[j], caracteristicasData[i]];
@@ -1306,7 +1358,7 @@
         
         const imagenSeleccionada = document.querySelector('#proyeccionesImagenes .card-info.seleccionada');
         if (!imagenSeleccionada) {
-          alert('Primero selecciona una proyecciÃ³n (haz clic en una imagen)');
+          alert('Primero selecciona una proyección (haz clic en una imagen)');
           return;
         }
 
@@ -1323,6 +1375,7 @@
           checkCompletado();
         } else {
           // Incorrecto
+          registrarErrorTracker(4, { actividad: 'proyecciones', resultado: 'incorrecto' });
           this.style.background = '#f44336';
           this.style.color = 'white';
           imagenSeleccionada.style.background = '#f44336';
@@ -1339,17 +1392,8 @@
     });
   }
 
-  // ===== INICIALIZACIÃ“N =====
+  // ===== INICIALIZACIÓN =====
   window.addEventListener('DOMContentLoaded', () => {
-    const guardado = localStorage.getItem('progreso_dificil_kinestesico');
-    if (guardado) {
-      const pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      }
-    }
     actualizarUI();
 
     iniciarActividad1();
@@ -1359,7 +1403,8 @@
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

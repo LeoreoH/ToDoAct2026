@@ -285,48 +285,149 @@
     }
 
     .mini-pregunta {
-      background: #fff3e0;
-      border: 3px solid #ffd600;
-      border-radius: 20px;
-      padding: 20px;
-      margin: 20px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
+      position: relative;
+      display: block;
+      background: linear-gradient(180deg, #fffdf4 0%, #fff5cf 100%);
+      border: 3px solid #ffd54f;
+      border-radius: 24px;
+      padding: 22px 22px 18px;
+      margin: 22px 0 0;
+      box-shadow: 0 8px 0 rgba(13, 71, 161, 0.15);
     }
 
-    .mini-pregunta p {
-      margin: 0;
+    .mini-esquina {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #ffd54f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 0 rgba(255, 214, 0, 0.24);
+    }
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1976d2;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 0 rgba(1, 87, 155, 0.22);
+    }
+
+    .mini-frase {
+      margin: 0 0 18px;
+      padding-right: 56px;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: #0d47a1;
       font-weight: 700;
-      font-size: 1.2rem;
+    }
+
+    .mini-hueco {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 132px;
+      padding: 5px 14px;
+      margin: 0 4px;
+      border-radius: 14px;
+      border: 2px dashed #1976d2;
+      background: #ffffff;
+      color: #01579b;
+      font-weight: 900;
+      vertical-align: middle;
     }
 
     .opciones-mini {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
     }
 
     .btn-mini {
-      background: white;
-      border: 3px solid #1976d2;
-      padding: 8px 20px;
-      border-radius: 40px;
-      font-weight: 700;
+      background: #ffffff;
+      border: 2px solid #90caf9;
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-weight: 800;
+      color: #01579b;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 0 rgba(25, 118, 210, 0.12);
     }
 
     .btn-mini:hover {
-      background: #ffd600;
+      transform: translateY(-2px);
+      background: #e3f2fd;
+      border-color: #1976d2;
     }
 
     .btn-mini.correcto {
-      background: #4caf50;
-      color: white;
-      border-color: white;
+      background: #43a047;
+      color: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 4px 0 rgba(46, 125, 50, 0.22);
+    }
+
+    .btn-mini.incorrecto {
+      background: #ffebee;
+      color: #c62828;
+      border-color: #ef9a9a;
+      box-shadow: none;
+    }
+
+    .mini-feedback {
+      min-height: 26px;
+      margin-top: 14px;
+      font-weight: 800;
+      color: #0d47a1;
+    }
+
+    .mini-pregunta.resuelta {
+      border-color: #66bb6a;
+      box-shadow: 0 8px 0 rgba(76, 175, 80, 0.15);
+    }
+
+    .mini-pregunta.resuelta .mini-hueco {
+      background: #e8f5e9;
+      border-style: solid;
+      border-color: #43a047;
+    }
+
+    @media (max-width: 768px) {
+      .mini-pregunta {
+        padding: 20px 18px 16px;
+      }
+
+      .mini-frase {
+        padding-right: 50px;
+        font-size: 1rem;
+      }
+
+      .mini-hueco {
+        min-width: 110px;
+      }
+
+      .opciones-mini {
+        gap: 10px;
+      }
+
+      .btn-mini {
+        width: 100%;
+      }
     }
 
     .navegador {
@@ -431,155 +532,9 @@
       background: rgba(0,0,0,0.5);
       z-index: 999;
     }
-
-    /* Mini-pregunta visual verbal */
-    .mini-pregunta {
-      position: relative;
-      display: block;
-      background: linear-gradient(180deg, #fffdf4 0%, #fff5cf 100%);
-      border: 3px solid #ffd54f;
-      border-radius: 24px;
-      padding: 22px 22px 18px;
-      margin: 22px 0 0;
-      box-shadow: 0 8px 0 rgba(13, 71, 161, 0.15);
-    }
-
-    .mini-esquina {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #ffffff;
-      border: 2px solid #ffd54f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.15rem;
-      line-height: 1;
-      box-shadow: 0 4px 0 rgba(13, 71, 161, 0.16);
-    }
-
-    .mini-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #1976d2;
-      color: #ffffff;
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 0 rgba(1, 87, 155, 0.22);
-    }
-
-    .mini-frase {
-      margin: 0 0 18px;
-      padding-right: 56px;
-      font-size: 1.08rem;
-      line-height: 1.7;
-      color: #0d47a1;
-      font-weight: 700;
-    }
-
-    .mini-hueco {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 132px;
-      padding: 5px 14px;
-      margin: 0 4px;
-      border-radius: 14px;
-      border: 2px dashed #1976d2;
-      background: #ffffff;
-      color: #01579b;
-      font-weight: 900;
-      vertical-align: middle;
-    }
-
-    .opciones-mini {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .btn-mini {
-      background: #ffffff;
-      border: 2px solid #90caf9;
-      border-radius: 16px;
-      padding: 12px 18px;
-      font-weight: 800;
-      color: #01579b;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      box-shadow: 0 4px 0 rgba(25, 118, 210, 0.12);
-    }
-
-    .btn-mini:hover {
-      transform: translateY(-2px);
-      background: #e3f2fd;
-      border-color: #1976d2;
-    }
-
-    .btn-mini.correcto {
-      background: #43a047;
-      color: #ffffff;
-      border-color: #ffffff;
-      box-shadow: 0 4px 0 rgba(46, 125, 50, 0.22);
-    }
-
-    .btn-mini.incorrecto {
-      background: #ffebee;
-      color: #c62828;
-      border-color: #ef9a9a;
-      box-shadow: none;
-    }
-
-    .mini-feedback {
-      min-height: 26px;
-      margin-top: 14px;
-      font-weight: 800;
-      color: #0d47a1;
-    }
-
-    .mini-pregunta.resuelta {
-      border-color: #66bb6a;
-      box-shadow: 0 8px 0 rgba(76, 175, 80, 0.15);
-    }
-
-    .mini-pregunta.resuelta .mini-hueco {
-      background: #e8f5e9;
-      border-style: solid;
-      border-color: #43a047;
-    }
-
-    @media (max-width: 768px) {
-      .mini-pregunta {
-        padding: 20px 18px 16px;
-      }
-
-      .mini-frase {
-        padding-right: 50px;
-        font-size: 1rem;
-      }
-
-      .mini-hueco {
-        min-width: 110px;
-      }
-
-      .opciones-mini {
-        gap: 10px;
-      }
-
-      .btn-mini {
-        width: 100%;
-      }
-    }
-
   </style>
+  <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
+
 </head>
 <body>
 
@@ -619,12 +574,17 @@
 
       <div class="row">
         <div class="col-md-6">
-          <div class="imagen-marco">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
-                 alt="Tierra desde el espacio" class="imagen-geo" onclick="ampliarImagen(this)"
-                 onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+          <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+            <div class="ayuda-ampliar-media">
+              <div class="imagen-marco">
+                <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" 
+                     alt="Tierra desde el espacio" class="imagen-geo" onclick="ampliarImagen(this)"
+                     onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+              </div>
+              <div class="pie-imagen">&#127757; Vista satelital de la Tierra</div>
+            </div>
+            <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
           </div>
-          <div class="pie-imagen">🌍 Vista satelital de la Tierra</div>
         </div>
         <div class="col-md-6">
           <div class="imagen-marco">
@@ -659,14 +619,14 @@
         <p>🌊 La Tierra se ve azul desde el espacio porque el 71% de su superficie está cubierta por agua.</p>
       </div>
 
-            <div class="mini-pregunta" id="mini1">
-        <div class="mini-esquina">&#127757;</div>
+      <div class="mini-pregunta" id="mini1">
+        <div class="mini-esquina">🌍</div>
         <div class="mini-badge"><span>Completa la idea</span></div>
-        <p class="mini-frase">La Tierra no es una esfera perfecta; est&aacute; un poco <span class="mini-hueco" data-default="________">________</span> en los polos.</p>
+        <p class="mini-frase">La Tierra no es una esfera perfecta: está ligeramente <span class="mini-hueco" data-default="________">________</span> en los polos.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, 'estirada', 'Piensa en los polos: no sobresalen, se ven m&aacute;s comprimidos.')">estirada</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', true, 'achatada', 'Muy cerca: recuerda c&oacute;mo se describen los polos.')">achatada</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, 'cuadrada', 'Observa el planeta: no tiene esquinas.')">cuadrada</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, 'redonda', 'La Tierra es redonda, pero la frase pide qué pasa en los polos.')">redonda</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', true, 'achatada', 'Observa la imagen de la forma de la Tierra.')">achatada</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini1', false, 'plana', 'La Tierra no es plana; revisa el modelo del planeta.')">plana</button>
         </div>
         <div class="mini-feedback" aria-live="polite"></div>
       </div>
@@ -707,14 +667,13 @@
         </div>
       </div>
 
-            <div class="mini-pregunta mt-4" id="mini2">
-        <div class="mini-esquina">&#127760;</div>
+      <div class="mini-pregunta mt-4" id="mini2">
+        <div class="mini-esquina">🗺️</div>
         <div class="mini-badge"><span>Completa la idea</span></div>
-        <p class="mini-frase">El Ecuador es un <span class="mini-hueco" data-default="________">________</span> importante para dividir la Tierra en hemisferio norte y sur.</p>
+        <p class="mini-frase">El Ecuador es un <span class="mini-hueco" data-default="________">________</span> que divide la Tierra en hemisferio Norte y hemisferio Sur.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', true, 'paralelo', 'Fíjate en las líneas horizontales del globo.')">paralelo</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', false, 'meridiano', 'Los meridianos van de polo a polo.')">meridiano</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', false, 'volcán', 'No es un relieve, es una línea imaginaria.')">volcán</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', false, 'meridiano', 'Los meridianos son líneas verticales; el Ecuador rodea la Tierra de forma horizontal.')">meridiano</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini2', true, 'paralelo', 'El Ecuador es el paralelo principal.')">paralelo</button>
         </div>
         <div class="mini-feedback" aria-live="polite"></div>
       </div>
@@ -750,14 +709,14 @@
         <p>🌅 El Sol sale por el Este todas las mañanas y se oculta por el Oeste por la tarde.</p>
       </div>
 
-            <div class="mini-pregunta mt-4" id="mini3">
-        <div class="mini-esquina">&#127749;</div>
+      <div class="mini-pregunta mt-4" id="mini3">
+        <div class="mini-esquina">🧭</div>
         <div class="mini-badge"><span>Completa la idea</span></div>
-        <p class="mini-frase">El Sol sale primero por el <span class="mini-hueco" data-default="________">________</span> cada ma&ntilde;ana.</p>
+        <p class="mini-frase">El Sol sale por el <span class="mini-hueco" data-default="________">________</span> y se oculta por el Oeste.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'Norte', 'Piensa en la rosa de los vientos, no en la parte de arriba del mapa.')">Norte</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', true, 'Este', 'Recuerda el lugar por donde amanece.')">Este</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'Oeste', 'Por all? anochece, no amanece.')">Oeste</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'Norte', 'El Norte ayuda a orientarnos, pero no es por donde sale el Sol.')">Norte</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', true, 'Este', 'Recuerda la pista del amanecer.')">Este</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini3', false, 'Oeste', 'El Oeste es por donde el Sol se oculta.')">Oeste</button>
         </div>
         <div class="mini-feedback" aria-live="polite"></div>
       </div>
@@ -806,14 +765,14 @@
       </div>
       <div class="pie-imagen">❄️ Paisaje de zona fría</div>
 
-            <div class="mini-pregunta mt-4" id="mini4">
-        <div class="mini-esquina">&#127777;&#65039;</div>
+      <div class="mini-pregunta mt-4" id="mini4">
+        <div class="mini-esquina">🌡️</div>
         <div class="mini-badge"><span>Completa la idea</span></div>
-        <p class="mini-frase">M&eacute;xico se localiza en una zona t&eacute;rmica <span class="mini-hueco" data-default="________">________</span> del planeta.</p>
+        <p class="mini-frase">México se ubica principalmente en la zona térmica <span class="mini-hueco" data-default="________">________</span>.</p>
         <div class="opciones-mini">
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'cálida', 'México no está pegado al Ecuador todo el año.')">cálida</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', true, 'templada', 'Busca la zona donde aparecen las cuatro estaciones.')">templada</button>
-          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'fría', 'Las zonas frías están cerca de los polos.')">fría</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'cálida', 'La zona cálida queda más cerca del Ecuador.')">cálida</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', true, 'templada', 'En el recurso visual se marca que México está aquí.')">templada</button>
+          <button type="button" class="btn-mini" onclick="responderMini(this, 'mini4', false, 'fría', 'La zona fría está cerca de los polos.')">fría</button>
         </div>
         <div class="mini-feedback" aria-live="polite"></div>
       </div>
@@ -840,7 +799,7 @@
 
   // Volumen bajo
   Object.values(sonidos).forEach(s => {
-    if (s.src) s.volume = 0.2;
+    if (s.src) s.volume = 0.15;
   });
 
   function reproducirSonido(nombre) {
@@ -884,13 +843,13 @@
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_facil_visualverbal', paginaActual);
   }
 
   function actualizarUI() {
     document.querySelectorAll('.punto').forEach((punto, index) => {
-      punto.classList.remove('activo');
+      punto.classList.remove('activo', 'completado');
       if (index + 1 === paginaActual) punto.classList.add('activo');
+      else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
     
     document.getElementById('paginaActualNum').innerText = paginaActual;
@@ -939,20 +898,13 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    const guardado = localStorage.getItem('progreso_facil_visualverbal');
-    if (guardado) {
-      const pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+

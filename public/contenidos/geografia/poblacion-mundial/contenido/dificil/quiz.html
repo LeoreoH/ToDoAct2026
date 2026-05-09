@@ -1,92 +1,226 @@
-const pathParts = window.location.pathname.split('/');
-const SLUG_CONTENIDO = 'POBLACIÓN-mundial';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz · Población Mundial · Nivel Difícil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/quiz-poblacion.css">
+</head>
+<body>
+  <main class="quiz-shell">
+    <header class="quiz-header">
+      <h1 id="quizTitle">Quiz · Población Mundial</h1>
+      <p class="quiz-sub" id="quizSubtitle">Nivel difícil</p>
+      <div class="badge-row">
+        <div class="badge-pill block">
+          <i class="fas fa-globe-americas"></i>
+          <span>Bloque III</span>
+        </div>
+        <div class="badge-pill level" id="quizLevel">
+          <i class="fas fa-compass"></i>
+          <span>Nivel difícil</span>
+        </div>
+      </div>
+    </header>
 
-const nombresBloques = {
-    'POBLACIÓN-mundial': 'Bloque III: Población Mundial'
-};
+    <section class="screen active" id="screenStart">
+      <article class="card-panel">
+        <div class="hero-icon" id="startIcon">🌍</div>
+        <h2 class="hero-title" id="startTitle">Quiz del nivel difícil</h2>
+        <p class="hero-description" id="startDescription">
+          Responde cinco preguntas para cerrar el bloque con migración, retos urbanos y análisis de población.
+        </p>
 
-let estadoContenido = null;
+        <div class="info-grid">
+          <div class="info-card" id="infoQuestions">
+            <i class="fas fa-question-circle"></i>
+            5 preguntas
+          </div>
+          <div class="info-card" id="infoPass">
+            <i class="fas fa-trophy"></i>
+            4/5 para completar
+          </div>
+          <div class="info-card" id="infoPoints">
+            <i class="fas fa-star"></i>
+            20 puntos por acierto
+          </div>
+        </div>
 
-async function cargarEstadoContenido() {
-    try {
-        const res = await fetch(
-            `/api/contenido/GEOGRAFÍA/${SLUG_CONTENIDO}`,
-            { credentials: 'include' }
-        );
+        <div class="topics-box">
+          <h2>Temas clave del nivel</h2>
+          <ul id="topicsList"></ul>
+        </div>
 
-        if (!res.ok) return;
+        <div class="center-actions">
+          <button class="btn-main" type="button" onclick="PoblacionQuiz.start()">
+            <i class="fas fa-play"></i>
+            Comenzar quiz
+          </button>
+        </div>
+      </article>
+    </section>
 
-        estadoContenido = await res.json();
+    <section class="screen" id="screenQuiz">
+      <div class="timer-box">
+        <div class="timer-label">
+          <i class="fas fa-stopwatch"></i>
+          Tiempo transcurrido
+        </div>
+        <div class="timer-value" id="timerDisplay">00:00</div>
+      </div>
 
-        actualizarBotones();
+      <div class="progress-row" id="progressRow"></div>
+      <div class="question-count" id="questionCount">1/5</div>
 
-    } catch (e) {
-        console.error(e);
-    }
-}
+      <div id="questionContainer"></div>
 
-function mostrarContenidos(){
-    document.getElementById('bloque-contenidos').style.display = 'block';
-}
+      <div class="nav-row">
+        <button class="btn-nav secondary" id="btnPrev" type="button" onclick="PoblacionQuiz.prev()">
+          <i class="fas fa-arrow-left"></i>
+          Anterior
+        </button>
+        <button class="btn-nav" id="btnNext" type="button" onclick="PoblacionQuiz.next()">
+          Siguiente
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="btn-nav" id="btnSubmit" type="button" onclick="PoblacionQuiz.submit()" style="display:none;">
+          Terminar quiz
+          <i class="fas fa-flag-checkered"></i>
+        </button>
+      </div>
+    </section>
 
-function actualizarBotones() {
-    const btnFacil   = document.getElementById('btn-facil');
-    const btnNormal  = document.getElementById('btn-normal');
-    const btnDificil = document.getElementById('btn-dificil');
+    <section class="screen" id="screenResult">
+      <article class="card-panel">
+        <div class="result-emoji" id="resultEmoji">🏆</div>
+        <h2 class="result-title" id="resultTitle">Bloque completado</h2>
 
-    btnFacil.disabled = true;
-    btnNormal.disabled = true;
-    btnDificil.disabled = true;
+        <div class="stars">
+          <span class="star" id="star1">★</span>
+          <span class="star" id="star2">★</span>
+          <span class="star" id="star3">★</span>
+          <span class="star" id="star4">★</span>
+          <span class="star" id="star5">★</span>
+        </div>
 
-    if (!estadoContenido || !estadoContenido.diagnostico_realizado) return;
+        <div class="result-score" id="resultScore">0/5</div>
+        <div class="result-time" id="resultTime">Tiempo: 0 segundos</div>
+        <div class="result-message" id="resultMessage"></div>
 
-    const nivelAsignado = estadoContenido.nivel_asignado;
+        <div class="result-bar">
+          <div class="result-fill" id="resultFill"></div>
+        </div>
 
-    if (nivelAsignado === 'facil') {
-        btnFacil.disabled = false;
-    }
+        <div class="result-actions">
+          <button class="btn-action btn-retry" id="btnRetry" type="button" onclick="PoblacionQuiz.retry()" style="display:none;">
+            <i class="fas fa-rotate-right"></i>
+            Reintentar quiz
+          </button>
+          <button class="btn-action btn-next" id="btnGoNext" type="button" onclick="PoblacionQuiz.goNext()" style="display:none;">
+            <span id="nextLabel"></span>
+          </button>
+          <button class="btn-action btn-menu" type="button" onclick="PoblacionQuiz.goBlock()">
+            <i class="fas fa-house"></i>
+            Volver al bloque
+          </button>
+        </div>
+      </article>
+    </section>
+  </main>
 
-    if (nivelAsignado === 'normal') {
-        btnFacil.disabled = false;
-        btnNormal.disabled = false;
-    }
-
-    if (nivelAsignado === 'dificil') {
-        btnFacil.disabled = false;
-        btnNormal.disabled = false;
-        btnDificil.disabled = false;
-    }
-}
-
-function irADiagnostico() {
-    window.location.href = `diagnostico/index.html`;
-}
-
-async function abrirNivel(nivel) {
-    try {
-        const res = await fetch(
-            `/api/contenido/archivo/${SLUG_CONTENIDO}/${nivel}`,
-            { credentials: 'include' }
-        );
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            alert(data.error || 'No disponible');
-            return;
+  <script>
+    window.POBLACION_QUIZ_CONFIG = {
+      pageTitle: 'Quiz · Población Mundial · Nivel Difícil',
+      headerTitle: 'Quiz · Población Mundial',
+      headerSubtitle: 'Nivel difícil · Migración, retos urbanos y análisis de población',
+      levelLabel: 'Nivel difícil',
+      levelIcon: 'fas fa-compass',
+      startIcon: '🚶🏙️📊',
+      startTitle: 'Quiz del nivel difícil',
+      startDescription: 'Este cierre integra los conceptos más complejos del bloque: migración humana, crecimiento urbano y análisis comparativo de población.',
+      contentId: 3,
+      level: 'dificil',
+      minToPass: 4,
+      passLabel: 'para completar',
+      blockMenu: '/contenidos/geografia/poblacion-mundial/menu.html',
+      result: {
+        successMessage: 'Lograste {pct}% de aciertos. Completaste el bloque de Población Mundial.',
+        failMessage: 'Obtuviste {pct}% de aciertos. Necesitas al menos {min} respuestas correctas para completar el bloque.'
+      },
+      topics: [
+        'Factores de expulsión y atracción, así como tipos de migración.',
+        'Retos urbanos y decisiones que mejoran la calidad de vida en la ciudad.',
+        'Densidad, concentración, dispersión y crecimiento poblacional.'
+      ],
+      questions: [
+        {
+          text: 'Una familia deja su comunidad porque la sequía dañó las cosechas y además no encuentra empleo estable. ¿Qué tipo de factor explica mejor su salida?',
+          context: 'Debes identificar si la causa empuja a las personas a irse o si las atrae a un nuevo lugar.',
+          options: [
+            'Factor de atracción',
+            'Factor de expulsión',
+            'Patrimonio cultural',
+            'Concentración urbana'
+          ],
+          correct: 1,
+          explanation: 'La sequía y la falta de empleo son factores de expulsión porque empujan a la población a salir de su lugar de origen.'
+        },
+        {
+          text: 'Si una persona se muda de Oaxaca a Monterrey sin salir de México, ¿qué tipo de migración realiza?',
+          context: 'Observa si el cambio ocurre dentro del mismo país o si cruza una frontera internacional.',
+          options: [
+            'Migración externa',
+            'Migración temporal internacional',
+            'Migración interna',
+            'Despoblamiento rural'
+          ],
+          correct: 2,
+          explanation: 'Es una migración interna porque ocurre dentro del mismo país, aunque cambie de estado.'
+        },
+        {
+          text: 'Una ciudad recibe miles de habitantes nuevos cada año y empieza a tener más tráfico, falta de vivienda y presión sobre el agua. ¿Qué idea explica mejor esa situación?',
+          context: 'La clave está en relacionar el aumento de población con los problemas que aparecen cuando la ciudad no crece al mismo ritmo.',
+          options: [
+            'La ciudad ya no necesita planeación urbana',
+            'El crecimiento urbano puede generar retos sobre vivienda, transporte y servicios',
+            'La densidad siempre disminuye cuando llegan más personas',
+            'La migración elimina los problemas urbanos'
+          ],
+          correct: 1,
+          explanation: 'Cuando una ciudad crece rápido necesita más vivienda, transporte y servicios; si eso no sucede, aparecen retos urbanos.'
+        },
+        {
+          text: 'Dos países tienen muchos habitantes, pero uno ocupa un territorio mucho más grande. ¿Qué dato permite compararlos mejor para saber en cuál vive la población más concentrada?',
+          context: 'No basta con mirar la población total; necesitas un dato que relacione habitantes con superficie.',
+          options: [
+            'La densidad de población',
+            'La bandera nacional',
+            'El número de ciudades capitales',
+            'El idioma oficial'
+          ],
+          correct: 0,
+          explanation: 'La densidad de población compara habitantes con superficie y permite saber en qué territorio la población está más concentrada.'
+        },
+        {
+          text: 'En una región hay pocas personas repartidas en un territorio muy amplio, mientras otra zona tiene muchísimas en poco espacio. ¿Qué conceptos describen mejor ambas situaciones?',
+          context: 'Debes reconocer la diferencia entre una población extendida y una muy agrupada.',
+          options: [
+            'Crecimiento y emigración',
+            'Dispersión y concentración',
+            'Atracción y expulsión',
+            'Interculturalidad y patrimonio'
+          ],
+          correct: 1,
+          explanation: 'La dispersión ocurre cuando pocas personas viven separadas en un territorio amplio; la concentración sucede cuando muchas viven en poco espacio.'
         }
-
-        window.location.href = data.archivo;
-
-    } catch (e) {
-        console.error(e);
-        alert('Error al abrir contenido');
-    }
-}
-
-function volver() {
-    window.location.href = '/contenidos/GEOGRAFÍA/menu.html';
-}
-
-document.addEventListener('DOMContentLoaded', cargarEstadoContenido);
-
+      ]
+    };
+  </script>
+  <script src="/contenidos/geografia/poblacion-mundial/recursos/js/quiz-poblacion.js"></script>
+<script src="/recursos/js/bayes-quiz-feedback.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -110,6 +110,8 @@
     .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
     .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
     .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
+    .boton-quiz.bloqueado{background:#ccc;border-color:#bbb;box-shadow:none;color:#f7f7f7;cursor:not-allowed;transform:none;}
+    .boton-quiz.bloqueado:hover{transform:none;box-shadow:none;color:#f7f7f7;}
   </style>
 </head>
 <body>
@@ -149,17 +151,17 @@
       <div class="col-md-6">
         <!-- Vista aérea de Dhaka, Bangladesh — ciudad muy densa -->
         <img class="foto-ref"
-          src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+          src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg"
           alt="Dhaka ciudad densa"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg'">
+          onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg'">
         <p class="foto-cap">Dhaka, Bangladesh — una de las ciudades más densas del mundo</p>
       </div>
       <div class="col-md-6">
         <!-- Estepa mongola — zona muy dispersa -->
         <img class="foto-ref"
-          src="https://th.bing.com/th/id/R.a9572f29b585a6fba91172817d313f83?rik=4bXqeQJwFRuIbw&pid=ImgRaw&r=0"
+          src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-10ad97ae88.jpg"
           alt="Estepa de Mongolia"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Mongolia_countryside.jpg/640px-Mongolia_countryside.jpg'">
+          onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-10ad97ae88.jpg'">
         <p class="foto-cap">Estepa de Mongolia — zona con solo ~2 hab/km²</p>
       </div>
     </div>
@@ -180,9 +182,9 @@
         <!-- Ciudad de México: ciudad enorme, concentración -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Ciudad de México">
-            <img src="https://media.admagazine.com/photos/6255f958b4e9a9f5ded6ed47/16:9/w_2560%2Cc_limit/GettyImages-638920569.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/gettyimages-638920569-edb2814efc.jpg"
                  alt="Ciudad de México"
-                 onerror="this.src='https://images.unsplash.com/photo-1518638150340-f706e86654de?w=320'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/photo-1518638150340-f706e86654de-5b34223ab4.jpg'">
             <div class="lbl">Ciudad de México</div>
           </div>
         </div>
@@ -190,9 +192,9 @@
         <!-- Desierto del Sahara: zona dispersa -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Desierto Sahara">
-            <img src="https://tse4.mm.bing.net/th/id/OIP.ki-DUmWsou7iquhLkSuJ-gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-fcb159a754.webp"
                  alt="Desierto Sahara"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/320px-Sahara_desert.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-fcb159a754.webp'">
             <div class="lbl">Desierto Sahara</div>
           </div>
         </div>
@@ -200,7 +202,7 @@
         <!-- Shanghái: megaciudad, concentración -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Shanghái">
-            <img src="https://th.bing.com/th/id/R.e0659da65fe339b3c804a6f0da39e5ba?rik=eVJGrtf3YRn3nw&pid=ImgRaw&r=0"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-497a5816af.jpg"
                  alt="Shanghái">
             <div class="lbl">Shanghái</div>
           </div>
@@ -209,9 +211,9 @@
         <!-- Siberia: bosques inmmensos, dispersión -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Siberia">
-            <img src="https://wallpapercave.com/wp/wp11088637.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/wp11088637-afddb7fb17.jpg"
                  alt="Siberia taiga"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Siberia%2C_landscape.jpg/320px-Siberia%2C_landscape.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/wp11088637-afddb7fb17.jpg'">
             <div class="lbl">Siberia</div>
           </div>
         </div>
@@ -219,7 +221,7 @@
         <!-- Tokio: megalópolis, concentración -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="conc" data-texto="Tokio">
-            <img src="https://tse2.mm.bing.net/th/id/OIP.JQiLvfXfPROpPIW2SZY0gwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-7826d10f68.webp"
                  alt="Tokio">
             <div class="lbl">Tokio</div>
           </div>
@@ -228,9 +230,9 @@
         <!-- Antártida: zona polar sin habitantes permanentes, dispersión -->
         <div class="col-4 col-sm-2">
           <div class="img-pieza" draggable="true" data-tipo="disp" data-texto="Antártida">
-            <img src="https://www.nexofin.com/archivos/2018/05/antartida.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/antartida-40eba88487.jpg"
                  alt="Antártida"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Antarctica_from_the_Front.jpg/320px-Antarctica_from_the_Front.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/antartida-40eba88487.jpg'">
             <div class="lbl">Antártida</div>
           </div>
         </div>
@@ -276,17 +278,17 @@
       <div class="col-6">
         <!-- Seúl antiguo, vista de ciudad pequeña -->
         <img class="foto-ref" style="height:140px;"
-          src="https://aprendecoreano.com/wp-content/uploads/2021/02/seul-en-1900-1024x640.jpg"
+          src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/seul-en-1900-1024x640-d5fbd75c03.jpg"
           alt="Seúl 1900"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Seoul%2C_Korea_1900.jpg/320px-Seoul%2C_Korea_1900.jpg'">
+          onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/seul-en-1900-1024x640-d5fbd75c03.jpg'">
         <p class="foto-cap">Seúl — Principios de 1900 (pequeña ciudad)</p>
       </div>
       <div class="col-6">
         <!-- Seúl moderno, megalópolis -->
         <img class="foto-ref" style="height:140px;"
-          src="https://tse2.mm.bing.net/th/id/OIP.qKjMkdT2xtqIo-e00tmXJQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3"
+          src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-2cdf263ad1.webp"
           alt="Seúl actualidad"
-          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Seoul_Gangnam.jpg/320px-Seoul_Gangnam.jpg'">
+          onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-2cdf263ad1.webp'">
         <p class="foto-cap">Seúl — Actualidad (más de 10 millones de hab.)</p>
       </div>
     </div>
@@ -302,20 +304,20 @@
       <div class="row g-2 mb-3">
         <div class="col-6">
           <!-- Dhaka vista aérea — alta concentración -->
-          <div class="img-opcion" onclick="selImagen('q1','conc','correcto')">
+          <div class="img-opcion" data-q="q1" data-choice="conc" onclick="verificarSelImagen('q1','conc',this)">
             <div class="check-badge"><i class="fas fa-check"></i></div>
-            <img src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg"
                  alt="Dhaka ciudad densa">
             <div class="lbl">Vista aérea de Dhaka, Bangladesh</div>
           </div>
         </div>
         <div class="col-6">
           <!-- Campo en Australia — baja densidad -->
-          <div class="img-opcion" onclick="selImagen('q1','disp','correcto')">
+          <div class="img-opcion" data-q="q1" data-choice="disp" onclick="verificarSelImagen('q1','disp',this)">
             <div class="check-badge"><i class="fas fa-times"></i></div>
-            <img src="https://www.dreamsabroad.com/wp-content/uploads/2024/12/Photo-%C2%A9-Tourism-NT-An-Aerial-View-of-the-Scenery-of-Larapinta-Drive-in-the-Northern-Territory-Complete-Guide-to-Australias-Outback-scaled.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/photo-c2-a9-tourism-nt-an-aerial-view-of-the-sce-4fd803663c.webp"
                  alt="Outback de Australia"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Sahara_desert.jpg/640px-Sahara_desert.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/photo-c2-a9-tourism-nt-an-aerial-view-of-the-sce-4fd803663c.webp'">
             <div class="lbl">Outback de Australia (muy pocas personas)</div>
           </div>
         </div>
@@ -328,19 +330,19 @@
       <div class="row g-2 mb-3">
         <div class="col-6">
           <!-- Estepa mongola con yurtas — dispersión real -->
-          <div class="img-opcion" onclick="selImagen('q2','campo','correcto')">
+          <div class="img-opcion" data-q="q2" data-choice="campo" onclick="verificarSelImagen('q2','campo',this)">
             <div class="check-badge"><i class="fas fa-check"></i></div>
-            <img src="https://th.bing.com/th/id/R.d64c82f4835d95ba5ea80c9a08468a9c?rik=MhiRWHMXeWsu1A&pid=ImgRaw&r=0"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-465ce1fb29.jpg"
                  alt="Yurta en Mongolia"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Mongolian_steppe.jpg/640px-Mongolian_steppe.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-465ce1fb29.jpg'">
             <div class="lbl">Nómadas en la estepa de Mongolia</div>
           </div>
         </div>
         <div class="col-6">
           <!-- Tokio nocturno — concentración total -->
-          <div class="img-opcion" onclick="selImagen('q2','ciudad','correcto')">
+          <div class="img-opcion" data-q="q2" data-choice="ciudad" onclick="verificarSelImagen('q2','ciudad',this)">
             <div class="check-badge"><i class="fas fa-times"></i></div>
-            <img src="https://s1.eestatic.com/2019/08/27/omicrono/omicrono_424719047_133148676_1024x576.jpg"
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/omicrono-424719047-133148676-1024x576-a74e622578.jpg"
                  alt="Tokio rascacielos">
             <div class="lbl">Rascacielos del centro de Tokio</div>
           </div>
@@ -378,19 +380,19 @@
       <div class="row g-3 mb-3" id="ronda1">
         <div class="col-6">
           <!-- Mumbai / Bombay — 20 millones -->
-          <div class="comp-card" data-ronda="r1" data-val="correcto" onclick="elegirComp(this,'r1','correcto')">
-            <img src="https://www.andbeyond.com/wp-content/uploads/sites/5/Chhatrapati-Shivaji-Terminus-railway-station-mumbai.jpg"
+          <div class="comp-card" data-ronda="r1" data-val="correcto" onclick="verificarComp('r1', this)">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg"
                  alt="Mumbai India"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Dhaka_from_above_%28Dhaka%29.jpg/640px-Dhaka_from_above_%28Dhaka%29.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg'">
             <div class="lbl">Bombay (Mumbai), India<br>~20 millones de hab.</div>
           </div>
         </div>
         <div class="col-6">
           <!-- Pueblo rural de Islandia — miles de hab. -->
-          <div class="comp-card" data-ronda="r1" data-val="incorrecto" onclick="elegirComp(this,'r1','correcto')">
-            <img src="https://lugarnia.com/wp-content/uploads/2020/02/Seydisfjordur-1000x556.jpg"
+          <div class="comp-card" data-ronda="r1" data-val="incorrecto" onclick="verificarComp('r1', this)">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/seydisfjordur-1000x556-8f03c602ab.jpg"
                  alt="Pueblo en Islandia"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Reykjavik_from_Hallgrimskirkja.jpg/640px-Reykjavik_from_Hallgrimskirkja.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/seydisfjordur-1000x556-8f03c602ab.jpg'">
             <div class="lbl">Vík, Islandia<br>~300 habitantes</div>
           </div>
         </div>
@@ -403,19 +405,19 @@
       <div class="row g-3 mb-3" id="ronda2">
         <div class="col-6">
           <!-- China: 1,400 millones -->
-          <div class="comp-card" data-ronda="r2" data-val="correcto" onclick="elegirComp(this,'r2','correcto')">
-            <img src="https://tse2.mm.bing.net/th/id/OIP.73y5AMn31-Ls68BFypfR5wHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+          <div class="comp-card" data-ronda="r2" data-val="correcto" onclick="verificarComp('r2', this)">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-a4d4b9fee1.webp"
                  alt="China Beijing"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Shanghaiviewfromthebund.jpg/640px-Shanghaiviewfromthebund.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-a4d4b9fee1.webp'">
             <div class="lbl">China (Beijing)<br>~1,400 millones de hab.</div>
           </div>
         </div>
         <div class="col-6">
           <!-- Islandia: 370,000 hab. -->
-          <div class="comp-card" data-ronda="r2" data-val="incorrecto" onclick="elegirComp(this,'r2','correcto')">
-            <img src="https://th.bing.com/th/id/R.c1aaa701e5bf1894bbfbdd1d50fb6104?rik=Qe0OnazPZfyYeQ&pid=ImgRaw&r=0"
+          <div class="comp-card" data-ronda="r2" data-val="incorrecto" onclick="verificarComp('r2', this)">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-1ec334e38c.jpg"
                  alt="Islandia paisaje"
-                 onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Reykjavik_from_Hallgrimskirkja.jpg/640px-Reykjavik_from_Hallgrimskirkja.jpg'">
+                 onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-1ec334e38c.jpg'">
             <div class="lbl">Islandia<br>~370,000 habitantes</div>
           </div>
         </div>
@@ -444,9 +446,9 @@
       <!-- Subtema 1: imagen satelital de la Tierra de noche (luces = población) -->
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://s2.dmcdn.net/v/Ju2D_1VhM7rR7y8Fp/x1080"
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg"
                alt="Tierra de noche - distribución de población"
-               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg'">
+               onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg'">
           <div class="rep-info">
             <h6>Distribución de la Población</h6>
             <p>Las luces nocturnas revelan dónde vive la gente. Asia y Europa brillan más. China e India concentran más de 1/3 de la humanidad. Las zonas oscuras son poco habitadas.</p>
@@ -457,7 +459,7 @@
       <!-- Subtema 2: comparación visual ciudad densa vs campo vacío -->
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://www.orangesmile.com/common/img_cities_original/dhaka--2737683-1.jpg"
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg"
                alt="Dhaka ciudad densa">
           <div class="rep-info">
             <h6>Concentración y Dispersión</h6>
@@ -469,9 +471,9 @@
       <!-- Subtema 3: tráfico en ciudad superpoblada, smog, problemas -->
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://th.bing.com/th/id/R.f099ba77e0e49257cb9f8f96e185c7d7?rik=ESwDV3FwY%2fwYwA&riu=http%3a%2f%2fthe-rdn.com%2fwp-content%2fuploads%2f2011%2f06%2findia-traffic-2.jpg&ehk=YBIFg4iDt40kB0Jj0unggDfDQhg8ogb3eEIXR7hMpJ4%3d&risl=&pid=ImgRaw&r=0"
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-8f1db13861.jpg"
                alt="Tráfico en India - problemas de concentración"
-               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Mumbai_03-2016_30_Gateway_of_India.jpg/640px-Mumbai_03-2016_30_Gateway_of_India.jpg'">
+               onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-8f1db13861.jpg'">
           <div class="rep-info">
             <h6>Problemas de Concentración</h6>
             <p>Tráfico extremo, smog, falta de vivienda y desempleo son consecuencias directas. Las ciudades superpobladas enfrentan estos retos a diario en países como India, China y México.</p>
@@ -497,10 +499,59 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+const sonidos = {
+  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+};
+Object.values(sonidos).forEach(audio => {
+  if (audio && audio.src) audio.volume = 0.15;
+});
+function reproducirSonido(nombre){
+  const audio = sonidos[nombre];
+  if (!audio || !audio.src) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
 let pag=1; const TOTAL=4;
+const progresoVisualNoVerbal = {1:false,2:false,3:false,4:true};
+const paginasCelebradas = new Set();
+let dropOk=0;
+let arrastreIntentos=0;
+let arrastreCorrecto=false;
+const visualAttempts={q1:0,q2:0};
+const visualLocked={q1:false,q2:false};
+const visualCorrect={q1:false,q2:false};
+const compAttempts={r1:0,r2:0};
+const compLocked={r1:false,r2:false};
+const compCorrect={r1:false,r2:false};
+let p2aciertos=0;
+let p3aciertos=0;
+
+function paginaCompleta(n){ return !!progresoVisualNoVerbal[n]; }
+function todoCompletado(){ return Object.values(progresoVisualNoVerbal).every(Boolean); }
+function completarPagina(n){
+  if (progresoVisualNoVerbal[n]) return;
+  progresoVisualNoVerbal[n] = true;
+  if (!paginasCelebradas.has(n)) {
+    paginasCelebradas.add(n);
+    reproducirSonido('tada');
+  }
+  syncUI();
+}
 function cambiarPag(d){
+  const destino=Math.max(1,Math.min(TOTAL,pag+d));
+  if(destino===pag) return;
+  if(destino>pag && !paginaCompleta(pag)){
+    reproducirSonido('error');
+    syncUI();
+    return;
+  }
+  reproducirSonido('click');
   document.getElementById('pagina'+pag).classList.remove('activa');
-  pag+=d;
+  pag=destino;
   document.getElementById('pagina'+pag).classList.add('activa');
   syncUI(); window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -513,16 +564,30 @@ function syncUI(){
   document.getElementById('numActual').innerText=pag;
   document.getElementById('indPag').innerText=pag+'/'+TOTAL;
   document.getElementById('btnAnt').disabled=(pag===1);
-  document.getElementById('btnSig').disabled=(pag===TOTAL);
+  document.getElementById('btnSig').disabled=(pag===TOTAL)||!paginaCompleta(pag);
+  const quizBtn=document.querySelector('.boton-quiz');
+  if(quizBtn){
+    quizBtn.style.display=(pag===TOTAL)?'block':'none';
+    const bloqueado=!todoCompletado();
+    quizBtn.classList.toggle('bloqueado',bloqueado);
+    quizBtn.setAttribute('aria-disabled',bloqueado?'true':'false');
+    quizBtn.title=bloqueado?'Completa todas las páginas para desbloquear el quiz':'';
+    quizBtn.tabIndex=bloqueado?-1:0;
+  }
 }
 function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
 function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
 
 /* ══════════ PÁG 1 — DRAG IMÁGENES ══════════ */
-let dropOk=0;
+function verificarArrastreVisual(esCorrecto){
+  arrastreIntentos++;
+  arrastreCorrecto=!!esCorrecto;
+  return arrastreCorrecto;
+}
 function initDragImgs(){
   document.querySelectorAll('#imgBanco .img-pieza').forEach(el=>{
     el.addEventListener('dragstart',e=>{
+      reproducirSonido('click');
       e.dataTransfer.setData('tipo',el.dataset.tipo);
       e.dataTransfer.setData('texto',el.dataset.texto);
       el.classList.add('dragging');
@@ -538,56 +603,109 @@ function initDragImgs(){
       e.preventDefault(); z.classList.remove('sobre');
       const tipo=e.dataTransfer.getData('tipo');
       const texto=e.dataTransfer.getData('texto');
-      if(tipo!==z.dataset.tipo) return;
-      document.querySelectorAll('#imgBanco .img-pieza').forEach(el=>{
-        if(el.dataset.texto===texto) el.classList.add('oculta');
-      });
+      const pieza=[...document.querySelectorAll('#imgBanco .img-pieza')].find(el=>el.dataset.texto===texto);
+      if(!pieza || pieza.classList.contains('oculta')) return;
+      if(tipo!==z.dataset.tipo){
+        reproducirSonido('error');
+        verificarArrastreVisual(false);
+        return;
+      }
+      pieza.classList.add('oculta');
       const wrap=document.createElement('div');
       wrap.className='img-colocada';
-      const imgSrc=document.querySelector(`[data-texto="${texto}"] img`)?.src||'';
+      const imgSrc=pieza.querySelector('img')?.src||'';
       wrap.innerHTML=`<img src="${imgSrc}" alt="${texto}" title="${texto}">`;
       document.getElementById(dropId).appendChild(wrap);
-      z.classList.add('ok'); dropOk++;
-      if(dropOk>=6) show('fbPag1');
+      z.classList.add('ok');
+      dropOk++;
+      reproducirSonido('acierto');
+      verificarArrastreVisual(true);
+      if(dropOk>=6){
+        show('fbPag1');
+        completarPagina(1);
+      }
     });
   });
 }
 
 /* ══════════ PÁG 2 — SELECCIÓN IMAGEN ══════════ */
-const q1done={}, q2done={};
-let p2aciertos=0;
-function selImagen(qId, elegida, correcta){
-  if(qId==='q1'){
-    if(q1done.done) return; q1done.done=true;
-    if(elegida==='conc'){show('okQ1');hide('errQ1');p2aciertos++;}
-    else{show('errQ1');hide('okQ1');}
-  } else if(qId==='q2'){
-    if(q2done.done) return; q2done.done=true;
-    if(elegida==='campo'){show('okQ2');hide('errQ2');p2aciertos++;}
+function verificarSelImagen(qId, elegida, card){
+  if(visualLocked[qId]) return;
+  visualAttempts[qId]++;
+  reproducirSonido('click');
+  const correcta = qId==='q1' ? 'conc' : 'campo';
+  const opciones=document.querySelectorAll(`.img-opcion[data-q="${qId}"]`);
+  if(elegida===correcta){
+    visualCorrect[qId]=true;
+    visualLocked[qId]=true;
+    card.classList.add('correcto','disabled');
+    opciones.forEach(op=>{
+      op.classList.add('disabled');
+      if(op!==card) op.classList.remove('incorrecto');
+    });
+    if(qId==='q1'){show('okQ1');hide('errQ1');}
+    else{show('okQ2');hide('errQ2');}
+    p2aciertos++;
+    reproducirSonido('acierto');
+    if(p2aciertos>=2){
+      show('fbPag2');
+      completarPagina(2);
+    }
+  } else {
+    visualCorrect[qId]=false;
+    card.classList.add('incorrecto','disabled');
+    if(qId==='q1'){show('errQ1');hide('okQ1');}
     else{show('errQ2');hide('okQ2');}
+    reproducirSonido('error');
   }
-  if(p2aciertos>=2) show('fbPag2');
 }
 
 /* ══════════ PÁG 3 — COMPARAR ══════════ */
-const rondaDone={};
-let p3aciertos=0;
-function elegirComp(el, ronda, esperado){
-  if(rondaDone[ronda]) return;
-  rondaDone[ronda]=true;
+function verificarComp(ronda, el){
+  if(compLocked[ronda]) return;
+  compAttempts[ronda]++;
+  reproducirSonido('click');
   const val=el.dataset.val;
-  document.querySelectorAll(`[data-ronda="${ronda}"]`).forEach(c=>c.classList.add('disabled'));
-  el.classList.add(val==='correcto'?'correcto':'incorrecto');
   const prefix=ronda.charAt(0).toUpperCase()+ronda.slice(1);
-  if(val==='correcto'){show('ok'+prefix);hide('err'+prefix);p3aciertos++;}
-  else{show('err'+prefix);hide('ok'+prefix);}
-  if(p3aciertos>=2) show('fbPag3');
+  if(val==='correcto'){
+    compCorrect[ronda]=true;
+    compLocked[ronda]=true;
+    document.querySelectorAll(`[data-ronda="${ronda}"]`).forEach(c=>c.classList.add('disabled'));
+    el.classList.add('correcto');
+    show('ok'+prefix);hide('err'+prefix);
+    p3aciertos++;
+    reproducirSonido('acierto');
+    if(p3aciertos>=2){
+      show('fbPag3');
+      completarPagina(3);
+    }
+  }
+  else{
+    compCorrect[ronda]=false;
+    el.classList.add('incorrecto','disabled');
+    show('err'+prefix);hide('ok'+prefix);
+    reproducirSonido('error');
+  }
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
   initDragImgs();
+  const quizBtn=document.querySelector('.boton-quiz');
+  if(quizBtn){
+    quizBtn.addEventListener('click',event=>{
+      if(!todoCompletado()){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        reproducirSonido('error');
+      } else {
+        reproducirSonido('click');
+      }
+    }, true);
+  }
   syncUI();
 });
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

@@ -44,6 +44,54 @@
       },
       setup: setupEasyKinestesico
     },
+    'dificil/visual_verbal': {
+      apartados: {
+        p1_form: { pagina: 1, apartadoClave: 'pagina1_migracion_formulario', tipoActividad: 'completar' },
+        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_migracion_quiz', tipoActividad: 'quiz' },
+        p2_form: { pagina: 2, apartadoClave: 'pagina2_retos_formulario', tipoActividad: 'completar' },
+        p2_text: { pagina: 2, apartadoClave: 'pagina2_retos_texto', tipoActividad: 'texto' },
+        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
+        p3_form: { pagina: 3, apartadoClave: 'pagina3_analisis_formulario', tipoActividad: 'completar' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_final', tipoActividad: 'repaso' }
+      },
+      setup: setupNormalVisualVerbal
+    },
+    'dificil/kinestesico': {
+      apartados: {
+        p1_drag: { pagina: 1, apartadoClave: 'pagina1_migracion_arrastrar', tipoActividad: 'arrastrar' },
+        p1_sort: { pagina: 1, apartadoClave: 'pagina1_migracion_ordenar', tipoActividad: 'ordenar' },
+        p2_match: { pagina: 2, apartadoClave: 'pagina2_retos_relacionar', tipoActividad: 'relacionar' },
+        p2_city: { pagina: 2, apartadoClave: 'pagina2_retos_construccion', tipoActividad: 'construccion' },
+        p3_culturas: { pagina: 3, apartadoClave: 'pagina3_analisis_arrastrar', tipoActividad: 'arrastrar' },
+        p3_actitudes: { pagina: 3, apartadoClave: 'pagina3_analisis_clasificar', tipoActividad: 'clasificar' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_quiz', tipoActividad: 'repaso' }
+      },
+      setup: setupNormalKinestesico
+    },
+    'dificil/visual_no_verbal': {
+      apartados: {
+        p1_flags: { pagina: 1, apartadoClave: 'pagina1_migracion_seleccion', tipoActividad: 'seleccion' },
+        p1_symbols: { pagina: 1, apartadoClave: 'pagina1_migracion_simbolos', tipoActividad: 'simbolos' },
+        p2_campo: { pagina: 2, apartadoClave: 'pagina2_retos_seleccion', tipoActividad: 'seleccion' },
+        p2_pq: { pagina: 2, apartadoClave: 'pagina2_retos_visual', tipoActividad: 'imagen' },
+        p3_match: { pagina: 3, apartadoClave: 'pagina3_analisis_relacionar', tipoActividad: 'relacionar' },
+        p3_cq: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_visual', tipoActividad: 'repaso' }
+      },
+      setup: setupNormalVisualNoVerbal
+    },
+    'dificil/auditivo': {
+      apartados: {
+        p1_cloze: { pagina: 1, apartadoClave: 'pagina1_migracion_audio', tipoActividad: 'audio' },
+        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_migracion_quiz', tipoActividad: 'quiz' },
+        p2_ritmo: { pagina: 2, apartadoClave: 'pagina2_retos_clasificar', tipoActividad: 'ritmo' },
+        p2_cloze: { pagina: 2, apartadoClave: 'pagina2_retos_audio', tipoActividad: 'audio' },
+        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
+        p3_cloze: { pagina: 3, apartadoClave: 'pagina3_analisis_audio', tipoActividad: 'audio' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_audio', tipoActividad: 'repaso' }
+      },
+      setup: setupNormalAuditivo
+    },
     'normal/visual_verbal': {
       apartados: {
         p1_form: { pagina: 1, apartadoClave: 'pagina1_formulario', tipoActividad: 'completar' },
@@ -98,6 +146,230 @@
 
   const config = CONFIGS[fileKey];
   if (!config) return;
+  const contenidoId = 3;
+  const sessionStorageKey = `reforzamiento_sesion_${contenidoId}_${nivel}_${estilo}`;
+  const bayesStateStorageKey = `poblacion_bayes_${contenidoId}_${nivel}_${estilo}`;
+  const mascotGeo = '/recursos/mascotas/mascota-geo-felicitacion.png';
+  const levelContentMap = {
+    facil: {
+      repasoCards: [
+        {
+          icon: '🌍',
+          title: 'Distribución de la población',
+          text: 'La población no está repartida igual en todos los lugares. Hay países y regiones con muchísimos habitantes y otros con muy pocos.'
+        },
+        {
+          icon: '🏙️',
+          title: 'Concentración',
+          text: 'La concentración ocurre cuando muchas personas viven juntas en un mismo espacio, como en grandes ciudades o zonas urbanas.'
+        },
+        {
+          icon: '🌾',
+          title: 'Dispersión',
+          text: 'La dispersión sucede cuando pocas personas viven separadas entre sí, generalmente en zonas rurales o alejadas.'
+        },
+        {
+          icon: '🚗',
+          title: 'Problemas de la concentración',
+          text: 'Cuando demasiadas personas viven en el mismo lugar pueden aparecer tráfico, contaminación, basura y falta de vivienda o servicios.'
+        }
+      ],
+      apoyoQuestions: [
+        {
+          icon: '🌍',
+          prompt: '¿Qué significa que la población se distribuye de manera desigual?',
+          options: [
+            'Que no vive la misma cantidad de personas en todos los lugares.',
+            'Que todos los países tienen la misma población.',
+            'Que nadie vive en las ciudades.'
+          ],
+          correct: 'Que no vive la misma cantidad de personas en todos los lugares.',
+          hint: 'Piensa en países muy poblados y otros con menos habitantes.'
+        },
+        {
+          icon: '🏙️',
+          prompt: '¿Qué describe mejor a una zona con mucha concentración de población?',
+          options: [
+            'Muchas personas viviendo cerca unas de otras.',
+            'Casas muy separadas en el campo.',
+            'Un lugar sin habitantes.'
+          ],
+          correct: 'Muchas personas viviendo cerca unas de otras.',
+          hint: 'Imagina una gran ciudad llena de gente.'
+        },
+        {
+          icon: '🌾',
+          prompt: '¿Qué pasa en una zona con población dispersa?',
+          options: [
+            'Las personas viven más separadas entre sí.',
+            'Toda la gente vive en edificios altos.',
+            'Hay más tráfico que en todas las ciudades.'
+          ],
+          correct: 'Las personas viven más separadas entre sí.',
+          hint: 'Piensa en lugares rurales o alejados.'
+        },
+        {
+          icon: '🚗',
+          prompt: '¿Cuál puede ser un problema de la concentración de población?',
+          options: [
+            'Tráfico y contaminación.',
+            'Más espacio vacío en todos lados.',
+            'Que desaparezcan todos los caminos.'
+          ],
+          correct: 'Tráfico y contaminación.',
+          hint: 'Recuerda lo que ocurre cuando vive demasiada gente en un mismo lugar.'
+        }
+      ]
+    },
+    normal: {
+      repasoCards: [
+        {
+          icon: '🌍',
+          title: 'Países poblados y poco poblados',
+          text: 'Algunos países tienen muchísima población y otros muy poca. Para entenderlo, conviene comparar cantidad de habitantes y espacio disponible.'
+        },
+        {
+          icon: '🏙️',
+          title: 'Ciudad y campo',
+          text: 'Las ciudades suelen concentrar a muchas personas y servicios. El campo suele tener menos habitantes y viviendas más separadas.'
+        },
+        {
+          icon: '🌎',
+          title: 'Diversidad cultural',
+          text: 'La población del mundo es diversa. Las personas pueden hablar distintas lenguas, tener costumbres diferentes y vivir de maneras variadas.'
+        },
+        {
+          icon: '🚦',
+          title: 'Concentración y sus efectos',
+          text: 'Cuando demasiadas personas viven en un mismo lugar pueden aparecer problemas como tráfico, contaminación y falta de vivienda o servicios.'
+        }
+      ],
+      apoyoQuestions: [
+        {
+          icon: '🌍',
+          prompt: '¿Qué ayuda a comparar mejor a dos países en población?',
+          options: [
+            'La cantidad de habitantes que tienen.',
+            'Solo el color de su bandera.',
+            'Únicamente el nombre del país.'
+          ],
+          correct: 'La cantidad de habitantes que tienen.',
+          hint: 'Recuerda que estamos comparando cuánta gente vive en cada lugar.'
+        },
+        {
+          icon: '🏙️',
+          prompt: '¿Qué es más común en una ciudad muy poblada?',
+          options: [
+            'Muchas personas viviendo cerca unas de otras.',
+            'Casas aisladas y muy separadas.',
+            'Campos de cultivo en cada calle.'
+          ],
+          correct: 'Muchas personas viviendo cerca unas de otras.',
+          hint: 'Piensa en zonas urbanas con mucha concentración.'
+        },
+        {
+          icon: '🌎',
+          prompt: '¿Qué muestra la diversidad cultural de la población?',
+          options: [
+            'Que las personas pueden tener lenguas y costumbres distintas.',
+            'Que todas las personas viven igual.',
+            'Que en todos lados se habla una sola lengua.'
+          ],
+          correct: 'Que las personas pueden tener lenguas y costumbres distintas.',
+          hint: 'La diversidad habla de diferencias culturales.'
+        },
+        {
+          icon: '🚦',
+          prompt: '¿Cuál puede ser una consecuencia de vivir demasiadas personas en un mismo lugar?',
+          options: [
+            'Tráfico y contaminación.',
+            'Más espacio libre para todos.',
+            'Desaparición de todas las calles.'
+          ],
+          correct: 'Tráfico y contaminación.',
+          hint: 'Piensa en los problemas de la concentración.'
+        }
+      ]
+    },
+    dificil: {
+      repasoCards: [
+        {
+          icon: '🧳',
+          title: 'Migración',
+          text: 'Migrar es cambiar de lugar para vivir. Las personas pueden salir por factores de expulsión y llegar por factores de atracción.'
+        },
+        {
+          icon: '🏙️',
+          title: 'Retos urbanos',
+          text: 'Cuando una ciudad crece muy rápido, pueden aparecer tráfico, contaminación, falta de vivienda y presión sobre los servicios.'
+        },
+        {
+          icon: '🛠️',
+          title: 'Mejoras urbanas',
+          text: 'Las ciudades pueden mejorar con transporte, planeación, áreas verdes, servicios básicos y acciones que cuiden la calidad de vida.'
+        },
+        {
+          icon: '📊',
+          title: 'Análisis de población',
+          text: 'Analizar población es interpretar datos, mapas y gráficas para entender concentración, dispersión, densidad y crecimiento.'
+        },
+        {
+          icon: '🌎',
+          title: 'Leer con varias pistas',
+          text: 'Para comprender un problema de población no basta un solo dato. Conviene comparar lugares, cantidades, mapas y situaciones.'
+        }
+      ],
+      apoyoQuestions: [
+        {
+          icon: '🧳',
+          prompt: '¿Qué idea describe mejor a la migración?',
+          options: [
+            'Cambiar de lugar para vivir.',
+            'Solo salir de paseo por un día.',
+            'Vivir siempre en el mismo sitio.'
+          ],
+          correct: 'Cambiar de lugar para vivir.',
+          hint: 'Piensa en moverse de un lugar a otro de manera permanente o larga.'
+        },
+        {
+          icon: '🏙️',
+          prompt: '¿Qué puede pasar cuando una ciudad crece demasiado rápido?',
+          options: [
+            'Pueden aparecer problemas como tráfico o contaminación.',
+            'Desaparecen todas las personas.',
+            'Ya no hace falta ningún servicio.'
+          ],
+          correct: 'Pueden aparecer problemas como tráfico o contaminación.',
+          hint: 'Recuerda los retos urbanos.'
+        },
+        {
+          icon: '🛠️',
+          prompt: '¿Cuál es un ejemplo de mejora urbana?',
+          options: [
+            'Mejor transporte y más servicios básicos.',
+            'Más basura en las calles.',
+            'Menos agua para la población.'
+          ],
+          correct: 'Mejor transporte y más servicios básicos.',
+          hint: 'Una mejora ayuda a vivir mejor en la ciudad.'
+        },
+        {
+          icon: '📊',
+          prompt: '¿Qué significa analizar la población?',
+          options: [
+            'Interpretar datos y compararlos.',
+            'Mirar un número sin pensar en nada más.',
+            'Aprender solo nombres de países.'
+          ],
+          correct: 'Interpretar datos y compararlos.',
+          hint: 'Analizar es leer información con sentido.'
+        }
+      ]
+    }
+  };
+  const activeLevelContent = levelContentMap[nivel] || null;
+  const repasoCards = activeLevelContent ? activeLevelContent.repasoCards : [];
+  const apoyoQuestions = activeLevelContent ? activeLevelContent.apoyoQuestions : [];
 
   function ready(fn) {
     if (document.readyState === 'loading') {
@@ -146,8 +418,8 @@
   }
 
   const tracker = window.createReforzamientoTracker({
-    trackTime: false,
-    contenidoId: 3,
+    trackTime: true,
+    contenidoId: contenidoId,
     nivel,
     estilo,
     detalleBase: { bloque: 'poblacion_mundial' },
@@ -155,11 +427,194 @@
   });
 
   const session = window.createReforzamientoSessionTracker({
-    contenidoId: 3,
+    contenidoId: contenidoId,
     nivel,
     estilo,
     detalleBase: { bloque: 'poblacion_mundial' }
   });
+
+  function readJsonFromSessionStorage(key) {
+    try {
+      const raw = window.sessionStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeJsonToSessionStorage(key, value) {
+    try {
+      window.sessionStorage.setItem(key, JSON.stringify(value));
+    } catch (_) {}
+  }
+
+  function removeFromSessionStorage(key) {
+    try {
+      window.sessionStorage.removeItem(key);
+    } catch (_) {}
+  }
+
+  function getCurrentSessionUuid() {
+    const stored = readJsonFromSessionStorage(sessionStorageKey);
+    return stored && typeof stored.sessionUuid === 'string' ? stored.sessionUuid : '';
+  }
+
+  function createEmptyBayesState(sessionUuid) {
+    return {
+      sessionUuid: sessionUuid || '',
+      loading: false,
+      recommendation: '',
+      confidence: null,
+      sessionClosed: false,
+      repasoDone: false,
+      apoyoDone: false,
+      apoyoIndex: 0,
+      fallback: false
+    };
+  }
+
+  function computeQuizUnlocked(state) {
+    if (!activeLevelContent || !state || !state.recommendation) return true;
+    if (state.recommendation === 'avance' || state.recommendation === 'mantener') return true;
+    if (state.recommendation === 'repaso') return state.repasoDone === true;
+    if (state.recommendation === 'apoyo') return state.apoyoDone === true;
+    return false;
+  }
+
+  function readBayesState() {
+    if (!activeLevelContent) return null;
+    const stored = readJsonFromSessionStorage(bayesStateStorageKey);
+    if (!stored || typeof stored !== 'object') return null;
+
+    const currentSessionUuid = getCurrentSessionUuid();
+    if (stored.sessionUuid && currentSessionUuid && stored.sessionUuid !== currentSessionUuid) {
+      removeFromSessionStorage(bayesStateStorageKey);
+      return null;
+    }
+
+    return {
+      sessionUuid: typeof stored.sessionUuid === 'string' ? stored.sessionUuid : currentSessionUuid,
+      loading: stored.loading === true,
+      recommendation: typeof stored.recommendation === 'string' ? stored.recommendation : '',
+      confidence: Number.isFinite(Number(stored.confidence)) ? Number(stored.confidence) : null,
+      sessionClosed: stored.sessionClosed === true,
+      repasoDone: stored.repasoDone === true,
+      apoyoDone: stored.apoyoDone === true,
+      apoyoIndex:
+        Number.isFinite(Number(stored.apoyoIndex)) && Number(stored.apoyoIndex) > 0
+          ? Math.min(Number(stored.apoyoIndex), apoyoQuestions.length)
+          : 0,
+      fallback: stored.fallback === true
+    };
+  }
+
+  function ensureBayesStyles() {
+    if (!activeLevelContent) return;
+    if (document.getElementById('poblacionBayesStyles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'poblacionBayesStyles';
+    style.textContent = [
+      '.pob-bayes-panel{display:none;max-width:960px;margin:18px auto 0;padding:22px 22px 24px;border-radius:26px;background:#ffffff;border:3px solid var(--guindo,#7c3048);box-shadow:0 8px 0 rgba(124,48,72,.22);color:var(--guindo,#7c3048);}',
+      '.pob-bayes-panel[data-kind="avance"]{padding:16px;background:transparent;border:none;box-shadow:none;}',
+      '.pob-bayes-title{font-size:1.7rem;color:var(--guindo,#7c3048);margin:0 0 8px;text-align:center;font-weight:900;}',
+      '.pob-bayes-text{font-size:1.05rem;line-height:1.55;margin:0;text-align:center;font-weight:700;color:var(--guindo,#7c3048);}',
+      '.pob-bayes-loader{display:flex;flex-direction:column;align-items:center;gap:10px;}',
+      '.pob-bayes-spinner{width:40px;height:40px;border-radius:50%;border:4px solid #f3d7de;border-top-color:var(--guindo,#7c3048);animation:pobBayesSpin .9s linear infinite;}',
+      '@keyframes pobBayesSpin{to{transform:rotate(360deg);}}',
+      '.pob-bayes-mascot-wrap{background:#fff7f9;border:3px solid #ead2d7;border-radius:28px;padding:16px;box-shadow:0 6px 0 rgba(124,48,72,.12);}',
+      '.pob-bayes-mascot{display:block;width:min(100%,420px);margin:0 auto;border-radius:24px;box-shadow:0 10px 24px rgba(124,48,72,.12);}',
+      '.pob-bayes-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:18px;}',
+      '.pob-bayes-card{background:#fff8fa;border:2px solid #ead2d7;border-radius:20px;padding:16px;text-align:left;}',
+      '.pob-bayes-card-icon{font-size:1.5rem;display:block;margin-bottom:8px;}',
+      '.pob-bayes-card-title{font-weight:900;color:var(--guindo,#7c3048);font-size:1rem;margin-bottom:6px;}',
+      '.pob-bayes-card-text{font-size:.96rem;line-height:1.45;color:#5a3643;margin:0;}',
+      '.pob-bayes-action{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin:18px auto 0;padding:13px 28px;border:none;border-radius:999px;background:#ffea00;color:var(--guindo,#7c3048);font-weight:900;font-size:1rem;border:3px solid var(--guindo,#7c3048);box-shadow:0 5px 0 rgba(124,48,72,.35);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;background-clip:padding-box;}',
+      '.pob-bayes-action:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(124,48,72,.35);}',
+      '.pob-bayes-action-wrap{text-align:center;}',
+      '.pob-bayes-practice{margin-top:14px;background:#fff8fa;border:2px solid #ead2d7;border-radius:22px;padding:18px 16px;}',
+      '.pob-bayes-progress{text-align:center;font-weight:900;color:var(--guindo,#7c3048);margin-bottom:12px;}',
+      '.pob-bayes-question{font-size:1.15rem;font-weight:900;color:var(--guindo,#7c3048);text-align:center;margin:0 0 14px;}',
+      '.pob-bayes-options{display:grid;gap:10px;}',
+      '.pob-bayes-option{width:100%;padding:13px 16px;border-radius:18px;border:2px solid #dfb8c3;background:#ffffff;color:var(--guindo,#7c3048);font-weight:800;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;}',
+      '.pob-bayes-option:hover{transform:translateY(-1px);background:#fffdf4;}',
+      '.pob-bayes-option.ok{background:#dff5e3;border-color:#4caf50;color:#145a20;}',
+      '.pob-bayes-option.err{background:#ffebee;border-color:#ef5350;color:#8b1e1e;}',
+      '.pob-bayes-feedback{min-height:26px;margin-top:12px;font-weight:800;text-align:center;color:var(--guindo,#7c3048);}',
+      '.pob-bayes-feedback.err{color:#b71c1c;}',
+      '.pob-bayes-ready{margin-top:14px;background:#fff8fa;border:2px solid #e0a9b8;border-radius:20px;padding:16px;text-align:center;font-weight:800;color:var(--guindo,#7c3048);}'
+    ].join('');
+    document.head.appendChild(style);
+  }
+
+  function ensureBayesPanel() {
+    if (!activeLevelContent) return null;
+    ensureBayesStyles();
+
+    let panel = document.getElementById('poblacionBayesPanel');
+    if (panel) return panel;
+
+    panel = document.createElement('section');
+    panel.id = 'poblacionBayesPanel';
+    panel.className = 'pob-bayes-panel';
+
+    const quizButton = document.querySelector('.btn-quiz, .boton-quiz, .quiz-btn-footer, a[href*="quiz.html"]');
+    if (quizButton && quizButton.parentNode) {
+      quizButton.parentNode.insertBefore(panel, quizButton);
+    } else {
+      document.body.appendChild(panel);
+    }
+
+    return panel;
+  }
+
+  let bayesState = createEmptyBayesState('');
+  let bayesRequestPromise = null;
+
+  function refreshBayesStateForCurrentSession() {
+    if (!activeLevelContent) return;
+    const currentSessionUuid = getCurrentSessionUuid();
+    if (!currentSessionUuid) return;
+    if (bayesState.sessionUuid && bayesState.sessionUuid !== currentSessionUuid) {
+      bayesState = createEmptyBayesState(currentSessionUuid);
+      removeFromSessionStorage(bayesStateStorageKey);
+      return;
+    }
+    if (!bayesState.sessionUuid) bayesState.sessionUuid = currentSessionUuid;
+  }
+
+  function persistBayesState() {
+    if (!activeLevelContent) return;
+    if (!bayesState.sessionUuid && !bayesState.recommendation && !bayesState.loading) {
+      removeFromSessionStorage(bayesStateStorageKey);
+      return;
+    }
+    writeJsonToSessionStorage(bayesStateStorageKey, {
+      sessionUuid: bayesState.sessionUuid,
+      loading: bayesState.loading,
+      recommendation: bayesState.recommendation,
+      confidence: bayesState.confidence,
+      sessionClosed: bayesState.sessionClosed,
+      repasoDone: bayesState.repasoDone,
+      apoyoDone: bayesState.apoyoDone,
+      apoyoIndex: bayesState.apoyoIndex,
+      fallback: bayesState.fallback
+    });
+  }
+
+  function isQuizUnlockedByBayes() {
+    return computeQuizUnlocked(bayesState);
+  }
+
+  function updateBayesState(patch) {
+    if (!activeLevelContent) return;
+    refreshBayesStateForCurrentSession();
+    bayesState = { ...bayesState, ...patch };
+    if (!bayesState.sessionUuid) bayesState.sessionUuid = getCurrentSessionUuid();
+    persistBayesState();
+    renderBayesPanel();
+    syncQuizButton();
+  }
 
   function ok(key, count) {
     tracker.addCorrect(key, count || 1);
@@ -190,16 +645,250 @@
     }
   }
 
+  function resolveApartadoKey(pageNumber, subKey) {
+    const keys = getKeysForPage(pageNumber);
+    if (!keys.length) return null;
+    const normalized = String(subKey || '').toLowerCase();
+    if (!normalized) return keys.length === 1 ? keys[0] : null;
+
+    return keys.find(function (key) {
+      const apartado = config.apartados[key] || {};
+      return key === normalized
+        || key.endsWith('_' + normalized)
+        || String(apartado.apartadoClave || '').toLowerCase().includes(normalized)
+        || String(apartado.tipoActividad || '').toLowerCase() === normalized;
+    }) || null;
+  }
+
+  function allPagesComplete() {
+    return Object.keys(config.apartados).every(function (key) {
+      const state = tracker.getState(key);
+      return !!(state && state.saved);
+    });
+  }
+
+  function lockedQuizMessage() {
+    if (!activeLevelContent) {
+      return 'Completa correctamente las actividades antes de ir al quiz.';
+    }
+    if (bayesState.loading) {
+      return 'Espera un momento. Estamos revisando cómo continuar.';
+    }
+    if (bayesState.recommendation === 'repaso' && !bayesState.repasoDone) {
+      return 'Antes del quiz, mira las tarjetas de repaso y pulsa "Listo, ya lo recordé".';
+    }
+    if (bayesState.recommendation === 'apoyo' && !bayesState.apoyoDone) {
+      return 'Antes del quiz, completa la práctica extra con calma.';
+    }
+    return 'Completa correctamente las actividades antes de ir al quiz.';
+  }
+
+  function renderBayesPanel() {
+    if (!activeLevelContent) return;
+    const panel = ensureBayesPanel();
+    const current = activePageNumber();
+    const onFinalPage = current === totalPages();
+    const solved = allPagesComplete();
+
+    if (!onFinalPage || !solved) {
+      panel.style.display = 'none';
+      panel.removeAttribute('data-kind');
+      panel.innerHTML = '';
+      return;
+    }
+
+    panel.style.display = 'block';
+
+    if (bayesState.loading) {
+      panel.dataset.kind = 'loading';
+      panel.innerHTML = [
+        '<div class="pob-bayes-loader">',
+        '<div class="pob-bayes-spinner" aria-hidden="true"></div>',
+        '<h3 class="pob-bayes-title">Estamos revisando tu avance</h3>',
+        '<p class="pob-bayes-text">Espera tantito. Ya casi te decimos cómo seguir.</p>',
+        '</div>'
+      ].join('');
+      return;
+    }
+
+    if (bayesState.recommendation === 'avance') {
+      panel.dataset.kind = 'avance';
+      panel.innerHTML = [
+        '<div class="pob-bayes-mascot-wrap">',
+        `<img src="${mascotGeo}" alt="Capibara felicitando" class="pob-bayes-mascot">`,
+        '</div>'
+      ].join('');
+      return;
+    }
+
+    if (bayesState.recommendation === 'mantener') {
+      panel.dataset.kind = 'mantener';
+      panel.innerHTML = [
+        '<h3 class="pob-bayes-title">Vas muy bien</h3>',
+        '<p class="pob-bayes-text">Sigue así. Entendiste bien el tema y ya puedes ir con confianza al quiz.</p>'
+      ].join('');
+      return;
+    }
+
+    if (bayesState.recommendation === 'repaso') {
+      panel.dataset.kind = 'repaso';
+      const cards = repasoCards.map(function (card) {
+        return [
+          '<article class="pob-bayes-card">',
+          `<span class="pob-bayes-card-icon">${card.icon}</span>`,
+          `<div class="pob-bayes-card-title">${card.title}</div>`,
+          `<p class="pob-bayes-card-text">${card.text}</p>`,
+          '</article>'
+        ].join('');
+      }).join('');
+
+      panel.innerHTML = [
+        '<h3 class="pob-bayes-title">Tarjetas para recordar</h3>',
+        '<p class="pob-bayes-text">Antes del quiz, mira estas ideas clave con calma.</p>',
+        `<div class="pob-bayes-card-grid">${cards}</div>`,
+        bayesState.repasoDone
+          ? '<div class="pob-bayes-ready">Listo. Ya puedes ir al quiz.</div>'
+          : '<div class="pob-bayes-action-wrap"><button type="button" class="pob-bayes-action" id="poblacionBayesRepasoBtn">Listo, ya lo recordé</button></div>'
+      ].join('');
+
+      const repasoBtn = document.getElementById('poblacionBayesRepasoBtn');
+      if (repasoBtn) {
+        repasoBtn.addEventListener('click', function () {
+          updateBayesState({ repasoDone: true });
+        });
+      }
+      return;
+    }
+
+    if (bayesState.recommendation === 'apoyo') {
+      panel.dataset.kind = 'apoyo';
+
+      if (bayesState.apoyoDone) {
+        panel.innerHTML = [
+          '<h3 class="pob-bayes-title">Práctica extra terminada</h3>',
+          '<p class="pob-bayes-text">Terminaste la práctica extra. Ahora sí ya puedes ir al quiz.</p>',
+          '<div class="pob-bayes-ready">Sigue con confianza y lee cada pregunta con mucha atención.</div>'
+        ].join('');
+        return;
+      }
+
+      const currentQuestion = apoyoQuestions[Math.min(bayesState.apoyoIndex, apoyoQuestions.length - 1)];
+      const optionsMarkup = currentQuestion.options.map(function (option) {
+        return `<button type="button" class="pob-bayes-option" data-value="${option}">${option}</button>`;
+      }).join('');
+
+      panel.innerHTML = [
+        '<h3 class="pob-bayes-title">Práctica extra antes del quiz</h3>',
+        '<p class="pob-bayes-text">Vamos a recordar las ideas principales con preguntas más generales y tranquilas.</p>',
+        '<div class="pob-bayes-practice">',
+        `<div class="pob-bayes-progress">Pregunta ${Math.min(bayesState.apoyoIndex + 1, apoyoQuestions.length)} de ${apoyoQuestions.length}</div>`,
+        `<p class="pob-bayes-question">${currentQuestion.icon} ${currentQuestion.prompt}</p>`,
+        `<div class="pob-bayes-options">${optionsMarkup}</div>`,
+        '<div class="pob-bayes-feedback" id="poblacionBayesApoyoFeedback" aria-live="polite"></div>',
+        '</div>'
+      ].join('');
+
+      const feedback = document.getElementById('poblacionBayesApoyoFeedback');
+      panel.querySelectorAll('.pob-bayes-option').forEach(function (button) {
+        button.addEventListener('click', function () {
+          const value = button.getAttribute('data-value');
+          const correct = value === currentQuestion.correct;
+
+          if (correct) {
+            button.classList.add('ok');
+            feedback.className = 'pob-bayes-feedback';
+            feedback.textContent =
+              bayesState.apoyoIndex + 1 >= apoyoQuestions.length
+                ? 'Muy bien. Terminaste la práctica extra.'
+                : 'Muy bien. Vamos con la siguiente.';
+            const nextIndex = bayesState.apoyoIndex + 1;
+            window.setTimeout(function () {
+              if (nextIndex >= apoyoQuestions.length) {
+                updateBayesState({ apoyoDone: true, apoyoIndex: apoyoQuestions.length });
+              } else {
+                updateBayesState({ apoyoIndex: nextIndex });
+              }
+            }, 650);
+            return;
+          }
+
+          button.classList.add('err');
+          feedback.className = 'pob-bayes-feedback err';
+          feedback.textContent = currentQuestion.hint || 'Vamos otra vez con calma.';
+        });
+      });
+      return;
+    }
+
+    panel.style.display = 'none';
+    panel.removeAttribute('data-kind');
+    panel.innerHTML = '';
+  }
+
+  async function resolveLevelBayesFlow() {
+    if (!activeLevelContent) return bayesState;
+    refreshBayesStateForCurrentSession();
+
+    if (bayesState.recommendation || bayesState.loading) return bayesState;
+    if (!allPagesComplete() || activePageNumber() !== totalPages()) return bayesState;
+    if (bayesRequestPromise) return bayesRequestPromise;
+
+    bayesRequestPromise = (async function () {
+      updateBayesState({ loading: true });
+      const response = await session.complete({ eventoCierre: 'nivel' });
+      const recommendation = response?.recomendacion_bayes?.recomendacion || '';
+      const confidence = response?.recomendacion_bayes?.confianza ?? null;
+
+      if (recommendation) {
+        updateBayesState({
+          loading: false,
+          recommendation: recommendation,
+          confidence: confidence,
+          sessionClosed: true,
+          fallback: false
+        });
+      } else {
+        updateBayesState({
+          loading: false,
+          recommendation: 'mantener',
+          confidence: null,
+          sessionClosed: response?.success === true,
+          fallback: true
+        });
+      }
+
+      return bayesState;
+    })();
+
+    try {
+      return await bayesRequestPromise;
+    } finally {
+      bayesRequestPromise = null;
+    }
+  }
+
   function syncQuizButton() {
     const current = activePageNumber();
     const total = totalPages();
+    const allComplete = allPagesComplete();
+    const bayesLocked = !!activeLevelContent && allComplete && !isQuizUnlockedByBayes();
+    const locked = !allComplete || bayesLocked;
     document.querySelectorAll('.btn-quiz, .boton-quiz, .quiz-btn-footer').forEach(function (button) {
       const display = current === total
         ? (button.classList.contains('quiz-btn-footer') ? 'inline-flex' : 'block')
         : 'none';
       button.style.display = display;
+      button.classList.toggle('bloqueado', locked);
+      button.setAttribute('aria-disabled', String(locked));
+      button.title = locked ? lockedQuizMessage() : '';
     });
     tracker.markPageVisibleByNumber(current);
+    renderBayesPanel();
+    if (current === total && allComplete && activeLevelContent && !bayesState.recommendation && !bayesState.loading) {
+      window.setTimeout(function () {
+        resolveLevelBayesFlow();
+      }, 0);
+    }
   }
 
   function bindNavigation() {
@@ -250,9 +939,49 @@
       link.addEventListener('click', async function (event) {
         event.preventDefault();
         await finalizeAll(false);
-        await session.complete();
+
+        if (!allPagesComplete()) {
+          syncQuizButton();
+          return;
+        }
+
+        if (activeLevelContent && !bayesState.recommendation && !bayesState.loading) {
+          await resolveLevelBayesFlow();
+        }
+
+        if (activeLevelContent && !isQuizUnlockedByBayes()) {
+          syncQuizButton();
+          const panel = document.getElementById('poblacionBayesPanel');
+          if (panel && panel.style.display !== 'none') {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+
+        if (activeLevelContent && !bayesState.sessionClosed) {
+          const response = await session.complete({ eventoCierre: 'quiz' });
+          updateBayesState({ sessionClosed: response?.success === true });
+        } else if (!activeLevelContent) {
+          await session.complete();
+        }
+
         window.location.href = href;
       });
+    });
+  }
+
+  function bindCompletionBridge() {
+    wrap('completarSubactividad', function (original, args) {
+      const pageNumber = Number(args[0]);
+      const subKey = args[1];
+      const result = original.apply(this, args);
+      const apartadoKey = resolveApartadoKey(pageNumber, subKey);
+      if (apartadoKey) {
+        Promise.resolve(finalizeKey(apartadoKey, true)).then(function () {
+          syncQuizButton();
+        });
+      }
+      return result;
     });
   }
 
@@ -318,19 +1047,23 @@
 
   function setupEasyVisualNoVerbal() {
     wrap('verificarArrastreVisual', function (original, args) {
+      const beforeAttempts = typeof arrastreIntentos === 'number' ? arrastreIntentos : 0;
       const result = original.apply(this, args);
-      const totalPlaced = document.querySelectorAll('#dropConc .img-colocada, #dropDisp .img-colocada').length;
-      if (totalPlaced === 8) ok('p1_arrastrar', 1);
-      else err('p1_arrastrar', 1);
+      const afterAttempts = typeof arrastreIntentos === 'number' ? arrastreIntentos : beforeAttempts;
+      if (afterAttempts > beforeAttempts) {
+        if (typeof arrastreCorrecto !== 'undefined' && arrastreCorrecto) ok('p1_arrastrar', 1);
+        else err('p1_arrastrar', 1);
+      }
       return result;
     });
 
     wrap('verificarSelImagen', function (original, args) {
       const qId = args[0];
-      const beforeLocked = visualLocked[qId];
+      const beforeAttempts = visualAttempts[qId];
+      const beforeResolved = visualLocked[qId];
       const result = original.apply(this, args);
-      if (!beforeLocked && visualLocked[qId]) {
-        if (visualCorrect[qId]) ok('p2_seleccion', 1);
+      if (visualAttempts[qId] > beforeAttempts && !beforeResolved) {
+        if (visualLocked[qId] && visualCorrect[qId]) ok('p2_seleccion', 1);
         else err('p2_seleccion', 1);
       }
       return result;
@@ -338,10 +1071,11 @@
 
     wrap('verificarComp', function (original, args) {
       const ronda = args[0];
-      const beforeLocked = compLocked[ronda];
+      const beforeAttempts = compAttempts[ronda];
+      const beforeResolved = compLocked[ronda];
       const result = original.apply(this, args);
-      if (!beforeLocked && compLocked[ronda]) {
-        if (compCorrect[ronda]) ok('p3_comparar', 1);
+      if (compAttempts[ronda] > beforeAttempts && !beforeResolved) {
+        if (compLocked[ronda] && compCorrect[ronda]) ok('p3_comparar', 1);
         else err('p3_comparar', 1);
       }
       return result;
@@ -372,13 +1106,22 @@
   }
 
   function setupEasyKinestesico() {
-    wrap('verificarDrag1', function (original, args) {
-      const result = original.apply(this, args);
-      const totalPlaced = document.querySelectorAll('#cAlta .colocado, #cBaja .colocado').length;
-      if (totalPlaced === 8) ok('p1_drag', 1);
-      else err('p1_drag', 1);
-      return result;
-    });
+    if (typeof window.registrarIntentoDrag1 === 'function') {
+      wrap('registrarIntentoDrag1', function (original, args) {
+        const result = original.apply(this, args);
+        if (args[0]) ok('p1_drag', 1);
+        else err('p1_drag', 1);
+        return result;
+      });
+    } else {
+      wrap('verificarDrag1', function (original, args) {
+        const result = original.apply(this, args);
+        const totalPlaced = document.querySelectorAll('#cAlta .colocado, #cBaja .colocado').length;
+        if (totalPlaced === 8) ok('p1_drag', 1);
+        else err('p1_drag', 1);
+        return result;
+      });
+    }
 
     wrap('verificarMapa', function (original, args) {
       const result = original.apply(this, args);
@@ -402,13 +1145,22 @@
       return result;
     });
 
-    wrap('verificarRepaso', function (original, args) {
-      const result = original.apply(this, args);
-      const totalPlaced = document.querySelectorAll('#cConc .colocado, #cDisp .colocado, #cDens .colocado, #cMega .colocado').length;
-      if (totalPlaced === 4) ok('p4_repaso', 1);
-      else err('p4_repaso', 1);
-      return result;
-    });
+    if (typeof window.registrarIntentoRepaso === 'function') {
+      wrap('registrarIntentoRepaso', function (original, args) {
+        const result = original.apply(this, args);
+        if (args[0]) ok('p4_repaso', 1);
+        else err('p4_repaso', 1);
+        return result;
+      });
+    } else {
+      wrap('verificarRepaso', function (original, args) {
+        const result = original.apply(this, args);
+        const totalPlaced = document.querySelectorAll('#cConc .colocado, #cDisp .colocado, #cDens .colocado, #cMega .colocado').length;
+        if (totalPlaced === 4) ok('p4_repaso', 1);
+        else err('p4_repaso', 1);
+        return result;
+      });
+    }
   }
 
   function setupNormalVisualVerbal() {
@@ -671,7 +1423,9 @@
 
   ready(function () {
     session.start();
+    bayesState = readBayesState() || createEmptyBayesState(getCurrentSessionUuid());
     bindNavigation();
+    bindCompletionBridge();
     config.setup();
     bindQuizLinks();
     syncQuizButton();

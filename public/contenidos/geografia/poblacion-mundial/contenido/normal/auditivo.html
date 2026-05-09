@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aprendizaje Auditivo 🎵</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Países Poblados · Auditivo · Nivel Normal</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --guindo: #6B0F2B;
@@ -168,13 +168,12 @@
 
   /* ── GAME CARD ── */
   .game-card {
-    background: linear-gradient(145deg, rgba(90,20,40,0.6), rgba(60,60,80,0.5));
-    border: 1.5px solid rgba(244,200,66,0.25);
+    background: #fff;
+    border: 1.5px solid var(--card-border);
     border-radius: 14px;
     margin-bottom: 18px;
     overflow: hidden;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   }
 
   .game-card-header {
@@ -204,8 +203,8 @@
   /* ── INSTRUCCIÓN CON AUDIO ── */
   .game-instruction {
     padding: 10px 18px 0px;
-    background: rgba(0,0,0,0.15);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: #fff8f5;
+    border-bottom: 1px solid var(--card-border);
   }
 
   .instr-top {
@@ -213,7 +212,7 @@
     align-items: flex-start;
     gap: 8px;
     font-size: 0.88rem;
-    color: var(--gris-pale);
+    color: var(--gris-dark);
     padding-bottom: 10px;
   }
   .instr-icon { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
@@ -231,6 +230,7 @@
     gap: 10px;
     flex-wrap: wrap;
   }
+  .audio-zone.ready .audio-upload-row { display: none; }
 
   .audio-upload-label {
     display: inline-flex;
@@ -265,12 +265,14 @@
     display: none;
     align-items: center;
     gap: 10px;
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(244,200,66,0.25);
+    background: #fff;
+    border: 1px solid var(--card-border);
     border-radius: 10px;
     padding: 9px 14px;
     flex-wrap: wrap;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
   }
+  .audio-zone.ready .audio-player-row { display: flex; }
   .audio-player-row.visible { display: flex; }
 
   .ap-play-btn {
@@ -292,7 +294,7 @@
   .ap-filename {
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--guindo-dark);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -302,7 +304,7 @@
   .ap-bar-wrap {
     width: 100%;
     height: 5px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(107,15,43,0.12);
     border-radius: 3px;
     cursor: pointer;
     position: relative;
@@ -319,7 +321,7 @@
 
   .ap-time {
     font-size: 0.72rem;
-    color: var(--gris-pale);
+    color: var(--gris);
     white-space: nowrap;
     font-family: monospace;
     flex-shrink: 0;
@@ -331,12 +333,12 @@
     gap: 5px;
     flex-shrink: 0;
   }
-  .ap-vol-icon { font-size: 0.85rem; color: var(--gris-pale); cursor: pointer; }
+  .ap-vol-icon { font-size: 0.85rem; color: var(--guindo-mid); cursor: pointer; }
   .ap-vol-slider {
     width: 55px;
     height: 4px;
     appearance: none;
-    background: rgba(255,255,255,0.2);
+    background: rgba(107,15,43,0.18);
     border-radius: 2px;
     cursor: pointer;
     outline: none;
@@ -362,6 +364,7 @@
     flex-shrink: 0;
   }
   .ap-remove-btn:hover { background: rgba(232,93,138,0.15); }
+  .audio-zone.ready .ap-remove-btn { display: none; }
 
   /* wave indicator when playing */
   .ap-wave {
@@ -386,7 +389,11 @@
   @keyframes apwave { 0%,100%{transform:scaleY(0.4)} 50%{transform:scaleY(1)} }
 
   /* ── GAME BODY ── */
-  .game-body { padding: 16px 18px; }
+  .game-body {
+    padding: 16px 18px;
+    background: #fff;
+    color: var(--gris-dark);
+  }
 
   /* ── SCORE COUNTER ── */
   .score-counter {
@@ -403,16 +410,16 @@
 
   /* ── CLOZE ── */
   .cloze-area {
-    background: rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #fff;
+    border: 1px solid var(--card-border);
     border-radius: 10px;
     padding: 14px 16px;
     margin-bottom: 12px;
   }
-  .cloze-sentence { font-size: 0.95rem; line-height: 2.3; color: var(--white); }
+  .cloze-sentence { font-size: 0.95rem; line-height: 2.3; color: var(--gris-dark); }
   .cloze-blank {
     display: inline-block;
-    background: rgba(255,255,255,0.07);
+    background: rgba(107,15,43,0.06);
     border-bottom: 2px solid var(--gold);
     min-width: 90px;
     text-align: center;
@@ -424,8 +431,8 @@
     transition: all 0.2s;
     margin: 0 3px;
   }
-  .cloze-blank:hover { background: rgba(244,200,66,0.12); }
-  .cloze-blank.filled { background: rgba(244,200,66,0.1); }
+  .cloze-blank:hover { background: rgba(244,200,66,0.18); }
+  .cloze-blank.filled { background: rgba(244,200,66,0.14); }
   .cloze-blank.correct-blank { border-color: var(--success); color: var(--success); }
   .cloze-blank.wrong-blank { border-color: var(--accent); color: var(--accent); }
 
@@ -455,25 +462,25 @@
   /* ── QUIZ OPTIONS ── */
   .quiz-opts-list { display: grid; gap: 8px; }
   .q-opt {
-    background: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.14);
+    background: #fff;
+    border: 1.5px solid var(--card-border);
     border-radius: 9px;
     padding: 11px 14px;
     cursor: pointer;
     font-weight: 600;
     font-size: 0.9rem;
-    color: var(--white);
+    color: var(--gris-dark);
     text-align: left;
     transition: all 0.22s;
   }
-  .q-opt:hover { border-color: var(--gold); background: rgba(244,200,66,0.1); }
+  .q-opt:hover { border-color: var(--gold); background: #fff8e8; }
   .q-opt.correct { border-color: var(--success); background: rgba(46,204,113,0.18); color: var(--success); }
   .q-opt.wrong { border-color: var(--accent); background: rgba(232,93,138,0.18); color: var(--accent); }
 
   /* ── RITMO ── */
   .ritmo-display {
-    background: rgba(0,0,0,0.3);
-    border: 2px solid rgba(244,200,66,0.25);
+    background: #fff;
+    border: 2px solid var(--card-border);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -481,7 +488,7 @@
     min-height: 80px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 14px;
-    color: var(--white);
+    color: var(--gris-dark);
   }
   .ritmo-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; }
   .ritmo-btn {
@@ -567,6 +574,13 @@
     border-color: var(--gold);
   }
   .nav-next-btn:hover { background: #fff; }
+  .nav-next-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+    background: #b9bcc7;
+    color: #f6f7fb;
+    border-color: #8f94a3;
+  }
   .footer-center { font-family: 'Fredoka One'; color: var(--gold); font-size: 0.95rem; }
   .quiz-btn-footer {
     background: linear-gradient(135deg, var(--guindo), var(--gris));
@@ -582,11 +596,43 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
   .quiz-btn-footer:hover { background: var(--gold); color: var(--guindo-dark); }
+  .quiz-btn-footer.bloqueado {
+    background: #b9bcc7;
+    border-color: #8f94a3;
+    color: #f6f7fb;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  .quiz-btn-footer.bloqueado:hover { background: #b9bcc7; color: #f6f7fb; }
 
   .rep-pbar-wrap { width: 100%; background: rgba(255,255,255,0.1); border-radius: 6px; height: 8px; margin: 10px 0; overflow: hidden; }
   .rep-pbar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--accent)); border-radius: 6px; transition: width 0.5s; }
 
-  .cultura-display { background: rgba(0,0,0,0.25); border: 1px solid rgba(244,200,66,0.2); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+  .cultura-display { background: #fff; border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+
+  .repaso-box {
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.9rem;
+    color: var(--gris-dark);
+    line-height: 1.75;
+  }
+
+  .repaso-pregunta {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gris-dark);
+    margin-bottom: 14px;
+    line-height: 1.55;
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--accent);
+    padding: 12px;
+    border-radius: 0 8px 8px 0;
+  }
 
   .badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(244,200,66,0.14); border: 1px solid var(--gold); border-radius: 20px; padding: 4px 12px; font-size: 0.8rem; color: var(--gold); font-weight: 700; }
 
@@ -601,26 +647,75 @@
     .ap-vol { display: none; }
   }
 </style>
+<link rel="stylesheet" href="/contenidos/geografia/poblacion-mundial/recursos/css/normal-base.css">
+<style>
+  .game-body .score-counter,
+  .game-body .score-counter span {
+    color: var(--guindo-dark) !important;
+  }
+
+  .game-body .cloze-blank {
+    color: var(--gold) !important;
+  }
+
+  .game-body .cloze-blank.correct-blank {
+    color: var(--success) !important;
+  }
+
+  .game-body .cloze-blank.wrong-blank {
+    color: var(--accent) !important;
+  }
+
+  .game-body .word-chip {
+    background: var(--guindo) !important;
+    border-color: rgba(244,200,66,0.55) !important;
+    color: var(--gold) !important;
+  }
+
+  .game-body .word-chip:hover {
+    background: var(--gold) !important;
+    color: var(--guindo-dark) !important;
+  }
+
+  .game-body .word-chip.selected-chip {
+    background: var(--gold) !important;
+    color: var(--guindo-dark) !important;
+    outline: 2px solid var(--white) !important;
+  }
+
+  .game-body .word-chip.used {
+    color: rgba(244,200,66,0.8) !important;
+  }
+
+  .game-body .ritmo-btn.ciudad,
+  .game-body .ritmo-btn.campo {
+    color: #fff !important;
+  }
+</style>
 </head>
 <body>
+<audio id="sndClick" src="/contenidos/geografia/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/geografia/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/geografia/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/geografia/recursos/sonidos/tada.mp3"></audio>
 
 <div class="score-popup" id="scorePopup">+10 ⭐</div>
 
 <!-- ══════════ TOP HEADER ══════════ -->
 <div class="top-header">
-  <div class="top-header-icon">🎵</div>
-  <h1>Aprendo Escuchando</h1>
-  <div class="top-header-sub">Bloque III — Geografía · 5to Primaria</div>
+  <div class="top-header-icon">🎧</div>
+  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
+  <div class="top-header-sub">Bloque · Nivel Normal · Geografía 5°</div>
   <div class="header-badges">
-    <div class="header-badge">🎵 Estilo Auditivo</div>
-    <div class="header-badge secondary">🟢 Nivel Normal</div>
+    <div class="header-badge">Estilo Auditivo</div>
+    <div class="header-badge secondary">Nivel Normal</div>
   </div>
 </div>
 
 <!-- ══════════ HUD BAR ══════════ -->
 <div class="hud-bar">
   <div class="hud-left">
-    <div class="hud-icon">🎧</div>
+    <div class="hud-icon">AUD</div>
     <div class="page-dots">
       <div class="page-dot active" id="dot-0" onclick="goToPage(0)">1</div>
       <div class="page-dot" id="dot-1" onclick="goToPage(1)">2</div>
@@ -763,7 +858,7 @@
       </div>
       <div class="game-body">
         <div class="score-counter">✅ Aciertos: <span id="q1-hits">0</span>/6</div>
-        <div style="margin-bottom:12px;font-size:1rem;font-weight:700;color:var(--white);line-height:1.55;" id="q1-text"></div>
+        <div style="margin-bottom:12px;font-size:1rem;font-weight:700;color:var(--gris-dark);line-height:1.55;" id="q1-text"></div>
         <div class="quiz-opts-list" id="q1-opts"></div>
         <div class="feedback" id="fb-q1"></div>
         <div class="btn-row">
@@ -815,7 +910,7 @@
         </div>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+        <div class="repaso-box">
           <p>🌍 <strong style="color:var(--gold)">Países más poblados:</strong> China (~1,400M), India (~1,400M), EE.UU (~335M), Indonesia (~275M), Pakistán (~230M).</p>
           <p>🏝️ <strong style="color:var(--gold)">Países menos poblados:</strong> Vaticano (~800), Nauru (~10,000), Tuvalu (~11,000).</p>
           <p>📍 <strong style="color:var(--gold)">Concentración:</strong> ocurre en zonas con clima favorable, agua, suelos fértiles y empleo.</p>
@@ -999,7 +1094,7 @@
         </div>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+        <div class="repaso-box">
           <p>🏙️ <strong style="color:var(--gold)">Espacio urbano:</strong> alta densidad, servicios, industria, comercio y transporte.</p>
           <p>🌾 <strong style="color:var(--gold)">Espacio rural:</strong> baja densidad, actividades primarias (agricultura, ganadería, pesca).</p>
           <p>🔄 <strong style="color:var(--gold)">Relación:</strong> el campo abastece alimentos a la ciudad; la ciudad provee tecnología y servicios al campo.</p>
@@ -1057,7 +1152,7 @@
       </div>
       <div class="game-body">
         <div class="cultura-display">
-          <div id="cultura-pista" style="font-size:1rem;color:var(--white);line-height:1.7;margin-bottom:14px;">Presiona "Siguiente Pista" para comenzar</div>
+          <div id="cultura-pista" style="font-size:1rem;color:var(--gris-dark);line-height:1.7;margin-bottom:14px;">Presiona "Siguiente Pista" para comenzar</div>
           <div class="quiz-opts-list" id="cultura-opciones"></div>
         </div>
         <div class="btn-row">
@@ -1181,7 +1276,7 @@
         </div>
       </div>
       <div class="game-body">
-        <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(244,200,66,0.15);border-radius:10px;padding:14px;font-size:0.9rem;color:var(--gris-pale);line-height:1.75;">
+        <div class="repaso-box">
           <p>🌍 <strong style="color:var(--gold)">Diversidad cultural:</strong> lenguas, tradiciones, religiones, gastronomía, arte y formas de vida.</p>
           <p>🗣️ <strong style="color:var(--gold)">Idiomas:</strong> más de 7,000 en el mundo, muchos en riesgo de desaparecer.</p>
           <p>🏛️ <strong style="color:var(--gold)">UNESCO:</strong> protege el patrimonio cultural inmaterial: música, danzas, tradiciones.</p>
@@ -1242,13 +1337,13 @@
             <div style="color:var(--gris-pale);font-size:0.88rem;">Pregunta <span id="rep-num">1</span> de 9</div>
           </div>
           <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:11%"></div></div>
-          <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px;line-height:1.55;background:rgba(0,0,0,0.2);border-left:3px solid var(--accent);padding:12px;border-radius:0 8px 8px 0;" id="rep-q"></div>
+          <div class="repaso-pregunta" id="rep-q"></div>
           <div class="quiz-opts-list" id="rep-opts"></div>
           <div class="feedback" id="fb-rep"></div>
         </div>
         <div id="repaso-end" style="display:none;" class="repaso-end">
           <div style="font-family:'Fredoka One';font-size:2.2rem;color:var(--gold);">🏆 ¡Excelente!</div>
-          <div style="font-size:1.1rem;margin:14px 0;color:var(--white);">Puntuación: <span id="rep-final" style="color:var(--gold);font-weight:800;"></span>/90</div>
+          <div style="font-size:1.1rem;margin:14px 0;color:var(--gris-dark);">Puntuación: <span id="rep-final" style="color:var(--gold);font-weight:800;"></span>/90</div>
           <div id="rep-badge" style="margin:10px 0;"></div>
           <button class="btn" onclick="restartRepaso()">🔄 Jugar de nuevo</button>
         </div>
@@ -1263,7 +1358,7 @@
   <button class="nav-prev-btn" id="prevBtn" onclick="changePage(-1)" disabled>← ANTERIOR</button>
   <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div class="footer-center" id="footerPageNum">1/4</div>
-    <button class="quiz-btn-footer" onclick="goToPage(3)">🎮 IR AL QUIZ</button>
+    <a class="quiz-btn-footer" href="quiz.html">🎮 IR AL QUIZ</a>
   </div>
   <button class="nav-next-btn" id="nextBtn" onclick="changePage(1)">SIGUIENTE →</button>
 </div>
@@ -1273,6 +1368,18 @@
 let totalPts = 0, totalInsig = 0;
 let currentPage = 0;
 const TOTAL_PAGES = 4;
+const progresoNormalAuditivo = {
+  1: { cloze: false, quiz: false },
+  2: { ritmo: false, cloze: false },
+  3: { cultura: false, cloze: false },
+  4: { repaso: false }
+};
+const paginasCelebradas = new Set();
+const q1CorrectSet = new Set();
+const culturaCorrectSet = new Set();
+let q1CurrentResolved = false;
+let culturaActual = -1;
+let culturaResuelta = true;
 
 const PAGE_LABELS = [
   { icon:'🌐', title:'Países Más y Menos Poblados' },
@@ -1281,11 +1388,81 @@ const PAGE_LABELS = [
   { icon:'🎮', title:'Repaso Final' },
 ];
 
+[document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+  if (audio) audio.volume = 0.15;
+});
+
+function playFx(id) {
+  try {
+    const audio = document.getElementById(id);
+    if (!audio) return;
+    audio.volume = 0.15;
+    audio.currentTime = 0;
+    const p = audio.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  } catch (_) {}
+}
+
+function paginaCompleta(numero) {
+  return Object.values(progresoNormalAuditivo[numero] || {}).every(Boolean);
+}
+
+function todoCompletado() {
+  return [1,2,3,4].every(paginaCompleta);
+}
+
+function completarSubactividad(pagina, clave) {
+  const before = paginaCompleta(pagina);
+  progresoNormalAuditivo[pagina][clave] = true;
+  const after = paginaCompleta(pagina);
+  if (after && !before && !paginasCelebradas.has(pagina)) {
+    paginasCelebradas.add(pagina);
+    playFx('sndTada');
+  }
+  syncLockedUI();
+}
+
+function puedeIrAPagina(destino) {
+  if (destino <= currentPage) return true;
+  for (let idx = currentPage; idx < destino; idx++) {
+    if (!paginaCompleta(idx + 1)) return false;
+  }
+  return true;
+}
+
+function syncLockedUI() {
+  document.getElementById('prevBtn').disabled = (currentPage === 0);
+  document.getElementById('nextBtn').disabled = (currentPage === TOTAL_PAGES - 1) || !paginaCompleta(currentPage + 1);
+
+  const quizBtn = document.querySelector('.quiz-btn-footer');
+  if (quizBtn) {
+    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'inline-flex' : 'none';
+    const bloqueado = !todoCompletado();
+    quizBtn.classList.toggle('bloqueado', bloqueado);
+    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
+    quizBtn.tabIndex = bloqueado ? -1 : 0;
+    quizBtn.title = bloqueado ? 'Completa todas las páginas para desbloquear el quiz' : '';
+  }
+}
+
 // ───── AUDIO PLAYER SYSTEM ─────
 // Track intervals for each player
 const playerIntervals = {};
 // Track active player to pause others
 let activePlayerId = null;
+
+const STATIC_AUDIO_FILES = {
+  '1': { src: 'audios/juego1.mp3', label: 'Escucha con atención' },
+  '2': { src: 'audios/juego2.mp3', label: 'Escucha la pregunta' },
+  'r1': { src: 'audios/repaso1.mp3', label: 'Escucha el repaso' },
+  '3': { src: 'audios/juego3.mp3', label: 'Escucha con atención' },
+  '4': { src: 'audios/juego4.mp3', label: 'Escucha con atención' },
+  'r2': { src: 'audios/repaso2.mp3', label: 'Escucha el repaso' },
+  '5': { src: 'audios/juego5.mp3', label: 'Escucha con atención' },
+  '6': { src: 'audios/juego6.mp3', label: 'Escucha con atención' },
+  'r3': { src: 'audios/repasoculturas.mp3', label: 'Escucha el repaso' },
+  'final': { src: 'audios/repasofinal.mp3', label: 'Escucha el reto final' }
+};
 
 function fmtTime(s) {
   if (isNaN(s) || !isFinite(s)) return '0:00';
@@ -1294,44 +1471,19 @@ function fmtTime(s) {
   return m + ':' + String(sec).padStart(2, '0');
 }
 
-function loadAudio(input, playerId) {
-  const file = input.files[0];
-  if (!file) return;
+function bindAudioPlayerEvents(key) {
+  const audio = document.getElementById('player-' + key);
+  if (!audio || audio.dataset.bound === '1') return;
 
-  const noFileId = 'no-file-' + playerId.replace('ap-', '');
-  const audioId = 'player-' + playerId.replace('ap-', '');
-  const fnameId = 'fname-' + playerId.replace('ap-', '');
-  const timeId = 'time-' + playerId.replace('ap-', '');
-  const barId = 'bar-' + playerId.replace('ap-', '');
+  const barId = 'bar-' + key;
+  const timeId = 'time-' + key;
+  const playBtnId = 'play-btn-' + key;
+  const waveId = 'wave-' + key;
 
-  const url = URL.createObjectURL(file);
-  const audio = document.getElementById(audioId);
-  audio.src = url;
-  audio.load();
-
-  // Show filename truncated
-  const maxLen = 28;
-  const displayName = file.name.length > maxLen ? file.name.substring(0, maxLen) + '…' : file.name;
-  document.getElementById(fnameId).textContent = displayName;
-
-  // Once metadata loaded, show duration
-  audio.addEventListener('loadedmetadata', function onMeta() {
+  audio.addEventListener('loadedmetadata', function() {
     document.getElementById(timeId).textContent = '0:00 / ' + fmtTime(audio.duration);
-    audio.removeEventListener('loadedmetadata', onMeta);
   });
 
-  // Show player, hide upload row
-  document.getElementById(playerId).classList.add('visible');
-  const noFileEl = document.getElementById(noFileId);
-  if (noFileEl) noFileEl.style.display = 'none';
-  // Hide the upload label within same audio-zone
-  const zone = document.getElementById(playerId).closest('.audio-zone');
-  if (zone) {
-    const uploadRow = zone.querySelector('.audio-upload-row');
-    if (uploadRow) uploadRow.style.display = 'none';
-  }
-
-  // Progress update
   audio.addEventListener('timeupdate', function() {
     if (!audio.duration) return;
     const pct = (audio.currentTime / audio.duration) * 100;
@@ -1339,15 +1491,53 @@ function loadAudio(input, playerId) {
     document.getElementById(timeId).textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(audio.duration);
   });
 
-  // Reset on end
-  const playBtnId = 'play-btn-' + playerId.replace('ap-', '');
-  const waveId = 'wave-' + playerId.replace('ap-', '');
   audio.addEventListener('ended', function() {
     document.getElementById(barId).style.width = '0%';
     document.getElementById(playBtnId).textContent = '▶';
     document.getElementById(playBtnId).classList.remove('playing');
     document.getElementById(waveId).classList.remove('active');
     activePlayerId = null;
+  });
+
+  audio.dataset.bound = '1';
+}
+
+function setupAudioPlayer(key, src, displayName) {
+  const zone = document.getElementById('player-' + key)?.closest('.audio-zone');
+  const playerRow = document.getElementById('ap-' + key);
+  const audio = document.getElementById('player-' + key);
+  const fname = document.getElementById('fname-' + key);
+  const time = document.getElementById('time-' + key);
+  const bar = document.getElementById('bar-' + key);
+
+  if (!zone || !playerRow || !audio || !fname || !time || !bar) return;
+
+  bindAudioPlayerEvents(key);
+
+  fname.textContent = displayName;
+  time.textContent = '0:00 / 0:00';
+  bar.style.width = '0%';
+  audio.src = src;
+  audio.load();
+
+  zone.classList.add('ready');
+  playerRow.classList.add('visible');
+}
+
+function loadAudio(input, playerId) {
+  const file = input.files[0];
+  if (!file) return;
+  const key = playerId.replace('ap-', '');
+
+  const url = URL.createObjectURL(file);
+  const maxLen = 28;
+  const displayName = file.name.length > maxLen ? file.name.substring(0, maxLen) + '…' : file.name;
+  setupAudioPlayer(key, url, displayName);
+}
+
+function initStaticAudios() {
+  Object.entries(STATIC_AUDIO_FILES).forEach(([key, config]) => {
+    setupAudioPlayer(key, config.src, config.label);
   });
 }
 
@@ -1407,6 +1597,15 @@ function toggleMute(audioId, iconEl) {
 }
 
 function removeAudio(playerId, noFileId, audioId, playBtnId, barId, timeId, waveId) {
+  const key = audioId.replace('player-', '');
+  if (STATIC_AUDIO_FILES[key]) {
+    setupAudioPlayer(key, STATIC_AUDIO_FILES[key].src, STATIC_AUDIO_FILES[key].label);
+    document.getElementById(playBtnId).textContent = '▶';
+    document.getElementById(playBtnId).classList.remove('playing');
+    document.getElementById(waveId).classList.remove('active');
+    return;
+  }
+
   const audio = document.getElementById(audioId);
   audio.pause();
   audio.src = '';
@@ -1447,6 +1646,12 @@ function addPoints(n) {
 
 // ───── PAGE NAVIGATION ─────
 function goToPage(n) {
+  if (!puedeIrAPagina(n)) {
+    playFx('sndError');
+    syncLockedUI();
+    return;
+  }
+  if (n !== currentPage) playFx('sndClick');
   currentPage = n;
   document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === n));
   document.querySelectorAll('.page-dot').forEach((d,i) => d.classList.toggle('active', i === n));
@@ -1454,8 +1659,7 @@ function goToPage(n) {
   document.getElementById('footerPageNum').textContent = `${n+1}/${TOTAL_PAGES}`;
   document.getElementById('sectionTitle').textContent = PAGE_LABELS[n].title;
   document.querySelector('.section-title-bar .sicon').textContent = PAGE_LABELS[n].icon;
-  document.getElementById('prevBtn').disabled = (n === 0);
-  document.getElementById('nextBtn').disabled = (n === TOTAL_PAGES - 1);
+  syncLockedUI();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 function changePage(dir) { goToPage(Math.max(0, Math.min(TOTAL_PAGES-1, currentPage + dir))); }
@@ -1491,6 +1695,7 @@ const clozeAnswers = {
 const clozePages = { 1:'page-0', 2:'page-1', 3:'page-2' };
 
 function checkCloze(n, scoreId) {
+  playFx('sndClick');
   const page = document.getElementById(clozePages[n]);
   const blanks = page.querySelectorAll('.cloze-blank');
   const answers = clozeAnswers[n];
@@ -1508,7 +1713,13 @@ function checkCloze(n, scoreId) {
   fb.textContent = correct === answers.length
     ? '🎉 ¡Perfecto! Completaste toda la actividad. +20 pts'
     : `✏️ Tuviste ${correct}/${answers.length} correctas. ¡Intenta de nuevo!`;
-  if (correct === answers.length) addPoints(20);
+  if (correct === answers.length) {
+    playFx('sndDing');
+    addPoints(20);
+    completarSubactividad(n, 'cloze');
+  } else {
+    playFx('sndError');
+  }
 }
 
 function resetCloze(n, scoreId) {
@@ -1537,27 +1748,79 @@ const q1data = [
 ];
 let q1idx = 0, q1hits = 0;
 function loadQ1() {
+  if (q1CorrectSet.size >= q1data.length) {
+    document.getElementById('q1-text').textContent = '🎉 ¡Completaste todas las preguntas de esta sección!';
+    document.getElementById('q1-opts').innerHTML = '';
+    const fb = document.getElementById('fb-q1');
+    fb.className = 'feedback show ok';
+    fb.textContent = '✅ Ya resolviste correctamente todas las preguntas.';
+    completarSubactividad(1, 'quiz');
+    q1CurrentResolved = true;
+    return;
+  }
   const d = q1data[q1idx];
+  q1CurrentResolved = false;
   document.getElementById('q1-text').textContent = '❓ ' + d.q;
   const c = document.getElementById('q1-opts'); c.innerHTML = '';
   d.opts.forEach((o,i) => {
     const b = document.createElement('button');
     b.className = 'q-opt'; b.textContent = o;
     b.onclick = () => {
-      document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
-        if(j===d.a) btn.classList.add('correct');
-        else if(j===i) btn.classList.add('wrong');
-        btn.disabled = true;
-      });
+      if (b.disabled || q1CurrentResolved) return;
+      playFx('sndClick');
       const fb = document.getElementById('fb-q1');
-      if(i===d.a){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto! +10 pts'; q1hits++; document.getElementById('q1-hits').textContent=q1hits; addPoints(10); }
-      else{ fb.className='feedback show fail'; fb.textContent='❌ Incorrecto. La respuesta correcta está en verde.'; }
+      if(i===d.a){
+        playFx('sndDing');
+        q1CurrentResolved = true;
+        if (!q1CorrectSet.has(q1idx)) {
+          q1CorrectSet.add(q1idx);
+          q1hits = q1CorrectSet.size;
+          document.getElementById('q1-hits').textContent = q1hits;
+          addPoints(10);
+        }
+        document.querySelectorAll('#q1-opts .q-opt').forEach((btn,j) => {
+          if(j===d.a) btn.classList.add('correct');
+          btn.disabled = true;
+        });
+        fb.className='feedback show ok';
+        fb.textContent = q1CorrectSet.size === q1data.length
+          ? '✅ ¡Correcto! Ya completaste toda la ronda.'
+          : '✅ ¡Correcto! Presiona "Siguiente pregunta".';
+        if (q1CorrectSet.size === q1data.length) completarSubactividad(1, 'quiz');
+      } else {
+        playFx('sndError');
+        b.classList.add('wrong');
+        b.disabled = true;
+        fb.className='feedback show fail';
+        fb.textContent='❌ Incorrecto. Intenta con otra opción.';
+      }
+      syncLockedUI();
     };
     c.appendChild(b);
   });
   document.getElementById('fb-q1').className = 'feedback';
 }
-function nextQ1() { q1idx = (q1idx+1) % q1data.length; loadQ1(); }
+function nextQ1() {
+  if (q1CorrectSet.size >= q1data.length) {
+    playFx('sndDing');
+    completarSubactividad(1, 'quiz');
+    return;
+  }
+  if (!q1CurrentResolved) {
+    playFx('sndError');
+    return;
+  }
+  playFx('sndClick');
+  for (let step = 1; step <= q1data.length; step++) {
+    const next = (q1idx + step) % q1data.length;
+    if (!q1CorrectSet.has(next)) {
+      q1idx = next;
+      loadQ1();
+      return;
+    }
+  }
+}
+initStaticAudios();
 loadQ1();
 
 // ───── RITMO ─────
@@ -1572,19 +1835,20 @@ const ritmoItems = [
   {text:'🌾 Cultivo de trigo', ans:'campo'},
 ];
 let ritmoIdx=0, ritmoScore=0, ritmoActive=false;
-function initRitmo() { ritmoIdx=0; ritmoScore=0; ritmoActive=true; document.getElementById('ritmo-score').textContent=0; document.getElementById('ritmo-round').textContent=0; showRitmoItem(); }
+function initRitmo() { playFx('sndClick'); ritmoIdx=0; ritmoScore=0; ritmoActive=true; document.getElementById('ritmo-score').textContent=0; document.getElementById('ritmo-round').textContent=0; showRitmoItem(); }
 function showRitmoItem() {
-  if(ritmoIdx>=ritmoItems.length){ document.getElementById('ritmo-display').textContent=`🎉 ¡Terminaste! Aciertos: ${ritmoScore}/8`; ritmoActive=false; return; }
+  if(ritmoIdx>=ritmoItems.length){ document.getElementById('ritmo-display').textContent=`🎉 ¡Terminaste! Aciertos: ${ritmoScore}/8`; ritmoActive=false; completarSubactividad(2, 'ritmo'); return; }
   document.getElementById('ritmo-round').textContent=ritmoIdx+1;
   document.getElementById('ritmo-display').textContent=ritmoItems[ritmoIdx].text;
   document.getElementById('fb-ritmo').className='feedback';
 }
 function answerRitmo(choice) {
   if(!ritmoActive) return;
+  playFx('sndClick');
   const correct=ritmoItems[ritmoIdx].ans;
   const fb=document.getElementById('fb-ritmo');
-  if(choice===correct){ fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto!'; ritmoScore++; addPoints(8); }
-  else{ fb.className='feedback show fail'; fb.textContent=`❌ Era ${correct==='ciudad'?'🏙️ Ciudad':'🌾 Campo'}`; }
+  if(choice===correct){ playFx('sndDing'); fb.className='feedback show ok'; fb.textContent='✅ ¡Correcto!'; ritmoScore++; addPoints(8); }
+  else{ playFx('sndError'); fb.className='feedback show fail'; fb.textContent=`❌ Era ${correct==='ciudad'?'🏙️ Ciudad':'🌾 Campo'}`; }
   document.getElementById('ritmo-score').textContent=ritmoScore;
   ritmoIdx++;
   setTimeout(showRitmoItem, 900);
@@ -1601,22 +1865,72 @@ const culturas = [
 ];
 let cultIdx=0, cultScore=0;
 function nextCultura() {
-  if(cultIdx>=culturas.length){ document.getElementById('cultura-pista').textContent='🏆 ¡Terminaste todas las pistas!'; document.getElementById('cultura-opciones').innerHTML=''; return; }
-  const d=culturas[cultIdx];
+  if(culturaCorrectSet.size >= culturas.length){
+    playFx('sndDing');
+    document.getElementById('cultura-pista').textContent='🏆 ¡Terminaste todas las pistas!';
+    document.getElementById('cultura-opciones').innerHTML='';
+    document.getElementById('fb-cultura').className='feedback show ok';
+    document.getElementById('fb-cultura').textContent='✅ Ya resolviste correctamente todas las pistas culturales.';
+    completarSubactividad(3, 'cultura');
+    return;
+  }
+  if(culturaActual !== -1 && !culturaResuelta){
+    playFx('sndError');
+    return;
+  }
+  playFx('sndClick');
+  let nextIndex = 0;
+  if (culturaActual === -1) {
+    while (culturaCorrectSet.has(nextIndex) && nextIndex < culturas.length) nextIndex++;
+  } else {
+    for (let step = 1; step <= culturas.length; step++) {
+      const idx = (culturaActual + step) % culturas.length;
+      if (!culturaCorrectSet.has(idx)) {
+        nextIndex = idx;
+        break;
+      }
+    }
+  }
+  const d=culturas[nextIndex];
+  culturaActual = nextIndex;
+  cultIdx = nextIndex + 1;
+  culturaResuelta = false;
   document.getElementById('cultura-pista').textContent=d.pista;
   const c=document.getElementById('cultura-opciones'); c.innerHTML='';
   d.opts.forEach((o,i)=>{
     const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
     b.onclick=()=>{
-      document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j)=>{ if(j===d.a)btn.classList.add('correct'); else if(j===i)btn.classList.add('wrong'); btn.disabled=true; });
+      if (b.disabled || culturaResuelta) return;
+      playFx('sndClick');
       const fb=document.getElementById('fb-cultura');
-      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';cultScore++;document.getElementById('cultura-score').textContent=cultScore;addPoints(10);}
-      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto. La respuesta está en verde.';}
+      if(i===d.a){
+        playFx('sndDing');
+        culturaResuelta = true;
+        if (!culturaCorrectSet.has(nextIndex)) {
+          culturaCorrectSet.add(nextIndex);
+          cultScore = culturaCorrectSet.size;
+          document.getElementById('cultura-score').textContent = cultScore;
+          addPoints(10);
+        }
+        document.querySelectorAll('#cultura-opciones .q-opt').forEach((btn,j)=>{ if(j===d.a)btn.classList.add('correct'); btn.disabled=true; });
+        fb.className='feedback show ok';
+        fb.textContent = culturaCorrectSet.size === culturas.length
+          ? '✅ ¡Correcto! Ya completaste todas las pistas culturales.'
+          : '✅ ¡Correcto! Presiona "Siguiente Pista".';
+        if (culturaCorrectSet.size === culturas.length) completarSubactividad(3, 'cultura');
+      }
+      else{
+        playFx('sndError');
+        b.classList.add('wrong');
+        b.disabled=true;
+        fb.className='feedback show fail';
+        fb.textContent='❌ Incorrecto. Intenta con otra opción.';
+      }
+      syncLockedUI();
     };
     c.appendChild(b);
   });
   document.getElementById('fb-cultura').className='feedback';
-  cultIdx++;
 }
 
 // ───── REPASO FINAL ─────
@@ -1641,10 +1955,12 @@ function loadRep(){
   d.opts.forEach((o,i)=>{
     const b=document.createElement('button'); b.className='q-opt'; b.textContent=o;
     b.onclick=()=>{
+      if (b.disabled) return;
+      playFx('sndClick');
       document.querySelectorAll('#rep-opts .q-opt').forEach((btn,j)=>{ if(j===d.a)btn.classList.add('correct'); else if(j===i)btn.classList.add('wrong'); btn.disabled=true; });
       const fb=document.getElementById('fb-rep');
-      if(i===d.a){fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';repPts+=10;addPoints(10);}
-      else{fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
+      if(i===d.a){playFx('sndDing'); fb.className='feedback show ok';fb.textContent='✅ ¡Correcto! +10 pts';repPts+=10;addPoints(10);}
+      else{playFx('sndError'); fb.className='feedback show fail';fb.textContent='❌ Incorrecto.';}
       document.getElementById('repaso-pts').textContent=repPts;
       repIdx++;
       document.getElementById('rep-num').textContent=Math.min(repIdx+1,9);
@@ -1661,13 +1977,32 @@ function showRepasoEnd(){
   document.getElementById('rep-final').textContent=repPts;
   const badge=repPts>=80?'🥇 Maestro Auditivo':repPts>=50?'🥈 Oyente Experto':'🥉 En Aprendizaje';
   document.getElementById('rep-badge').innerHTML=`<span class="badge">${badge}</span>`;
+  completarSubactividad(4, 'repaso');
 }
 function restartRepaso(){
+  playFx('sndClick');
   document.getElementById('repaso-container').style.display='block';
   document.getElementById('repaso-end').style.display='none';
+  progresoNormalAuditivo[4].repaso = false;
   initRepaso();
+  syncLockedUI();
 }
 initRepaso();
+
+syncLockedUI();
+const quizBtnNormalAuditivo = document.querySelector('.quiz-btn-footer');
+if (quizBtnNormalAuditivo) {
+  quizBtnNormalAuditivo.addEventListener('click', function(event) {
+    if (!todoCompletado()) {
+      event.preventDefault();
+      playFx('sndError');
+    } else {
+      playFx('sndClick');
+    }
+  }, true);
+}
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

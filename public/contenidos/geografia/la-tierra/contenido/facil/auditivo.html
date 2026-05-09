@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -242,7 +242,7 @@
     }
 
     .btn-quiz {
-      display: block; width: fit-content; margin: 0 auto;
+      display: none; width: fit-content; margin: 0 auto;
       background: #ffd600; color: #01579b; border: none;
       padding: 15px 45px; border-radius: 60px; font-weight: 800; font-size: 1.5rem;
       text-decoration: none; border: 4px solid #1976d2;
@@ -262,6 +262,7 @@
 
     .btn-subir:hover { transform: translateY(-5px); box-shadow: 0 8px 0 #0d47a1; }
   </style>
+<link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -295,7 +296,7 @@
 <div class="contenedor">
 
   <!-- =====================================================
-       PÃGINA 1: LA TIERRA
+       P�GINA 1: LA TIERRA
   ===================================================== -->
   <div class="pagina activa" id="pagina1">
 
@@ -307,10 +308,15 @@
       <div class="audio-control">
         <audio controls><source src="audios/01-introduccion.mp3" type="audio/mpeg"></audio>
       </div>
-      <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" alt="Tierra" class="imagen-geo"
-             onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
-        <div class="pie-imagen">&#127757; Vista desde el espacio</div>
+      <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+        <div class="ayuda-ampliar-media">
+          <div class="imagen-grande" onclick="ampliarImagen(this.querySelector('img'))">
+            <img src="/contenidos/geografia/recursos/imagenes/libro/tierra-satelital.jpg" alt="Tierra" class="imagen-geo"
+                 onerror="this.src='https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/globe_west_2048.jpg'">
+            <div class="pie-imagen">&#127757; Vista desde el espacio</div>
+          </div>
+        </div>
+        <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
       </div>
     </div>
 
@@ -346,7 +352,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 2: LÃNEAS IMAGINARIAS
+       P�GINA 2: L�NEAS IMAGINARIAS
   ===================================================== -->
   <div class="pagina" id="pagina2">
 
@@ -390,7 +396,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 3: PUNTOS CARDINALES
+       P�GINA 3: PUNTOS CARDINALES
   ===================================================== -->
   <div class="pagina" id="pagina3">
 
@@ -430,7 +436,7 @@
   </div>
 
   <!-- =====================================================
-       PÃGINA 4: ZONAS TÃ‰RMICAS
+       P�GINA 4: ZONAS T�RMICAS
   ===================================================== -->
   <div class="pagina" id="pagina4">
 
@@ -521,6 +527,10 @@
     error:       new Audio('/contenidos/geografia/recursos/sonidos/error.mp3')
   };
 
+  Object.values(sonidos).forEach(function(s) {
+    if (s.src) s.volume = 0.15;
+  });
+
   function reproducirSonido(nombre) {
     try { sonidos[nombre].currentTime = 0; sonidos[nombre].play(); } catch(e) {}
   }
@@ -542,7 +552,6 @@
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     actualizarUI();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('progreso_auditivo_facil', paginaActual);
   }
 
   function actualizarUI() {
@@ -633,20 +642,13 @@
   }, true);
 
   window.addEventListener('DOMContentLoaded', function() {
-    var guardado = localStorage.getItem('progreso_auditivo_facil');
-    if (guardado) {
-      var pag = parseInt(guardado);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById('pagina' + paginaActual).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById('pagina' + paginaActual).classList.add('activa');
-      }
-    }
     actualizarUI();
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js"></script></body>
+<script src="/contenidos/geografia/la-tierra/recursos/js/la-tierra-tracking.js?v=20260505g"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+

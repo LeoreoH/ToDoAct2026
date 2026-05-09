@@ -1,7 +1,7 @@
 ﻿body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background: #f3f7fb;
+    background: linear-gradient(180deg, #eef8ef 0%, #dff0e1 100%);
 }
 
 .bloque-header {
@@ -46,6 +46,7 @@
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 2px solid #c8e6c9;
 }
 
 h2 {
@@ -97,12 +98,12 @@ h3 {
     display: block;
     font-size: 0.85em;
     margin-top: 8px;
-    color: #546e7a;
+    color: #4f6f52;
     font-weight: normal;
 }
 
 #bloque-contenidos {
     margin-top: 20px;
     padding-top: 10px;
-    border-top: 1px dashed #b0bec5;
+    border-top: 1px dashed #81c784;
 }

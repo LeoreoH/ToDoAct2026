@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -133,9 +133,15 @@
     .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
     .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
     .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
+    .boton-quiz.bloqueado{background:#b9bcc7;border-color:#8f94a3;box-shadow:0 8px 0 #8f94a3;color:#f6f7fb;cursor:not-allowed;pointer-events:none;transform:none;}
+    .boton-quiz.bloqueado:hover{transform:none;box-shadow:0 8px 0 #8f94a3;color:#f6f7fb;}
   </style>
 </head>
 <body>
+<audio id="sndClick" src="/contenidos/geografia/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/geografia/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/geografia/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/geografia/recursos/sonidos/tada.mp3"></audio>
 
 <!-- HEADER -->
 <div class="cabecera">
@@ -195,16 +201,16 @@
         </div>
 
         <button class="opcion-btn" onclick="responderOpc('qAud1','china','china')">
-          <img src="https://flagcdn.com/cn.svg" alt="China"> China
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/cn.svg" alt="China"> China
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud1','noruega','china')">
-          <img src="https://flagcdn.com/no.svg" alt="Noruega"> Noruega
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/no.svg" alt="Noruega"> Noruega
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud1','nauru','china')">
-          <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg" alt="Nauru"> Nauru
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud1','islandia','china')">
-          <img src="https://flagcdn.com/is.svg" alt="Islandia"> Islandia
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/is.svg" alt="Islandia"> Islandia
         </button>
         <div class="fb-ok" id="okQAud1">¡Correcto! China es el país más poblado del mundo con más de 1,400 millones de habitantes.</div>
         <div class="fb-err" id="errQAud1">Incorrecto. La respuesta es China. Es el país más poblado del mundo.</div>
@@ -224,16 +230,16 @@
         </div>
 
         <button class="opcion-btn" onclick="responderOpc('qAud2','brasil','india')">
-          <img src="https://flagcdn.com/br.svg" alt="Brasil"> Brasil
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/br.svg" alt="Brasil"> Brasil
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud2','india','india')">
-          <img src="https://flagcdn.com/in.svg" alt="India"> India
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/in.svg" alt="India"> India
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud2','palau','india')">
-          <img src="https://flagcdn.com/pw.svg" alt="Palau"> Palau
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/pw.svg" alt="Palau"> Palau
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud2','suecia','india')">
-          <img src="https://flagcdn.com/se.svg" alt="Suecia"> Suecia
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/se.svg" alt="Suecia"> Suecia
         </button>
         <div class="fb-ok" id="okQAud2">¡Correcto! India tiene más de 1,400 millones de habitantes y compite con China por el 1er lugar.</div>
         <div class="fb-err" id="errQAud2">Incorrecto. La respuesta es India, el segundo país más poblado del mundo.</div>
@@ -253,16 +259,16 @@
         </div>
 
         <button class="opcion-btn" onclick="responderOpc('qAud3','indonesia','nauru')">
-          <img src="https://flagcdn.com/id.svg" alt="Indonesia"> Indonesia
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/id.svg" alt="Indonesia"> Indonesia
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud3','eeuu','nauru')">
-          <img src="https://flagcdn.com/us.svg" alt="EE.UU."> EE.UU.
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/us.svg" alt="EE.UU."> EE.UU.
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud3','nauru','nauru')">
-          <img src="https://flagcdn.com/nr.svg" alt="Nauru"> Nauru
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg" alt="Nauru"> Nauru
         </button>
         <button class="opcion-btn" onclick="responderOpc('qAud3','alemania','nauru')">
-          <img src="https://flagcdn.com/de.svg" alt="Alemania"> Alemania
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/de.svg" alt="Alemania"> Alemania
         </button>
         <div class="fb-ok" id="okQAud3">¡Correcto! Nauru es uno de los países menos poblados del mundo, con menos de 15,000 habitantes.</div>
         <div class="fb-err" id="errQAud3">Incorrecto. La respuesta es Nauru, un pequeño estado insular con muy poca población.</div>
@@ -442,21 +448,21 @@
     <div class="row g-3 mt-2">
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg" alt="Tierra" class="rep-img">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="Tierra" class="rep-img">
           <h6>Distribución Mundial</h6>
           <p>La población no está repartida igual. China e India son los más poblados. Clima, agua y economía influyen en dónde vive la gente. Los países insulares pequeños son los menos poblados.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://th.bing.com/th/id/R.5612adfcd7c11880698e0780c9fe99cc?rik=R%2b2Six9HSgSiuA&riu=http%3a%2f%2fstatic.wixstatic.com%2fmedia%2fb55503_23b632a35d364273b2cd025f228d366d.jpg&ehk=St5eXWBtus%2b9VNv4w3GHjZguFxXIeBccU3ylfHHveUc%3d&risl=&pid=ImgRaw&r=0" alt="Ciudad densa" class="rep-img">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-898ea4b8c0.jpg" alt="Ciudad densa" class="rep-img">
           <h6>Concentración y Dispersión</h6>
           <p>La densidad mide habitantes por km². Ciudades como Tokio o Dhaka están muy concentradas. Mongolia y el Sahara son ejemplos de dispersión poblacional extrema.</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="rep-card">
-          <img src="https://phantom-marca-mx.unidadeditorial.es/e1847edcfa4ce97ef477243ef14a870e/resize/1320/f/jpg/mx/assets/multimedia/imagenes/2024/06/18/17187367465141.jpg" alt="Problemas de concentración" class="rep-img">
+          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/17187367465141-0f0a309a26.jpg" alt="Problemas de concentración" class="rep-img">
           <h6>Problemas de Concentración</h6>
           <p>Demasiada gente en un lugar causa: falta de vivienda, contaminación, desempleo y saturación de servicios. Es uno de los retos más grandes del mundo actual.</p>
         </div>
@@ -480,7 +486,69 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 let pag=1; const TOTAL=4;
+const progresoPaginas = {1:false,2:false,3:false,4:true};
+const aciertosAuditivos = {
+  p1: new Set(),
+  p2: new Set(),
+  p3: new Set()
+};
+
+[document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+  if (audio) audio.volume = 0.15;
+});
+
+function playFx(id){
+  try{
+    const audio=document.getElementById(id);
+    if(!audio) return;
+    audio.volume=0.15;
+    audio.currentTime=0;
+    const p=audio.play();
+    if(p && typeof p.catch==='function') p.catch(()=>{});
+  }catch(_){}
+}
+
+function puedeAvanzarDesdePaginaActual(){
+  return !!progresoPaginas[pag];
+}
+
+function todoCompletado(){
+  return Object.values(progresoPaginas).every(Boolean);
+}
+
+function marcarPaginaCompleta(numero){
+  if(progresoPaginas[numero]) return;
+  progresoPaginas[numero]=true;
+  playFx('sndTada');
+  syncUI();
+}
+
+function revisarPagina1(){
+  if(aciertosAuditivos.p1.size >= 3) marcarPaginaCompleta(1);
+}
+
+function revisarPagina2(){
+  if(aciertosAuditivos.p2.size >= 5) marcarPaginaCompleta(2);
+}
+
+function revisarPagina3(){
+  if(aciertosAuditivos.p3.size >= 3) marcarPaginaCompleta(3);
+}
+
+function actualizarQuizBtn(){
+  const btn=document.querySelector('.boton-quiz');
+  if(!btn) return;
+  btn.style.display = pag===TOTAL ? 'block' : 'none';
+  const bloqueado = !todoCompletado();
+  btn.classList.toggle('bloqueado', bloqueado);
+  btn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
+  btn.tabIndex = bloqueado ? -1 : 0;
+  btn.title = bloqueado ? 'Completa todas las páginas para desbloquear el quiz' : '';
+}
+
 function cambiarPag(d){
+  if(d>0 && !puedeAvanzarDesdePaginaActual()) return;
+  playFx('sndClick');
   document.getElementById('pagina'+pag).classList.remove('activa');
   pag+=d;
   document.getElementById('pagina'+pag).classList.add('activa');
@@ -495,22 +563,28 @@ function syncUI(){
   document.getElementById('numActual').innerText=pag;
   document.getElementById('indPag').innerText=pag+'/'+TOTAL;
   document.getElementById('btnAnt').disabled=(pag===1);
-  document.getElementById('btnSig').disabled=(pag===TOTAL);
+  document.getElementById('btnSig').disabled=(pag===TOTAL)||!puedeAvanzarDesdePaginaActual();
+  actualizarQuizBtn();
 }
 function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
 function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
 
 /* ── PÁG 1: OPCIÓN CON AUDIO POR PREGUNTA ── */
 function responderOpc(pregId, elegida, correcta){
+  if(aciertosAuditivos.p1.has(pregId)) return;
   const cont = document.getElementById(pregId);
   const btns = cont.querySelectorAll('.opcion-btn');
-  btns.forEach(b => b.classList.add('disabled'));
+  playFx('sndClick');
 
   const okId  = 'ok'  + pregId.charAt(0).toUpperCase() + pregId.slice(1);
   const errId = 'err' + pregId.charAt(0).toUpperCase() + pregId.slice(1);
+  const clickedBtn = [...btns].find(b => b.getAttribute('onclick').includes("'"+elegida+"'"));
 
   if(elegida === correcta){
+    aciertosAuditivos.p1.add(pregId);
+    playFx('sndDing');
     show(okId); hide(errId);
+    btns.forEach(b => b.classList.add('disabled'));
     // resaltar botón correcto
     [...btns].forEach(b => {
       if(b.getAttribute('onclick').includes("'"+elegida+"'")){
@@ -518,49 +592,81 @@ function responderOpc(pregId, elegida, correcta){
       }
     });
   } else {
+    playFx('sndError');
     show(errId); hide(okId);
-    [...btns].forEach(b => {
-      if(b.getAttribute('onclick').includes("'"+elegida+"'")){
-        b.classList.add('incorrecto');
-      }
-    });
+    if(clickedBtn){
+      clickedBtn.classList.add('incorrecto','disabled');
+    }
   }
+  revisarPagina1();
 }
 
 /* ── PÁG 2: VERDADERO / FALSO ── */
 let vfAciertos = 0;
 function respVF(id, elegida, correcta){
+  if(aciertosAuditivos.p2.has(id)) return;
   const cont = document.getElementById(id);
   const btns = cont.querySelectorAll('.vf-btn');
-  btns.forEach(b => b.classList.add('disabled'));
+  playFx('sndClick');
+  const btnElegido = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
   if(elegida === correcta){
-    const btn = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
-    if(btn) btn.classList.add('ok');
+    aciertosAuditivos.p2.add(id);
+    playFx('sndDing');
+    btns.forEach(b => b.classList.add('disabled'));
+    if(btnElegido) btnElegido.classList.add('ok');
     vfAciertos++;
     if(vfAciertos >= 4) show('fbPag2');
   } else {
-    const btn = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
-    if(btn) btn.classList.add('err');
+    playFx('sndError');
+    if(btnElegido){
+      btnElegido.classList.add('err','disabled');
+    }
   }
+  revisarPagina2();
 }
 
 /* ── PÁG 3: PISTAS ── */
 let pistaAciertos = 0;
 function responderPista(pistaId, elegida, correcta){
+  if(aciertosAuditivos.p3.has(pistaId)) return;
   const cont = document.getElementById(pistaId);
   const btns = cont.querySelectorAll('.opcion-btn');
-  btns.forEach(b => b.classList.add('disabled'));
+  playFx('sndClick');
   const prefix = pistaId.charAt(0).toUpperCase() + pistaId.slice(1);
+  const clickedBtn = [...btns].find(b => b.getAttribute('onclick').includes("'"+elegida+"'"));
   if(elegida === correcta){
+    aciertosAuditivos.p3.add(pistaId);
+    playFx('sndDing');
     show('ok'+prefix); hide('err'+prefix);
+    btns.forEach(b => b.classList.add('disabled'));
     pistaAciertos++;
     if(pistaAciertos >= 3) show('fbPag3');
   } else {
+    playFx('sndError');
     show('err'+prefix); hide('ok'+prefix);
+    if(clickedBtn){
+      clickedBtn.classList.add('incorrecto','disabled');
+    }
   }
+  revisarPagina3();
 }
 
-window.addEventListener('DOMContentLoaded', syncUI);
+window.addEventListener('DOMContentLoaded', () => {
+  syncUI();
+  const btnQuiz=document.querySelector('.boton-quiz');
+  if(btnQuiz){
+    btnQuiz.addEventListener('click', function(event){
+      if(!todoCompletado()){
+        event.preventDefault();
+        playFx('sndError');
+      } else {
+        playFx('sndClick');
+      }
+    }, true);
+  }
+});
 </script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
 </body>
 </html>

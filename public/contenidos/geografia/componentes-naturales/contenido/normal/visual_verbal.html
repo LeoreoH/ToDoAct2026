@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Agua · Visual Verbal · 5to Primaria</title>
+  <title>Componentes Naturales de la Tierra · Nivel Normal · Visual Verbal</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -144,7 +144,7 @@
     .btn-nav:hover:not(:disabled){background:var(--bl);transform:scale(1.05);}
     .btn-nav:disabled{background:#e0e0e0;color:#9e9e9e;border-color:#bdbdbd;cursor:not-allowed;}
     .ind-pag{font-size:1.3rem;font-weight:800;background:var(--vd5);color:var(--tx);padding:7px 22px;border-radius:40px;border:3px solid var(--vd2);}
-    .btn-quiz{display:block;width:fit-content;margin:16px auto 0;background:var(--am3);color:var(--vd1);padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd1);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
+    .btn-quiz{display:none;width:fit-content;margin:16px auto 0;background:var(--am3);color:var(--vd1);padding:15px 44px;border-radius:60px;font-weight:800;font-size:1.4rem;text-decoration:none;border:4px solid var(--vd1);box-shadow:0 8px 0 var(--vd1);transition:all .2s;}
     .btn-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--vd1);background:var(--bl);}
 
     .panel-final{display:none;text-align:center;background:var(--bl);border-radius:26px;padding:36px;border:3px solid var(--am3);box-shadow:0 8px 0 var(--vd1);margin-top:16px;}
@@ -162,8 +162,8 @@
 <body>
 
 <div class="cab">
-  <h1>💧 EL AGUA EN EL PLANETA</h1>
-  <p>Bloque II · Geografía · 5to de Primaria</p>
+  <h1>👐 COMPONENTES NATURALES DE LA TIERRA</h1>
+  <p>Bloque II · Nivel Normal</p>
   <div class="badges">
     <span class="b1">📖 Visual Verbal</span>
     <span class="b2">⚡ Nivel Normal</span>
@@ -245,15 +245,15 @@
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
-          <li><span>1.</span> Forma del terreno donde corren los ríos (5 letras)</li>
-          <li><span>3.</span> Río secundario que entra a otro mayor (8 letras)</li>
+          <li><span>1.</span> Río secundario que entra a otro mayor (8 letras)</li>
+          <li><span>3.</span> Zona donde toda el agua drena al mismo río (6 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Forma más alta del terreno, origen de ríos (7 letras)</li>
-          <li><span>4.</span> Zona donde toda el agua drena al mismo río (6 letras)</li>
+          <li><span>2.</span> Forma del terreno donde corren los ríos (5 letras)</li>
+          <li><span>4.</span> Forma más alta del terreno, origen de ríos (7 letras, con Ñ)</li>
         </ul>
       </div>
     </div>
@@ -341,20 +341,23 @@
     <div class="pts-ganados" id="pts_ah"></div>
 
     <div class="juego-titulo" style="margin-top:20px;">📝 Juego 2 — Crucigrama del agua</div>
+    <div class="parr" style="margin-top:8px;">
+      Recuerda: un <strong>río</strong> fluye por la tierra, un <strong>mar</strong> es una parte de agua salada conectada a un océano, y un <strong>océano</strong> es una masa muchísimo mayor que cubre gran parte del planeta.
+    </div>
     <div class="crucigrama-wrap"><div class="crucigrama" id="cruc4" style="grid-template-columns:repeat(8,36px);"></div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">➡️ HORIZONTALES</div>
         <ul class="pistas-lista">
-          <li><span>1.</span> Tipo de agua que NO tiene sal (5 letras)</li>
-          <li><span>3.</span> Donde está la mayor parte del agua del planeta (6 letras)</li>
+          <li><span>1.</span> Tipo de agua sin sal, como la de ríos y lagos (5 letras)</li>
+          <li><span>3.</span> Masa gigantesca de agua salada, mayor que un mar (6 letras)</li>
         </ul>
       </div>
       <div>
         <div style="font-weight:800;color:var(--vd1);margin-bottom:6px;">⬇️ VERTICALES</div>
         <ul class="pistas-lista">
-          <li><span>2.</span> Gran masa de hielo con agua dulce congelada (8 letras)</li>
-          <li><span>4.</span> Río más grande del mundo, en Sudamérica (8 letras)</li>
+          <li><span>2.</span> Gran masa de hielo con agua dulce congelada (7 letras)</li>
+          <li><span>4.</span> Río de agua dulce con mayor caudal del mundo, en Sudamérica (8 letras)</li>
         </ul>
       </div>
     </div>
@@ -393,21 +396,13 @@
     <div class="juego-titulo" style="margin-top:20px;">✏️ Juego 2 — ¡Hay 4 palabras equivocadas! Toca cada una y escribe la correcta</div>
     <div class="texto-roto-wrap">
       <div class="texto-roto" id="texto_roto_rl">
-        Un río tiene <span class="error-span" data-c="Y29ycmllbnRl" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-c="bW92aW1pZW50bw==" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-c="ZGVzZW1ib2NhZHVyYQ==" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span> donde llega al mar. En cambio, un lago tiene agua <span class="error-span" data-c="cXVpZXRh" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
+        Un río tiene <span class="error-span" data-c="Y29ycmllbnRl" data-actual="calma" onclick="corregirError(this)">calma</span> constante y su agua siempre está en <span class="error-span" data-c="bW92aW1pZW50bw==" data-actual="reposo" onclick="corregirError(this)">reposo</span>. El río termina su recorrido en una <span class="error-span" data-c="ZGVzZW1ib2NhZHVyYQ==" data-actual="nacimiento" onclick="corregirError(this)">nacimiento</span>, es decir, en el lugar donde llega al mar. En cambio, un lago tiene agua <span class="error-span" data-c="cXVpZXRh" data-actual="rápida" onclick="corregirError(this)">rápida</span> y está completamente rodeado de tierra.
       </div>
       <button class="btn-v" onclick="verificarTextoRoto2('retro_tr_rl','pts_tr_rl')">✅ Verificar correcciones</button>
       <div class="retro" id="retro_tr_rl"></div>
       <div class="pts-ganados" id="pts_tr_rl"></div>
     </div>
 
-    <div class="panel-final" id="panelFinal">
-      <div style="font-size:3rem;margin-bottom:10px;" id="estrellasFinales">⭐⭐⭐</div>
-      <h2>¡Eres un campeón! 🏆</h2>
-      <p style="font-weight:700;color:#607d8b;margin:10px 0 4px;">Tu puntuación final:</p>
-      <div class="big-num" id="scoreFinal">0</div>
-      <p style="font-weight:800;color:var(--vd1);font-size:1.1rem;">puntos</p>
-      <div style="margin-top:16px;font-size:1rem;font-weight:700;color:#607d8b;" id="mensajeFinal"></div>
-    </div>
   </div>
 </div>
 
@@ -421,13 +416,30 @@
 
 <script>
 let pagActual=1,totalPags=5,score=0;
+function irPagina(nuevaPagina){
+  const destino = Math.max(1, Math.min(totalPags, Number(nuevaPagina) || 1));
+  if(destino===pagActual){
+    actualizarUI();
+    return false;
+  }
+  document.getElementById('pagina'+pagActual).classList.remove('activa');
+  pagActual=destino;
+  document.getElementById('pagina'+pagActual).classList.add('activa');
+  actualizarUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+  return true;
+}
 
 function cambiarPag(dir){
-  document.getElementById('pagina'+pagActual).classList.remove('activa');
-  pagActual+=dir;
-  document.getElementById('pagina'+pagActual).classList.add('activa');
-  actualizarUI();window.scrollTo({top:0,behavior:'smooth'});
-  if(pagActual===5)setTimeout(mostrarFinal,3000);
+  const destino = pagActual + dir;
+  if(destino < 1 || destino > totalPags){
+    actualizarUI();
+    return;
+  }
+  if(window.reproducirSonidoComponentes){
+    window.reproducirSonidoComponentes('pasarPagina');
+  }
+  irPagina(destino);
 }
 function actualizarUI(){
   document.querySelectorAll('.punto').forEach((p,i)=>{
@@ -445,7 +457,7 @@ function sumarPts(pts,id){
   document.getElementById('estrellasMini').innerText=score>=200?'⭐⭐⭐':score>=100?'⭐⭐':score>=40?'⭐':'☆☆☆';
 }
 function mostrarFinal(){
-  const pf=document.getElementById('panelFinal');pf.style.display='block';
+  const pf=document.getElementById('panelFinal');if(!pf)return;pf.style.display='block';
   document.getElementById('scoreFinal').innerText=score;
   document.getElementById('mensajeFinal').innerText=score>=200?'¡Eres un experto en el agua! 🌊':score>=100?'¡Muy buen trabajo! 📚':'¡Buen intento! Repasa y vuelve 💪';
   document.getElementById('estrellasFinales').innerText=score>=200?'⭐⭐⭐':score>=100?'⭐⭐':score>=40?'⭐':'☆';
@@ -502,10 +514,20 @@ function corregirError(span){
   inp.addEventListener('keydown',e=>{if(e.key==='Enter')verificarInputCorreccion(span,inp);});
   inp.addEventListener('blur',()=>{if(inp.value.trim()!=='')verificarInputCorreccion(span,inp);else span.innerText=palabraIncorrecta;});
 }
+function decodeBase64UTF8(str){
+  try{return decodeURIComponent(escape(atob(str)));}
+  catch(_){return atob(str);}
+}
+function resolverTextoCorrecto(span){
+  if(span.dataset.correcto)return span.dataset.correcto;
+  if(span.dataset.c)return decodeBase64UTF8(span.dataset.c);
+  return '';
+}
 function verificarInputCorreccion(span,inp){
   const escrito=inp.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const correcto=atob(span.dataset.c).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  if(escrito===correcto){span.innerText=atob(span.dataset.c);span.classList.add('corregido');span.onclick=null;}
+  const textoCorrecto=resolverTextoCorrecto(span);
+  const correcto=textoCorrecto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  if(escrito===correcto){span.innerText=textoCorrecto;span.classList.add('corregido');span.onclick=null;}
   else{inp.classList.add('mal-inp');setTimeout(()=>{inp.classList.remove('mal-inp');inp.value='';inp.focus();},700);}
 }
 let trCorregido1=false,trCorregido2=false;
@@ -525,8 +547,8 @@ function verificarTextoRoto2(retroId,ptsId){
 }
 
 // CRUCIGRAMA
-const cruc2Layout=(()=>{const g=Array.from({length:7},()=>Array(9).fill(null));'VALLE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});'MONTANA'.split('').forEach((l,i)=>{if(!g[i][4])g[i][4]={l,editable:true};else g[i][4].l=l;});'AFLUENTE'.split('').forEach((l,i)=>{if(g[4][i])g[4][i].l=l;else g[4][i]={l,editable:true};});'CUENCA'.split('').forEach((l,i)=>{const r=i+1;if(g[r][0])g[r][0].l=l;else g[r][0]={l,editable:true};});return g;})();
-const cruc4Layout=(()=>{const g=Array.from({length:8},()=>Array(8).fill(null));'DULCE'.split('').forEach((l,i)=>g[0][i]={l,editable:true});'GLACIAR '.split('').forEach((l,i)=>{if(i<8){if(!g[i][3])g[i][3]={l,editable:true};else g[i][3].l=l;}});'OCEANO'.split('').forEach((l,i)=>{if(g[3][i])g[3][i].l=l;else g[3][i]={l,editable:true};});'AMAZONAS'.split('').forEach((l,i)=>{if(!g[i][7])g[i][7]={l,editable:true};else g[i][7].l=l;});return g;})();
+const cruc2Layout=(()=>{const g=Array.from({length:7},()=>Array(8).fill(null));'AFLUENTE'.split('').forEach((l,i)=>g[2][i]={l,editable:true});'VALLE'.split('').forEach((l,i)=>{if(g[i][2])g[i][2].l=l;else g[i][2]={l,editable:true};});'CUENCA'.split('').forEach((l,i)=>{if(g[4][i])g[4][i].l=l;else g[4][i]={l,editable:true};});'MONTAÑA'.split('').forEach((l,i)=>{if(g[i][5])g[i][5].l=l;else g[i][5]={l,editable:true};});return g;})();
+const cruc4Layout=(()=>{const g=Array.from({length:8},()=>Array(7).fill(null));'DULCE'.split('').forEach((l,i)=>g[2][i]={l,editable:true});'GLACIAR'.split('').forEach((l,i)=>{if(g[i+1][2])g[i+1][2].l=l;else g[i+1][2]={l,editable:true};});'OCEANO'.split('').forEach((l,i)=>{if(g[4][i+1])g[4][i+1].l=l;else g[4][i+1]={l,editable:true};});'AMAZONAS'.split('').forEach((l,i)=>{if(g[i][6])g[i][6].l=l;else g[i][6]={l,editable:true};});return g;})();
 function buildCrucigrama(containerId,layout,numeracion){
   const cont=document.getElementById(containerId);cont.innerHTML='';
   cont.style.gridTemplateColumns=`repeat(${layout[0].length},36px)`;
@@ -567,10 +589,23 @@ function respRuleta(btn,resp,correcta,opcDiv){
 
 // AHORCADO
 const ahPalabras=[{palabra:'DULCE',pista:'El agua que no tiene sal se llama agua _____ (5 letras)'},{palabra:'GLACIAR',pista:'Gran masa de hielo que guarda agua dulce congelada (7 letras)'},{palabra:'OCEANO',pista:'Donde está el 97% del agua del planeta (6 letras)'}];
-let ahIdx=0,ahVidas=5,ahDescubiertas=[],ahPtsGanados=false;
-function initAhorcado(){ahIdx=0;ahVidas=5;ahDescubiertas=[];ahPtsGanados=false;cargarPalabraAh();}
+let ahIdx=0,ahVidas=5,ahDescubiertas=[],ahCorrectas=0,ahPtsGanados=false;
+function initAhorcado(){ahIdx=0;ahVidas=5;ahDescubiertas=[];ahCorrectas=0;ahPtsGanados=false;cargarPalabraAh();}
 function cargarPalabraAh(){
-  if(ahIdx>=ahPalabras.length){const r=document.getElementById('retro_ah');r.className='retro ok';r.innerHTML='🎉 ¡Adivinaste todas las palabras!';r.style.display='flex';if(!ahPtsGanados){sumarPts(35,'pts_ah');ahPtsGanados=true;}return;}
+  if(ahIdx>=ahPalabras.length){
+    const r=document.getElementById('retro_ah');
+    if(ahCorrectas===ahPalabras.length){
+      r.className='retro ok';
+      r.innerHTML='🎉 ¡Adivinaste todas las palabras!';
+      r.style.display='flex';
+      if(!ahPtsGanados){sumarPts(35,'pts_ah');ahPtsGanados=true;}
+    } else {
+      r.className='retro mal';
+      r.innerHTML='🔄 Te faltó resolver correctamente alguna palabra. Repasa las pistas e inténtalo de nuevo.';
+      r.style.display='flex';
+    }
+    return;
+  }
   ahVidas=5;ahDescubiertas=[];
   document.getElementById('ah_pista').innerText='💡 Pista: '+ahPalabras[ahIdx].pista;
   document.getElementById('btn_sig_pal').style.display='none';
@@ -591,7 +626,7 @@ function presionarTecla(letra,btn){
     ahDescubiertas.push(letra);btn.classList.add('ok-tecla');
     const letrasDiv=document.getElementById('ah_letras');
     pal.split('').forEach((l,i)=>{if(l===letra){const div=letrasDiv.children[i];div.innerText=l;div.classList.add('revelada');}});
-    if(pal.split('').every(l=>ahDescubiertas.includes(l))){document.getElementById('retro_ah').className='retro ok';document.getElementById('retro_ah').innerHTML='✅ ¡Correcto! La palabra era <strong>'+pal+'</strong>';document.getElementById('retro_ah').style.display='flex';ahIdx++;document.getElementById('btn_sig_pal').style.display='inline-block';document.querySelectorAll('#ah_teclado .tecla').forEach(b=>b.disabled=true);}
+    if(pal.split('').every(l=>ahDescubiertas.includes(l))){document.getElementById('retro_ah').className='retro ok';document.getElementById('retro_ah').innerHTML='✅ ¡Correcto! La palabra era <strong>'+pal+'</strong>';document.getElementById('retro_ah').style.display='flex';ahCorrectas++;ahIdx++;document.getElementById('btn_sig_pal').style.display='inline-block';document.querySelectorAll('#ah_teclado .tecla').forEach(b=>b.disabled=true);}
   } else {
     ahVidas--;btn.classList.add('mal-tecla');renderAhorcado();
     if(ahVidas===0){document.getElementById('retro_ah').className='retro mal';document.getElementById('retro_ah').innerHTML='💔 ¡Sin vidas! La palabra era <strong>'+ahPalabras[ahIdx].palabra+'</strong>';document.getElementById('retro_ah').style.display='flex';document.querySelectorAll('#ah_teclado .tecla').forEach(b=>b.disabled=true);ahIdx++;document.getElementById('btn_sig_pal').style.display='inline-block';}
@@ -599,12 +634,25 @@ function presionarTecla(letra,btn){
 }
 function siguientePalabra(){document.getElementById('retro_ah').style.display='none';cargarPalabraAh();}
 
-window.addEventListener('DOMContentLoaded',()=>{
-  initSopa(sopaData1,sopaState1);
-  buildCrucigrama('cruc2',cruc2Layout,[{r:0,c:0,n:'1'},{r:0,c:4,n:'2'},{r:4,c:0,n:'3'},{r:1,c:0,n:'4'}]);
-  buildCrucigrama('cruc4',cruc4Layout,[{r:0,c:0,n:'1'},{r:0,c:3,n:'2'},{r:3,c:0,n:'3'},{r:0,c:7,n:'4'}]);
-  initAhorcado();actualizarUI();
-});
+function runInitStep(nombre, fn){
+  try{ fn(); }
+  catch(error){ console.error('Error al iniciar '+nombre+':', error); }
+}
+function initPagina(){
+  runInitStep('sopa de letras', ()=>initSopa(sopaData1,sopaState1));
+  runInitStep('crucigrama 2', ()=>buildCrucigrama('cruc2',cruc2Layout,[{r:2,c:0,n:'1'},{r:0,c:2,n:'2'},{r:4,c:0,n:'3'},{r:0,c:5,n:'4'}]));
+  runInitStep('crucigrama 4', ()=>buildCrucigrama('cruc4',cruc4Layout,[{r:2,c:0,n:'1'},{r:1,c:2,n:'2'},{r:4,c:1,n:'3'},{r:0,c:6,n:'4'}]));
+  runInitStep('ahorcado', initAhorcado);
+  runInitStep('ui', actualizarUI);
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initPagina, { once:true });
+} else {
+  initPagina();
+}
 </script>
+<script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-sonidos.js"></script>
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+    <script src="/contenidos/geografia/componentes-naturales/recursos/js/componentes-tracking.js?v=20260505c"></script>
 </body>
 </html>
