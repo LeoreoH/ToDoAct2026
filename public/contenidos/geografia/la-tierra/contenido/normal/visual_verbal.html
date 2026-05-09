@@ -577,7 +577,7 @@
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-sync-alt me-3"></i>Movimiento de rotación</h2>
-      
+
       <p class="texto-explicativo">
         La Tierra gira sobre sí misma como un trompo. Este movimiento se llama <strong>rotación</strong> y dura 24 horas, un día completo.
         Es el responsable de que tengamos días y noches.
@@ -588,7 +588,7 @@
           <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
             <div class="ayuda-ampliar-media">
               <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-                <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg" 
+                <img src="/contenidos/geografia/recursos/imagenes/libro/rotacion-tierra.jpg"
                      alt="Rotación de la Tierra" class="imagen-geo"
                      onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Earth_rotation.svg/800px-Earth_rotation.svg.png'">
               </div>
@@ -644,7 +644,7 @@
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-orbit me-3"></i>Movimiento de traslación</h2>
-      
+
       <p class="texto-explicativo">
         La Tierra viaja alrededor del Sol siguiendo un camino llamado <strong>órbita</strong>. Este movimiento se llama traslación y dura 365 días y 6 horas.
       </p>
@@ -652,7 +652,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/traslacion-tierra.jpg"
                  alt="Traslación de la Tierra" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Earth_orbit.svg/800px-Earth_orbit.svg.png'">
           </div>
@@ -693,13 +693,13 @@
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-seedling me-3"></i>Las estaciones del año</h2>
-      
+
       <p class="texto-explicativo">
         La Tierra está inclinada sobre su eje. Esta inclinación, junto con la traslación, provoca que los rayos del Sol lleguen con diferente intensidad durante el año, creando las cuatro estaciones.
       </p>
 
       <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg" 
+        <img src="/contenidos/geografia/recursos/imagenes/libro/estaciones.jpg"
              alt="Estaciones del año" class="imagen-geo"
              onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Seasons.svg/800px-Seasons.svg.png'">
       </div>
@@ -751,7 +751,7 @@
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Elementos de los mapas</h2>
-      
+
       <p class="texto-explicativo">
         Los mapas tienen elementos importantes que nos ayudan a entenderlos y usarlos correctamente.
       </p>
@@ -759,7 +759,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/elementos-mapa.jpg"
                  alt="Elementos de un mapa" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Map_elements.svg/800px-Map_elements.svg.png'">
           </div>
@@ -823,7 +823,7 @@
   // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
   function ampliarImagen(img) {
     if (!img) return;
-    
+
     if (img.classList.contains('ampliada')) {
       img.classList.remove('ampliada');
       document.body.classList.remove('imagen-ampliada');
@@ -868,7 +868,7 @@
 
   function cambiarPagina(direccion) {
     reproducirSonido('pasarPagina');
-    
+
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
     paginaActual += direccion;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
@@ -882,7 +882,7 @@
       if (index + 1 === paginaActual) punto.classList.add('activo');
       else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
-    
+
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
@@ -938,4 +938,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

@@ -629,7 +629,7 @@
   <div class="pagina activa" id="pagina1">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-globe-americas me-3"></i>Coordenadas geográficas</h2>
-      
+
       <p class="texto-explicativo">
         Las <strong>coordenadas geográficas</strong> son un sistema que permite localizar cualquier punto exacto en la superficie terrestre. Se basan en dos medidas: <strong>latitud</strong> y <strong>longitud</strong>.
       </p>
@@ -639,7 +639,7 @@
           <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
             <div class="ayuda-ampliar-media">
               <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/coordenadas.jpg"
                  alt="Coordenadas geográficas" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/World_map_with_latitude_and_longitude.svg/800px-World_map_with_latitude_and_longitude.svg.png'">
             <div class="pie-imagen">🌐 Latitud y longitud en un mapa</div>
@@ -684,7 +684,7 @@
   <div class="pagina" id="pagina2">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-h me-3"></i>Latitud y paralelos</h2>
-      
+
       <p class="texto-explicativo">
         La <strong>latitud</strong> se mide usando los <strong>paralelos</strong>, líneas horizontales que rodean la Tierra de este a oeste.
       </p>
@@ -692,7 +692,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/paralelos-detalle.jpg"
                  alt="Paralelos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Latitude_lines.svg/800px-Latitude_lines.svg.png'">
             <div class="pie-imagen">📏 Principales paralelos</div>
@@ -735,7 +735,7 @@
   <div class="pagina" id="pagina3">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-arrows-alt-v me-3"></i>Longitud y meridianos</h2>
-      
+
       <p class="texto-explicativo">
         La <strong>longitud</strong> se mide usando los <strong>meridianos</strong>, líneas verticales que van del Polo Norte al Polo Sur.
       </p>
@@ -743,7 +743,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/meridianos-detalle.jpg"
                  alt="Meridianos" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Longitude_lines.svg/800px-Longitude_lines.svg.png'">
             <div class="pie-imagen">📍 Meridianos y husos horarios</div>
@@ -784,7 +784,7 @@
   <div class="pagina" id="pagina4">
     <div class="tarjeta">
       <h2 class="titulo-pagina"><i class="fas fa-map me-3"></i>Proyecciones cartográficas</h2>
-      
+
       <p class="texto-explicativo">
         La Tierra es esférica, pero los mapas son planos. Las <strong>proyecciones cartográficas</strong> intentan representar la superficie terrestre, pero siempre hay <strong>distorsiones</strong>.
       </p>
@@ -792,7 +792,7 @@
       <div class="row">
         <div class="col-md-4 mb-3">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-mercator.jpg"
                  alt="Mercator" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Mercator_projection_SW.jpg/800px-Mercator_projection_SW.jpg'">
           </div>
@@ -803,7 +803,7 @@
         </div>
         <div class="col-md-4 mb-3">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-robinson.jpg"
                  alt="Robinson" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Robinson_projection_SW.jpg/800px-Robinson_projection_SW.jpg'">
           </div>
@@ -814,7 +814,7 @@
         </div>
         <div class="col-md-4 mb-3">
           <div class="imagen-marco" onclick="ampliarImagen(this.querySelector('img'))">
-            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg" 
+            <img src="/contenidos/geografia/recursos/imagenes/libro/proyeccion-peters.jpg"
                  alt="Peters" class="imagen-geo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Peters_projection%2C_Japan.jpg/800px-Peters_projection%2C_Japan.jpg'">
           </div>
@@ -868,7 +868,7 @@
   // ===== FUNCIÓN PARA AMPLIAR IMÁGENES =====
   function ampliarImagen(img) {
     if (!img) return;
-    
+
     if (img.classList.contains('ampliada')) {
       img.classList.remove('ampliada');
       document.body.classList.remove('imagen-ampliada');
@@ -913,7 +913,7 @@
 
   function cambiarPagina(direccion) {
     reproducirSonido('pasarPagina');
-    
+
     document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
     paginaActual += direccion;
     document.getElementById(`pagina${paginaActual}`).classList.add('activa');
@@ -927,7 +927,7 @@
       if (index + 1 === paginaActual) punto.classList.add('activo');
       else if (index + 1 < paginaActual) punto.classList.add('completado');
     });
-    
+
     document.getElementById('paginaActualNum').innerText = paginaActual;
     document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
@@ -983,4 +983,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
