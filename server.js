@@ -1,9 +1,14 @@
 ﻿const express = require('express');
 const { Client } = require('pg');
-const bodyParser = require('body-parser');
+const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const {
+    classifyQuizPerformance,
+    classifyReinforcementSession
+} = require('./services/bayes-monitor');
+const { evaluateVarkAnswers } = require('./services/vark-evaluator');
 
 const app = express();
 console.log('public:', path.join(__dirname, 'public'));
@@ -12,7 +17,15 @@ const config = require('./config');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, filePath) => {
+        if (filePath.toLowerCase().endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+        }
+    }
+}));
 
 app.use(session({
     secret: 'tu_clave_secreta',
@@ -30,23 +43,7 @@ const client = new Client({
     client_encoding: 'UTF8'
 });
 
-async function ensurePuntuacionesSchema() {
-    await client.query(`
-        CREATE TABLE IF NOT EXISTS puntuaciones (
-            id SERIAL PRIMARY KEY,
-            id_usuario INTEGER NOT NULL,
-            id_actividad INTEGER,
-            categoria VARCHAR(60),
-            nivel VARCHAR(20),
-            puntuacion INTEGER NOT NULL DEFAULT 0,
-            tiempo INTEGER NOT NULL DEFAULT 0,
-            errores INTEGER NOT NULL DEFAULT 0,
-            estilo_mostrado VARCHAR(30),
-            fecha TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
-        )
-    `);
-}
-
+// Sincroniza las tablas de progreso y reforzamiento al iniciar el servidor.
 async function ensureContentProgressSchema() {
     await client.query(`
         ALTER TABLE resultados_quiz
@@ -188,6 +185,76 @@ async function ensureContentProgressSchema() {
         CREATE INDEX IF NOT EXISTS idx_sesiones_reforzamiento_session_uuid
         ON sesiones_reforzamiento (session_uuid)
     `);
+
+    await client.query(`
+        CREATE TABLE IF NOT EXISTS inferencias_bayes (
+            id SERIAL PRIMARY KEY,
+            usuario VARCHAR(50) NOT NULL,
+            contenido_id INTEGER NOT NULL REFERENCES contenidos(id) ON DELETE CASCADE,
+            nivel VARCHAR(20),
+            estilo VARCHAR(30),
+            origen VARCHAR(20) NOT NULL,
+            referencia_id INTEGER,
+            session_uuid VARCHAR(64),
+            recomendacion VARCHAR(30) NOT NULL,
+            confianza NUMERIC(10,6) NOT NULL DEFAULT 0,
+            probabilidades_json JSONB NOT NULL DEFAULT '[]'::jsonb,
+            rasgos_json JSONB NOT NULL DEFAULT '[]'::jsonb,
+            modelo_version VARCHAR(40) NOT NULL,
+            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_inferencias_bayes_usuario
+        ON inferencias_bayes (usuario)
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_inferencias_bayes_contenido
+        ON inferencias_bayes (contenido_id)
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_inferencias_bayes_origen
+        ON inferencias_bayes (origen)
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_inferencias_bayes_referencia
+        ON inferencias_bayes (referencia_id)
+    `);
+}
+
+async function ensureVarkSchema() {
+    await client.query(`
+        CREATE TABLE IF NOT EXISTS resultados_vark (
+            id SERIAL PRIMARY KEY,
+            usuario VARCHAR(50) NOT NULL,
+            usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+            intento INTEGER NOT NULL DEFAULT 1,
+            respuestas_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+            totales_v INTEGER NOT NULL DEFAULT 0,
+            totales_a INTEGER NOT NULL DEFAULT 0,
+            totales_r INTEGER NOT NULL DEFAULT 0,
+            totales_k INTEGER NOT NULL DEFAULT 0,
+            codigo_estilo VARCHAR(1),
+            estilo_resultado VARCHAR(30),
+            es_clasificable BOOLEAN NOT NULL DEFAULT false,
+            motivo_no_clasificable VARCHAR(40),
+            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_resultados_vark_usuario
+        ON resultados_vark (usuario)
+    `);
+
+    await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_resultados_vark_usuario_fecha
+        ON resultados_vark (usuario, fecha DESC)
+    `);
 }
 
 async function getUsuarioActual(usuario) {
@@ -212,6 +279,7 @@ function toUtcTimestampString(value) {
     return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 
+// Valida la clave que une contenido, sesion y quiz.
 function normalizeSessionUuid(value) {
     if (typeof value !== 'string') {
         return null;
@@ -225,6 +293,7 @@ function normalizeSessionUuid(value) {
     return /^[A-Za-z0-9-]{8,64}$/.test(cleaned) ? cleaned : null;
 }
 
+// Calcula el siguiente intento para quiz o diagnostico sin mezclar niveles.
 async function getNextContentAttempt(usuario, contenidoId, tipoResultado, nivel = null) {
     const params = [usuario, contenidoId, tipoResultado];
     let sql = `
@@ -241,6 +310,16 @@ async function getNextContentAttempt(usuario, contenidoId, tipoResultado, nivel 
     }
 
     const result = await client.query(sql, params);
+    return Number(result.rows[0]?.siguiente_intento || 1);
+}
+
+async function getNextVarkAttempt(usuario) {
+    const result = await client.query(`
+        SELECT COALESCE(MAX(intento), 0) + 1 AS siguiente_intento
+        FROM resultados_vark
+        WHERE usuario = $1
+    `, [usuario]);
+
     return Number(result.rows[0]?.siguiente_intento || 1);
 }
 
@@ -271,82 +350,196 @@ async function getNextReinforcementSessionAttempt(usuario, contenidoId, nivel, e
     return Number(result.rows[0]?.siguiente_intento || 1);
 }
 
+async function guardarInferenciaBayesQuiz({
+    usuario,
+    contenidoId,
+    nivel,
+    estilo,
+    sessionUuid,
+    referenciaId,
+    puntaje,
+    aciertos,
+    totalPreguntas,
+    errores,
+    tiempoSegundos,
+    aprobado,
+    intento
+}) {
+    const inferencia = classifyQuizPerformance({
+        contenidoId,
+        nivel,
+        puntaje,
+        aciertos,
+        totalPreguntas,
+        errores,
+        tiempoSegundos,
+        aprobado,
+        intento
+    });
+
+    await client.query(`
+        INSERT INTO inferencias_bayes
+            (usuario, contenido_id, nivel, estilo, origen, referencia_id, session_uuid, recomendacion, confianza, probabilidades_json, rasgos_json, modelo_version)
+        VALUES
+            ($1, $2, $3, $4, 'quiz', $5, $6, $7, $8, $9::jsonb, $10::jsonb, $11)
+    `, [
+        usuario,
+        contenidoId,
+        nivel,
+        estilo,
+        referenciaId,
+        sessionUuid,
+        inferencia.recommendation,
+        inferencia.confidence,
+        JSON.stringify(inferencia.ranking),
+        JSON.stringify(inferencia.tokens),
+        inferencia.modelVersion
+    ]);
+
+    return inferencia;
+}
+
+async function getReinforcementSessionAggregate({
+    usuario,
+    contenidoId,
+    nivel,
+    estilo,
+    sessionUuid
+}) {
+    if (!sessionUuid) {
+        return null;
+    }
+
+    const result = await client.query(`
+        SELECT
+            COUNT(*) AS registros,
+            COALESCE(SUM(aciertos), 0) AS aciertos_totales,
+            COALESCE(SUM(errores), 0) AS errores_totales,
+            COUNT(DISTINCT apartado_clave) AS apartados_visitados,
+            COUNT(DISTINCT CASE WHEN completado = true THEN apartado_clave END) AS apartados_completados
+        FROM resultados_reforzamiento
+        WHERE usuario = $1
+          AND contenido_id = $2
+          AND nivel = $3
+          AND estilo = $4
+          AND session_uuid = $5
+    `, [usuario, contenidoId, nivel, estilo, sessionUuid]);
+
+    const row = result.rows[0];
+    if (!row) {
+        return null;
+    }
+
+    return {
+        registros: Number(row.registros || 0),
+        aciertosTotales: Number(row.aciertos_totales || 0),
+        erroresTotales: Number(row.errores_totales || 0),
+        apartadosVisitados: Number(row.apartados_visitados || 0),
+        apartadosCompletados: Number(row.apartados_completados || 0)
+    };
+}
+
+async function guardarInferenciaBayesReforzamiento({
+    usuario,
+    contenidoId,
+    nivel,
+    estilo,
+    sessionUuid,
+    referenciaId,
+    tiempoSegundos,
+    intento,
+    eventoCierre
+}) {
+    const aggregate = await getReinforcementSessionAggregate({
+        usuario,
+        contenidoId,
+        nivel,
+        estilo,
+        sessionUuid
+    });
+
+    if (!aggregate || aggregate.apartadosVisitados <= 0) {
+        return null;
+    }
+
+    const inferencia = classifyReinforcementSession({
+        contenidoId,
+        nivel,
+        tiempoSegundos,
+        intento,
+        eventoCierre,
+        aciertos: aggregate.aciertosTotales,
+        errores: aggregate.erroresTotales,
+        apartadosVisitados: aggregate.apartadosVisitados,
+        apartadosCompletados: aggregate.apartadosCompletados
+    });
+
+    await client.query(`
+        INSERT INTO inferencias_bayes
+            (usuario, contenido_id, nivel, estilo, origen, referencia_id, session_uuid, recomendacion, confianza, probabilidades_json, rasgos_json, modelo_version)
+        VALUES
+            ($1, $2, $3, $4, 'reforzamiento', $5, $6, $7, $8, $9::jsonb, $10::jsonb, $11)
+    `, [
+        usuario,
+        contenidoId,
+        nivel,
+        estilo,
+        referenciaId,
+        sessionUuid,
+        inferencia.recommendation,
+        inferencia.confidence,
+        JSON.stringify(inferencia.ranking),
+        JSON.stringify(inferencia.tokens),
+        inferencia.modelVersion
+    ]);
+
+    return {
+        ...inferencia,
+        aggregate
+    };
+}
+
 client.connect()
     .then(async () => {
-        console.log('Conexión exitosa a la base de datos');
+        console.log('ConexiÃ³n exitosa a la base de datos');
         await client.query("SET client_encoding TO 'UTF8'");
-        await ensurePuntuacionesSchema();
         await ensureContentProgressSchema();
+        await ensureVarkSchema();
     })
     .catch(err => console.error('Error al conectar a la base de datos', err));
 
-app.use((req, res, next) => {
-    if (req.path.endsWith('.html')) {
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    }
-    next();
-});
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  }
+}));
 
 app.get('/', (req, res) => {
     res.redirect('/index.html');
 });
 
-// ============================================
-// =====  AUTENTICACIÃ“N Y USUARIOS  =====
-// ============================================
+function getPasswordFromBody(body) {
+    return body?.contrasena ?? body?.['contraseña'] ?? body?.['contraseÃ±a'] ?? null;
+}
+
+function getPasswordFromUserRow(userRow) {
+    return userRow?.['contraseña'] ?? userRow?.['contraseÃ±a'] ?? null;
+}
 
 app.post('/crearcuenta', async (req, res) => {
-    const { usuario, nombrecompleto, fechanacimiento, genero } = req.body;
-    const contrasena = req.body['contraseña'] ?? req.body.contrasena ?? req.body.password;
+    const { usuario, nombrecompleto, fechanacimiento, genero } = req.body || {};
+    const contrasena = getPasswordFromBody(req.body);
+
+    if (!usuario || !contrasena || !nombrecompleto || !fechanacimiento || !genero) {
+        return res.status(400).json({ error: 'Faltan campos requeridos' });
+    }
 
     try {
-        const insertUsuario = await client.query(
-            `INSERT INTO usuarios(usuario, contraseña, nombrecompleto, fechanacimiento, genero)
-             VALUES($1, $2, $3, $4, $5) RETURNING id`,
+        await client.query(
+            `INSERT INTO usuarios(usuario, U&"contrase\\00F1a", nombrecompleto, fechanacimiento, genero)
+             VALUES($1, $2, $3, $4, $5)`,
             [usuario, contrasena, nombrecompleto, fechanacimiento, genero]
         );
-        const id_usuario = insertUsuario.rows[0].id;
-
-        const actividadesResult = await client.query('SELECT * FROM actividades');
-        const actividades = actividadesResult.rows;
-
-        for (const act of actividades) {
-            if (act.actividad === 'Notas musicales') {
-                await client.query(
-                    `INSERT INTO niveles (id_usuario, id_actividad, categoria, nivel, desbloqueado)
-                     VALUES ($1, $2, NULL, 1, true)`,
-                    [id_usuario, act.id]
-                );
-                continue;
-            }
-
-            if (act.id !== 2 && act.id !== 5) {
-                const listaNiv = (act.id === 1) ? [1, 2, 3, 4] : [1, 2, 3];
-                for (const niv of listaNiv) {
-                    await client.query(
-                        `INSERT INTO niveles (id_usuario, id_actividad, categoria, nivel, desbloqueado)
-                         VALUES ($1, $2, NULL, $3, $4)`,
-                        [id_usuario, act.id, niv, niv === 1]
-                    );
-                }
-            }
-
-            else if (act.id === 2) {
-                await client.query(
-                    `INSERT INTO niveles (id_usuario, id_actividad, categoria, nivel, desbloqueado)
-                     VALUES ($1, $2, $3, 1, true)`,
-                    [id_usuario, act.id, 'frutas']
-                );
-            }
-
-            else if (act.id === 5) {
-                await client.query(
-                    `INSERT INTO niveles (id_usuario, id_actividad, categoria, nivel, desbloqueado)
-                     VALUES ($1, $2, $3, 1, true)`,
-                    [id_usuario, act.id, 'animales']
-                );
-            }
-        }
 
         res.status(200).json({ message: 'Cuenta creada exitosamente' });
     } catch (error) {
@@ -356,20 +549,25 @@ app.post('/crearcuenta', async (req, res) => {
 });
 
 app.post('/index', async (req, res) => {
-    const { usuario } = req.body;
-    const contrasena = req.body['contraseña'] ?? req.body.contrasena ?? req.body.password;
+    const { usuario } = req.body || {};
+    const contrasena = getPasswordFromBody(req.body);
+
+    if (!usuario || !contrasena) {
+        return res.status(400).json({ success: false, message: 'Faltan credenciales' });
+    }
 
     try {
         const result = await client.query('SELECT * FROM usuarios WHERE usuario = $1', [usuario]);
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
+            const contrasenaGuardada = getPasswordFromUserRow(user);
 
-            if (user.contraseña === contrasena) {
+            if (contrasenaGuardada === contrasena) {
                 req.session.usuario = usuario;
                 res.status(200).json({ success: true });
             } else {
-                res.status(400).json({ success: false, message: 'Contraseña incorrecta' });
+                res.status(400).json({ success: false, message: 'ContraseÃ±a incorrecta' });
             }
         } else {
             res.status(400).json({ success: false, message: 'Usuario no encontrado' });
@@ -438,10 +636,6 @@ app.post('/actualizar-estilo', async (req, res) => {
     }
 });
 
-// ============================================
-// =====  ENDPOINT PARA OBTENER ESTILO DEL USUARIO  =====
-// ============================================
-
 app.get('/api/usuario/estilo', async (req, res) => {
     if (!req.session?.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -467,14 +661,93 @@ app.get('/api/usuario/estilo', async (req, res) => {
     }
 });
 
-// ============================================
-// =====  ENDPOINTS GENÃ‰RICOS PARA CONTENIDOS  =====
-// ============================================
+app.post('/api/vark/guardar', async (req, res) => {
+    if (!req.session?.usuario) {
+        return res.status(401).json({ error: 'No autenticado' });
+    }
 
-/**
- * Obtiene informaciÃ³n de un contenido por Ã¡rea y slug
- * GET /api/contenido/:area/:slug
- */
+    const { respuestas } = req.body || {};
+    const usuario = req.session.usuario;
+
+    if (!respuestas || typeof respuestas !== 'object' || Array.isArray(respuestas)) {
+        return res.status(400).json({ error: 'Respuestas VARK invalidas' });
+    }
+
+    try {
+        const usuarioActual = await getUsuarioActual(usuario);
+        const evaluacion = evaluateVarkAnswers(respuestas);
+        const siguienteIntento = await getNextVarkAttempt(usuario);
+
+        const { answers, totals, classification } = evaluacion;
+        await client.query('BEGIN');
+
+        const insert = await client.query(`
+            INSERT INTO resultados_vark (
+                usuario,
+                usuario_id,
+                intento,
+                respuestas_json,
+                totales_v,
+                totales_a,
+                totales_r,
+                totales_k,
+                codigo_estilo,
+                estilo_resultado,
+                es_clasificable,
+                motivo_no_clasificable
+            ) VALUES (
+                $1,
+                $2,
+                $3,
+                $4::jsonb,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9,
+                $10,
+                $11,
+                $12
+            )
+            RETURNING id, fecha
+        `, [
+            usuario,
+            usuarioActual?.id || null,
+            siguienteIntento,
+            JSON.stringify(answers),
+            totals.V,
+            totals.A,
+            totals.R,
+            totals.K,
+            classification.code,
+            classification.platformStyle,
+            classification.valid,
+            classification.valid ? null : classification.reason
+        ]);
+
+        await client.query('COMMIT');
+
+        res.json({
+            success: true,
+            intento: siguienteIntento,
+            registro_id: insert.rows[0]?.id || null,
+            fecha: insert.rows[0]?.fecha || null,
+            totales: totals,
+            resultado: {
+                es_clasificable: classification.valid,
+                codigo_estilo: classification.code,
+                estilo_resultado: classification.platformStyle,
+                estilo_label: classification.styleLabel,
+                motivo_no_clasificable: classification.valid ? null : classification.reason
+            }
+        });
+    } catch (error) {
+        try { await client.query('ROLLBACK'); } catch (_) {}
+        console.error('Error al guardar resultado VARK:', error);
+        res.status(500).json({ error: 'Error al guardar el resultado VARK' });
+    }
+});
+
 app.get('/api/contenido/:area/:slug', async (req, res) => {
     if (!req.session.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -524,10 +797,6 @@ app.get('/api/contenido/:area/:slug', async (req, res) => {
     }
 });
 
-/**
- * Obtiene la ruta del archivo HTML para un contenido, nivel y el estilo del usuario
- * GET /api/contenido/archivo/:slug/:nivel
- */
 app.get('/api/contenido/archivo/:slug/:nivel', async (req, res) => {
     if (!req.session.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -576,8 +845,24 @@ app.get('/api/contenido/archivo/:slug/:nivel', async (req, res) => {
             return res.status(404).json({ error: 'Archivo no registrado para este nivel y estilo' });
         }
 
+        const archivoRelativo = String(archivo.rows[0].archivo || '')
+            .replace(/^\/+/, '')
+            .replace(/^public[\\/]/, '');
+        const archivoAbsoluto = path.join(__dirname, 'public', archivoRelativo);
+
+        if (!fs.existsSync(archivoAbsoluto)) {
+            return res.status(404).json({ error: 'Archivo del contenido no encontrado en disco' });
+        }
+
+        const statsArchivo = fs.statSync(archivoAbsoluto);
+        if (!statsArchivo.isFile() || statsArchivo.size === 0) {
+            return res.status(404).json({ error: 'Archivo del contenido no disponible actualmente' });
+        }
+
+        const archivoVersionado = `${archivo.rows[0].archivo}${archivo.rows[0].archivo.includes('?') ? '&' : '?'}v=${Math.trunc(statsArchivo.mtimeMs)}`;
+
         res.json({
-            archivo: archivo.rows[0].archivo,
+            archivo: archivoVersionado,
             estilo
         });
 
@@ -587,14 +872,6 @@ app.get('/api/contenido/archivo/:slug/:nivel', async (req, res) => {
     }
 });
 
-// ============================================
-// =====  ENDPOINTS PARA DIAGNÃ“STICO  =====
-// ============================================
-
-/**
- * Obtiene las preguntas de diagnÃ³stico para un contenido
- * GET /api/diagnostico/:contenidoId
- */
 app.get('/api/diagnostico/:contenidoId', async (req, res) => {
     if (!req.session.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -604,10 +881,10 @@ app.get('/api/diagnostico/:contenidoId', async (req, res) => {
 
     try {
         const examen = await client.query(
-            `SELECT id 
-             FROM examenes_diagnostico 
-             WHERE contenido_id = $1 
-             AND activo = true 
+            `SELECT id
+             FROM examenes_diagnostico
+             WHERE contenido_id = $1
+             AND activo = true
              LIMIT 1`,
             [contenidoId]
         );
@@ -636,10 +913,6 @@ app.get('/api/diagnostico/:contenidoId', async (req, res) => {
     }
 });
 
-/**
- * Guarda los resultados del diagnÃ³stico y asigna nivel
- * POST /api/diagnostico/guardar
- */
 app.post('/api/diagnostico/guardar', async (req, res) => {
     if (!req.session?.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -653,7 +926,14 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
     }
 
     try {
-        // 1. Obtener el examen activo del contenido
+        const usuarioActual = await getUsuarioActual(usuario);
+        if (!usuarioActual) {
+            return res.status(400).json({ error: 'Usuario no encontrado' });
+        }
+
+        const estilo = usuarioActual.estilo_aprendizaje || 'visual_verbal';
+        const fechaInicioNormalizada = toUtcTimestampString(fecha_inicio);
+
         const examen = await client.query(`
             SELECT id FROM examenes_diagnostico
             WHERE contenido_id = $1 AND activo = true
@@ -666,27 +946,27 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
 
         const examen_id = examen.rows[0].id;
 
-        // 2. Obtener las respuestas correctas de la BD
         const preguntas = await client.query(`
             SELECT id, respuesta_correcta
             FROM preguntas_diagnostico
             WHERE examen_id = $1
         `, [examen_id]);
 
-        // 3. Calcular cuÃ¡ntas correctas tuvo
         let correctas = 0;
         for (const pregunta of preguntas.rows) {
             const respuestaUsuario = respuestas[pregunta.id];
-            if (respuestaUsuario &&
-                respuestaUsuario.toUpperCase() === pregunta.respuesta_correcta.toUpperCase()) {
+            if (
+                respuestaUsuario &&
+                respuestaUsuario.toUpperCase() === pregunta.respuesta_correcta.toUpperCase()
+            ) {
                 correctas++;
             }
         }
 
         const total = preguntas.rows.length;
         const puntaje = total > 0 ? Math.round((correctas / total) * 100) : 0;
+        const erroresTotales = Math.max(total - correctas, 0);
 
-        // 4. Asignar nivel segÃºn reglas del sistema
         let nivel_asignado;
         if (correctas <= 4) {
             nivel_asignado = 'facil';
@@ -696,50 +976,44 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
             nivel_asignado = 'dificil';
         }
 
-        // 5. Guardar cada respuesta individual para anÃ¡lisis
+        await client.query('BEGIN');
+
         for (const pregunta of preguntas.rows) {
             const respuestaUsuario = respuestas[pregunta.id];
             if (!respuestaUsuario) continue;
 
-            const esCorrecta = respuestaUsuario.toUpperCase() === pregunta.respuesta_correcta.toUpperCase();
+            const esCorrecta =
+                respuestaUsuario.toUpperCase() === pregunta.respuesta_correcta.toUpperCase();
 
             await client.query(`
                 INSERT INTO respuestas_diagnostico
                     (usuario, contenido_id, pregunta_id, respuesta_dada, es_correcta, fecha)
-                VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)
+                VALUES ($1, $2, $3, $4, $5, TIMEZONE('UTC', CURRENT_TIMESTAMP))
             `, [usuario, contenido_id, pregunta.id, respuestaUsuario.toUpperCase(), esCorrecta]);
         }
 
-        // 6. Guardar nivel asignado en progreso_contenido_usuario
         await client.query(`
             INSERT INTO progreso_contenido_usuario
                 (usuario, contenido_id, diagnostico_realizado, nivel_asignado, contenido_completado, fecha, tiempo_total_diagnostico, fecha_inicio_diagnostico, fecha_fin_diagnostico)
-            VALUES ($1, $2, true, $3, false, CURRENT_TIMESTAMP, $4, $5, CURRENT_TIMESTAMP)
+            VALUES ($1, $2, true, $3, false, TIMEZONE('UTC', CURRENT_TIMESTAMP), $4, $5, TIMEZONE('UTC', CURRENT_TIMESTAMP))
             ON CONFLICT (usuario, contenido_id)
             DO UPDATE SET
                 diagnostico_realizado = true,
-                nivel_asignado        = $3,
+                nivel_asignado = $3,
                 tiempo_total_diagnostico = $4,
                 fecha_inicio_diagnostico = $5,
-                fecha_fin_diagnostico = CURRENT_TIMESTAMP
-        `, [usuario, contenido_id, nivel_asignado, tiempo_segundos || 0, fecha_inicio]);
+                fecha_fin_diagnostico = TIMEZONE('UTC', CURRENT_TIMESTAMP),
+                fecha = TIMEZONE('UTC', CURRENT_TIMESTAMP)
+        `, [usuario, contenido_id, nivel_asignado, tiempo_segundos || 0, fechaInicioNormalizada]);
 
-        // 7. Guardar puntaje general en puntuaciones
+        const siguienteIntento = await getNextContentAttempt(usuario, contenido_id, 'diagnostico');
         await client.query(`
-            INSERT INTO puntuaciones
-                (id_usuario, id_actividad, categoria, nivel, puntuacion, tiempo, errores, estilo_mostrado)
-            SELECT
-                u.id,
-                $2,
-                'diagnostico',
-                0,
-                $3,
-                $4,
-                $5,
-                u.estilo_aprendizaje
-            FROM usuarios u
-            WHERE u.usuario = $1
-        `, [usuario, contenido_id, puntaje, tiempo_segundos || 0, total - correctas]);
+            INSERT INTO resultados_quiz
+                (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, intento, aprobado, errores, fecha_inicio, fecha_fin, tipo_resultado, nivel_resultante)
+            VALUES ($1, $2, 'diagnostico', $3, $4, $5, $6, $7, $8, true, $9, $10, TIMEZONE('UTC', CURRENT_TIMESTAMP), 'diagnostico', $11)
+        `, [usuario, contenido_id, estilo, correctas, total, puntaje, tiempo_segundos || 0, siguienteIntento, erroresTotales, fechaInicioNormalizada, nivel_asignado]);
+
+        await client.query('COMMIT');
 
         res.json({
             success: true,
@@ -749,38 +1023,19 @@ app.post('/api/diagnostico/guardar', async (req, res) => {
             nivel_asignado,
             mensaje: `Obtuviste ${correctas}/${total}. Tu nivel asignado es: ${nivel_asignado}.`
         });
-
     } catch (e) {
+        try { await client.query('ROLLBACK'); } catch (_) {}
         console.error('Error en /api/diagnostico/guardar:', e);
-        res.status(500).json({ error: 'Error al guardar diagnÃ³stico' });
+        res.status(500).json({ error: 'Error al guardar diagnostico' });
     }
 });
 
-// ============================================
-// =====  ENDPOINTS PARA PROGRESO DE CONTENIDOS  =====
-// ============================================
-
-/**
- * Guarda el progreso al completar un nivel (mini-quiz)
- * POST /api/progreso/nivel
- */
 app.post('/api/progreso/nivel', async (req, res) => {
     if (!req.session?.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
     }
 
-    const {
-        contenido_id,
-        nivel_completado,
-        puntaje,
-        aprobado,
-        tiempo_segundos,
-        aciertos,
-        total_preguntas,
-        fecha_inicio,
-        errores,
-        session_uuid
-    } = req.body;
+    const { contenido_id, nivel_completado, puntaje, aprobado, tiempo_segundos, aciertos, total_preguntas, fecha_inicio, errores, session_uuid } = req.body;
     const usuario = req.session.usuario;
 
     if (!contenido_id || !nivel_completado || puntaje === undefined) {
@@ -790,12 +1045,10 @@ app.post('/api/progreso/nivel', async (req, res) => {
     const puntajeFinal = Number.isFinite(Number(puntaje)) ? Number(puntaje) : 0;
     const tiempoFinal = Number.isFinite(Number(tiempo_segundos)) ? Number(tiempo_segundos) : 0;
     const aciertosFinales = Number.isFinite(Number(aciertos)) ? Number(aciertos) : 0;
-    const erroresFinales = Number.isFinite(Number(errores))
-        ? Math.max(0, Number(errores))
-        : Math.max(Number(total_preguntas || 0) - aciertosFinales, 0);
+    const erroresReales = Number.isFinite(Number(errores)) ? Math.max(0, Number(errores)) : 0;
     const totalPreguntasFinal = Number.isFinite(Number(total_preguntas))
         ? Number(total_preguntas)
-        : Math.max(aciertosFinales + erroresFinales, 0);
+        : Math.max(aciertosFinales + erroresReales, 0);
     const aprobadoFinal = aprobado === true || aprobado === 'true';
     const fechaInicioNormalizada = toUtcTimestampString(fecha_inicio);
     const sessionUuidNormalizada = normalizeSessionUuid(session_uuid);
@@ -803,7 +1056,7 @@ app.post('/api/progreso/nivel', async (req, res) => {
     const siguienteNivel = {
         'facil': 'normal',
         'normal': 'dificil',
-        'dificil':  null
+        'dificil': null
     };
 
     try {
@@ -828,14 +1081,14 @@ app.post('/api/progreso/nivel', async (req, res) => {
 
         const nivelActual = progresoActual.rows[0]?.nivel_asignado;
         const nivelSiguiente = siguienteNivel[nivel_completado];
-        const ordenNiveles = { 'facil': 1, 'normal': 2, 'dificil': 3 };
+        const ordenNiveles = { facil: 1, normal: 2, dificil: 3 };
         const nivelNuevo = aprobadoFinal && nivelSiguiente
             ? (ordenNiveles[nivelSiguiente] > (ordenNiveles[nivelActual] || 0)
                 ? nivelSiguiente
                 : nivelActual)
             : nivelActual;
-        const nivelResultante = nivelNuevo || nivel_completado;
         const estaCompletado = aprobadoFinal && nivelSiguiente === null;
+        const nivelResultante = nivelNuevo || nivel_completado;
 
         await client.query('BEGIN');
 
@@ -845,7 +1098,7 @@ app.post('/api/progreso/nivel', async (req, res) => {
             VALUES ($1, $2, true, $3, $4, TIMEZONE('UTC', CURRENT_TIMESTAMP))
             ON CONFLICT (usuario, contenido_id)
             DO UPDATE SET
-                nivel_asignado       = $3,
+                nivel_asignado = $3,
                 contenido_completado = CASE
                     WHEN $4 = true THEN true
                     ELSE progreso_contenido_usuario.contenido_completado
@@ -853,63 +1106,56 @@ app.post('/api/progreso/nivel', async (req, res) => {
                 fecha = TIMEZONE('UTC', CURRENT_TIMESTAMP)
         `, [usuario, contenido_id, nivelResultante, estaCompletado]);
 
-        await client.query(`
-            INSERT INTO puntuaciones
-                (id_usuario, id_actividad, categoria, nivel, puntuacion, tiempo, errores, estilo_mostrado)
-            SELECT
-                u.id,
-                $2,
-                $3,
-                CASE $4
-                    WHEN 'facil'   THEN 1
-                    WHEN 'normal'  THEN 2
-                    WHEN 'dificil' THEN 3
-                    ELSE 1
-                END,
-                $5,
-                $6,
-                $7,
-                u.estilo_aprendizaje
-            FROM usuarios u
-            WHERE u.usuario = $1
-        `, [usuario, contenido_id, nivel_completado, nivel_completado, puntajeFinal, tiempoFinal, erroresFinales]);
-
+        const estiloGuardado = usuarioActual.estilo_aprendizaje || 'visual_verbal';
         const siguienteIntento = await getNextContentAttempt(usuario, contenido_id, 'quiz', nivel_completado);
-        await client.query(`
+        const quizInsert = await client.query(`
             INSERT INTO resultados_quiz
                 (usuario, contenido_id, nivel, estilo, aciertos, total_preguntas, puntaje, tiempo_total, intento, aprobado, errores, fecha_inicio, fecha_fin, tipo_resultado, nivel_resultante, session_uuid)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, TIMEZONE('UTC', CURRENT_TIMESTAMP), 'quiz', $13, $14)
-        `, [
-            usuario,
-            contenido_id,
-            nivel_completado,
-            usuarioActual.estilo_aprendizaje || 'visual_verbal',
-            aciertosFinales,
-            totalPreguntasFinal,
-            puntajeFinal,
-            tiempoFinal,
-            siguienteIntento,
-            aprobadoFinal,
-            erroresFinales,
-            fechaInicioNormalizada,
-            nivelResultante,
-            sessionUuidNormalizada
-        ]);
+            RETURNING id
+        `, [usuario, contenido_id, nivel_completado, estiloGuardado, aciertosFinales, totalPreguntasFinal, puntajeFinal, tiempoFinal, siguienteIntento, aprobadoFinal, erroresReales, fechaInicioNormalizada, nivelResultante, sessionUuidNormalizada]);
 
         await client.query('COMMIT');
+
+        let recomendacionBayes = null;
+        try {
+            recomendacionBayes = await guardarInferenciaBayesQuiz({
+                usuario,
+                contenidoId: contenido_id,
+                nivel: nivel_completado,
+                estilo: estiloGuardado,
+                sessionUuid: sessionUuidNormalizada,
+                referenciaId: quizInsert.rows[0]?.id || null,
+                puntaje: puntajeFinal,
+                aciertos: aciertosFinales,
+                totalPreguntas: totalPreguntasFinal,
+                errores: erroresReales,
+                tiempoSegundos: tiempoFinal,
+                aprobado: aprobadoFinal,
+                intento: siguienteIntento
+            });
+        } catch (bayesError) {
+            console.error('Error al guardar inferencia bayesiana del quiz:', bayesError);
+        }
 
         res.json({
             success: true,
             aprobado: aprobadoFinal,
             nivel_completado,
             nivel_siguiente: aprobadoFinal ? nivelSiguiente : null,
+            recomendacion_bayes: recomendacionBayes
+                ? {
+                    recomendacion: recomendacionBayes.recommendation,
+                    confianza: recomendacionBayes.confidence,
+                    modelo: recomendacionBayes.modelVersion
+                }
+                : null,
             mensaje: aprobadoFinal
                 ? nivelSiguiente
-                    ? `Â¡Aprobaste! Nivel "${nivelSiguiente}" desbloqueado.`
-                    : 'Â¡Completaste todos los niveles del mÃ³dulo!'
+                    ? `Aprobaste. Nivel "${nivelSiguiente}" desbloqueado.`
+                    : 'Completaste todos los niveles del modulo.'
                 : 'No aprobaste. Repasa el contenido e intenta de nuevo.'
         });
-
     } catch (e) {
         try { await client.query('ROLLBACK'); } catch (_) {}
         console.error('Error en /api/progreso/nivel:', e);
@@ -1077,22 +1323,41 @@ app.post('/api/reforzamiento/sesion', async (req, res) => {
             fechaFinNormalizada
         ]);
 
+        let recomendacionBayes = null;
+        try {
+            recomendacionBayes = await guardarInferenciaBayesReforzamiento({
+                usuario,
+                contenidoId: contenido_id,
+                nivel,
+                estilo,
+                sessionUuid: sessionUuidNormalizada,
+                referenciaId: insert.rows[0]?.id || null,
+                tiempoSegundos: tiempoFinal,
+                intento: insert.rows[0]?.intento || siguienteIntento,
+                eventoCierre: eventoFinal
+            });
+        } catch (bayesError) {
+            console.error('Error al guardar inferencia bayesiana del reforzamiento:', bayesError);
+        }
+
         res.json({
             success: true,
             sesion_id: insert.rows[0]?.id || null,
             intento: insert.rows[0]?.intento || siguienteIntento,
-            fecha: insert.rows[0]?.fecha || null
+            fecha: insert.rows[0]?.fecha || null,
+            recomendacion_bayes: recomendacionBayes
+                ? {
+                    recomendacion: recomendacionBayes.recommendation,
+                    confianza: recomendacionBayes.confidence,
+                    modelo: recomendacionBayes.modelVersion
+                }
+                : null
         });
     } catch (e) {
         console.error('Error en /api/reforzamiento/sesion:', e);
         res.status(500).json({ error: 'Error al guardar la sesion de reforzamiento' });
     }
 });
-
-/**
- * Obtiene el progreso de un usuario para un contenido especÃ­fico
- * GET /api/progreso/contenido/:contenidoId
- */
 app.get('/api/progreso/contenido/:contenidoId', async (req, res) => {
     if (!req.session?.usuario) {
         return res.status(401).json({ error: 'No autenticado' });
@@ -1140,193 +1405,30 @@ app.get('/api/progreso/contenido/:contenidoId', async (req, res) => {
     }
 });
 
-// ============================================
-// =====  ENDPOINTS PARA NIVELES Y XP  =====
-// ============================================
-
-app.get('/niveles-desbloqueados', async (req, res) => {
-    try {
-        if (!req.session?.usuario) {
-            return res.json({ success: true, xp: 0 });
-        }
-
-        const { rows: uRows } = await client.query(
-            'SELECT id FROM usuarios WHERE usuario = $1',
-            [req.session.usuario]
-        );
-        if (!uRows.length) {
-            return res.status(401).json({ success: false, message: 'SesiÃ³n invÃ¡lida' });
-        }
-        const id_usuario = uRows[0].id;
-
-        const id_actividad = parseInt(req.query.id_actividad, 10);
-        const categoria = req.query.categoria ?? null;
-
-        if (Number.isNaN(id_actividad)) {
-            return res.status(400).json({ success: false, message: 'id_actividad invÃ¡lido' });
-        }
-
-        let sql = `
-            SELECT nivel
-            FROM niveles
-            WHERE id_usuario   = $1
-              AND id_actividad = $2
-              AND desbloqueado = true`;
-        const params = [id_usuario, id_actividad];
-
-        if (categoria && categoria !== '') {
-            sql += ' AND categoria = $3';
-            params.push(categoria);
-        } else {
-            sql += ' AND categoria IS NULL';
-        }
-
-        const { rows } = await client.query(sql, params);
-        const niveles = rows.map(r => r.nivel).sort((a, b) => a - b);
-
-        res.json({ success: true, niveles });
-    } catch (err) {
-        console.error('niveles-desbloqueados:', err);
-        res.status(500).json({ success: false, message: 'Error al obtener niveles desbloqueados' });
-    }
-});
-
-app.post('/desbloquear-nivel', async (req, res) => {
-    const { id_actividad, categoria = null, nivel } = req.body;
-    const nivelNum = parseInt(nivel, 10);
-
-    try {
-        if (!req.session?.usuario) {
-            return res.json({ success: true, xp: 0 });
-        }
-
-        const u = await client.query(
-            'SELECT id FROM usuarios WHERE usuario = $1',
-            [req.session.usuario]
-        );
-        if (!u.rows.length) {
-            return res.status(400).json({ success: false, message: 'Usuario no encontrado' });
-        }
-        const id_usuario = u.rows[0].id;
-
-        const upd = await client.query(
-            `UPDATE niveles
-                SET desbloqueado = true
-              WHERE id_usuario   = $1
-                AND id_actividad = $2
-                AND nivel        = $3
-                AND (categoria IS NOT DISTINCT FROM $4)`,
-            [id_usuario, id_actividad, nivelNum, categoria]
-        );
-
-        if (upd.rowCount === 0) {
-            await client.query(
-                `INSERT INTO niveles (id_usuario, id_actividad, categoria, nivel, desbloqueado)
-                VALUES ($1, $2, $3, $4, true)`,
-                [id_usuario, id_actividad, categoria, nivelNum]
-            );
-        }
-
-        res.json({ success: true, nivel: nivelNum });
-    } catch (err) {
-        console.error('desbloquear-nivel:', err);
-        res.status(500).json({ success: false, message: 'Error al desbloquear nivel' });
-    }
-});
-
-app.post('/guardar-progreso', async (req, res) => {
-    const {
-        id_actividad,
-        categoria = null,
-        dificultad,
-        puntuacion,
-        tiempoFinalizacion,
-        erroresCometidos,
-        estilo_mostrado
-    } = req.body;
-
-    const nivelNum = parseInt(dificultad, 10);
-    const puntuacionNum = parseInt(puntuacion, 10);
-    const tiempoNum = parseInt(tiempoFinalizacion, 10);
-    const erroresNum = parseInt(erroresCometidos, 10);
-
-    try {
-        if (!req.session?.usuario) {
-            return res.status(401).json({ success: false, message: 'No autorizado' });
-        }
-
-        const usrRes = await client.query(
-            'SELECT id FROM usuarios WHERE usuario = $1',
-            [req.session.usuario]
-        );
-        if (!usrRes.rows.length) {
-            return res.status(400).json({ success: false, message: 'Usuario no encontrado' });
-        }
-        const id_usuario = usrRes.rows[0].id;
-
-        const actRes = await client.query(
-            'SELECT id FROM actividades WHERE id = $1',
-            [id_actividad]
-        );
-        if (!actRes.rows.length) {
-            return res.status(400).json({ success: false, message: 'Actividad no encontrada' });
-        }
-
-        const insertSql = `
-            INSERT INTO puntuaciones
-                (id_usuario, id_actividad, categoria,
-                 nivel, puntuacion, tiempo, errores, estilo_mostrado)
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
-            RETURNING id
-        `;
-        const params = [
-            id_usuario,
-            id_actividad,
-            categoria,
-            nivelNum,
-            puntuacionNum,
-            tiempoNum,
-            erroresNum,
-            estilo_mostrado
-        ];
-        const { rows } = await client.query(insertSql, params);
-
-        res.status(200).json({ success: true, id: rows[0].id });
-    } catch (error) {
-        console.error('Error al guardar progreso:', error);
-        res.status(500).json({ success: false, message: 'Error al guardar progreso' });
-    }
-});
-
 app.get('/xp-total', async (req, res) => {
     try {
         if (!req.session?.usuario) {
             return res.status(401).json({ success: false, message: 'No autorizado' });
         }
 
-        const u = await client.query(
-            'SELECT id FROM usuarios WHERE usuario = $1',
-            [req.session.usuario]
+        const usuario = req.session.usuario;
+        const usuarioExiste = await client.query(
+            'SELECT 1 FROM usuarios WHERE usuario = $1',
+            [usuario]
         );
-        if (!u.rows.length) {
+        if (!usuarioExiste.rows.length) {
             return res.status(400).json({ success: false, message: 'Usuario no encontrado' });
         }
 
-        const id_usuario = u.rows[0].id;
-
         const { rows } = await client.query(
-            'SELECT COALESCE(SUM(puntuacion),0) AS xp FROM puntuaciones WHERE id_usuario = $1',
-            [id_usuario]
+            `SELECT COALESCE(SUM(puntaje), 0) AS xp
+             FROM resultados_quiz
+             WHERE usuario = $1`,
+            [usuario]
         );
 
         res.json({ success: true, xp: rows[0].xp });
     } catch (err) {
-        if (err && (err.code === '42P01' || /puntuaciones/i.test(err.message || ''))) {
-            try {
-                await ensurePuntuacionesSchema();
-            } catch {}
-            return res.json({ success: true, xp: 0 });
-        }
         console.error('xp-total:', err);
         res.status(500).json({ success: false, message: 'Error al obtener XP' });
     }
