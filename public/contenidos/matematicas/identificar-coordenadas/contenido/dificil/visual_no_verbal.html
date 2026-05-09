@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas - Nivel Dificil - Visual No Verbal</title>
+    <title>Identificar coordenadas · Nivel difícil · Visual No Verbal</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -94,6 +94,326 @@
         .feedback-visual {
             margin-top: 15px; padding: 15px; border-radius: 15px; font-weight: 600; display: none;
         }
+        .actividad-visual.reto-secundario {
+            background: linear-gradient(180deg, #fffaf2, #fff3e0);
+            border-color: #fb923c;
+        }
+        .fila-claves-vnv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 12px 0 16px;
+        }
+        .clave-vnv {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 2px solid #fdba74;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-weight: 800;
+            color: #9a3412;
+        }
+        .btn-accion {
+            background: #f97316;
+            color: white;
+            padding: 10px 22px;
+            border: 2px solid #c2410c;
+            border-radius: 30px;
+            font-weight: 800;
+            transition: all .2s;
+            margin: 6px;
+            cursor: pointer;
+        }
+        .btn-accion:hover { background: white; transform: translateY(-2px); }
+        .panel-flechas-ruta {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .btn-flecha-ruta {
+            width: 72px;
+            height: 72px;
+            background: #fde68a;
+            border: 3px solid #f97316;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 5px 0 #fdba74;
+            user-select: none;
+        }
+        .btn-flecha-ruta:hover {
+            background: #f97316;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .ruta-construida {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            padding: 16px;
+            min-height: 76px;
+            background: #fff7e6;
+            border-radius: 20px;
+            border: 3px dashed #f97316;
+            align-items: center;
+        }
+        .paso-ruta {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: white;
+            animation: popIn .2s ease;
+        }
+        .paso-ruta.norte { background: #3b82f6; }
+        .paso-ruta.sur { background: #ef4444; }
+        .paso-ruta.este { background: #10b981; }
+        .paso-ruta.oeste { background: #f59e0b; }
+        .contador-ruta {
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #c2410c;
+            margin-bottom: 8px;
+        }
+        .trayecto-construido {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+            padding: 14px 18px;
+            background: #fff7e6;
+            border-radius: 16px;
+            border: 2px dashed #f97316;
+            min-height: 54px;
+        }
+        .chip-est {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: .9rem;
+            color: white;
+            animation: popIn .2s ease;
+        }
+        .chip-est.l2 { background: #3b82f6; }
+        .chip-est.l3 { background: #10b981; }
+        .chip-est.l4 { background: #f97316; }
+        .chip-flecha {
+            font-size: 1.1rem;
+            color: #9a3412;
+        }
+        .est-clickeable {
+            cursor: pointer;
+            transition: filter .2s;
+        }
+        .est-clickeable:hover { filter: brightness(1.25) drop-shadow(0 0 6px #f97316); }
+        .est-clickeable.en-trayecto circle:first-child {
+            stroke: #c2410c;
+            stroke-width: 5;
+        }
+        .radar-panel {
+            background: linear-gradient(180deg, #0f172a, #1e293b);
+            border-radius: 24px;
+            border: 3px solid #38bdf8;
+            padding: 22px;
+            color: white;
+        }
+        .radar-indicaciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .radar-indicaciones span {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(56,189,248,.18);
+            border: 1px solid rgba(125,211,252,.5);
+            font-weight: 800;
+        }
+        .radar-grid-wrap {
+            display: grid;
+            grid-template-columns: 36px repeat(6, 1fr);
+            gap: 6px;
+            align-items: center;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        .radar-head {
+            text-align: center;
+            font-weight: 900;
+            color: #bae6fd;
+            font-size: .9rem;
+        }
+        .radar-cell {
+            aspect-ratio: 1;
+            min-height: 54px;
+            border-radius: 12px;
+            border: 2px solid rgba(125,211,252,.45);
+            background:
+                radial-gradient(circle at center, rgba(56,189,248,.12), rgba(15,23,42,.7)),
+                linear-gradient(180deg, rgba(14,165,233,.18), rgba(15,23,42,.55));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform .16s, box-shadow .16s, border-color .16s;
+        }
+        .radar-cell:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 0 3px rgba(56,189,248,.15);
+        }
+        .radar-cell.activa {
+            background: radial-gradient(circle at center, rgba(34,197,94,.38), rgba(15,23,42,.7));
+            border-color: #4ade80;
+        }
+        .radar-cell.activa::after {
+            content: 'X';
+            font-weight: 900;
+            color: #86efac;
+            font-size: 1.4rem;
+        }
+        .ayuda-reto {
+            background: #fff7e6;
+            color: #9a3412;
+            border: 2px dashed #fdba74;
+            border-radius: 16px;
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 700;
+            margin: 10px 0 0;
+        }
+        .balcon-grid { min-width: 560px; }
+        .fila-balcon {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+            gap: 6px;
+        }
+        .fila-num-b {
+            width: 48px;
+            text-align: right;
+            font-weight: 800;
+            color: #c2410c;
+            font-size: .85rem;
+            flex-shrink: 0;
+        }
+        .bloque-izq-b,
+        .bloque-der-b {
+            display: flex;
+            gap: 3px;
+            flex: 1;
+        }
+        .bloque-izq-b { justify-content: flex-end; }
+        .bloque-der-b { justify-content: flex-start; }
+        .pasillo-b {
+            width: 46px;
+            flex-shrink: 0;
+            text-align: center;
+            font-weight: 800;
+            color: #9a3412;
+            font-size: .74rem;
+            background: #fed7aa;
+            border-radius: 8px;
+            padding: 4px 2px;
+            line-height: 1.2;
+        }
+        .asiento-b {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 1.8px solid #f97316;
+            border-radius: 6px 6px 3px 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .66rem;
+            font-weight: 800;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .asiento-b:hover { background: #fde68a; transform: scale(1.12); }
+        .asiento-b.sel-izq { background: #3b82f6; color: white; border-color: white; transform: scale(1.1); }
+        .asiento-b.sel-der { background: #ef4444; color: white; border-color: white; transform: scale(1.1); }
+        .asiento-b.correcto { background: #4caf50; color: white; border-color: white; }
+        .info-sel-b {
+            font-weight: 700;
+            text-align: center;
+            margin: 12px 0;
+            color: #c2410c;
+            font-size: 1rem;
+            background: #fff7e6;
+            border: 2px solid #fed7aa;
+            border-radius: 14px;
+            padding: 12px;
+        }
+        .panel-ruta-cu {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+        .btn-dir-cu {
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1rem;
+            border: 3px solid;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-dir-cu.este { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; }
+        .btn-dir-cu.oeste { background: #fef3c7; border-color: #f59e0b; color: #b45309; }
+        .btn-dir-cu.sur { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+        .btn-dir-cu.norte { background: #d1fae5; border-color: #10b981; color: #065f46; }
+        .btn-dir-cu:hover { filter: brightness(.93); transform: scale(1.06); }
+        .secuencia-ruta-cu {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 14px 0;
+            padding: 14px;
+            background: #fff7e6;
+            border-radius: 16px;
+            border: 2px dashed #f97316;
+            min-height: 52px;
+        }
+        .chip-dir {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: .85rem;
+            color: white;
+            animation: popIn .15s ease;
+        }
+        .chip-dir.este { background: #3b82f6; }
+        .chip-dir.oeste { background: #f59e0b; }
+        .chip-dir.sur { background: #ef4444; }
+        .chip-dir.norte { background: #10b981; }
 
         /* MAPS */
         .mapa-calles-wrap {
@@ -258,12 +578,27 @@
             border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all .2s;
         }
         .boton-quiz:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
+        .boton-quiz.bloqueado {
+            background: #e5e7eb; color: #6b7280; border-color: #9ca3af;
+            box-shadow: 0 8px 0 #9ca3af; cursor: not-allowed; pointer-events: auto;
+        }
+        .boton-quiz.bloqueado:hover {
+            transform: none; background: #e5e7eb; box-shadow: 0 8px 0 #9ca3af;
+        }
+        .texto-ayuda-quiz {
+            color: #9a3412; font-weight: 800; margin-top: 12px; text-align: center;
+        }
 
         @media (max-width: 768px) {
             .cabecera-dificil h1 { font-size: 2rem; }
             .navegador { flex-direction: column; }
             .titulo-pagina { font-size: 1.5rem; }
             .badge-nivel { margin-left: 0; margin-top: 10px; }
+            .radar-grid-wrap {
+                gap: 4px;
+                grid-template-columns: 28px repeat(6, 1fr);
+            }
+            .radar-cell { min-height: 44px; }
         }
     </style>
 </head>
@@ -281,7 +616,7 @@
 
 <!-- HEADER -->
 <div class="cabecera-dificil">
-    <h1>&#9881; COORDENADAS</h1>
+    <h1>🧭 IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Dif&iacute;cil &middot; Planos y estrategia</p>
     <div>
         <span class="badge-estilo">&#128065; Visual / No Verbal</span>
@@ -432,10 +767,82 @@
         </div>
 
         <div class="actividad-visual">
-            <h4><i class="fas fa-map-pin me-2"></i>Actividad</h4>
+            <h4><i class="fas fa-map-pin me-2"></i>Reto 1: Marca el final</h4>
             <p>Mar&iacute;a quiere llegar al <strong>Parque</strong>. Siguiendo la ruta marcada en el mapa,
                haz clic en la interseccion donde termina su camino. Cada punto del mapa muestra el nombre de la calle y la avenida.</p>
             <div id="feedback1" class="feedback-visual"></div>
+        </div>
+
+        <div class="actividad-visual reto-secundario">
+            <h4><i class="fas fa-map-signs me-2"></i>Reto 2: Nueva ruta</h4>
+            <p>Usa el mapa nuevo. <strong>Inicio:</strong> Panader&iacute;a. <strong>Meta:</strong> Biblioteca.
+               Toca las flechas para dibujar una ruta de <strong>4 pasos</strong>. Si la ruta llega bien, cuenta.</p>
+            <div class="fila-claves-vnv">
+                <span class="clave-vnv">&#129360; Inicio</span>
+                <span class="clave-vnv">&#128218; Meta</span>
+                <span class="clave-vnv">&#128099; 4 pasos</span>
+            </div>
+            <div class="mapa-calles-wrap">
+                <svg id="svgMapa1b" viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%;">
+                    <line x1="110" y1="70" x2="110" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="220" y1="70" x2="220" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="330" y1="70" x2="330" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="440" y1="70" x2="440" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="60" y1="220" x2="490" y2="220" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="60" y1="330" x2="490" y2="330" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+
+                    <text x="110" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Olmo</text>
+                    <text x="220" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Palma</text>
+                    <text x="330" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Naranjo</text>
+                    <text x="440" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Jazm&iacute;n</text>
+                    <text x="52" y="115" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Sol</text>
+                    <text x="52" y="225" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Luna</text>
+                    <text x="52" y="335" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Mar</text>
+
+                    <circle cx="110" cy="110" r="4" fill="#f97316"/><circle cx="220" cy="110" r="4" fill="#f97316"/><circle cx="330" cy="110" r="4" fill="#f97316"/><circle cx="440" cy="110" r="4" fill="#f97316"/>
+                    <circle cx="110" cy="220" r="4" fill="#f97316"/><circle cx="220" cy="220" r="4" fill="#f97316"/><circle cx="330" cy="220" r="4" fill="#f97316"/><circle cx="440" cy="220" r="4" fill="#f97316"/>
+                    <circle cx="110" cy="330" r="4" fill="#f97316"/><circle cx="220" cy="330" r="4" fill="#f97316"/><circle cx="330" cy="330" r="4" fill="#f97316"/><circle cx="440" cy="330" r="4" fill="#f97316"/>
+
+                    <rect x="88" y="308" width="44" height="44" rx="10" fill="#f59e0b" stroke="white" stroke-width="3"/>
+                    <text x="110" y="336" text-anchor="middle" font-size="20">&#129360;</text>
+                    <text x="144" y="316" font-family="Nunito" font-size="10" font-weight="800" fill="#9a3412">Panader&iacute;a</text>
+
+                    <circle cx="220" cy="220" r="19" fill="#10b981" stroke="white" stroke-width="3"/>
+                    <text x="220" y="226" text-anchor="middle" font-size="15">&#127959;</text>
+                    <text x="248" y="206" font-family="Nunito" font-size="10" font-weight="800" fill="#065f46">Plaza</text>
+
+                    <rect x="308" y="198" width="44" height="44" rx="10" fill="#8b5cf6" stroke="white" stroke-width="3"/>
+                    <text x="330" y="226" text-anchor="middle" font-size="20">&#127963;</text>
+                    <text x="362" y="206" font-family="Nunito" font-size="10" font-weight="800" fill="#5b21b6">Museo</text>
+
+                    <rect x="308" y="88" width="44" height="44" rx="10" fill="#3b82f6" stroke="white" stroke-width="3"/>
+                    <text x="330" y="116" text-anchor="middle" font-size="19">&#128218;</text>
+                    <text x="362" y="96" font-family="Nunito" font-size="10" font-weight="800" fill="#1d4ed8">Biblioteca</text>
+
+                    <rect x="418" y="308" width="44" height="44" rx="10" fill="#ec4899" stroke="white" stroke-width="3"/>
+                    <text x="440" y="336" text-anchor="middle" font-size="20">&#127981;</text>
+                    <text x="472" y="316" font-family="Nunito" font-size="10" font-weight="800" fill="#9d174d">Mercado</text>
+
+                    <polyline id="trazoRuta1b" points="" fill="none" stroke="#c2410c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>
+                    <circle id="marcadorPos1b" cx="110" cy="330" r="9" fill="#c2410c" stroke="white" stroke-width="2" opacity="0"/>
+                </svg>
+            </div>
+            <div class="contador-ruta" id="cont-ruta1b">Pasos: 0 / 4</div>
+            <div class="panel-flechas-ruta">
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('N','norte')" title="Norte">&#8593;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('E','este')" title="Este">&#8594;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('S','sur')" title="Sur">&#8595;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('O','oeste')" title="Oeste">&#8592;</div>
+            </div>
+            <div class="ruta-construida" id="ruta-construida1b">
+                <span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarRuta1b()">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="limpiarRuta1b()">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback1b" class="feedback-visual"></div>
         </div>
     </div>
 </div>
@@ -572,10 +979,93 @@
         </div>
 
         <div class="actividad-visual">
-            <h4><i class="fas fa-subway me-2"></i>Actividad</h4>
-            <p>Vas de <strong>Insurgentes (L&iacute;nea 1, roja)</strong> a <strong>Copilco (L&iacute;nea 3, verde)</strong>.
-               Para llegar necesitas hacer un transbordo. Haz clic directamente en el mapa sobre la estacion donde debes cambiar de l&iacute;nea para hacer el recorrido con el menor n&uacute;mero de transbordos posible.</p>
+            <h4><i class="fas fa-subway me-2"></i>Reto 1: Marca el transbordo</h4>
+            <p>Vas de <strong>Insurgentes</strong> a <strong>Copilco</strong>. Toca en el mapa la estaci&oacute;n donde
+               conviene cambiar de l&iacute;nea para hacer el recorrido con el menor n&uacute;mero de transbordos.</p>
             <div id="feedback2" class="feedback-visual"></div>
+        </div>
+
+        <div class="actividad-visual reto-secundario">
+            <h4><i class="fas fa-route me-2"></i>Reto 2: Metro alterno</h4>
+            <p>En este plano nuevo, toca <strong>solo 4 estaciones clave</strong>: inicio, transbordo, transbordo y destino.
+               Arma el recorrido de <strong>Terminal</strong> a <strong>Puerto</strong> sin tocar todas las paradas intermedias.</p>
+            <div class="fila-claves-vnv">
+                <span class="clave-vnv">&#128649; Inicio</span>
+                <span class="clave-vnv">&#11088; Cambio</span>
+                <span class="clave-vnv">&#11088; Cambio</span>
+                <span class="clave-vnv">&#127961; Meta</span>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding:12px 18px;background:#fff7e6;border-radius:14px;border:2px solid #fed7aa;">
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#3b82f6;border-radius:3px;"></span>L&iacute;nea Azul
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#10b981;border-radius:3px;"></span>L&iacute;nea Verde
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#f97316;border-radius:3px;"></span>L&iacute;nea Naranja
+                </span>
+            </div>
+
+            <div class="mapa-metro-dificil">
+                <svg class="metro-svg" viewBox="0 0 620 470" xmlns="http://www.w3.org/2000/svg" style="min-width:620px;">
+                    <line x1="80" y1="110" x2="540" y2="110" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="340" y1="110" x2="340" y2="380" stroke="#10b981" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="80" y1="380" x2="540" y2="380" stroke="#f97316" stroke-width="8" stroke-linecap="round"/>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Bosque','l2')" id="e2b-Bosque">
+                        <circle cx="80" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="80" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Bosque</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Parque','l2')" id="e2b-Parque">
+                        <circle cx="210" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="210" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Parque</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Central','l2')" id="e2b-Central">
+                        <circle cx="340" cy="110" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                        <circle cx="340" cy="110" r="6" fill="#3b82f6"/>
+                        <text x="340" y="86" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Central &#11088;</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Puerto','l2')" id="e2b-Puerto">
+                        <circle cx="540" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="540" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Puerto</text>
+                    </g>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Museo','l3')" id="e2b-Museo">
+                        <circle cx="340" cy="245" r="10" fill="white" stroke="#10b981" stroke-width="3"/>
+                        <text x="368" y="250" font-family="Nunito" font-size="10" fill="#065f46">Museo</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Jardin','l3')" id="e2b-Jardin">
+                        <circle cx="340" cy="380" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                        <circle cx="340" cy="380" r="6" fill="#10b981"/>
+                        <text x="340" y="410" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Jard&iacute;n &#11088;</text>
+                    </g>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Terminal','l4')" id="e2b-Terminal">
+                        <circle cx="80" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="80" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Terminal</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Mercado','l4')" id="e2b-Mercado">
+                        <circle cx="210" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="210" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Mercado</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Hospital','l4')" id="e2b-Hospital">
+                        <circle cx="540" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="540" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Hospital</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="trayecto-construido" id="trayecto2b-construido">
+                <span style="color:#fdba74;font-weight:600;">Toca las estaciones del plano...</span>
+            </div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarTrayecto2b()">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="limpiarTrayecto2b()">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback2b" class="feedback-visual"></div>
         </div>
     </div>
 </div>
@@ -617,10 +1107,9 @@
         </div>
 
         <div class="actividad-visual">
-            <h4><i class="fas fa-fighter-jet me-2"></i>Actividad</h4>
-            <p>Observa los dos tableros (puedes hacer clic en cada imagen para verla m&aacute;s grande).
-               Localiza la columna <strong>E</strong> en ambos y cuenta cu&aacute;ntos aviones hay en total sumando los dos tableros.
-               Luego haz clic en el n&uacute;mero correcto.</p>
+            <h4><i class="fas fa-fighter-jet me-2"></i>Reto 1: Cuenta y elige</h4>
+            <p>Observa los dos tableros. Busca la columna <strong>E</strong> en ambos, cuenta los aviones
+               y luego toca el n&uacute;mero correcto.</p>
 
             <!-- Opciones visuales: numeros grandes clickeables -->
             <div class="opciones-numericas" id="opciones-p3">
@@ -639,6 +1128,32 @@
             </div>
 
             <div id="feedback3" class="feedback-visual"></div>
+        </div>
+
+        <div class="actividad-visual reto-secundario">
+            <h4><i class="fas fa-satellite-dish me-2"></i>Reto 2: Radar nuevo</h4>
+            <p>Marca <strong>3 drones</strong> en el radar. Sigue las pistas y toca las casillas correctas.</p>
+            <div class="fila-claves-vnv">
+                <span class="clave-vnv">1&#65039;&#8419; B5</span>
+                <span class="clave-vnv">2&#65039;&#8419; &#8594; &#8594; &#8593;</span>
+                <span class="clave-vnv">3&#65039;&#8419; F + misma fila</span>
+            </div>
+            <div class="radar-panel">
+                <div class="radar-indicaciones">
+                    <span>1. Marca el dron en <strong>B5</strong>.</span>
+                    <span>2. Desde ah&iacute;, avanza <strong>2 columnas a la derecha</strong> y <strong>1 fila al norte</strong>.</span>
+                    <span>3. El tercer dron est&aacute; en la <strong>columna F</strong>, en la <strong>misma fila</strong> que el primero.</span>
+                </div>
+                <div class="radar-grid-wrap" id="radar-grid3b"></div>
+                <div class="ayuda-reto" style="background:rgba(255,255,255,.08);color:#e0f2fe;border-color:rgba(125,211,252,.4);margin-top:16px;">
+                    Toca una casilla para marcarla. Si te equivocas, t&oacute;cala otra vez para quitarla.
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:14px;">
+                <button class="btn-accion" onclick="verificarRadar3()">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="reiniciarRadar3()">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback3b" class="feedback-visual"></div>
         </div>
     </div>
 </div>
@@ -671,8 +1186,10 @@
         </div>
 
         <div class="actividad-visual">
-            <h4><i class="fas fa-chair me-2"></i>Actividad</h4>
-            <p>Una familia de <strong>5 personas</strong> quiere sentarse en la <strong>fila 10</strong>, lo m&aacute;s cerca posible del pasillo central y repartidos en ambos lados. Los asientos impares (1, 3, 5...) est&aacute;n a la izquierda y los pares (2, 4, 6...) a la derecha. Haz clic en los 5 asientos m&aacute;s cercanos al pasillo en esa fila.</p>
+            <h4><i class="fas fa-chair me-2"></i>Reto 1: Marca los asientos</h4>
+            <p>Una familia de <strong>5 personas</strong> quiere sentarse en la <strong>fila 10</strong>,
+               lo m&aacute;s cerca posible del pasillo central y repartida en ambos lados.
+               Toca los <strong>5 asientos correctos</strong>.</p>
 
             <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0;">
                 <span class="badge-lado izq"><i class="fas fa-arrow-left me-1"></i> Impares - Izquierda</span>
@@ -687,6 +1204,32 @@
                         onclick="limpiarAsientosP4()">&#8635; Limpiar</button>
             </div>
             <div id="feedback4" class="feedback-visual"></div>
+        </div>
+
+        <div class="actividad-visual reto-secundario">
+            <h4><i class="fas fa-chair me-2"></i>Reto 2: Balc&oacute;n</h4>
+            <p>Ahora usa <strong>otro espacio del teatro</strong>. La familia Ortiz necesita
+               <strong>4 asientos</strong> en la <strong>fila 8</strong>: <strong>2 impares</strong> a la izquierda
+               y <strong>2 pares</strong> a la derecha, todos cerca del pasillo.</p>
+            <div class="fila-claves-vnv">
+                <span class="clave-vnv">&#127915; Fila 8</span>
+                <span class="clave-vnv">&#11013;&#65039; 2 impares</span>
+                <span class="clave-vnv">2 pares &#10145;&#65039;</span>
+                <span class="clave-vnv">&#128205; Junto al pasillo</span>
+            </div>
+
+            <div class="teatro-wrap">
+                <div class="escenario-bar" style="width:min(560px,100%);">&#127917; &nbsp; BALC&Oacute;N &nbsp; &#127917;</div>
+                <div class="balcon-grid" id="balcon-grid4b"></div>
+            </div>
+
+            <div class="info-sel-b" id="info-sel4b">Seleccionados: 0 / 4</div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarBalcon4b()">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="limpiarBalcon4b()">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback4b" class="feedback-visual"></div>
         </div>
     </div>
 </div>
@@ -872,11 +1415,9 @@
         </div>
 
         <div class="actividad-visual">
-            <h4><i class="fas fa-route me-2"></i>Actividad</h4>
-            <p>En el mapa est&aacute;n dibujadas <strong>4 rutas posibles</strong> (A, B, C y D) para ir de
-               <strong>Biblioteca (1,A)</strong> a <strong>Veterinaria (4,D)</strong>. Cada ruta tiene su propio color,
-               indicado en la leyenda de abajo. Solo una de ellas respeta todos los sentidos de circulaci&oacute;n.
-               Haz clic sobre la ruta que consideres correcta.</p>
+            <h4><i class="fas fa-route me-2"></i>Reto 1: Elige la ruta v&aacute;lida</h4>
+            <p>En el mapa hay <strong>4 rutas dibujadas</strong>. Toca la que s&iacute; respeta
+               todos los sentidos de circulaci&oacute;n para ir de <strong>Biblioteca</strong> a <strong>Veterinaria</strong>.</p>
 
             <!-- Leyenda de rutas -->
             <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0;padding:12px;background:#fff7e6;border-radius:12px;border:2px solid #fed7aa;">
@@ -901,9 +1442,108 @@
             <div id="feedback5" class="feedback-visual"></div>
         </div>
 
-        <a href="quiz.html" class="boton-quiz text-center">
+        <div class="actividad-visual reto-secundario">
+            <h4><i class="fas fa-compass me-2"></i>Reto 2: Ruta del anexo</h4>
+            <p>En este segundo mapa, el t&eacute;cnico sale del <strong>Gimnasio</strong> y debe llegar a la
+               <strong>Sala de lectura</strong>. Traza una ruta de <strong>6 pasos</strong> respetando las flechas.</p>
+            <div class="fila-claves-vnv">
+                <span class="clave-vnv">&#127947;&#65039; Inicio</span>
+                <span class="clave-vnv">&#128218; Meta</span>
+                <span class="clave-vnv">&#128099; 6 pasos</span>
+                <span class="clave-vnv">&#8596;&#65039; Sigue sentidos</span>
+            </div>
+
+            <div class="cu-wrap">
+                <svg class="cu-svg" viewBox="0 0 660 520" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="660" height="520" fill="#f0f9ff" rx="14"/>
+
+                    <line x1="40" y1="120" x2="610" y2="120" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="600,113 616,120 600,127" fill="#3b82f6"/>
+                    <text x="20" y="124" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">A</text>
+
+                    <line x1="610" y1="240" x2="40" y2="240" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="50,233 34,240 50,247" fill="#f59e0b"/>
+                    <text x="20" y="244" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">B</text>
+
+                    <line x1="40" y1="360" x2="610" y2="360" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="600,353 616,360 600,367" fill="#3b82f6"/>
+                    <text x="20" y="364" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">C</text>
+
+                    <line x1="610" y1="460" x2="40" y2="460" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="50,453 34,460 50,467" fill="#f59e0b"/>
+                    <text x="20" y="464" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">D</text>
+
+                    <line x1="80" y1="60" x2="80" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="73,478 80,494 87,478" fill="#ef4444"/>
+                    <text x="80" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">1</text>
+
+                    <line x1="210" y1="490" x2="210" y2="60" stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="203,72 210,56 217,72" fill="#10b981"/>
+                    <text x="210" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">2</text>
+
+                    <line x1="340" y1="60" x2="340" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="333,478 340,494 347,478" fill="#ef4444"/>
+                    <text x="340" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">3</text>
+
+                    <line x1="470" y1="490" x2="470" y2="60" stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="463,72 470,56 477,72" fill="#10b981"/>
+                    <text x="470" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">4</text>
+
+                    <line x1="580" y1="60" x2="580" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="573,478 580,494 587,478" fill="#ef4444"/>
+                    <text x="580" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">5</text>
+
+                    <rect x="174" y="424" width="72" height="72" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                    <text x="210" y="454" text-anchor="middle" font-size="22">&#127947;&#65039;</text>
+                    <text x="210" y="470" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#9a3412">Gimnasio</text>
+                    <text x="210" y="482" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(2,D)</text>
+
+                    <rect x="544" y="84" width="72" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+                    <text x="580" y="114" text-anchor="middle" font-size="22">&#128218;</text>
+                    <text x="580" y="130" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#1d4ed8">Sala de lectura</text>
+                    <text x="580" y="142" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(5,A)</text>
+
+                    <rect x="304" y="324" width="72" height="72" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+                    <text x="340" y="354" text-anchor="middle" font-size="22">&#127917;</text>
+                    <text x="340" y="370" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#5b21b6">Foro</text>
+                    <text x="340" y="382" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(3,C)</text>
+
+                    <rect x="434" y="204" width="72" height="72" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                    <text x="470" y="234" text-anchor="middle" font-size="22">&#128187;</text>
+                    <text x="470" y="250" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#065f46">Sala de c&oacute;mputo</text>
+                    <text x="470" y="262" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(4,B)</text>
+
+                    <polyline id="trazoRuta5b" points="" fill="none" stroke="#c2410c" stroke-width="5"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                    <circle id="marcadorCU2" cx="210" cy="460" r="10" fill="#c2410c" stroke="white" stroke-width="2" opacity="0"/>
+                </svg>
+            </div>
+
+            <div class="contador-ruta" id="cont-ruta5b">Pasos: 0 / 6</div>
+            <div class="panel-ruta-cu">
+                <button class="btn-dir-cu este" onclick="agregarTramoCU2('E')">&#8594; Este</button>
+                <button class="btn-dir-cu oeste" onclick="agregarTramoCU2('O')">&#8592; Oeste</button>
+                <button class="btn-dir-cu sur" onclick="agregarTramoCU2('S')">&#8595; Sur</button>
+                <button class="btn-dir-cu norte" onclick="agregarTramoCU2('N')">&#8593; Norte</button>
+            </div>
+
+            <div class="secuencia-ruta-cu" id="secuencia-ruta5b">
+                <span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>
+            </div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarRutaCU2()">&#9654; Verificar reto 2</button>
+                <button class="btn-accion" onclick="limpiarRutaCU2()">&#8635; Reiniciar reto 2</button>
+            </div>
+            <div id="feedback5b" class="feedback-visual"></div>
+        </div>
+
+        <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz">
             <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">
+            Completa los dos retos de esta página para activar el quiz.
+        </div>
     </div>
 </div>
 
@@ -920,18 +1560,177 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
 var paginaActual = 1;
 var totalPaginas = 5;
-var respuestasPagina = {1:false,2:false,3:false,4:false,5:false};
-var audioClick  = document.getElementById('audioClick');
-var audioDing   = document.getElementById('audioDing');
-var audioError  = document.getElementById('audioError');
+var respuestasPagina = { 1:false, 2:false, 3:false, 4:false, 5:false };
+var progresoActividades = {
+    1: { reto1:false, reto2:false },
+    2: { reto1:false, reto2:false },
+    3: { reto1:false, reto2:false },
+    4: { reto1:false, reto2:false },
+    5: { reto1:false, reto2:false }
+};
+
+var audioClick = document.getElementById('audioClick');
+var audioDing = document.getElementById('audioDing');
+var audioError = document.getElementById('audioError');
 var audioWhoosh = document.getElementById('audioWhoosh');
+[audioClick, audioDing, audioError, audioWhoosh].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+});
 
-function safePlay(a) { try { if (a) { a.currentTime = 0; a.play(); } } catch(e) {} }
+var ejerciciosDificilVisualNoVerbal = {
+    p1reto1: { pagina: 1, apartadoClave: 'pagina1_mapa_calles_interseccion', tipoActividad: 'visual_no_verbal_opcion' },
+    p1reto2: { pagina: 1, apartadoClave: 'pagina1_ruta_biblioteca', tipoActividad: 'visual_no_verbal_ruta' },
+    p2reto1: { pagina: 2, apartadoClave: 'pagina2_transbordo_centro', tipoActividad: 'visual_no_verbal_opcion' },
+    p2reto2: { pagina: 2, apartadoClave: 'pagina2_trayecto_metro', tipoActividad: 'visual_no_verbal_secuencia' },
+    p3reto1: { pagina: 3, apartadoClave: 'pagina3_conteo_columna_e', tipoActividad: 'visual_no_verbal_opcion' },
+    p3reto2: { pagina: 3, apartadoClave: 'pagina3_radar_drones', tipoActividad: 'visual_no_verbal_cuadricula' },
+    p4reto1: { pagina: 4, apartadoClave: 'pagina4_asientos_fila10', tipoActividad: 'visual_no_verbal_seleccion' },
+    p4reto2: { pagina: 4, apartadoClave: 'pagina4_balcon_fila8', tipoActividad: 'visual_no_verbal_seleccion' },
+    p5reto1: { pagina: 5, apartadoClave: 'pagina5_ruta_sentidos_campus', tipoActividad: 'visual_no_verbal_opcion' },
+    p5reto2: { pagina: 5, apartadoClave: 'pagina5_construir_ruta_campus', tipoActividad: 'visual_no_verbal_ruta' }
+};
+var completadosRegistroDificilVisualNoVerbal = Object.fromEntries(Object.keys(ejerciciosDificilVisualNoVerbal).map(function(clave) {
+    return [clave, false];
+}));
+var sesionCompletadaDificilVisualNoVerbal = false;
+var trackerDificilVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'visual_no_verbal',
+    trackTime: false,
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_dificil' },
+    apartados: ejerciciosDificilVisualNoVerbal
+}) : null;
+var sessionTrackerDificilVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'visual_no_verbal',
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_dificil' }
+}) : null;
 
-/* LIGHTBOX P3 */
+var PASOS_SVG_1B = {
+    N: { dx: 0, dy: -110 },
+    E: { dx: 110, dy: 0 },
+    S: { dx: 0, dy: 110 },
+    O: { dx: -110, dy: 0 }
+};
+var RUTAS_CORRECTAS_1B = [
+    ['N', 'E', 'E', 'N'],
+    ['E', 'N', 'E', 'N'],
+    ['E', 'E', 'N', 'N']
+];
+var ruta1b = [];
+var posActual1b = { x: 110, y: 330 };
+
+var trayecto2b = [];
+var TRAYECTO_CORRECTO_2B = ['Terminal', 'Jardin', 'Central', 'Puerto'];
+
+var RADAR_MISION3 = {
+    pagina: 3,
+    gridId: 'radar-grid3b',
+    columnas: ['A', 'B', 'C', 'D', 'E', 'F'],
+    filas: [1, 2, 3, 4, 5, 6],
+    correctas: ['B5', 'D4', 'F5'],
+    seleccionadas: []
+};
+
+var selAsientosP4 = [];
+var FILA_OBJETIVO = 10;
+var selBalcon4b = [];
+var FILA_BALCON_4B = 8;
+
+var AVENIDAS_X = [80, 210, 340, 470, 580];
+var CALLES_Y = [120, 240, 360, 460];
+var SENTIDO_CALLE_Y = { 120: 'E', 240: 'O', 360: 'E', 460: 'O' };
+var SENTIDO_AV_X = { 80: 'S', 210: 'N', 340: 'S', 470: 'N', 580: 'S' };
+var RUTA_CORRECTA_5B = ['N', 'N', 'N', 'E', 'E', 'E'];
+var secRuta5b = [];
+var posRuta5b = { x: 210, y: 460 };
+
+function safePlay(audio) {
+    try {
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play();
+        }
+    } catch (e) {}
+}
+
+function actividadResuelta(pagina, reto) {
+    return !!(progresoActividades[pagina] && progresoActividades[pagina][reto]);
+}
+
+function paginaCompletaDificilVisualNoVerbal(pagina) {
+    return actividadResuelta(pagina, 'reto1') && actividadResuelta(pagina, 'reto2');
+}
+
+function todasPaginasCompletasDificilVisualNoVerbal() {
+    for (var pagina = 1; pagina <= totalPaginas; pagina++) {
+        if (!paginaCompletaDificilVisualNoVerbal(pagina)) return false;
+    }
+    return true;
+}
+
+function claveEjercicioDificilVisualNoVerbal(pagina, reto) {
+    return 'p' + pagina + reto;
+}
+
+function registrarIntentoDificilVisualNoVerbal(pagina, reto, correcto, detalle) {
+    var clave = claveEjercicioDificilVisualNoVerbal(pagina, reto);
+    var config = ejerciciosDificilVisualNoVerbal[clave];
+    if (!config) return;
+    detalle = detalle || {};
+
+    if (trackerDificilVisualNoVerbal) {
+        trackerDificilVisualNoVerbal.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+    }
+
+    if (correcto) {
+        if (!completadosRegistroDificilVisualNoVerbal[clave]) {
+            completadosRegistroDificilVisualNoVerbal[clave] = true;
+            if (trackerDificilVisualNoVerbal) {
+                trackerDificilVisualNoVerbal.addCorrect(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+            }
+        }
+    } else if (trackerDificilVisualNoVerbal) {
+        trackerDificilVisualNoVerbal.addError(clave, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+    }
+
+    revisarSesionCompletadaDificilVisualNoVerbal();
+}
+
+function revisarSesionCompletadaDificilVisualNoVerbal() {
+    if (!sesionCompletadaDificilVisualNoVerbal && todasPaginasCompletasDificilVisualNoVerbal()) {
+        sesionCompletadaDificilVisualNoVerbal = true;
+        if (trackerDificilVisualNoVerbal) trackerDificilVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+        if (sessionTrackerDificilVisualNoVerbal) sessionTrackerDificilVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+    }
+}
+
+function actualizarEstadoPagina(pagina) {
+    respuestasPagina[pagina] = paginaCompletaDificilVisualNoVerbal(pagina);
+}
+
+function marcarActividad(pagina, reto) {
+    progresoActividades[pagina][reto] = true;
+    actualizarEstadoPagina(pagina);
+    revisarSesionCompletadaDificilVisualNoVerbal();
+    actualizarUI();
+}
+
+function mostrarFeedback(id, ok, mensaje) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'block';
+    el.className = 'feedback-visual ' + (ok ? 'bg-success text-white' : 'bg-danger text-white');
+    el.innerHTML = mensaje;
+}
+
 function abrirLightbox(img) {
     var lb = document.getElementById('lightbox');
     var lbImg = document.getElementById('lightbox-img');
@@ -939,155 +1738,308 @@ function abrirLightbox(img) {
     lbImg.alt = img.alt;
     lb.classList.add('visible');
 }
+
 function cerrarLightbox() {
     document.getElementById('lightbox').classList.remove('visible');
 }
 
+function prepararPaginaVisualNoVerbalDificil(pagina) {
+    if (pagina === 1) setTimeout(animarRuta, 400);
+    if (pagina === 3) generarRadar3();
+    if (pagina === 4) {
+        generarTeatro();
+        generarBalcon4b();
+    }
+}
+
 function cambiarPagina(dir) {
+    if (dir > 0 && !paginaCompletaDificilVisualNoVerbal(paginaActual)) {
+        safePlay(audioError);
+        var feedbackId = actividadResuelta(paginaActual, 'reto1') ? 'feedback' + paginaActual + 'b' : 'feedback' + paginaActual;
+        mostrarFeedback(feedbackId, false, 'Completa los dos retos de esta página antes de avanzar.');
+        return;
+    }
+
+    var siguientePagina = paginaActual + dir;
+    if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
+
     document.getElementById('pagina' + paginaActual).classList.remove('activa');
-    paginaActual += dir;
+    paginaActual = siguientePagina;
     document.getElementById('pagina' + paginaActual).classList.add('activa');
     safePlay(audioWhoosh);
     actualizarUI();
-    localStorage.setItem('progreso_dificil_visualnoverbal_coordenadas', paginaActual);
-    window.scrollTo({top:0, behavior:'smooth'});
-    if (paginaActual === 1) setTimeout(animarRuta, 500);
-    if (paginaActual === 4) generarTeatro();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    prepararPaginaVisualNoVerbalDificil(paginaActual);
 }
 
 function actualizarUI() {
     var puntos = document.querySelectorAll('.punto');
     for (var i = 0; i < puntos.length; i++) {
         var n = i + 1;
-        puntos[i].classList.remove('activo','completado');
+        puntos[i].classList.remove('activo', 'completado');
         if (n === paginaActual) puntos[i].classList.add('activo');
-        else if (n < paginaActual && respuestasPagina[n]) puntos[i].classList.add('completado');
-        else if (n < paginaActual) puntos[i].classList.add('activo');
+        else if (paginaCompletaDificilVisualNoVerbal(n)) puntos[i].classList.add('completado');
     }
     document.getElementById('paginaActualNum').innerText = paginaActual;
-    document.getElementById('contadorPagina').innerText  = paginaActual + '/' + totalPaginas;
+    document.getElementById('contadorPagina').innerText = paginaActual + '/' + totalPaginas;
     document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
-}
+    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !paginaCompletaDificilVisualNoVerbal(paginaActual));
 
-function mostrarFeedback(id, tipo, msg) {
-    var el = document.getElementById(id);
-    el.style.display = 'block';
-    el.className = (tipo === 'ok')
-        ? 'feedback-visual bg-success text-white'
-        : 'feedback-visual bg-danger text-white';
-    el.innerHTML = msg;
-}
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+    if (botonQuiz && textoAyudaQuiz) {
+        if (todasPaginasCompletasDificilVisualNoVerbal()) {
+            botonQuiz.classList.remove('bloqueado');
+            textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+        } else {
+            botonQuiz.classList.add('bloqueado');
+            textoAyudaQuiz.textContent = 'Completa los dos retos de esta página para activar el quiz.';
+        }
+    }
 
-/* ============================================
-   PAGINA 1 - RUTA: clic en interseccion del mapa
-============================================ */
-var rutaAnimada = false;
+    if (trackerDificilVisualNoVerbal) {
+        trackerDificilVisualNoVerbal.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+    }
+}
 
 function animarRuta() {
-    var l = document.getElementById('rutaLinea');
-    if (!l) return;
-    l.style.transition = 'none';
-    l.setAttribute('stroke-dashoffset', '1200');
+    var linea = document.getElementById('rutaLinea');
+    if (!linea) return;
+    linea.style.transition = 'none';
+    linea.setAttribute('stroke-dashoffset', '1200');
     setTimeout(function() {
-        l.style.transition = 'stroke-dashoffset 2s ease';
-        l.setAttribute('stroke-dashoffset', '0');
-        rutaAnimada = true;
+        linea.style.transition = 'stroke-dashoffset 2s ease';
+        linea.setAttribute('stroke-dashoffset', '0');
     }, 100);
 }
 
 function elegirInterseccion(letra, esCorrecta) {
-    if (respuestasPagina[1]) return;
+    if (actividadResuelta(1, 'reto1')) return;
     safePlay(audioClick);
+    registrarIntentoDificilVisualNoVerbal(1, 'reto1', esCorrecta, { seleccion: letra });
 
-    var ids = ['int-A','int-B','int-C','int-D'];
-    ids.forEach(function(id) {
+    ['int-A', 'int-B', 'int-C', 'int-D'].forEach(function(id) {
         var el = document.getElementById(id);
-        if (el) el.classList.remove('seleccionada','correcta','incorrecta');
+        if (el) el.classList.remove('seleccionada', 'correcta', 'incorrecta');
     });
 
     var sel = document.getElementById('int-' + letra);
-
     if (esCorrecta) {
         safePlay(audioDing);
-        sel.classList.add('correcta');
-        mostrarFeedback('feedback1','ok','Correcto! El parque esta en Calle Sauce, Avenida Misisipi. Es el punto C del mapa.');
-        respuestasPagina[1] = true; actualizarUI();
+        if (sel) sel.classList.add('correcta');
+        mostrarFeedback('feedback1', true, 'Correcto. El recorrido termina en <strong>Sauce con Misisipi</strong>.');
+        marcarActividad(1, 'reto1');
     } else {
         safePlay(audioError);
-        sel.classList.add('incorrecta');
-        mostrarFeedback('feedback1','error','Incorrecto. Sigue la ruta en el mapa hasta el final y haz clic en ese punto.');
+        if (sel) sel.classList.add('incorrecta');
+        mostrarFeedback('feedback1', false, 'No coincide. Sigue la l&iacute;nea completa hasta el final.');
         setTimeout(function() {
-            sel.classList.remove('incorrecta');
+            if (sel) sel.classList.remove('incorrecta');
             document.getElementById('feedback1').style.display = 'none';
         }, 1500);
     }
 }
 
-/* ============================================
-   PAGINA 2 - METRO: clic en estacion correcta
-============================================ */
-function elegirEstacion2(nombre, esCorrecta) {
-    if (respuestasPagina[2]) return;
+function agregarPaso1b(letra, clase) {
+    if (actividadResuelta(1, 'reto2') || ruta1b.length >= 4) return;
     safePlay(audioClick);
+    ruta1b.push(letra);
 
-    var ids = ['est2-Centro','est2-Copilco','est2-Zocalo','est2-Observatorio'];
-    ids.forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el) el.classList.remove('seleccionada','correcta','incorrecta');
+    var contenedor = document.getElementById('ruta-construida1b');
+    if (ruta1b.length === 1) contenedor.innerHTML = '';
+
+    var simbolo = letra === 'N' ? '&#8593;' : letra === 'S' ? '&#8595;' : letra === 'E' ? '&#8594;' : '&#8592;';
+    var paso = document.createElement('div');
+    paso.className = 'paso-ruta ' + clase;
+    paso.innerHTML = simbolo;
+    contenedor.appendChild(paso);
+
+    var delta = PASOS_SVG_1B[letra];
+    var nuevaX = posActual1b.x + delta.dx;
+    var nuevaY = posActual1b.y + delta.dy;
+    var trazo = document.getElementById('trazoRuta1b');
+    var puntos = trazo.getAttribute('points') || '';
+    if (puntos === '') puntos = posActual1b.x + ',' + posActual1b.y;
+    puntos += ' ' + nuevaX + ',' + nuevaY;
+    trazo.setAttribute('points', puntos);
+
+    var marcador = document.getElementById('marcadorPos1b');
+    marcador.setAttribute('cx', nuevaX);
+    marcador.setAttribute('cy', nuevaY);
+    marcador.setAttribute('opacity', '1');
+
+    posActual1b = { x: nuevaX, y: nuevaY };
+    document.getElementById('cont-ruta1b').innerText = 'Pasos: ' + ruta1b.length + ' / 4';
+    document.getElementById('feedback1b').style.display = 'none';
+}
+
+function verificarRuta1b() {
+    if (ruta1b.length < 4) {
+        registrarIntentoDificilVisualNoVerbal(1, 'reto2', false, { actividad: 'ruta_biblioteca', respuesta: ruta1b.join('>'), error: 'incompleta' });
+        mostrarFeedback('feedback1b', false, 'Completa los 4 pasos antes de verificar.');
+        return;
+    }
+    var ok = RUTAS_CORRECTAS_1B.some(function(ruta) {
+        return ruta.every(function(paso, index) { return ruta1b[index] === paso; });
     });
-
-    var sel = document.getElementById('est2-' + nombre);
-
-    if (esCorrecta) {
+    registrarIntentoDificilVisualNoVerbal(1, 'reto2', ok, { actividad: 'ruta_biblioteca', respuesta: ruta1b.join('>') });
+    if (ok) {
         safePlay(audioDing);
-        if (sel) sel.classList.add('correcta');
-        mostrarFeedback('feedback2','ok','Correcto! En Centro se conectan L1 y L3. Es el transbordo mas eficiente: solo 1 cambio de linea.');
-        respuestasPagina[2] = true; actualizarUI();
+        document.getElementById('marcadorPos1b').setAttribute('fill', '#4caf50');
+        mostrarFeedback('feedback1b', true, 'Correcto. Esa ruta de 4 pasos s&iacute; llega a la <strong>Biblioteca</strong>.');
+        marcarActividad(1, 'reto2');
     } else {
         safePlay(audioError);
-        if (sel) sel.classList.add('incorrecta');
-        var msg = 'Incorrecto. ';
-        if (nombre === 'Copilco') msg += 'Copilco es el destino, no el transbordo.';
-        else if (nombre === 'Zocalo') msg += 'Zocalo esta solo en L3, no conecta con L1.';
-        else if (nombre === 'Observatorio') msg += 'Observatorio esta solo en L4, no tiene conexion con L1 directamente.';
-        mostrarFeedback('feedback2','error', msg + ' Busca la estacion donde coinciden L1 y L3.');
-        setTimeout(function() {
-            if (sel) sel.classList.remove('incorrecta');
-            document.getElementById('feedback2').style.display = 'none';
-        }, 1800);
+        mostrarFeedback('feedback1b', false, 'La ruta no llega bien. Prueba otra combinaci&oacute;n de 4 pasos.');
     }
 }
 
-/* ============================================
-   PAGINA 3 - BATALLA AEREA: clic en numero
-   Verde col E: (E,A) y (E,E) = 2 aviones
-   Naranja col E: (E,B) = 1 avion
-   Total = 3
-============================================ */
-function elegirNumero(idx, esCorrecta) {
-    if (respuestasPagina[3]) return;
+function limpiarRuta1b() {
+    if (actividadResuelta(1, 'reto2')) return;
+    ruta1b = [];
+    posActual1b = { x: 110, y: 330 };
+    document.getElementById('trazoRuta1b').setAttribute('points', '');
+    var marcador = document.getElementById('marcadorPos1b');
+    marcador.setAttribute('cx', '110');
+    marcador.setAttribute('cy', '330');
+    marcador.setAttribute('opacity', '0');
+    marcador.setAttribute('fill', '#c2410c');
+    document.getElementById('ruta-construida1b').innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>';
+    document.getElementById('cont-ruta1b').innerText = 'Pasos: 0 / 4';
+    document.getElementById('feedback1b').style.display = 'none';
+}
+
+function elegirEstacion2(nombre, esCorrecta) {
+    if (actividadResuelta(2, 'reto1')) return;
     safePlay(audioClick);
+    registrarIntentoDificilVisualNoVerbal(2, 'reto1', esCorrecta, { estacion: nombre });
+
+    ['est2-Centro', 'est2-Copilco', 'est2-Zocalo', 'est2-Observatorio'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('seleccionada', 'correcta', 'incorrecta');
+    });
+
+    var sel = document.getElementById('est2-' + nombre);
+    if (esCorrecta) {
+        safePlay(audioDing);
+        if (sel) sel.classList.add('correcta');
+        mostrarFeedback('feedback2', true, 'Correcto. <strong>Centro</strong> es el cambio de l&iacute;nea m&aacute;s corto.');
+        marcarActividad(2, 'reto1');
+    } else {
+        safePlay(audioError);
+        if (sel) sel.classList.add('incorrecta');
+        mostrarFeedback('feedback2', false, 'No es ese transbordo. Busca donde coinciden <strong>L1</strong> y <strong>L3</strong>.');
+        setTimeout(function() {
+            if (sel) sel.classList.remove('incorrecta');
+            document.getElementById('feedback2').style.display = 'none';
+        }, 1700);
+    }
+}
+
+function renderTrayecto2b() {
+    document.querySelectorAll('[id^="e2b-"]').forEach(function(el) {
+        el.classList.remove('en-trayecto');
+    });
+
+    var contenedor = document.getElementById('trayecto2b-construido');
+    if (!trayecto2b.length) {
+        contenedor.innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca las estaciones del plano...</span>';
+        return;
+    }
+
+    contenedor.innerHTML = '';
+    trayecto2b.forEach(function(est, index) {
+        var target = document.getElementById('e2b-' + est.nombre);
+        if (target) target.classList.add('en-trayecto');
+        if (index > 0) {
+            var flecha = document.createElement('span');
+            flecha.className = 'chip-flecha';
+            flecha.innerHTML = '&#8594;';
+            contenedor.appendChild(flecha);
+        }
+        var chip = document.createElement('span');
+        chip.className = 'chip-est ' + est.clase;
+        chip.textContent = est.nombre === 'Jardin' ? 'Jardín' : est.nombre;
+        contenedor.appendChild(chip);
+    });
+}
+
+function clickEst2b(nombre, clase) {
+    if (actividadResuelta(2, 'reto2')) return;
+
+    if (trayecto2b.length && trayecto2b[trayecto2b.length - 1].nombre === nombre) {
+        safePlay(audioClick);
+        trayecto2b.pop();
+        document.getElementById('feedback2b').style.display = 'none';
+        renderTrayecto2b();
+        return;
+    }
+
+    if (trayecto2b.some(function(est) { return est.nombre === nombre; })) return;
+    if (trayecto2b.length >= 4) {
+        mostrarFeedback('feedback2b', false, 'Ya elegiste 4 estaciones. Toca la &uacute;ltima para quitarla o reinicia.');
+        return;
+    }
+
+    safePlay(audioClick);
+    trayecto2b.push({ nombre: nombre, clase: clase });
+    document.getElementById('feedback2b').style.display = 'none';
+    renderTrayecto2b();
+}
+
+function verificarTrayecto2b() {
+    if (trayecto2b.length < 4) {
+        registrarIntentoDificilVisualNoVerbal(2, 'reto2', false, { actividad: 'trayecto_metro', respuesta: trayecto2b.map(function(est) { return est.nombre; }).join('>'), error: 'incompleto' });
+        mostrarFeedback('feedback2b', false, 'Faltan estaciones. Debes marcar 4.');
+        return;
+    }
+
+    var ok = TRAYECTO_CORRECTO_2B.every(function(nombre, index) {
+        return trayecto2b[index].nombre === nombre;
+    });
+    registrarIntentoDificilVisualNoVerbal(2, 'reto2', ok, { actividad: 'trayecto_metro', respuesta: trayecto2b.map(function(est) { return est.nombre; }).join('>') });
+
+    if (ok) {
+        safePlay(audioDing);
+        mostrarFeedback('feedback2b', true, 'Correcto. El orden es <strong>Terminal &rarr; Jard&iacute;n &rarr; Central &rarr; Puerto</strong>.');
+        marcarActividad(2, 'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback2b', false, 'Ese recorrido no sirve. Primero cambia de la naranja a la verde, y luego de la verde a la azul.');
+    }
+}
+
+function limpiarTrayecto2b() {
+    if (actividadResuelta(2, 'reto2')) return;
+    trayecto2b = [];
+    document.getElementById('feedback2b').style.display = 'none';
+    renderTrayecto2b();
+}
+
+function elegirNumero(idx, esCorrecta) {
+    if (actividadResuelta(3, 'reto1')) return;
+    safePlay(audioClick);
+    registrarIntentoDificilVisualNoVerbal(3, 'reto1', esCorrecta, { opcion: idx + 1 });
 
     for (var i = 0; i < 4; i++) {
         var el = document.getElementById('op3-' + i);
-        if (el) el.classList.remove('correcta','incorrecta','disabled');
+        if (el) el.classList.remove('correcta', 'incorrecta', 'disabled');
     }
     var sel = document.getElementById('op3-' + idx);
 
     if (esCorrecta) {
         safePlay(audioDing);
         sel.classList.add('correcta');
-        mostrarFeedback('feedback3','ok','Correcto! En columna E hay 3 aviones en total: 2 en el tablero verde (E,A) y (E,E), mas 1 en el naranja (E,B).');
-        respuestasPagina[3] = true; actualizarUI();
-        for (var i = 0; i < 4; i++) {
-            var el = document.getElementById('op3-' + i);
-            if (el && i !== idx) el.classList.add('disabled');
+        for (var j = 0; j < 4; j++) {
+            var op = document.getElementById('op3-' + j);
+            if (op && j !== idx) op.classList.add('disabled');
         }
+        mostrarFeedback('feedback3', true, 'Correcto. En la columna <strong>E</strong> hay <strong>3 aviones</strong> en total.');
+        marcarActividad(3, 'reto1');
     } else {
         safePlay(audioError);
         sel.classList.add('incorrecta');
-        mostrarFeedback('feedback3','error','Incorrecto. Cuenta los aviones en la columna E de los DOS tableros y sumalos.');
+        mostrarFeedback('feedback3', false, 'Vuelve a contar solo la columna <strong>E</strong> en los dos tableros.');
         setTimeout(function() {
             sel.classList.remove('incorrecta');
             document.getElementById('feedback3').style.display = 'none';
@@ -1095,83 +2047,159 @@ function elegirNumero(idx, esCorrecta) {
     }
 }
 
-/* ============================================
-   PAGINA 4 - TEATRO: clic en asientos
-   Fila 10, capacidad 28 -> mitad=14 por lado
-   5 personas, lo mas cerca del pasillo:
-   Izquierda: 1, 3 (2 asientos)
-   Derecha: 2, 4, 6 (3 asientos)
-   O bien: Izq: 1,3,5 / Der: 2,4
-   Los asientos correctos: cercanos al pasillo en fila 10
-============================================ */
-var selAsientosP4 = [];
-var FILA_OBJETIVO = 10;
-var ASIENTOS_CORRECTOS_IZQ = [1,3];
-var ASIENTOS_CORRECTOS_DER = [2,4,6];
+function generarRadar3() {
+    var wrap = document.getElementById(RADAR_MISION3.gridId);
+    if (!wrap || wrap.innerHTML.trim() !== '') return;
+
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(document.createElement('div'));
+
+    RADAR_MISION3.columnas.forEach(function(columna) {
+        var head = document.createElement('div');
+        head.className = 'radar-head';
+        head.textContent = columna;
+        fragment.appendChild(head);
+    });
+
+    RADAR_MISION3.filas.forEach(function(fila) {
+        var rowHead = document.createElement('div');
+        rowHead.className = 'radar-head';
+        rowHead.textContent = fila;
+        fragment.appendChild(rowHead);
+
+        RADAR_MISION3.columnas.forEach(function(columna) {
+            var coord = columna + fila;
+            var cell = document.createElement('div');
+            cell.className = 'radar-cell';
+            cell.id = 'radar-cell-' + coord;
+            cell.onclick = function() { toggleRadar3(coord); };
+            fragment.appendChild(cell);
+        });
+    });
+
+    wrap.appendChild(fragment);
+    actualizarRadar3UI();
+}
+
+function actualizarRadar3UI() {
+    RADAR_MISION3.filas.forEach(function(fila) {
+        RADAR_MISION3.columnas.forEach(function(columna) {
+            var coord = columna + fila;
+            var cell = document.getElementById('radar-cell-' + coord);
+            if (!cell) return;
+            cell.classList.toggle('activa', RADAR_MISION3.seleccionadas.indexOf(coord) !== -1);
+        });
+    });
+}
+
+function toggleRadar3(coord) {
+    if (actividadResuelta(3, 'reto2')) return;
+    var idx = RADAR_MISION3.seleccionadas.indexOf(coord);
+    if (idx !== -1) {
+        RADAR_MISION3.seleccionadas.splice(idx, 1);
+    } else {
+        if (RADAR_MISION3.seleccionadas.length >= 3) {
+            mostrarFeedback('feedback3b', false, 'Solo debes marcar <strong>3 drones</strong>.');
+            return;
+        }
+        RADAR_MISION3.seleccionadas.push(coord);
+    }
+    safePlay(audioClick);
+    document.getElementById('feedback3b').style.display = 'none';
+    actualizarRadar3UI();
+}
+
+function verificarRadar3() {
+    if (RADAR_MISION3.seleccionadas.length !== 3) {
+        registrarIntentoDificilVisualNoVerbal(3, 'reto2', false, { actividad: 'radar_drones', respuesta: RADAR_MISION3.seleccionadas.slice().sort().join(','), error: 'cantidad_incorrecta' });
+        mostrarFeedback('feedback3b', false, 'Debes marcar exactamente <strong>3</strong> casillas.');
+        return;
+    }
+
+    var user = RADAR_MISION3.seleccionadas.slice().sort();
+    var correctas = RADAR_MISION3.correctas.slice().sort();
+    var ok = user.every(function(coord, index) { return coord === correctas[index]; });
+    registrarIntentoDificilVisualNoVerbal(3, 'reto2', ok, { actividad: 'radar_drones', respuesta: user.join(',') });
+
+    if (ok) {
+        safePlay(audioDing);
+        mostrarFeedback('feedback3b', true, 'Correcto. Los drones est&aacute;n en <strong>B5</strong>, <strong>D4</strong> y <strong>F5</strong>.');
+        marcarActividad(3, 'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback3b', false, 'No coincide. Empieza en <strong>B5</strong> y sigue las pistas del panel.');
+    }
+}
+
+function reiniciarRadar3() {
+    if (actividadResuelta(3, 'reto2')) return;
+    RADAR_MISION3.seleccionadas = [];
+    actualizarRadar3UI();
+    document.getElementById('feedback3b').style.display = 'none';
+}
 
 function generarTeatro() {
     var c = document.getElementById('teatro-grid');
     if (!c || c.innerHTML.trim() !== '') return;
     var caps = {1:24,2:24,3:24,4:24,5:24,6:28,7:28,8:28,9:28,10:28,11:32,12:32,13:32,14:32,15:32};
     var html = '';
-    for (var f = 1; f <= 12; f++) {
-        var cap   = caps[f];
-        var mitad = cap / 2;
+    for (var fila = 1; fila <= 12; fila++) {
+        var mitad = caps[fila] / 2;
         html += '<div class="fila-teatro">';
-        html += '<div class="fila-num">F' + f + '</div>';
+        html += '<div class="fila-num">F' + fila + '</div>';
         html += '<div class="bloque-izq">';
         for (var i = mitad; i >= 1; i--) {
-            var n = (i * 2) - 1;
-            var bloq = (f !== FILA_OBJETIVO) ? ' bloqueado' : '';
-            html += '<div class="asiento' + bloq + '" id="asi-izq-' + f + '-' + n + '" ' +
-                    (f === FILA_OBJETIVO ? 'onclick="clickAsientoP4(' + f + ',\'izq\',' + n + ')"' : '') +
-                    '>' + n + '</div>';
+            var impar = (i * 2) - 1;
+            var claseBloq = fila !== FILA_OBJETIVO ? ' bloqueado' : '';
+            html += '<div class="asiento' + claseBloq + '" id="asi-izq-' + fila + '-' + impar + '" ' +
+                (fila === FILA_OBJETIVO ? 'onclick="clickAsientoP4(' + fila + ',\'izq\',' + impar + ')"' : '') +
+                '>' + impar + '</div>';
         }
         html += '</div>';
-        html += '<div class="pasillo">F' + f + '</div>';
+        html += '<div class="pasillo">F' + fila + '</div>';
         html += '<div class="bloque-der">';
-        for (var i = 1; i <= mitad; i++) {
-            var n = i * 2;
-            var bloq = (f !== FILA_OBJETIVO) ? ' bloqueado' : '';
-            html += '<div class="asiento' + bloq + '" id="asi-der-' + f + '-' + n + '" ' +
-                    (f === FILA_OBJETIVO ? 'onclick="clickAsientoP4(' + f + ',\'der\',' + n + ')"' : '') +
-                    '>' + n + '</div>';
+        for (var j = 1; j <= mitad; j++) {
+            var par = j * 2;
+            var claseBloq2 = fila !== FILA_OBJETIVO ? ' bloqueado' : '';
+            html += '<div class="asiento' + claseBloq2 + '" id="asi-der-' + fila + '-' + par + '" ' +
+                (fila === FILA_OBJETIVO ? 'onclick="clickAsientoP4(' + fila + ',\'der\',' + par + ')"' : '') +
+                '>' + par + '</div>';
         }
         html += '</div>';
         html += '</div>';
     }
-    html += '<div style="text-align:center;padding:10px;color:#9a3412;font-weight:700;">... Filas 13 a 20 (misma distribucion) ...</div>';
+    html += '<div style="text-align:center;padding:10px;color:#9a3412;font-weight:700;">... Filas 13 a 20 (misma distribuci&oacute;n) ...</div>';
     c.innerHTML = html;
 }
 
 function clickAsientoP4(fila, lado, num) {
-    if (respuestasPagina[4]) return;
+    if (actividadResuelta(4, 'reto1')) return;
     safePlay(audioClick);
 
     var key = lado + '-' + num;
-    var el  = document.getElementById('asi-' + lado + '-' + fila + '-' + num);
+    var el = document.getElementById('asi-' + lado + '-' + fila + '-' + num);
     var idx = selAsientosP4.indexOf(key);
 
     if (idx !== -1) {
         selAsientosP4.splice(idx, 1);
-        if (el) el.classList.remove('sel-izq','sel-der');
+        if (el) el.classList.remove('sel-izq', 'sel-der');
     } else {
         if (selAsientosP4.length >= 5) {
-            mostrarFeedback('feedback4','error','Solo puedes seleccionar 5 asientos. Haz clic en uno seleccionado para deseleccionarlo.');
+            mostrarFeedback('feedback4', false, 'Solo puedes marcar <strong>5</strong> asientos.');
             return;
         }
         selAsientosP4.push(key);
         if (el) el.classList.add(lado === 'izq' ? 'sel-izq' : 'sel-der');
     }
 
-    var count = selAsientosP4.length;
-    document.getElementById('info-sel-p4').innerText = 'Seleccionados: ' + count + ' / 5';
+    document.getElementById('info-sel-p4').innerText = 'Seleccionados: ' + selAsientosP4.length + ' / 5';
     document.getElementById('feedback4').style.display = 'none';
 }
 
 function verificarAsientosP4() {
     if (selAsientosP4.length !== 5) {
-        mostrarFeedback('feedback4','error','Selecciona exactamente 5 asientos antes de verificar.');
+        registrarIntentoDificilVisualNoVerbal(4, 'reto1', false, { actividad: 'asientos_fila10', seleccion: selAsientosP4.join(','), error: 'cantidad_incorrecta' });
+        mostrarFeedback('feedback4', false, 'Debes marcar exactamente <strong>5</strong> asientos.');
         return;
     }
 
@@ -1179,95 +2207,304 @@ function verificarAsientosP4() {
     var derSel = [];
     selAsientosP4.forEach(function(k) {
         var parts = k.split('-');
-        if (parts[0] === 'izq') izqSel.push(parseInt(parts[1]));
-        else derSel.push(parseInt(parts[1]));
+        if (parts[0] === 'izq') izqSel.push(parseInt(parts[1], 10));
+        else derSel.push(parseInt(parts[1], 10));
     });
-    izqSel.sort(function(a,b){return a-b;});
-    derSel.sort(function(a,b){return a-b;});
+    izqSel.sort(function(a, b) { return a - b; });
+    derSel.sort(function(a, b) { return a - b; });
 
-    var opcion1ok = (JSON.stringify(izqSel) === JSON.stringify([1,3]) && JSON.stringify(derSel) === JSON.stringify([2,4,6]));
-    var opcion2ok = (JSON.stringify(izqSel) === JSON.stringify([1,3,5]) && JSON.stringify(derSel) === JSON.stringify([2,4]));
-    var ok = opcion1ok || opcion2ok;
+    var opcion1 = JSON.stringify(izqSel) === JSON.stringify([1, 3]) && JSON.stringify(derSel) === JSON.stringify([2, 4, 6]);
+    var opcion2 = JSON.stringify(izqSel) === JSON.stringify([1, 3, 5]) && JSON.stringify(derSel) === JSON.stringify([2, 4]);
+    var ok = opcion1 || opcion2;
+    registrarIntentoDificilVisualNoVerbal(4, 'reto1', ok, { actividad: 'asientos_fila10', izquierda: izqSel.join(','), derecha: derSel.join(',') });
 
     if (ok) {
         safePlay(audioDing);
-        var asientosEl = document.querySelectorAll('.asiento.sel-izq, .asiento.sel-der');
-        asientosEl.forEach(function(a) { a.classList.add('correcto'); });
-        mostrarFeedback('feedback4','ok','Correcto! Los 5 asientos mas cercanos al pasillo en fila 10 son los impares 1,3,5 (izquierda) y pares 2,4,6 (derecha), repartidos para que la familia quede junta.');
-        respuestasPagina[4] = true; actualizarUI();
+        document.querySelectorAll('.asiento.sel-izq, .asiento.sel-der').forEach(function(a) {
+            a.classList.add('correcto');
+        });
+        mostrarFeedback('feedback4', true, 'Correcto. Marcaste los asientos m&aacute;s cercanos al pasillo de la <strong>fila 10</strong>.');
+        marcarActividad(4, 'reto1');
     } else {
         safePlay(audioError);
-        mostrarFeedback('feedback4','error','Incorrecto. Los asientos mas cercanos al pasillo son los de numero mas bajo: 1 y 3 a la izquierda, 2 y 4 a la derecha. Necesitas 5 en total.');
+        mostrarFeedback('feedback4', false, 'No coincide. Revisa primero los asientos pegados al pasillo.');
     }
 }
 
 function limpiarAsientosP4() {
+    if (actividadResuelta(4, 'reto1')) return;
     selAsientosP4 = [];
-    var asientos = document.querySelectorAll('.asiento');
-    asientos.forEach(function(a) { a.classList.remove('sel-izq','sel-der','correcto'); });
+    document.querySelectorAll('.asiento').forEach(function(a) {
+        a.classList.remove('sel-izq', 'sel-der', 'correcto');
+    });
     document.getElementById('info-sel-p4').innerText = 'Seleccionados: 0 / 5';
     document.getElementById('feedback4').style.display = 'none';
 }
 
-/* ============================================
-   PAGINA 5 - CU: clic en la ruta correcta
-   Ruta C es la correcta (verde)
-============================================ */
-function elegirRutaCU(letra, esCorrecta) {
-    if (respuestasPagina[5]) return;
+function generarBalcon4b() {
+    var contenedor = document.getElementById('balcon-grid4b');
+    if (!contenedor || contenedor.innerHTML.trim() !== '') return;
+
+    var html = '';
+    for (var fila = 6; fila <= 10; fila++) {
+        html += '<div class="fila-balcon">';
+        html += '<div class="fila-num-b">F' + fila + '</div>';
+        html += '<div class="bloque-izq-b">';
+        for (var i = 6; i >= 1; i--) {
+            var impar = (i * 2) - 1;
+            if (fila === FILA_BALCON_4B) {
+                html += '<div class="asiento-b" id="bal-izq-' + fila + '-' + impar + '" onclick="clickBalcon4b(' + fila + ',\'izq\',' + impar + ')">' + impar + '</div>';
+            } else {
+                html += '<div class="asiento-b" style="background:#e5e7eb;color:#9ca3af;border-color:#d1d5db;cursor:default;">' + impar + '</div>';
+            }
+        }
+        html += '</div>';
+        html += '<div class="pasillo-b">|</div>';
+        html += '<div class="bloque-der-b">';
+        for (var j = 1; j <= 6; j++) {
+            var par = j * 2;
+            if (fila === FILA_BALCON_4B) {
+                html += '<div class="asiento-b" id="bal-der-' + fila + '-' + par + '" onclick="clickBalcon4b(' + fila + ',\'der\',' + par + ')">' + par + '</div>';
+            } else {
+                html += '<div class="asiento-b" style="background:#e5e7eb;color:#9ca3af;border-color:#d1d5db;cursor:default;">' + par + '</div>';
+            }
+        }
+        html += '</div>';
+        html += '</div>';
+    }
+    contenedor.innerHTML = html;
+}
+
+function clickBalcon4b(fila, lado, num) {
+    if (actividadResuelta(4, 'reto2')) return;
     safePlay(audioClick);
 
-    var rutas = ['A','B','C','D'];
-    rutas.forEach(function(r) {
-        var el = document.getElementById('ruta-' + r);
-        if (el) el.classList.remove('seleccionada','correcta','incorrecta');
+    var key = lado + '-' + num;
+    var el = document.getElementById('bal-' + lado + '-' + fila + '-' + num);
+    var idx = selBalcon4b.indexOf(key);
+
+    if (idx !== -1) {
+        selBalcon4b.splice(idx, 1);
+        if (el) el.classList.remove('sel-izq', 'sel-der');
+    } else {
+        if (selBalcon4b.length >= 4) {
+            mostrarFeedback('feedback4b', false, 'Solo debes marcar <strong>4</strong> asientos.');
+            return;
+        }
+        selBalcon4b.push(key);
+        if (el) el.classList.add(lado === 'izq' ? 'sel-izq' : 'sel-der');
+    }
+
+    document.getElementById('info-sel4b').innerText = 'Seleccionados: ' + selBalcon4b.length + ' / 4';
+    document.getElementById('feedback4b').style.display = 'none';
+}
+
+function verificarBalcon4b() {
+    if (selBalcon4b.length !== 4) {
+        registrarIntentoDificilVisualNoVerbal(4, 'reto2', false, { actividad: 'balcon_fila8', seleccion: selBalcon4b.join(','), error: 'cantidad_incorrecta' });
+        mostrarFeedback('feedback4b', false, 'Debes marcar exactamente <strong>4</strong> asientos.');
+        return;
+    }
+
+    var izqSel = [];
+    var derSel = [];
+    selBalcon4b.forEach(function(k) {
+        var parts = k.split('-');
+        if (parts[0] === 'izq') izqSel.push(parseInt(parts[1], 10));
+        else derSel.push(parseInt(parts[1], 10));
     });
+    izqSel.sort(function(a, b) { return a - b; });
+    derSel.sort(function(a, b) { return a - b; });
 
-    var sel = document.getElementById('ruta-' + letra);
-
-    if (esCorrecta) {
+    var ok = JSON.stringify(izqSel) === JSON.stringify([1, 3]) && JSON.stringify(derSel) === JSON.stringify([2, 4]);
+    registrarIntentoDificilVisualNoVerbal(4, 'reto2', ok, { actividad: 'balcon_fila8', izquierda: izqSel.join(','), derecha: derSel.join(',') });
+    if (ok) {
         safePlay(audioDing);
-        if (sel) sel.classList.add('correcta');
-        rutas.forEach(function(r) {
-            if (r !== letra) {
-                var el = document.getElementById('ruta-' + r);
-                if (el) el.classList.add('incorrecta');
-            }
+        document.querySelectorAll('#balcon-grid4b .asiento-b.sel-izq, #balcon-grid4b .asiento-b.sel-der').forEach(function(a) {
+            a.classList.add('correcto');
         });
-        mostrarFeedback('feedback5','ok','Correcto! Ruta C: Calle A este hasta Av.5, Av.5 sur hasta Calle D, Calle D oeste hasta Av.4. Las rutas A y B son imposibles (Av.4 sube, Calle D va oeste). La ruta D es imposible porque de Av.3 yendo oeste no se puede llegar a Av.4 que esta mas al este.');
-        respuestasPagina[5] = true; actualizarUI();
+        mostrarFeedback('feedback4b', true, 'Correcto. En la fila 8, los mejores lugares son <strong>1 y 3</strong> a la izquierda y <strong>2 y 4</strong> a la derecha.');
+        marcarActividad(4, 'reto2');
     } else {
         safePlay(audioError);
-        if (sel) sel.classList.add('seleccionada');
-        var mensajes = {
-            'A': 'Ruta A incorrecta: Av.4 solo va hacia el norte, no puedes bajar por ella hacia la Calle D.',
-            'B': 'Ruta B incorrecta: Calle D solo va hacia el oeste, no puedes ir hacia el este en ella.',
-            'D': 'Ruta D incorrecta: Si bajas por Av.3 y tomas Calle D hacia el oeste, te alejas de Av.4 que esta mas al este.'
-        };
-        mostrarFeedback('feedback5','error', mensajes[letra] + ' Observa las flechas e intenta de nuevo.');
-        setTimeout(function() {
-            if (sel) sel.classList.remove('seleccionada');
-            document.getElementById('feedback5').style.display = 'none';
-        }, 2200);
+        mostrarFeedback('feedback4b', false, 'No coincide. Toma los lugares m&aacute;s cercanos al pasillo en ambos lados.');
     }
 }
 
-/* ============================================
-   INIT
-============================================ */
-window.addEventListener('DOMContentLoaded', function() {
-    var g = localStorage.getItem('progreso_dificil_visualnoverbal_coordenadas');
-    if (g) {
-        var p = parseInt(g, 10);
-        if (p >= 1 && p <= totalPaginas) {
-            document.getElementById('pagina' + paginaActual).classList.remove('activa');
-            paginaActual = p;
-            document.getElementById('pagina' + paginaActual).classList.add('activa');
-        }
+function limpiarBalcon4b() {
+    if (actividadResuelta(4, 'reto2')) return;
+    selBalcon4b = [];
+    document.querySelectorAll('#balcon-grid4b .asiento-b').forEach(function(a) {
+        a.classList.remove('sel-izq', 'sel-der', 'correcto');
+    });
+    document.getElementById('info-sel4b').innerText = 'Seleccionados: 0 / 4';
+    document.getElementById('feedback4b').style.display = 'none';
+}
+
+function elegirRutaCU(letra, esCorrecta) {
+    if (actividadResuelta(5, 'reto1')) return;
+    safePlay(audioClick);
+    registrarIntentoDificilVisualNoVerbal(5, 'reto1', esCorrecta, { ruta: letra });
+
+    ['A', 'B', 'C', 'D'].forEach(function(ruta) {
+        var el = document.getElementById('ruta-' + ruta);
+        if (el) el.classList.remove('seleccionada', 'correcta', 'incorrecta');
+    });
+
+    var sel = document.getElementById('ruta-' + letra);
+    if (esCorrecta) {
+        safePlay(audioDing);
+        if (sel) sel.classList.add('correcta');
+        ['A', 'B', 'C', 'D'].forEach(function(ruta) {
+            if (ruta !== letra) {
+                var el = document.getElementById('ruta-' + ruta);
+                if (el) el.classList.add('incorrecta');
+            }
+        });
+        mostrarFeedback('feedback5', true, 'Correcto. La ruta <strong>C</strong> es la &uacute;nica que respeta todas las flechas.');
+        marcarActividad(5, 'reto1');
+    } else {
+        safePlay(audioError);
+        if (sel) sel.classList.add('seleccionada');
+        mostrarFeedback('feedback5', false, 'Esa ruta rompe un sentido de circulaci&oacute;n. Observa mejor las flechas.');
+        setTimeout(function() {
+            if (sel) sel.classList.remove('seleccionada');
+            document.getElementById('feedback5').style.display = 'none';
+        }, 1900);
     }
+}
+
+function renderSecuenciaRuta5b() {
+    var contenedor = document.getElementById('secuencia-ruta5b');
+    if (!secRuta5b.length) {
+        contenedor.innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>';
+        return;
+    }
+
+    contenedor.innerHTML = '';
+    secRuta5b.forEach(function(paso) {
+        var chip = document.createElement('span');
+        chip.className = 'chip-dir';
+        chip.textContent = paso === 'N' ? '↑' : paso === 'S' ? '↓' : paso === 'E' ? '→' : '←';
+        contenedor.appendChild(chip);
+    });
+}
+
+function moverEnCampus(pos, dir) {
+    var nuevo = { x: pos.x, y: pos.y };
+    var idxX = AVENIDAS_X.indexOf(pos.x);
+    var idxY = CALLES_Y.indexOf(pos.y);
+
+    if ((dir === 'E' || dir === 'O') && SENTIDO_CALLE_Y[pos.y] !== dir) return null;
+    if ((dir === 'N' || dir === 'S') && SENTIDO_AV_X[pos.x] !== dir) return null;
+
+    if (dir === 'E') {
+        if (idxX === -1 || idxX >= AVENIDAS_X.length - 1) return null;
+        nuevo.x = AVENIDAS_X[idxX + 1];
+    } else if (dir === 'O') {
+        if (idxX <= 0) return null;
+        nuevo.x = AVENIDAS_X[idxX - 1];
+    } else if (dir === 'N') {
+        if (idxY <= 0) return null;
+        nuevo.y = CALLES_Y[idxY - 1];
+    } else if (dir === 'S') {
+        if (idxY === -1 || idxY >= CALLES_Y.length - 1) return null;
+        nuevo.y = CALLES_Y[idxY + 1];
+    }
+    return nuevo;
+}
+
+function agregarTramoCU2(dir) {
+    if (actividadResuelta(5, 'reto2') || secRuta5b.length >= 6) return;
+
+    var nuevaPos = moverEnCampus(posRuta5b, dir);
+    if (!nuevaPos) {
+        safePlay(audioError);
+        mostrarFeedback('feedback5b', false, 'Ese movimiento no respeta la flecha del cruce actual.');
+        return;
+    }
+
+    safePlay(audioClick);
+    secRuta5b.push(dir);
+    renderSecuenciaRuta5b();
+
+    var trazo = document.getElementById('trazoRuta5b');
+    var puntos = trazo.getAttribute('points') || '';
+    if (puntos === '') puntos = posRuta5b.x + ',' + posRuta5b.y;
+    puntos += ' ' + nuevaPos.x + ',' + nuevaPos.y;
+    trazo.setAttribute('points', puntos);
+
+    posRuta5b = nuevaPos;
+    var marcador = document.getElementById('marcadorCU2');
+    marcador.setAttribute('cx', posRuta5b.x);
+    marcador.setAttribute('cy', posRuta5b.y);
+    marcador.setAttribute('opacity', '1');
+
+    document.getElementById('cont-ruta5b').innerText = 'Pasos: ' + secRuta5b.length + ' / 6';
+    document.getElementById('feedback5b').style.display = 'none';
+}
+
+function verificarRutaCU2() {
+    if (secRuta5b.length < 6) {
+        registrarIntentoDificilVisualNoVerbal(5, 'reto2', false, { actividad: 'ruta_campus_sentidos', respuesta: secRuta5b.join('>'), error: 'incompleta' });
+        mostrarFeedback('feedback5b', false, 'Completa los <strong>6 pasos</strong> antes de verificar.');
+        return;
+    }
+
+    var ok = RUTA_CORRECTA_5B.every(function(paso, index) {
+        return secRuta5b[index] === paso;
+    }) && posRuta5b.x === 580 && posRuta5b.y === 120;
+    registrarIntentoDificilVisualNoVerbal(5, 'reto2', ok, { actividad: 'ruta_campus_sentidos', respuesta: secRuta5b.join('>'), x: posRuta5b.x, y: posRuta5b.y });
+
+    if (ok) {
+        safePlay(audioDing);
+        document.getElementById('marcadorCU2').setAttribute('fill', '#4caf50');
+        mostrarFeedback('feedback5b', true, 'Correcto. La ruta es <strong>↑ ↑ ↑ → → →</strong> hasta la <strong>Sala de lectura</strong>.');
+        marcarActividad(5, 'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback5b', false, 'La ruta no llega bien. Revisa los sentidos y vuelve a trazarla.');
+    }
+}
+
+function limpiarRutaCU2() {
+    if (actividadResuelta(5, 'reto2')) return;
+    secRuta5b = [];
+    posRuta5b = { x: 210, y: 460 };
+    document.getElementById('trazoRuta5b').setAttribute('points', '');
+    var marcador = document.getElementById('marcadorCU2');
+    marcador.setAttribute('cx', '210');
+    marcador.setAttribute('cy', '460');
+    marcador.setAttribute('opacity', '0');
+    marcador.setAttribute('fill', '#c2410c');
+    document.getElementById('cont-ruta5b').innerText = 'Pasos: 0 / 6';
+    renderSecuenciaRuta5b();
+    document.getElementById('feedback5b').style.display = 'none';
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    if (botonQuiz) {
+        botonQuiz.addEventListener('click', function(event) {
+            if (botonQuiz.classList.contains('bloqueado')) {
+                event.preventDefault();
+                safePlay(audioError);
+                mostrarFeedback('feedback5b', false, 'Completa los dos retos finales antes de entrar al quiz.');
+            }
+        });
+    }
+
+    if (sessionTrackerDificilVisualNoVerbal) {
+        sessionTrackerDificilVisualNoVerbal.start();
+        sessionTrackerDificilVisualNoVerbal.attachQuizLinks('.boton-quiz', function() {
+            return { eventoCierre: 'quiz' };
+        });
+    }
+
     actualizarUI();
-    if (paginaActual === 1) setTimeout(animarRuta, 600);
-    if (paginaActual === 4) generarTeatro();
+    renderTrayecto2b();
+    renderSecuenciaRuta5b();
+    prepararPaginaVisualNoVerbalDificil(paginaActual);
 });
 </script>
 

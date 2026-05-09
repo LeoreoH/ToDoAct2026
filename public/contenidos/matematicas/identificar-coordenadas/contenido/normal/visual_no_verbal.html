@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas · Nivel Normal · Visual/No Verbal</title>
+    <title>Identificar coordenadas · Nivel Normal · Visual/No Verbal</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -618,6 +618,28 @@
             background: white;
         }
 
+        .boton-quiz.bloqueado {
+            background: #e5e7eb;
+            color: #6b7280;
+            border-color: #9ca3af;
+            box-shadow: 0 8px 0 #9ca3af;
+            cursor: not-allowed;
+            pointer-events: auto;
+        }
+
+        .boton-quiz.bloqueado:hover {
+            transform: none;
+            background: #e5e7eb;
+            box-shadow: 0 8px 0 #9ca3af;
+        }
+
+        .texto-ayuda-quiz {
+            color: #9a3412;
+            font-weight: 800;
+            margin-top: 12px;
+            text-align: center;
+        }
+
         .feedback-visual {
             margin-top: 15px;
             padding: 15px;
@@ -627,13 +649,342 @@
             text-align: center;
         }
 
+        .pregunta-reforzamiento {
+            background: #fff3e0;
+            border: 3px solid #f97316;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .pregunta-reforzamiento h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .opciones-reforzamiento {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .btn-opcion {
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 16px;
+            padding: 14px;
+            font-weight: 700;
+            color: #9a3412;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .btn-opcion:hover:not(:disabled) {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .btn-opcion.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-opcion.incorrecta {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-opcion:disabled {
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        .btn-accion {
+            background: #fde68a;
+            color: #9a3412;
+            border: 2px solid #f97316;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            margin: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .btn-accion:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .feedback-reforzamiento {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .pregunta-reforzamiento.reto-secundario {
+            background: #fffaf2;
+            border-color: #fb923c;
+        }
+
+        .fila-claves-vnv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 12px 0 16px;
+        }
+
+        .clave-vnv {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #fff7e6;
+            border: 2px solid #fed7aa;
+            color: #c2410c;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .panel-manipulacion-vv {
+            background: white;
+            border: 2px solid #fed7aa;
+            border-radius: 18px;
+            padding: 18px;
+            margin: 18px 0;
+        }
+
+        .banco-opciones-vv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .opcion-item-vv {
+            background: white;
+            border: 2px solid #f97316;
+            border-radius: 16px;
+            padding: 12px 14px;
+            font-weight: 800;
+            color: #9a3412;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .opcion-item-vv:hover:not(.usada):not(.bloqueada) {
+            background: #fde68a;
+            transform: translateY(-2px);
+        }
+
+        .opcion-item-vv.usada,
+        .opcion-item-vv.bloqueada {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .secuencia-slots-vv {
+            display: grid;
+            gap: 12px;
+        }
+
+        .slot-vv {
+            background: #fff7e6;
+            border: 2px dashed #fdba74;
+            border-radius: 16px;
+            padding: 12px 14px;
+            min-height: 72px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slot-vv:hover {
+            border-color: #f97316;
+        }
+
+        .slot-vv.lleno {
+            border-style: solid;
+            background: white;
+        }
+
+        .slot-tag-vv {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f97316;
+            color: white;
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        .slot-texto-vv {
+            color: #9a3412;
+            font-weight: 800;
+            vertical-align: middle;
+        }
+
+        .slot-placeholder-vv {
+            color: #c2410c;
+            opacity: 0.75;
+            font-weight: 700;
+        }
+
+        .ayuda-actividad-vv {
+            background: #fff7e6;
+            border: 2px dashed #fdba74;
+            border-radius: 14px;
+            padding: 12px 14px;
+            color: #9a3412;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .grid-cartas-vv {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .carta-vv {
+            background: linear-gradient(180deg, #fffdf8, #fff7e6);
+            border: 2px solid #fdba74;
+            border-radius: 18px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .carta-vv:hover:not(.bloqueada) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(194, 65, 12, 0.12);
+        }
+
+        .carta-vv.seleccionada {
+            border-color: #c2410c;
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.18);
+            background: #fff3e0;
+        }
+
+        .carta-vv.bloqueada {
+            opacity: 0.92;
+            cursor: default;
+        }
+
+        .etiqueta-carta-vv {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #c2410c;
+            font-size: 0.82rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .ruta-mini-metro-vv {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .pill-estacion-vv {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 800;
+            font-size: 0.88rem;
+        }
+
+        .pill-estacion-vv.azul { background: #2563eb; }
+        .pill-estacion-vv.ambar { background: #d97706; }
+        .pill-estacion-vv.verde { background: #059669; }
+
+        .paso-ruta-mini-vv {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #9a3412;
+        }
+
+        .nota-carta-vv {
+            color: #9a3412;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .boleto-pack-vv {
+            display: grid;
+            gap: 12px;
+        }
+
+        .boleto-fila-vv {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #fff3e0;
+            color: #c2410c;
+            font-weight: 900;
+        }
+
+        .mini-pasillo-vv {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .asiento-ticket-vv {
+            border: 2px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 8px;
+            text-align: center;
+            background: white;
+            font-weight: 900;
+            color: #9a3412;
+        }
+
+        .asiento-ticket-vv.izq { background: #eff6ff; }
+        .asiento-ticket-vv.der { background: #fff1f2; }
+
+        .pasillo-ticket-vv {
+            border-radius: 14px;
+            background: #fed7aa;
+            color: #9a3412;
+            padding: 8px 10px;
+            font-size: 0.76rem;
+            font-weight: 900;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .cabecera-normal h1 { font-size: 2rem; }
             .navegador { flex-direction: column; }
             .titulo-pagina { font-size: 1.5rem; }
             .badge-nivel { margin-left: 0; margin-top: 10px; }
+            .grid-cartas-vv { grid-template-columns: 1fr; }
         }
     </style>
+    <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
@@ -644,7 +995,7 @@
 <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
 
 <div class="cabecera-normal">
-    <h1>🧭 COORDENADAS</h1>
+    <h1>🧭 IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Normal · Planos y rutas</p>
     <div>
         <span class="badge-estilo">👁️ Visual / No Verbal</span>
@@ -669,65 +1020,63 @@
 <div class="contenedor-paginas">
 
     <!-- ============================================
-         PÁGINA 1: RUTA DE SUPERMERCADO
+         PÁGINA 1: RUTA DE SEBASTIÁN
         ============================================ -->
     <div class="pagina activa" id="pagina1">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-shopping-cart me-3"></i>Ruta de Sebastián</h2>
+            <h2 class="titulo-pagina"><i class="fas fa-road me-3"></i>Ruta de Sebastián</h2>
 
-            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
-            <div class="contenedor-imagen">
-                <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con calles numeradas" onclick="ampliarImagen(this)">
-                <div class="pie-imagen">Ruta de la casa de Sebastian al parquefortino serrano</div>
+            <p class="lead">Sigue el recorrido de Sebastián desde su casa hasta el parque.</p>
+
+            <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+                <div class="ayuda-ampliar-media">
+                    <div class="contenedor-imagen">
+                        <img src="/contenidos/matematicas/recursos/imagenes/mapa-calles-numeros.jpg" alt="Mapa con la ruta de Sebastián" onclick="ampliarImagen(this)">
+                        <div class="pie-imagen">Casa → calles → parque</div>
+                    </div>
+                </div>
+                <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
             </div>
 
             <div class="recuadro-info">
-                <h4><i class="fas fa-store me-2"></i>Tiendas en la plaza</h4>
+                <h4><i class="fas fa-route me-2"></i>Pistas del recorrido</h4>
                 <ul class="lista-iconos">
-                    <li><i class="fas fa-tshirt"></i> Ropa: A1</li>
-                    <li><i class="fas fa-gamepad"></i> Juguetes: B1</li>
-                    <li><i class="fas fa-laptop"></i> Electrónica: C1</li>
-                    <li><i class="fas fa-utensils"></i> Comida: A3</li>
+                    <li><i class="fas fa-arrow-up"></i>Sube al <strong>norte</strong></li>
+                    <li><i class="fas fa-arrow-right"></i>Avanza al <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-up"></i>Vuelve a alternar <strong>norte</strong> y <strong>este</strong> hasta llegar al parque</li>
                 </ul>
             </div>
 
-            <!-- ACTIVIDAD -->
-            <div class="actividad-visual">
-                <h4><i class="fas fa-route me-2"></i>Encuentra la ruta</h4>
-                <p>Observa el mapa. ¿Qué ruta debes seguir para ir de Ropa (A1) a Comida (A3)?</p>
-
-                <div style="display: flex; justify-content: center;">
-                    <div class="mapa-supermercado">
-                        <div class="local inicio" data-local="ropa" style="grid-column: 1; grid-row: 1;">👕 Ropa</div>
-                        <div class="local" data-local="juguetes" style="grid-column: 2; grid-row: 1;">🧸 Juguetes</div>
-                        <div class="local" data-local="electronica" style="grid-column: 3; grid-row: 1;">📱 Elec.</div>
-                        <div class="local" data-local="libreria" style="grid-column: 4; grid-row: 1;">📚 Librería</div>
-                        
-                        <div class="local" data-local="deportes" style="grid-column: 1; grid-row: 2;">⚽ Deportes</div>
-                        <div class="local" data-local="zapatos" style="grid-column: 2; grid-row: 2;">👞 Zapatos</div>
-                        <div class="local" data-local="regalos" style="grid-column: 3; grid-row: 2;">🎁 Regalos</div>
-                        <div class="local" data-local="cafe" style="grid-column: 4; grid-row: 2;">☕ Café</div>
-                        
-                        <div class="local" data-local="comida" style="grid-column: 1; grid-row: 3;">🍔 Comida</div>
-                        <div class="local" data-local="pizzeria" style="grid-column: 2; grid-row: 3;">🍕 Pizzería</div>
-                        <div class="local" data-local="helados" style="grid-column: 3; grid-row: 3;">🍦 Helados</div>
-                        <div class="local" data-local="postres" style="grid-column: 4; grid-row: 3;">🍰 Postres</div>
-                        
-                        <div class="local" data-local="cine" style="grid-column: 1; grid-row: 4;">🎬 Cine</div>
-                        <div class="local" data-local="juegos" style="grid-column: 2; grid-row: 4;">🎮 Juegos</div>
-                        <div class="local" data-local="taqueria" style="grid-column: 3; grid-row: 4;">🌮 Taquería</div>
-                        <div class="local" data-local="fuente" style="grid-column: 4; grid-row: 4;">🍧 Fuente</div>
-                    </div>
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Reto 1: Cuenta los cambios</h4>
+                <p>¿Cuántas veces cambia de dirección Sebastián?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento1">
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, this, false)">A) 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, this, false)">B) 3</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, this, true)">C) 4</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(1, this, false)">D) 5</button>
                 </div>
+                <div id="feedback1" class="feedback-reforzamiento"></div>
+            </div>
 
-                <div style="text-align: center; margin: 20px 0;">
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 0)">A) 2 sur</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 1)">B) 1 sur, 1 este</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 2)">C) 2 este, 2 sur</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(1, 3)">D) 3 sur</div>
+            <div class="pregunta-reforzamiento reto-secundario">
+                <h4><i class="fas fa-map-signs me-2"></i>Reto 2: Ordena el recorrido</h4>
+                <p>Toca las fichas para armar el camino desde la casa hasta el parque. Hay <strong>2 extras</strong>.</p>
+                <div class="fila-claves-vnv">
+                    <span class="clave-vnv">🏠 Inicio</span>
+                    <span class="clave-vnv">🛣️ Calles</span>
+                    <span class="clave-vnv">🌳 Meta</span>
                 </div>
-
-                <div id="feedback1" class="feedback-visual"></div>
+                <div class="panel-manipulacion-vv">
+                    <div class="banco-opciones-vv" id="banco-ruta1b-vv"></div>
+                    <div class="secuencia-slots-vv" id="slots-ruta1b-vv"></div>
+                    <div class="ayuda-actividad-vv">Si te equivocas, toca un espacio ocupado para quitar esa ficha.</div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn-accion" onclick="verificarActividadSecuenciaVV('rutaSebastian2')">&#9654; Verificar reto 2</button>
+                    <button class="btn-accion" onclick="reiniciarActividadSecuenciaVV('rutaSebastian2')">&#8635; Reiniciar reto 2</button>
+                </div>
+                <div id="feedback1b" class="feedback-reforzamiento"></div>
             </div>
         </div>
     </div>
@@ -739,157 +1088,132 @@
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-university me-3"></i>Ciudad Universitaria</h2>
 
-            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <p class="lead">Observa el mapa y sigue la ruta desde el estacionamiento hasta Veterinaria.</p>
+
             <div class="contenedor-imagen">
                 <img src="/contenidos/matematicas/recursos/imagenes/mapa-ciudad-universitaria.jpg" alt="Mapa de Ciudad Universitaria" onclick="ampliarImagen(this)">
-                <div class="pie-imagen">Ciudad Universitaria con facultades y edificios</div>
+                <div class="pie-imagen">Ruta por facultades y edificios</div>
             </div>
 
             <div class="recuadro-info">
-                <h4><i class="fas fa-map-marked-alt me-2"></i>Nueva ruta: Biblioteca a Museo</h4>
+                <h4><i class="fas fa-map-marked-alt me-2"></i>Clave visual</h4>
                 <ul class="lista-iconos">
-                    <li><i class="fas fa-arrow-right"></i> Biblioteca → Derecho (este)</li>
-                    <li><i class="fas fa-arrow-right"></i> Derecho → Economía (este)</li>
-                    <li><i class="fas fa-arrow-up"></i> Economía → Museo (norte)</li>
+                    <li><i class="fas fa-arrow-right"></i>Primero avanza al <strong>este</strong></li>
+                    <li><i class="fas fa-arrow-up"></i>Al final sube al <strong>norte</strong></li>
                 </ul>
             </div>
 
-            <!-- ACTIVIDAD -->
-            <div class="actividad-visual">
-                <h4><i class="fas fa-route me-2"></i>Ruta inversa</h4>
-                <p>Si estás en el Museo y quieres regresar a la Biblioteca, ¿qué ruta debes seguir?</p>
-                
-                <div style="display: flex; justify-content: center;">
-                    <div class="cuadricula-cu-nueva">
-                        <div class="local" style="grid-column: 1; grid-row: 3;">📚 Biblioteca</div>
-                        <div class="local" style="grid-column: 2; grid-row: 3;">⚖️ Derecho</div>
-                        <div class="local" style="grid-column: 3; grid-row: 3;">📊 Economía</div>
-                        <div class="local inicio" style="grid-column: 3; grid-row: 2;">🏛️ Museo</div>
-                        <div class="local" style="grid-column: 1; grid-row: 1;">🔬 Ciencias</div>
-                        <div class="local" style="grid-column: 2; grid-row: 1;">🧪 Química</div>
-                        <div class="local" style="grid-column: 4; grid-row: 2;">📐 Ingeniería</div>
-                        <div class="local" style="grid-column: 4; grid-row: 4;">🏫 Medicina</div>
-                    </div>
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Reto 1: Elige la dirección</h4>
+                <p>Si estás en <strong>Contaduría</strong> y quieres volver a <strong>Trabajo Social</strong>, ¿hacia dónde vas?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento2">
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, this, false)">A) ➡️ Este</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, this, true)">B) ⬅️ Oeste</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, this, false)">C) ⬆️ Norte</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(2, this, false)">D) ⬇️ Sur</button>
                 </div>
+                <div id="feedback2" class="feedback-reforzamiento"></div>
+            </div>
 
-                <div style="text-align: center; margin: 20px 0;">
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 0)">A) Sur, Oeste, Oeste</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 1)">B) Oeste, Oeste, Sur</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 2)">C) Oeste, Sur, Oeste</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(2, 3)">D) Sur, Sur, Oeste</div>
+            <div class="pregunta-reforzamiento reto-secundario">
+                <h4><i class="fas fa-project-diagram me-2"></i>Reto 2: Reconstruye el trayecto</h4>
+                <p>Forma la secuencia desde <strong>Estacionamiento</strong> hasta <strong>Veterinaria</strong>. Hay <strong>2 distractores</strong>.</p>
+                <div class="fila-claves-vnv">
+                    <span class="clave-vnv">🚗 Inicio</span>
+                    <span class="clave-vnv">➡️ Tramo largo</span>
+                    <span class="clave-vnv">⬆️ Giro final</span>
+                    <span class="clave-vnv">🐾 Meta</span>
                 </div>
-
-                <div id="feedback2" class="feedback-visual"></div>
+                <div class="panel-manipulacion-vv">
+                    <div class="banco-opciones-vv" id="banco-cu2-vv"></div>
+                    <div class="secuencia-slots-vv" id="slots-cu2-vv"></div>
+                    <div class="ayuda-actividad-vv">Recuerda: casi todo va recto y el último movimiento sube.</div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn-accion" onclick="verificarActividadSecuenciaVV('campusRuta2')">&#9654; Verificar reto 2</button>
+                    <button class="btn-accion" onclick="reiniciarActividadSecuenciaVV('campusRuta2')">&#8635; Reiniciar reto 2</button>
+                </div>
+                <div id="feedback2b" class="feedback-reforzamiento"></div>
             </div>
         </div>
     </div>
 
     <!-- ============================================
-         PÁGINA 3: METRO COMPLETO
+         PÁGINA 3: METRO
         ============================================ -->
     <div class="pagina" id="pagina3">
         <div class="tarjeta-contenido">
             <h2 class="titulo-pagina"><i class="fas fa-subway me-3"></i>Red de Metro</h2>
 
-            <!-- CONTENIDO (SVG, no necesita ampliación) -->
-            <div class="recuadro-info">
-                <h4><i class="fas fa-info-circle me-2"></i>Líneas del Metro</h4>
-                <ul class="lista-iconos">
-                    <li><span style="color:#ef4444; font-weight:700;">Línea 1:</span> Observatorio - Tacubaya - <strong style="color:gold;">Balderas</strong> - Pino Suárez - Pantitlán</li>
-                    <li><span style="color:#3b82f6; font-weight:700;">Línea 2:</span> Tasqueña - Ermita - Chabacano - <strong style="color:gold;">Balderas</strong> - Cuatro Caminos</li>
-                    <li><span style="color:#10b981; font-weight:700;">Línea 3:</span> Universidad - Copilco - <strong style="color:gold;">Balderas</strong> - Guerrero - Indios Verdes</li>
-                </ul>
-                <p class="texto-destacado" style="margin-top:10px;">🌟 <strong>Balderas</strong> es la única estación donde coinciden las 3 líneas. Allí puedes hacer transbordo.</p>
-            </div>
+            <p class="lead">Busca estaciones, líneas y transbordos en el plano.</p>
 
-            <!-- MAPA COMPLETO -->
             <div class="mapa-metro-container">
                 <svg class="mapa-metro-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Línea 1 (Roja) -->
-                    <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 1"/>
-                    
-                    <!-- Línea 2 (Azul) -->
-                    <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 2"/>
-                    
-                    <!-- Línea 3 (Verde) -->
-                    <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round" class="linea-metro" data-linea="Línea 3"/>
-                    
-                    <!-- Estaciones Línea 1 -->
-                    <g class="estacion" data-nombre="Observatorio" data-linea="L1">
+                    <line x1="50" y1="80" x2="650" y2="80" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="150" y1="50" x2="150" y2="350" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="400" y1="50" x2="400" y2="350" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+
+                    <g class="estacion" onclick="mostrarEstacion('Observatorio')">
                         <circle cx="80" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                         <text x="80" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Observatorio</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Tacubaya" data-linea="L1">
+                    <g class="estacion" onclick="mostrarEstacion('Tacubaya')">
                         <circle cx="180" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                         <text x="180" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Tacubaya</text>
                     </g>
-                    
-                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L1,L2,L3">
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
                         <circle cx="280" cy="80" r="12" fill="#ef4444" stroke="white" stroke-width="3"/>
                         <circle cx="280" cy="80" r="6" fill="gold"/>
                         <text x="280" y="50" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="700">Balderas</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Pino Suárez" data-linea="L1">
+                    <g class="estacion" onclick="mostrarEstacion('Pino Suárez')">
                         <circle cx="380" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                         <text x="380" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Pino Suárez</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Pantitlán" data-linea="L1">
+                    <g class="estacion" onclick="mostrarEstacion('Pantitlán')">
                         <circle cx="620" cy="80" r="10" fill="#ef4444" stroke="white" stroke-width="2"/>
                         <text x="620" y="110" text-anchor="middle" fill="#9a3412" font-size="10">Pantitlán</text>
                     </g>
-                    
-                    <!-- Estaciones Línea 2 -->
-                    <g class="estacion" data-nombre="Tasqueña" data-linea="L2">
+
+                    <g class="estacion" onclick="mostrarEstacion('Tasqueña')">
                         <circle cx="150" cy="320" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                         <text x="150" y="350" text-anchor="middle" fill="#9a3412" font-size="10">Tasqueña</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Ermita" data-linea="L2">
+                    <g class="estacion" onclick="mostrarEstacion('Ermita')">
                         <circle cx="150" cy="250" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                         <text x="120" y="250" text-anchor="end" fill="#9a3412" font-size="10">Ermita</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Chabacano" data-linea="L2">
+                    <g class="estacion" onclick="mostrarEstacion('Chabacano')">
                         <circle cx="150" cy="180" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                         <text x="120" y="180" text-anchor="end" fill="#9a3412" font-size="10">Chabacano</text>
                     </g>
-                    
-                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L2">
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
                         <circle cx="150" cy="110" r="12" fill="#3b82f6" stroke="white" stroke-width="3"/>
                         <circle cx="150" cy="110" r="6" fill="gold"/>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Cuatro Caminos" data-linea="L2">
+                    <g class="estacion" onclick="mostrarEstacion('Cuatro Caminos')">
                         <circle cx="150" cy="50" r="10" fill="#3b82f6" stroke="white" stroke-width="2"/>
                         <text x="150" y="30" text-anchor="middle" fill="#9a3412" font-size="10">Cuatro Caminos</text>
                     </g>
-                    
-                    <!-- Estaciones Línea 3 -->
-                    <g class="estacion" data-nombre="Universidad" data-linea="L3">
+
+                    <g class="estacion" onclick="mostrarEstacion('Universidad')">
                         <circle cx="400" cy="320" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
                         <text x="400" y="350" text-anchor="middle" fill="#9a3412" font-size="10">Universidad</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Copilco" data-linea="L3">
+                    <g class="estacion" onclick="mostrarEstacion('Copilco')">
                         <circle cx="400" cy="250" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
                         <text x="430" y="250" text-anchor="start" fill="#9a3412" font-size="10">Copilco</text>
                     </g>
-                    
-                    <g class="estacion transbordo" data-nombre="Balderas" data-linea="L3">
+                    <g class="estacion transbordo" onclick="mostrarEstacion('Balderas')">
                         <circle cx="400" cy="180" r="12" fill="#10b981" stroke="white" stroke-width="3"/>
                         <circle cx="400" cy="180" r="6" fill="gold"/>
                         <text x="400" y="210" text-anchor="middle" fill="#9a3412" font-size="10" font-weight="700">Balderas</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Guerrero" data-linea="L3">
+                    <g class="estacion" onclick="mostrarEstacion('Guerrero')">
                         <circle cx="400" cy="110" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
                         <text x="430" y="110" text-anchor="start" fill="#9a3412" font-size="10">Guerrero</text>
                     </g>
-                    
-                    <g class="estacion" data-nombre="Indios Verdes" data-linea="L3">
+                    <g class="estacion" onclick="mostrarEstacion('Indios Verdes')">
                         <circle cx="400" cy="50" r="10" fill="#10b981" stroke="white" stroke-width="2"/>
                         <text x="400" y="30" text-anchor="middle" fill="#9a3412" font-size="10">Indios Verdes</text>
                     </g>
@@ -903,137 +1227,248 @@
                 <div class="leyenda-item"><span style="color:gold;">⬤</span> Transbordo</div>
             </div>
 
-            <!-- ACTIVIDAD -->
-            <div class="actividad-visual">
-                <h4><i class="fas fa-question-circle me-2"></i>¿Qué estación necesitas?</h4>
-                <p>Para ir de Observatorio (Línea 1) a Copilco (Línea 3), ¿en qué estación debes hacer transbordo?</p>
-                
-                <div style="text-align: center; margin: 20px 0;">
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 0)">A) Tacubaya</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 1)">B) Balderas</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 2)">C) Pino Suárez</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(3, 3)">D) Guerrero</div>
-                </div>
+            <div class="recuadro-info">
+                <h4><i class="fas fa-info-circle me-2"></i>Clave rápida</h4>
+                <ul class="lista-iconos">
+                    <li><span style="color:gold;font-weight:700;">🌟 Balderas</span> conecta las líneas 1, 2 y 3</li>
+                    <li><span style="color:#3b82f6;font-weight:700;">L2</span> sale de Tasqueña</li>
+                    <li><span style="color:#10b981;font-weight:700;">L3</span> llega a Copilco</li>
+                </ul>
+            </div>
 
-                <div id="feedback3" class="feedback-visual"></div>
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Reto 1: Marca el transbordo</h4>
+                <p>Para ir de <strong>Tasqueña</strong> a <strong>Indios Verdes</strong>, ¿qué estación conviene?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento3">
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, this, false)">A) Chabacano</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, this, true)">B) Balderas</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, this, false)">C) Pino Suárez</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(3, this, false)">D) Guerrero</button>
+                </div>
+                <div id="feedback3" class="feedback-reforzamiento"></div>
+            </div>
+
+            <div class="pregunta-reforzamiento reto-secundario">
+                <h4><i class="fas fa-ticket-alt me-2"></i>Reto 2: Elige el pase</h4>
+                <p>Toca la tarjeta que sí sale de <strong>Tasqueña</strong>, cambia <strong>una vez</strong> y termina en <strong>Copilco</strong>.</p>
+                <div class="fila-claves-vnv">
+                    <span class="clave-vnv">🔵 Inicio</span>
+                    <span class="clave-vnv">⭐ 1 cambio</span>
+                    <span class="clave-vnv">🟢 Meta</span>
+                </div>
+                <div class="grid-cartas-vv" id="cartas-metro2-vv">
+                    <div class="carta-vv" id="metro-opcion-a-vv" data-actividad-vv="metroPase2" onclick="seleccionarActividadOpcionVV('metroPase2','metro-opcion-a-vv')">
+                        <div class="etiqueta-carta-vv">🎫 Pase A</div>
+                        <div class="ruta-mini-metro-vv">
+                            <span class="pill-estacion-vv azul">Tasqueña</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv ambar">Balderas</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta-vv">🔵 ⭐ 🟢</p>
+                    </div>
+                    <div class="carta-vv" id="metro-opcion-b-vv" data-actividad-vv="metroPase2" onclick="seleccionarActividadOpcionVV('metroPase2','metro-opcion-b-vv')">
+                        <div class="etiqueta-carta-vv">🎫 Pase B</div>
+                        <div class="ruta-mini-metro-vv">
+                            <span class="pill-estacion-vv azul">Tasqueña</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv azul">Chabacano</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta-vv">¿Hay cambio válido?</p>
+                    </div>
+                    <div class="carta-vv" id="metro-opcion-c-vv" data-actividad-vv="metroPase2" onclick="seleccionarActividadOpcionVV('metroPase2','metro-opcion-c-vv')">
+                        <div class="etiqueta-carta-vv">🎫 Pase C</div>
+                        <div class="ruta-mini-metro-vv">
+                            <span class="pill-estacion-vv azul">Tasqueña</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv azul">Ermita</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv verde">Copilco</span>
+                        </div>
+                        <p class="nota-carta-vv">¿Conecta con verde?</p>
+                    </div>
+                    <div class="carta-vv" id="metro-opcion-d-vv" data-actividad-vv="metroPase2" onclick="seleccionarActividadOpcionVV('metroPase2','metro-opcion-d-vv')">
+                        <div class="etiqueta-carta-vv">🎫 Pase D</div>
+                        <div class="ruta-mini-metro-vv">
+                            <span class="pill-estacion-vv azul">Tasqueña</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv ambar">Balderas</span>
+                            <span class="paso-ruta-mini-vv">&#8594;</span>
+                            <span class="pill-estacion-vv verde">Universidad</span>
+                        </div>
+                        <p class="nota-carta-vv">¿Llega a la meta?</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn-accion" onclick="verificarActividadOpcionVV('metroPase2')">&#9654; Verificar reto 2</button>
+                    <button class="btn-accion" onclick="reiniciarActividadOpcionVV('metroPase2')">&#8635; Reiniciar reto 2</button>
+                </div>
+                <div id="feedback3b" class="feedback-reforzamiento"></div>
             </div>
         </div>
     </div>
 
     <!-- ============================================
-         PÁGINA 4: ROBOTS CON NOMBRES AMIGABLES
+         PÁGINA 4: ROBOTS
         ============================================ -->
     <div class="pagina" id="pagina4">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots amigos</h2>
+            <h2 class="titulo-pagina"><i class="fas fa-robot me-3"></i>Robots</h2>
 
-            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <p class="lead">Compara distancias con la tabla.</p>
+
             <div class="contenedor-imagen">
                 <img src="/contenidos/matematicas/recursos/imagenes/tabla-robot-avanzada.jpg" alt="Tabla de robots" onclick="ampliarImagen(this)">
-                <div class="pie-imagen">Tabla con datos de robots: unidades por paso y pasos dados</div>
+                <div class="pie-imagen">Unidades por paso y pasos dados</div>
             </div>
 
             <div class="recuadro-info">
-                <h4><i class="fas fa-calculator me-2"></i>Distancia = Pasos × Unidades por paso</h4>
+                <h4><i class="fas fa-calculator me-2"></i>Regla</h4>
+                <p><strong>Distancia = pasos × unidades por paso</strong></p>
             </div>
 
-            <!-- TABLA NUEVA -->
-            <table class="tabla-robots-nombres">
-                <thead>
-                    <tr>
-                        <th>Robot</th>
-                        <th>Pasos</th>
-                        <th>Unidades/paso</th>
-                        <th>Distancia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-pasos="4" data-unidades="3">
-                        <td><span class="robot-icon">🤖</span> Bolt</td>
-                        <td>4</td>
-                        <td>3</td>
-                        <td class="distancia">?</td>
-                    </tr>
-                    <tr data-pasos="5" data-unidades="4">
-                        <td><span class="robot-icon">🦾</span> Titan</td>
-                        <td>5</td>
-                        <td>4</td>
-                        <td class="distancia">?</td>
-                    </tr>
-                    <tr data-pasos="6" data-unidades="2">
-                        <td><span class="robot-icon">⚡</span> Rayo</td>
-                        <td>6</td>
-                        <td>2</td>
-                        <td class="distancia">?</td>
-                    </tr>
-                    <tr data-pasos="3" data-unidades="5">
-                        <td><span class="robot-icon">🛡️</span> Tank</td>
-                        <td>3</td>
-                        <td>5</td>
-                        <td class="distancia">?</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- ACTIVIDAD -->
-            <div class="actividad-visual">
-                <h4><i class="fas fa-question-circle me-2"></i>¿Quién avanzó más?</h4>
-                <p>Pasa el cursor sobre cada robot para ver su distancia. Luego elige.</p>
-                
-                <div style="text-align: center; margin: 20px 0;">
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 0)">A) Bolt</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 1)">B) Titan</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 2)">C) Rayo</div>
-                    <div class="respuesta-opcion" onclick="seleccionarRespuestaVisual(4, 3)">D) Tank</div>
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Reto 1: Elige el menor</h4>
+                <p>¿Qué robot avanzó menos distancia total?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento4">
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, this, true)">A) 🤖 Robot A</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, this, false)">B) 🤖 Robot F</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, this, false)">C) 🤖 Robot G</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(4, this, false)">D) 🤖 Robot B</button>
                 </div>
+                <div id="feedback4" class="feedback-reforzamiento"></div>
+            </div>
 
-                <div id="feedback4" class="feedback-visual"></div>
+            <div class="pregunta-reforzamiento reto-secundario">
+                <h4><i class="fas fa-sort-amount-down me-2"></i>Reto 2: Ordena distancias</h4>
+                <p>Coloca los robots de <strong>menor</strong> a <strong>mayor</strong> distancia.</p>
+                <div class="fila-claves-vnv">
+                    <span class="clave-vnv">🥉 Menor</span>
+                    <span class="clave-vnv">📊 Compara</span>
+                    <span class="clave-vnv">🥇 Mayor</span>
+                </div>
+                <div class="panel-manipulacion-vv">
+                    <div class="banco-opciones-vv" id="banco-robots2-vv"></div>
+                    <div class="secuencia-slots-vv" id="slots-robots2-vv"></div>
+                    <div class="ayuda-actividad-vv">Mira la tabla, calcula y después acomoda.</div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn-accion" onclick="verificarActividadSecuenciaVV('robotsOrden2')">&#9654; Verificar reto 2</button>
+                    <button class="btn-accion" onclick="reiniciarActividadSecuenciaVV('robotsOrden2')">&#8635; Reiniciar reto 2</button>
+                </div>
+                <div id="feedback4b" class="feedback-reforzamiento"></div>
             </div>
         </div>
     </div>
 
     <!-- ============================================
-         PÁGINA 5: TEATRO SIMPLE
+         PÁGINA 5: TEATRO
         ============================================ -->
     <div class="pagina" id="pagina5">
         <div class="tarjeta-contenido">
-            <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Teatro</h2>
+            <h2 class="titulo-pagina"><i class="fas fa-theater-masks me-3"></i>Plano de teatro</h2>
 
-            <!-- CONTENIDO CON IMAGEN AMPLIABLE Y PIE -->
+            <p class="lead">Observa filas, lados y cercanía al pasillo.</p>
+
             <div class="contenedor-imagen">
                 <img src="/contenidos/matematicas/recursos/imagenes/plano-teatro.jpg" alt="Plano de teatro" onclick="ampliarImagen(this)">
-                <div class="pie-imagen">Plano de teatro con filas numeradas y asientos</div>
+                <div class="pie-imagen">Fila, lado izquierdo y lado derecho</div>
             </div>
 
             <div class="recuadro-info">
-                <h4><i class="fas fa-chair me-2"></i>Platea (10 filas, 10 asientos por fila)</h4>
-                <p>Los asientos se numeran del 1 al 10 de izquierda a derecha.</p>
+                <h4><i class="fas fa-chair me-2"></i>Clave rápida</h4>
+                <ul class="lista-iconos">
+                    <li><i class="fas fa-arrow-left"></i>Impares = lado izquierdo</li>
+                    <li><i class="fas fa-arrow-right"></i>Pares = lado derecho</li>
+                    <li><i class="fas fa-sort-numeric-down"></i>Fila 1 = más cerca del escenario</li>
+                </ul>
             </div>
 
-            <!-- TEATRO SIMPLE -->
-            <div class="teatro-simple">
-                <div class="escenario-simple">ESCENARIO</div>
-                <div class="filas-teatro" id="teatro-simple">
-                    <!-- Se genera con JS -->
+            <div class="pregunta-reforzamiento">
+                <h4><i class="fas fa-question-circle me-2"></i>Reto 1: Elige la mejor fila</h4>
+                <p>Dos amigos quieren una fila cercana, lados opuestos y asientos pegados al pasillo. ¿Qué opción sirve?</p>
+                <div class="opciones-reforzamiento" id="reforzamiento5">
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, this, true)">A) Fila 1 · 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, this, false)">B) Fila 1 · 3 y 4</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, this, false)">C) Fila 2 · 1 y 2</button>
+                    <button class="btn-opcion" onclick="responderReforzamiento(5, this, false)">D) Fila 5 · 15 y 16</button>
                 </div>
+                <div id="feedback5" class="feedback-reforzamiento"></div>
             </div>
 
-            <!-- ACTIVIDAD -->
-            <div class="actividad-visual">
-                <h4><i class="fas fa-question-circle me-2"></i>Encuentra el asiento</h4>
-                <p>Haz clic en el asiento <strong>Fila 4, Asiento 8</strong></p>
-                
-                <div id="feedback5" class="feedback-visual"></div>
+            <div class="pregunta-reforzamiento reto-secundario">
+                <h4><i class="fas fa-ticket me-2"></i>Reto 2: Elige la reserva</h4>
+                <p>Toca el paquete que sí cumple: <strong>misma fila</strong>, <strong>lados opuestos</strong> y <strong>lo más cerca posible</strong>.</p>
+                <div class="fila-claves-vnv">
+                    <span class="clave-vnv">🎭 Cerca</span>
+                    <span class="clave-vnv">↔️ Ambos lados</span>
+                    <span class="clave-vnv">🚪 Junto al pasillo</span>
+                </div>
+                <div class="grid-cartas-vv" id="cartas-teatro2-vv">
+                    <div class="carta-vv" id="teatro-opcion-a-vv" data-actividad-vv="teatroReserva2" onclick="seleccionarActividadOpcionVV('teatroReserva2','teatro-opcion-a-vv')">
+                        <div class="etiqueta-carta-vv">🎟️ Paquete A</div>
+                        <div class="boleto-pack-vv">
+                            <div class="boleto-fila-vv">Fila 1</div>
+                            <div class="mini-pasillo-vv">
+                                <div class="asiento-ticket-vv izq">Izq 1</div>
+                                <div class="pasillo-ticket-vv">Pasillo</div>
+                                <div class="asiento-ticket-vv der">Der 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-vv" id="teatro-opcion-b-vv" data-actividad-vv="teatroReserva2" onclick="seleccionarActividadOpcionVV('teatroReserva2','teatro-opcion-b-vv')">
+                        <div class="etiqueta-carta-vv">🎟️ Paquete B</div>
+                        <div class="boleto-pack-vv">
+                            <div class="boleto-fila-vv">Fila 2</div>
+                            <div class="mini-pasillo-vv">
+                                <div class="asiento-ticket-vv izq">Izq 1</div>
+                                <div class="pasillo-ticket-vv">Pasillo</div>
+                                <div class="asiento-ticket-vv der">Der 2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-vv" id="teatro-opcion-c-vv" data-actividad-vv="teatroReserva2" onclick="seleccionarActividadOpcionVV('teatroReserva2','teatro-opcion-c-vv')">
+                        <div class="etiqueta-carta-vv">🎟️ Paquete C</div>
+                        <div class="boleto-pack-vv">
+                            <div class="boleto-fila-vv">Fila 1</div>
+                            <div class="mini-pasillo-vv">
+                                <div class="asiento-ticket-vv izq">Izq 3</div>
+                                <div class="pasillo-ticket-vv">Pasillo</div>
+                                <div class="asiento-ticket-vv der">Der 4</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carta-vv" id="teatro-opcion-d-vv" data-actividad-vv="teatroReserva2" onclick="seleccionarActividadOpcionVV('teatroReserva2','teatro-opcion-d-vv')">
+                        <div class="etiqueta-carta-vv">🎟️ Paquete D</div>
+                        <div class="boleto-pack-vv">
+                            <div class="boleto-fila-vv">Fila 1</div>
+                            <div class="mini-pasillo-vv">
+                                <div class="asiento-ticket-vv izq">Izq 1</div>
+                                <div class="pasillo-ticket-vv">Pasillo</div>
+                                <div class="asiento-ticket-vv der">Der 4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="btn-accion" onclick="verificarActividadOpcionVV('teatroReserva2')">&#9654; Verificar reto 2</button>
+                    <button class="btn-accion" onclick="reiniciarActividadOpcionVV('teatroReserva2')">&#8635; Reiniciar reto 2</button>
+                </div>
+                <div id="feedback5b" class="feedback-reforzamiento"></div>
             </div>
 
-            <!-- BOTÓN PARA IR AL QUIZ -->
-            <a href="quiz.html" class="boton-quiz text-center">
+            <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz">
                 <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
             </a>
+            <div class="texto-ayuda-quiz" id="textoAyudaQuiz">
+                Completa los dos retos de esta pagina para activar el quiz.
+            </div>
         </div>
     </div>
 
-    <!-- NAVEGADOR -->
     <div class="navegador">
         <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>
             <i class="fas fa-arrow-left me-2"></i> ANTERIOR
@@ -1046,45 +1481,243 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
-    // ============================================
-    // VARIABLES GLOBALES
-    // ============================================
     let paginaActual = 1;
     const totalPaginas = 5;
     const audioWhoosh = document.getElementById('audioWhoosh');
     const audioClick = document.getElementById('audioClick');
     const audioDing = document.getElementById('audioDing');
     const audioError = document.getElementById('audioError');
+    [audioWhoosh, audioClick, audioDing, audioError].forEach(audio => {
+        if (audio) audio.volume = 0.15;
+    });
 
-    let respuestasPagina = {
-        1: false,
-        2: false,
-        3: false,
-        4: false,
-        5: false
+    let respuestasPagina = { 1: false, 2: false, 3: false, 4: false, 5: false };
+    const progresoActividades = {
+        1: { reto1: false, reto2: false },
+        2: { reto1: false, reto2: false },
+        3: { reto1: false, reto2: false },
+        4: { reto1: false, reto2: false },
+        5: { reto1: false, reto2: false }
     };
 
-    let respuestasCorrectas = {
-        1: 0, // 2 sur
-        2: 0, // Sur, Oeste, Oeste
-        3: 1, // Balderas
-        4: 1  // Titan (5×4=20)
+    const ejerciciosNormalVisualNoVerbal = {
+        p1reto1: { pagina: 1, apartadoClave: 'pagina1_cambios_direccion', tipoActividad: 'visual_no_verbal_opcion' },
+        p1reto2: { pagina: 1, apartadoClave: 'pagina1_ruta_sebastian', tipoActividad: 'visual_no_verbal_secuencia' },
+        p2reto1: { pagina: 2, apartadoClave: 'pagina2_regreso_campus', tipoActividad: 'visual_no_verbal_opcion' },
+        p2reto2: { pagina: 2, apartadoClave: 'pagina2_ruta_campus', tipoActividad: 'visual_no_verbal_secuencia' },
+        p3reto1: { pagina: 3, apartadoClave: 'pagina3_transbordo_metro', tipoActividad: 'visual_no_verbal_opcion' },
+        p3reto2: { pagina: 3, apartadoClave: 'pagina3_pase_metro', tipoActividad: 'visual_no_verbal_tarjeta' },
+        p4reto1: { pagina: 4, apartadoClave: 'pagina4_distancia_robot', tipoActividad: 'visual_no_verbal_opcion' },
+        p4reto2: { pagina: 4, apartadoClave: 'pagina4_orden_robots', tipoActividad: 'visual_no_verbal_secuencia' },
+        p5reto1: { pagina: 5, apartadoClave: 'pagina5_asientos_cercanos', tipoActividad: 'visual_no_verbal_opcion' },
+        p5reto2: { pagina: 5, apartadoClave: 'pagina5_paquete_teatro', tipoActividad: 'visual_no_verbal_tarjeta' }
+    };
+    const completadosRegistroNormalVisualNoVerbal = Object.fromEntries(Object.keys(ejerciciosNormalVisualNoVerbal).map(clave => [clave, false]));
+    let sesionCompletadaNormalVisualNoVerbal = false;
+    const trackerNormalVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+        contenidoId: 5,
+        nivel: 'normal',
+        estilo: 'visual_no_verbal',
+        trackTime: false,
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_normal' },
+        apartados: ejerciciosNormalVisualNoVerbal
+    }) : null;
+    const sessionTrackerNormalVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+        contenidoId: 5,
+        nivel: 'normal',
+        estilo: 'visual_no_verbal',
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_normal' }
+    }) : null;
+
+    const ACTIVIDADES_SECUENCIA_VV = {
+        rutaSebastian2: {
+            pagina: 1,
+            feedbackId: 'feedback1b',
+            bankId: 'banco-ruta1b-vv',
+            slotsId: 'slots-ruta1b-vv',
+            items: [
+                { id: 'miguel', label: '🏠 Miguel Jacintez' },
+                { id: 'luis', label: '🛣️ Luis Preciado de la Torre' },
+                { id: 'o156', label: '➡️ Oriente 156' },
+                { id: 'eje1', label: '⬆️ Eje 1 Norte' },
+                { id: 'o170', label: '➡️ Oriente 170' },
+                { id: 'parque', label: '🌳 Parque Porfino Serrano' },
+                { id: 'o152', label: '🛣️ Oriente 152' },
+                { id: 'mercado', label: '🏪 Mercado Juárez' }
+            ],
+            correct: ['miguel', 'luis', 'o156', 'eje1', 'o170', 'parque'],
+            placeholders: ['Inicio', 'Paso 2', 'Paso 3', 'Paso 4', 'Paso 5', 'Meta'],
+            user: [],
+            success: '✅ Correcto. El recorrido va de la casa a las calles indicadas y termina en el parque.',
+            error: '❌ El orden no coincide. Revisa dónde aparecen Oriente 156, Eje 1 Norte y Oriente 170.',
+            empty: '❌ Completa los 6 espacios antes de verificar.'
+        },
+        campusRuta2: {
+            pagina: 2,
+            feedbackId: 'feedback2b',
+            bankId: 'banco-cu2-vv',
+            slotsId: 'slots-cu2-vv',
+            items: [
+                { id: 'estacionamiento', label: '🚗 Estacionamiento' },
+                { id: 'estadio', label: '🏟️ Estadio de Prácticas' },
+                { id: 'trabajo-social', label: '🏫 Trabajo Social' },
+                { id: 'contaduria', label: '📘 Contaduría' },
+                { id: 'ciencias-mar', label: '🌊 Ciencias del Mar' },
+                { id: 'veterinaria', label: '🐾 Veterinaria' },
+                { id: 'rectoria', label: '🏛️ Rectoría' },
+                { id: 'biblioteca', label: '📚 Biblioteca' }
+            ],
+            correct: ['estacionamiento', 'estadio', 'trabajo-social', 'contaduria', 'ciencias-mar', 'veterinaria'],
+            placeholders: ['Inicio', 'Paso 2', 'Paso 3', 'Paso 4', 'Paso 5', 'Meta'],
+            user: [],
+            success: '✅ Correcto. La ruta avanza al este y al final sube a Veterinaria.',
+            error: '❌ Ese orden no coincide. Primero va recto y al final gira al norte.',
+            empty: '❌ Completa toda la secuencia antes de verificar.'
+        },
+        robotsOrden2: {
+            pagina: 4,
+            feedbackId: 'feedback4b',
+            bankId: 'banco-robots2-vv',
+            slotsId: 'slots-robots2-vv',
+            items: [
+                { id: 'A', label: '🤖 Robot A' },
+                { id: 'F', label: '🤖 Robot F' },
+                { id: 'G', label: '🤖 Robot G' },
+                { id: 'B', label: '🤖 Robot B' }
+            ],
+            correct: ['A', 'G', 'F', 'B'],
+            placeholders: ['Menor', 'Lugar 2', 'Lugar 3', 'Mayor'],
+            user: [],
+            success: '✅ Correcto. El orden es A, G, F y B.',
+            error: '❌ Ese orden no coincide. Compara bien las distancias totales.',
+            empty: '❌ Completa los 4 lugares antes de verificar.'
+        }
     };
 
-    // ============================================
-    // NAVEGACIÓN
-    // ============================================
-    function cambiarPagina(direccion) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual += direccion;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        audioWhoosh.play();
+    const ACTIVIDADES_OPCION_VV = {
+        metroPase2: {
+            pagina: 3,
+            feedbackId: 'feedback3b',
+            containerId: 'cartas-metro2-vv',
+            selected: null,
+            correct: 'metro-opcion-a-vv',
+            success: '✅ Correcto. Ese pase sale de Tasqueña, cambia una vez y llega a Copilco.',
+            error: '❌ Esa tarjeta no cumple el viaje pedido. Revisa el cambio y el destino.',
+            empty: '❌ Primero selecciona una tarjeta.'
+        },
+        teatroReserva2: {
+            pagina: 5,
+            feedbackId: 'feedback5b',
+            containerId: 'cartas-teatro2-vv',
+            selected: null,
+            correct: 'teatro-opcion-a-vv',
+            success: '✅ Correcto. Ese paquete usa la fila más cercana y los asientos pegados al pasillo.',
+            error: '❌ Ese paquete no cumple todas las condiciones al mismo tiempo.',
+            empty: '❌ Primero selecciona un paquete.'
+        }
+    };
+
+    function safePlay(audio) {
+        try {
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play();
+            }
+        } catch (e) {}
+    }
+
+    function shuffleArray(arr) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = tmp;
+        }
+        return copy;
+    }
+
+    function actividadResuelta(pagina, reto) {
+        return !!(progresoActividades[pagina] && progresoActividades[pagina][reto]);
+    }
+
+    function paginaCompletaNormalVisualNoVerbal(pagina) {
+        return actividadResuelta(pagina, 'reto1') && actividadResuelta(pagina, 'reto2');
+    }
+
+    function todasPaginasCompletasNormalVisualNoVerbal() {
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+            if (!paginaCompletaNormalVisualNoVerbal(pagina)) return false;
+        }
+        return true;
+    }
+
+    function claveEjercicioNormalVisualNoVerbal(pagina, reto) {
+        return `p${pagina}${reto}`;
+    }
+
+    function registrarIntentoNormalVisualNoVerbal(pagina, reto, correcto, detalle = {}) {
+        const clave = claveEjercicioNormalVisualNoVerbal(pagina, reto);
+        const config = ejerciciosNormalVisualNoVerbal[clave];
+        if (!config) return;
+
+        if (trackerNormalVisualNoVerbal) {
+            trackerNormalVisualNoVerbal.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+        }
+
+        if (correcto) {
+            if (!completadosRegistroNormalVisualNoVerbal[clave]) {
+                completadosRegistroNormalVisualNoVerbal[clave] = true;
+                if (trackerNormalVisualNoVerbal) {
+                    trackerNormalVisualNoVerbal.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                }
+            }
+        } else if (trackerNormalVisualNoVerbal) {
+            trackerNormalVisualNoVerbal.addError(clave, { pagina, ejercicio: clave, ...detalle });
+        }
+
+        revisarSesionCompletadaNormalVisualNoVerbal();
+    }
+
+    function revisarSesionCompletadaNormalVisualNoVerbal() {
+        if (!sesionCompletadaNormalVisualNoVerbal && todasPaginasCompletasNormalVisualNoVerbal()) {
+            sesionCompletadaNormalVisualNoVerbal = true;
+            if (trackerNormalVisualNoVerbal) trackerNormalVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+            if (sessionTrackerNormalVisualNoVerbal) sessionTrackerNormalVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+        }
+    }
+
+    function actualizarEstadoPagina(pagina) {
+        respuestasPagina[pagina] = paginaCompletaNormalVisualNoVerbal(pagina);
+    }
+
+    function marcarActividad(pagina, reto) {
+        progresoActividades[pagina][reto] = true;
+        actualizarEstadoPagina(pagina);
+        revisarSesionCompletadaNormalVisualNoVerbal();
         actualizarUI();
-        localStorage.setItem('progreso_normal_visualnoverbal_coordenadas', paginaActual);
-        
-        if (paginaActual === 4) inicializarTablaRobots();
-        if (paginaActual === 5) generarTeatroSimple();
+    }
+
+    function cambiarPagina(direccion) {
+        if (direccion > 0 && !paginaCompletaNormalVisualNoVerbal(paginaActual)) {
+            safePlay(audioError);
+            const feedbackId = actividadResuelta(paginaActual, 'reto1') ? `feedback${paginaActual}b` : `feedback${paginaActual}`;
+            mostrarFeedbackVV(feedbackId, false, 'Completa los dos retos de esta página antes de avanzar.');
+            return;
+        }
+
+        const siguientePagina = paginaActual + direccion;
+        if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
+
+        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
+        paginaActual = siguientePagina;
+        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+        safePlay(audioWhoosh);
+        actualizarUI();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function actualizarUI() {
@@ -1092,19 +1725,100 @@
             const numPagina = index + 1;
             punto.classList.remove('activo', 'completado');
             if (numPagina === paginaActual) punto.classList.add('activo');
-            else if (numPagina < paginaActual && respuestasPagina[numPagina]) punto.classList.add('completado');
-            else if (numPagina < paginaActual) punto.classList.add('activo');
+            else if (paginaCompletaNormalVisualNoVerbal(numPagina)) punto.classList.add('completado');
         });
 
         document.getElementById('paginaActualNum').innerText = paginaActual;
         document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
         document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !paginaCompletaNormalVisualNoVerbal(paginaActual));
+
+        const botonQuiz = document.getElementById('botonQuiz');
+        const textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+        if (botonQuiz && textoAyudaQuiz) {
+            if (todasPaginasCompletasNormalVisualNoVerbal()) {
+                botonQuiz.classList.remove('bloqueado');
+                textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+            } else {
+                botonQuiz.classList.add('bloqueado');
+                textoAyudaQuiz.textContent = 'Completa los dos retos de esta página para activar el quiz.';
+            }
+        }
+
+        if (trackerNormalVisualNoVerbal) {
+            trackerNormalVisualNoVerbal.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+        }
     }
 
-    // ============================================
-    // FUNCIÓN PARA AMPLIAR IMÁGENES
-    // ============================================
+    function mezclarOpcionesReforzamiento() {
+        const letras = ['A', 'B', 'C', 'D'];
+        document.querySelectorAll('.opciones-reforzamiento').forEach(contenedor => {
+            const botones = shuffleArray(Array.from(contenedor.children));
+            botones.forEach((boton, index) => {
+                boton.innerHTML = boton.innerHTML.replace(/^[A-D]\)\s*/, `${letras[index]}) `);
+                contenedor.appendChild(boton);
+            });
+        });
+    }
+
+    function responderReforzamiento(pagina, botonSeleccionado, esCorrecta) {
+        if (actividadResuelta(pagina, 'reto1')) return;
+
+        safePlay(audioClick);
+        const botones = document.querySelectorAll(`#reforzamiento${pagina} .btn-opcion`);
+        const opcion = Array.from(botones).indexOf(botonSeleccionado);
+        registrarIntentoNormalVisualNoVerbal(pagina, 'reto1', esCorrecta, { opcion: opcion + 1 });
+
+        const feedback = document.getElementById(`feedback${pagina}`);
+        botones.forEach(btn => {
+            btn.classList.remove('correcta', 'incorrecta');
+            btn.disabled = false;
+        });
+
+        botonSeleccionado.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+        if (esCorrecta) {
+            safePlay(audioDing);
+            botones.forEach(btn => btn.disabled = true);
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-reforzamiento bg-success text-white';
+
+            const mensajes = {
+                1: '✅ Correcto. Sebastián cambia de dirección 4 veces.',
+                2: '✅ Correcto. Para volver a Trabajo Social debe ir al oeste.',
+                3: '✅ Correcto. Balderas conecta la Línea 2 y la Línea 3.',
+                4: '✅ Correcto. Robot A avanzó menos distancia total.',
+                5: '✅ Correcto. La mejor opción es Fila 1, asientos 1 y 2.'
+            };
+
+            feedback.innerHTML = mensajes[pagina] || '✅ Correcto.';
+            marcarActividad(pagina, 'reto1');
+        } else {
+            safePlay(audioError);
+            feedback.style.display = 'block';
+            feedback.className = 'feedback-reforzamiento bg-danger text-white';
+
+            const mensajesError = {
+                1: '❌ No coincide. Cuenta los cambios de dirección completos.',
+                2: '❌ No coincide. Trabajo Social está antes de Contaduría en la ruta.',
+                3: '❌ No coincide. Busca la estación donde sí cambias entre L2 y L3.',
+                4: '❌ No coincide. Compara las distancias totales.',
+                5: '❌ No coincide. Deben quedar en la fila más cercana, uno a cada lado.'
+            };
+
+            feedback.innerHTML = mensajesError[pagina] || '❌ Inténtalo de nuevo.';
+        }
+    }
+
+    function mostrarEstacion(nombre) {
+        safePlay(audioClick);
+        if (nombre === 'Balderas') {
+            alert('🌟 Balderas es estación de transbordo.');
+        } else {
+            alert('🚉 ' + nombre);
+        }
+    }
+
     function ampliarImagen(img) {
         if (img.classList.contains('ampliada')) {
             img.classList.remove('ampliada');
@@ -1116,7 +1830,6 @@
         }
     }
 
-    // Cerrar imagen al hacer clic fuera
     document.addEventListener('click', function(event) {
         if (!event.target.classList.contains('ampliada') && !event.target.closest('.contenedor-imagen')) {
             document.querySelectorAll('.ampliada').forEach(img => {
@@ -1126,165 +1839,216 @@
         }
     });
 
-    // ============================================
-    // RESPUESTAS VISUALES
-    // ============================================
-    function seleccionarRespuestaVisual(pagina, opcion) {
-        if (respuestasPagina[pagina]) return;
-        
-        audioClick.play();
-        
-        const opciones = document.querySelectorAll(`#pagina${pagina} .respuesta-opcion`);
-        opciones.forEach(opt => opt.classList.remove('seleccionada'));
-        opciones[opcion].classList.add('seleccionada');
-        
-        const feedback = document.getElementById(`feedback${pagina}`);
-        
-        if (opcion === respuestasCorrectas[pagina]) {
-            audioDing.play();
-            feedback.style.display = 'block';
-            feedback.className = 'feedback-visual bg-success text-white';
-            
-            const mensajes = {
-                1: '✅ ¡Correcto! Ropa (A1) a Comida (A3): 2 sur',
-                2: '✅ ¡Correcto! Museo → Economía (sur) → Derecho (oeste) → Biblioteca (oeste)',
-                3: '✅ ¡Correcto! Balderas conecta Línea 1 y Línea 3',
-                4: '✅ ¡Correcto! Titan: 5×4 = 20 unidades (Bolt: 12, Rayo: 12, Tank: 15)'
-            };
-            
-            feedback.innerHTML = mensajes[pagina] || '✅ ¡Correcto!';
-            respuestasPagina[pagina] = true;
-        } else {
-            audioError.play();
-            feedback.style.display = 'block';
-            feedback.className = 'feedback-visual bg-danger text-white';
-            
-            const mensajesError = {
-                1: '❌ Incorrecto. Ropa está en A1, Comida en A3. Solo debes bajar 2 sur.',
-                2: '❌ Incorrecto. La ruta inversa es: sur (bajar del museo), oeste (a Derecho), oeste (a Biblioteca)',
-                3: '❌ Incorrecto. Balderas es la única estación donde coinciden L1 y L3',
-                4: '❌ Incorrecto. Calcula: Bolt: 4×3=12, Titan: 5×4=20, Rayo: 6×2=12, Tank: 3×5=15'
-            };
-            
-            feedback.innerHTML = mensajesError[pagina] || '❌ Incorrecto. Observa bien y vuelve a intentar.';
-        }
-        
-        actualizarUI();
+    function buscarItemSecuenciaVV(cfg, id) {
+        return cfg.items.find(item => item.id === id);
     }
 
-    // ============================================
-    // PÁGINA 3: METRO INTERACTIVO
-    // ============================================
-    document.querySelectorAll('.linea-metro, .estacion').forEach(elemento => {
-        elemento.addEventListener('mouseenter', function() {
-            if (this.classList.contains('linea-metro')) {
-                document.getElementById('info-metro').innerHTML = `🚇 ${this.getAttribute('data-linea')}`;
+    function inicializarActividadSecuenciaVV(nombre) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        cfg.user = new Array(cfg.correct.length).fill(null);
+        cfg.displayOrder = shuffleArray(cfg.items.map(item => item.id));
+    }
+
+    function estaUsadaSecuenciaVV(cfg, id) {
+        return cfg.user.includes(id);
+    }
+
+    function renderActividadSecuenciaVV(nombre) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        const banco = document.getElementById(cfg.bankId);
+        const slots = document.getElementById(cfg.slotsId);
+        if (!banco || !slots) return;
+
+        banco.innerHTML = '';
+        cfg.displayOrder.forEach(id => {
+            const item = buscarItemSecuenciaVV(cfg, id);
+            const usado = estaUsadaSecuenciaVV(cfg, id);
+            const btn = document.createElement('button');
+            btn.className = 'opcion-item-vv' + (usado ? ' usada' : '') + (actividadResuelta(cfg.pagina, 'reto2') ? ' bloqueada' : '');
+            btn.innerText = item.label;
+            btn.disabled = usado || actividadResuelta(cfg.pagina, 'reto2');
+            btn.onclick = () => agregarActividadSecuenciaVV(nombre, id);
+            banco.appendChild(btn);
+        });
+
+        slots.innerHTML = '';
+        cfg.correct.forEach((_, index) => {
+            const slot = document.createElement('div');
+            const valor = cfg.user[index];
+            slot.className = 'slot-vv' + (valor ? ' lleno' : '');
+            slot.onclick = () => quitarActividadSecuenciaVV(nombre, index);
+            if (valor) {
+                const item = buscarItemSecuenciaVV(cfg, valor);
+                slot.innerHTML = `<span class="slot-tag-vv">${index + 1}</span><span class="slot-texto-vv">${item.label}</span>`;
             } else {
-                const nombre = this.getAttribute('data-nombre');
-                const linea = this.getAttribute('data-linea');
-                document.getElementById('info-metro').innerHTML = `🚉 ${nombre} (${linea})`;
+                slot.innerHTML = `<span class="slot-tag-vv">${index + 1}</span><span class="slot-placeholder-vv">${cfg.placeholders[index]}</span>`;
             }
-        });
-        
-        elemento.addEventListener('mouseleave', function() {
-            document.getElementById('info-metro').innerHTML = 'Pasa el cursor sobre líneas o estaciones';
-        });
-    });
-
-    // ============================================
-    // PÁGINA 4: TABLA DE ROBOTS
-    // ============================================
-    function inicializarTablaRobots() {
-        const filas = document.querySelectorAll('.tabla-robots-nombres tbody tr');
-        
-        filas.forEach(fila => {
-            const pasos = parseInt(fila.getAttribute('data-pasos'));
-            const unidades = parseInt(fila.getAttribute('data-unidades'));
-            const distancia = pasos * unidades;
-            
-            fila.addEventListener('mouseenter', function() {
-                const distanciaCell = this.querySelector('.distancia');
-                distanciaCell.textContent = distancia;
-                distanciaCell.classList.add('destacado');
-            });
-            
-            fila.addEventListener('mouseleave', function() {
-                const distanciaCell = this.querySelector('.distancia');
-                distanciaCell.textContent = '?';
-                distanciaCell.classList.remove('destacado');
-            });
+            slots.appendChild(slot);
         });
     }
 
-    // ============================================
-    // PÁGINA 5: TEATRO SIMPLE
-    // ============================================
-    function generarTeatroSimple() {
-        const contenedor = document.getElementById('teatro-simple');
-        if (!contenedor) return;
-        
-        let html = '';
-        
-        for (let fila = 1; fila <= 5; fila++) {
-            html += '<div class="fila-simple">';
-            html += `<div class="numero-fila-simple">Fila ${fila}</div>`;
-            html += '<div class="asientos-fila">';
-            
-            for (let asiento = 1; asiento <= 10; asiento++) {
-                html += `<div class="asiento-simple" data-fila="${fila}" data-asiento="${asiento}" onclick="seleccionarAsiento(${fila}, ${asiento})">${asiento}</div>`;
-            }
-            
-            html += '</div>';
-            html += '</div>';
+    function agregarActividadSecuenciaVV(nombre, id) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        if (actividadResuelta(cfg.pagina, 'reto2') || estaUsadaSecuenciaVV(cfg, id)) return;
+        const idx = cfg.user.indexOf(null);
+        if (idx === -1) return;
+        cfg.user[idx] = id;
+        safePlay(audioClick);
+        document.getElementById(cfg.feedbackId).style.display = 'none';
+        renderActividadSecuenciaVV(nombre);
+    }
+
+    function quitarActividadSecuenciaVV(nombre, index) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        if (actividadResuelta(cfg.pagina, 'reto2') || !cfg.user[index]) return;
+        const compacta = cfg.user.filter(Boolean);
+        compacta.splice(index, 1);
+        cfg.user = compacta.concat(new Array(cfg.correct.length - compacta.length).fill(null));
+        safePlay(audioClick);
+        document.getElementById(cfg.feedbackId).style.display = 'none';
+        renderActividadSecuenciaVV(nombre);
+    }
+
+    function verificarActividadSecuenciaVV(nombre) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        if (cfg.user.includes(null)) {
+            registrarIntentoNormalVisualNoVerbal(cfg.pagina, 'reto2', false, {
+                actividad: nombre,
+                respuesta: cfg.user.filter(Boolean).join('>'),
+                error: 'incompleto'
+            });
+            mostrarFeedbackVV(cfg.feedbackId, false, cfg.empty);
+            return;
         }
-        
-        contenedor.innerHTML = html;
-    }
-
-    function seleccionarAsiento(fila, asiento) {
-        audioClick.play();
-        
-        document.querySelectorAll('.asiento-simple').forEach(a => a.classList.remove('seleccionado'));
-        
-        const asientoCorrecto = (fila === 4 && asiento === 8);
-        
-        const asientoElement = document.querySelector(`.asiento-simple[data-fila="${fila}"][data-asiento="${asiento}"]`);
-        asientoElement.classList.add('seleccionado');
-        
-        const feedback = document.getElementById('feedback5');
-        
-        if (asientoCorrecto) {
-            audioDing.play();
-            feedback.style.display = 'block';
-            feedback.className = 'feedback-visual bg-success text-white';
-            feedback.innerHTML = '✅ ¡Correcto! Encontraste el asiento Fila 4, Asiento 8';
-            respuestasPagina[5] = true;
-            actualizarUI();
+        const ok = cfg.correct.every((id, index) => cfg.user[index] === id);
+        registrarIntentoNormalVisualNoVerbal(cfg.pagina, 'reto2', ok, {
+            actividad: nombre,
+            respuesta: cfg.user.join('>')
+        });
+        if (ok) {
+            safePlay(audioDing);
+            mostrarFeedbackVV(cfg.feedbackId, true, cfg.success);
+            marcarActividad(cfg.pagina, 'reto2');
+            renderActividadSecuenciaVV(nombre);
         } else {
-            audioError.play();
-            feedback.style.display = 'block';
-            feedback.className = 'feedback-visual bg-danger text-white';
-            feedback.innerHTML = `❌ Ese no es. Busca Fila 4, Asiento 8`;
+            safePlay(audioError);
+            mostrarFeedbackVV(cfg.feedbackId, false, cfg.error);
         }
     }
 
-    // ============================================
-    // INICIALIZACIÓN
-    // ============================================
-    window.addEventListener('DOMContentLoaded', () => {
-        const guardado = localStorage.getItem('progreso_normal_visualnoverbal_coordenadas');
-        if (guardado) {
-            const pag = parseInt(guardado, 10);
-            if (pag >= 1 && pag <= totalPaginas) {
-                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-                paginaActual = pag;
-                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-            }
+    function reiniciarActividadSecuenciaVV(nombre) {
+        const cfg = ACTIVIDADES_SECUENCIA_VV[nombre];
+        if (actividadResuelta(cfg.pagina, 'reto2')) return;
+        inicializarActividadSecuenciaVV(nombre);
+        document.getElementById(cfg.feedbackId).style.display = 'none';
+        renderActividadSecuenciaVV(nombre);
+    }
+
+    function mezclarCartasVV(nombre) {
+        const cfg = ACTIVIDADES_OPCION_VV[nombre];
+        const contenedor = document.getElementById(cfg.containerId);
+        if (!contenedor) return;
+        const cartas = shuffleArray(Array.from(contenedor.children));
+        cartas.forEach(carta => contenedor.appendChild(carta));
+    }
+
+    function renderActividadOpcionVV(nombre) {
+        const cfg = ACTIVIDADES_OPCION_VV[nombre];
+        document.querySelectorAll(`[data-actividad-vv="${nombre}"]`).forEach(card => {
+            card.classList.remove('seleccionada', 'bloqueada');
+            if (cfg.selected === card.id) card.classList.add('seleccionada');
+            if (actividadResuelta(cfg.pagina, 'reto2')) card.classList.add('bloqueada');
+        });
+    }
+
+    function seleccionarActividadOpcionVV(nombre, id) {
+        const cfg = ACTIVIDADES_OPCION_VV[nombre];
+        if (actividadResuelta(cfg.pagina, 'reto2')) return;
+        cfg.selected = id;
+        safePlay(audioClick);
+        document.getElementById(cfg.feedbackId).style.display = 'none';
+        renderActividadOpcionVV(nombre);
+    }
+
+    function verificarActividadOpcionVV(nombre) {
+        const cfg = ACTIVIDADES_OPCION_VV[nombre];
+        if (!cfg.selected) {
+            registrarIntentoNormalVisualNoVerbal(cfg.pagina, 'reto2', false, {
+                actividad: nombre,
+                error: 'sin_seleccion'
+            });
+            mostrarFeedbackVV(cfg.feedbackId, false, cfg.empty);
+            return;
         }
+        const ok = cfg.selected === cfg.correct;
+        registrarIntentoNormalVisualNoVerbal(cfg.pagina, 'reto2', ok, {
+            actividad: nombre,
+            seleccion: cfg.selected
+        });
+        if (ok) {
+            safePlay(audioDing);
+            mostrarFeedbackVV(cfg.feedbackId, true, cfg.success);
+            marcarActividad(cfg.pagina, 'reto2');
+            renderActividadOpcionVV(nombre);
+        } else {
+            safePlay(audioError);
+            mostrarFeedbackVV(cfg.feedbackId, false, cfg.error);
+        }
+    }
+
+    function reiniciarActividadOpcionVV(nombre) {
+        const cfg = ACTIVIDADES_OPCION_VV[nombre];
+        if (actividadResuelta(cfg.pagina, 'reto2')) return;
+        cfg.selected = null;
+        document.getElementById(cfg.feedbackId).style.display = 'none';
+        mezclarCartasVV(nombre);
+        renderActividadOpcionVV(nombre);
+    }
+
+    function mostrarFeedbackVV(id, ok, mensaje) {
+        const feedback = document.getElementById(id);
+        feedback.style.display = 'block';
+        feedback.className = `feedback-reforzamiento ${ok ? 'bg-success' : 'bg-danger'} text-white`;
+        feedback.innerHTML = mensaje;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const botonQuiz = document.getElementById('botonQuiz');
+        if (botonQuiz) {
+            botonQuiz.addEventListener('click', event => {
+                if (botonQuiz.classList.contains('bloqueado')) {
+                    event.preventDefault();
+                    safePlay(audioError);
+                    mostrarFeedbackVV('feedback5b', false, 'Completa los dos retos finales antes de entrar al quiz.');
+                }
+            });
+        }
+
+        if (sessionTrackerNormalVisualNoVerbal) {
+            sessionTrackerNormalVisualNoVerbal.start();
+            sessionTrackerNormalVisualNoVerbal.attachQuizLinks('.boton-quiz', () => {
+                return { eventoCierre: 'quiz' };
+            });
+        }
+
+        mezclarOpcionesReforzamiento();
+
+        Object.keys(ACTIVIDADES_SECUENCIA_VV).forEach(nombre => {
+            inicializarActividadSecuenciaVV(nombre);
+            renderActividadSecuenciaVV(nombre);
+        });
+
+        Object.keys(ACTIVIDADES_OPCION_VV).forEach(nombre => {
+            ACTIVIDADES_OPCION_VV[nombre].selected = null;
+            mezclarCartasVV(nombre);
+            renderActividadOpcionVV(nombre);
+        });
+
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+            actualizarEstadoPagina(pagina);
+        }
+
         actualizarUI();
-        
-        if (paginaActual === 4) inicializarTablaRobots();
-        if (paginaActual === 5) generarTeatroSimple();
     });
 </script>
 

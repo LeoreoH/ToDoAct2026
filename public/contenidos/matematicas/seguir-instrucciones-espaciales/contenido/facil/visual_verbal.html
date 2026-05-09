@@ -233,8 +233,13 @@
     .feedback-box.err { background: var(--rojo-pale);  color: var(--rojo-err); border: 2px solid #fca5a5; }
     .feedback-box.visible { display: block; }
 
-    .btn-quiz-wrap { margin-top: 6px; display: none; }
-    .btn-quiz-wrap.visible { display: block; }
+    .btn-quiz-wrap {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
     .btn-quiz {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--naranja);
@@ -252,6 +257,20 @@
       transform: translateY(-3px);
       box-shadow: 0 9px 0 var(--naranja-med), 0 12px 24px rgba(194,65,12,.35);
       color: white;
+    }
+    .btn-quiz.bloqueado,
+    .btn-quiz.bloqueado:hover {
+      background: #d6d3d1;
+      color: #78716c;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
+    }
+    .texto-ayuda-quiz {
+      font-size: .9rem;
+      font-weight: 700;
+      color: #9a3412;
+      text-align: center;
     }
 
     .btn-reintentar {
@@ -274,7 +293,11 @@
       0%,100%{ transform: translateY(0); }
       40%    { transform: translateY(-10px); }
     }
-    .luna-anim { animation: lunaSalta .5s ease; }
+    .luna-anim .luna-cuerpo {
+      animation: lunaSalta .5s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
 
     .leyenda {
       background: white;
@@ -718,10 +741,11 @@
              Claramente en el cruce del mapa, fácil de identificar
         ═══════════════════════════════════════ -->
         <g id="lunaPersonaje" transform="translate(390,260)">
+          <g class="luna-cuerpo">
           <!-- Etiqueta "LUNA ESTÁ AQUÍ" -->
-          <rect x="-34" y="-26" width="68" height="16" rx="5" fill="#fde68a" stroke="#c2410c" stroke-width="1.5"/>
-          <text x="0" y="-14" font-family="Fredoka One,cursive" font-size="8" fill="#7c2d12" text-anchor="middle">¡LUNA ESTÁ AQUÍ!</text>
-          <line x1="0" y1="-8" x2="0" y2="0" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="2,2"/>
+          <rect data-badge="inicio" x="-34" y="-26" width="68" height="16" rx="5" fill="#fde68a" stroke="#c2410c" stroke-width="1.5"/>
+          <text data-badge="inicio" x="0" y="-14" font-family="Fredoka One,cursive" font-size="8" fill="#7c2d12" text-anchor="middle">¡LUNA ESTÁ AQUÍ!</text>
+          <line data-badge="inicio" x1="0" y1="-8" x2="0" y2="0" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="2,2"/>
           <!-- Sombra -->
           <ellipse cx="0" cy="42" rx="16" ry="5" fill="rgba(0,0,0,.18)"/>
           <!-- Cuerpo: overol azul -->
@@ -757,6 +781,7 @@
           <!-- Manos -->
           <circle cx="-18" cy="28" r="4" fill="#fbbf24"/>
           <circle cx="20"  cy="28" r="4" fill="#fbbf24"/>
+          </g>
         </g>
 
       </svg>
@@ -852,9 +877,10 @@
       <div class="feedback-box" id="feedbackBox"></div>
 
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz">
-          <i class="fas fa-puzzle-piece"></i> ¡Ir al ejercicio!
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true">
+          <i class="fas fa-puzzle-piece"></i> Ir al quiz
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">
         <i class="fas fa-redo me-2"></i> Intentar de nuevo
@@ -865,12 +891,18 @@
 
 </div><!-- /layout -->
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505b"></script>
 <script>
   // DESTINO CORRECTO: heladería A (arriba derecha, toldo ROSA)
   // Luna parte de la intersección derecha (translate 390,260 en SVG 600x600)
   // 1 cuadra arriba = heladería A
   var DESTINO_CORRECTO = 'hel';
   var respondido = false;
+  var ejercicioCompletado = false;
+  var erroresVisualVerbal = 0;
+  var completadoRegistroVisualVerbal = false;
+  var quizTrackerAdjunto = false;
 
   /* Posiciones de Luna para cada destino (translate SVG 600x600) */
   var POSICIONES_LUNA = {
@@ -883,20 +915,111 @@
     inicio:'translate(390,260)'    // intersección central derecha
   };
 
-  function play(id) {
-    try { var s = document.getElementById(id); s.currentTime = 0; s.play(); } catch(e){}
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioWhoosh = document.getElementById('sndWhoosh');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioWhoosh, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosVisualVerbal = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_destino_pueblo',
+      tipoActividad: 'visual_verbal_toque'
+    }
+  };
+
+  var trackerVisualVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'visual_verbal',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'visual_verbal_facil' },
+    apartados: ejerciciosVisualVerbal
+  }) : null;
+
+  var sessionTrackerVisualVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'visual_verbal'
+  }) : null;
+
+  function reproducir(audio) {
+    if (!audio) return;
+    try {
+      audio.currentTime = 0;
+      audio.play();
+    } catch (error) {}
+  }
+
+  function registrarIntentoVisualVerbal(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerVisualVerbal) {
+      trackerVisualVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroVisualVerbal) {
+        completadoRegistroVisualVerbal = true;
+        if (trackerVisualVerbal) {
+          trackerVisualVerbal.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            errores_previos: erroresVisualVerbal,
+            actividad: 'seleccionar_destino',
+            destino_correcto: DESTINO_CORRECTO,
+            destino_elegido: detalle.destino || null
+          });
+          trackerVisualVerbal.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'seleccionar_destino',
+              destino_correcto: DESTINO_CORRECTO,
+              destino_elegido: detalle.destino || null
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresVisualVerbal += 1;
+    if (trackerVisualVerbal) {
+      trackerVisualVerbal.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'seleccionar_destino',
+        intento: erroresVisualVerbal,
+        destino_elegido: detalle.destino || null
+      });
+    }
+  }
+
+  function limpiarEstadosHotspots() {
+    ['pan', 'jug', 'hel', 'far', 'esc', 'hel2'].forEach(function(id) {
+      var hs = document.getElementById('hs-' + id);
+      if (hs) hs.classList.remove('activo', 'correcto', 'incorrecto');
+    });
   }
 
   function activarHotspots() {
-    ['pan','jug','hel','far','esc','hel2'].forEach(function(id){
-      var hs = document.getElementById('hs-'+id);
-      if (hs) { hs.classList.add('activo'); hs.classList.remove('correcto','incorrecto'); }
+    ['pan', 'jug', 'hel', 'far', 'esc', 'hel2'].forEach(function(id) {
+      var hs = document.getElementById('hs-' + id);
+      if (!hs) return;
+      hs.classList.remove('correcto', 'incorrecto');
+      if (!ejercicioCompletado) hs.classList.add('activo');
     });
   }
 
   function desactivarHotspots() {
-    ['pan','jug','hel','far','esc','hel2'].forEach(function(id){
-      var hs = document.getElementById('hs-'+id);
+    ['pan', 'jug', 'hel', 'far', 'esc', 'hel2'].forEach(function(id) {
+      var hs = document.getElementById('hs-' + id);
       if (hs) hs.classList.remove('activo');
     });
   }
@@ -904,52 +1027,79 @@
   function moverLuna(destId) {
     var luna = document.getElementById('lunaPersonaje');
     if (!luna) return;
-    var pos = POSICIONES_LUNA[destId] || POSICIONES_LUNA['inicio'];
+    var pos = POSICIONES_LUNA[destId] || POSICIONES_LUNA.inicio;
     luna.setAttribute('transform', pos);
     luna.classList.remove('luna-anim');
     void luna.getBBox();
     luna.classList.add('luna-anim');
     // Ocultar etiqueta "Luna está aquí" cuando se mueve
-    var etiqueta = luna.querySelector('rect');
-    var etiquetaTxt = luna.querySelectorAll('text, line');
-    if (destId !== 'inicio') {
-      // ocultar el badge de inicio al moverse
-      luna.querySelectorAll('[data-badge]').forEach(function(el){ el.setAttribute('display','none'); });
+    luna.querySelectorAll('[data-badge]').forEach(function(el) {
+      el.setAttribute('display', destId === 'inicio' ? '' : 'none');
+    });
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerVisualVerbal) {
+        sessionTrackerVisualVerbal.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
     }
   }
 
   function elegirDestino(id) {
-    if (respondido) return;
-    play('sndClick');
+    if (respondido || ejercicioCompletado) return;
+    reproducir(audioClick);
     respondido = true;
     desactivarHotspots();
 
-    var hs = document.getElementById('hs-'+id);
+    var hs = document.getElementById('hs-' + id);
     var fb = document.getElementById('feedbackBox');
     var sub = document.getElementById('accionSub');
 
     moverLuna(id);
 
     if (id === DESTINO_CORRECTO) {
-      play('sndTada');
-      hs.classList.add('correcto');
-      var ind = document.getElementById('ind-'+id);
-      if (ind) ind.setAttribute('display','');
+      ejercicioCompletado = true;
+      reproducir(audioTada);
+      reproducir(audioDing);
+      if (hs) hs.classList.add('correcto');
+      var ind = document.getElementById('ind-' + id);
+      if (ind) ind.setAttribute('display', '');
 
       fb.className = 'feedback-box ok visible';
       fb.innerHTML = '✅ ¡Correcto! Luna subió <strong>1 cuadra hacia arriba</strong> desde la intersección y llegó al edificio con el <strong>toldo rosa</strong> y los helados. ¡Muy bien leídas las instrucciones!';
-      sub.textContent = '¡Excelente! ¿Lista para el ejercicio?';
-      document.getElementById('btnQuizWrap').classList.add('visible');
+      sub.textContent = 'Excelente. Ya puedes pasar al quiz.';
+      document.getElementById('btnReintentar').classList.remove('visible');
 
       // Atenuar los otros
-      ['pan','jug','far','esc','hel2'].forEach(function(otro){
-        var h2 = document.getElementById('hs-'+otro);
+      ['pan', 'jug', 'far', 'esc', 'hel2'].forEach(function(otro) {
+        var h2 = document.getElementById('hs-' + otro);
         if (h2) h2.classList.add('incorrecto');
       });
 
+      registrarIntentoVisualVerbal(true, { destino: id });
+      actualizarBotonQuiz();
+      return;
+
     } else {
-      play('sndError');
-      hs.classList.add('incorrecto');
+      reproducir(audioError);
+      if (hs) hs.classList.add('incorrecto');
       respondido = false;
 
       var pistas = {
@@ -964,8 +1114,10 @@
       fb.innerHTML = '❌ No es ese. ' + (pistas[id] || 'Vuelve a leer los pasos y fíjate en la posición de Luna.');
       sub.textContent = '¡Inténtalo de nuevo!';
       document.getElementById('btnReintentar').classList.add('visible');
+      registrarIntentoVisualVerbal(false, { destino: id });
 
       setTimeout(function(){
+        if (ejercicioCompletado) return;
         if (hs) { hs.classList.remove('incorrecto'); hs.classList.add('activo'); }
         document.getElementById('btnReintentar').classList.remove('visible');
         fb.className = 'feedback-box';
@@ -975,29 +1127,43 @@
       }, 2800);
     }
 
-    localStorage.setItem('progreso_facil_vv_instrucciones', id === DESTINO_CORRECTO ? 'ok' : 'intento');
   }
 
   function reintentar() {
+    if (ejercicioCompletado) return;
     respondido = false;
     moverLuna('inicio');
-    desactivarHotspots();
+    limpiarEstadosHotspots();
     activarHotspots();
     document.getElementById('feedbackBox').className = 'feedback-box';
     document.getElementById('feedbackBox').style.display = 'none';
     document.getElementById('accionSub').textContent = 'Lee las instrucciones y haz clic en el lugar correcto del mapa.';
     document.getElementById('btnReintentar').classList.remove('visible');
-    ['pan','jug','hel','far','esc','hel2'].forEach(function(id){
-      var hs = document.getElementById('hs-'+id);
-      if (hs) hs.classList.remove('correcto','incorrecto');
+  }
+
+  var botonQuizVisualVerbal = document.getElementById('botonQuiz');
+  if (botonQuizVisualVerbal) {
+    botonQuizVisualVerbal.addEventListener('click', function(event) {
+      if (!ejercicioCompletado) {
+        event.preventDefault();
+        reproducir(audioError);
+        return;
+      }
+      reproducir(audioClick);
     });
   }
 
   window.addEventListener('DOMContentLoaded', function(){
+    moverLuna('inicio');
     activarHotspots();
-    var guardado = localStorage.getItem('progreso_facil_vv_instrucciones');
-    if (guardado === 'ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
+    actualizarBotonQuiz();
+
+    if (trackerVisualVerbal) {
+      trackerVisualVerbal.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (sessionTrackerVisualVerbal) {
+      sessionTrackerVisualVerbal.start();
     }
   });
 </script>

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas · Nivel Fácil · Visual/No Verbal</title>
+    <title>Identificar coordenadas · Nivel Fácil · Visual/No Verbal</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -179,7 +179,34 @@
             height: auto;
             border-radius: 15px;
             border: 3px solid #f97316;
+            cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .contenedor-imagen img.ampliada {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fde68a;
+        }
+
+        body.imagen-ampliada::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
 
         .pie-imagen {
@@ -384,15 +411,15 @@
         }
 
         .robot-imagen {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             background: #fde68a;
             border: 4px solid #f97316;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
+            font-size: 4rem;
             animation: caminar 2s infinite;
             position: relative;
         }
@@ -445,6 +472,480 @@
         .robot-animado:hover .paso-indicador {
             background: #f97316;
             animation: latido 0.5s;
+        }
+
+        .panel-retos-visuales {
+            display: grid;
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .reto-visual {
+            background: #fff3e0;
+            border: 3px solid #f97316;
+            border-radius: 24px;
+            padding: 22px;
+        }
+
+        .reto-visual h4 {
+            color: #c2410c;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .reto-visual p {
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .opciones-visuales-robot {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .tarjeta-opcion-robot {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 18px;
+            padding: 16px 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 0 #fed7aa;
+            text-align: center;
+        }
+
+        .tarjeta-opcion-robot:hover:not(:disabled) {
+            transform: translateY(-3px);
+            background: #fff7e6;
+        }
+
+        .tarjeta-opcion-robot.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .tarjeta-opcion-robot.incorrecta {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        .tarjeta-opcion-robot:disabled {
+            cursor: default;
+            opacity: 1;
+        }
+
+        .tarjeta-opcion-robot .emoji-opcion {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .tarjeta-opcion-robot .texto-opcion {
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .pasos-visual {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #9a3412;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .unidades-visual {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #fde68a;
+            color: #9a3412;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+
+        .feedback-visual {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .actividad-visual-lite {
+            background: #fff3e0;
+            border: 3px solid #f97316;
+            border-radius: 22px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .mapa-postal-lite,
+        .grid-lite,
+        .fichas-lite {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .mapa-postal-lite, .fichas-lite {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-lite {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .lite-card, .lite-cell, .lite-stop {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 800;
+            color: #9a3412;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .lite-card.correcta, .lite-cell.correcta {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .lite-card.error, .lite-cell.error {
+            background: #f44336;
+            color: white;
+            border-color: white;
+        }
+
+        .lite-stop.usada {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .brujula-lite-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .brujula-lite {
+            width: 136px;
+            height: 136px;
+            transition: transform 0.4s ease;
+        }
+
+        .botones-lite {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-lite, .btn-reset-lite {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 8px;
+            font-weight: 800;
+            color: #9a3412;
+            cursor: pointer;
+        }
+
+        .btn-lite.activo {
+            background: #4caf50;
+            color: white;
+            border-color: white;
+        }
+
+        .pasos-lite {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 18px;
+            padding: 18px;
+            margin-top: 16px;
+            text-align: center;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .pasos-lite-num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #c2410c;
+            margin-bottom: 10px;
+        }
+
+        .pasos-lite-botones {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .zona-lite {
+            min-height: 56px;
+            margin-top: 16px;
+            border: 3px dashed #f97316;
+            border-radius: 18px;
+            background: #fff7e6;
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .chip-lite {
+            background: #4caf50;
+            color: white;
+            border-radius: 50px;
+            padding: 7px 14px;
+            font-weight: 800;
+        }
+
+        .btn-reset-lite {
+            margin-top: 12px;
+            background: #fde68a;
+        }
+
+        .direccion-grid-lite {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .direccion-card-lite {
+            background: white;
+            border: 3px solid #fed7aa;
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .slots-lite {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+        }
+
+        .slot-lite {
+            min-width: 60px;
+            min-height: 44px;
+            border: 3px dashed #f97316;
+            border-radius: 12px;
+            background: #fff7e6;
+            color: #9a3412;
+            font-weight: 800;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slot-lite.av {
+            min-width: 104px;
+        }
+
+        .slot-lite.activo {
+            background: #fde68a;
+            border-style: solid;
+            transform: translateY(-2px);
+        }
+
+        .slot-lite.lleno {
+            background: white;
+            border-style: solid;
+        }
+
+        .bank-lite {
+            background: #fed7aa;
+            border-radius: 18px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .row-bank-lite {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .row-bank-lite + .row-bank-lite {
+            margin-top: 10px;
+        }
+
+        .chip-bank-lite {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 0 rgba(122, 45, 0, 0.18);
+        }
+
+        .chip-bank-lite.calle {
+            background: #f97316;
+        }
+
+        .chip-bank-lite.av {
+            background: #4caf50;
+        }
+
+        .grid-ruta-lite {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .route-cell-lite {
+            min-height: 66px;
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 0 #fdba74;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .route-cell-lite.visitada {
+            background: #fff7e6;
+        }
+
+        .route-cell-lite.actual {
+            background: #fde68a;
+        }
+
+        .route-cell-lite.destino {
+            border-color: #4caf50;
+        }
+
+        .coord-lite {
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .mark-lite {
+            font-size: 1.15rem;
+            line-height: 1;
+        }
+
+        .estado-lite, .seq-lite {
+            min-height: 56px;
+            margin-top: 14px;
+            border: 3px dashed #f97316;
+            border-radius: 18px;
+            background: #fff7e6;
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #9a3412;
+        }
+
+        .arrow-chip-lite {
+            background: #fde68a;
+            color: #9a3412;
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-weight: 800;
+        }
+
+        .arrow-pad-lite, .acciones-lite, .stepper-buttons-lite {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .arrow-btn-lite {
+            min-width: 58px;
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 8px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #9a3412;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .dupla-lite {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .stepper-card-lite {
+            background: white;
+            border: 3px solid #f97316;
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+
+        .stepper-card-lite.ok {
+            border-color: #4caf50;
+        }
+
+        .stepper-track-lite {
+            position: relative;
+            height: 58px;
+            margin: 14px 0;
+        }
+
+        .stepper-line-lite {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 24px;
+            height: 8px;
+            background: #fed7aa;
+            border-radius: 999px;
+        }
+
+        .stepper-bot-lite {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 1.9rem;
+            transition: left 0.25s ease;
+        }
+
+        .stepper-info-lite {
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #c2410c;
         }
 
         /* Página 5: Ruta animada */
@@ -581,6 +1082,25 @@
             box-shadow: 0 12px 0 #fdba74;
             background: white;
         }
+        .boton-quiz.bloqueado {
+            background: #e5e7eb;
+            color: #78716c;
+            border-color: #bdbdbd;
+            box-shadow: 0 8px 0 #a8a29e;
+            cursor: not-allowed;
+            pointer-events: auto;
+        }
+        .boton-quiz.bloqueado:hover {
+            transform: none;
+            box-shadow: 0 8px 0 #a8a29e;
+            background: #e5e7eb;
+        }
+        .texto-ayuda-quiz {
+            text-align: center;
+            margin-top: 12px;
+            color: #9a3412;
+            font-weight: 800;
+        }
 
         @media (max-width: 768px) {
             .cabecera-facil h1 { font-size: 2rem; }
@@ -595,14 +1115,18 @@
             .flecha { font-size: 3rem; }
         }
     </style>
+    <link rel="stylesheet" href="/contenidos/recursos/css/mascota-ampliar.css">
 </head>
 <body>
 
-<!-- AUDIOS (solo para efectos visuales no se usan, pero por si acaso) -->
+<!-- AUDIOS -->
+<audio id="audioClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="audioDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="audioError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
 <audio id="audioWhoosh" src="/contenidos/matematicas/recursos/sonidos/whoosh.mp3"></audio>
 
 <div class="cabecera-facil">
-    <h1>🧭 COORDENADAS</h1>
+    <h1>🧭 IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Fácil · Ubicación en planos</p>
     <div>
         <span class="badge-estilo">👁️ Visual / No Verbal</span>
@@ -636,19 +1160,24 @@
             </div>
 
             <div class="contenedor-imagen">
-                <div class="mapa-interactivo">
-                    <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Mapa de colonia con calles y avenidas">
-                    
-                    <!-- Zonas interactivas simuladas (en un caso real se definirían coordenadas exactas) -->
-                    <div class="zona-calle" style="top: 10%; left: 20%; width: 5%; height: 80%;"></div>
-                    <div class="zona-calle" style="top: 10%; left: 40%; width: 5%; height: 80%;"></div>
-                    <div class="zona-calle" style="top: 10%; left: 60%; width: 5%; height: 80%;"></div>
-                    <div class="zona-calle" style="top: 10%; left: 80%; width: 5%; height: 80%;"></div>
-                    
-                    <div class="zona-avenida" style="top: 20%; left: 10%; width: 80%; height: 5%;"></div>
-                    <div class="zona-avenida" style="top: 40%; left: 10%; width: 80%; height: 5%;"></div>
-                    <div class="zona-avenida" style="top: 60%; left: 10%; width: 80%; height: 5%;"></div>
-                    <div class="zona-avenida" style="top: 80%; left: 10%; width: 80%; height: 5%;"></div>
+                <div class="ayuda-ampliar-lateral ayuda-ampliar-lateral--top">
+                    <div class="ayuda-ampliar-media">
+                        <div class="mapa-interactivo">
+                            <img src="/contenidos/matematicas/recursos/imagenes/libro-mapa-colonia.jpg" alt="Mapa de colonia con calles y avenidas" onclick="ampliarImagen(this)">
+                            
+                            <!-- Zonas interactivas simuladas (en un caso real se definirían coordenadas exactas) -->
+                            <div class="zona-calle" style="top: 10%; left: 20%; width: 5%; height: 80%;"></div>
+                            <div class="zona-calle" style="top: 10%; left: 40%; width: 5%; height: 80%;"></div>
+                            <div class="zona-calle" style="top: 10%; left: 60%; width: 5%; height: 80%;"></div>
+                            <div class="zona-calle" style="top: 10%; left: 80%; width: 5%; height: 80%;"></div>
+                            
+                            <div class="zona-avenida" style="top: 20%; left: 10%; width: 80%; height: 5%;"></div>
+                            <div class="zona-avenida" style="top: 40%; left: 10%; width: 80%; height: 5%;"></div>
+                            <div class="zona-avenida" style="top: 60%; left: 10%; width: 80%; height: 5%;"></div>
+                            <div class="zona-avenida" style="top: 80%; left: 10%; width: 80%; height: 5%;"></div>
+                        </div>
+                    </div>
+                    <img src="/contenidos/recursos/imagenes/ui/mascota-abrir-imagen.png" alt="Presiona para visualizar la imagen en grande" class="ayuda-ampliar-mascota">
                 </div>
                 
                 <div class="leyenda-visual">
@@ -669,6 +1198,75 @@
 
             <div class="frase-contexto" style="margin-top: 20px;">
                 ✅ Observa: las calles son verticales, las avenidas son horizontales
+            </div>
+
+            <div class="panel-retos-visuales">
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 1</h4>
+                    <p><strong>Completa cada dirección.</strong><br>Toca un espacio y luego una ficha.</p>
+
+                    <div class="direccion-grid-lite">
+                        <div class="direccion-card-lite">
+                            <span style="font-size:1.9rem;">🏫</span>
+                            <div class="slots-lite">
+                                <button class="slot-lite" id="nv-escuela-calle1" type="button" onclick="activarSlotNV('escuela','calle1','calle')">?</button>
+                                <button class="slot-lite" id="nv-escuela-calle2" type="button" onclick="activarSlotNV('escuela','calle2','calle')">?</button>
+                                <button class="slot-lite av" id="nv-escuela-avenida1" type="button" onclick="activarSlotNV('escuela','avenida1','avenida')">?</button>
+                                <button class="slot-lite av" id="nv-escuela-avenida2" type="button" onclick="activarSlotNV('escuela','avenida2','avenida')">?</button>
+                            </div>
+                        </div>
+
+                        <div class="direccion-card-lite">
+                            <span style="font-size:1.9rem;">🌳</span>
+                            <div class="slots-lite">
+                                <button class="slot-lite" id="nv-parque-calle1" type="button" onclick="activarSlotNV('parque','calle1','calle')">?</button>
+                                <button class="slot-lite" id="nv-parque-calle2" type="button" onclick="activarSlotNV('parque','calle2','calle')">?</button>
+                                <button class="slot-lite av" id="nv-parque-avenida1" type="button" onclick="activarSlotNV('parque','avenida1','avenida')">?</button>
+                            </div>
+                        </div>
+
+                        <div class="direccion-card-lite">
+                            <span style="font-size:1.9rem;">🏥</span>
+                            <div class="slots-lite">
+                                <button class="slot-lite" id="nv-hospital-calle1" type="button" onclick="activarSlotNV('hospital','calle1','calle')">?</button>
+                                <button class="slot-lite" id="nv-hospital-calle2" type="button" onclick="activarSlotNV('hospital','calle2','calle')">?</button>
+                                <button class="slot-lite av" id="nv-hospital-avenida1" type="button" onclick="activarSlotNV('hospital','avenida1','avenida')">?</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bank-lite">
+                        <div class="row-bank-lite">
+                            <button class="chip-bank-lite calle" type="button" onclick="colocarFichaNV('calle','14')">14</button>
+                            <button class="chip-bank-lite calle" type="button" onclick="colocarFichaNV('calle','18')">18</button>
+                            <button class="chip-bank-lite calle" type="button" onclick="colocarFichaNV('calle','22')">22</button>
+                            <button class="chip-bank-lite calle" type="button" onclick="colocarFichaNV('calle','24')">24</button>
+                        </div>
+                        <div class="row-bank-lite">
+                            <button class="chip-bank-lite av" type="button" onclick="colocarFichaNV('avenida','Zapata')">Zapata</button>
+                            <button class="chip-bank-lite av" type="button" onclick="colocarFichaNV('avenida','Reforma')">Reforma</button>
+                            <button class="chip-bank-lite av" type="button" onclick="colocarFichaNV('avenida','5 de Mayo')">5 de Mayo</button>
+                        </div>
+                    </div>
+
+                    <div id="feedback1a" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarDireccionesNV()">↺ Reiniciar</button>
+                </div>
+
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 2</h4>
+                    <p><strong>Av. Zapata</strong><br>Calle mayor que 20 y menor que 24.</p>
+                    <div class="mapa-postal-lite" id="nv-mapa-p1">
+                        <div class="lite-card" data-correcto="false" onclick="tocarPostalNV(this)">🏫<br>C14 · Reforma</div>
+                        <div class="lite-card" data-correcto="false" onclick="tocarPostalNV(this)">🏥<br>C18 · 5 de Mayo</div>
+                        <div class="lite-card" data-correcto="true" onclick="tocarPostalNV(this)">🌳<br>C22 · Zapata</div>
+                        <div class="lite-card" data-correcto="false" onclick="tocarPostalNV(this)">🏪<br>C24 · Zapata</div>
+                        <div class="lite-card" data-correcto="false" onclick="tocarPostalNV(this)">🏢<br>C22 · Reforma</div>
+                        <div class="lite-card" data-correcto="false" onclick="tocarPostalNV(this)">🎵<br>C14 · 5 de Mayo</div>
+                    </div>
+                    <div id="feedback1b" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarPostalNV()">↺ Reiniciar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -702,6 +1300,25 @@
 
             <div class="frase-contexto" style="margin-top: 20px;">
                 ✅ La coordenada se forma con la letra de la columna y el número de la fila
+            </div>
+
+            <div class="panel-retos-visuales">
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 1</h4>
+                    <p><strong>Lleva el robot de A1 a D4.</strong><br>Toca solo casillas vecinas.</p>
+                    <div class="grid-ruta-lite" id="nv-grid-recorrido"></div>
+                    <div class="estado-lite" id="nv-estado-recorrido"><span>A1</span></div>
+                    <div id="feedback2a" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarRecorridoNV()">↺ Reiniciar</button>
+                </div>
+
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 2</h4>
+                    <p><strong>Marca la fila de B2.</strong><br>Toca todas las casillas de esa fila.</p>
+                    <div class="grid-lite" id="nv-grid-p2"></div>
+                    <div id="feedback2b" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarFilaNV()">↺ Reiniciar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -743,6 +1360,51 @@
             <div class="frase-contexto" style="margin-top: 20px;">
                 ✅ Observa el orden: las flechas te muestran cada dirección
             </div>
+
+            <div class="panel-retos-visuales">
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 1</h4>
+                    <p><strong>Observa la secuencia.</strong><br>Luego repítela con las flechas.</p>
+                    <div class="seq-lite" id="nv-secuencia-modelo"><span>👀</span></div>
+                    <div class="seq-lite" id="nv-secuencia-respuesta"><span>Tu secuencia</span></div>
+                    <div class="arrow-pad-lite">
+                        <button class="arrow-btn-lite" type="button" onclick="seleccionarFlechaNV('↑')">↑</button>
+                        <button class="arrow-btn-lite" type="button" onclick="seleccionarFlechaNV('↓')">↓</button>
+                        <button class="arrow-btn-lite" type="button" onclick="seleccionarFlechaNV('→')">→</button>
+                        <button class="arrow-btn-lite" type="button" onclick="seleccionarFlechaNV('←')">←</button>
+                    </div>
+                    <div class="acciones-lite">
+                        <button class="btn-reset-lite" type="button" onclick="mostrarSecuenciaNV()">Mostrar</button>
+                        <button class="btn-reset-lite" type="button" onclick="reiniciarSecuenciaNV()">↺ Reiniciar</button>
+                    </div>
+                    <div id="feedback3a" class="feedback-visual"></div>
+                </div>
+
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 2</h4>
+                    <p><strong>Orienta la brújula.</strong><br>Toca la dirección opuesta al sur.</p>
+                    <div class="brujula-lite-wrap">
+                        <svg class="brujula-lite" id="nv-brujula" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(135deg);">
+                            <circle cx="70" cy="70" r="64" fill="#fff7e6" stroke="#f97316" stroke-width="3"/>
+                            <polygon points="70,14 63,70 77,70" fill="#c2410c"/>
+                            <polygon points="70,126 63,70 77,70" fill="#fde68a"/>
+                            <circle cx="70" cy="70" r="7" fill="#f97316"/>
+                            <text x="70" y="11" text-anchor="middle" font-size="12" font-weight="800" fill="#c2410c">N</text>
+                            <text x="70" y="135" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412">S</text>
+                            <text x="130" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412">E</text>
+                            <text x="10" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412">O</text>
+                        </svg>
+                        <div class="botones-lite">
+                            <button class="btn-lite" id="nv-btn-n" type="button" onclick="elegirBrujulaNV(0)">↑</button>
+                            <button class="btn-lite" id="nv-btn-s" type="button" onclick="elegirBrujulaNV(180)">↓</button>
+                            <button class="btn-lite" id="nv-btn-e" type="button" onclick="elegirBrujulaNV(90)">→</button>
+                            <button class="btn-lite" id="nv-btn-o" type="button" onclick="elegirBrujulaNV(-90)">←</button>
+                        </div>
+                    </div>
+                    <div id="feedback3b" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarBrujulaNV()">↺ Reiniciar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -779,19 +1441,55 @@
                         <div class="paso-indicador"></div>
                     </div>
                 </div>
-                
-                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
-                    <img src="/contenidos/matematicas/recursos/imagenes/libro-tabla-robot.jpg" alt="Tabla del robot" style="max-width: 200px; border-radius: 10px; border: 2px solid #f97316;">
-                </div>
-                
+
                 <div class="pie-imagen">
-                    El robot camina solo. Observa cómo avanza la barra
+                    El robot camina solo. Observa el patrón y luego resuelve los dos retos visuales.
                 </div>
             </div>
 
             <div class="frase-contexto" style="margin-top: 20px;">
-                ✅ Cada paso son 2 unidades. La barra muestra el avance
+                ✅ 2u por paso
             </div>
+
+            <div class="panel-retos-visuales dupla-lite">
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 1</h4>
+                    <p><strong>Ajusta a 12 unidades.</strong></p>
+                    <div class="stepper-card-lite" id="nv-stepper-card-a">
+                        <div class="stepper-track-lite">
+                            <div class="stepper-line-lite"></div>
+                            <div class="stepper-bot-lite" id="nv-bot-a">🤖</div>
+                        </div>
+                        <div class="stepper-info-lite" id="nv-info-a"><strong>0</strong> = 0u</div>
+                        <div class="stepper-buttons-lite">
+                            <button class="btn-lite" type="button" onclick="ajustarRobotNV('a', -1)">−</button>
+                            <button class="btn-lite" type="button" onclick="ajustarRobotNV('a', 1)">+</button>
+                        </div>
+                    </div>
+                    <div id="feedback4a" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarRobotNV('a')">↺ Reiniciar</button>
+                </div>
+
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 2</h4>
+                    <p><strong>Ajusta a 14 unidades.</strong><br>Son 2 más que el reto 1.</p>
+                    <div class="stepper-card-lite" id="nv-stepper-card-b">
+                        <div class="stepper-track-lite">
+                            <div class="stepper-line-lite"></div>
+                            <div class="stepper-bot-lite" id="nv-bot-b">🦾</div>
+                        </div>
+                        <div class="stepper-info-lite" id="nv-info-b"><strong>0</strong> = 0u</div>
+                        <div class="stepper-buttons-lite">
+                            <button class="btn-lite" type="button" onclick="ajustarRobotNV('b', -1)">−</button>
+                            <button class="btn-lite" type="button" onclick="ajustarRobotNV('b', 1)">+</button>
+                        </div>
+                    </div>
+                    <div id="feedback4b" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarRobotNV('b')">↺ Reiniciar</button>
+                </div>
+            </div>
+
+            <div id="feedback4" class="feedback-visual"></div>
         </div>
     </div>
 
@@ -806,7 +1504,7 @@
 
             <div class="contenedor-imagen">
                 <div class="ruta-animada">
-                    <img src="/contenidos/matematicas/recursos/imagenes/mapa-punto-a-b-camino.jpg" alt="Mapa con punto A y B">
+                    <img src="/contenidos/matematicas/recursos/imagenes/mapa-punto-a-b-camino.jpg" alt="Mapa con punto A y B" onclick="ampliarImagen(this)">
                     
                     <div class="linea-animada">
                         <svg viewBox="0 0 500 300">
@@ -828,10 +1526,45 @@
                 ✅ Observa cómo se traza el camino del punto A al punto B
             </div>
 
+            <div class="panel-retos-visuales">
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 1</h4>
+                    <p><strong>Arma una ruta de A1 a E3.</strong><br>Agrega flechas y luego prueba.</p>
+                    <div class="grid-ruta-lite" id="nv-grid-ruta-final"></div>
+                    <div class="arrow-pad-lite">
+                        <button class="arrow-btn-lite" type="button" onclick="agregarFlechaRutaNV('→')">→</button>
+                        <button class="arrow-btn-lite" type="button" onclick="agregarFlechaRutaNV('↓')">↓</button>
+                        <button class="arrow-btn-lite" type="button" onclick="agregarFlechaRutaNV('←')">←</button>
+                        <button class="arrow-btn-lite" type="button" onclick="agregarFlechaRutaNV('↑')">↑</button>
+                    </div>
+                    <div class="seq-lite" id="nv-ruta-seq"><span>Tu ruta</span></div>
+                    <div class="acciones-lite">
+                        <button class="btn-reset-lite" type="button" onclick="probarRutaNV()">Probar ruta</button>
+                        <button class="btn-reset-lite" type="button" onclick="limpiarRutaNV()">↺ Limpiar</button>
+                    </div>
+                    <div id="feedback5a" class="feedback-visual"></div>
+                </div>
+
+                <div class="actividad-visual-lite">
+                    <h4><i class="fas fa-eye me-2"></i>Reto 2</h4>
+                    <p><strong>Empieza en A1.</strong><br>Sigue la ruta: <strong>→ ↓ → ↓</strong>.</p>
+                    <div class="fichas-lite" id="nv-fichas-ruta">
+                        <div class="lite-stop" onclick="tocarParadaNV(this, 'C3')">C3</div>
+                        <div class="lite-stop" onclick="tocarParadaNV(this, 'B1')">B1</div>
+                        <div class="lite-stop" onclick="tocarParadaNV(this, 'C2')">C2</div>
+                        <div class="lite-stop" onclick="tocarParadaNV(this, 'B2')">B2</div>
+                    </div>
+                    <div class="zona-lite" id="nv-zona-ruta"><strong>A1 →</strong></div>
+                    <div id="feedback5b" class="feedback-visual"></div>
+                    <button class="btn-reset-lite" type="button" onclick="reiniciarParadasNV()">↺ Reiniciar</button>
+                </div>
+            </div>
+
             <!-- BOTÓN PARA IR AL QUIZ -->
-            <a href="quiz.html" class="boton-quiz text-center">
+            <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz">
                 <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
             </a>
+            <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa los dos retos de esta página para activar el quiz.</div>
         </div>
     </div>
 
@@ -848,21 +1581,163 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
     // ============================================
     // NAVEGACIÓN ENTRE PÁGINAS
     // ============================================
     let paginaActual = 1;
     const totalPaginas = 5;
+    const audioClick = document.getElementById('audioClick');
+    const audioDing = document.getElementById('audioDing');
+    const audioError = document.getElementById('audioError');
     const audioWhoosh = document.getElementById('audioWhoosh');
+    [audioClick, audioDing, audioError, audioWhoosh].forEach(audio => {
+        if (audio) audio.volume = 0.15;
+    });
+    const respuestasPagina = { 1:false, 2:false, 3:false, 4:false, 5:false };
+    const estadoRetosVisualNoVerbal = {
+        1:{ a:false, b:false },
+        2:{ a:false, b:false },
+        3:{ a:false, b:false },
+        4:{ a:false, b:false },
+        5:{ a:false, b:false }
+    };
+    const respuestasCorrectasNV = {
+        escuela: { calle1: '22', calle2: '18', avenida1: 'Zapata', avenida2: 'Reforma' },
+        parque: { calle1: '22', calle2: '14', avenida1: 'Zapata' },
+        hospital: { calle1: '24', calle2: '18', avenida1: '5 de Mayo' }
+    };
+
+    function compararGrupoFlexibleNV(respuestasLugar, respuestasEsperadas, claves) {
+        return claves
+            .map(clave => String(respuestasLugar[clave] || ''))
+            .sort()
+            .join('|') === claves
+            .map(clave => String(respuestasEsperadas[clave] || ''))
+            .sort()
+            .join('|');
+    }
+
+    function direccionCorrectaFlexibleNV(respuestasLugar, respuestasEsperadas) {
+        const callesOk = compararGrupoFlexibleNV(respuestasLugar, respuestasEsperadas, ['calle1', 'calle2']);
+        const clavesAvenida = Object.prototype.hasOwnProperty.call(respuestasEsperadas, 'avenida2')
+            ? ['avenida1', 'avenida2']
+            : ['avenida1'];
+        const avenidasOk = compararGrupoFlexibleNV(respuestasLugar, respuestasEsperadas, clavesAvenida);
+        return callesOk && avenidasOk;
+    }
+    const nvFilaMeta = ['A2', 'B2', 'C2', 'D2'];
+    const secuenciaMemoriaNV = ['↑', '↑', '→', '↓'];
+    const metasRobotsNV = {
+        a: { pasos: 6, unidades: 12 },
+        b: { pasos: 7, unidades: 14 }
+    };
+    const nvRutaCorrecta = ['B1', 'B2', 'C2', 'C3'];
+    const destinoRobotNV = 'D4';
+    const ejerciciosVisualNoVerbal = {
+        p1a: { pagina: 1, apartadoClave: 'pagina1_direcciones', tipoActividad: 'visual_no_verbal_completar' },
+        p1b: { pagina: 1, apartadoClave: 'pagina1_pistas_mapa', tipoActividad: 'visual_no_verbal_opcion' },
+        p2a: { pagina: 2, apartadoClave: 'pagina2_recorrido_robot', tipoActividad: 'visual_no_verbal_ruta' },
+        p2b: { pagina: 2, apartadoClave: 'pagina2_fila_b2', tipoActividad: 'visual_no_verbal_seleccion' },
+        p3a: { pagina: 3, apartadoClave: 'pagina3_secuencia_flechas', tipoActividad: 'visual_no_verbal_secuencia' },
+        p3b: { pagina: 3, apartadoClave: 'pagina3_brujula', tipoActividad: 'visual_no_verbal_direccion' },
+        p4a: { pagina: 4, apartadoClave: 'pagina4_robot_12u', tipoActividad: 'visual_no_verbal_stepper' },
+        p4b: { pagina: 4, apartadoClave: 'pagina4_robot_14u', tipoActividad: 'visual_no_verbal_stepper' },
+        p5a: { pagina: 5, apartadoClave: 'pagina5_ruta_e3', tipoActividad: 'visual_no_verbal_ruta' },
+        p5b: { pagina: 5, apartadoClave: 'pagina5_paradas', tipoActividad: 'visual_no_verbal_orden' }
+    };
+
+    let respuestasDireccionesNV = crearDireccionesVaciasNV();
+    let slotActivoNV = null;
+    let recorridoRobotNV = ['A1'];
+    let nvFilaMarcadas = new Set();
+    let secuenciaUsuarioNV = [];
+    let nvBrujulaResuelta = false;
+    let robotsNV = { a: 0, b: 0 };
+    let rutaConstruidaNV = [];
+    let nvRutaUsuario = [];
+    const completadosRegistroVisualNoVerbal = Object.fromEntries(Object.keys(ejerciciosVisualNoVerbal).map(clave => [clave, false]));
+    let sesionCompletadaVisualNoVerbal = false;
+    const trackerVisualNoVerbal = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'visual_no_verbal',
+        trackTime: false,
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_facil' },
+        apartados: ejerciciosVisualNoVerbal
+    }) : null;
+    const sessionTrackerVisualNoVerbal = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+        contenidoId: 5,
+        nivel: 'facil',
+        estilo: 'visual_no_verbal',
+        detalleBase: { bloque: 'identificar_coordenadas', archivo: 'visual_no_verbal_facil' }
+    }) : null;
+
+    function reproducir(audio) {
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    }
+
+    function paginaCompletaVisualNoVerbal(pagina) {
+        return !!(estadoRetosVisualNoVerbal[pagina] && estadoRetosVisualNoVerbal[pagina].a && estadoRetosVisualNoVerbal[pagina].b);
+    }
+
+    function todasPaginasCompletasVisualNoVerbal() {
+        for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+            if (!paginaCompletaVisualNoVerbal(pagina)) return false;
+        }
+        return true;
+    }
+
+    function claveEjercicioVisualNoVerbal(pagina, reto) {
+        return `p${pagina}${reto}`;
+    }
+
+    function registrarIntentoVisualNoVerbal(pagina, reto, correcto, detalle = {}) {
+        const clave = claveEjercicioVisualNoVerbal(pagina, reto);
+        const config = ejerciciosVisualNoVerbal[clave];
+        if (!config) return;
+
+        if (trackerVisualNoVerbal) {
+            trackerVisualNoVerbal.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+        }
+
+        if (correcto) {
+            if (!completadosRegistroVisualNoVerbal[clave]) {
+                completadosRegistroVisualNoVerbal[clave] = true;
+                if (trackerVisualNoVerbal) {
+                    trackerVisualNoVerbal.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                }
+            }
+        } else if (trackerVisualNoVerbal) {
+            trackerVisualNoVerbal.addError(clave, { pagina, ejercicio: clave, ...detalle });
+        }
+
+        if (!sesionCompletadaVisualNoVerbal && todasPaginasCompletasVisualNoVerbal()) {
+            sesionCompletadaVisualNoVerbal = true;
+            if (trackerVisualNoVerbal) trackerVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+            if (sessionTrackerVisualNoVerbal) sessionTrackerVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
+        }
+    }
 
     function cambiarPagina(direccion) {
+        if (direccion > 0 && !paginaCompletaVisualNoVerbal(paginaActual)) {
+            reproducir(audioError);
+            const feedbackId = estadoRetosVisualNoVerbal[paginaActual].a ? `feedback${paginaActual}b` : `feedback${paginaActual}a`;
+            mostrarFeedbackNV(feedbackId, 'error', 'Completa los dos retos de esta página antes de avanzar.');
+            return;
+        }
+        const siguientePagina = paginaActual + direccion;
+        if (siguientePagina < 1 || siguientePagina > totalPaginas) return;
         document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual += direccion;
+        paginaActual = siguientePagina;
         document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-        audioWhoosh.play();
+        reproducir(audioWhoosh);
         actualizarUI();
-        localStorage.setItem('progreso_facil_visualnoverbal_coordenadas', paginaActual);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function actualizarUI() {
@@ -870,27 +1745,574 @@
             const numPagina = index + 1;
             punto.classList.remove('activo', 'completado');
             if (numPagina === paginaActual) punto.classList.add('activo');
+            else if (paginaCompletaVisualNoVerbal(numPagina)) punto.classList.add('completado');
         });
 
         document.getElementById('paginaActualNum').innerText = paginaActual;
         document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
         document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
-    }
+        document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas || !paginaCompletaVisualNoVerbal(paginaActual));
 
-    // ============================================
-    // INICIALIZACIÓN
-    // ============================================
-    window.addEventListener('DOMContentLoaded', () => {
-        const guardado = localStorage.getItem('progreso_facil_visualnoverbal_coordenadas');
-        if (guardado) {
-            const pag = parseInt(guardado, 10);
-            if (pag >= 1 && pag <= totalPaginas) {
-                document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-                paginaActual = pag;
-                document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+        const botonQuiz = document.getElementById('botonQuiz');
+        const textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+        if (botonQuiz && textoAyudaQuiz) {
+            if (todasPaginasCompletasVisualNoVerbal()) {
+                botonQuiz.classList.remove('bloqueado');
+                textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+            } else {
+                botonQuiz.classList.add('bloqueado');
+                textoAyudaQuiz.textContent = 'Completa los dos retos de esta página para activar el quiz.';
             }
         }
+
+        if (trackerVisualNoVerbal) trackerVisualNoVerbal.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+    }
+
+    function crearDireccionesVaciasNV() {
+        return {
+            escuela: { calle1: null, calle2: null, avenida1: null, avenida2: null },
+            parque: { calle1: null, calle2: null, avenida1: null },
+            hospital: { calle1: null, calle2: null, avenida1: null }
+        };
+    }
+
+    function mostrarFeedbackNV(id, tipo, mensaje) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = 'block';
+        if (tipo === 'success') el.className = 'feedback-visual bg-success text-white';
+        else if (tipo === 'error') el.className = 'feedback-visual bg-danger text-white';
+        else el.className = 'feedback-visual bg-warning';
+        el.innerHTML = mensaje;
+    }
+
+    function ocultarFeedbackNV(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = 'none';
+        el.innerHTML = '';
+    }
+
+    function actualizarEstadoPaginaNV(pagina) {
+        respuestasPagina[pagina] = paginaCompletaVisualNoVerbal(pagina);
+        actualizarUI();
+    }
+
+    function activarSlotNV(lugar, posicion, tipo) {
+        if (estadoRetosVisualNoVerbal[1].a) return;
+        reproducir(audioClick);
+        slotActivoNV = { lugar, posicion, tipo };
+        document.querySelectorAll('.slot-lite').forEach(el => el.classList.remove('activo'));
+        document.getElementById(`nv-${lugar}-${posicion}`).classList.add('activo');
+        mostrarFeedbackNV('feedback1a', 'info', 'Espacio listo. Ahora toca una ficha.');
+    }
+
+    function colocarFichaNV(tipo, valor) {
+        if (estadoRetosVisualNoVerbal[1].a) return;
+        reproducir(audioClick);
+
+        if (!slotActivoNV) {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(1, 'a', false, { actividad: 'completar_direcciones', error: 'sin_espacio_activo' });
+            mostrarFeedbackNV('feedback1a', 'error', 'Primero toca un espacio.');
+            return;
+        }
+
+        if (slotActivoNV.tipo !== tipo) {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(1, 'a', false, { actividad: 'completar_direcciones', error: 'tipo_incorrecto', tipo });
+            mostrarFeedbackNV('feedback1a', 'error', 'Ese espacio necesita otro tipo de ficha.');
+            return;
+        }
+
+        respuestasDireccionesNV[slotActivoNV.lugar][slotActivoNV.posicion] = valor;
+        const el = document.getElementById(`nv-${slotActivoNV.lugar}-${slotActivoNV.posicion}`);
+        el.textContent = valor;
+        el.classList.add('lleno');
+        el.classList.remove('activo');
+        slotActivoNV = null;
+        verificarDireccionesNV();
+    }
+
+    function verificarDireccionesNV() {
+        const escuelaCompleta = respuestasDireccionesNV.escuela.calle1 && respuestasDireccionesNV.escuela.calle2 && respuestasDireccionesNV.escuela.avenida1 && respuestasDireccionesNV.escuela.avenida2;
+        const parqueCompleto = respuestasDireccionesNV.parque.calle1 && respuestasDireccionesNV.parque.calle2 && respuestasDireccionesNV.parque.avenida1;
+        const hospitalCompleto = respuestasDireccionesNV.hospital.calle1 && respuestasDireccionesNV.hospital.calle2 && respuestasDireccionesNV.hospital.avenida1;
+
+        if (!(escuelaCompleta && parqueCompleto && hospitalCompleto)) {
+            mostrarFeedbackNV('feedback1a', 'info', 'Sigue completando las direcciones.');
+            return;
+        }
+
+        const escuelaOk = direccionCorrectaFlexibleNV(respuestasDireccionesNV.escuela, respuestasCorrectasNV.escuela);
+        const parqueOk = direccionCorrectaFlexibleNV(respuestasDireccionesNV.parque, respuestasCorrectasNV.parque);
+        const hospitalOk = direccionCorrectaFlexibleNV(respuestasDireccionesNV.hospital, respuestasCorrectasNV.hospital);
+
+        if (escuelaOk && parqueOk && hospitalOk) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[1].a = true;
+            registrarIntentoVisualNoVerbal(1, 'a', true, { actividad: 'completar_direcciones' });
+            mostrarFeedbackNV('feedback1a', 'success', '✅ Muy bien. Completaste las direcciones.');
+        } else {
+            reproducir(audioError);
+            estadoRetosVisualNoVerbal[1].a = false;
+            registrarIntentoVisualNoVerbal(1, 'a', false, { actividad: 'completar_direcciones' });
+            mostrarFeedbackNV('feedback1a', 'error', '❌ Algunas direcciones no coinciden. Revisa calle y avenida.');
+        }
+
+        actualizarEstadoPaginaNV(1);
+    }
+
+    function reiniciarDireccionesNV() {
+        respuestasDireccionesNV = crearDireccionesVaciasNV();
+        slotActivoNV = null;
+        document.querySelectorAll('.slot-lite').forEach(el => {
+            el.textContent = '?';
+            el.classList.remove('activo', 'lleno');
+        });
+        estadoRetosVisualNoVerbal[1].a = false;
+        ocultarFeedbackNV('feedback1a');
+        actualizarEstadoPaginaNV(1);
+    }
+
+    function tocarPostalNV(el) {
+        if (estadoRetosVisualNoVerbal[1].b) return;
+        reproducir(audioClick);
+        const esCorrecta = el.dataset.correcto === 'true';
+        const cards = document.querySelectorAll('#nv-mapa-p1 .lite-card');
+
+        if (esCorrecta) {
+            reproducir(audioDing);
+            el.classList.add('correcta');
+            cards.forEach(card => { if (card !== el) card.style.opacity = '0.35'; });
+            estadoRetosVisualNoVerbal[1].b = true;
+            registrarIntentoVisualNoVerbal(1, 'b', true, { actividad: 'mapa_pistas', opcion: el.textContent.trim() });
+            mostrarFeedbackNV('feedback1b', 'success', '✅ Correcto. Esa tarjeta cumple las pistas.');
+            actualizarEstadoPaginaNV(1);
+            return;
+        }
+
+        reproducir(audioError);
+        registrarIntentoVisualNoVerbal(1, 'b', false, { actividad: 'mapa_pistas', opcion: el.textContent.trim() });
+        el.classList.add('error');
+        mostrarFeedbackNV('feedback1b', 'error', '❌ Esa tarjeta no cumple las pistas.');
+        setTimeout(() => el.classList.remove('error'), 800);
+    }
+
+    function reiniciarPostalNV() {
+        document.querySelectorAll('#nv-mapa-p1 .lite-card').forEach(card => {
+            card.classList.remove('correcta', 'error');
+            card.style.opacity = '1';
+        });
+        estadoRetosVisualNoVerbal[1].b = false;
+        ocultarFeedbackNV('feedback1b');
+        actualizarEstadoPaginaNV(1);
+    }
+
+    function construirRecorridoNV() {
+        const grid = document.getElementById('nv-grid-recorrido');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        for (let fila = 1; fila <= 5; fila++) {
+            for (let col = 1; col <= 5; col++) {
+                const letra = String.fromCharCode(64 + col);
+                const id = `${letra}${fila}`;
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className = 'route-cell-lite';
+                if (recorridoRobotNV.includes(id)) cell.classList.add('visitada');
+                if (id === recorridoRobotNV[recorridoRobotNV.length - 1]) cell.classList.add('actual');
+                if (id === destinoRobotNV) cell.classList.add('destino');
+                cell.innerHTML = `<span class="coord-lite">${id}</span><span class="mark-lite">${id === recorridoRobotNV[recorridoRobotNV.length - 1] ? '🤖' : id === destinoRobotNV ? '🎯' : recorridoRobotNV.includes(id) ? '•' : ''}</span>`;
+                cell.onclick = () => moverRobotNV(id);
+                grid.appendChild(cell);
+            }
+        }
+
+        document.getElementById('nv-estado-recorrido').innerHTML = recorridoRobotNV.map(punto => `<span class="arrow-chip-lite">${punto}</span>`).join('');
+    }
+
+    function moverRobotNV(id) {
+        if (estadoRetosVisualNoVerbal[2].a) return;
+        const ultima = recorridoRobotNV[recorridoRobotNV.length - 1];
+        const dLetra = Math.abs(id.charCodeAt(0) - ultima.charCodeAt(0));
+        const dFila = Math.abs(parseInt(id.slice(1), 10) - parseInt(ultima.slice(1), 10));
+
+        if (dLetra + dFila !== 1) {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(2, 'a', false, { actividad: 'recorrido_robot', desde: ultima, intento: id });
+            mostrarFeedbackNV('feedback2a', 'error', '❌ Solo puedes tocar una casilla vecina.');
+            return;
+        }
+
+        reproducir(audioClick);
+        recorridoRobotNV.push(id);
+        construirRecorridoNV();
+
+        if (id === destinoRobotNV) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[2].a = true;
+            registrarIntentoVisualNoVerbal(2, 'a', true, { actividad: 'recorrido_robot', destino: id, pasos: recorridoRobotNV.length - 1 });
+            mostrarFeedbackNV('feedback2a', 'success', '✅ Llegaste a D4.');
+        } else {
+            mostrarFeedbackNV('feedback2a', 'info', 'Sigue avanzando hasta D4.');
+        }
+
+        actualizarEstadoPaginaNV(2);
+    }
+
+    function reiniciarRecorridoNV() {
+        recorridoRobotNV = ['A1'];
+        estadoRetosVisualNoVerbal[2].a = false;
+        construirRecorridoNV();
+        ocultarFeedbackNV('feedback2a');
+        actualizarEstadoPaginaNV(2);
+    }
+
+    function construirFilaNV() {
+        const grid = document.getElementById('nv-grid-p2');
+        if (!grid) return;
+        grid.innerHTML = '';
+        nvFilaMarcadas.clear();
+        const cols = ['A', 'B', 'C', 'D'];
+        for (let fila = 1; fila <= 4; fila++) {
+            for (let col = 0; col < 4; col++) {
+                const id = cols[col] + fila;
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                cell.className = 'lite-cell';
+                cell.textContent = id;
+                cell.onclick = () => marcarFilaNV(cell, id);
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function marcarFilaNV(el, id) {
+        if (el.classList.contains('correcta') || estadoRetosVisualNoVerbal[2].b) return;
+        reproducir(audioClick);
+        if (!nvFilaMeta.includes(id)) {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(2, 'b', false, { actividad: 'marcar_fila', intento: id });
+            el.classList.add('error');
+            mostrarFeedbackNV('feedback2b', 'error', '❌ Esa casilla no está en la fila de B2.');
+            setTimeout(() => el.classList.remove('error'), 800);
+            return;
+        }
+
+        el.classList.add('correcta');
+        nvFilaMarcadas.add(id);
+        if (nvFilaMarcadas.size === nvFilaMeta.length) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[2].b = true;
+            registrarIntentoVisualNoVerbal(2, 'b', true, { actividad: 'marcar_fila', total: nvFilaMarcadas.size });
+            mostrarFeedbackNV('feedback2b', 'success', '✅ Marcaste la fila correcta.');
+        } else {
+            mostrarFeedbackNV('feedback2b', 'info', `Llevas ${nvFilaMarcadas.size} de 4.`);
+        }
+
+        actualizarEstadoPaginaNV(2);
+    }
+
+    function reiniciarFilaNV() {
+        construirFilaNV();
+        estadoRetosVisualNoVerbal[2].b = false;
+        ocultarFeedbackNV('feedback2b');
+        actualizarEstadoPaginaNV(2);
+    }
+
+    function renderSecuenciaRespuestaNV() {
+        const contenedor = document.getElementById('nv-secuencia-respuesta');
+        if (!contenedor) return;
+        if (!secuenciaUsuarioNV.length) {
+            contenedor.innerHTML = '<span>Tu secuencia</span>';
+            return;
+        }
+        contenedor.innerHTML = secuenciaUsuarioNV.map(flecha => `<span class="arrow-chip-lite">${flecha}</span>`).join('');
+    }
+
+    function mostrarSecuenciaNV() {
+        reproducir(audioClick);
+        document.getElementById('nv-secuencia-modelo').innerHTML = secuenciaMemoriaNV.map(flecha => `<span class="arrow-chip-lite">${flecha}</span>`).join('');
+        mostrarFeedbackNV('feedback3a', 'info', 'Observa la secuencia y luego repítela.');
+    }
+
+    function seleccionarFlechaNV(flecha) {
+        if (estadoRetosVisualNoVerbal[3].a) return;
+        if (secuenciaUsuarioNV.length >= secuenciaMemoriaNV.length) return;
+        reproducir(audioClick);
+        secuenciaUsuarioNV.push(flecha);
+        renderSecuenciaRespuestaNV();
+
+        if (secuenciaUsuarioNV.length < secuenciaMemoriaNV.length) {
+            mostrarFeedbackNV('feedback3a', 'info', `Llevas ${secuenciaUsuarioNV.length} de 4 flechas.`);
+            return;
+        }
+
+        const correcta = secuenciaMemoriaNV.every((item, index) => item === secuenciaUsuarioNV[index]);
+        if (correcta) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[3].a = true;
+            registrarIntentoVisualNoVerbal(3, 'a', true, { actividad: 'repetir_secuencia', respuesta: secuenciaUsuarioNV.join('') });
+            mostrarFeedbackNV('feedback3a', 'success', '✅ Secuencia correcta.');
+        } else {
+            reproducir(audioError);
+            estadoRetosVisualNoVerbal[3].a = false;
+            registrarIntentoVisualNoVerbal(3, 'a', false, { actividad: 'repetir_secuencia', respuesta: secuenciaUsuarioNV.join('') });
+            mostrarFeedbackNV('feedback3a', 'error', '❌ La secuencia no coincide.');
+        }
+
+        actualizarEstadoPaginaNV(3);
+    }
+
+    function reiniciarSecuenciaNV() {
+        secuenciaUsuarioNV = [];
+        estadoRetosVisualNoVerbal[3].a = false;
+        document.getElementById('nv-secuencia-modelo').innerHTML = '<span>👀</span>';
+        renderSecuenciaRespuestaNV();
+        ocultarFeedbackNV('feedback3a');
+        actualizarEstadoPaginaNV(3);
+    }
+
+    function elegirBrujulaNV(angulo) {
+        if (nvBrujulaResuelta) return;
+        reproducir(audioClick);
+        document.getElementById('nv-brujula').style.transform = `rotate(${angulo}deg)`;
+        ['nv-btn-n', 'nv-btn-s', 'nv-btn-e', 'nv-btn-o'].forEach(id => document.getElementById(id).classList.remove('activo'));
+        const map = { 0: 'nv-btn-n', 180: 'nv-btn-s', 90: 'nv-btn-e', '-90': 'nv-btn-o' };
+        document.getElementById(map[String(angulo)]).classList.add('activo');
+        if (angulo === 0) {
+            reproducir(audioDing);
+            nvBrujulaResuelta = true;
+            estadoRetosVisualNoVerbal[3].b = true;
+            registrarIntentoVisualNoVerbal(3, 'b', true, { actividad: 'direccion_opuesta', angulo });
+            mostrarFeedbackNV('feedback3b', 'success', '✅ Correcto. Esa es la dirección opuesta al sur.');
+        } else {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(3, 'b', false, { actividad: 'direccion_opuesta', angulo });
+            mostrarFeedbackNV('feedback3b', 'error', '❌ Esa no es la dirección opuesta al sur.');
+        }
+
+        actualizarEstadoPaginaNV(3);
+    }
+
+    function reiniciarBrujulaNV() {
+        nvBrujulaResuelta = false;
+        estadoRetosVisualNoVerbal[3].b = false;
+        document.getElementById('nv-brujula').style.transform = 'rotate(135deg)';
+        ['nv-btn-n', 'nv-btn-s', 'nv-btn-e', 'nv-btn-o'].forEach(id => document.getElementById(id).classList.remove('activo'));
+        ocultarFeedbackNV('feedback3b');
+        actualizarEstadoPaginaNV(3);
+    }
+
+    function renderRobotNV(id) {
+        const pasos = robotsNV[id];
+        const unidades = pasos * 2;
+        document.getElementById(`nv-info-${id}`).innerHTML = `<strong>${pasos}</strong> = ${unidades}u`;
+        document.getElementById(`nv-bot-${id}`).style.left = `${(pasos / 10) * 100}%`;
+        document.getElementById(`nv-stepper-card-${id}`).classList.toggle('ok', estadoRetosVisualNoVerbal[4][id]);
+    }
+
+    function actualizarEstadoPagina4NV() {
+        if (estadoRetosVisualNoVerbal[4].a && estadoRetosVisualNoVerbal[4].b) {
+            mostrarFeedbackNV('feedback4', 'success', '✅ Ya resolviste los dos retos.');
+        } else {
+            ocultarFeedbackNV('feedback4');
+        }
+        actualizarEstadoPaginaNV(4);
+    }
+
+    function ajustarRobotNV(id, delta) {
+        if (estadoRetosVisualNoVerbal[4][id]) return;
+        reproducir(audioClick);
+        robotsNV[id] = Math.max(0, Math.min(10, robotsNV[id] + delta));
+        renderRobotNV(id);
+
+        const meta = metasRobotsNV[id];
+        if (robotsNV[id] === meta.pasos) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[4][id] = true;
+            registrarIntentoVisualNoVerbal(4, id, true, { actividad: 'pasos_unidades', pasos: meta.pasos, unidades: meta.unidades });
+            mostrarFeedbackNV(`feedback4${id}`, 'success', `✅ Correcto. Llegaste a ${meta.unidades} unidades.`);
+        } else {
+            mostrarFeedbackNV(`feedback4${id}`, 'info', `Ahora va en ${robotsNV[id] * 2} unidades.`);
+        }
+
+        actualizarEstadoPagina4NV();
+    }
+
+    function reiniciarRobotNV(id) {
+        robotsNV[id] = 0;
+        estadoRetosVisualNoVerbal[4][id] = false;
+        renderRobotNV(id);
+        ocultarFeedbackNV(`feedback4${id}`);
+        actualizarEstadoPagina4NV();
+    }
+
+    function construirGridRutaNV() {
+        const grid = document.getElementById('nv-grid-ruta-final');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        for (let fila = 1; fila <= 5; fila++) {
+            for (let col = 1; col <= 5; col++) {
+                const letra = String.fromCharCode(64 + col);
+                const id = `${letra}${fila}`;
+                const cell = document.createElement('div');
+                cell.className = 'route-cell-lite';
+                if (id === 'A1') cell.classList.add('visitada');
+                if (id === 'E3') cell.classList.add('destino');
+                cell.innerHTML = `<span class="coord-lite">${id}</span><span class="mark-lite">${id === 'A1' ? '🏠' : id === 'E3' ? '🎯' : ''}</span>`;
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function renderRutaConstruidaNV() {
+        const contenedor = document.getElementById('nv-ruta-seq');
+        if (!contenedor) return;
+        if (!rutaConstruidaNV.length) {
+            contenedor.innerHTML = '<span>Tu ruta</span>';
+            return;
+        }
+        contenedor.innerHTML = rutaConstruidaNV.map(flecha => `<span class="arrow-chip-lite">${flecha}</span>`).join('');
+    }
+
+    function agregarFlechaRutaNV(flecha) {
+        if (estadoRetosVisualNoVerbal[5].a) return;
+        reproducir(audioClick);
+        rutaConstruidaNV.push(flecha);
+        renderRutaConstruidaNV();
+        mostrarFeedbackNV('feedback5a', 'info', `Llevas ${rutaConstruidaNV.length} movimientos.`);
+    }
+
+    function probarRutaNV() {
+        if (estadoRetosVisualNoVerbal[5].a) return;
+        let este = 0, sur = 0, oeste = 0, norte = 0;
+        rutaConstruidaNV.forEach(flecha => {
+            if (flecha === '→') este++;
+            if (flecha === '↓') sur++;
+            if (flecha === '←') oeste++;
+            if (flecha === '↑') norte++;
+        });
+
+        if (este === 4 && sur === 2 && oeste === 0 && norte === 0) {
+            reproducir(audioDing);
+            estadoRetosVisualNoVerbal[5].a = true;
+            registrarIntentoVisualNoVerbal(5, 'a', true, { actividad: 'ruta_libre', este, sur, oeste, norte });
+            mostrarFeedbackNV('feedback5a', 'success', '✅ Ruta correcta. Llegaste a E3.');
+        } else {
+            reproducir(audioError);
+            estadoRetosVisualNoVerbal[5].a = false;
+            registrarIntentoVisualNoVerbal(5, 'a', false, { actividad: 'ruta_libre', este, sur, oeste, norte });
+            mostrarFeedbackNV('feedback5a', 'error', '❌ Esa ruta no llega a E3. Necesitas 4 → y 2 ↓.');
+        }
+
+        actualizarEstadoPaginaNV(5);
+    }
+
+    function limpiarRutaNV() {
+        rutaConstruidaNV = [];
+        estadoRetosVisualNoVerbal[5].a = false;
+        renderRutaConstruidaNV();
+        ocultarFeedbackNV('feedback5a');
+        actualizarEstadoPaginaNV(5);
+    }
+
+    function tocarParadaNV(el, valor) {
+        if (el.classList.contains('usada') || estadoRetosVisualNoVerbal[5].b) return;
+        reproducir(audioClick);
+        const siguiente = nvRutaCorrecta[nvRutaUsuario.length];
+        if (valor === siguiente) {
+            el.classList.add('usada');
+            nvRutaUsuario.push(valor);
+            const chip = document.createElement('div');
+            chip.className = 'chip-lite';
+            chip.textContent = valor;
+            document.getElementById('nv-zona-ruta').appendChild(chip);
+            if (nvRutaUsuario.length === nvRutaCorrecta.length) {
+                reproducir(audioDing);
+                estadoRetosVisualNoVerbal[5].b = true;
+                registrarIntentoVisualNoVerbal(5, 'b', true, { actividad: 'ordenar_paradas', ruta: nvRutaUsuario.join('>') });
+                mostrarFeedbackNV('feedback5b', 'success', '✅ Ruta correcta. Ordenaste las paradas.');
+            } else {
+                mostrarFeedbackNV('feedback5b', 'info', 'Bien. Sigue con la siguiente parada.');
+            }
+        } else {
+            reproducir(audioError);
+            registrarIntentoVisualNoVerbal(5, 'b', false, { actividad: 'ordenar_paradas', intento: valor, posicion: nvRutaUsuario.length + 1 });
+            el.classList.add('error');
+            mostrarFeedbackNV('feedback5b', 'error', '❌ Esa no es la siguiente parada.');
+            setTimeout(() => el.classList.remove('error'), 800);
+        }
+
+        actualizarEstadoPaginaNV(5);
+    }
+
+    function reiniciarParadasNV() {
+        nvRutaUsuario = [];
+        estadoRetosVisualNoVerbal[5].b = false;
+        document.querySelectorAll('#nv-fichas-ruta .lite-stop').forEach(el => el.classList.remove('usada', 'error'));
+        document.getElementById('nv-zona-ruta').innerHTML = '<strong>A1 →</strong>';
+        ocultarFeedbackNV('feedback5b');
+        actualizarEstadoPaginaNV(5);
+    }
+
+    function ampliarImagen(img) {
+        if (img.classList.contains('ampliada')) {
+            img.classList.remove('ampliada');
+            document.body.classList.remove('imagen-ampliada');
+        } else {
+            document.querySelectorAll('.ampliada').forEach(i => i.classList.remove('ampliada'));
+            img.classList.add('ampliada');
+            document.body.classList.add('imagen-ampliada');
+        }
+    }
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.classList.contains('ampliada') && !event.target.closest('.contenedor-imagen')) {
+            document.querySelectorAll('.ampliada').forEach(img => img.classList.remove('ampliada'));
+            document.body.classList.remove('imagen-ampliada');
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const botonQuizVisualNoVerbal = document.getElementById('botonQuiz');
+        if (botonQuizVisualNoVerbal) {
+            botonQuizVisualNoVerbal.addEventListener('click', event => {
+                if (!todasPaginasCompletasVisualNoVerbal()) {
+                    event.preventDefault();
+                    reproducir(audioError);
+                    mostrarFeedbackNV('feedback5b', 'error', 'Completa los dos retos finales antes de entrar al quiz.');
+                    return;
+                }
+                reproducir(audioClick);
+            });
+        }
+
+        if (sessionTrackerVisualNoVerbal) {
+            sessionTrackerVisualNoVerbal.start();
+            sessionTrackerVisualNoVerbal.attachQuizLinks('.boton-quiz', () => {
+                return { eventoCierre: 'quiz' };
+            });
+        }
+
+        reiniciarDireccionesNV();
+        reiniciarPostalNV();
+        reiniciarRecorridoNV();
+        construirFilaNV();
+        ocultarFeedbackNV('feedback2b');
+        reiniciarSecuenciaNV();
+        reiniciarBrujulaNV();
+        renderRobotNV('a');
+        renderRobotNV('b');
+        ocultarFeedbackNV('feedback4a');
+        ocultarFeedbackNV('feedback4b');
+        ocultarFeedbackNV('feedback4');
+        construirGridRutaNV();
+        limpiarRutaNV();
+        reiniciarParadasNV();
         actualizarUI();
     });
 </script>

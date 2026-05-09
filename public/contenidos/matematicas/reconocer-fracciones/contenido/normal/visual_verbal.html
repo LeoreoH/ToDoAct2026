@@ -1,863 +1,1831 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fracciones · Nivel Normal · Visual/Verbal</title>
+  <title>Reconocer fracciones &middot; Nivel Normal &middot; Visual/Verbal</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #f3e5f5, #ede7f6);
-      color: #4a148c;
-      min-height: 100vh;
+    *{box-sizing:border-box}
+    :root{
+      --m:#7b1fa2;
+      --m2:#5e35b1;
+      --l:#ede7f6;
+      --s:#d1c4e9;
+      --a:#ffd54f;
+      --v:#43a047;
+      --r:#e53935;
+      --t:#4a148c;
+      --cream:#fff8e1;
+      --pink:#fce4ec;
+      --orange:#ffb74d;
+      --brown:#6d4c41;
     }
 
-    .cabecera-normal {
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
-      padding: 30px 20px;
-      border-bottom: 6px solid #ffd54f;
-      text-align: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      color: white;
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Nunito',sans-serif;
+      background:linear-gradient(135deg,#f3e5f5,#ede7f6);
+      color:var(--t);
     }
 
-    .cabecera-normal h1 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 3rem;
-      color: white;
-      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
-      margin-bottom: 6px;
+    .cabecera{
+      position:relative;
+      text-align:center;
+      color:#fff;
+      padding:28px 18px;
+      background:linear-gradient(135deg,#8e24aa,#5e35b1);
+      border-bottom:6px solid var(--a);
+      box-shadow:0 10px 24px rgba(0,0,0,.16);
     }
 
-    .badge-estilo {
-      background: #ffd54f;
-      color: #4a148c;
-      padding: 12px 35px;
-      border-radius: 50px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      display: inline-block;
-      border: 4px solid white;
-      margin-top: 10px;
+    .cabecera h1{
+      margin:0;
+      font-family:'Fredoka One',cursive;
+      font-size:2.5rem;
     }
 
-    .badge-nivel {
-      background: #4a148c;
-      color: white;
-      padding: 8px 25px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1rem;
-      display: inline-block;
-      margin-left: 15px;
-      border: 2px solid #ffd54f;
+    .subtitulo{
+      margin-top:8px;
+      font-weight:800;
+      letter-spacing:.2px;
     }
 
-    .barra-progreso {
-      background: white;
-      border-radius: 60px;
-      margin: 25px auto;
-      max-width: 950px;
-      padding: 15px 26px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 5px 0 #d1c4e9;
-      flex-wrap: wrap;
+    .badge-estilo{
+      display:inline-block;
+      margin-top:12px;
+      padding:10px 22px;
+      border-radius:999px;
+      background:var(--a);
+      color:var(--t);
+      border:3px solid #fff;
+      font-weight:800;
+      box-shadow:0 4px 0 #d39e00;
     }
 
-    .puntos-progreso {
-      display: flex;
-      gap: 12px;
-      flex: 1;
-      justify-content: center;
-      flex-wrap: wrap;
+    .btn-volver-menu{
+      position:absolute;
+      top:16px;
+      left:16px;
+      width:54px;
+      height:54px;
+      border:3px solid #fff;
+      border-radius:50%;
+      background:var(--a);
+      color:var(--t);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.2rem;
+      cursor:pointer;
+      box-shadow:0 4px 0 #d39e00;
+      transition:.2s;
     }
 
-    .punto {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #e1bee7;
-      border: 3px solid #7b1fa2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: #4a148c;
-      transition: all 0.3s;
+    .btn-volver-menu:hover{transform:translateY(-2px);background:#fff3c4}
+
+    .progreso,.navegador{
+      max-width:1020px;
+      margin:22px auto 0;
+      padding:12px 16px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:#fff;
+      border:3px solid var(--m);
+      border-radius:999px;
+      box-shadow:0 6px 0 var(--s);
     }
 
-    .punto.activo {
-      background: #ffd54f;
-      border-color: #7b1fa2;
-      color: #4a148c;
-      transform: scale(1.15);
+    .navegador{
+      justify-content:space-between;
+      margin-top:16px;
+      padding:14px 20px;
     }
 
-    .punto.completado {
-      background: #4caf50;
-      border-color: white;
-      color: white;
+    .progreso-texto,.contador{
+      font-weight:800;
+      color:#6a1b9a;
     }
 
-    .contenedor-paginas {
-      max-width: 1000px;
-      margin: 0 auto 40px;
-      padding: 0 20px;
+    .contador{
+      padding:8px 16px;
+      border-radius:999px;
+      background:#f3e5f5;
+      border:2px solid #ce93d8;
     }
 
-    .pagina {
-      display: none;
-      animation: aparecer 0.5s ease;
+    .barra-fondo{
+      flex:1;
+      min-width:160px;
+      height:14px;
+      background:var(--l);
+      border-radius:999px;
+      overflow:hidden;
+      border:2px solid var(--s);
     }
 
-    .pagina.activa {
-      display: block;
+    .barra-relleno{
+      width:12.5%;
+      height:100%;
+      background:linear-gradient(90deg,#ab47bc,#7e57c2);
+      transition:width .3s;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .progreso-num{
+      padding:7px 14px;
+      border-radius:999px;
+      background:var(--m);
+      color:#fff;
+      font-weight:800;
     }
 
-    .tarjeta-contenido {
-      background: white;
-      border-radius: 30px;
-      padding: 30px;
-      margin-bottom: 25px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 8px 0 #d1c4e9;
+    .contenedor{
+      max-width:1080px;
+      margin:24px auto 42px;
+      padding:0 16px;
     }
 
-    .titulo-pagina {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2rem;
-      color: #6a1b9a;
-      margin-bottom: 22px;
-      border-left: 8px solid #ffd54f;
-      padding-left: 20px;
+    .pagina{
+      display:none;
+      animation:aparecer .3s ease;
     }
 
-    .subtitulo {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #7b1fa2;
-      margin: 24px 0 14px;
+    .pagina.activa{display:block}
+
+    @keyframes aparecer{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
-    .recuadro-datos {
-      background: #faf5ff;
-      border-radius: 20px;
-      padding: 20px;
-      margin: 20px 0;
-      border-left: 8px solid #ffd54f;
+    .tarjeta{
+      background:#fff;
+      border-radius:32px;
+      border:3px solid var(--m);
+      box-shadow:0 12px 0 var(--s);
+      padding:34px 36px;
     }
 
-    .recuadro-datos h4 {
-      color: #6a1b9a;
-      font-weight: 800;
-      margin-bottom: 15px;
+    .titulo-pagina{
+      margin-bottom:20px;
+      padding-left:18px;
+      border-left:8px solid var(--a);
+      font-family:'Fredoka One',cursive;
+      font-size:2.05rem;
+      color:#6a1b9a;
     }
 
-    .lista-iconos {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .texto-destacado,.modelo,.actividad,.panel,.recta-wrap,.mini-modelo,.reglas-panel{
+      border-radius:24px;
     }
 
-    .lista-iconos li {
-      padding: 8px 0;
-      display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      border-bottom: 1px solid #e1bee7;
+    .texto-destacado{
+      margin-bottom:24px;
+      padding:20px 22px;
+      background:#faf5ff;
+      border:2px dashed #ce93d8;
+      color:#5e35b1;
+      font-weight:700;
+      line-height:1.7;
     }
 
-    .lista-iconos li:last-child {
-      border-bottom: none;
+    .modelo,.panel,.recta-wrap,.mini-modelo,.reglas-panel{
+      background:#fff;
+      border:2px solid var(--s);
+      padding:24px;
     }
 
-    .lista-iconos i {
-      color: #ffd54f;
-      font-size: 1.2rem;
-      width: 28px;
-      margin-top: 2px;
-      flex-shrink: 0;
+    .modelo{
+      margin:24px 0 16px;
+      text-align:center;
     }
 
-    .texto-destacado {
-      background: #fff8e1;
-      border: 2px solid #ffd54f;
-      border-radius: 15px;
-      padding: 15px 20px;
-      font-weight: 700;
-      margin: 20px 0;
-      color: #5e35b1;
+    .modelo h4,.mini-modelo h5,.reglas-panel h4,.situacion-card h5{
+      margin:0 0 14px;
+      color:#6a1b9a;
+      font-weight:900;
     }
 
-    .modelo-fraccion {
-      background: #faf5ff;
-      border: 2px solid #d1c4e9;
-      border-radius: 22px;
-      padding: 20px;
-      margin-top: 18px;
-      text-align: center;
+    .actividad{
+      margin-top:28px;
+      padding:26px;
+      background:#faf5ff;
+      border:3px dashed #ba68c8;
     }
 
-    .fila-partes {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 18px 0 12px;
+    .actividad h3{
+      text-align:center;
+      color:#6a1b9a;
+      font-size:1.34rem;
+      font-weight:900;
+      margin:0 0 18px;
     }
 
-    .parte {
-      width: 70px;
-      height: 70px;
-      background: white;
-      border: 3px solid #7b1fa2;
-      border-radius: 14px;
+    .mini-etiqueta{
+      display:inline-block;
+      margin-bottom:14px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:var(--l);
+      border:2px solid var(--s);
+      color:#6a1b9a;
+      font-weight:800;
+      font-size:.96rem;
     }
 
-    .parte.coloreada {
-      background: linear-gradient(135deg, #ab47bc, #7e57c2);
+    .texto-centro{text-align:center}
+
+    .tip,.feedback{
+      margin-top:18px;
+      padding:14px 18px;
+      border-radius:18px;
+      font-weight:800;
     }
 
-    .parte.circulo {
-      border-radius: 50%;
+    .tip{
+      background:var(--cream);
+      border:2px solid var(--a);
+      color:#7b1fa2;
     }
 
-    .fraccion-grande {
-      display: inline-block;
-      font-size: 2.1rem;
-      font-weight: 800;
-      color: #6a1b9a;
-      line-height: 1.1;
-      min-width: 95px;
-      text-align: center;
+    .feedback{
+      display:none;
+      text-align:center;
     }
 
-    .fraccion-grande .linea {
-      display: block;
-      height: 4px;
-      background: #6a1b9a;
-      border-radius: 2px;
-      margin: 6px 0;
+    .feedback.visible{display:block}
+
+    .ok{
+      background:#e8f5e9;
+      border:2px solid var(--v);
+      color:#2e7d32;
     }
 
-    .mini-card {
-      background: #faf5ff;
-      border: 2px solid #d1c4e9;
-      border-radius: 18px;
-      padding: 18px;
-      text-align: center;
-      height: 100%;
+    .warn{
+      background:#fff8e1;
+      border:2px solid var(--a);
+      color:#8d6e00;
     }
 
-    .mini-card h5 {
-      color: #6a1b9a;
-      font-weight: 800;
-      margin-bottom: 10px;
+    .escena,.selector-nombre,.orden-pool,.orden-slots,.simbolo-grid,.fractions-row{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
     }
 
-    .mini-card p {
-      margin-bottom: 0;
-      font-weight: 700;
-      color: #5e35b1;
+    .escena{margin:20px 0 14px}
+
+    .opciones{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      margin-top:18px;
     }
 
-    .tabla-compara {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 18px;
-      margin-top: 15px;
+    .selector-btn,.tarjeta-orden,.btn-reiniciar,.simbolo-btn,.rule-choice{
+      padding:14px 18px;
+      border-radius:18px;
+      border:3px solid var(--m);
+      background:#fff;
+      color:#6a1b9a;
+      font-weight:900;
+      box-shadow:0 5px 0 var(--s);
+      cursor:pointer;
+      transition:.2s;
+      min-height:68px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-family:inherit;
     }
 
-    .tabla-compara th,
-    .tabla-compara td {
-      border: 2px solid #d1c4e9;
-      padding: 12px;
-      text-align: center;
-      font-weight: 700;
+    .selector-btn:hover,.tarjeta-orden:hover,.btn-reiniciar:hover,.simbolo-btn:hover,.rule-choice:hover{
+      transform:translateY(-2px);
     }
 
-    .tabla-compara th {
-      background: #f3e5f5;
-      color: #6a1b9a;
+    .selector-btn:disabled,.tarjeta-orden:disabled,.simbolo-btn:disabled,.rule-choice:disabled,.btn-reiniciar:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    .tabla-compara td {
-      background: white;
-      color: #5e35b1;
+    .activo{
+      background:#ede7f6!important;
+      border-color:#ab47bc!important;
+      color:#6a1b9a!important;
     }
 
-    .linea-numerica {
-      position: relative;
-      height: 120px;
-      margin-top: 18px;
+    .correcto{
+      background:var(--v)!important;
+      border-color:#2e7d32!important;
+      color:#fff!important;
     }
 
-    .linea-base {
-      height: 6px;
-      background: #7b1fa2;
-      position: absolute;
-      top: 52px;
-      left: 5%;
-      right: 5%;
-      border-radius: 4px;
+    .incorrecto{
+      background:#ef5350!important;
+      border-color:#c62828!important;
+      color:#fff!important;
     }
 
-    .marca {
-      position: absolute;
-      top: 38px;
-      transform: translateX(-50%);
-      text-align: center;
-      font-weight: 800;
-      color: #6a1b9a;
+    .lectura,.zona-respuesta{
+      min-height:104px;
+      padding:20px 22px;
+      border-radius:22px;
+      background:#fdfbff;
+      border:3px dashed #ba68c8;
+      text-align:center;
+      color:#7b1fa2;
+      font-weight:800;
+      line-height:1.6;
+      max-width:920px;
+      margin:0 auto;
     }
 
-    .marca .punto-linea {
-      display: block;
-      font-size: 1.2rem;
-      margin-top: 4px;
+    .zona-respuesta.correcta{
+      background:#e8f5e9;
+      border-color:var(--v);
+      color:#2e7d32;
     }
 
-    .navegador {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 40px 0 20px;
-      background: white;
-      padding: 15px 30px;
-      border-radius: 60px;
-      border: 3px solid #7b1fa2;
-      box-shadow: 0 5px 0 #d1c4e9;
-      gap: 15px;
-      flex-wrap: wrap;
+    .fraccion{
+      display:inline-block;
+      min-width:92px;
+      font-size:2rem;
+      font-weight:900;
+      line-height:1.05;
+      color:#5e35b1;
     }
 
-    .btn-nav {
-      background: #ffd54f;
-      color: #4a148c;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 1.15rem;
-      border: 3px solid #7b1fa2;
-      transition: all 0.2s;
+    .fraccion .linea{
+      display:block;
+      height:4px;
+      margin:4px 0;
+      border-radius:2px;
+      background:#5e35b1;
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: white;
-      transform: scale(1.05);
+    .panel-fraccion{
+      padding:18px 20px;
+      border-radius:20px;
+      background:#f7f1ff;
+      border:2px solid var(--s);
+      margin-top:14px;
+      text-align:center;
     }
 
-    .btn-nav:disabled {
-      background: #e0e0e0;
-      color: #9e9e9e;
-      border-color: #bdbdbd;
+    .comparacion-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:20px;
+      max-width:960px;
+      margin:22px auto 0;
     }
 
-    .indicador-pagina {
-      font-size: 1.35rem;
-      font-weight: 800;
-      background: #f3e5f5;
-      color: #6a1b9a;
-      padding: 8px 26px;
-      border-radius: 40px;
-      border: 3px solid #7b1fa2;
+    .comparacion-grid.tres{
+      grid-template-columns:repeat(3,minmax(0,1fr));
     }
 
-    .boton-quiz {
-      display: block;
-      width: fit-content;
-      margin: 30px auto 0;
-      background: #ffd54f;
-      color: #4a148c;
-      border: none;
-      padding: 18px 42px;
-      border-radius: 60px;
-      font-weight: 800;
-      font-size: 1.45rem;
-      text-decoration: none;
-      border: 4px solid #7b1fa2;
-      box-shadow: 0 8px 0 #d39e00;
-      transition: all 0.2s;
+    .mini-modelo{
+      text-align:center;
+      padding:22px 24px;
+      height:100%;
     }
 
-    .boton-quiz:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 0 #d39e00;
-      background: white;
+    .contexto-mini,.subtexto{
+      margin-top:12px;
+      font-weight:700;
+      color:#7b1fa2;
+      line-height:1.6;
     }
 
-    @media (max-width: 768px) {
-      .cabecera-normal h1 { font-size: 2rem; }
-      .navegador { flex-direction: column; }
-      .parte { width: 58px; height: 58px; }
-      .titulo-pagina { font-size: 1.5rem; }
-      .badge-nivel { margin-left: 0; margin-top: 10px; }
+    .objeto{position:relative;user-select:none}
+
+    .chocolate{
+      width:min(760px,95%);
+      height:120px;
+      border-radius:26px;
+      border:4px solid #4e342e;
+      background:linear-gradient(180deg,#8d6e63,#6d4c41);
+      box-shadow:0 8px 0 #4e342e;
+      overflow:hidden;
+      display:flex;
+      margin:0 auto;
+    }
+
+    .choco-piece{
+      flex:1;
+      position:relative;
+      padding:0;
+      border:0;
+      border-right:3px solid rgba(78,52,46,.85);
+      background:linear-gradient(180deg,#8d6e63,#6d4c41);
+      transition:.2s;
+      cursor:pointer;
+      appearance:none;
+    }
+
+    .choco-piece:last-child{border-right:none}
+
+    .choco-piece::before{
+      content:'';
+      position:absolute;
+      inset:12px 10px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#9c7b71,#6d4c41);
+      box-shadow:inset 0 4px 0 rgba(255,255,255,.18), inset 0 -4px 0 rgba(0,0,0,.12);
+    }
+
+    .choco-piece.selected{
+      background:linear-gradient(180deg,#b39ddb,#7e57c2);
+    }
+
+    .choco-piece.selected::before{
+      background:linear-gradient(180deg,#c5b4f2,#8e7cc3);
+    }
+
+    .choco-whole-label{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      color:#fff8e1;
+      text-shadow:1px 1px 0 rgba(0,0,0,.35);
+      pointer-events:none;
+      font-size:1.15rem;
+    }
+
+    .barra{
+      width:min(760px,100%);
+      border-radius:24px;
+      overflow:hidden;
+      display:flex;
+      position:relative;
+      margin:0 auto;
+      border:4px solid var(--m);
+      background:#fff;
+      box-shadow:0 8px 0 var(--s);
+    }
+
+    .barra.sm{
+      height:72px;
+      border-radius:20px;
+    }
+
+    .barra.md{
+      height:90px;
+    }
+
+    .seg{
+      flex:1;
+      border-right:3px solid rgba(123,31,162,.7);
+      background:#fff;
+    }
+
+    .seg:last-child{border-right:none}
+
+    .seg.fill{
+      background:linear-gradient(135deg,#ba68c8,#7e57c2);
+    }
+
+    .cake-wrap,.pizza-wrap{
+      width:280px;
+      height:280px;
+      margin:0 auto;
+    }
+
+    .cake-svg,.pizza-svg{
+      width:100%;
+      height:100%;
+      display:block;
+      filter:drop-shadow(0 8px 0 rgba(209,196,233,.75));
+    }
+
+    .recta-wrap{
+      margin-top:22px;
+    }
+
+    .recta{
+      position:relative;
+      max-width:900px;
+      height:176px;
+      margin:18px auto 6px;
+    }
+
+    .linea-recta{
+      position:absolute;
+      left:6%;
+      right:6%;
+      top:88px;
+      height:6px;
+      border-radius:999px;
+      background:var(--m);
+    }
+
+    .marca{
+      position:absolute;
+      top:58px;
+      width:0;
+      height:52px;
+      border-left:4px solid var(--m);
+      transform:translateX(-50%);
+    }
+
+    .marca span{
+      position:absolute;
+      top:56px;
+      left:50%;
+      transform:translateX(-50%);
+      font-weight:900;
+      color:#6a1b9a;
+      white-space:nowrap;
+    }
+
+    .marca-click{
+      position:absolute;
+      top:10px;
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      border:3px dashed #ba68c8;
+      background:rgba(255,255,255,.96);
+      transform:translateX(-50%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#6a1b9a;
+      font-weight:900;
+      cursor:pointer;
+      transition:.2s;
+      padding:8px;
+      font-family:inherit;
+      appearance:none;
+    }
+
+    .marca-click:hover{transform:translateX(-50%) translateY(-2px);background:#f3e5f5}
+
+    .marca-click.activa{
+      background:#ede7f6;
+      border-style:solid;
+    }
+
+    .fila-def{
+      padding:18px 20px;
+      border-radius:20px;
+      background:#fff;
+      border:2px solid var(--s);
+      margin-bottom:18px;
+    }
+
+    .fila-def p{
+      margin:0 0 14px;
+      text-align:center;
+      color:#6a1b9a;
+      font-weight:800;
+    }
+
+    .slot-orden,.simbolo-slot{
+      min-width:148px;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:18px;
+      border:3px dashed #ba68c8;
+      background:#fdfbff;
+      color:#8e24aa;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .simbolo-slot{
+      min-width:120px;
+      font-size:2rem;
+    }
+
+    .btn-reiniciar{
+      margin-top:18px;
+      background:#fff8e1;
+    }
+
+    .fraccion-card{
+      min-width:170px;
+      padding:18px 20px;
+      border-radius:22px;
+      border:3px solid var(--m);
+      background:#fff;
+      box-shadow:0 6px 0 var(--s);
+      text-align:center;
+    }
+
+    .fraccion-card small{
+      display:block;
+      margin-top:10px;
+      color:#7b1fa2;
+      font-weight:800;
+    }
+
+    .simbolo-grid{margin-top:16px}
+
+    .simbolo-btn{
+      min-width:88px;
+      font-size:2rem;
+    }
+
+    .reglas-panel{
+      margin-top:20px;
+      background:#fffaf2;
+      border-color:#f5c76b;
+    }
+
+    .reglas-grid,.situacion-grid{
+      display:grid;
+      gap:18px;
+    }
+
+    .reglas-grid{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      margin-top:16px;
+    }
+
+    .regla-info,.situacion-card{
+      background:#fff;
+      border:2px solid var(--s);
+      border-radius:20px;
+      padding:18px;
+    }
+
+    .regla-info h5,.situacion-card h5{
+      margin:0 0 10px;
+      color:#6a1b9a;
+      font-weight:900;
+    }
+
+    .regla-info p,.situacion-card p{
+      margin:0;
+      color:#5e35b1;
+      font-weight:700;
+      line-height:1.55;
+    }
+
+    .situacion-grid{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      margin-top:18px;
+    }
+
+    .situacion-card.correcta{
+      border-color:#43a047;
+      box-shadow:0 0 0 3px rgba(67,160,71,.12);
+      background:#f5fff6;
+    }
+
+    .fractions-row{
+      margin-top:14px;
+      gap:10px;
+    }
+
+    .fraction-pill{
+      padding:8px 14px;
+      border-radius:999px;
+      background:#f3e5f5;
+      border:2px solid #ce93d8;
+      color:#6a1b9a;
+      font-weight:900;
+    }
+
+    .opciones-regla{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .btn-nav{
+      padding:12px 24px;
+      border:none;
+      border-radius:999px;
+      background:var(--m);
+      color:#fff;
+      font-weight:900;
+      font-family:inherit;
+    }
+
+    .btn-nav:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .boton-quiz{
+      display:inline-block;
+      margin:26px auto 0;
+      padding:16px 34px;
+      text-decoration:none;
+      border-radius:999px;
+      background:var(--a);
+      color:var(--t);
+      border:4px solid var(--m);
+      font-weight:900;
+      font-size:1.12rem;
+      box-shadow:0 7px 0 #d39e00;
+    }
+
+    .boton-quiz.bloqueado{
+      opacity:.55;
+      cursor:not-allowed;
+      background:#e0e0e0;
+      color:#777;
+      border-color:#bdbdbd;
+      box-shadow:0 7px 0 #9e9e9e;
+    }
+
+    .boton-quiz:not(.bloqueado):hover{
+      transform:translateY(-2px);
+    }
+
+    @media(max-width:920px){
+      .comparacion-grid,
+      .comparacion-grid.tres,
+      .reglas-grid,
+      .situacion-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:768px){
+      .cabecera h1{font-size:2rem}
+      .contenedor{padding:0 14px}
+      .tarjeta{padding:24px 18px}
+      .titulo-pagina{font-size:1.55rem}
+      .btn-volver-menu{width:46px;height:46px;top:12px;left:12px}
+      .opciones{grid-template-columns:1fr}
+      .pizza-wrap,.cake-wrap{width:240px;height:240px}
+      .recta{height:156px}
+      .linea-recta{top:80px}
+      .marca{top:52px}
+      .marca span{top:52px}
+      .marca-click{width:56px;height:56px;font-size:.92rem}
+      .simbolo-btn{min-width:74px}
     }
   </style>
 </head>
 <body>
+  <header class="cabecera">
+    <button class="btn-volver-menu" onclick="volverAlMenu()" title="Volver al men&uacute;"><i class="fas fa-arrow-left"></i></button>
+    <h1>&#128309; FRACCIONES</h1>
+    <div class="subtitulo">Reconocer fracciones &middot; Nivel Normal</div>
+    <div class="badge-estilo">&#128214; Estilo Visual / Verbal</div>
+  </header>
 
-<div class="cabecera-normal">
-  <h1>🟣 FRACCIONES</h1>
-  <p class="lead text-white">Reconocer fracciones · Nivel Normal</p>
-  <div>
-    <span class="badge-estilo">📖 Visual / Verbal</span>
-    <span class="badge-nivel">⚡ Intermedio</span>
+  <div class="progreso">
+    <span class="progreso-texto" id="progresoTexto">P&aacute;gina 1 de 8</span>
+    <div class="barra-fondo"><div class="barra-relleno" id="barraRelleno"></div></div>
+    <span class="progreso-num" id="progresoNum">13%</span>
   </div>
-</div>
 
-<div class="barra-progreso">
-  <i class="fas fa-book-open fa-2x" style="color: #7b1fa2;"></i>
-  <div class="puntos-progreso" id="puntosProgreso">
-    <div class="punto activo" data-pagina="1">1</div>
-    <div class="punto" data-pagina="2">2</div>
-    <div class="punto" data-pagina="3">3</div>
-    <div class="punto" data-pagina="4">4</div>
-    <div class="punto" data-pagina="5">5</div>
-    <div class="punto" data-pagina="6">6</div>
-  </div>
-  <span class="badge" style="background: #7b1fa2; color: white; font-size: 1.1rem; padding: 8px 20px;">
-    Página <span id="paginaActualNum">1</span>/6
-  </span>
-</div>
+  <div class="contenedor">
+    <section class="pagina activa" id="pagina1">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-pizza-slice me-2"></i>Mismo denominador</h2>
+        <div class="texto-destacado">
+          Cuando dos fracciones tienen el <strong>mismo denominador</strong>, la unidad se parti&oacute; igual en ambos casos.
+          Entonces la comparaci&oacute;n se hace mirando cu&aacute;ntas partes coloreadas tiene cada una.
+        </div>
 
-<div class="contenedor-paginas">
-
-  <!-- PAGINA 1 -->
-  <div class="pagina activa" id="pagina1">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-layer-group me-3"></i>Fracciones con más partes</h2>
-
-      <p class="lead">
-        En este nivel trabajarás con fracciones como <strong>2/5</strong>, <strong>4/6</strong> y <strong>3/8</strong>.
-        Ya no solo verás medios o cuartos.
-      </p>
-
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="modelo-fraccion">
-            <div class="fraccion-grande">
-              <span>2</span>
-              <span class="linea"></span>
-              <span>5</span>
+        <div class="modelo">
+          <h4>Comparamos dos pizzas divididas en octavos</h4>
+          <div class="comparacion-grid">
+            <div class="mini-modelo">
+              <h5>Pizza A &middot; 3/8</h5>
+              <div class="pizza-wrap">
+                <svg class="pizza-svg" viewBox="0 0 260 260" aria-label="Pizza de 3 octavos">
+                  <circle cx="130" cy="130" r="108" fill="#fbc96b" stroke="#d17b28" stroke-width="10"/>
+                  <circle cx="130" cy="130" r="92" fill="#ffb74d"/>
+                  <g>
+                    <path d="M130 130 L130 22 A108 108 0 0 1 206.37 53.63 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L206.37 53.63 A108 108 0 0 1 238 130 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L238 130 A108 108 0 0 1 206.37 206.37 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L206.37 206.37 A108 108 0 0 1 130 238 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L130 238 A108 108 0 0 1 53.63 206.37 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L53.63 206.37 A108 108 0 0 1 22 130 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L22 130 A108 108 0 0 1 53.63 53.63 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L53.63 53.63 A108 108 0 0 1 130 22 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="contexto-mini">La pizza A tiene 3 partes de 8 partes iguales.</div>
             </div>
 
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
+            <div class="mini-modelo">
+              <h5>Pizza B &middot; 5/8</h5>
+              <div class="pizza-wrap">
+                <svg class="pizza-svg" viewBox="0 0 260 260" aria-label="Pizza de 5 octavos">
+                  <circle cx="130" cy="130" r="108" fill="#fbc96b" stroke="#d17b28" stroke-width="10"/>
+                  <circle cx="130" cy="130" r="92" fill="#ffb74d"/>
+                  <g>
+                    <path d="M130 130 L130 22 A108 108 0 0 1 206.37 53.63 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L206.37 53.63 A108 108 0 0 1 238 130 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L238 130 A108 108 0 0 1 206.37 206.37 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L206.37 206.37 A108 108 0 0 1 130 238 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L130 238 A108 108 0 0 1 53.63 206.37 Z" fill="#ba68c8" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L53.63 206.37 A108 108 0 0 1 22 130 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L22 130 A108 108 0 0 1 53.63 53.63 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                    <path d="M130 130 L53.63 53.63 A108 108 0 0 1 130 22 Z" fill="#ffe0b2" stroke="#d84315" stroke-width="4"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="contexto-mini">La pizza B tiene 5 partes de 8 partes iguales.</div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="recuadro-datos h-100">
-            <h4><i class="fas fa-hashtag me-2"></i>Cómo leer 2/5</h4>
-            <ul class="lista-iconos">
-              <li><i class="fas fa-arrow-up"></i> <strong>Numerador:</strong> 2 partes tomadas</li>
-              <li><i class="fas fa-arrow-down"></i> <strong>Denominador:</strong> 5 partes en total</li>
-              <li><i class="fas fa-fill-drip"></i> Se colorean 2 partes</li>
-              <li><i class="fas fa-cubes"></i> El todo se divide en 5 partes iguales</li>
-            </ul>
+        <div class="actividad">
+          <h3>Selecciona la conclusi&oacute;n correcta</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Ambas fracciones est&aacute;n en octavos</span></div>
+          <div class="opciones" id="opcionesP1">
+            <button class="selector-btn" data-value="igualdad">3/8 y 5/8 representan la misma cantidad.</button>
+            <button class="selector-btn" data-value="mayor">5/8 es mayor porque toma m&aacute;s partes del mismo entero.</button>
+            <button class="selector-btn" data-value="menor">3/8 es mayor porque tiene menos partes sin colorear.</button>
+          </div>
+          <div class="tip">Si el denominador es igual, gana la fracci&oacute;n que toma <strong>m&aacute;s partes</strong>.</div>
+          <div class="feedback ok" id="ok1">✅ Correcto. Como ambas est&aacute;n en octavos, <strong>5/8</strong> es mayor que <strong>3/8</strong>.</div>
+          <div class="feedback warn" id="warn1">⚠️ Revisa cu&aacute;ntas partes coloreadas tiene cada pizza. El denominador ya es el mismo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-birthday-cake me-2"></i>Mismo numerador</h2>
+        <div class="texto-destacado">
+          Si dos fracciones tienen el <strong>mismo numerador</strong>, ambas toman el mismo n&uacute;mero de partes.
+          Entonces la comparaci&oacute;n depende del tama&ntilde;o de cada parte.
+        </div>
+
+        <div class="modelo">
+          <h4>Las dos fracciones toman una sola parte</h4>
+          <div class="comparacion-grid">
+            <div class="mini-modelo">
+              <h5>1/3</h5>
+              <div class="cake-wrap">
+                <svg class="cake-svg" viewBox="0 0 240 240" aria-label="Pastel de un tercio">
+                  <circle cx="120" cy="120" r="96" fill="#ffe0b2" stroke="#d17b28" stroke-width="8"/>
+                  <path d="M120 120 L120 24 A96 96 0 0 1 203.14 168 Z" fill="#f06292" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L203.14 168 A96 96 0 0 1 36.86 168 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L36.86 168 A96 96 0 0 1 120 24 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                </svg>
+              </div>
+              <div class="contexto-mini">Cada parte es grande porque el entero se reparti&oacute; en solo 3 partes.</div>
+            </div>
+
+            <div class="mini-modelo">
+              <h5>1/5</h5>
+              <div class="cake-wrap">
+                <svg class="cake-svg" viewBox="0 0 240 240" aria-label="Pastel de un quinto">
+                  <circle cx="120" cy="120" r="96" fill="#ffe0b2" stroke="#d17b28" stroke-width="8"/>
+                  <path d="M120 120 L120 24 A96 96 0 0 1 211.3 90.34 Z" fill="#f06292" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L211.3 90.34 A96 96 0 0 1 176.43 197.66 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L176.43 197.66 A96 96 0 0 1 63.57 197.66 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L63.57 197.66 A96 96 0 0 1 28.7 90.34 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                  <path d="M120 120 L28.7 90.34 A96 96 0 0 1 120 24 Z" fill="#ffe0b2" stroke="#d17b28" stroke-width="4"/>
+                </svg>
+              </div>
+              <div class="contexto-mini">Cada parte es m&aacute;s peque&ntilde;a porque el entero se reparti&oacute; en 5 partes.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Elige la comparaci&oacute;n correcta</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Ambas fracciones toman 1 parte</span></div>
+          <div class="opciones" id="opcionesP2">
+            <button class="selector-btn" data-value="unoQuinto">1/5 es mayor porque tiene un denominador m&aacute;s grande.</button>
+            <button class="selector-btn" data-value="igual">1/3 y 1/5 son iguales porque ambas toman una parte.</button>
+            <button class="selector-btn" data-value="unoTercio">1/3 es mayor porque una tercera parte es m&aacute;s grande que una quinta parte.</button>
+          </div>
+          <div class="tip">Si el numerador es igual, la fracci&oacute;n mayor es la que tiene <strong>partes m&aacute;s grandes</strong>.</div>
+          <div class="feedback ok" id="ok2">✅ Muy bien. <strong>1/3</strong> es mayor que <strong>1/5</strong> porque una tercera parte ocupa m&aacute;s que una quinta parte.</div>
+          <div class="feedback warn" id="warn2">⚠️ Observa el tama&ntilde;o de cada rebanada. Ambas toman una sola parte, pero no del mismo tama&ntilde;o.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-hand-pointer me-2"></i>Construye la fracci&oacute;n mayor</h2>
+        <div class="texto-destacado">
+          La barra de chocolate est&aacute; dividida en <strong>6 cuadritos iguales</strong>.
+          Vamos a comparar <strong>2/6</strong> y <strong>4/6</strong>.
+          Como ambas usan sextos, la fracci&oacute;n mayor ser&aacute; la que tenga m&aacute;s partes marcadas.
+        </div>
+
+        <div class="modelo">
+          <h4>Referencia escrita antes de construir</h4>
+          <div class="fractions-row">
+            <div class="fraccion-card">
+              <div class="fraccion"><span>2</span><span class="linea"></span><span>6</span></div>
+              <small>Toma 2 partes de 6</small>
+            </div>
+            <div class="fraccion-card">
+              <div class="fraccion"><span>4</span><span class="linea"></span><span>6</span></div>
+              <small>Toma 4 partes de 6</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Marca los cuadritos necesarios para formar la fracci&oacute;n mayor</h3>
+          <div class="texto-centro"><span class="mini-etiqueta">Debes terminar con la representaci&oacute;n de 4/6</span></div>
+          <div class="escena">
+            <div class="objeto chocolate" id="barraP3">
+              <button class="choco-piece" data-p3="1" aria-label="Cuadrito 1"></button>
+              <button class="choco-piece" data-p3="2" aria-label="Cuadrito 2"></button>
+              <button class="choco-piece" data-p3="3" aria-label="Cuadrito 3"></button>
+              <button class="choco-piece" data-p3="4" aria-label="Cuadrito 4"></button>
+              <button class="choco-piece" data-p3="5" aria-label="Cuadrito 5"></button>
+              <button class="choco-piece" data-p3="6" aria-label="Cuadrito 6"></button>
+            </div>
+          </div>
+          <div class="panel-fraccion">
+            <div class="fraccion"><span id="numP3">?</span><span class="linea"></span><span>6</span></div>
+            <div class="subtexto" id="lecturaP3">Todav&iacute;a no has marcado ninguna parte del entero.</div>
+          </div>
+          <div class="tip">Como el denominador es 6 en ambos casos, basta comparar cu&aacute;ntas partes se toman: 2 o 4.</div>
+          <div class="feedback ok" id="ok3">✅ Correcto. Construiste <strong>4/6</strong>, que es mayor que <strong>2/6</strong>.</div>
+          <div class="feedback warn" id="warn3">⚠️ Para formar la fracci&oacute;n mayor debes dejar marcadas exactamente <strong>4 partes</strong>.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina4">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-road me-2"></i>Recta num&eacute;rica sin pista obvia</h2>
+        <div class="texto-destacado">
+          En la recta, las fracciones m&aacute;s grandes quedan m&aacute;s cerca de <strong>1</strong>.
+          En esta actividad la unidad est&aacute; dividida en <strong>6 partes iguales</strong>.
+          Debes ubicar la fracci&oacute;n <strong>5/6</strong>.
+        </div>
+
+        <div class="recta-wrap">
+          <div class="texto-centro"><span class="mini-etiqueta">Selecciona una marca y luego verifica</span></div>
+          <div class="recta">
+            <div class="linea-recta"></div>
+
+            <div class="marca" style="left:6%;"><span>0</span></div>
+            <div class="marca" style="left:20.67%;"></div>
+            <div class="marca" style="left:35.33%;"></div>
+            <div class="marca" style="left:50%;"></div>
+            <div class="marca" style="left:64.67%;"></div>
+            <div class="marca" style="left:79.33%;"></div>
+            <div class="marca" style="left:94%;"><span>1</span></div>
+
+            <button class="marca-click" data-value="1/6" style="left:20.67%;" aria-label="Marca interior 1">&bull;</button>
+            <button class="marca-click" data-value="2/6" style="left:35.33%;" aria-label="Marca interior 2">&bull;</button>
+            <button class="marca-click" data-value="3/6" style="left:50%;" aria-label="Marca interior 3">&bull;</button>
+            <button class="marca-click" data-value="4/6" style="left:64.67%;" aria-label="Marca interior 4">&bull;</button>
+            <button class="marca-click" data-value="5/6" style="left:79.33%;" aria-label="Marca interior 5">&bull;</button>
+          </div>
+          <div class="texto-centro mt-3">
+            <button class="selector-btn" id="btnVerificarP4">Verificar posici&oacute;n</button>
+          </div>
+          <div class="tip">5/6 est&aacute; muy cerca de 1, porque solo le falta una de las seis partes para completar el entero.</div>
+          <div class="feedback ok" id="ok4">✅ Muy bien. <strong>5/6</strong> queda en la quinta marca interior, justo antes de llegar al entero completo.</div>
+          <div class="feedback warn" id="warn4">⚠️ Esa marca no corresponde a 5/6. Busca la fracci&oacute;n que est&aacute; m&aacute;s cerca de 1 sin llegar a 1.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina5">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-tags me-2"></i>Numerador y denominador</h2>
+        <div class="texto-destacado">
+          Para leer y comparar fracciones con seguridad, necesitas distinguir qu&eacute; significa cada n&uacute;mero.
+          En esta p&aacute;gina trabajaremos con la fracci&oacute;n <strong>5/8</strong>.
+        </div>
+
+        <div class="modelo">
+          <h4>Leemos la fracci&oacute;n 5/8</h4>
+          <div class="panel-fraccion">
+            <div class="fraccion"><span>5</span><span class="linea"></span><span>8</span></div>
+          </div>
+          <div class="comparacion-grid">
+            <div class="mini-modelo">
+              <h5>N&uacute;mero de arriba</h5>
+              <div class="contexto-mini">El 5 habla de las <strong>partes que se toman</strong> o que aparecen coloreadas.</div>
+            </div>
+            <div class="mini-modelo">
+              <h5>N&uacute;mero de abajo</h5>
+              <div class="contexto-mini">El 8 habla del <strong>total de partes iguales</strong> en que se dividi&oacute; la unidad.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Asigna el nombre correcto a cada n&uacute;mero</h3>
+          <div class="fila-def">
+            <p>El <strong>5</strong>, que est&aacute; arriba, se llama:</p>
+            <div class="selector-nombre">
+              <button class="selector-btn" data-slot="arriba" data-value="denominador">Denominador</button>
+              <button class="selector-btn" data-slot="arriba" data-value="numerador">Numerador</button>
+            </div>
+          </div>
+          <div class="fila-def">
+            <p>El <strong>8</strong>, que est&aacute; abajo, se llama:</p>
+            <div class="selector-nombre">
+              <button class="selector-btn" data-slot="abajo" data-value="numerador">Numerador</button>
+              <button class="selector-btn" data-slot="abajo" data-value="denominador">Denominador</button>
+            </div>
+          </div>
+          <div class="tip"><strong>Numerador</strong> = partes tomadas. <strong>Denominador</strong> = total de partes iguales.</div>
+          <div class="feedback ok" id="ok5">✅ Excelente. En <strong>5/8</strong>, el 5 es el numerador y el 8 es el denominador.</div>
+          <div class="feedback warn" id="warn5">⚠️ Revisa qu&eacute; n&uacute;mero habla de las partes tomadas y cu&aacute;l del total de partes iguales.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina6">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-sort-numeric-down me-2"></i>Ordena de menor a mayor</h2>
+        <div class="texto-destacado">
+          Ya viste que unas veces conviene comparar por numerador, otras por denominador y otras por cercan&iacute;a al entero.
+          Ahora ordena estas tres fracciones de <strong>menor a mayor</strong>: <strong>2/3</strong>, <strong>3/4</strong> y <strong>5/6</strong>.
+        </div>
+
+        <div class="comparacion-grid tres">
+            <div class="mini-modelo">
+              <h5>2/3</h5>
+              <div class="escena">
+                <div class="barra md">
+                  <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                  <div class="seg"></div>
+                </div>
+              </div>
+            <div class="contexto-mini">Se lee <strong>dos tercios</strong>. Le falta 1 de 3 partes para completar el entero.</div>
+            </div>
+            <div class="mini-modelo">
+              <h5>3/4</h5>
+              <div class="escena">
+                <div class="barra md">
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                  <div class="seg"></div>
+                </div>
+              </div>
+            <div class="contexto-mini">Se lee <strong>tres cuartos</strong>. Le falta 1 de 4 partes para llegar a 1.</div>
+            </div>
+            <div class="mini-modelo">
+              <h5>5/6</h5>
+              <div class="escena">
+                <div class="barra md">
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                <div class="seg fill"></div>
+                  <div class="seg"></div>
+                </div>
+              </div>
+            <div class="contexto-mini">Se lee <strong>cinco sextos</strong>. Le falta solo 1 de 6 partes, por eso queda muy cerca del entero.</div>
+            </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Toca las tarjetas en orden: menor &rarr; mayor</h3>
+          <div class="orden-pool" id="poolP6">
+            <button class="tarjeta-orden" data-value="5/6">5/6</button>
+            <button class="tarjeta-orden" data-value="2/3">2/3</button>
+            <button class="tarjeta-orden" data-value="3/4">3/4</button>
+          </div>
+          <div class="orden-slots">
+            <div class="slot-orden" id="slot1">1&deg; lugar</div>
+            <div class="slot-orden" id="slot2">2&deg; lugar</div>
+            <div class="slot-orden" id="slot3">3&deg; lugar</div>
+          </div>
+          <div class="texto-centro">
+            <button class="btn-reiniciar" id="resetP6">Reiniciar orden</button>
+          </div>
+          <div class="tip">Piensa cu&aacute;l est&aacute; m&aacute;s cerca de 0, cu&aacute;l ya pas&oacute; de la mitad y cu&aacute;l queda casi en 1.</div>
+          <div class="feedback ok" id="ok6">✅ Excelente. El orden correcto es <strong>2/3 &lt; 3/4 &lt; 5/6</strong>.</div>
+          <div class="feedback warn" id="warn6">⚠️ Ese no es el siguiente lugar correcto. Compara cu&aacute;l de las tres fracciones est&aacute; m&aacute;s cerca del entero.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina7">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-greater-than-equal me-2"></i>Coloca el s&iacute;mbolo correcto</h2>
+        <div class="texto-destacado">
+          Ahora vas a comparar dos repartos de s&aacute;ndwich. Ambos est&aacute;n divididos en <strong>s&eacute;ptimos</strong>.
+          Como el denominador es el mismo, solo necesitas mirar cu&aacute;ntas partes coloreadas tiene cada uno.
+        </div>
+
+        <div class="modelo">
+          <h4>Comparamos 4/7 y 2/7</h4>
+          <div class="comparacion-grid">
+            <div class="mini-modelo">
+              <h5>4/7</h5>
+              <div class="escena">
+                <div class="barra sm">
+                  <div class="seg fill"></div>
+                  <div class="seg fill"></div>
+                  <div class="seg fill"></div>
+                  <div class="seg fill"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mini-modelo">
+              <h5>2/7</h5>
+              <div class="escena">
+                <div class="barra sm">
+                  <div class="seg fill"></div>
+                  <div class="seg fill"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                  <div class="seg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Selecciona el s&iacute;mbolo que complete la comparaci&oacute;n</h3>
+          <div class="fractions-row">
+            <div class="fraccion-card">
+              <div class="fraccion"><span>4</span><span class="linea"></span><span>7</span></div>
+            </div>
+            <div class="simbolo-slot" id="simboloSlot7">?</div>
+            <div class="fraccion-card">
+              <div class="fraccion"><span>2</span><span class="linea"></span><span>7</span></div>
+            </div>
+          </div>
+          <div class="simbolo-grid" id="opcionesP7">
+            <button class="simbolo-btn" data-value="=">=</button>
+            <button class="simbolo-btn" data-value=">">&gt;</button>
+            <button class="simbolo-btn" data-value="<">&lt;</button>
+          </div>
+          <div class="tip">Con el mismo denominador, la fracci&oacute;n mayor es la que toma <strong>m&aacute;s partes</strong>.</div>
+          <div class="feedback ok" id="ok7">✅ Correcto. <strong>4/7 &gt; 2/7</strong> porque ambas fracciones usan el mismo denominador y 4 toma m&aacute;s partes que 2.</div>
+          <div class="feedback warn" id="warn7">⚠️ Revisa cu&aacute;ntas partes coloreadas tiene cada s&aacute;ndwich. Ambos est&aacute;n divididos en s&eacute;ptimos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pagina" id="pagina8">
+      <div class="tarjeta">
+        <h2 class="titulo-pagina"><i class="fas fa-puzzle-piece me-2"></i>Relaciona la regla correcta</h2>
+        <div class="texto-destacado">
+          En el cierre del nivel vas a decidir <strong>qu&eacute; regla explica mejor</strong> cada situaci&oacute;n:
+          comparar con mismo denominador, comparar con mismo numerador o reconocer fracciones equivalentes.
+        </div>
+
+        <div class="reglas-panel">
+          <h4>Reglas de comparaci&oacute;n</h4>
+          <div class="reglas-grid">
+            <div class="regla-info">
+              <h5>Mismo denominador</h5>
+              <p>Si el entero se dividi&oacute; igual, gana la fracci&oacute;n que toma <strong>m&aacute;s partes</strong>.</p>
+            </div>
+            <div class="regla-info">
+              <h5>Mismo numerador</h5>
+              <p>Si ambas toman el mismo n&uacute;mero de partes, gana la que tiene <strong>partes m&aacute;s grandes</strong>.</p>
+            </div>
+            <div class="regla-info">
+              <h5>Equivalentes</h5>
+              <p>Dos fracciones equivalentes se escriben distinto, pero <strong>representan la misma cantidad</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <h3>Elige la regla que corresponde a cada situaci&oacute;n</h3>
+          <div class="situacion-grid">
+            <div class="situacion-card" id="cardP8a">
+              <h5>Situaci&oacute;n A</h5>
+              <p>Comparar <strong>3/8</strong> y <strong>5/8</strong>.</p>
+              <div class="fractions-row">
+                <span class="fraction-pill">3/8</span>
+                <span class="fraction-pill">5/8</span>
+              </div>
+              <div class="opciones-regla">
+                <button class="rule-choice" data-card="a" data-value="equiv">Equivalentes</button>
+                <button class="rule-choice" data-card="a" data-value="same_den">Mismo denominador</button>
+                <button class="rule-choice" data-card="a" data-value="same_num">Mismo numerador</button>
+              </div>
+            </div>
+
+            <div class="situacion-card" id="cardP8b">
+              <h5>Situaci&oacute;n B</h5>
+              <p>Comparar <strong>1/3</strong> y <strong>1/6</strong>.</p>
+              <div class="fractions-row">
+                <span class="fraction-pill">1/3</span>
+                <span class="fraction-pill">1/6</span>
+              </div>
+              <div class="opciones-regla">
+                <button class="rule-choice" data-card="b" data-value="same_num">Mismo numerador</button>
+                <button class="rule-choice" data-card="b" data-value="equiv">Equivalentes</button>
+                <button class="rule-choice" data-card="b" data-value="same_den">Mismo denominador</button>
+              </div>
+            </div>
+
+            <div class="situacion-card" id="cardP8c">
+              <h5>Situaci&oacute;n C</h5>
+              <p>Comparar <strong>2/4</strong> y <strong>1/2</strong>.</p>
+              <div class="fractions-row">
+                <span class="fraction-pill">2/4</span>
+                <span class="fraction-pill">1/2</span>
+              </div>
+              <div class="comparacion-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px;">
+                <div class="mini-modelo" style="padding:14px 12px;">
+                  <div class="barra sm">
+                    <div class="seg fill"></div>
+                    <div class="seg fill"></div>
+                    <div class="seg"></div>
+                    <div class="seg"></div>
+                  </div>
+                </div>
+                <div class="mini-modelo" style="padding:14px 12px;">
+                  <div class="barra sm">
+                    <div class="seg fill"></div>
+                    <div class="seg"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="opciones-regla">
+                <button class="rule-choice" data-card="c" data-value="same_den">Mismo denominador</button>
+                <button class="rule-choice" data-card="c" data-value="same_num">Mismo numerador</button>
+                <button class="rule-choice" data-card="c" data-value="equiv">Equivalentes</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip">No todas las comparaciones se resuelven igual. Primero identifica <strong>qu&eacute; relaci&oacute;n existe</strong> entre las fracciones.</div>
+          <div class="feedback ok" id="ok8">✅ Excelente. Ya relacionas cada situaci&oacute;n con su regla y el mini-quiz qued&oacute; desbloqueado.</div>
+          <div class="feedback warn" id="warn8">⚠️ Una de las reglas elegidas no corresponde. Revisa si la situaci&oacute;n usa el mismo denominador, el mismo numerador o si ambas fracciones representan la misma cantidad.</div>
+
+          <div class="texto-centro">
+            <a href="quiz.html" class="boton-quiz bloqueado" id="btnMiniQuiz" onclick="return validarMiniQuiz(event)">
+              <i class="fas fa-puzzle-piece me-2"></i>Ir al Mini-Quiz
+            </a>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="texto-destacado">
-        <i class="fas fa-lightbulb me-2"></i>
-        <strong>Idea clave:</strong> arriba va lo que se toma y abajo va el total de partes iguales.
-      </div>
+    <div class="navegador">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>&larr; Anterior</button>
+      <span class="contador" id="contadorPagina">1/8</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente &rarr;</button>
     </div>
   </div>
 
-  <!-- PAGINA 2 -->
-  <div class="pagina" id="pagina2">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-search me-3"></i>Relacionar figuras con fracciones</h2>
+  <audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+  <audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+  <audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+  <audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/exito.mp3"></audio>
 
-      <p class="lead">
-        Para reconocer una fracción, primero observa el total de partes y después cuenta cuántas están coloreadas.
-      </p>
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/matematicas/reconocer-fracciones/recursos/js/fracciones-tracking.js?v=20260506c"></script>
+  <script>
+    let paginaActual = 1;
+    let ordenP6 = 0;
+    let seleccionP4 = null;
+    const totalPaginas = 8;
+    const esperadoP6 = ['2/3', '3/4', '5/6'];
+    const res = { 1:false, 2:false, 3:false, 4:false, 5:false, 6:false, 7:false, 8:false };
+    const p5 = { arriba:null, abajo:null };
+    const p8 = { a:false, b:false, c:false };
+    const p8Esperado = { a:'same_den', b:'same_num', c:'equiv' };
+    const intentosPagina = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0 };
+    const apartadosVisualVerbal = {
+      p1: { pagina:1, apartadoClave:'p1_fraccion_mayor', tipoActividad:'comparar_fracciones' },
+      p2: { pagina:2, apartadoClave:'p2_identificar_tercio', tipoActividad:'identificar_fraccion' },
+      p3: { pagina:3, apartadoClave:'p3_comparar_sextos', tipoActividad:'marcar_partes' },
+      p4: { pagina:4, apartadoClave:'p4_ubicar_en_recta', tipoActividad:'recta_numerica' },
+      p5: { pagina:5, apartadoClave:'p5_numerador_denominador', tipoActividad:'partes_de_fraccion' },
+      p6: { pagina:6, apartadoClave:'p6_ordenar_fracciones', tipoActividad:'ordenar_fracciones' },
+      p7: { pagina:7, apartadoClave:'p7_comparar_con_signo', tipoActividad:'comparar_con_simbolo' },
+      p8: { pagina:8, apartadoClave:'p8_reglas_de_comparacion', tipoActividad:'relacionar_reglas' }
+    };
+    let trackerVisualVerbal = null;
+    let sessionTrackerVisualVerbal = null;
+    let quizTrackerAdjunto = false;
 
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>Figura A</h5>
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
-            </div>
-            <div class="fraccion-grande" style="font-size:1.45rem;">
-              <span>1</span>
-              <span class="linea"></span>
-              <span>3</span>
-            </div>
-          </div>
-        </div>
+    const q = s => document.querySelector(s);
+    const qa = s => Array.from(document.querySelectorAll(s));
 
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>Figura B</h5>
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
-            </div>
-            <div class="fraccion-grande" style="font-size:1.45rem;">
-              <span>2</span>
-              <span class="linea"></span>
-              <span>4</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>Figura C</h5>
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
-            </div>
-            <div class="fraccion-grande" style="font-size:1.45rem;">
-              <span>3</span>
-              <span class="linea"></span>
-              <span>5</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="recuadro-datos mt-4">
-        <h4><i class="fas fa-list-ol me-2"></i>Paso a paso</h4>
-        <ul class="lista-iconos">
-          <li><i class="fas fa-1"></i> Cuenta las partes totales</li>
-          <li><i class="fas fa-2"></i> Cuenta las partes coloreadas</li>
-          <li><i class="fas fa-3"></i> Forma la fracción con esos dos números</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGINA 3 -->
-  <div class="pagina" id="pagina3">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-balance-scale me-3"></i>Comparar fracciones con el mismo denominador</h2>
-
-      <p class="lead">
-        Cuando dos fracciones tienen el mismo denominador, puedes compararlas observando cuál tiene el numerador mayor.
-      </p>
-
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="modelo-fraccion">
-            <div class="fraccion-grande">
-              <span>1</span>
-              <span class="linea"></span>
-              <span>4</span>
-            </div>
-            <div class="fila-partes">
-              <div class="parte circulo coloreada"></div>
-              <div class="parte circulo"></div>
-              <div class="parte circulo"></div>
-              <div class="parte circulo"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="modelo-fraccion">
-            <div class="fraccion-grande">
-              <span>3</span>
-              <span class="linea"></span>
-              <span>4</span>
-            </div>
-            <div class="fila-partes">
-              <div class="parte circulo coloreada"></div>
-              <div class="parte circulo coloreada"></div>
-              <div class="parte circulo coloreada"></div>
-              <div class="parte circulo"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="texto-destacado">
-        <i class="fas fa-arrow-right me-2"></i>
-        <strong>Conclusión:</strong> <strong>3/4</strong> es mayor que <strong>1/4</strong> porque ambas tienen 4 partes en total, pero 3/4 tiene más partes tomadas.
-      </div>
-
-      <table class="tabla-compara">
-        <thead>
-          <tr>
-            <th>Fracción</th>
-            <th>Denominador</th>
-            <th>Numerador</th>
-            <th>¿Cuál es mayor?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1/4</td>
-            <td>4</td>
-            <td>1</td>
-            <td rowspan="2"><strong>3/4</strong></td>
-          </tr>
-          <tr>
-            <td>3/4</td>
-            <td>4</td>
-            <td>3</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- PAGINA 4 -->
-  <div class="pagina" id="pagina4">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-equals me-3"></i>Fracciones equivalentes</h2>
-
-      <p class="lead">
-        A veces dos fracciones se ven diferentes, pero representan la misma cantidad.
-      </p>
-
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="modelo-fraccion">
-            <div class="fraccion-grande">
-              <span>2</span>
-              <span class="linea"></span>
-              <span>4</span>
-            </div>
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-              <div class="parte"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="modelo-fraccion">
-            <div class="fraccion-grande">
-              <span>1</span>
-              <span class="linea"></span>
-              <span>2</span>
-            </div>
-            <div class="fila-partes">
-              <div class="parte coloreada"></div>
-              <div class="parte"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="texto-destacado">
-        <i class="fas fa-link me-2"></i>
-        <strong>Observa:</strong> <strong>2/4</strong> y <strong>1/2</strong> representan la misma cantidad. A eso se le llama fracciones equivalentes.
-      </div>
-
-      <div class="recuadro-datos">
-        <h4><i class="fas fa-check-circle me-2"></i>Qué debes recordar</h4>
-        <ul class="lista-iconos">
-          <li><i class="fas fa-equals"></i> Se escriben diferente</li>
-          <li><i class="fas fa-chart-pie"></i> Pero ocupan la misma parte del todo</li>
-          <li><i class="fas fa-brain"></i> Por eso tienen el mismo valor</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGINA 5 -->
-  <div class="pagina" id="pagina5">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-sort-amount-up me-3"></i>Ordenar fracciones</h2>
-
-      <p class="lead">
-        Cuando varias fracciones tienen el mismo denominador, puedes ordenarlas de menor a mayor usando el numerador.
-      </p>
-
-      <div class="recuadro-datos">
-        <h4><i class="fas fa-list me-2"></i>Ejemplo</h4>
-        <p class="mb-2">Ordena: <strong>1/5</strong>, <strong>3/5</strong> y <strong>4/5</strong>.</p>
-        <p class="mb-0">Como todas tienen 5 abajo, observamos el número de arriba: <strong>1, 3 y 4</strong>.</p>
-      </div>
-
-      <div class="row g-4 mt-2">
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>1/5</h5>
-            <p>Menor</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>3/5</h5>
-            <p>Intermedia</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>4/5</h5>
-            <p>Mayor</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="texto-destacado">
-        <i class="fas fa-arrow-up me-2"></i>
-        <strong>Orden correcto:</strong> <strong>1/5 &lt; 3/5 &lt; 4/5</strong>.
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGINA 6 -->
-  <div class="pagina" id="pagina6">
-    <div class="tarjeta-contenido">
-      <h2 class="titulo-pagina"><i class="fas fa-ruler-horizontal me-3"></i>Fracciones en la recta numérica</h2>
-
-      <p class="lead">
-        Las fracciones también se colocan en una recta. Así puedes ver cuál está más cerca de 0 y cuál está más cerca de 1.
-      </p>
-
-      <div class="modelo-fraccion">
-        <div class="linea-numerica">
-          <div class="linea-base"></div>
-
-          <div class="marca" style="left:5%;">
-            0
-            <span class="punto-linea">●</span>
-          </div>
-
-          <div class="marca" style="left:27.5%;">
-            1/4
-            <span class="punto-linea">●</span>
-          </div>
-
-          <div class="marca" style="left:50%;">
-            2/4
-            <span class="punto-linea">●</span>
-          </div>
-
-          <div class="marca" style="left:72.5%;">
-            3/4
-            <span class="punto-linea">●</span>
-          </div>
-
-          <div class="marca" style="left:95%;">
-            1
-            <span class="punto-linea">●</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="row g-4 mt-2">
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>1/4</h5>
-            <p>Está cerca de 0</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>2/4</h5>
-            <p>Está a la mitad</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mini-card">
-            <h5>3/4</h5>
-            <p>Está cerca de 1</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="texto-destacado">
-        <i class="fas fa-map-pin me-2"></i>
-        <strong>Recuerda:</strong> en la recta, una fracción más a la derecha tiene mayor valor.
-      </div>
-
-      <a href="quiz.html" class="boton-quiz text-center">
-        <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
-      </a>
-    </div>
-  </div>
-
-  <!-- NAVEGADOR -->
-  <div class="navegador">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>← ANTERIOR</button>
-    <span class="indicador-pagina" id="contadorPagina">1/6</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPagina(1)">SIGUIENTE →</button>
-  </div>
-
-</div>
-
-<script>
-  let paginaActual = 1;
-  const totalPaginas = 6;
-
-  function cambiarPagina(direccion) {
-    document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-    paginaActual += direccion;
-    document.getElementById(`pagina${paginaActual}`).classList.add('activa');
-    actualizarUI();
-    localStorage.setItem('progreso_normal_visualverbal_fracciones', paginaActual);
-  }
-
-  function actualizarUI() {
-    document.querySelectorAll('.punto').forEach((punto, index) => {
-      const numPagina = index + 1;
-      punto.classList.remove('activo', 'completado');
-      if (numPagina === paginaActual) punto.classList.add('activo');
-      else if (numPagina < paginaActual) punto.classList.add('completado');
+    ['sndClick', 'sndDing', 'sndError', 'sndTada'].forEach(id => {
+      const audio = document.getElementById(id);
+      if (audio) audio.volume = 0.15;
     });
 
-    document.getElementById('paginaActualNum').innerText = paginaActual;
-    document.getElementById('contadorPagina').innerText = `${paginaActual}/${totalPaginas}`;
-    document.getElementById('btnAnterior').disabled = (paginaActual === 1);
-    document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
-  }
+    function reproducir(id) {
+      try {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.volume = 0.15;
+        audio.currentTime = 0;
+        const promesa = audio.play();
+        if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+      } catch (_) {}
+    }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const guardado = localStorage.getItem('progreso_normal_visualverbal_fracciones');
-    if (guardado) {
-      const pag = parseInt(guardado, 10);
-      if (pag >= 1 && pag <= totalPaginas) {
-        document.getElementById(`pagina${paginaActual}`).classList.remove('activa');
-        paginaActual = pag;
-        document.getElementById(`pagina${paginaActual}`).classList.add('activa');
+    function initTrackers() {
+      if (window.createReforzamientoTracker) {
+        trackerVisualVerbal = window.createReforzamientoTracker({
+          contenidoId: 4,
+          nivel: 'normal',
+          estilo: 'visual_verbal',
+          trackTime: true,
+          detalleBase: {
+            bloque: 'reconocer_fracciones',
+            variante: 'visual_verbal_normal'
+          },
+          apartados: apartadosVisualVerbal
+        });
+      }
+
+      if (window.createReforzamientoSessionTracker) {
+        sessionTrackerVisualVerbal = window.createReforzamientoSessionTracker({
+          contenidoId: 4,
+          nivel: 'normal',
+          estilo: 'visual_verbal'
+        });
       }
     }
-    actualizarUI();
-  });
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    function clavePagina(n) {
+      return 'p' + n;
+    }
+
+    function marcarPaginaVisible(n, detalleExtra) {
+      if (!trackerVisualVerbal) return;
+      trackerVisualVerbal.markVisible(clavePagina(n), {
+        pagina: n,
+        ejercicio: clavePagina(n),
+        ...detalleExtra
+      });
+    }
+
+    function registrarError(n, detalle) {
+      intentosPagina[n] += 1;
+      if (!trackerVisualVerbal) return;
+      trackerVisualVerbal.addError(clavePagina(n), 1, {
+        pagina: n,
+        ejercicio: clavePagina(n),
+        intento: intentosPagina[n],
+        ...detalle
+      });
+    }
+
+    async function completarPagina(n, detalle) {
+      if (res[n]) return;
+      res[n] = true;
+
+      if (trackerVisualVerbal) {
+        trackerVisualVerbal.addCorrect(clavePagina(n), 1, {
+          pagina: n,
+          ejercicio: clavePagina(n),
+          ...detalle
+        });
+
+        await trackerVisualVerbal.complete(clavePagina(n), {
+          detalle: {
+            pagina: n,
+            ejercicio: clavePagina(n),
+            ...detalle
+          }
+        });
+      }
+
+      if (n === 8) {
+        reproducir('sndTada');
+        actualizarEstadoQuiz();
+      } else {
+        reproducir('sndDing');
+      }
+
+      actualizarNav();
+    }
+
+    function volverAlMenu() {
+      reproducir('sndClick');
+      window.location.href = '../../menu.html';
+    }
+
+    function shuffleChildren(target) {
+      const el = typeof target === 'string' ? q(target) : target;
+      if (!el) return;
+      const items = Array.from(el.children);
+      for (let i = items.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = items[i];
+        items[i] = items[j];
+        items[j] = tmp;
+      }
+      items.forEach(item => el.appendChild(item));
+    }
+
+    function flash(el) {
+      el.classList.add('incorrecto');
+      setTimeout(() => el.classList.remove('incorrecto'), 700);
+    }
+
+    function showFeedback(n, ok) {
+      q('#ok' + n)?.classList.toggle('visible', ok);
+      q('#warn' + n)?.classList.toggle('visible', !ok);
+    }
+
+    function clearFeedback(n) {
+      q('#ok' + n)?.classList.remove('visible');
+      q('#warn' + n)?.classList.remove('visible');
+    }
+
+    function actualizarEstadoQuiz() {
+      const botonQuiz = q('#btnMiniQuiz');
+      if (!botonQuiz) return;
+
+      if (res[8]) {
+        botonQuiz.classList.remove('bloqueado');
+
+        if (!quizTrackerAdjunto && sessionTrackerVisualVerbal) {
+          sessionTrackerVisualVerbal.attachQuizLinks('.boton-quiz', () => ({ eventoCierre: 'quiz' }));
+          quizTrackerAdjunto = true;
+        }
+      } else {
+        botonQuiz.classList.add('bloqueado');
+      }
+    }
+
+    function actualizarNav() {
+      q('#progresoTexto').innerText = 'P\u00e1gina ' + paginaActual + ' de ' + totalPaginas;
+      q('#contadorPagina').innerText = paginaActual + '/' + totalPaginas;
+      const p = (paginaActual / totalPaginas) * 100;
+      q('#barraRelleno').style.width = p + '%';
+      q('#progresoNum').innerText = Math.round(p) + '%';
+      q('#btnAnterior').disabled = paginaActual === 1;
+      q('#btnSiguiente').disabled = paginaActual === totalPaginas || !res[paginaActual];
+    }
+
+    function resolver(n, detalle) {
+      completarPagina(n, detalle);
+    }
+
+    function cambiarPagina(d) {
+      if (d === 1 && !res[paginaActual]) return;
+      const dest = paginaActual + d;
+      if (dest < 1 || dest > totalPaginas) return;
+      reproducir('sndClick');
+      q('#pagina' + paginaActual).classList.remove('activa');
+      paginaActual = dest;
+      q('#pagina' + paginaActual).classList.add('activa');
+      actualizarNav();
+      marcarPaginaVisible(paginaActual);
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+
+    function validarMiniQuiz(e) {
+      if (!res[8]) {
+        e.preventDefault();
+        reproducir('sndError');
+        return false;
+      }
+      reproducir('sndClick');
+      return true;
+    }
+
+    function initP1() {
+      qa('#opcionesP1 .selector-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[1]) return;
+          reproducir('sndClick');
+
+          if (btn.dataset.value === 'mayor') {
+            btn.classList.add('correcto');
+            qa('#opcionesP1 .selector-btn').forEach(x => x.disabled = true);
+            showFeedback(1, true);
+            resolver(1, {
+              actividad: 'identificar_fraccion_mayor',
+              respuesta: btn.dataset.value
+            });
+          } else {
+            flash(btn);
+            showFeedback(1, false);
+            reproducir('sndError');
+            registrarError(1, {
+              actividad: 'identificar_fraccion_mayor',
+              respuesta: btn.dataset.value
+            });
+          }
+        });
+      });
+    }
+
+    function initP2() {
+      qa('#opcionesP2 .selector-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[2]) return;
+          reproducir('sndClick');
+
+          if (btn.dataset.value === 'unoTercio') {
+            btn.classList.add('correcto');
+            qa('#opcionesP2 .selector-btn').forEach(x => x.disabled = true);
+            showFeedback(2, true);
+            resolver(2, {
+              actividad: 'identificar_un_tercio',
+              respuesta: btn.dataset.value
+            });
+          } else {
+            flash(btn);
+            showFeedback(2, false);
+            reproducir('sndError');
+            registrarError(2, {
+              actividad: 'identificar_un_tercio',
+              respuesta: btn.dataset.value
+            });
+          }
+        });
+      });
+    }
+
+    function updateP3() {
+      const total = qa('#barraP3 .choco-piece.selected').length;
+      q('#numP3').textContent = total ? total : '?';
+      if (total === 0) {
+        q('#lecturaP3').innerHTML = 'Todav&iacute;a no has marcado ninguna parte del entero.';
+      } else if (total === 4) {
+        q('#lecturaP3').innerHTML = 'La fracci&oacute;n formada es <strong>4/6</strong>. Entre <strong>2/6</strong> y <strong>4/6</strong>, la mayor es <strong>4/6</strong>.';
+      } else {
+        q('#lecturaP3').innerHTML = 'Has marcado <strong>' + total + '</strong> de <strong>6</strong> partes iguales.';
+      }
+    }
+
+    function initP3() {
+      qa('#barraP3 .choco-piece').forEach(piece => {
+        piece.addEventListener('click', () => {
+          if (res[3]) return;
+          reproducir('sndClick');
+          piece.classList.toggle('selected');
+          updateP3();
+          const total = qa('#barraP3 .choco-piece.selected').length;
+          if (total === 4) {
+            showFeedback(3, true);
+            qa('#barraP3 .choco-piece').forEach(x => x.disabled = true);
+            resolver(3, {
+              actividad: 'comparar_fracciones_sextos',
+              seleccionadas: total
+            });
+          } else {
+            showFeedback(3, false);
+            if (total > 4) {
+              reproducir('sndError');
+              registrarError(3, {
+                actividad: 'comparar_fracciones_sextos',
+                seleccionadas: total
+              });
+            }
+          }
+        });
+      });
+    }
+
+    function initP4() {
+      qa('.marca-click').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[4]) return;
+          reproducir('sndClick');
+          qa('.marca-click').forEach(x => x.classList.remove('activa'));
+          btn.classList.add('activa');
+          seleccionP4 = btn.dataset.value;
+          clearFeedback(4);
+        });
+      });
+
+      q('#btnVerificarP4').addEventListener('click', () => {
+        if (res[4]) return;
+        reproducir('sndClick');
+
+        if (seleccionP4 === '5/6') {
+          const target = q('.marca-click[data-value="5/6"]');
+          target.classList.add('correcto');
+          qa('.marca-click').forEach(x => x.disabled = true);
+          q('#btnVerificarP4').disabled = true;
+          showFeedback(4, true);
+          resolver(4, {
+            actividad: 'ubicar_cinco_sextos',
+            respuesta: seleccionP4
+          });
+        } else {
+          showFeedback(4, false);
+          reproducir('sndError');
+          registrarError(4, {
+            actividad: 'ubicar_cinco_sextos',
+            respuesta: seleccionP4 || 'sin_seleccion'
+          });
+        }
+      });
+    }
+
+    function revisarP5() {
+      if (!p5.arriba || !p5.abajo || res[5]) return;
+      const ok = p5.arriba === 'numerador' && p5.abajo === 'denominador';
+      if (ok) {
+        qa('#pagina5 .selector-btn').forEach(btn => btn.disabled = true);
+        showFeedback(5, true);
+        resolver(5, {
+          actividad: 'nombrar_numerador_denominador',
+          arriba: p5.arriba,
+          abajo: p5.abajo
+        });
+      } else {
+        showFeedback(5, false);
+        reproducir('sndError');
+        registrarError(5, {
+          actividad: 'nombrar_numerador_denominador',
+          arriba: p5.arriba,
+          abajo: p5.abajo
+        });
+      }
+    }
+
+    function initP5() {
+      qa('#pagina5 .selector-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[5]) return;
+          reproducir('sndClick');
+          const slot = btn.dataset.slot;
+          qa('#pagina5 .selector-btn[data-slot="' + slot + '"]').forEach(x => x.classList.remove('activo'));
+          btn.classList.add('activo');
+          p5[slot] = btn.dataset.value;
+          revisarP5();
+        });
+      });
+    }
+
+    function resetP6() {
+      if (res[6]) return;
+      ordenP6 = 0;
+      qa('#poolP6 .tarjeta-orden').forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove('correcto', 'incorrecto');
+      });
+      q('#slot1').textContent = '1\u00b0 lugar';
+      q('#slot2').textContent = '2\u00b0 lugar';
+      q('#slot3').textContent = '3\u00b0 lugar';
+      q('#slot1').classList.remove('correcto');
+      q('#slot2').classList.remove('correcto');
+      q('#slot3').classList.remove('correcto');
+      clearFeedback(6);
+      shuffleChildren('#poolP6');
+    }
+
+    function initP6() {
+      qa('#poolP6 .tarjeta-orden').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[6] || btn.disabled) return;
+          reproducir('sndClick');
+          const value = btn.dataset.value;
+          if (value === esperadoP6[ordenP6]) {
+            ordenP6 += 1;
+            btn.disabled = true;
+            btn.classList.add('correcto');
+            const slot = q('#slot' + ordenP6);
+            slot.textContent = value;
+            slot.classList.add('correcto');
+            q('#warn6').classList.remove('visible');
+            if (ordenP6 === 3) {
+              q('#ok6').classList.add('visible');
+              resolver(6, {
+                actividad: 'ordenar_fracciones',
+                orden_final: esperadoP6.join(' < ')
+              });
+            }
+          } else {
+            q('#warn6').classList.add('visible');
+            flash(btn);
+            reproducir('sndError');
+            registrarError(6, {
+              actividad: 'ordenar_fracciones',
+              respuesta: value,
+              posicion_esperada: ordenP6 + 1
+            });
+          }
+        });
+      });
+      q('#resetP6').addEventListener('click', () => {
+        reproducir('sndClick');
+        resetP6();
+      });
+      resetP6();
+    }
+
+    function initP7() {
+      qa('#opcionesP7 .simbolo-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[7]) return;
+          reproducir('sndClick');
+
+          if (btn.dataset.value === '>') {
+            btn.classList.add('correcto');
+            q('#simboloSlot7').textContent = '>';
+            q('#simboloSlot7').classList.add('correcto');
+            qa('#opcionesP7 .simbolo-btn').forEach(x => x.disabled = true);
+            showFeedback(7, true);
+            resolver(7, {
+              actividad: 'comparar_con_signo',
+              respuesta: btn.dataset.value
+            });
+          } else {
+            flash(btn);
+            showFeedback(7, false);
+            reproducir('sndError');
+            registrarError(7, {
+              actividad: 'comparar_con_signo',
+              respuesta: btn.dataset.value
+            });
+          }
+        });
+      });
+    }
+
+    function revisarP8() {
+      if (p8.a && p8.b && p8.c) {
+        showFeedback(8, true);
+        resolver(8, {
+          actividad: 'relacionar_reglas_de_comparacion',
+          relaciones: 'completas'
+        });
+      }
+    }
+
+    function initP8() {
+      qa('.rule-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (res[8]) return;
+          reproducir('sndClick');
+          const card = btn.dataset.card;
+          if (p8[card]) return;
+
+          if (btn.dataset.value === p8Esperado[card]) {
+            p8[card] = true;
+            btn.classList.add('correcto');
+            const cardEl = q('#cardP8' + card);
+            cardEl.classList.add('correcta');
+            qa('#cardP8' + card + ' .rule-choice').forEach(x => x.disabled = true);
+            q('#warn8').classList.remove('visible');
+            revisarP8();
+          } else {
+            flash(btn);
+            showFeedback(8, false);
+            reproducir('sndError');
+            registrarError(8, {
+              actividad: 'relacionar_reglas_de_comparacion',
+              tarjeta: card,
+              respuesta: btn.dataset.value
+            });
+          }
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initTrackers();
+      shuffleChildren('#opcionesP1');
+      shuffleChildren('#opcionesP2');
+      shuffleChildren('#opcionesP7');
+      qa('#pagina5 .selector-nombre').forEach(shuffleChildren);
+      qa('.opciones-regla').forEach(shuffleChildren);
+
+      initP1();
+      initP2();
+      initP3();
+      updateP3();
+      initP4();
+      initP5();
+      initP6();
+      initP7();
+      initP8();
+      actualizarEstadoQuiz();
+      actualizarNav();
+      marcarPaginaVisible(1);
+    });
+  </script>
 </body>
 </html>

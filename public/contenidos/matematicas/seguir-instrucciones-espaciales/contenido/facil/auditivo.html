@@ -35,7 +35,7 @@
 
     .cabecera {
       background: linear-gradient(135deg, var(--naranja-med) 0%, var(--naranja) 100%);
-      padding: 22px 20px 18px;
+      padding: 18px 18px 14px;
       border-bottom: 5px solid var(--naranja-claro);
       text-align: center;
       box-shadow: 0 8px 24px rgba(194,65,12,.35);
@@ -49,7 +49,7 @@
     }
     .cabecera h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 2.6rem; color: white;
+      font-size: 2.2rem; color: white;
       text-shadow: 3px 3px 0 var(--naranja);
       position: relative;
     }
@@ -60,16 +60,16 @@
     }
     .badge-estilo {
       background: #fde68a; color: var(--texto);
-      padding: 9px 28px; border-radius: 50px;
-      font-weight: 800; font-size: 1.05rem;
+      padding: 8px 22px; border-radius: 50px;
+      font-weight: 800; font-size: .98rem;
       border: 3px solid white; display: inline-block;
       margin-top: 10px; box-shadow: 0 3px 0 #b26a00;
       position: relative;
     }
     .badge-nivel {
       background: var(--naranja); color: white;
-      padding: 7px 22px; border-radius: 40px;
-      font-weight: 700; font-size: .95rem;
+      padding: 6px 18px; border-radius: 40px;
+      font-weight: 700; font-size: .9rem;
       border: 2px solid #fde68a; display: inline-block;
       margin-left: 12px; position: relative;
     }
@@ -159,65 +159,73 @@
       75%{ transform: translateX(6px); }
     }
 
-    .panel { display: flex; flex-direction: column; gap: 20px; }
+    .panel { display: flex; flex-direction: column; gap: 14px; width: 100%; }
 
     .tarjeta-audio {
       background: white;
-      border-radius: 24px;
+      border-radius: 22px;
       border: 3px solid var(--naranja-claro);
-      box-shadow: 0 8px 0 #fed7aa;
+      box-shadow: 0 7px 0 #fed7aa;
       overflow: hidden;
     }
     .audio-header {
       background: linear-gradient(135deg, var(--naranja-med), var(--naranja));
-      padding: 14px 20px;
+      padding: 12px 16px;
       color: white;
       font-family: 'Fredoka One', cursive;
-      font-size: 1.15rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     .audio-body {
-      padding: 20px;
+      padding: 16px;
       text-align: center;
     }
 
     .btn-play {
-      background: var(--naranja-bg);
-      border: 3px solid var(--naranja-claro);
-      border-radius: 60px;
-      padding: 20px 30px;
-      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--naranja-med), var(--naranja));
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 16px 20px;
+      font-size: 1.1rem;
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      width: 100%;
+      box-shadow: 0 6px 0 #9a3412, 0 10px 20px rgba(194,65,12,.22);
     }
     .btn-play:hover {
-      transform: scale(1.05);
-      background: white;
-      border-color: var(--naranja);
-      box-shadow: 0 5px 20px rgba(234,88,12,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #9a3412, 0 14px 22px rgba(234,88,12,0.3);
     }
     .btn-play:active {
-      transform: scale(0.98);
+      transform: translateY(1px);
+      box-shadow: 0 4px 0 #9a3412;
     }
+    .btn-play i { font-size: 1.6rem; }
+    .btn-play-texto { font-size: 1.02rem; letter-spacing: .01em; }
 
     .btn-repetir {
       background: #fde68a;
       border: none;
       border-radius: 40px;
-      padding: 10px 24px;
+      padding: 10px 18px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      width: 100%;
     }
     .btn-repetir:hover {
       background: var(--naranja);
@@ -228,39 +236,49 @@
     .paso-audio {
       background: var(--naranja-pale);
       border-radius: 16px;
-      padding: 12px 16px;
-      margin-top: 15px;
-      display: flex;
+      padding: 10px 14px;
+      margin-top: 12px;
+      display: none;
       align-items: center;
       justify-content: center;
-      gap: 15px;
-      font-size: 1.8rem;
+      gap: 12px;
+      font-size: 1.4rem;
+    }
+    .texto-ayuda-audio {
+      background: var(--naranja-bg);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin: 12px 0;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #92400e;
+      line-height: 1.4;
     }
 
     .tarjeta-accion {
       background: white;
-      border-radius: 24px;
+      border-radius: 22px;
       border: 3px solid var(--naranja-claro);
-      box-shadow: 0 8px 0 #fed7aa;
-      padding: 22px;
+      box-shadow: 0 7px 0 #fed7aa;
+      padding: 18px;
       text-align: center;
     }
     .accion-icono {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
+      font-size: 2.1rem;
+      margin-bottom: 8px;
       color: var(--naranja);
     }
     .accion-pregunta {
       font-family: 'Fredoka One', cursive;
-      font-size: 1.2rem;
+      font-size: 1.08rem;
       color: var(--naranja);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .accion-sub {
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       color: #a16207;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .feedback-box {
@@ -291,10 +309,9 @@
     }
 
     .btn-quiz-wrap {
-      margin-top: 15px;
-      display: none;
+      margin-top: 12px;
+      display: block;
     }
-    .btn-quiz-wrap.visible { display: block; }
     .btn-quiz {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--naranja);
@@ -312,6 +329,23 @@
       transform: translateY(-3px);
       box-shadow: 0 9px 0 var(--naranja-med);
       color: white;
+    }
+    .btn-quiz.bloqueado {
+      background: #e5e7eb;
+      color: #9ca3af;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .btn-quiz.bloqueado:hover {
+      transform: none;
+      box-shadow: none;
+      color: #9ca3af;
+    }
+    .texto-ayuda-quiz {
+      margin-top: 10px;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #a16207;
     }
 
     .btn-reintentar {
@@ -336,8 +370,9 @@
 
     .leyenda {
       background: white;
-      border-radius: 20px;
-      border: 2px solid var(--naranja-claro);
+      border-radius: 0 0 24px 24px;
+      border: 0;
+      border-top: 2px solid var(--naranja-claro);
       padding: 14px 18px;
       display: flex;
       flex-wrap: wrap;
@@ -347,7 +382,7 @@
     }
     .leyenda-titulo {
       font-family: 'Fredoka One', cursive;
-      font-size: .85rem;
+      font-size: .9rem;
       color: var(--naranja);
       width: 100%;
       margin-bottom: 6px;
@@ -376,7 +411,11 @@
       40%{ transform: translateY(-15px) rotate(5deg); }
       60%{ transform: translateY(-8px); }
     }
-    .luna-anim { animation: lunaSalta .5s cubic-bezier(0.34, 1.2, 0.64, 1); }
+    .luna-anim .luna-cuerpo {
+      animation: lunaSalta .5s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform-box: fill-box;
+      transform-origin: center;
+    }
 
     @keyframes confetiFall {
       0%  { transform: translateY(-10px) rotate(0deg); opacity: 1; }
@@ -710,6 +749,7 @@
 
         <!-- LUNA PERSONAJE -->
         <g id="lunaPersonaje" transform="translate(390,260)">
+          <g class="luna-cuerpo">
           <rect x="-34" y="-26" width="68" height="16" rx="5" fill="#fde68a" stroke="#c2410c" stroke-width="1.5"/>
           <text x="0" y="-14" font-family="Fredoka One,cursive" font-size="8" fill="#7c2d12" text-anchor="middle">⭐ LUNA ⭐</text>
           <line x1="0" y1="-8" x2="0" y2="0" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="2,2"/>
@@ -736,6 +776,7 @@
           <rect x="10"  y="18" width="10" height="6" rx="3" fill="#1d4ed8" transform="rotate(-20,10,18)"/>
           <circle cx="-18" cy="28" r="4" fill="#fbbf24"/>
           <circle cx="20"  cy="28" r="4" fill="#fbbf24"/>
+          </g>
         </g>
       </svg>
 
@@ -770,10 +811,10 @@
       </div>
       <div class="audio-body">
         <button class="btn-play" id="btnPlayInstruccion">
-          <i class="fas fa-play-circle"></i> <span style="font-size:1.2rem;">▶ Escuchar</span>
+          <i class="fas fa-play-circle"></i> <span class="btn-play-texto">▶ Escuchar instrucción</span>
         </button>
 
-        <div id="textoAyuda" style="background: var(--naranja-bg); border-radius: 16px; padding: 12px; margin: 15px 0; font-size: 0.9rem; font-weight: 600; color: #92400e;">
+        <div id="textoAyuda" class="texto-ayuda-audio">
           🎧 Presiona el botón para escuchar la instrucción.
         </div>
 
@@ -781,7 +822,7 @@
           <i class="fas fa-redo-alt"></i> Repetir instrucción
         </button>
 
-        <div class="paso-audio">
+        <div class="paso-audio" hidden aria-hidden="true">
           <span>⬆️</span>
           <span>+</span>
           <span>1</span>
@@ -801,9 +842,10 @@
       <div class="feedback-box" id="feedbackBox"></div>
 
       <div class="btn-quiz-wrap" id="btnQuizWrap">
-        <a href="quiz.html" class="btn-quiz">
-          <i class="fas fa-puzzle-piece"></i> Ir al ejercicio
+        <a href="quiz.html" class="btn-quiz boton-quiz bloqueado" id="botonQuiz" aria-disabled="true">
+          <i class="fas fa-puzzle-piece"></i> Ir al quiz
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">Completa este reto para activar el quiz.</div>
       </div>
       <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">
         <i class="fas fa-redo-alt"></i> Reintentar
@@ -813,9 +855,15 @@
   </div>
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/seguir-instrucciones-espaciales/recursos/js/instrucciones-tracking.js?v=20260505b"></script>
 <script>
   var DESTINO_CORRECTO = 'hel';
   var respondido = false;
+  var ejercicioCompletado = false;
+  var erroresAuditivo = 0;
+  var completadoRegistroAuditivo = false;
+  var quizTrackerAdjunto = false;
 
   var POSICIONES_LUNA = {
     pan:   'translate(55,160)',
@@ -827,6 +875,38 @@
     inicio:'translate(390,260)'
   };
 
+  var audioClick = document.getElementById('sndClick');
+  var audioDing = document.getElementById('sndDing');
+  var audioError = document.getElementById('sndError');
+  var audioTada = document.getElementById('sndTada');
+
+  [audioClick, audioDing, audioError, audioTada].forEach(function(audio) {
+    if (audio) audio.volume = 0.15;
+  });
+
+  var ejerciciosAuditivo = {
+    p1a: {
+      pagina: 1,
+      apartadoClave: 'pagina1_destino_pueblo',
+      tipoActividad: 'audio_opcion'
+    }
+  };
+
+  var trackerAuditivo = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'auditivo',
+    trackTime: false,
+    detalleBase: { bloque: 'seguir_instrucciones_espaciales', archivo: 'auditivo_facil' },
+    apartados: ejerciciosAuditivo
+  }) : null;
+
+  var sessionTrackerAuditivo = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 7,
+    nivel: 'facil',
+    estilo: 'auditivo'
+  }) : null;
+
   function play(id) {
     try { var s = document.getElementById(id); s.currentTime = 0; s.play(); } catch(e){}
   }
@@ -837,6 +917,75 @@
       audio.currentTime = 0;
       audio.play();
     } catch(e){}
+  }
+
+  function registrarIntentoAuditivo(correcto, detalle) {
+    if (!detalle) detalle = {};
+
+    if (trackerAuditivo) {
+      trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+
+    if (correcto) {
+      if (!completadoRegistroAuditivo) {
+        completadoRegistroAuditivo = true;
+        if (trackerAuditivo) {
+          trackerAuditivo.addCorrect('p1a', 1, {
+            pagina: 1,
+            ejercicio: 'p1a',
+            actividad: 'seleccionar_destino',
+            errores_previos: erroresAuditivo,
+            destino_correcto: DESTINO_CORRECTO,
+            destino_elegido: detalle.destino || null
+          });
+          trackerAuditivo.complete('p1a', {
+            detalle: {
+              pagina: 1,
+              ejercicio: 'p1a',
+              actividad: 'seleccionar_destino',
+              destino_correcto: DESTINO_CORRECTO,
+              destino_elegido: detalle.destino || null
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    erroresAuditivo += 1;
+    if (trackerAuditivo) {
+      trackerAuditivo.addError('p1a', 1, {
+        pagina: 1,
+        ejercicio: 'p1a',
+        actividad: 'seleccionar_destino',
+        intento: erroresAuditivo,
+        destino_elegido: detalle.destino || null
+      });
+    }
+  }
+
+  function actualizarBotonQuiz() {
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+
+    if (!botonQuiz || !textoAyudaQuiz) return;
+
+    if (ejercicioCompletado) {
+      botonQuiz.classList.remove('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'false');
+      textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+
+      if (!quizTrackerAdjunto && sessionTrackerAuditivo) {
+        sessionTrackerAuditivo.attachQuizLinks('.boton-quiz', function() {
+          return { eventoCierre: 'quiz' };
+        });
+        quizTrackerAdjunto = true;
+      }
+    } else {
+      botonQuiz.classList.add('bloqueado');
+      botonQuiz.setAttribute('aria-disabled', 'true');
+      textoAyudaQuiz.textContent = 'Completa este reto para activar el quiz.';
+    }
   }
 
   function moverLuna(destId) {
@@ -852,7 +1001,9 @@
   function activarHotspots() {
     ['pan','jug','hel','far','esc','hel2'].forEach(function(id){
       var hs = document.getElementById('hs-'+id);
-      if (hs) { hs.classList.add('activo'); hs.classList.remove('correcto','incorrecto'); }
+      if (!hs) return;
+      hs.classList.remove('correcto','incorrecto');
+      if (!ejercicioCompletado) hs.classList.add('activo');
     });
   }
 
@@ -873,6 +1024,7 @@
   }
 
   function reproducirInstruccionCorta() {
+    play('sndClick');
     reproducirAudio('audioInstruccionCorta');
   }
 
@@ -899,7 +1051,7 @@
   });
 
   function elegirDestino(id) {
-    if (respondido) return;
+    if (respondido || ejercicioCompletado) return;
     play('sndClick');
     respondido = true;
     desactivarHotspots();
@@ -910,6 +1062,8 @@
     moverLuna(id);
 
     if (id === DESTINO_CORRECTO) {
+      ejercicioCompletado = true;
+      registrarIntentoAuditivo(true, { destino: id });
       play('sndTada');
       hs.classList.add('correcto');
       var ind = document.getElementById('ind-'+id);
@@ -918,8 +1072,7 @@
 
       fb.className = 'feedback-box ok';
       fb.innerHTML = '✅ ¡Correcto! Luna llegó a la Heladería ROSA.';
-      document.getElementById('btnQuizWrap').classList.add('visible');
-      localStorage.setItem('progreso_facil_auditivo_instrucciones', 'ok');
+      actualizarBotonQuiz();
       lanzarConfeti();
 
       ['pan','jug','far','esc','hel2'].forEach(function(otro){
@@ -928,9 +1081,9 @@
       });
 
     } else {
+      registrarIntentoAuditivo(false, { destino: id });
       play('sndError');
       hs.classList.add('incorrecto');
-      respondido = false;
 
       var audioPistas = {
         pan: 'audioPistaPan',
@@ -958,16 +1111,19 @@
         fb.style.display = 'none';
         setTimeout(function() { fb.style.display = ''; }, 100);
         moverLuna('inicio');
+        respondido = false;
         activarHotspots();
       }, 3000);
     }
   }
 
   function reintentar() {
+    if (ejercicioCompletado) return;
     respondido = false;
     moverLuna('inicio');
     desactivarHotspots();
     activarHotspots();
+    actualizarBotonQuiz();
     document.getElementById('feedbackBox').className = 'feedback-box';
     document.getElementById('feedbackBox').style.display = 'none';
     document.getElementById('btnReintentar').classList.remove('visible');
@@ -1006,11 +1162,26 @@
   document.getElementById('btnPlayInstruccion').addEventListener('click', reproducirInstruccionCompleta);
   document.getElementById('btnRepetir').addEventListener('click', reproducirInstruccionCorta);
 
+  var botonQuizAuditivo = document.getElementById('botonQuiz');
+  if (botonQuizAuditivo) {
+    botonQuizAuditivo.addEventListener('click', function(event) {
+      if (!ejercicioCompletado) {
+        event.preventDefault();
+        play('sndError');
+      }
+    });
+  }
+
   window.addEventListener('DOMContentLoaded', function() {
+    moverLuna('inicio');
     activarHotspots();
-    var guardado = localStorage.getItem('progreso_facil_auditivo_instrucciones');
-    if (guardado === 'ok') {
-      document.getElementById('btnQuizWrap').classList.add('visible');
+    actualizarBotonQuiz();
+
+    if (trackerAuditivo) {
+      trackerAuditivo.markVisible('p1a', { pagina: 1, ejercicio: 'p1a' });
+    }
+    if (sessionTrackerAuditivo) {
+      sessionTrackerAuditivo.start();
     }
   });
 </script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordenadas - Nivel Dificil - Kinestesico</title>
+    <title>Identificar coordenadas - Nivel Dificil - Kinestesico</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -104,6 +104,16 @@
             border: 4px solid #f97316; box-shadow: 0 8px 0 #fdba74; transition: all .2s;
         }
         .boton-quiz:hover { transform: translateY(-4px); box-shadow: 0 12px 0 #fdba74; background: white; }
+        .boton-quiz.bloqueado {
+            background: #e5e7eb; color: #6b7280; border-color: #9ca3af;
+            box-shadow: 0 8px 0 #9ca3af; cursor: not-allowed; pointer-events: auto;
+        }
+        .boton-quiz.bloqueado:hover {
+            transform: none; background: #e5e7eb; box-shadow: 0 8px 0 #9ca3af;
+        }
+        .texto-ayuda-quiz {
+            color: #9a3412; font-weight: 800; margin-top: 12px; text-align: center;
+        }
 
         /* P1 - MAPA */
         .mapa-calles-wrap {
@@ -252,6 +262,31 @@
         .badge-lado.izq { background: #3b82f6; color: white; }
         .badge-lado.der { background: #ef4444; color: white; }
         .info-sel { font-weight: 700; text-align: center; margin: 10px 0; color: #c2410c; font-size: 1rem; }
+        .balcon-grid { min-width: 560px; }
+        .fila-balcon { display:flex; align-items:center; margin-bottom:4px; gap:6px; }
+        .fila-num-b {
+            width: 48px; text-align: right; font-weight: 800; color: #c2410c; font-size: .85rem; flex-shrink: 0;
+        }
+        .bloque-izq-b, .bloque-der-b { display:flex; gap:3px; flex:1; }
+        .bloque-izq-b { justify-content:flex-end; }
+        .bloque-der-b { justify-content:flex-start; }
+        .pasillo-b {
+            width: 46px; flex-shrink: 0; text-align:center; font-weight:800; color:#9a3412; font-size:.74rem;
+            background:#fed7aa; border-radius:8px; padding:4px 2px; line-height:1.2;
+        }
+        .asiento-b {
+            width: 30px; height: 30px; background: white; border: 1.8px solid #f97316;
+            border-radius: 6px 6px 3px 3px; display:flex; align-items:center; justify-content:center;
+            font-size: .66rem; font-weight:800; color:#9a3412; cursor:pointer; transition:all .15s;
+        }
+        .asiento-b:hover { background:#fde68a; transform:scale(1.12); }
+        .asiento-b.sel-izq { background:#3b82f6; color:white; border-color:white; transform:scale(1.1); }
+        .asiento-b.sel-der { background:#ef4444; color:white; border-color:white; transform:scale(1.1); }
+        .asiento-b.correcto { background:#4caf50; color:white; border-color:white; }
+        .info-sel-b {
+            font-weight:700; text-align:center; margin:12px 0; color:#c2410c; font-size:1rem;
+            background:#fff7e6; border:2px solid #fed7aa; border-radius:14px; padding:12px;
+        }
 
         /* P5 - CU */
         .cu-wrap { overflow-x: auto; margin: 20px 0; background: #f0f9ff; border-radius: 20px; border: 2px solid #bae6fd; padding: 20px; }
@@ -281,11 +316,345 @@
         .chip-dir.sur   { background: #ef4444; }
         .chip-dir.norte { background: #10b981; }
 
+        /* RETOS EXTRA */
+        .actividad-kinestesica.reto-secundario {
+            background: linear-gradient(180deg, #fffaf2, #fff3e0);
+            border-color: #fb923c;
+        }
+        .panel-manipulacion {
+            background: white;
+            border: 2px solid #fed7aa;
+            border-radius: 22px;
+            padding: 20px;
+            margin: 18px 0;
+            box-shadow: inset 0 0 0 1px rgba(251,146,60,.08);
+        }
+        .banco-fichas-k {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .ficha-kin {
+            min-width: 154px;
+            max-width: 220px;
+            background: linear-gradient(180deg, #fff7e6, #ffffff);
+            border: 2px solid #f97316;
+            border-radius: 18px;
+            padding: 12px 14px;
+            font-weight: 700;
+            color: #9a3412;
+            text-align: center;
+            cursor: grab;
+            transition: transform .18s, box-shadow .18s, border-color .18s, opacity .18s;
+            box-shadow: 0 4px 0 #fed7aa;
+            user-select: none;
+        }
+        .ficha-kin:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #fed7aa; }
+        .ficha-kin strong { display: block; font-size: 1rem; }
+        .ficha-kin.seleccionada {
+            border-color: #c2410c;
+            background: #fde68a;
+            transform: translateY(-2px) scale(1.02);
+        }
+        .ficha-kin.usada {
+            opacity: .35;
+            cursor: default;
+            pointer-events: none;
+            transform: none;
+            box-shadow: none;
+        }
+        .zona-slot-k {
+            display: grid;
+            gap: 14px;
+            align-items: stretch;
+        }
+        .ruta-checks { grid-template-columns: repeat(5, minmax(130px, 1fr)); }
+        .campus-checks { grid-template-columns: repeat(4, minmax(150px, 1fr)); }
+        .slot-k {
+            min-height: 96px;
+            background: #fff7e6;
+            border: 3px dashed #fdba74;
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: box-shadow .18s, border-color .18s, background .18s;
+        }
+        .slot-k:hover { box-shadow: 0 10px 20px rgba(249,115,22,.12); }
+        .slot-k.lleno {
+            border-style: solid;
+            border-color: #f97316;
+            background: #fff;
+        }
+        .slot-k.incompatible {
+            animation: sacudir .22s linear 2;
+            border-color: #ef4444;
+        }
+        .slot-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 78px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #c2410c;
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .3px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .slot-placeholder {
+            color: #c2410c;
+            font-weight: 700;
+            opacity: .72;
+            line-height: 1.25;
+        }
+        .banco-sello {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .sello-kin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 164px;
+            min-height: 74px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            border: 3px dashed #c2410c;
+            background: linear-gradient(180deg, #fff7e6, #fde68a);
+            color: #9a3412;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 6px 0 #fdba74;
+            cursor: grab;
+            user-select: none;
+        }
+        .grid-cartas-kin {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+        .carta-kin {
+            position: relative;
+            background: linear-gradient(180deg, #fffdf8, #fff7e6);
+            border: 2px solid #fdba74;
+            border-radius: 22px;
+            padding: 18px 16px;
+            min-height: 176px;
+            cursor: pointer;
+            transition: transform .18s, box-shadow .18s, border-color .18s;
+        }
+        .carta-kin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(194,65,12,.12);
+        }
+        .carta-kin.marcada {
+            border-color: #c2410c;
+            box-shadow: 0 0 0 3px rgba(249,115,22,.16);
+        }
+        .carta-kin .sello-kin {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            min-width: 118px;
+            min-height: 56px;
+            padding: 8px 12px;
+            font-size: .82rem;
+            box-shadow: 0 4px 0 #fdba74;
+        }
+        .etiqueta-carta-kin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #ffedd5;
+            color: #c2410c;
+            font-size: .8rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .ruta-mini-metro {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .pill-estacion {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 800;
+            font-size: .88rem;
+            min-width: 88px;
+        }
+        .pill-estacion.azul { background: #2563eb; }
+        .pill-estacion.ambar { background: #d97706; }
+        .pill-estacion.verde { background: #059669; }
+        .pill-estacion.roja { background: #dc2626; }
+        .paso-ruta-mini {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #9a3412;
+        }
+        .nota-carta {
+            color: #9a3412;
+            font-weight: 700;
+            line-height: 1.35;
+            font-size: .92rem;
+            margin: 0;
+        }
+        .boleto-pack {
+            display: grid;
+            gap: 12px;
+        }
+        .boleto-fila {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #fff3e0;
+            color: #c2410c;
+            font-weight: 900;
+            width: fit-content;
+        }
+        .mini-pasillo {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+        .asiento-ticket {
+            border: 2px solid #f97316;
+            border-radius: 14px;
+            padding: 10px 8px;
+            text-align: center;
+            background: white;
+            font-weight: 900;
+            color: #9a3412;
+        }
+        .asiento-ticket.izq { background: linear-gradient(180deg, #eff6ff, #dbeafe); }
+        .asiento-ticket.der { background: linear-gradient(180deg, #fff1f2, #ffe4e6); }
+        .pasillo-ticket {
+            border-radius: 14px;
+            background: #fed7aa;
+            color: #9a3412;
+            padding: 8px 10px;
+            font-size: .76rem;
+            font-weight: 900;
+            text-align: center;
+        }
+        .radar-panel {
+            background: linear-gradient(180deg, #0f172a, #1e293b);
+            border-radius: 24px;
+            border: 3px solid #38bdf8;
+            padding: 22px;
+            color: white;
+        }
+        .radar-indicaciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .radar-indicaciones span {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(56,189,248,.18);
+            border: 1px solid rgba(125,211,252,.5);
+            font-weight: 800;
+        }
+        .radar-grid-wrap {
+            display: grid;
+            grid-template-columns: 36px repeat(6, 1fr);
+            gap: 6px;
+            align-items: center;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        .radar-head {
+            text-align: center;
+            font-weight: 900;
+            color: #bae6fd;
+            font-size: .9rem;
+        }
+        .radar-cell {
+            aspect-ratio: 1;
+            min-height: 54px;
+            border-radius: 12px;
+            border: 2px solid rgba(125,211,252,.45);
+            background:
+                radial-gradient(circle at center, rgba(56,189,248,.12), rgba(15,23,42,.7)),
+                linear-gradient(180deg, rgba(14,165,233,.18), rgba(15,23,42,.55));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform .16s, box-shadow .16s, border-color .16s;
+        }
+        .radar-cell:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 0 3px rgba(56,189,248,.15);
+        }
+        .radar-cell.activa {
+            background: radial-gradient(circle at center, rgba(34,197,94,.38), rgba(15,23,42,.7));
+            border-color: #4ade80;
+        }
+        .radar-cell.activa::after {
+            content: 'X';
+            font-weight: 900;
+            color: #86efac;
+            font-size: 1.4rem;
+        }
+        .ayuda-reto {
+            background: #fff7e6;
+            color: #9a3412;
+            border: 2px dashed #fdba74;
+            border-radius: 16px;
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 700;
+            margin: 10px 0 0;
+        }
+        @keyframes sacudir {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+
         @media (max-width: 768px) {
             .cabecera-dificil h1 { font-size: 2rem; }
             .navegador { flex-direction: column; }
             .titulo-pagina { font-size: 1.5rem; }
             .badge-nivel { margin-left: 0; margin-top: 10px; }
+            .ruta-checks,
+            .campus-checks,
+            .grid-cartas-kin {
+                grid-template-columns: 1fr;
+            }
+            .radar-grid-wrap {
+                grid-template-columns: 28px repeat(6, 1fr);
+            }
+            .radar-cell { min-height: 44px; }
         }
     </style>
 </head>
@@ -303,7 +672,7 @@
 
 <!-- HEADER -->
 <div class="cabecera-dificil">
-    <h1>&#9881; COORDENADAS</h1>
+    <h1>&#129517; IDENTIFICAR COORDENADAS</h1>
     <p class="lead text-white">Nivel Dif&iacute;cil &middot; Planos y estrategia</p>
     <div>
         <span class="badge-estilo">&#9995; Kinest&eacute;sico</span>
@@ -426,11 +795,11 @@
         </div>
 
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Traza la ruta</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Traza la ruta</h4>
             <p>Usa los botones de direcci&oacute;n para reproducir el camino de Mar&iacute;a paso a paso.
-               Ver&aacute;s c&oacute;mo se dibuja la ruta sobre el mapa. Son <strong>6 pasos</strong> en total
+               Ver&aacute;s c&oacute;mo se dibuja la ruta sobre el mapa. Son <strong>7 pasos</strong> en total
                (sur, este, sur, este, sur, este, este).</p>
-            <div class="contador-ruta" id="cont-ruta1">Pasos: 0 / 6</div>
+            <div class="contador-ruta" id="cont-ruta1">Pasos: 0 / 7</div>
             <div class="panel-flechas-ruta">
                 <div class="btn-flecha-ruta" onclick="agregarPaso1('S','sur')" title="Sur">&#8595;</div>
                 <div class="btn-flecha-ruta" onclick="agregarPaso1('E','este')" title="Este">&#8594;</div>
@@ -445,6 +814,80 @@
                 <button class="btn-accion" onclick="limpiarRuta1()">&#8635; Limpiar</button>
             </div>
             <div id="feedback1" class="feedback-k"></div>
+        </div>
+
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-map-signs me-2"></i>Reto 2: Traza la ruta del repartidor</h4>
+            <p>Este reto usa <strong>otro mapa del barrio</strong>. El repartidor sale de la
+               <strong>Panader&iacute;a</strong> y debe llegar a la <strong>Biblioteca</strong> en
+               <strong>4 pasos</strong>. Puede hacerlo por distintos cruces del mapa, as&iacute; que
+               cualquier ruta correcta de 4 pasos cuenta.</p>
+
+            <div class="mapa-calles-wrap">
+                <svg id="svgMapa1b" viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;width:100%;">
+                    <line x1="110" y1="70" x2="110" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="220" y1="70" x2="220" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="330" y1="70" x2="330" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="440" y1="70" x2="440" y2="350" stroke="#fed7aa" stroke-width="14" stroke-linecap="round"/>
+
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="60" y1="220" x2="490" y2="220" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+                    <line x1="60" y1="330" x2="490" y2="330" stroke="#fdba74" stroke-width="14" stroke-linecap="round"/>
+
+                    <text x="110" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Olmo</text>
+                    <text x="220" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Palma</text>
+                    <text x="330" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Naranjo</text>
+                    <text x="440" y="50" text-anchor="middle" font-family="Nunito" font-size="13" font-weight="800" fill="#c2410c">Jazm&iacute;n</text>
+
+                    <text x="52" y="115" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Sol</text>
+                    <text x="52" y="225" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Luna</text>
+                    <text x="52" y="335" text-anchor="end" font-family="Nunito" font-size="12" font-weight="800" fill="#9a3412">Mar</text>
+
+                    <circle cx="110" cy="110" r="4" fill="#f97316"/><circle cx="220" cy="110" r="4" fill="#f97316"/><circle cx="330" cy="110" r="4" fill="#f97316"/><circle cx="440" cy="110" r="4" fill="#f97316"/>
+                    <circle cx="110" cy="220" r="4" fill="#f97316"/><circle cx="220" cy="220" r="4" fill="#f97316"/><circle cx="330" cy="220" r="4" fill="#f97316"/><circle cx="440" cy="220" r="4" fill="#f97316"/>
+                    <circle cx="110" cy="330" r="4" fill="#f97316"/><circle cx="220" cy="330" r="4" fill="#f97316"/><circle cx="330" cy="330" r="4" fill="#f97316"/><circle cx="440" cy="330" r="4" fill="#f97316"/>
+
+                    <rect x="88" y="308" width="44" height="44" rx="10" fill="#f59e0b" stroke="white" stroke-width="3"/>
+                    <text x="110" y="336" text-anchor="middle" font-size="20">&#129360;</text>
+                    <text x="144" y="316" font-family="Nunito" font-size="10" font-weight="800" fill="#9a3412">Panader&iacute;a</text>
+
+                    <circle cx="220" cy="220" r="19" fill="#10b981" stroke="white" stroke-width="3"/>
+                    <text x="220" y="226" text-anchor="middle" font-size="15">&#127959;</text>
+                    <text x="248" y="206" font-family="Nunito" font-size="10" font-weight="800" fill="#065f46">Plaza</text>
+
+                    <rect x="308" y="198" width="44" height="44" rx="10" fill="#8b5cf6" stroke="white" stroke-width="3"/>
+                    <text x="330" y="226" text-anchor="middle" font-size="20">&#127963;</text>
+                    <text x="362" y="206" font-family="Nunito" font-size="10" font-weight="800" fill="#5b21b6">Museo</text>
+
+                    <rect x="308" y="88" width="44" height="44" rx="10" fill="#3b82f6" stroke="white" stroke-width="3"/>
+                    <text x="330" y="116" text-anchor="middle" font-size="19">&#128218;</text>
+                    <text x="362" y="96" font-family="Nunito" font-size="10" font-weight="800" fill="#1d4ed8">Biblioteca</text>
+
+                    <rect x="418" y="308" width="44" height="44" rx="10" fill="#ec4899" stroke="white" stroke-width="3"/>
+                    <text x="440" y="336" text-anchor="middle" font-size="20">&#127981;</text>
+                    <text x="472" y="316" font-family="Nunito" font-size="10" font-weight="800" fill="#9d174d">Mercado</text>
+
+                    <polyline id="trazoRuta1b" points="" fill="none" stroke="#c2410c" stroke-width="5"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>
+                    <circle id="marcadorPos1b" cx="110" cy="330" r="9" fill="#c2410c" stroke="white" stroke-width="2" opacity="0"/>
+                </svg>
+            </div>
+
+            <div class="contador-ruta" id="cont-ruta1b">Pasos: 0 / 4</div>
+            <div class="panel-flechas-ruta">
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('N','norte')" title="Norte">&#8593;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('E','este')" title="Este">&#8594;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('S','sur')" title="Sur">&#8595;</div>
+                <div class="btn-flecha-ruta" onclick="agregarPaso1b('O','oeste')" title="Oeste">&#8592;</div>
+            </div>
+            <div class="ruta-construida" id="ruta-construida1b">
+                <span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>
+            </div>
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarRuta1b()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="limpiarRuta1b()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback1b" class="feedback-k"></div>
         </div>
     </div>
 </div>
@@ -573,7 +1016,7 @@
         </div>
 
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Arrastra las estaciones al trayecto</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Arma el trayecto</h4>
             <p>Arrastra las fichas de estaciones desde el banco hasta los 3 slots del trayecto, en el orden correcto
                para ir de <strong>Insurgentes (L1)</strong> a <strong>Copilco (L3)</strong> con el menor n&uacute;mero de transbordos.</p>
 
@@ -610,6 +1053,85 @@
                 <button class="btn-accion" onclick="limpiarTrayecto2()">&#8635; Limpiar</button>
             </div>
             <div id="feedback2" class="feedback-k"></div>
+        </div>
+
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-route me-2"></i>Reto 2: Usa el mapa alterno del metro</h4>
+            <p>Este segundo reto tiene <strong>otro plano del metro</strong>. Toca las estaciones
+               en el orden correcto para ir de <strong>Terminal</strong> a <strong>Puerto</strong>.
+               <strong>Solo marca el inicio, los transbordos y el destino</strong>. No hace falta tocar
+               todas las estaciones del camino.</p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px;padding:12px 18px;background:#fff7e6;border-radius:14px;border:2px solid #fed7aa;">
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#3b82f6;border-radius:3px;"></span>L&iacute;nea Azul
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#10b981;border-radius:3px;"></span>L&iacute;nea Verde
+                </span>
+                <span style="display:flex;align-items:center;gap:8px;font-weight:700;color:#9a3412;">
+                    <span style="display:inline-block;width:36px;height:6px;background:#f97316;border-radius:3px;"></span>L&iacute;nea Naranja
+                </span>
+            </div>
+
+            <div class="mapa-metro-dificil">
+                <svg class="metro-svg" viewBox="0 0 620 470" xmlns="http://www.w3.org/2000/svg" style="min-width:620px;">
+                    <line x1="80" y1="110" x2="540" y2="110" stroke="#3b82f6" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="340" y1="110" x2="340" y2="380" stroke="#10b981" stroke-width="8" stroke-linecap="round"/>
+                    <line x1="80" y1="380" x2="540" y2="380" stroke="#f97316" stroke-width="8" stroke-linecap="round"/>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Bosque','l2')" id="e2b-Bosque">
+                        <circle cx="80" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="80" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Bosque</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Parque','l2')" id="e2b-Parque">
+                        <circle cx="210" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="210" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Parque</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Central','l2')" id="e2b-Central">
+                        <circle cx="340" cy="110" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                        <circle cx="340" cy="110" r="6" fill="#3b82f6"/>
+                        <text x="340" y="86" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Central &#11088;</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Puerto','l2')" id="e2b-Puerto">
+                        <circle cx="540" cy="110" r="10" fill="white" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="540" y="90" text-anchor="middle" font-family="Nunito" font-size="10" fill="#1e3a8a">Puerto</text>
+                    </g>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Museo','l3')" id="e2b-Museo">
+                        <circle cx="340" cy="245" r="10" fill="white" stroke="#10b981" stroke-width="3"/>
+                        <text x="368" y="250" font-family="Nunito" font-size="10" fill="#065f46">Museo</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Jardin','l3')" id="e2b-Jardin">
+                        <circle cx="340" cy="380" r="14" fill="#fde68a" stroke="#c2410c" stroke-width="3"/>
+                        <circle cx="340" cy="380" r="6" fill="#10b981"/>
+                        <text x="340" y="410" text-anchor="middle" font-family="Nunito" font-size="11" font-weight="800" fill="#9a3412">Jard&iacute;n &#11088;</text>
+                    </g>
+
+                    <g class="est-clickeable" onclick="clickEst2b('Terminal','l4')" id="e2b-Terminal">
+                        <circle cx="80" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="80" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Terminal</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Mercado','l4')" id="e2b-Mercado">
+                        <circle cx="210" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="210" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Mercado</text>
+                    </g>
+                    <g class="est-clickeable" onclick="clickEst2b('Hospital','l4')" id="e2b-Hospital">
+                        <circle cx="540" cy="380" r="10" fill="white" stroke="#f97316" stroke-width="3"/>
+                        <text x="540" y="360" text-anchor="middle" font-family="Nunito" font-size="10" fill="#7c2d12">Hospital</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="trayecto-construido" id="trayecto2b-construido">
+                <span style="color:#fdba74;font-weight:600;">Toca las estaciones del mapa para armar el recorrido...</span>
+            </div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarTrayecto2b()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="limpiarTrayecto2b()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback2b" class="feedback-k"></div>
         </div>
     </div>
 </div>
@@ -648,7 +1170,7 @@
         </div>
 
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Cuenta los aviones en la columna E</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Cuenta los aviones en la columna E</h4>
             <p>Localiza la columna <strong>E</strong> en cada tablero y usa los botones + / - para
                indicar cu&aacute;ntos aviones ves. El total de ambos tableros ser&aacute; tu respuesta.</p>
 
@@ -683,6 +1205,28 @@
             </div>
             <div id="feedback3" class="feedback-k"></div>
         </div>
+
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-satellite-dish me-2"></i>Reto 2: Marca los drones del radar</h4>
+            <p>El escuadr&oacute;n recibi&oacute; un nuevo reporte. Marca exactamente <strong>3 drones</strong> en el radar.
+               Sigue estas pistas en orden:</p>
+            <div class="radar-panel">
+                <div class="radar-indicaciones">
+                    <span>1. Marca primero el dron que est&aacute; en <strong>B5</strong>.</span>
+                    <span>2. Desde <strong>B5</strong>, mueve 2 columnas a la derecha y 1 fila al norte.</span>
+                    <span>3. El tercer dron est&aacute; en la columna <strong>F</strong>, en la misma fila que el primer dron.</span>
+                </div>
+                <div class="radar-grid-wrap" id="radar-grid3b"></div>
+                <div class="ayuda-reto" style="background:rgba(255,255,255,.08);color:#e0f2fe;border-color:rgba(125,211,252,.4);margin-top:16px;">
+                    Toca una casilla para marcarla. Si te equivocas, t&oacute;cala otra vez para quitarla.
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:14px;">
+                <button class="btn-accion" onclick="verificarRadar3()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="reiniciarRadar3()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback3b" class="feedback-k"></div>
+        </div>
     </div>
 </div>
 
@@ -713,7 +1257,7 @@
         </div>
 
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Encuentra la fila y selecciona los asientos</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Encuentra la fila y selecciona los asientos</h4>
             <p>Desliza el control para recorrer las filas del teatro. Cuando llegues a la <strong>fila 10</strong>
                los asientos se activar&aacute;n. Luego haz clic en los <strong>5 asientos m&aacute;s cercanos al pasillo</strong>
                repartidos en ambos lados.</p>
@@ -742,6 +1286,27 @@
                 <button class="btn-accion" onclick="limpiarAsientos4()">&#8635; Limpiar</button>
             </div>
             <div id="feedback4" class="feedback-k"></div>
+        </div>
+
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-chair me-2"></i>Reto 2: Reserva en el balc&oacute;n</h4>
+            <p>Ahora trabaja con <strong>otro escenario del teatro</strong>: el balc&oacute;n.
+               La familia Ortiz necesita <strong>4 asientos</strong> en la <strong>fila 8</strong>:
+               <strong>2 impares a la izquierda</strong> y <strong>2 pares a la derecha</strong>,
+               todos lo m&aacute;s cerca posible del pasillo. M&aacute;rcalos.</p>
+
+            <div class="teatro-wrap">
+                <div class="escenario-bar" style="width:min(560px,100%);">&#127917; &nbsp; BALC&Oacute;N &nbsp; &#127917;</div>
+                <div class="balcon-grid" id="balcon-grid4b"></div>
+            </div>
+
+            <div class="info-sel-b" id="info-sel4b">Seleccionados: 0 / 4</div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarBalcon4b()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="limpiarBalcon4b()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback4b" class="feedback-k"></div>
         </div>
     </div>
 </div>
@@ -873,7 +1438,7 @@
         </div>
 
         <div class="actividad-kinestesica">
-            <h4><i class="fas fa-hand-pointer me-2"></i>Actividad: Construye la ruta</h4>
+            <h4><i class="fas fa-hand-pointer me-2"></i>Reto 1: Construye la ruta</h4>
             <p>Usa los botones de direcci&oacute;n para construir la ruta de <strong>Biblioteca (1,A)</strong>
                a <strong>Veterinaria (4,D)</strong>. Cada bot&oacute;n mueve un tramo en esa direcci&oacute;n.
                Ver&aacute;s el trazo dibuj&aacute;ndose en el mapa. La ruta v&aacute;lida tiene <strong>3 tramos</strong>.</p>
@@ -896,9 +1461,103 @@
             <div id="feedback5" class="feedback-k"></div>
         </div>
 
-        <a href="quiz.html" class="boton-quiz text-center">
+        <div class="actividad-kinestesica reto-secundario">
+            <h4><i class="fas fa-compass me-2"></i>Reto 2: Traza la ruta del anexo</h4>
+            <p>Este reto usa <strong>otro mapa del campus</strong>. El t&eacute;cnico sale del
+               <strong>Gimnasio</strong> y debe llegar a la <strong>Sala de lectura</strong>,
+               siempre respetando el sentido de las v&iacute;as. Traza la ruta completa.</p>
+
+            <div class="cu-wrap">
+                <svg class="cu-svg" viewBox="0 0 660 520" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="660" height="520" fill="#f0f9ff" rx="14"/>
+
+                    <line x1="40" y1="120" x2="610" y2="120" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="600,113 616,120 600,127" fill="#3b82f6"/>
+                    <text x="20" y="124" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">A</text>
+
+                    <line x1="610" y1="240" x2="40" y2="240" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="50,233 34,240 50,247" fill="#f59e0b"/>
+                    <text x="20" y="244" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">B</text>
+
+                    <line x1="40" y1="360" x2="610" y2="360" stroke="#93c5fd" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="600,353 616,360 600,367" fill="#3b82f6"/>
+                    <text x="20" y="364" font-family="Nunito" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle">C</text>
+
+                    <line x1="610" y1="460" x2="40" y2="460" stroke="#fcd34d" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="50,453 34,460 50,467" fill="#f59e0b"/>
+                    <text x="20" y="464" font-family="Nunito" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">D</text>
+
+                    <line x1="80" y1="60" x2="80" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="73,478 80,494 87,478" fill="#ef4444"/>
+                    <text x="80" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">1</text>
+
+                    <line x1="210" y1="490" x2="210" y2="60" stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="203,72 210,56 217,72" fill="#10b981"/>
+                    <text x="210" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">2</text>
+
+                    <line x1="340" y1="60" x2="340" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="333,478 340,494 347,478" fill="#ef4444"/>
+                    <text x="340" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">3</text>
+
+                    <line x1="470" y1="490" x2="470" y2="60" stroke="#6ee7b7" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="463,72 470,56 477,72" fill="#10b981"/>
+                    <text x="470" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#065f46">4</text>
+
+                    <line x1="580" y1="60" x2="580" y2="490" stroke="#fca5a5" stroke-width="11" stroke-linecap="round"/>
+                    <polygon points="573,478 580,494 587,478" fill="#ef4444"/>
+                    <text x="580" y="50" text-anchor="middle" font-family="Nunito" font-size="12" font-weight="800" fill="#b91c1c">5</text>
+
+                    <rect x="174" y="424" width="72" height="72" rx="10" fill="#fde68a" stroke="#f97316" stroke-width="2.5"/>
+                    <text x="210" y="454" text-anchor="middle" font-size="22">&#127947;</text>
+                    <text x="210" y="470" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#9a3412">Gimnasio</text>
+                    <text x="210" y="482" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(2,D)</text>
+
+                    <rect x="544" y="84" width="72" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+                    <text x="580" y="114" text-anchor="middle" font-size="22">&#128218;</text>
+                    <text x="580" y="130" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#1d4ed8">Sala de lectura</text>
+                    <text x="580" y="142" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(5,A)</text>
+
+                    <rect x="304" y="324" width="72" height="72" rx="10" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+                    <text x="340" y="354" text-anchor="middle" font-size="22">&#127917;</text>
+                    <text x="340" y="370" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#5b21b6">Foro</text>
+                    <text x="340" y="382" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(3,C)</text>
+
+                    <rect x="434" y="204" width="72" height="72" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+                    <text x="470" y="234" text-anchor="middle" font-size="22">&#128187;</text>
+                    <text x="470" y="250" text-anchor="middle" font-family="Nunito" font-size="9" font-weight="800" fill="#065f46">Sala de c&oacute;mputo</text>
+                    <text x="470" y="262" text-anchor="middle" font-family="Nunito" font-size="8" fill="#c2410c">(4,B)</text>
+
+                    <polyline id="trazoRuta5b" points="" fill="none" stroke="#c2410c" stroke-width="5"
+                        stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                    <circle id="marcadorCU2" cx="210" cy="460" r="10" fill="#c2410c" stroke="white" stroke-width="2" opacity="0"/>
+                </svg>
+            </div>
+
+            <div class="contador-ruta" id="cont-ruta5b">Pasos: 0 / 6</div>
+            <div class="panel-ruta-cu">
+                <button class="btn-dir-cu este" onclick="agregarTramoCU2('E')">&#8594; Este</button>
+                <button class="btn-dir-cu oeste" onclick="agregarTramoCU2('O')">&#8592; Oeste</button>
+                <button class="btn-dir-cu sur" onclick="agregarTramoCU2('S')">&#8595; Sur</button>
+                <button class="btn-dir-cu norte" onclick="agregarTramoCU2('N')">&#8593; Norte</button>
+            </div>
+
+            <div class="secuencia-ruta-cu" id="secuencia-ruta5b">
+                <span style="color:#fdba74;font-weight:600;">Toca los botones para trazar la ruta...</span>
+            </div>
+
+            <div style="text-align:center;">
+                <button class="btn-accion" onclick="verificarRutaCU2()">&#9654; Verificar</button>
+                <button class="btn-accion" onclick="limpiarRutaCU2()">&#8635; Reiniciar</button>
+            </div>
+            <div id="feedback5b" class="feedback-k"></div>
+        </div>
+
+        <a href="quiz.html" class="boton-quiz text-center bloqueado" id="botonQuiz" aria-disabled="true">
             <i class="fas fa-puzzle-piece me-3"></i> IR AL QUIZ
         </a>
+        <div class="texto-ayuda-quiz" id="textoAyudaQuiz">
+            Completa los dos retos finales para activar el quiz.
+        </div>
     </div>
 </div>
 
@@ -915,23 +1574,100 @@
 
 </div>
 
+<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+<script src="/contenidos/matematicas/identificar-coordenadas/recursos/js/coordenadas-tracking.js?v=20260505e"></script>
 <script>
 var paginaActual = 1;
 var totalPaginas = 5;
 var respuestasPagina = {1:false,2:false,3:false,4:false,5:false};
+var progresoActividades = {
+    1:{reto1:false, reto2:false},
+    2:{reto1:false, reto2:false},
+    3:{reto1:false, reto2:false},
+    4:{reto1:false, reto2:false},
+    5:{reto1:false, reto2:false}
+};
+var fichaActiva = { actividad:null, item:null };
 var audioClick  = document.getElementById('audioClick');
 var audioDing   = document.getElementById('audioDing');
 var audioError  = document.getElementById('audioError');
 var audioWhoosh = document.getElementById('audioWhoosh');
+var audiosNivel = [audioClick, audioDing, audioError, audioWhoosh];
+for(var ai=0; ai<audiosNivel.length; ai++){
+    if(audiosNivel[ai]) audiosNivel[ai].volume = 0.15;
+}
+
+var ejerciciosDificilKinestesico = {
+    p1reto1:{ pagina:1, apartadoClave:'pagina1_ruta_colonia', tipoActividad:'kinestesico_ruta' },
+    p1reto2:{ pagina:1, apartadoClave:'pagina1_ruta_biblioteca', tipoActividad:'kinestesico_ruta' },
+    p2reto1:{ pagina:2, apartadoClave:'pagina2_metro_transbordo', tipoActividad:'kinestesico_slots_metro' },
+    p2reto2:{ pagina:2, apartadoClave:'pagina2_trayecto_metro_alterno', tipoActividad:'kinestesico_trayecto' },
+    p3reto1:{ pagina:3, apartadoClave:'pagina3_conteo_aviones', tipoActividad:'kinestesico_contador' },
+    p3reto2:{ pagina:3, apartadoClave:'pagina3_radar_drones', tipoActividad:'kinestesico_radar' },
+    p4reto1:{ pagina:4, apartadoClave:'pagina4_teatro_fila', tipoActividad:'kinestesico_asientos' },
+    p4reto2:{ pagina:4, apartadoClave:'pagina4_balcon', tipoActividad:'kinestesico_asientos' },
+    p5reto1:{ pagina:5, apartadoClave:'pagina5_ruta_campus_sentidos', tipoActividad:'kinestesico_ruta_sentidos' },
+    p5reto2:{ pagina:5, apartadoClave:'pagina5_ruta_campus_alterna', tipoActividad:'kinestesico_ruta_sentidos' }
+};
+var completadosRegistroDificilKinestesico = {};
+var sesionCompletadaDificilKinestesico = false;
+var trackerDificilKinestesico = window.createReforzamientoTracker ? window.createReforzamientoTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'kinestesico',
+    trackTime: false,
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_dificil' },
+    apartados: ejerciciosDificilKinestesico
+}) : null;
+var sessionTrackerDificilKinestesico = window.createReforzamientoSessionTracker ? window.createReforzamientoSessionTracker({
+    contenidoId: 5,
+    nivel: 'dificil',
+    estilo: 'kinestesico',
+    detalleBase: { bloque: 'identificar_coordenadas', archivo: 'kinestesico_dificil' }
+}) : null;
+
 function safePlay(a){try{if(a){a.currentTime=0;a.play();}}catch(e){}}
 
+function shuffleArray(arr){
+    var copy = arr.slice();
+    for(var i=copy.length-1;i>0;i--){
+        var j=Math.floor(Math.random()*(i+1));
+        var tmp=copy[i];
+        copy[i]=copy[j];
+        copy[j]=tmp;
+    }
+    return copy;
+}
+
+function actividadResuelta(pagina, reto){
+    return !!(progresoActividades[pagina] && progresoActividades[pagina][reto]);
+}
+
+function actualizarEstadoPagina(pagina){
+    respuestasPagina[pagina] = paginaCompletaDificilKinestesico(pagina);
+}
+
+function marcarActividad(pagina, reto){
+    progresoActividades[pagina][reto] = true;
+    actualizarEstadoPagina(pagina);
+    revisarSesionCompletadaDificilKinestesico();
+    actualizarUI();
+}
+
 function cambiarPagina(dir){
+    if(dir > 0 && !paginaCompletaDificilKinestesico(paginaActual)){
+        safePlay(audioError);
+        var feedbackBloqueo = actividadResuelta(paginaActual,'reto1') ? 'feedback' + paginaActual + 'b' : 'feedback' + paginaActual;
+        mostrarFeedback(feedbackBloqueo,'error','Completa los dos retos de esta pagina antes de avanzar.');
+        return;
+    }
+    var siguientePagina = paginaActual + dir;
+    if(siguientePagina < 1 || siguientePagina > totalPaginas) return;
     document.getElementById('pagina'+paginaActual).classList.remove('activa');
-    paginaActual+=dir;
+    paginaActual = siguientePagina;
     document.getElementById('pagina'+paginaActual).classList.add('activa');
     safePlay(audioWhoosh);
     actualizarUI();
-    localStorage.setItem('progreso_dificil_kinestesico_coordenadas',paginaActual);
     window.scrollTo({top:0,behavior:'smooth'});
     if(paginaActual===4) generarTeatro();
 }
@@ -942,13 +1678,82 @@ function actualizarUI(){
         var n=i+1;
         puntos[i].classList.remove('activo','completado');
         if(n===paginaActual) puntos[i].classList.add('activo');
-        else if(n<paginaActual&&respuestasPagina[n]) puntos[i].classList.add('completado');
-        else if(n<paginaActual) puntos[i].classList.add('activo');
+        else if(paginaCompletaDificilKinestesico(n)) puntos[i].classList.add('completado');
     }
     document.getElementById('paginaActualNum').innerText=paginaActual;
     document.getElementById('contadorPagina').innerText=paginaActual+'/'+totalPaginas;
     document.getElementById('btnAnterior').disabled=(paginaActual===1);
-    document.getElementById('btnSiguiente').disabled=(paginaActual===totalPaginas);
+    document.getElementById('btnSiguiente').disabled=(paginaActual===totalPaginas || !paginaCompletaDificilKinestesico(paginaActual));
+
+    var botonQuiz = document.getElementById('botonQuiz');
+    var textoAyudaQuiz = document.getElementById('textoAyudaQuiz');
+    if(botonQuiz && textoAyudaQuiz){
+        if(todasPaginasCompletasDificilKinestesico()){
+            botonQuiz.classList.remove('bloqueado');
+            botonQuiz.setAttribute('aria-disabled','false');
+            textoAyudaQuiz.textContent = 'Ya puedes entrar al quiz.';
+        } else {
+            botonQuiz.classList.add('bloqueado');
+            botonQuiz.setAttribute('aria-disabled','true');
+            textoAyudaQuiz.textContent = 'Completa los dos retos finales para activar el quiz.';
+        }
+    }
+
+    if(trackerDificilKinestesico){
+        trackerDificilKinestesico.markPageVisibleByNumber(paginaActual, { pagina: paginaActual });
+    }
+}
+
+function paginaCompletaDificilKinestesico(pagina){
+    return actividadResuelta(pagina,'reto1') && actividadResuelta(pagina,'reto2');
+}
+
+function todasPaginasCompletasDificilKinestesico(){
+    for(var i=1; i<=totalPaginas; i++){
+        if(!paginaCompletaDificilKinestesico(i)) return false;
+    }
+    return true;
+}
+
+function claveEjercicioDificilKinestesico(pagina, reto){
+    return 'p' + pagina + reto;
+}
+
+function detalleConBaseDificilKinestesico(pagina, reto, detalle){
+    var clave = claveEjercicioDificilKinestesico(pagina, reto);
+    var base = { pagina: pagina, ejercicio: clave };
+    detalle = detalle || {};
+    for(var k in detalle){
+        if(Object.prototype.hasOwnProperty.call(detalle, k)) base[k] = detalle[k];
+    }
+    return base;
+}
+
+function registrarIntentoDificilKinestesico(pagina, reto, correcto, detalle){
+    var clave = claveEjercicioDificilKinestesico(pagina, reto);
+    var config = ejerciciosDificilKinestesico[clave];
+    if(!config) return;
+
+    var detalleFinal = detalleConBaseDificilKinestesico(pagina, reto, detalle);
+    if(trackerDificilKinestesico){
+        trackerDificilKinestesico.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
+        if(correcto){
+            if(!completadosRegistroDificilKinestesico[clave]){
+                trackerDificilKinestesico.addCorrect(clave, detalleFinal);
+                completadosRegistroDificilKinestesico[clave] = true;
+            }
+        } else {
+            trackerDificilKinestesico.addError(clave, detalleFinal);
+        }
+    }
+}
+
+function revisarSesionCompletadaDificilKinestesico(){
+    if(sesionCompletadaDificilKinestesico || !todasPaginasCompletasDificilKinestesico()) return;
+    sesionCompletadaDificilKinestesico = true;
+    if(sessionTrackerDificilKinestesico){
+        sessionTrackerDificilKinestesico.complete({ paginasCompletas: totalPaginas });
+    }
 }
 
 function mostrarFeedback(id,tipo,msg){
@@ -992,7 +1797,7 @@ var ruta1 = [];
 var posActual1 = {x:120, y:120};
 
 function agregarPaso1(letra, clase){
-    if(respuestasPagina[1]||ruta1.length>=7) return;
+    if(actividadResuelta(1,'reto1')||ruta1.length>=7) return;
     safePlay(audioClick);
     ruta1.push(letra);
 
@@ -1026,6 +1831,11 @@ function agregarPaso1(letra, clase){
 
 function verificarRuta1(){
     if(ruta1.length<7){
+        registrarIntentoDificilKinestesico(1,'reto1',false,{
+            actividad:'ruta_colonia',
+            respuesta:ruta1.join('>'),
+            error:'ruta_incompleta'
+        });
         mostrarFeedback('feedback1','error','Necesitas 7 pasos: Sur, Este, Sur, Este, Sur, Este, Este. Sigue trazando la ruta.');
         return;
     }
@@ -1033,11 +1843,15 @@ function verificarRuta1(){
     for(var i=0;i<RUTA_CORRECTA1.length;i++){
         if(ruta1[i]!==RUTA_CORRECTA1[i]){ok=false;break;}
     }
+    registrarIntentoDificilKinestesico(1,'reto1',ok,{
+        actividad:'ruta_colonia',
+        respuesta:ruta1.join('>')
+    });
     if(ok){
         safePlay(audioDing);
         document.getElementById('marcadorPos').setAttribute('fill','#4caf50');
         mostrarFeedback('feedback1','ok','Correcto! La ruta de Maria es: Sur - Este - Sur - Este - Sur - Este - Este. El parque esta en Calle Sauce y Avenida Misisipi.');
-        respuestasPagina[1]=true; actualizarUI();
+        marcarActividad(1,'reto1');
     } else {
         safePlay(audioError);
         mostrarFeedback('feedback1','error','La ruta no es correcta. Recuerda: el recorrido va alternando Sur y Este hasta llegar al parque. Limpia e intentalo de nuevo.');
@@ -1045,6 +1859,7 @@ function verificarRuta1(){
 }
 
 function limpiarRuta1(){
+    if(actividadResuelta(1,'reto1')) return;
     ruta1=[];
     posActual1={x:120,y:120};
     document.getElementById('trazoRuta1').setAttribute('points','');
@@ -1056,10 +1871,110 @@ function limpiarRuta1(){
 }
 
 /* ============================================================
+   PAGINA 1 - MAPA ALTERNO DEL BARRIO
+============================================================ */
+var RUTAS_CORRECTAS_1B = [
+    ['N','E','E','N'],
+    ['E','N','E','N'],
+    ['E','E','N','N']
+];
+var PASOS_SVG_1B = {
+    N:{dx:0, dy:-110},
+    S:{dx:0, dy:110},
+    E:{dx:110, dy:0},
+    O:{dx:-110, dy:0}
+};
+var ruta1b = [];
+var posActual1b = {x:110, y:330};
+
+function agregarPaso1b(letra, clase){
+    if(actividadResuelta(1,'reto2') || ruta1b.length >= 4) return;
+    safePlay(audioClick);
+    ruta1b.push(letra);
+
+    var cont = document.getElementById('ruta-construida1b');
+    if(ruta1b.length === 1) cont.innerHTML = '';
+
+    var simbolo = letra==='S'?'&#8595;':letra==='N'?'&#8593;':letra==='E'?'&#8594;':'&#8592;';
+    var div = document.createElement('div');
+    div.className = 'paso-ruta ' + clase;
+    div.innerHTML = simbolo;
+    cont.appendChild(div);
+
+    var d = PASOS_SVG_1B[letra];
+    var nuevaX = posActual1b.x + d.dx;
+    var nuevaY = posActual1b.y + d.dy;
+
+    var trazo = document.getElementById('trazoRuta1b');
+    var pts = trazo.getAttribute('points') || '';
+    if(pts === '') pts = posActual1b.x + ',' + posActual1b.y;
+    pts += ' ' + nuevaX + ',' + nuevaY;
+    trazo.setAttribute('points', pts);
+
+    var marc = document.getElementById('marcadorPos1b');
+    marc.setAttribute('cx', nuevaX);
+    marc.setAttribute('cy', nuevaY);
+    marc.setAttribute('opacity', '1');
+
+    posActual1b = {x:nuevaX, y:nuevaY};
+    document.getElementById('cont-ruta1b').innerText = 'Pasos: ' + ruta1b.length + ' / 4';
+    document.getElementById('feedback1b').style.display = 'none';
+}
+
+function verificarRuta1b(){
+    if(ruta1b.length < 4){
+        registrarIntentoDificilKinestesico(1,'reto2',false,{
+            actividad:'ruta_biblioteca',
+            respuesta:ruta1b.join('>'),
+            error:'ruta_incompleta'
+        });
+        mostrarFeedback('feedback1b','error','Necesitas 4 pasos para llegar de la Panader&iacute;a a la Biblioteca.');
+        return;
+    }
+    var ok = false;
+    for(var r=0;r<RUTAS_CORRECTAS_1B.length;r++){
+        var rutaValida = true;
+        for(var i=0;i<RUTAS_CORRECTAS_1B[r].length;i++){
+            if(ruta1b[i] !== RUTAS_CORRECTAS_1B[r][i]){ rutaValida = false; break; }
+        }
+        if(rutaValida){ ok = true; break; }
+    }
+    registrarIntentoDificilKinestesico(1,'reto2',ok,{
+        actividad:'ruta_biblioteca',
+        respuesta:ruta1b.join('>')
+    });
+    if(ok){
+        safePlay(audioDing);
+        document.getElementById('marcadorPos1b').setAttribute('fill','#4caf50');
+        mostrarFeedback('feedback1b','ok','Correcto. Esa es una de las rutas v&aacute;lidas de 4 pasos para llegar a la Biblioteca.');
+        marcarActividad(1,'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback1b','error','La ruta no coincide. Debes llegar a la Biblioteca en 4 pasos, avanzando solo por las calles del mapa.');
+    }
+}
+
+function limpiarRuta1b(){
+    if(actividadResuelta(1,'reto2')) return;
+    ruta1b = [];
+    posActual1b = {x:110, y:330};
+    document.getElementById('trazoRuta1b').setAttribute('points','');
+    var marc = document.getElementById('marcadorPos1b');
+    marc.setAttribute('cx','110');
+    marc.setAttribute('cy','330');
+    marc.setAttribute('opacity','0');
+    marc.setAttribute('fill','#c2410c');
+    document.getElementById('ruta-construida1b').innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca las flechas para dibujar la ruta...</span>';
+    document.getElementById('cont-ruta1b').innerText = 'Pasos: 0 / 4';
+    document.getElementById('feedback1b').style.display = 'none';
+}
+
+/* ============================================================
    PAGINA 2 - METRO  drag & drop fichas
    Correcto: Insurgentes -> Centro -> Copilco
 ============================================================ */
 var slots2 = [null, null, null];
+var clasesSlots2 = [null, null, null];
 
 function dragFicha(event, nombre, clase){
     event.dataTransfer.setData('text/plain', nombre+'|'+clase);
@@ -1075,7 +1990,49 @@ function dropFicha(event, idx){
     event.currentTarget.classList.remove('dragover');
     var data = event.dataTransfer.getData('text/plain').split('|');
     var nombre = data[0], clase = data[1];
+    colocarEstacion2(idx, nombre, clase);
+}
+
+function claseMapaEstacion2(nombre, clase){
+    if(nombre === 'Buenavista' || nombre === 'Centro'){
+        if(clase === 'l3') return 'l3';
+        if(clase === 'l2') return 'l2';
+        return 'l1';
+    }
+    if(nombre === 'Balderas'){
+        if(clase === 'l4') return 'l4';
+        if(clase === 'l3') return 'l3';
+        return 'l2';
+    }
+    return clase;
+}
+
+function actualizarMapaTrayecto2(){
+    document.querySelectorAll('.est-clickeable').forEach(function(el){ el.classList.remove('en-trayecto'); });
+    for(var i=0;i<slots2.length;i++){
+        if(!slots2[i]) continue;
+        var clase = claseMapaEstacion2(slots2[i], clasesSlots2[i] || 'l1');
+        var target = document.getElementById('e2-' + slots2[i]);
+        if(!target && slots2[i] === 'PantitlanL4') target = document.getElementById('e2-PantitlanL4');
+        if(target) target.classList.add('en-trayecto');
+    }
+}
+
+function colocarEstacion2(idx, nombre, clase){
+    if(actividadResuelta(2,'reto1')) return;
     safePlay(audioClick);
+
+    var previo = slots2.indexOf(nombre);
+    if(previo !== -1 && previo !== idx){
+        slots2[previo] = null;
+        clasesSlots2[previo] = null;
+        var slotPrevio = document.getElementById('slot-est2-'+previo);
+        var hintsPrev=['Origen','Transbordo','Destino'];
+        if(slotPrevio){
+            slotPrevio.classList.remove('lleno');
+            slotPrevio.innerHTML='<span class="slot-num">'+(previo+1)+'</span><span class="slot-hint">'+hintsPrev[previo]+'</span>';
+        }
+    }
 
     var slot = document.getElementById('slot-est2-'+idx);
     if(slots2[idx]){
@@ -1083,6 +2040,7 @@ function dropFicha(event, idx){
         if(ficha) ficha.classList.remove('usada');
     }
     slots2[idx] = nombre;
+    clasesSlots2[idx] = clase;
     var ficha2 = document.getElementById('ficha-'+nombre);
     if(ficha2) ficha2.classList.add('usada');
 
@@ -1090,18 +2048,53 @@ function dropFicha(event, idx){
     slot.innerHTML = '<span class="slot-num">'+(idx+1)+'</span>' +
         '<span class="ficha-est '+clase+'" style="cursor:default;">'+nombre+'</span>';
     document.getElementById('feedback2').style.display = 'none';
+    actualizarMapaTrayecto2();
+}
+
+function clickEst2(nombre, clase){
+    if(actividadResuelta(2,'reto1')) return;
+    var idx = slots2.indexOf(nombre);
+    if(idx !== -1){
+        safePlay(audioClick);
+        slots2[idx] = null;
+        clasesSlots2[idx] = null;
+        var slot = document.getElementById('slot-est2-'+idx);
+        var hints=['Origen','Transbordo','Destino'];
+        slot.classList.remove('lleno');
+        slot.innerHTML='<span class="slot-num">'+(idx+1)+'</span><span class="slot-hint">'+hints[idx]+'</span>';
+        var ficha = document.getElementById('ficha-'+nombre);
+        if(ficha) ficha.classList.remove('usada');
+        document.getElementById('feedback2').style.display='none';
+        actualizarMapaTrayecto2();
+        return;
+    }
+    var target = slots2.indexOf(null);
+    if(target === -1){
+        mostrarFeedback('feedback2','error','Ya tienes 3 estaciones en el trayecto. Quita una o limpia para rearmarlo.');
+        return;
+    }
+    colocarEstacion2(target, nombre, clase);
 }
 
 function verificarTrayecto2(){
     if(!slots2[0]||!slots2[1]||!slots2[2]){
+        registrarIntentoDificilKinestesico(2,'reto1',false,{
+            actividad:'metro_transbordo',
+            respuesta:slots2.filter(function(v){ return !!v; }).join('>'),
+            error:'trayecto_incompleto'
+        });
         mostrarFeedback('feedback2','error','Arrastra una ficha a cada slot antes de verificar.');
         return;
     }
     var ok = (slots2[0]==='Insurgentes' && slots2[1]==='Centro' && slots2[2]==='Copilco');
+    registrarIntentoDificilKinestesico(2,'reto1',ok,{
+        actividad:'metro_transbordo',
+        respuesta:slots2.join('>')
+    });
     if(ok){
         safePlay(audioDing);
         mostrarFeedback('feedback2','ok','Correcto! Insurgentes (L1) -> Centro (transbordo L1 a L3) -> Copilco (L3). Solo 1 transbordo en Centro donde coinciden L1 y L3.');
-        respuestasPagina[2]=true; actualizarUI();
+        marcarActividad(2,'reto1');
     } else {
         safePlay(audioError);
         mostrarFeedback('feedback2','error','Incorrecto. El origen es Insurgentes, el destino es Copilco, y el transbordo debe ser en la unica estacion donde conectan L1 y L3 directamente.');
@@ -1109,7 +2102,9 @@ function verificarTrayecto2(){
 }
 
 function limpiarTrayecto2(){
+    if(actividadResuelta(2,'reto1')) return;
     slots2=[null,null,null];
+    clasesSlots2=[null,null,null];
     document.querySelectorAll('.ficha-est').forEach(function(f){ f.classList.remove('usada'); });
     for(var i=0;i<3;i++){
         var s=document.getElementById('slot-est2-'+i);
@@ -1118,6 +2113,101 @@ function limpiarTrayecto2(){
         s.innerHTML='<span class="slot-num">'+(i+1)+'</span><span class="slot-hint">'+hints[i]+'</span>';
     }
     document.getElementById('feedback2').style.display='none';
+    actualizarMapaTrayecto2();
+}
+
+/* ============================================================
+   PAGINA 2 - METRO ALTERNO
+============================================================ */
+var trayecto2b = [];
+var TRAYECTO_CORRECTO_2B = ['Terminal','Jardin','Central','Puerto'];
+
+function renderTrayecto2b(){
+    document.querySelectorAll('[id^="e2b-"]').forEach(function(el){ el.classList.remove('en-trayecto'); });
+
+    var cont = document.getElementById('trayecto2b-construido');
+    if(!trayecto2b.length){
+        cont.innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca las estaciones del mapa para armar el recorrido...</span>';
+        return;
+    }
+
+    cont.innerHTML = '';
+    for(var i=0;i<trayecto2b.length;i++){
+        var est = trayecto2b[i];
+        var target = document.getElementById('e2b-' + est.nombre);
+        if(target) target.classList.add('en-trayecto');
+        if(i>0){
+            var flecha = document.createElement('span');
+            flecha.className = 'chip-flecha';
+            flecha.innerHTML = '&#8594;';
+            cont.appendChild(flecha);
+        }
+        var chip = document.createElement('span');
+        chip.className = 'chip-est ' + est.clase;
+        chip.textContent = est.nombre;
+        cont.appendChild(chip);
+    }
+}
+
+function clickEst2b(nombre, clase){
+    if(actividadResuelta(2,'reto2')) return;
+
+    if(trayecto2b.length && trayecto2b[trayecto2b.length-1].nombre === nombre){
+        safePlay(audioClick);
+        trayecto2b.pop();
+        document.getElementById('feedback2b').style.display = 'none';
+        renderTrayecto2b();
+        return;
+    }
+
+    for(var i=0;i<trayecto2b.length;i++){
+        if(trayecto2b[i].nombre === nombre) return;
+    }
+
+    if(trayecto2b.length >= 4){
+        mostrarFeedback('feedback2b','error','Ya elegiste 4 estaciones. Si quieres corregir, toca de nuevo la &uacute;ltima o reinicia.');
+        return;
+    }
+
+    safePlay(audioClick);
+    trayecto2b.push({nombre:nombre, clase:clase});
+    document.getElementById('feedback2b').style.display = 'none';
+    renderTrayecto2b();
+}
+
+function verificarTrayecto2b(){
+    if(trayecto2b.length < 4){
+        registrarIntentoDificilKinestesico(2,'reto2',false,{
+            actividad:'trayecto_metro_alterno',
+            respuesta:trayecto2b.map(function(e){ return e.nombre; }).join('>'),
+            error:'trayecto_incompleto'
+        });
+        mostrarFeedback('feedback2b','error','Completa las 4 estaciones clave del recorrido antes de verificar.');
+        return;
+    }
+    var ok = true;
+    for(var i=0;i<TRAYECTO_CORRECTO_2B.length;i++){
+        if(trayecto2b[i].nombre !== TRAYECTO_CORRECTO_2B[i]){ ok = false; break; }
+    }
+    registrarIntentoDificilKinestesico(2,'reto2',ok,{
+        actividad:'trayecto_metro_alterno',
+        respuesta:trayecto2b.map(function(e){ return e.nombre; }).join('>')
+    });
+    if(ok){
+        safePlay(audioDing);
+        mostrarFeedback('feedback2b','ok','Correcto. Solo deb&iacute;as marcar el inicio, los dos transbordos y el destino: Terminal, Jard&iacute;n, Central y Puerto.');
+        marcarActividad(2,'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback2b','error','Ese trayecto no es el m&aacute;s corto. Busca primero el transbordo de la l&iacute;nea naranja a la verde, y despu&eacute;s el de la verde a la azul.');
+    }
+}
+
+function limpiarTrayecto2b(){
+    if(actividadResuelta(2,'reto2')) return;
+    trayecto2b = [];
+    document.getElementById('feedback2b').style.display = 'none';
+    renderTrayecto2b();
 }
 
 /* ============================================================
@@ -1144,16 +2234,28 @@ function cambiarContador(tablero, delta){
 
 function verificarConteo3(){
     if(contVerde===0&&contNaranja===0){
+        registrarIntentoDificilKinestesico(3,'reto1',false,{
+            actividad:'conteo_aviones',
+            verde:contVerde,
+            naranja:contNaranja,
+            error:'sin_conteo'
+        });
         mostrarFeedback('feedback3','error','Primero cuenta los aviones en cada tablero usando los botones + y -.');
         return;
     }
     var okVerde=(contVerde===2);
     var okNaranja=(contNaranja===1);
     var okTotal=((contVerde+contNaranja)===3);
+    registrarIntentoDificilKinestesico(3,'reto1',okVerde&&okNaranja&&okTotal,{
+        actividad:'conteo_aviones',
+        verde:contVerde,
+        naranja:contNaranja,
+        total:contVerde+contNaranja
+    });
     if(okVerde&&okNaranja&&okTotal){
         safePlay(audioDing);
         mostrarFeedback('feedback3','ok','Correcto! En el tablero verde hay 2 aviones en columna E: en (E,A) y (E,E). En el naranja hay 1: en (E,B). Total: 3 aviones.');
-        respuestasPagina[3]=true; actualizarUI();
+        marcarActividad(3,'reto1');
     } else if(okTotal&&(!okVerde||!okNaranja)){
         safePlay(audioError);
         mostrarFeedback('feedback3','error','El total es correcto (3) pero la distribucion por tablero no. Vuelve a contar en cada tablero por separado: verde tiene 2 en columna E y naranja tiene 1.');
@@ -1167,6 +2269,7 @@ function verificarConteo3(){
 }
 
 function limpiarConteo3(){
+    if(actividadResuelta(3,'reto1')) return;
     contVerde=0; contNaranja=0;
     document.getElementById('num-verde').innerText='0';
     document.getElementById('num-naranja').innerText='0';
@@ -1241,7 +2344,7 @@ function generarTeatro(){
 }
 
 function clickAsiento4(fila,lado,num){
-    if(respuestasPagina[4]) return;
+    if(actividadResuelta(4,'reto1')) return;
     safePlay(audioClick);
     var key=lado+'-'+num;
     var el=document.getElementById('a4-'+lado+'-'+fila+'-'+num);
@@ -1263,6 +2366,11 @@ function clickAsiento4(fila,lado,num){
 
 function verificarAsientos4(){
     if(selAsientos4.length!==5){
+        registrarIntentoDificilKinestesico(4,'reto1',false,{
+            actividad:'teatro_fila',
+            seleccion:selAsientos4.join(','),
+            error:'cantidad_incorrecta'
+        });
         mostrarFeedback('feedback4','error','Selecciona exactamente 5 asientos antes de verificar.');
         return;
     }
@@ -1276,11 +2384,18 @@ function verificarAsientos4(){
     derSel.sort(function(a,b){return a-b;});
     var op1=(JSON.stringify(izqSel)===JSON.stringify([1,3])&&JSON.stringify(derSel)===JSON.stringify([2,4,6]));
     var op2=(JSON.stringify(izqSel)===JSON.stringify([1,3,5])&&JSON.stringify(derSel)===JSON.stringify([2,4]));
+    registrarIntentoDificilKinestesico(4,'reto1',op1||op2,{
+        actividad:'teatro_fila',
+        fila:filaActiva4,
+        izquierda:izqSel.join(','),
+        derecha:derSel.join(',')
+    });
     if(op1||op2){
         safePlay(audioDing);
         document.querySelectorAll('.asiento.sel-izq,.asiento.sel-der').forEach(function(a){a.classList.add('correcto');});
+        document.getElementById('slider-fila4').disabled = true;
         mostrarFeedback('feedback4','ok','Correcto! Los 5 asientos mas cercanos al pasillo en fila 10. Los impares 1,3 (o 1,3,5) van a la izquierda y los pares 2,4,6 (o 2,4) a la derecha.');
-        respuestasPagina[4]=true; actualizarUI();
+        marcarActividad(4,'reto1');
     } else {
         safePlay(audioError);
         mostrarFeedback('feedback4','error','Incorrecto. Los asientos mas cercanos al pasillo son los de numero mas bajo: 1 y 3 (izq) y 2, 4 y 6 (der), o bien 1,3,5 (izq) y 2,4 (der). Limpias e intenta de nuevo.');
@@ -1288,10 +2403,115 @@ function verificarAsientos4(){
 }
 
 function limpiarAsientos4(){
+    if(actividadResuelta(4,'reto1')) return;
     selAsientos4=[];
+    document.getElementById('slider-fila4').disabled = false;
     document.querySelectorAll('.asiento').forEach(function(a){a.classList.remove('sel-izq','sel-der','correcto');});
     document.getElementById('info-sel4').innerText='Seleccionados: 0 / 5';
     document.getElementById('feedback4').style.display='none';
+}
+
+/* ============================================================
+   PAGINA 4 - BALCON NUEVO
+============================================================ */
+var FILA_BALCON_4B = 8;
+var selBalcon4b = [];
+
+function generarBalcon4b(){
+    var c = document.getElementById('balcon-grid4b');
+    if(!c || c.innerHTML.trim() !== '') return;
+    var html = '';
+    for(var f=6; f<=9; f++){
+        html += '<div class="fila-balcon">';
+        html += '<div class="fila-num-b">F' + f + '</div>';
+        html += '<div class="bloque-izq-b">';
+        for(var i=6; i>=1; i--){
+            var n = (i*2)-1;
+            html += '<div class="asiento-b" id="b4b-izq-' + f + '-' + n + '" onclick="clickBalcon4b(' + f + ',\'izq\',' + n + ')">' + n + '</div>';
+        }
+        html += '</div>';
+        html += '<div class="pasillo-b">Fila ' + f + '</div>';
+        html += '<div class="bloque-der-b">';
+        for(var j=1; j<=6; j++){
+            var p = j*2;
+            html += '<div class="asiento-b" id="b4b-der-' + f + '-' + p + '" onclick="clickBalcon4b(' + f + ',\'der\',' + p + ')">' + p + '</div>';
+        }
+        html += '</div>';
+        html += '</div>';
+    }
+    c.innerHTML = html;
+}
+
+function clickBalcon4b(fila, lado, num){
+    if(actividadResuelta(4,'reto2')) return;
+    safePlay(audioClick);
+    var key = fila + '-' + lado + '-' + num;
+    var el = document.getElementById('b4b-' + lado + '-' + fila + '-' + num);
+    var idx = selBalcon4b.indexOf(key);
+    if(idx !== -1){
+        selBalcon4b.splice(idx,1);
+        if(el) el.classList.remove('sel-izq','sel-der');
+    } else {
+        if(selBalcon4b.length >= 4){
+            mostrarFeedback('feedback4b','error','Solo puedes marcar 4 asientos. Si quieres corregir, toca uno ya marcado.');
+            return;
+        }
+        selBalcon4b.push(key);
+        if(el) el.classList.add(lado === 'izq' ? 'sel-izq' : 'sel-der');
+    }
+    document.getElementById('info-sel4b').innerText = 'Seleccionados: ' + selBalcon4b.length + ' / 4';
+    document.getElementById('feedback4b').style.display = 'none';
+}
+
+function verificarBalcon4b(){
+    if(selBalcon4b.length !== 4){
+        registrarIntentoDificilKinestesico(4,'reto2',false,{
+            actividad:'balcon',
+            seleccion:selBalcon4b.join(','),
+            error:'cantidad_incorrecta'
+        });
+        mostrarFeedback('feedback4b','error','Debes marcar exactamente 4 asientos en el balc&oacute;n.');
+        return;
+    }
+    var filas = {};
+    var izqSel = [], derSel = [];
+    selBalcon4b.forEach(function(k){
+        var p = k.split('-');
+        filas[p[0]] = true;
+        if(p[1] === 'izq') izqSel.push(parseInt(p[2],10));
+        else derSel.push(parseInt(p[2],10));
+    });
+    izqSel.sort(function(a,b){ return a-b; });
+    derSel.sort(function(a,b){ return a-b; });
+    var unaFila = Object.keys(filas).length === 1 && !!filas[FILA_BALCON_4B];
+    var ok = unaFila &&
+        JSON.stringify(izqSel) === JSON.stringify([1,3]) &&
+        JSON.stringify(derSel) === JSON.stringify([2,4]);
+
+    registrarIntentoDificilKinestesico(4,'reto2',ok,{
+        actividad:'balcon',
+        fila:FILA_BALCON_4B,
+        izquierda:izqSel.join(','),
+        derecha:derSel.join(','),
+        filas:Object.keys(filas).join(',')
+    });
+    if(ok){
+        safePlay(audioDing);
+        document.querySelectorAll('.asiento-b.sel-izq,.asiento-b.sel-der').forEach(function(a){ a.classList.add('correcto'); });
+        mostrarFeedback('feedback4b','ok','Correcto. En el balc&oacute;n, la fila 8 usa los asientos 1 y 3 a la izquierda, y 2 y 4 a la derecha.');
+        marcarActividad(4,'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback4b','error','No coincide. Revisa que todos est&eacute;n en la fila 8 y que sean los m&aacute;s cercanos al pasillo en ambos lados.');
+    }
+}
+
+function limpiarBalcon4b(){
+    if(actividadResuelta(4,'reto2')) return;
+    selBalcon4b = [];
+    document.querySelectorAll('.asiento-b').forEach(function(a){ a.classList.remove('sel-izq','sel-der','correcto'); });
+    document.getElementById('info-sel4b').innerText = 'Seleccionados: 0 / 4';
+    document.getElementById('feedback4b').style.display = 'none';
 }
 
 /* ============================================================
@@ -1345,7 +2565,7 @@ function siguienteEnAvenida(y, dir){
 }
 
 function agregarTramoCU(dir){
-    if(respuestasPagina[5]) return;
+    if(actividadResuelta(5,'reto1')) return;
     safePlay(audioClick);
 
     var posX = posRuta5.x, posY = posRuta5.y;
@@ -1415,14 +2635,25 @@ function agregarTramoCU(dir){
 
 function verificarRutaCU5(){
     if(secRuta5.length === 0){
+        registrarIntentoDificilKinestesico(5,'reto1',false,{
+            actividad:'ruta_campus_sentidos',
+            respuesta:'',
+            error:'ruta_vacia'
+        });
         mostrarFeedback('feedback5','error','Primero construye la ruta usando los botones de direccion.');
         return;
     }
-    if(posRuta5.x === 470 && posRuta5.y === 460){
+    var ok = (posRuta5.x === 470 && posRuta5.y === 460);
+    registrarIntentoDificilKinestesico(5,'reto1',ok,{
+        actividad:'ruta_campus_sentidos',
+        respuesta:secRuta5.join('>'),
+        destino:posRuta5.x + ',' + posRuta5.y
+    });
+    if(ok){
         safePlay(audioDing);
         document.getElementById('marcadorCU').setAttribute('fill','#4caf50');
         mostrarFeedback('feedback5','ok','Correcto! La ruta valida: Este por Calle A hasta Av.5, Sur por Av.5 hasta Calle D, Oeste por Calle D hasta Av.4 donde esta Veterinaria. Las otras rutas son imposibles porque Av.4 solo sube al norte (no puedes bajar) y Calle D solo va al oeste (si entras por Av.3 te alejas de Av.4 que esta mas al este).');
-        respuestasPagina[5]=true; actualizarUI();
+        marcarActividad(5,'reto1');
     } else {
         safePlay(audioError);
         var cx=posRuta5.x, cy=posRuta5.y;
@@ -1433,6 +2664,7 @@ function verificarRutaCU5(){
 }
 
 function limpiarRutaCU5(){
+    if(actividadResuelta(5,'reto1')) return;
     secRuta5 = [];
     posRuta5 = {x:80, y:120};
     document.getElementById('trazoRuta5').setAttribute('points','');
@@ -1443,19 +2675,630 @@ function limpiarRutaCU5(){
     document.getElementById('feedback5').style.display = 'none';
 }
 
-/* INIT */
-window.addEventListener('DOMContentLoaded',function(){
-    var g=localStorage.getItem('progreso_dificil_kinestesico_coordenadas');
-    if(g){
-        var p=parseInt(g,10);
-        if(p>=1&&p<=totalPaginas){
-            document.getElementById('pagina'+paginaActual).classList.remove('activa');
-            paginaActual=p;
-            document.getElementById('pagina'+paginaActual).classList.add('activa');
+/* ============================================================
+   PAGINA 5 - CAMPUS ALTERNO
+============================================================ */
+var RUTA_CORRECTA_5B = ['N','N','N','E','E','E'];
+var posRuta5b = {x:210, y:460};
+var secRuta5b = [];
+
+function agregarTramoCU2(dir){
+    if(actividadResuelta(5,'reto2') || secRuta5b.length >= 6) return;
+    safePlay(audioClick);
+
+    var posX = posRuta5b.x, posY = posRuta5b.y;
+    var enCalle = esCalle(posY);
+    var enAvenida = esAvenida(posX);
+    var valido = false, razon = '', nuevaX = posX, nuevaY = posY;
+
+    if(dir === 'E' || dir === 'O'){
+        if(!enCalle){
+            razon = 'Para ir este u oeste debes estar sobre una calle horizontal.';
+        } else {
+            var permitido = SENTIDO_CALLE_Y[posY];
+            if(dir !== permitido){
+                razon = 'Esa calle no permite avanzar en esa direcci&oacute;n.';
+            } else {
+                var sig = siguienteEnCalle(posX, dir);
+                if(sig === null) razon = 'Ya llegaste al borde del mapa en esa direcci&oacute;n.';
+                else { valido = true; nuevaX = sig; }
+            }
+        }
+    } else {
+        if(!enAvenida){
+            razon = 'Para ir norte o sur debes estar sobre una avenida vertical.';
+        } else {
+            var permitidoAv = SENTIDO_AV_X[posX];
+            if(dir !== permitidoAv){
+                razon = 'Esa avenida no permite avanzar en esa direcci&oacute;n.';
+            } else {
+                var sigY = siguienteEnAvenida(posY, dir);
+                if(sigY === null) razon = 'Ya llegaste al borde del mapa en esa direcci&oacute;n.';
+                else { valido = true; nuevaY = sigY; }
+            }
         }
     }
+
+    if(!valido){
+        safePlay(audioError);
+        mostrarFeedback('feedback5b','error',razon);
+        return;
+    }
+
+    secRuta5b.push(dir);
+    var cont = document.getElementById('secuencia-ruta5b');
+    if(secRuta5b.length === 1) cont.innerHTML = '';
+    var labels = {E:'Este &rarr;', O:'Oeste &larr;', S:'Sur &darr;', N:'Norte &uarr;'};
+    var clases = {E:'este', O:'oeste', S:'sur', N:'norte'};
+    var chip = document.createElement('span');
+    chip.className = 'chip-dir ' + clases[dir];
+    chip.innerHTML = labels[dir];
+    cont.appendChild(chip);
+
+    var trazo = document.getElementById('trazoRuta5b');
+    var pts = trazo.getAttribute('points') || '';
+    if(pts === '') pts = posX + ',' + posY;
+    pts += ' ' + nuevaX + ',' + nuevaY;
+    trazo.setAttribute('points', pts);
+
+    var marc = document.getElementById('marcadorCU2');
+    marc.setAttribute('cx', nuevaX);
+    marc.setAttribute('cy', nuevaY);
+    marc.setAttribute('opacity', '1');
+
+    posRuta5b = {x:nuevaX, y:nuevaY};
+    document.getElementById('cont-ruta5b').innerText = 'Pasos: ' + secRuta5b.length + ' / 6';
+    document.getElementById('feedback5b').style.display = 'none';
+}
+
+function verificarRutaCU2(){
+    if(secRuta5b.length !== 6){
+        registrarIntentoDificilKinestesico(5,'reto2',false,{
+            actividad:'ruta_campus_alterna',
+            respuesta:secRuta5b.join('>'),
+            error:'ruta_incompleta'
+        });
+        mostrarFeedback('feedback5b','error','Necesitas 6 pasos para llegar del Gimnasio a la Hemeroteca.');
+        return;
+    }
+    var ok = (posRuta5b.x === 580 && posRuta5b.y === 120);
+    if(ok){
+        for(var i=0;i<RUTA_CORRECTA_5B.length;i++){
+            if(secRuta5b[i] !== RUTA_CORRECTA_5B[i]){ ok = false; break; }
+        }
+    }
+    registrarIntentoDificilKinestesico(5,'reto2',ok,{
+        actividad:'ruta_campus_alterna',
+        respuesta:secRuta5b.join('>'),
+        destino:posRuta5b.x + ',' + posRuta5b.y
+    });
+    if(ok){
+        safePlay(audioDing);
+        document.getElementById('marcadorCU2').setAttribute('fill','#4caf50');
+        mostrarFeedback('feedback5b','ok','Correcto. La ruta del anexo sube por la Avenida 2 y despu&eacute;s avanza al este por la Calle A hasta la Sala de lectura.');
+        marcarActividad(5,'reto2');
+    } else {
+        safePlay(audioError);
+        mostrarFeedback('feedback5b','error','La ruta no coincide. Primero debes subir por una avenida que s&iacute; vaya al norte, y despu&eacute;s avanzar por la calle que corre hacia el este.');
+    }
+}
+
+function limpiarRutaCU2(){
+    if(actividadResuelta(5,'reto2')) return;
+    secRuta5b = [];
+    posRuta5b = {x:210, y:460};
+    document.getElementById('trazoRuta5b').setAttribute('points','');
+    var marc = document.getElementById('marcadorCU2');
+    marc.setAttribute('cx','210');
+    marc.setAttribute('cy','460');
+    marc.setAttribute('opacity','0');
+    marc.setAttribute('fill','#c2410c');
+    document.getElementById('cont-ruta5b').innerText = 'Pasos: 0 / 6';
+    document.getElementById('secuencia-ruta5b').innerHTML = '<span style="color:#fdba74;font-weight:600;">Toca los botones para trazar la ruta...</span>';
+    document.getElementById('feedback5b').style.display = 'none';
+}
+
+/* ============================================================
+   RETOS 2 - NUEVOS ESCENARIOS KINESTESICOS
+============================================================ */
+var ACTIVIDADES_SLOTS = {
+    coloniaRuta2: {
+        pagina: 1,
+        reto: 'reto2',
+        bankId: 'banco-colonia2',
+        slotsId: 'slots-colonia2',
+        feedbackId: 'feedback1b',
+        items: [
+            { id:'farmacia', html:'<strong>&#128138; Farmacia</strong><span style="display:block;font-size:.82rem;font-weight:700;">Fresno &amp; Nilo</span>' },
+            { id:'cedro-nilo', html:'<strong>Cedro &amp; Nilo</strong><span style="display:block;font-size:.82rem;">Cruce intermedio</span>' },
+            { id:'escuela', html:'<strong>&#127979; Escuela</strong><span style="display:block;font-size:.82rem;font-weight:700;">Cedro &amp; Ganges</span>' },
+            { id:'roble-ganges', html:'<strong>Roble &amp; Ganges</strong><span style="display:block;font-size:.82rem;">Cruce intermedio</span>' },
+            { id:'super', html:'<strong>&#128722; Supermercado</strong><span style="display:block;font-size:.82rem;font-weight:700;">Roble &amp; Nilo</span>' },
+            { id:'casa', html:'<strong>&#127968; Casa</strong><span style="display:block;font-size:.82rem;">Pino &amp; Amazonas</span>' },
+            { id:'parque', html:'<strong>&#127795; Parque</strong><span style="display:block;font-size:.82rem;">Sauce &amp; Misisipi</span>' },
+            { id:'sauce-ganges', html:'<strong>Sauce &amp; Ganges</strong><span style="display:block;font-size:.82rem;">Cruce libre</span>' }
+        ],
+        correct: ['farmacia','cedro-nilo','escuela','roble-ganges','super'],
+        user: [null,null,null,null,null],
+        slotLabels: ['1','2','3','4','5'],
+        placeholders: ['Parada 1','Parada 2','Parada 3','Parada 4','Parada 5'],
+        success: 'Correcto! El nuevo recorrido pasa por Farmacia, Cedro &amp; Nilo, Escuela, Roble &amp; Ganges y termina en el Supermercado.',
+        error: 'Ese orden no coincide. Revisa en qu&eacute; momento el mensajero baja a Ganges y en qu&eacute; momento vuelve al norte para llegar al Supermercado.',
+        emptyMessage: 'Completa las 5 paradas del recorrido antes de verificar.'
+    },
+    campusRutaDificil2: {
+        pagina: 5,
+        reto: 'reto2',
+        bankId: 'banco-campus5b',
+        slotsId: 'slots-campus5b',
+        feedbackId: 'feedback5b',
+        items: [
+            { id:'rectoria', html:'<strong>&#127963; Rector&iacute;a</strong><span style="display:block;font-size:.82rem;">(3,A)</span>' },
+            { id:'laboratorio', html:'<strong>&#128300; Laboratorio</strong><span style="display:block;font-size:.82rem;">(5,B)</span>' },
+            { id:'veterinaria', html:'<strong>&#128062; Veterinaria</strong><span style="display:block;font-size:.82rem;">(4,D)</span>' },
+            { id:'agronomia', html:'<strong>&#127807; Agronom&iacute;a</strong><span style="display:block;font-size:.82rem;">(2,D)</span>' },
+            { id:'biblioteca', html:'<strong>&#128218; Biblioteca</strong><span style="display:block;font-size:.82rem;">(1,A)</span>' },
+            { id:'cafeteria', html:'<strong>&#9749; Cafeter&iacute;a</strong><span style="display:block;font-size:.82rem;">(2,B)</span>' },
+            { id:'artes', html:'<strong>&#127912; Artes</strong><span style="display:block;font-size:.82rem;">(3,C)</span>' }
+        ],
+        correct: ['rectoria','laboratorio','veterinaria','agronomia'],
+        user: [null,null,null,null],
+        slotLabels: ['1','2','3','4'],
+        placeholders: ['Parada 1','Parada 2','Parada 3','Parada 4'],
+        success: 'Correcto! La ruta del expediente pasa por Rector&iacute;a, Laboratorio, Veterinaria y termina en Agronom&iacute;a.',
+        error: 'Ese orden no respeta el sentido del campus. Observa por cu&aacute;l avenida se puede bajar y en qu&eacute; momento se entra a Calle D.',
+        emptyMessage: 'Ordena las 4 paradas clave antes de verificar.'
+    }
+};
+
+var ACTIVIDADES_SELLO = {
+    metroPaseDificil2: {
+        pagina: 2,
+        reto: 'reto2',
+        stampId: 'sello-metro2b',
+        bankId: 'banco-sello-metro2b',
+        feedbackId: 'feedback2b',
+        target: null,
+        correct: 'metro2b-opcion-a',
+        success: 'Correcto! El pase bueno es Observatorio -> Balderas -> Z&oacute;calo: se usa la L4 y solo se hace un cambio en Balderas para tomar la L3.',
+        error: 'Ese pase no sirve. Revisa si realmente llega a Z&oacute;calo y si evita vueltas o cambios extra.',
+        emptyMessage: 'Coloca el sello sobre un pase antes de verificar.'
+    },
+    teatroReservaDificil4: {
+        pagina: 4,
+        reto: 'reto2',
+        stampId: 'sello-teatro4b',
+        bankId: 'banco-sello-teatro4b',
+        feedbackId: 'feedback4b',
+        target: null,
+        correct: 'teatro4b-opcion-a',
+        success: 'Correcto! Ese paquete usa la fila 12 y deja los 4 lugares pegados al pasillo: 1 y 3 a la izquierda, 2 y 4 a la derecha.',
+        error: 'Ese paquete no cumple todas las condiciones. Compara fila, lado y cercan&iacute;a real al pasillo.',
+        emptyMessage: 'Coloca el sello en un paquete antes de verificar.'
+    }
+};
+
+var RADAR_MISION3 = {
+    pagina: 3,
+    reto: 'reto2',
+    gridId: 'radar-grid3b',
+    feedbackId: 'feedback3b',
+    columnas: ['A','B','C','D','E','F'],
+    filas: [1,2,3,4,5,6],
+    correctas: ['B5','D4','F5'],
+    seleccionadas: []
+};
+
+function buscarItemActividad(cfg, id){
+    for(var i=0;i<cfg.items.length;i++){
+        if(cfg.items[i].id === id) return cfg.items[i];
+    }
+    return null;
+}
+
+function prepararActividadSlots(nombre){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    cfg.displayOrder = shuffleArray(cfg.items.map(function(item){ return item.id; }));
+    cfg.selected = null;
+}
+
+function fichaUsadaEnActividad(cfg, id){
+    for(var i=0;i<cfg.user.length;i++){
+        if(cfg.user[i] === id) return true;
+    }
+    return false;
+}
+
+function limpiarSeleccionGlobal(){
+    if(!fichaActiva.actividad) return;
+    var previa = ACTIVIDADES_SLOTS[fichaActiva.actividad];
+    if(previa){
+        previa.selected = null;
+        renderActividadSlots(fichaActiva.actividad);
+    }
+    fichaActiva = { actividad:null, item:null };
+}
+
+function renderActividadSlots(nombre){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    var banco = document.getElementById(cfg.bankId);
+    var slots = document.getElementById(cfg.slotsId);
+    if(!banco || !slots) return;
+
+    banco.innerHTML = '';
+    var displayOrder = cfg.displayOrder || cfg.items.map(function(item){ return item.id; });
+    for(var i=0;i<displayOrder.length;i++){
+        var item = buscarItemActividad(cfg, displayOrder[i]);
+        var usado = fichaUsadaEnActividad(cfg, item.id);
+        var ficha = document.createElement('div');
+        ficha.className = 'ficha-kin' + (usado ? ' usada' : '') + (cfg.selected === item.id ? ' seleccionada' : '');
+        ficha.innerHTML = item.html;
+        ficha.draggable = !usado && !actividadResuelta(cfg.pagina, cfg.reto);
+        ficha.onclick = (function(n,id){ return function(){ seleccionarFichaActividad(n,id); }; })(nombre,item.id);
+        ficha.ondragstart = (function(n,id){ return function(e){ iniciarArrastreActividad(e,n,id); }; })(nombre,item.id);
+        banco.appendChild(ficha);
+    }
+
+    slots.innerHTML = '';
+    for(var s=0;s<cfg.correct.length;s++){
+        var slot = document.createElement('div');
+        var itemSlot = cfg.user[s] ? buscarItemActividad(cfg, cfg.user[s]) : null;
+        slot.className = 'slot-k' + (itemSlot ? ' lleno' : '');
+        slot.ondragover = permitirSoltar;
+        slot.ondrop = (function(n,idx){ return function(e){ soltarFichaActividad(e,n,idx); }; })(nombre,s);
+        slot.onclick = (function(n,idx){ return function(){ colocarFichaSeleccionada(n,idx); }; })(nombre,s);
+
+        var contenido = '<span class="slot-tag">' + cfg.slotLabels[s] + '</span>';
+        if(itemSlot) contenido += itemSlot.html;
+        else contenido += '<span class="slot-placeholder">' + cfg.placeholders[s] + '</span>';
+        slot.innerHTML = contenido;
+        slots.appendChild(slot);
+    }
+}
+
+function seleccionarFichaActividad(nombre, id){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto) || fichaUsadaEnActividad(cfg, id)) return;
+
+    if(fichaActiva.actividad && fichaActiva.actividad !== nombre) limpiarSeleccionGlobal();
+
+    safePlay(audioClick);
+    if(cfg.selected === id){
+        cfg.selected = null;
+        fichaActiva = { actividad:null, item:null };
+    } else {
+        cfg.selected = id;
+        fichaActiva = { actividad:nombre, item:id };
+    }
+    renderActividadSlots(nombre);
+}
+
+function permitirSoltar(e){
+    e.preventDefault();
+}
+
+function iniciarArrastreActividad(e, nombre, id){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto) || fichaUsadaEnActividad(cfg, id)){
+        e.preventDefault();
+        return;
+    }
+    if(fichaActiva.actividad && fichaActiva.actividad !== nombre) limpiarSeleccionGlobal();
+    cfg.selected = id;
+    fichaActiva = { actividad:nombre, item:id };
+    if(e.dataTransfer){
+        e.dataTransfer.setData('text/plain', nombre + '|' + id);
+        e.dataTransfer.effectAllowed = 'move';
+    }
+    renderActividadSlots(nombre);
+}
+
+function colocarFichaEnSlot(nombre, idx, id){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(!id || actividadResuelta(cfg.pagina, cfg.reto)) return;
+    if(fichaUsadaEnActividad(cfg, id) && cfg.user[idx] !== id) return;
+    cfg.user[idx] = id;
+    cfg.selected = null;
+    fichaActiva = { actividad:null, item:null };
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function colocarFichaSeleccionada(nombre, idx){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto)) return;
+    if(cfg.user[idx] && !cfg.selected){
+        removerFichaDeSlot(nombre, idx);
+        return;
+    }
+    if(!cfg.selected) return;
+    colocarFichaEnSlot(nombre, idx, cfg.selected);
+}
+
+function soltarFichaActividad(e, nombre, idx){
+    e.preventDefault();
+    var data = e.dataTransfer ? e.dataTransfer.getData('text/plain') : '';
+    var partes = data ? data.split('|') : [];
+    if(partes.length === 2 && partes[0] !== nombre) return;
+    var id = partes.length === 2 ? partes[1] : ACTIVIDADES_SLOTS[nombre].selected;
+    colocarFichaEnSlot(nombre, idx, id);
+}
+
+function removerFichaDeSlot(nombre, idx){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto) || !cfg.user[idx]) return;
+    cfg.user[idx] = null;
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function reiniciarActividadSlots(nombre){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto)) return;
+    for(var i=0;i<cfg.user.length;i++) cfg.user[i] = null;
+    prepararActividadSlots(nombre);
+    if(fichaActiva.actividad === nombre) fichaActiva = { actividad:null, item:null };
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSlots(nombre);
+}
+
+function verificarActividadSlots(nombre){
+    var cfg = ACTIVIDADES_SLOTS[nombre];
+    for(var i=0;i<cfg.correct.length;i++){
+        if(!cfg.user[i]){
+            registrarIntentoDificilKinestesico(cfg.pagina,cfg.reto,false,{
+                actividad:nombre,
+                respuesta:cfg.user.filter(function(v){ return !!v; }).join('>'),
+                error:'espacios_incompletos'
+            });
+            mostrarFeedback(cfg.feedbackId, 'error', cfg.emptyMessage || 'Completa todos los espacios antes de verificar.');
+            return;
+        }
+    }
+
+    var ok = true;
+    for(var j=0;j<cfg.correct.length;j++){
+        if(cfg.user[j] !== cfg.correct[j]){
+            ok = false;
+            break;
+        }
+    }
+
+    registrarIntentoDificilKinestesico(cfg.pagina,cfg.reto,ok,{
+        actividad:nombre,
+        respuesta:cfg.user.join('>')
+    });
+    if(ok){
+        safePlay(audioDing);
+        mostrarFeedback(cfg.feedbackId, 'ok', cfg.success);
+        marcarActividad(cfg.pagina, cfg.reto);
+        cfg.selected = null;
+        if(fichaActiva.actividad === nombre) fichaActiva = { actividad:null, item:null };
+        renderActividadSlots(nombre);
+    } else {
+        safePlay(audioError);
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.error);
+    }
+}
+
+function renderActividadSello(nombre){
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    var stamp = document.getElementById(cfg.stampId);
+    var bank = document.getElementById(cfg.bankId);
+    if(!stamp || !bank) return;
+
+    var cartas = document.querySelectorAll('[data-sello-actividad="' + nombre + '"]');
+    for(var i=0;i<cartas.length;i++) cartas[i].classList.remove('marcada');
+
+    var destino = cfg.target ? document.getElementById(cfg.target) : bank;
+    if(destino) destino.appendChild(stamp);
+    if(cfg.target){
+        var carta = document.getElementById(cfg.target);
+        if(carta) carta.classList.add('marcada');
+    }
+}
+
+function mezclarCartasActividad(nombre){
+    var cartas = Array.prototype.slice.call(document.querySelectorAll('[data-sello-actividad="' + nombre + '"]'));
+    if(!cartas.length) return;
+    var contenedor = cartas[0].parentNode;
+    var mezcladas = shuffleArray(cartas);
+    for(var i=0;i<mezcladas.length;i++) contenedor.appendChild(mezcladas[i]);
+}
+
+function iniciarArrastreSello(e, nombre){
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto)){
+        e.preventDefault();
+        return;
+    }
+    if(e.dataTransfer){
+        e.dataTransfer.setData('text/plain', nombre);
+        e.dataTransfer.effectAllowed = 'move';
+    }
+}
+
+function colocarSelloActividad(nombre, targetId){
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto)) return;
+    cfg.target = targetId;
+    safePlay(audioClick);
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    renderActividadSello(nombre);
+}
+
+function soltarSelloActividad(e, nombre, targetId){
+    e.preventDefault();
+    var data = e.dataTransfer ? e.dataTransfer.getData('text/plain') : '';
+    if(data && data !== nombre) return;
+    colocarSelloActividad(nombre, targetId);
+}
+
+function reiniciarActividadSello(nombre){
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if(actividadResuelta(cfg.pagina, cfg.reto)) return;
+    cfg.target = null;
+    document.getElementById(cfg.feedbackId).style.display = 'none';
+    mezclarCartasActividad(nombre);
+    renderActividadSello(nombre);
+}
+
+function verificarActividadSello(nombre){
+    var cfg = ACTIVIDADES_SELLO[nombre];
+    if(!cfg.target){
+        registrarIntentoDificilKinestesico(cfg.pagina,cfg.reto,false,{
+            actividad:nombre,
+            error:'sin_sello'
+        });
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.emptyMessage);
+        return;
+    }
+    registrarIntentoDificilKinestesico(cfg.pagina,cfg.reto,cfg.target === cfg.correct,{
+        actividad:nombre,
+        seleccion:cfg.target
+    });
+    if(cfg.target === cfg.correct){
+        safePlay(audioDing);
+        mostrarFeedback(cfg.feedbackId, 'ok', cfg.success);
+        marcarActividad(cfg.pagina, cfg.reto);
+        renderActividadSello(nombre);
+    } else {
+        safePlay(audioError);
+        mostrarFeedback(cfg.feedbackId, 'error', cfg.error);
+    }
+}
+
+function generarRadar3(){
+    var wrap = document.getElementById(RADAR_MISION3.gridId);
+    if(!wrap || wrap.innerHTML.trim() !== '') return;
+    wrap.innerHTML = '<div></div>';
+    for(var c=0;c<RADAR_MISION3.columnas.length;c++){
+        var colHead = document.createElement('div');
+        colHead.className = 'radar-head';
+        colHead.textContent = RADAR_MISION3.columnas[c];
+        wrap.appendChild(colHead);
+    }
+    for(var f=0;f<RADAR_MISION3.filas.length;f++){
+        var rowHead = document.createElement('div');
+        rowHead.className = 'radar-head';
+        rowHead.textContent = RADAR_MISION3.filas[f];
+        wrap.appendChild(rowHead);
+        for(var cc=0;cc<RADAR_MISION3.columnas.length;cc++){
+            var coord = RADAR_MISION3.columnas[cc] + RADAR_MISION3.filas[f];
+            var cell = document.createElement('div');
+            cell.className = 'radar-cell';
+            cell.id = 'radar-cell-' + coord;
+            cell.setAttribute('title', coord);
+            cell.onclick = (function(pos){ return function(){ toggleRadar3(pos); }; })(coord);
+            wrap.appendChild(cell);
+        }
+    }
+    actualizarRadar3UI();
+}
+
+function actualizarRadar3UI(){
+    for(var f=0;f<RADAR_MISION3.filas.length;f++){
+        for(var c=0;c<RADAR_MISION3.columnas.length;c++){
+            var coord = RADAR_MISION3.columnas[c] + RADAR_MISION3.filas[f];
+            var cell = document.getElementById('radar-cell-' + coord);
+            if(!cell) continue;
+            cell.classList.toggle('activa', RADAR_MISION3.seleccionadas.indexOf(coord) !== -1);
+        }
+    }
+}
+
+function toggleRadar3(coord){
+    if(actividadResuelta(RADAR_MISION3.pagina, RADAR_MISION3.reto)) return;
+    var idx = RADAR_MISION3.seleccionadas.indexOf(coord);
+    if(idx !== -1){
+        safePlay(audioClick);
+        RADAR_MISION3.seleccionadas.splice(idx,1);
+    } else {
+        if(RADAR_MISION3.seleccionadas.length >= 3){
+            safePlay(audioError);
+            mostrarFeedback(RADAR_MISION3.feedbackId, 'error', 'Solo debes marcar 3 drones. Si quieres corregir, toca una casilla marcada para quitarla.');
+            return;
+        }
+        safePlay(audioClick);
+        RADAR_MISION3.seleccionadas.push(coord);
+    }
+    document.getElementById(RADAR_MISION3.feedbackId).style.display = 'none';
+    actualizarRadar3UI();
+}
+
+function verificarRadar3(){
+    if(RADAR_MISION3.seleccionadas.length !== 3){
+        registrarIntentoDificilKinestesico(RADAR_MISION3.pagina,RADAR_MISION3.reto,false,{
+            actividad:'radar_drones',
+            seleccion:RADAR_MISION3.seleccionadas.join(','),
+            error:'cantidad_incorrecta'
+        });
+        mostrarFeedback(RADAR_MISION3.feedbackId, 'error', 'Debes marcar exactamente 3 casillas en el radar.');
+        return;
+    }
+    var user = RADAR_MISION3.seleccionadas.slice().sort();
+    var correct = RADAR_MISION3.correctas.slice().sort();
+    var ok = JSON.stringify(user) === JSON.stringify(correct);
+    registrarIntentoDificilKinestesico(RADAR_MISION3.pagina,RADAR_MISION3.reto,ok,{
+        actividad:'radar_drones',
+        seleccion:user.join(',')
+    });
+    if(ok){
+        safePlay(audioDing);
+        mostrarFeedback(RADAR_MISION3.feedbackId, 'ok', 'Correcto! Los drones est&aacute;n en B5, D4 y F5.');
+        marcarActividad(RADAR_MISION3.pagina, RADAR_MISION3.reto);
+    } else {
+        safePlay(audioError);
+        mostrarFeedback(RADAR_MISION3.feedbackId, 'error', 'No coincide. Empieza por B5, luego marca la casilla que queda 2 columnas a la derecha y 1 fila arriba, y al final la de F5.');
+    }
+}
+
+function reiniciarRadar3(){
+    if(actividadResuelta(RADAR_MISION3.pagina, RADAR_MISION3.reto)) return;
+    RADAR_MISION3.seleccionadas = [];
+    document.getElementById(RADAR_MISION3.feedbackId).style.display = 'none';
+    actualizarRadar3UI();
+}
+
+/* INIT */
+window.addEventListener('DOMContentLoaded',function(){
+    var botonQuiz = document.getElementById('botonQuiz');
+    if(botonQuiz){
+        botonQuiz.addEventListener('click',function(event){
+            if(botonQuiz.classList.contains('bloqueado')){
+                event.preventDefault();
+                safePlay(audioError);
+                mostrarFeedback('feedback5b','error','Completa los dos retos finales antes de entrar al quiz.');
+            }
+        });
+    }
+
+    if(sessionTrackerDificilKinestesico){
+        sessionTrackerDificilKinestesico.start();
+        sessionTrackerDificilKinestesico.attachQuizLinks('.boton-quiz',function(){
+            return { eventoCierre:'quiz' };
+        });
+    }
+
+    generarTeatro();
+    generarBalcon4b();
+    generarRadar3();
+    renderTrayecto2b();
+    for(var nombre in ACTIVIDADES_SLOTS){
+        prepararActividadSlots(nombre);
+        renderActividadSlots(nombre);
+    }
+    mezclarCartasActividad('metroPaseDificil2');
+    mezclarCartasActividad('teatroReservaDificil4');
+    renderActividadSello('metroPaseDificil2');
+    renderActividadSello('teatroReservaDificil4');
+    for(var pagina=1;pagina<=totalPaginas;pagina++){
+        actualizarEstadoPagina(pagina);
+    }
+    actualizarMapaTrayecto2();
     actualizarUI();
-    if(paginaActual===4) generarTeatro();
 });
 </script>
 

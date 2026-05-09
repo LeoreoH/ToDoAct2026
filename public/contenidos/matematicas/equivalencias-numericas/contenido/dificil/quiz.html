@@ -3,85 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz · Equivalencias numéricas · Nivel Difícil</title>
+  <title>Quiz &middot; Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --morado: #7b1fa2;
+      --morado-oscuro: #4a148c;
+      --morado-medio: #5e35b1;
+      --lila: #ede7f6;
+      --lila-2: #d1c4e9;
+      --amarillo: #ffd54f;
+      --amarillo-sombra: #d39e00;
+      --verde: #43a047;
+      --rojo: #e53935;
+      --azul: #1e88e5;
+      --azul-claro: #e3f2fd;
+      --naranja: #fb8c00;
+      --rosa: #f06292;
+      --menta: #66bb6a;
+      --tinta: #3b0d5d;
+    }
+
     body {
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(135deg, #8e24aa, #5e35b1);
       min-height: 100vh;
-      color: white;
+      font-family: 'Nunito', sans-serif;
+      color: #fff;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 213, 79, .36) 0 120px, transparent 122px),
+        radial-gradient(circle at 88% 14%, rgba(79, 195, 247, .28) 0 150px, transparent 153px),
+        linear-gradient(135deg, #8e24aa 0%, #5e35b1 55%, #4527a0 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .14;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,.8) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.8) 25%, transparent 25%);
+      background-size: 36px 36px;
+      background-position: 0 0, 0 18px;
+      mask-image: linear-gradient(to bottom, #000, transparent 68%);
     }
 
     .quiz-container {
-      max-width: 860px;
-      margin: 50px auto;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 40px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      border: 4px solid #ffd54f;
+      width: min(1080px, calc(100% - 32px));
+      margin: 34px auto 44px;
       position: relative;
+      z-index: 1;
+    }
+
+    .panel-principal {
+      background: rgba(255,255,255,.13);
+      backdrop-filter: blur(12px);
+      border: 4px solid var(--amarillo);
+      border-radius: 38px;
+      padding: 34px;
+      box-shadow: 0 24px 52px rgba(0,0,0,.28);
     }
 
     .quiz-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+    }
+
+    .icono-header {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      border: 4px solid #fff;
+      box-shadow: 0 7px 0 var(--amarillo-sombra);
+      transform: rotate(-4deg);
+      font-size: 2rem;
     }
 
     .quiz-header h1 {
       font-family: 'Fredoka One', cursive;
-      font-size: 3rem;
-      color: #ffd54f;
-      text-shadow: 3px 3px 0 #4a148c;
+      font-size: clamp(2.25rem, 5vw, 3.55rem);
+      color: var(--amarillo);
+      text-shadow: 4px 4px 0 rgba(74,20,140,.65);
+      margin-bottom: 6px;
+    }
+
+    .quiz-header .lead {
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
     }
 
     .badge-nivel {
-      background: #4a148c;
-      color: white;
-      padding: 8px 25px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      display: inline-block;
-      border: 2px solid #ffd54f;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      background: #fff;
+      color: var(--morado-oscuro);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 3px solid var(--amarillo);
+      box-shadow: 0 5px 0 rgba(0,0,0,.12);
     }
 
     .timer-container {
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 10px 20px;
-      margin: 20px 0;
+      background: rgba(255,255,255,.16);
+      border-radius: 22px;
+      padding: 12px 18px;
+      margin: 22px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 2px solid #ffd54f;
-    }
-
-    .timer-label {
-      font-size: 1.1rem;
-      font-weight: 700;
+      gap: 16px;
+      border: 2px solid rgba(255,255,255,.78);
+      font-weight: 900;
     }
 
     .timer-value {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #ffd54f;
-      font-family: monospace;
+      color: var(--amarillo);
+      font-size: 1.25rem;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
     }
 
     .progreso-quiz {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin: 30px 0;
+      margin: 26px 0;
       flex-wrap: wrap;
     }
 
@@ -89,103 +150,489 @@
       width: 45px;
       height: 45px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: 3px solid white;
+      background: rgba(255,255,255,.18);
+      border: 3px solid #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 1.1rem;
       color: white;
-      transition: all 0.3s;
+      transition: transform .2s, background .2s, color .2s;
     }
 
     .punto.activo {
-      background: #ffd54f;
-      border-color: white;
-      color: #4a148c;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
       transform: scale(1.15);
     }
 
     .punto.respondido {
-      background: #4caf50;
-      border-color: white;
-      color: white;
+      background: var(--verde);
+      color: #fff;
     }
 
     .tarjeta-pregunta {
-      background: white;
-      border-radius: 30px;
-      padding: 30px;
-      margin-bottom: 25px;
-      border: 4px solid #ffd54f;
-      box-shadow: 0 8px 0 #d39e00;
-      color: #4a148c;
+      background: #fff;
+      border-radius: 32px;
+      padding: 28px;
+      border: 4px solid var(--amarillo);
+      box-shadow: 0 10px 0 var(--amarillo-sombra);
+      color: var(--morado-oscuro);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tarjeta-pregunta::before {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,213,79,.42), rgba(255,213,79,0) 68%);
     }
 
     .pregunta-numero {
-      font-size: 1rem;
-      color: #7b1fa2;
-      font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f7f1ff;
+      border: 2px solid var(--lila-2);
+      color: var(--morado);
+      font-size: .95rem;
+      font-weight: 900;
+      letter-spacing: .7px;
+      border-radius: 999px;
+      padding: 7px 14px;
+      margin-bottom: 14px;
     }
 
     .pregunta-texto {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-      line-height: 1.45;
+      position: relative;
+      font-size: clamp(1.16rem, 2vw, 1.38rem);
+      font-weight: 900;
+      line-height: 1.42;
+      margin-bottom: 20px;
+      color: var(--tinta);
+    }
+
+    .pista-corta {
+      position: relative;
+      background: #fff8df;
+      border: 2px dashed #f1b928;
+      color: #6d4c00;
+      font-weight: 900;
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin: 0 0 20px;
+    }
+
+    .recurso-visual {
+      position: relative;
+      background: linear-gradient(135deg, rgba(237,231,246,.98), rgba(255,248,225,.96));
+      border: 3px solid var(--lila-2);
+      border-radius: 26px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.7);
+    }
+
+    .recurso-titulo {
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 16px;
     }
 
     .opciones {
+      position: relative;
       display: grid;
-      gap: 12px;
+      gap: 14px;
+    }
+
+    .opciones.modelos {
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      align-items: stretch;
+    }
+
+    .opciones.compactas {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     }
 
     .opcion-btn {
-      background: #f3e5f5;
-      border: 3px solid #7b1fa2;
-      border-radius: 20px;
-      padding: 15px 20px;
-      color: #4a148c;
-      font-weight: 600;
-      font-size: 1.08rem;
-      text-align: left;
+      min-height: 82px;
+      background: #f7f1ff;
+      border: 3px solid var(--morado);
+      border-radius: 22px;
+      padding: 16px;
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      font-size: 1.05rem;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform .18s, background .18s, border-color .18s, box-shadow .18s;
       width: 100%;
+      box-shadow: 0 5px 0 #c7b7de;
     }
 
     .opcion-btn:hover:not(:disabled) {
-      background: #ffd54f;
-      transform: scale(1.02);
-      border-color: #4a148c;
+      background: #fff3c4;
+      border-color: var(--morado-oscuro);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 7px 0 #d39e00;
     }
 
     .opcion-btn.correcta {
-      background: #4caf50;
-      color: white;
-      border-color: white;
+      background: var(--verde);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 5px 0 #2e7d32;
     }
 
     .opcion-btn.incorrecta {
-      background: #f44336;
-      color: white;
-      border-color: white;
+      background: var(--rojo);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 5px 0 #b71c1c;
     }
 
     .opcion-btn:disabled {
       cursor: not-allowed;
-      opacity: 0.96;
+      opacity: 1;
+    }
+
+    .opcion-html {
+      width: 100%;
+      display: grid;
+      place-items: center;
+      gap: 10px;
+    }
+
+    .opcion-visual {
+      display: grid;
+      place-items: center;
+      min-height: 150px;
+      margin-bottom: 12px;
+    }
+
+    .opcion-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 28px;
+    }
+
+    .value-chip,
+    .fraction-chip,
+    .mini-chip,
+    .podio-token {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: #fff;
+      border: 3px solid var(--morado);
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      box-shadow: 0 3px 0 var(--lila-2);
+    }
+
+    .fraction-chip {
+      background: #fff8df;
+      border-color: var(--amarillo);
+    }
+
+    .mini-chip {
+      min-width: 94px;
+      background: #f7f1ff;
+      border-color: var(--lila-2);
+      box-shadow: none;
+    }
+
+    .eq-row,
+    .podio-row,
+    .model-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .eq-symbol,
+    .arrow {
+      color: var(--morado);
+      font-weight: 900;
+      font-size: 1.35rem;
+    }
+
+    .pizza-model {
+      width: min(210px, 100%);
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+    }
+
+    .pizza-circle {
+      width: 178px;
+      aspect-ratio: 1;
+      position: relative;
+      border-radius: 50%;
+      border: 8px solid #c96f24;
+      background:
+        repeating-conic-gradient(from -90deg, rgba(91, 45, 9, .58) 0deg 2deg, transparent 2deg var(--slice-angle)),
+        conic-gradient(from -90deg, #fb8c00 0deg var(--used-angle), #fff0be var(--used-angle) 360deg);
+      box-shadow:
+        inset 0 0 0 8px #ffd180,
+        0 8px 0 rgba(146, 78, 22, .25);
+      overflow: hidden;
+    }
+
+    .pizza-circle::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 50%;
+      border: 2px dashed rgba(95, 52, 12, .34);
+      pointer-events: none;
+    }
+
+    .pizza-circle::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 56% 21%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 72% 39%, #2e7d32 0 4px, transparent 5px),
+        radial-gradient(circle at 54% 56%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 35% 35%, #2e7d32 0 4px, transparent 5px),
+        radial-gradient(circle at 32% 72%, #b71c1c 0 5px, transparent 6px),
+        radial-gradient(circle at 73% 70%, #2e7d32 0 4px, transparent 5px);
+      opacity: .95;
+      pointer-events: none;
+    }
+
+    .hundred-grid {
+      width: min(204px, 100%);
+      aspect-ratio: 1;
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      grid-template-rows: repeat(10, minmax(0, 1fr));
+      gap: 2px;
+      padding: 8px;
+      border: 4px solid var(--morado);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 6px 0 var(--lila-2);
+      overflow: hidden;
+    }
+
+    .hundred-grid.compacta {
+      width: min(160px, 42vw);
+      border-width: 3px;
+      border-radius: 18px;
+      padding: 7px;
+    }
+
+    .hundred-cell {
+      min-width: 0;
+      min-height: 0;
+      border-radius: 3px;
+      background: #f1eef8;
+      border: 1px solid #d7c6ec;
+    }
+
+    .hundred-cell.fill {
+      background: linear-gradient(135deg, #ffd54f, #fb8c00);
+      border-color: #f57c00;
+    }
+
+    .jarra {
+      width: 92px;
+      height: 128px;
+      margin: 0 auto 8px;
+      border: 4px solid var(--morado);
+      border-radius: 18px 18px 12px 12px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(to top, #81d4fa 0%, #1e88e5 var(--fill), #fff var(--fill), #fff 100%);
+      box-shadow: 0 5px 0 rgba(126,87,194,.18);
+    }
+
+    .jarra::after {
+      content: "";
+      position: absolute;
+      right: -17px;
+      top: 30px;
+      width: 17px;
+      height: 34px;
+      border: 4px solid var(--morado);
+      border-left: none;
+      border-radius: 0 14px 14px 0;
+      background: #fff;
+    }
+
+    .jarra .line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #ce93d8;
+    }
+
+    .jarra .l1 { top: 25%; }
+    .jarra .l2 { top: 50%; }
+    .jarra .l3 { top: 75%; }
+
+    .recta-wrap {
+      position: relative;
+      width: min(760px, 100%);
+      height: 140px;
+      margin: 4px auto 0;
+      padding: 0 8px;
+    }
+
+    .linea-recta {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 66px;
+      height: 7px;
+      background: var(--morado);
+      border-radius: 999px;
+      box-shadow: 0 3px 0 var(--lila-2);
+    }
+
+    .marca-recta {
+      position: absolute;
+      top: 43px;
+      width: 0;
+      height: 48px;
+      border-left: 3px solid var(--morado);
+      transform: translateX(-50%);
+    }
+
+    .marca-recta.menor {
+      top: 52px;
+      height: 30px;
+      border-left-width: 2px;
+      opacity: .82;
+    }
+
+    .marca-recta span {
+      position: absolute;
+      top: 54px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 900;
+      font-size: .78rem;
+      color: var(--morado-oscuro);
+      white-space: nowrap;
+      background: #fff;
+      border-radius: 999px;
+      padding: 2px 6px;
+      border: 1px solid #eadcf7;
+    }
+
+    .marca-recta.menor span {
+      top: 40px;
+      font-size: .68rem;
+    }
+
+    .punto-recta {
+      position: absolute;
+      top: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transform: translateX(-50%);
+      border: 4px solid var(--morado);
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      font-weight: 900;
+      box-shadow: 0 5px 0 var(--amarillo-sombra);
+    }
+
+    .podio-token {
+      min-width: 78px;
+      background: #fff8df;
+      border-color: var(--amarillo);
+      box-shadow: 0 3px 0 rgba(211,158,0,.22);
+    }
+
+    .coupon-card {
+      background:
+        radial-gradient(circle at 0 50%, transparent 0 12px, #fff 13px),
+        radial-gradient(circle at 100% 50%, transparent 0 12px, #fff 13px),
+        linear-gradient(180deg,#fff,#faf5ff);
+      border: 3px solid var(--morado);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 6px 0 var(--lila-2);
+      width: 100%;
+    }
+
+    .coupon-brand {
+      color: var(--morado-oscuro);
+      font-weight: 900;
+    }
+
+    .coupon-value {
+      color: var(--tinta);
+      font-size: 2rem;
+      font-weight: 900;
+      margin: 6px 0;
+    }
+
+    .case-card {
+      background: linear-gradient(180deg,#fff,#faf5ff);
+      border: 3px solid var(--morado);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 6px 0 var(--lila-2);
+      width: 100%;
+      min-height: 166px;
+    }
+
+    .case-stamp {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      border: 3px solid var(--morado);
+    }
+
+    .opcion-btn.correcta .value-chip,
+    .opcion-btn.incorrecta .value-chip,
+    .opcion-btn.correcta .fraction-chip,
+    .opcion-btn.incorrecta .fraction-chip,
+    .opcion-btn.correcta .mini-chip,
+    .opcion-btn.incorrecta .mini-chip,
+    .opcion-btn.correcta .podio-token,
+    .opcion-btn.incorrecta .podio-token {
+      border-color: #fff;
+      color: var(--morado-oscuro);
     }
 
     .feedback {
       margin-top: 20px;
-      padding: 15px;
-      border-radius: 15px;
-      font-weight: 600;
+      padding: 16px 18px;
+      border-radius: 18px;
+      font-weight: 900;
       display: none;
+      line-height: 1.45;
     }
 
     .feedback.visible {
@@ -193,14 +640,14 @@
     }
 
     .feedback.correcto {
-      background: #c8e6c9;
-      color: #2e7d32;
+      background: #d8f3dc;
+      color: #1b5e20;
       border-left: 8px solid #2e7d32;
     }
 
     .feedback.incorrecto {
-      background: #ffcdd2;
-      color: #c62828;
+      background: #ffdde0;
+      color: #b71c1c;
       border-left: 8px solid #c62828;
     }
 
@@ -213,42 +660,46 @@
       flex-wrap: wrap;
     }
 
-    .btn-nav {
-      background: #ffd54f;
-      color: #4a148c;
+    .btn-nav,
+    .btn-accion {
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
       border: none;
-      padding: 12px 30px;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 1.2rem;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.12rem;
       border: 3px solid white;
-      transition: all 0.2s;
+      transition: transform .18s, background .18s;
+      box-shadow: 0 5px 0 var(--amarillo-sombra);
     }
 
-    .btn-nav:hover:not(:disabled) {
-      background: white;
-      transform: scale(1.05);
+    .btn-nav:hover:not(:disabled),
+    .btn-accion:hover {
+      background: #fff3c4;
+      transform: translateY(-2px);
     }
 
     .btn-nav:disabled {
       background: #b0bec5;
-      opacity: 0.5;
+      color: #52616b;
+      opacity: .65;
       cursor: not-allowed;
+      box-shadow: 0 5px 0 #78909c;
     }
 
     .contador {
-      background: #4a148c;
+      background: var(--morado-oscuro);
       color: white;
-      padding: 8px 25px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      border: 2px solid #ffd54f;
+      padding: 9px 24px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 2px solid var(--amarillo);
     }
 
     .resultado {
       text-align: center;
-      padding: 30px;
+      padding: 28px;
       display: none;
     }
 
@@ -257,204 +708,413 @@
     }
 
     .resultado-emoji {
-      font-size: 5rem;
-      margin-bottom: 15px;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 34px;
+      background: var(--amarillo);
+      color: var(--morado-oscuro);
+      border: 4px solid #fff;
+      box-shadow: 0 8px 0 var(--amarillo-sombra);
+      font-size: 2.7rem;
     }
 
     .resultado-titulo {
       font-family: 'Fredoka One', cursive;
-      font-size: 2.5rem;
-      color: #ffd54f;
-      margin-bottom: 15px;
+      font-size: clamp(2.1rem, 5vw, 2.9rem);
+      color: var(--amarillo);
+      margin-bottom: 14px;
+      text-shadow: 3px 3px 0 rgba(74,20,140,.55);
     }
 
     .resultado-puntaje {
-      font-size: 4rem;
+      font-size: clamp(2.6rem, 8vw, 4rem);
       font-weight: 900;
       color: white;
-      background: #4a148c;
+      background: var(--morado-oscuro);
       display: inline-block;
-      padding: 20px 50px;
-      border-radius: 60px;
-      margin: 20px 0;
-      border: 4px solid #ffd54f;
+      padding: 16px 44px;
+      border-radius: 999px;
+      margin: 18px 0;
+      border: 4px solid var(--amarillo);
     }
 
-    .btn-accion {
-      background: #ffd54f;
-      color: #4a148c;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 60px;
+    .resultado p {
       font-weight: 800;
-      font-size: 1.2rem;
-      margin: 10px;
-      border: 4px solid white;
-      transition: all 0.2s;
     }
 
-    .btn-accion:hover {
-      transform: scale(1.05);
-      background: white;
+    .acciones-resultado {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
     }
 
-    @media (max-width: 768px) {
-      .quiz-container {
-        margin: 20px;
-        padding: 25px;
+    @media (max-width: 760px) {
+      .panel-principal {
+        padding: 22px;
+        border-radius: 30px;
       }
 
-      .quiz-header h1 {
-        font-size: 2.2rem;
+      .tarjeta-pregunta {
+        padding: 22px;
       }
 
+      .timer-container,
       .navegador-quiz {
         flex-direction: column;
+      }
+
+      .btn-nav,
+      .contador {
+        width: 100%;
+        text-align: center;
+      }
+
+      .opcion-visual {
+        min-height: 126px;
+      }
+
+      .pizza-circle {
+        width: 156px;
+      }
+
+      .recta-wrap {
+        height: 174px;
+      }
+
+      .marca-recta span {
+        top: 56px;
+        transform: translateX(-50%) rotate(-34deg);
+        transform-origin: top center;
+      }
+
+      .marca-recta.menor span {
+        top: 42px;
       }
     }
   </style>
 </head>
 <body>
+<audio id="sndClick" src="/contenidos/matematicas/recursos/sonidos/click.mp3"></audio>
+<audio id="sndDing" src="/contenidos/matematicas/recursos/sonidos/ding.mp3"></audio>
+<audio id="sndError" src="/contenidos/matematicas/recursos/sonidos/error.mp3"></audio>
+<audio id="sndTada" src="/contenidos/matematicas/recursos/sonidos/tada.mp3"></audio>
 
-<div class="quiz-container">
-  <div class="quiz-header">
-    <i class="fas fa-star fa-3x" style="color: #ffd54f;"></i>
-    <h1>Mini-Quiz</h1>
-    <p class="lead">Equivalencias numéricas · Nivel Difícil</p>
-    <span class="badge-nivel">⭐⭐⭐ 8 preguntas · 7 correctas para completar</span>
-  </div>
+<main class="quiz-container">
+  <section class="panel-principal">
+    <div class="quiz-header">
+      <div class="icono-header"><i class="fas fa-wand-magic-sparkles"></i></div>
+      <h1>Mini-Quiz</h1>
+      <p class="lead">Equivalencias num&eacute;ricas &middot; Nivel Dif&iacute;cil</p>
+      <span class="badge-nivel"><i class="fas fa-star"></i> 8 retos visuales &middot; necesitas 7 correctas</span>
+    </div>
 
-  <div class="timer-container">
-    <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i> Tiempo:</span>
-    <span class="timer-value" id="timerDisplay">00:00</span>
-  </div>
+    <div class="timer-container">
+      <span class="timer-label"><i class="fas fa-hourglass-half me-2"></i>Tiempo:</span>
+      <span class="timer-value" id="timerDisplay">00:00</span>
+    </div>
 
-  <div class="progreso-quiz" id="progresoQuiz">
-    <div class="punto activo" data-i="0">1</div>
-    <div class="punto" data-i="1">2</div>
-    <div class="punto" data-i="2">3</div>
-    <div class="punto" data-i="3">4</div>
-    <div class="punto" data-i="4">5</div>
-    <div class="punto" data-i="5">6</div>
-    <div class="punto" data-i="6">7</div>
-    <div class="punto" data-i="7">8</div>
-  </div>
+    <div class="progreso-quiz" id="progresoQuiz"></div>
 
-  <div id="preguntasContainer"></div>
+    <div id="preguntasContainer"></div>
 
-  <div class="navegador-quiz" id="navBotones">
-    <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>← Anterior</button>
-    <span class="contador" id="contadorPregunta">1/8</span>
-    <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)">Siguiente →</button>
-    <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;">Enviar</button>
-  </div>
+    <div class="navegador-quiz" id="navBotones">
+      <button class="btn-nav" id="btnAnterior" onclick="cambiarPregunta(-1)" disabled>
+        <i class="fas fa-arrow-left me-2"></i>Anterior
+      </button>
+      <span class="contador" id="contadorPregunta">1/8</span>
+      <button class="btn-nav" id="btnSiguiente" onclick="cambiarPregunta(1)" disabled>
+        Siguiente<i class="fas fa-arrow-right ms-2"></i>
+      </button>
+      <button class="btn-nav" id="btnEnviar" onclick="enviarQuiz()" style="display: none;" disabled>
+        Enviar<i class="fas fa-paper-plane ms-2"></i>
+      </button>
+    </div>
 
-  <div class="resultado" id="resultado">
-    <div class="resultado-emoji" id="resultadoEmoji">🏆</div>
-    <div class="resultado-titulo" id="resultadoTitulo">¡Lo lograste!</div>
-    <div class="resultado-puntaje" id="resultadoPuntaje">8/8</div>
-    <p class="mb-4" id="resultadoMensaje"></p>
-    <p class="text-white-50" id="resultadoTiempo"></p>
-    <button class="btn-accion" onclick="volverAlContenido()">
-      <i class="fas fa-arrow-left me-2"></i> Volver
-    </button>
-    <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
-      <i class="fas fa-redo me-2"></i> Reintentar
-    </button>
-  </div>
-</div>
+    <div class="resultado" id="resultado">
+      <div class="resultado-emoji" id="resultadoEmoji"><i class="fas fa-trophy"></i></div>
+      <div class="resultado-titulo" id="resultadoTitulo">&iexcl;Lo lograste!</div>
+      <div class="resultado-puntaje" id="resultadoPuntaje">8/8</div>
+      <p class="mb-2" id="resultadoMensaje"></p>
+      <p class="text-white-50" id="resultadoTiempo"></p>
+
+      <div class="acciones-resultado">
+        <button class="btn-accion" onclick="volverAlContenido()">
+          <i class="fas fa-arrow-left me-2"></i>Volver
+        </button>
+        <button class="btn-accion" id="btnReintentar" onclick="reiniciarQuiz()" style="display: none;">
+          <i class="fas fa-redo me-2"></i>Reintentar
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
 
 <script>
   let fechaInicio = new Date();
   let timerInterval = null;
   let estiloUsuario = null;
 
-  const preguntas = [
+  [document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
+    if (audio) audio.volume = 0.15;
+  });
+
+  function playFx(id) {
+    try {
+      const audio = document.getElementById(id);
+      if (!audio) return;
+      audio.volume = 0.15;
+      audio.currentTime = 0;
+      const promesa = audio.play();
+      if (promesa && typeof promesa.catch === 'function') promesa.catch(() => {});
+    } catch (_) {}
+  }
+
+  function normalizarSlugEstilo(valor) {
+    return String(valor || 'visual_verbal')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
+  }
+
+  async function obtenerEstiloUsuario() {
+    try {
+      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
+      const data = await res.json();
+      estiloUsuario = normalizarSlugEstilo(data.estilo || 'visual_verbal');
+    } catch (e) {
+      estiloUsuario = 'visual_verbal';
+    }
+  }
+
+  function obtenerSessionUuidActual(nivel) {
+    try {
+      const estilo = estiloUsuario || 'visual_verbal';
+      const key = `reforzamiento_sesion_6_${nivel}_${estilo}`;
+      const raw = window.sessionStorage.getItem(key);
+      if (!raw) return null;
+      const meta = JSON.parse(raw);
+      return typeof meta.sessionUuid === 'string' ? meta.sessionUuid : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function pizza(usadas, total, etiqueta = "") {
+    const usedAngle = (usadas / total) * 360;
+    const sliceAngle = 360 / total;
+    return `
+      <div class="pizza-model">
+        <div class="pizza-circle" style="--used-angle:${usedAngle}deg; --slice-angle:${sliceAngle}deg"></div>
+        ${etiqueta ? `<span class="mini-chip">${etiqueta}</span>` : ""}
+      </div>
+    `;
+  }
+
+  function cuadricula(fill, extraClass = "") {
+    return `<div class="hundred-grid ${extraClass}" data-fill="${fill}"></div>`;
+  }
+
+  function jarra(fill, etiqueta) {
+    return `
+      <div>
+        <div class="jarra" style="--fill:${fill}%">
+          <div class="line l1"></div>
+          <div class="line l2"></div>
+          <div class="line l3"></div>
+        </div>
+        <span class="mini-chip">${etiqueta}</span>
+      </div>
+    `;
+  }
+
+  function eqGrupo(valores, etiqueta = "") {
+    return `
+      <div class="eq-row">
+        <span class="fraction-chip">${valores[0]}</span>
+        <span class="eq-symbol">=</span>
+        <span class="value-chip">${valores[1]}</span>
+        <span class="eq-symbol">=</span>
+        <span class="value-chip">${valores[2]}</span>
+      </div>
+      ${etiqueta ? `<span class="mini-chip">${etiqueta}</span>` : ""}
+    `;
+  }
+
+  function placa(fill, decimal, fraccion, etiqueta) {
+    return `
+      <div class="model-row">
+        ${cuadricula(fill, "compacta")}
+        <div class="eq-row">
+          <span class="value-chip">${fill}%</span>
+          <span class="value-chip">${decimal}</span>
+          <span class="fraction-chip">${fraccion}</span>
+        </div>
+        <span class="mini-chip">${etiqueta}</span>
+      </div>
+    `;
+  }
+
+  function rectaSieteDecimos() {
+    const marcas = Array.from({ length: 11 }, (_, i) => {
+      const left = 8 + (i / 10) * 84;
+      const label = i === 0 ? "0" : (i === 5 ? "1/2" : (i === 10 ? "1" : ""));
+      const clase = i === 0 || i === 5 || i === 10 ? "marca-recta" : "marca-recta menor";
+      return `<div class="${clase}" style="left:${left}%">${label ? `<span>${label}</span>` : ""}</div>`;
+    }).join("");
+    return `
+      <div class="recurso-titulo">Recta dividida en d&eacute;cimas</div>
+      <div class="recta-wrap">
+        <div class="linea-recta"></div>
+        ${marcas}
+        <div class="punto-recta" style="left:${8 + 0.7 * 84}%"><i class="fas fa-map-pin"></i></div>
+      </div>
+    `;
+  }
+
+  function podio(valores) {
+    return `
+      <span class="podio-row">
+        <span class="podio-token">${valores[0]}</span>
+        <span class="arrow">&rarr;</span>
+        <span class="podio-token">${valores[1]}</span>
+        <span class="arrow">&rarr;</span>
+        <span class="podio-token">${valores[2]}</span>
+        <span class="arrow">&rarr;</span>
+        <span class="podio-token">${valores[3]}</span>
+      </span>
+    `;
+  }
+
+  function cupon(marca, valor, etiqueta) {
+    return `
+      <div class="coupon-card">
+        <div class="coupon-brand">${marca}</div>
+        <div class="coupon-value">${valor}</div>
+        <span class="mini-chip">${etiqueta}</span>
+      </div>
+    `;
+  }
+
+  function expediente(valores, etiqueta, icono = "fa-file") {
+    return `
+      <div class="case-card">
+        <span class="case-stamp"><i class="fas ${icono}"></i></span>
+        ${eqGrupo(valores, etiqueta)}
+      </div>
+    `;
+  }
+
+  const basePreguntas = [
     {
-      texto: "¿Qué grupo representa la misma cantidad?",
+      texto: "Toca la pizza que representa cinco de ocho rebanadas usadas.",
+      pista: "Observa las pizzas antes de elegir.",
+      claseOpciones: "modelos",
       opciones: [
-        "2/5, 0.4, 40%",
-        "2/5, 0.2, 40%",
-        "2/5, 0.4, 20%"
+        { html: pizza(4, 8, "Pizza A"), correcta: false },
+        { html: pizza(5, 8, "Pizza B"), correcta: true },
+        { html: pizza(6, 8, "Pizza C"), correcta: false }
       ],
-      correcta: 0,
-      explicacion: "Dos quintos equivalen a 0.4 y también a 40%."
+      explicacion: "La pizza correcta muestra 5 de 8 partes coloreadas."
     },
     {
-      texto: "Si 7/10 = 0.7, entonces su porcentaje es:",
-      opciones: ["7%", "70%", "17%"],
-      correcta: 1,
-      explicacion: "Siete décimos equivalen a setenta por ciento."
-    },
-    {
-      texto: "En la igualdad 3/5 = 0.6 = 30%, ¿qué parte está mal?",
-      opciones: ["3/5", "0.6", "30%"],
-      correcta: 2,
-      explicacion: "3/5 y 0.6 sí coinciden, pero el porcentaje correcto es 60%."
-    },
-    {
-      texto: "¿Cuál cantidad es mayor?",
+      texto: "Elige la placa donde las tres formas corresponden a 68 de cada 100.",
+      claseOpciones: "modelos",
       opciones: [
-        "3/5",
-        "50%",
-        "Son iguales"
+        { html: placa(68, "0.86", "17/25", "Placa A"), correcta: false },
+        { html: placa(68, "0.68", "17/25", "Placa B"), correcta: true },
+        { html: placa(68, "0.68", "16/25", "Placa C"), correcta: false }
       ],
-      correcta: 0,
-      explicacion: "3/5 equivale a 60%, y 60% es mayor que 50%."
+      explicacion: "68 de 100 se escribe 68%, 0.68 y tambi&eacute;n 17/25."
     },
     {
-      texto: "Si una tienda anuncia 0.4 del precio y otra 40% del precio, entonces:",
+      texto: "Toca la tarjeta que corrige correctamente el grupo de tres quintos.",
+      claseOpciones: "modelos",
       opciones: [
-        "La primera ofrece más descuento",
-        "La segunda ofrece más descuento",
-        "Ambas ofrecen el mismo descuento"
+        { html: eqGrupo(["3/5", "0.35", "35%"], "Correcci&oacute;n A"), correcta: false },
+        { html: eqGrupo(["3/5", "0.60", "60%"], "Correcci&oacute;n B"), correcta: true },
+        { html: eqGrupo(["3/5", "0.50", "50%"], "Correcci&oacute;n C"), correcta: false }
       ],
-      correcta: 2,
-      explicacion: "0.4 y 40% representan la misma cantidad."
+      explicacion: "3 dividido entre 5 da 0.60, y 0.60 equivale a 60%."
     },
     {
-      texto: "Completa correctamente: 1/4 = 0.25 =",
-      opciones: ["25%", "2.5%", "50%"],
-      correcta: 0,
-      explicacion: "Un cuarto equivale a 0.25 y a 25%."
-    },
-    {
-      texto: "Si 6/10 = 0.6 = 60%, entonces comparado con 1/2:",
+      texto: "Elige el grupo que corresponde al punto marcado en siete de diez partes del recorrido.",
+      recurso: rectaSieteDecimos(),
+      claseOpciones: "modelos",
       opciones: [
-        "Es menor",
-        "Es mayor",
-        "Es igual"
+        { html: eqGrupo(["7/10", "0.07", "7%"], "Grupo A"), correcta: false },
+        { html: eqGrupo(["7/10", "0.70", "70%"], "Grupo B"), correcta: true },
+        { html: eqGrupo(["7/100", "0.70", "70%"], "Grupo C"), correcta: false }
       ],
-      correcta: 1,
-      explicacion: "1/2 equivale a 50%, y 60% es mayor."
+      explicacion: "Siete de diez partes es 7/10, que equivale a 0.70 y 70%."
     },
     {
-      texto: "¿Quién escribió mal su equivalencia?",
+      texto: "Toca el frasco que tiene m&aacute;s jugo.",
+      pista: "Compara ambas cantidades en una misma escala.",
+      claseOpciones: "compactas",
       opciones: [
-        "Luna: 2/5 = 0.4 = 40%",
-        "Diego: 7/10 = 0.7 = 70%",
-        "Rafa: 3/5 = 0.6 = 30%"
+        { html: jarra(60, "Frasco A &middot; 3/5"), correcta: true },
+        { html: jarra(58, "Frasco B &middot; 58%"), correcta: false }
       ],
-      correcta: 2,
-      explicacion: "Rafa se equivocó, porque 3/5 equivale a 60%, no a 30%."
+      explicacion: "3/5 equivale a 60%, y 60% es mayor que 58%."
+    },
+    {
+      texto: "Elige la fila ordenada de menor a mayor.",
+      claseOpciones: "compactas",
+      opciones: [
+        { html: podio(["1/2", "25%", "0.65", "3/4"]), correcta: false },
+        { html: podio(["25%", "1/2", "0.65", "3/4"]), correcta: true },
+        { html: podio(["25%", "0.65", "1/2", "3/4"]), correcta: false }
+      ],
+      explicacion: "25% es 0.25, 1/2 es 0.50, luego sigue 0.65 y al final 3/4 es 0.75."
+    },
+    {
+      texto: "Toca la oferta que da el descuento mayor.",
+      claseOpciones: "modelos",
+      opciones: [
+        { html: cupon("Tienda Sol", "1/4", "Cup&oacute;n A"), correcta: false },
+        { html: cupon("Tienda Luna", "0.40", "Cup&oacute;n B"), correcta: true },
+        { html: cupon("Tienda Cometa", "3/8", "Cup&oacute;n C"), correcta: false }
+      ],
+      explicacion: "0.40 equivale a 40%, que es mayor que 1/4 y que 3/8."
+    },
+    {
+      texto: "Toca el expediente donde las tres escrituras representan la misma cantidad.",
+      claseOpciones: "modelos",
+      opciones: [
+        { html: expediente(["4/5", "0.75", "80%"], "Expediente A"), correcta: false },
+        { html: expediente(["4/5", "0.80", "80%"], "Expediente B", "fa-file-circle-check"), correcta: true },
+        { html: expediente(["3/5", "0.80", "80%"], "Expediente C"), correcta: false }
+      ],
+      explicacion: "4/5, 0.80 y 80% representan la misma parte del entero."
     }
   ];
+
+  function mezclar(array) {
+    const copia = [...array];
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  }
+
+  const preguntas = basePreguntas.map((pregunta) => ({
+    ...pregunta,
+    opciones: mezclar(pregunta.opciones)
+  }));
 
   let preguntaActual = 0;
   let respuestas = new Array(preguntas.length).fill(null);
   let aciertos = 0;
   const TOTAL = preguntas.length;
   const MINIMO = 7;
-
-  async function obtenerEstiloUsuario() {
-    try {
-      const res = await fetch('/api/usuario/estilo', { credentials: 'include' });
-      const data = await res.json();
-      estiloUsuario = data.estilo || 'visual_verbal';
-    } catch (e) {
-      estiloUsuario = 'visual_verbal';
-    }
-  }
 
   function actualizarTimer() {
     const ahora = new Date();
@@ -464,62 +1124,103 @@
     document.getElementById('timerDisplay').innerText = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
+  function crearPuntos() {
+    const progreso = document.getElementById('progresoQuiz');
+    progreso.innerHTML = preguntas.map((_, i) => (
+      `<div class="punto ${i === 0 ? 'activo' : ''}" data-i="${i}">${i + 1}</div>`
+    )).join("");
+  }
+
+  function renderizarVisuales() {
+    document.querySelectorAll('.hundred-grid').forEach((gridEl) => {
+      const fill = Number(gridEl.dataset.fill || 0);
+      gridEl.innerHTML = Array.from({ length: 100 }, (_, i) => (
+        `<span class="hundred-cell ${i < fill ? 'fill' : ''}"></span>`
+      )).join("");
+    });
+  }
+
+  function contenidoOpcion(opcion) {
+    return `<div class="opcion-html">${opcion.html || opcion.texto}</div>`;
+  }
+
   function mostrarPregunta() {
     const container = document.getElementById('preguntasContainer');
     const p = preguntas[preguntaActual];
     const respondida = respuestas[preguntaActual] !== null;
-    const esCorrecta = respondida ? respuestas[preguntaActual] === p.correcta : false;
+    const opcionElegida = respondida ? p.opciones[respuestas[preguntaActual]] : null;
+    const esCorrecta = Boolean(opcionElegida && opcionElegida.correcta);
 
-    let opcionesHTML = '';
-    p.opciones.forEach((opcion, idx) => {
+    const opcionesHTML = p.opciones.map((opcion, idx) => {
       let claseBtn = 'opcion-btn';
       if (respondida) {
-        if (idx === p.correcta) claseBtn += ' correcta';
-        if (idx === respuestas[preguntaActual] && idx !== p.correcta) claseBtn += ' incorrecta';
+        if (opcion.correcta) claseBtn += ' correcta';
+        if (idx === respuestas[preguntaActual] && !opcion.correcta) claseBtn += ' incorrecta';
       }
-      opcionesHTML += `<button class="${claseBtn}" onclick="seleccionarRespuesta(${preguntaActual}, ${idx})" ${respondida ? 'disabled' : ''}>${String.fromCharCode(65 + idx)}) ${opcion}</button>`;
-    });
+
+      return `
+        <button class="${claseBtn}" onclick="seleccionarRespuesta(${idx})" ${respondida ? 'disabled' : ''}>
+          ${contenidoOpcion(opcion)}
+        </button>
+      `;
+    }).join("");
 
     container.innerHTML = `
       <div class="tarjeta-pregunta">
-        <div class="pregunta-numero">PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
+        <div class="pregunta-numero"><i class="fas fa-location-dot"></i> PREGUNTA ${preguntaActual + 1} DE ${TOTAL}</div>
         <div class="pregunta-texto">${p.texto}</div>
-        <div class="opciones">${opcionesHTML}</div>
+        ${p.pista ? `<div class="pista-corta">${p.pista}</div>` : ""}
+        ${p.recurso ? `<div class="recurso-visual">${p.recurso}</div>` : ""}
+        <div class="opciones ${p.claseOpciones || ''}">${opcionesHTML}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${esCorrecta ? 'correcto' : 'incorrecto'}">
-          ${respondida ? (esCorrecta ? '✅ ' + p.explicacion : '❌ ' + p.explicacion) : ''}
+          ${respondida ? (esCorrecta ? '<i class="fas fa-check-circle me-2"></i>' : '<i class="fas fa-circle-info me-2"></i>') + p.explicacion : ''}
         </div>
       </div>
     `;
 
+    renderizarVisuales();
     actualizarPuntos();
-    document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
     actualizarBotones();
+    document.getElementById('contadorPregunta').innerText = `${preguntaActual + 1}/${TOTAL}`;
   }
 
-  function seleccionarRespuesta(idxPregunta, idxOpcion) {
-    if (respuestas[idxPregunta] !== null) return;
-    respuestas[idxPregunta] = idxOpcion;
-    if (idxOpcion === preguntas[idxPregunta].correcta) aciertos++;
-    document.querySelectorAll('.punto')[idxPregunta].classList.add('respondido');
+  function seleccionarRespuesta(idxOpcion) {
+    if (respuestas[preguntaActual] !== null) return;
+
+    playFx('sndClick');
+    respuestas[preguntaActual] = idxOpcion;
+    if (preguntas[preguntaActual].opciones[idxOpcion].correcta) {
+      aciertos++;
+      playFx('sndDing');
+    } else {
+      playFx('sndError');
+    }
+
+    const punto = document.querySelectorAll('.punto')[preguntaActual];
+    if (punto) punto.classList.add('respondido');
+
     mostrarPregunta();
   }
 
   function cambiarPregunta(direccion) {
     if (direccion === -1 && preguntaActual > 0) {
+      playFx('sndClick');
       preguntaActual--;
       mostrarPregunta();
-    } else if (direccion === 1 && preguntaActual < TOTAL - 1) {
-      if (respuestas[preguntaActual] !== null) {
-        preguntaActual++;
-        mostrarPregunta();
-      }
+      return;
+    }
+
+    if (direccion === 1 && preguntaActual < TOTAL - 1 && respuestas[preguntaActual] !== null) {
+      playFx('sndClick');
+      preguntaActual++;
+      mostrarPregunta();
     }
   }
 
   function actualizarPuntos() {
     document.querySelectorAll('.punto').forEach((punto, i) => {
-      punto.classList.remove('activo');
-      if (i === preguntaActual) punto.classList.add('activo');
+      punto.classList.toggle('activo', i === preguntaActual);
+      punto.classList.toggle('respondido', respuestas[i] !== null);
     });
   }
 
@@ -527,73 +1228,83 @@
     const btnAnterior = document.getElementById('btnAnterior');
     const btnSiguiente = document.getElementById('btnSiguiente');
     const btnEnviar = document.getElementById('btnEnviar');
+    const respondidaActual = respuestas[preguntaActual] !== null;
 
-    btnAnterior.disabled = (preguntaActual === 0);
+    btnAnterior.disabled = preguntaActual === 0;
 
     if (preguntaActual === TOTAL - 1) {
       btnSiguiente.style.display = 'none';
       btnEnviar.style.display = 'inline-block';
+      btnEnviar.disabled = !respondidaActual || respuestas.some((r) => r === null);
     } else {
       btnSiguiente.style.display = 'inline-block';
       btnEnviar.style.display = 'none';
+      btnSiguiente.disabled = !respondidaActual;
     }
   }
 
   async function enviarQuiz() {
-    const sinResponder = respuestas.filter(r => r === null).length;
+    const sinResponder = respuestas.filter((r) => r === null).length;
     if (sinResponder > 0) {
+      playFx('sndError');
       alert(`Te faltan ${sinResponder} preguntas por responder`);
       return;
     }
 
+    playFx('sndClick');
     if (timerInterval) clearInterval(timerInterval);
 
     const fechaFin = new Date();
     const tiempoSegundos = Math.round((fechaFin - fechaInicio) / 1000);
+    const resultado = document.getElementById('resultado');
+    const aprobado = aciertos >= MINIMO;
+    const pct = Math.round((aciertos / TOTAL) * 100);
 
     document.getElementById('preguntasContainer').style.display = 'none';
     document.getElementById('progresoQuiz').style.display = 'none';
     document.getElementById('navBotones').style.display = 'none';
-
-    const resultado = document.getElementById('resultado');
     resultado.classList.add('visible');
 
-    const aprobado = aciertos >= MINIMO;
-    const pct = Math.round((aciertos / TOTAL) * 100);
-
     document.getElementById('resultadoPuntaje').innerHTML = `${aciertos}/${TOTAL}`;
-    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '🏆' : '📚';
-    document.getElementById('resultadoTiempo').innerHTML = `⏱️ Tiempo: ${tiempoSegundos} segundos`;
+    document.getElementById('resultadoEmoji').innerHTML = aprobado ? '<i class="fas fa-trophy"></i>' : '<i class="fas fa-book-open"></i>';
+    document.getElementById('resultadoTiempo').innerHTML = `Tiempo: ${tiempoSegundos} segundos`;
 
     if (aprobado) {
-      document.getElementById('resultadoTitulo').innerHTML = '¡Excelente!';
-      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. ¡Terminaste el nivel difícil!`;
+      playFx('sndTada');
+      document.getElementById('resultadoTitulo').innerHTML = '&iexcl;Excelente!';
+      document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Completaste las conversiones entre fracciones, decimales y porcentajes.`;
       document.getElementById('btnReintentar').style.display = 'none';
-      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, true);
     } else {
+      playFx('sndError');
       document.getElementById('resultadoTitulo').innerHTML = 'Sigue practicando';
       document.getElementById('resultadoMensaje').innerHTML = `Obtuviste ${pct}%. Necesitas al menos ${MINIMO} de ${TOTAL} para completar este nivel.`;
       document.getElementById('btnReintentar').style.display = 'inline-block';
-      await guardarProgreso(aciertos, TOTAL, tiempoSegundos, false);
     }
+
+    await guardarProgreso(aciertos, TOTAL, tiempoSegundos, aprobado);
   }
 
   async function guardarProgreso(aciertos, total, tiempoSegundos, aprobado) {
+    const payload = {
+      contenido_id: 6,
+      nivel_completado: 'dificil',
+      puntaje: Math.round((aciertos / total) * 100),
+      aprobado: aprobado,
+      aciertos: aciertos,
+      total_preguntas: total,
+      errores: Math.max(total - aciertos, 0),
+      tiempo_segundos: tiempoSegundos,
+      fecha_inicio: fechaInicio.toISOString(),
+      fecha_fin: new Date().toISOString(),
+      session_uuid: obtenerSessionUuidActual('dificil')
+    };
+
     try {
       await fetch('/api/progreso/nivel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          contenido_id: 6,
-          nivel_completado: 'dificil',
-          puntaje: Math.round((aciertos / total) * 100),
-          aprobado: aprobado,
-          aciertos: aciertos,
-          total_preguntas: total,
-          tiempo_segundos: tiempoSegundos,
-          fecha_inicio: fechaInicio.toISOString()
-        })
+        body: JSON.stringify(payload)
       });
     } catch (e) {
       console.error('Error guardando progreso:', e);
@@ -601,38 +1312,44 @@
   }
 
   function reiniciarQuiz() {
+    playFx('sndClick');
     preguntaActual = 0;
     respuestas = new Array(preguntas.length).fill(null);
     aciertos = 0;
     fechaInicio = new Date();
 
+    preguntas.forEach((pregunta) => {
+      pregunta.opciones = mezclar(pregunta.opciones);
+    });
+
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(actualizarTimer, 1000);
-
-    document.querySelectorAll('.punto').forEach((punto, i) => {
-      punto.classList.remove('respondido', 'activo');
-      if (i === 0) punto.classList.add('activo');
-    });
+    actualizarTimer();
 
     document.getElementById('preguntasContainer').style.display = 'block';
     document.getElementById('progresoQuiz').style.display = 'flex';
     document.getElementById('navBotones').style.display = 'flex';
     document.getElementById('resultado').classList.remove('visible');
 
+    crearPuntos();
     mostrarPregunta();
   }
 
   function volverAlContenido() {
+    playFx('sndClick');
     window.location.href = '/contenidos/matematicas/equivalencias-numericas/menu.html';
   }
 
   (async function init() {
     await obtenerEstiloUsuario();
+    crearPuntos();
     mostrarPregunta();
+    actualizarTimer();
     timerInterval = setInterval(actualizarTimer, 1000);
   })();
 </script>
 
+<script src="/recursos/js/bayes-quiz-feedback.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
