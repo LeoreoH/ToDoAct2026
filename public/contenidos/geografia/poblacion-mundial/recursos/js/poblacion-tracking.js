@@ -13,134 +13,111 @@
   const CONFIGS = {
     'facil/visual_verbal': {
       apartados: {
-        p1_relacionar: { pagina: 1, apartadoClave: 'pagina1_relacionar', tipoActividad: 'relacionar' },
-        p2_oraciones: { pagina: 2, apartadoClave: 'pagina2_oraciones', tipoActividad: 'completar' },
-        p3_sopa: { pagina: 3, apartadoClave: 'pagina3_sopa', tipoActividad: 'sopa' }
+        p1_distribucion: { pagina: 1, apartadoClave: 'pagina1_distribucion', tipoActividad: 'seleccion' },
+        p2_conceptos: { pagina: 2, apartadoClave: 'pagina2_conceptos', tipoActividad: 'seleccion' },
+        p3_retos: { pagina: 3, apartadoClave: 'pagina3_retos_urbanos', tipoActividad: 'clasificar' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_integrador', tipoActividad: 'integrador' }
       },
       setup: setupEasyVisualVerbal
     },
     'facil/visual_no_verbal': {
       apartados: {
-        p1_arrastrar: { pagina: 1, apartadoClave: 'pagina1_arrastrar_imagenes', tipoActividad: 'arrastrar' },
-        p2_seleccion: { pagina: 2, apartadoClave: 'pagina2_seleccion_visual', tipoActividad: 'seleccion' },
-        p3_comparar: { pagina: 3, apartadoClave: 'pagina3_comparar_poblacion', tipoActividad: 'comparar' }
+        p1_distribucion: { pagina: 1, apartadoClave: 'pagina1_distribucion_visual', tipoActividad: 'seleccion' },
+        p2_conceptos: { pagina: 2, apartadoClave: 'pagina2_conceptos_visual', tipoActividad: 'seleccion' },
+        p3_retos: { pagina: 3, apartadoClave: 'pagina3_retos_visual', tipoActividad: 'seleccion' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_integrador_visual', tipoActividad: 'integrador' }
       },
-      setup: setupEasyVisualNoVerbal
+      setup: setupEasyVisualNoVerbalRebuilt
     },
     'facil/auditivo': {
       apartados: {
-        p1_audio: { pagina: 1, apartadoClave: 'pagina1_audio_preguntas', tipoActividad: 'audio' },
-        p2_vf: { pagina: 2, apartadoClave: 'pagina2_verdadero_falso', tipoActividad: 'verdadero_falso' },
-        p3_pistas: { pagina: 3, apartadoClave: 'pagina3_pistas_auditivas', tipoActividad: 'pistas' }
+        p1_audio: { pagina: 1, apartadoClave: 'pagina1_audio_imagenes', tipoActividad: 'audio_imagen' },
+        p2_escucha: { pagina: 2, apartadoClave: 'pagina2_concentracion_dispersion', tipoActividad: 'audio_clasificacion' },
+        p3_soluciones: { pagina: 3, apartadoClave: 'pagina3_retos_soluciones_audio', tipoActividad: 'audio_solucion' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_audio', tipoActividad: 'repaso_audio' }
       },
-      setup: setupEasyAuditivo
+      setup: setupEasyAuditivoRebuilt
     },
     'facil/kinestesico': {
       apartados: {
-        p1_drag: { pagina: 1, apartadoClave: 'pagina1_arrastrar_paises', tipoActividad: 'arrastrar' },
-        p2_mapa: { pagina: 2, apartadoClave: 'pagina2_mapa_poblacion', tipoActividad: 'mapa' },
-        p3_orden: { pagina: 3, apartadoClave: 'pagina3_ordenar_ranking', tipoActividad: 'ordenar' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_arrastrar', tipoActividad: 'repaso' }
+        p1_drag: { pagina: 1, apartadoClave: 'pagina1_factores_poblacion', tipoActividad: 'arrastrar' },
+        p2_mapa: { pagina: 2, apartadoClave: 'pagina2_maquetas_poblacion', tipoActividad: 'maqueta' },
+        p3_orden: { pagina: 3, apartadoClave: 'pagina3_reparar_ciudad', tipoActividad: 'arrastrar' },
+        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_tablero_final', tipoActividad: 'repaso' }
       },
       setup: setupEasyKinestesico
     },
     'dificil/visual_verbal': {
       apartados: {
-        p1_form: { pagina: 1, apartadoClave: 'pagina1_migracion_formulario', tipoActividad: 'completar' },
-        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_migracion_quiz', tipoActividad: 'quiz' },
-        p2_form: { pagina: 2, apartadoClave: 'pagina2_retos_formulario', tipoActividad: 'completar' },
-        p2_text: { pagina: 2, apartadoClave: 'pagina2_retos_texto', tipoActividad: 'texto' },
-        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
-        p3_form: { pagina: 3, apartadoClave: 'pagina3_analisis_formulario', tipoActividad: 'completar' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_final', tipoActividad: 'repaso' }
+        p1_migracion: { pagina: 1, apartadoClave: 'pagina1_migracion_casos', tipoActividad: 'casos' },
+        p2_retos: { pagina: 2, apartadoClave: 'pagina2_retos_soluciones', tipoActividad: 'casos' },
+        p3_analisis: { pagina: 3, apartadoClave: 'pagina3_analisis_pistas', tipoActividad: 'casos' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_integrador_dificil', tipoActividad: 'integrador' }
       },
-      setup: setupNormalVisualVerbal
+      setup: setupDifficultVisualVerbalRebuilt
     },
     'dificil/kinestesico': {
       apartados: {
-        p1_drag: { pagina: 1, apartadoClave: 'pagina1_migracion_arrastrar', tipoActividad: 'arrastrar' },
-        p1_sort: { pagina: 1, apartadoClave: 'pagina1_migracion_ordenar', tipoActividad: 'ordenar' },
-        p2_match: { pagina: 2, apartadoClave: 'pagina2_retos_relacionar', tipoActividad: 'relacionar' },
-        p2_city: { pagina: 2, apartadoClave: 'pagina2_retos_construccion', tipoActividad: 'construccion' },
-        p3_culturas: { pagina: 3, apartadoClave: 'pagina3_analisis_arrastrar', tipoActividad: 'arrastrar' },
-        p3_actitudes: { pagina: 3, apartadoClave: 'pagina3_analisis_clasificar', tipoActividad: 'clasificar' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_quiz', tipoActividad: 'repaso' }
+        p1_caso: { pagina: 1, apartadoClave: 'pagina1_caso_migracion', tipoActividad: 'clasificar_arrastrar' },
+        p2_ciudad: { pagina: 2, apartadoClave: 'pagina2_reparar_ciudad', tipoActividad: 'relacionar_arrastrar' },
+        p3_laboratorio: { pagina: 3, apartadoClave: 'pagina3_laboratorio_datos', tipoActividad: 'clasificar_arrastrar' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_tablero_integrador', tipoActividad: 'integrador_arrastrar' }
       },
-      setup: setupNormalKinestesico
+      setup: setupDifficultKinestesicoRebuilt
     },
     'dificil/visual_no_verbal': {
       apartados: {
-        p1_flags: { pagina: 1, apartadoClave: 'pagina1_migracion_seleccion', tipoActividad: 'seleccion' },
-        p1_symbols: { pagina: 1, apartadoClave: 'pagina1_migracion_simbolos', tipoActividad: 'simbolos' },
-        p2_campo: { pagina: 2, apartadoClave: 'pagina2_retos_seleccion', tipoActividad: 'seleccion' },
-        p2_pq: { pagina: 2, apartadoClave: 'pagina2_retos_visual', tipoActividad: 'imagen' },
-        p3_match: { pagina: 3, apartadoClave: 'pagina3_analisis_relacionar', tipoActividad: 'relacionar' },
-        p3_cq: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_visual', tipoActividad: 'repaso' }
+        p1_signals: { pagina: 1, apartadoClave: 'pagina1_senales_migracion_visual', tipoActividad: 'seleccion' },
+        p2_pairs: { pagina: 2, apartadoClave: 'pagina2_retos_relaciones_visual', tipoActividad: 'relacionar' },
+        p3_panel: { pagina: 3, apartadoClave: 'pagina3_panel_analisis_visual', tipoActividad: 'panel' },
+        p4_missions: { pagina: 4, apartadoClave: 'pagina4_misiones_finales_visual', tipoActividad: 'integrador' }
       },
-      setup: setupNormalVisualNoVerbal
+      setup: setupDifficultVisualNoVerbalRebuilt
     },
     'dificil/auditivo': {
       apartados: {
-        p1_cloze: { pagina: 1, apartadoClave: 'pagina1_migracion_audio', tipoActividad: 'audio' },
-        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_migracion_quiz', tipoActividad: 'quiz' },
-        p2_ritmo: { pagina: 2, apartadoClave: 'pagina2_retos_clasificar', tipoActividad: 'ritmo' },
-        p2_cloze: { pagina: 2, apartadoClave: 'pagina2_retos_audio', tipoActividad: 'audio' },
-        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_analisis_quiz', tipoActividad: 'quiz' },
-        p3_cloze: { pagina: 3, apartadoClave: 'pagina3_analisis_audio', tipoActividad: 'audio' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_audio', tipoActividad: 'repaso' }
+        p1_migracion: { pagina: 1, apartadoClave: 'pagina1_migracion_casos_audio', tipoActividad: 'audio_caso' },
+        p2_decisiones: { pagina: 2, apartadoClave: 'pagina2_decisiones_urbanas_audio', tipoActividad: 'audio_decision' },
+        p3_datos: { pagina: 3, apartadoClave: 'pagina3_evidencias_poblacion_audio', tipoActividad: 'audio_datos' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_conclusiones_audio', tipoActividad: 'repaso_audio' }
       },
-      setup: setupNormalAuditivo
+      setup: setupDifficultAuditivoRebuilt
     },
     'normal/visual_verbal': {
       apartados: {
-        p1_form: { pagina: 1, apartadoClave: 'pagina1_formulario', tipoActividad: 'completar' },
-        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_quiz_rapido', tipoActividad: 'quiz' },
-        p2_form: { pagina: 2, apartadoClave: 'pagina2_formulario', tipoActividad: 'completar' },
-        p2_text: { pagina: 2, apartadoClave: 'pagina2_texto_huecos', tipoActividad: 'texto' },
-        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_cultura_pistas', tipoActividad: 'quiz' },
-        p3_form: { pagina: 3, apartadoClave: 'pagina3_formulario', tipoActividad: 'completar' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_final', tipoActividad: 'repaso' }
+        p1_crucigrama: { pagina: 1, apartadoClave: 'pagina1_crucigrama_urbano_rural', tipoActividad: 'crucigrama' },
+        p2_migracion: { pagina: 2, apartadoClave: 'pagina2_casos_migracion', tipoActividad: 'casos' },
+        p3_sopa: { pagina: 3, apartadoClave: 'pagina3_sopa_servicios', tipoActividad: 'sopa' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_integrador_normal', tipoActividad: 'integrador' }
       },
-      setup: setupNormalVisualVerbal
+      setup: setupNormalVisualVerbalRebuilt
     },
     'normal/visual_no_verbal': {
       apartados: {
-        p1_flags: { pagina: 1, apartadoClave: 'pagina1_banderas', tipoActividad: 'seleccion' },
-        p1_symbols: { pagina: 1, apartadoClave: 'pagina1_simbolos', tipoActividad: 'simbolos' },
-        p2_campo: { pagina: 2, apartadoClave: 'pagina2_ciudad_campo', tipoActividad: 'seleccion' },
-        p2_pq: { pagina: 2, apartadoClave: 'pagina2_preguntas_imagen', tipoActividad: 'imagen' },
-        p3_match: { pagina: 3, apartadoClave: 'pagina3_relacionar_culturas', tipoActividad: 'relacionar' },
-        p3_cq: { pagina: 3, apartadoClave: 'pagina3_quiz_cultural', tipoActividad: 'quiz' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_visual', tipoActividad: 'repaso' }
+        p1_urban: { pagina: 1, apartadoClave: 'pagina1_urbano_rural_visual', tipoActividad: 'seleccion' },
+        p2_migration: { pagina: 2, apartadoClave: 'pagina2_migracion_visual', tipoActividad: 'seleccion' },
+        p3_services: { pagina: 3, apartadoClave: 'pagina3_servicios_visual', tipoActividad: 'seleccion' },
+        p4_integrator: { pagina: 4, apartadoClave: 'pagina4_integrador_visual_normal', tipoActividad: 'integrador' }
       },
-      setup: setupNormalVisualNoVerbal
+      setup: setupNormalVisualNoVerbalRebuilt
     },
     'normal/auditivo': {
       apartados: {
-        p1_cloze: { pagina: 1, apartadoClave: 'pagina1_completar_audio', tipoActividad: 'audio' },
-        p1_quiz: { pagina: 1, apartadoClave: 'pagina1_quiz_audio', tipoActividad: 'quiz' },
-        p2_ritmo: { pagina: 2, apartadoClave: 'pagina2_ritmo_audio', tipoActividad: 'ritmo' },
-        p2_cloze: { pagina: 2, apartadoClave: 'pagina2_completar_audio', tipoActividad: 'audio' },
-        p3_cultura: { pagina: 3, apartadoClave: 'pagina3_cultura_audio', tipoActividad: 'quiz' },
-        p3_cloze: { pagina: 3, apartadoClave: 'pagina3_completar_audio', tipoActividad: 'audio' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_audio', tipoActividad: 'repaso' }
+        p1_espacios: { pagina: 1, apartadoClave: 'pagina1_espacios_audio', tipoActividad: 'audio_clasificacion' },
+        p2_migracion: { pagina: 2, apartadoClave: 'pagina2_ruta_migracion_audio', tipoActividad: 'audio_ruta' },
+        p3_servicios: { pagina: 3, apartadoClave: 'pagina3_servicios_audio', tipoActividad: 'audio_solucion' },
+        p4_integrador: { pagina: 4, apartadoClave: 'pagina4_integrador_audio', tipoActividad: 'repaso_audio' }
       },
-      setup: setupNormalAuditivo
+      setup: setupNormalAuditivoRebuilt
     },
     'normal/kinestesico': {
       apartados: {
-        p1_drag: { pagina: 1, apartadoClave: 'pagina1_arrastrar', tipoActividad: 'arrastrar' },
-        p1_sort: { pagina: 1, apartadoClave: 'pagina1_ordenar', tipoActividad: 'ordenar' },
-        p2_match: { pagina: 2, apartadoClave: 'pagina2_relacionar', tipoActividad: 'relacionar' },
-        p2_city: { pagina: 2, apartadoClave: 'pagina2_construir_ciudad', tipoActividad: 'construccion' },
-        p3_culturas: { pagina: 3, apartadoClave: 'pagina3_culturas_drag', tipoActividad: 'arrastrar' },
-        p3_actitudes: { pagina: 3, apartadoClave: 'pagina3_actitudes', tipoActividad: 'clasificar' },
-        p4_repaso: { pagina: 4, apartadoClave: 'pagina4_repaso_quiz', tipoActividad: 'repaso' },
-        p4_match: { pagina: 4, apartadoClave: 'pagina4_repaso_match', tipoActividad: 'relacionar' },
-        p4_sort: { pagina: 4, apartadoClave: 'pagina4_repaso_ordenar', tipoActividad: 'ordenar' }
+        p1_spaces: { pagina: 1, apartadoClave: 'pagina1_mapa_urbano_rural', tipoActividad: 'arrastrar' },
+        p2_route: { pagina: 2, apartadoClave: 'pagina2_ruta_migracion', tipoActividad: 'ordenar_arrastrar' },
+        p3_services: { pagina: 3, apartadoClave: 'pagina3_reparar_ciudad', tipoActividad: 'relacionar_arrastrar' },
+        p4_mission: { pagina: 4, apartadoClave: 'pagina4_tablero_final', tipoActividad: 'integrador_arrastrar' }
       },
-      setup: setupNormalKinestesico
+      setup: setupNormalKinestesicoRebuilt
     }
   };
 
@@ -224,70 +201,70 @@
     normal: {
       repasoCards: [
         {
-          icon: '🌍',
-          title: 'Países poblados y poco poblados',
-          text: 'Algunos países tienen muchísima población y otros muy poca. Para entenderlo, conviene comparar cantidad de habitantes y espacio disponible.'
-        },
-        {
           icon: '🏙️',
           title: 'Ciudad y campo',
-          text: 'Las ciudades suelen concentrar a muchas personas y servicios. El campo suele tener menos habitantes y viviendas más separadas.'
+          text: 'Las ciudades suelen reunir más población y servicios. El campo suele tener menos viviendas juntas y más espacio abierto.'
         },
         {
-          icon: '🌎',
-          title: 'Diversidad cultural',
-          text: 'La población del mundo es diversa. Las personas pueden hablar distintas lenguas, tener costumbres diferentes y vivir de maneras variadas.'
+          icon: '🧳',
+          title: 'Migración interna',
+          text: 'Sucede cuando una persona o familia cambia de lugar para vivir dentro del mismo país.'
         },
         {
-          icon: '🚦',
-          title: 'Concentración y sus efectos',
-          text: 'Cuando demasiadas personas viven en un mismo lugar pueden aparecer problemas como tráfico, contaminación y falta de vivienda o servicios.'
+          icon: '🌾➡️🏙️',
+          title: 'Éxodo rural',
+          text: 'Ocurre cuando muchas personas salen del campo y se trasladan a la ciudad para buscar mejores oportunidades.'
+        },
+        {
+          icon: '🚰',
+          title: 'Servicios que deben crecer',
+          text: 'Si una ciudad recibe más población, también necesita más agua, escuelas, vivienda, salud y transporte.'
         }
       ],
       apoyoQuestions: [
         {
-          icon: '🌍',
-          prompt: '¿Qué ayuda a comparar mejor a dos países en población?',
-          options: [
-            'La cantidad de habitantes que tienen.',
-            'Solo el color de su bandera.',
-            'Únicamente el nombre del país.'
-          ],
-          correct: 'La cantidad de habitantes que tienen.',
-          hint: 'Recuerda que estamos comparando cuánta gente vive en cada lugar.'
-        },
-        {
           icon: '🏙️',
-          prompt: '¿Qué es más común en una ciudad muy poblada?',
+          prompt: '¿Qué es más común en un espacio urbano?',
           options: [
-            'Muchas personas viviendo cerca unas de otras.',
-            'Casas aisladas y muy separadas.',
-            'Campos de cultivo en cada calle.'
+            'Muchos edificios y servicios cercanos.',
+            'Casas muy separadas en zonas agrícolas.',
+            'Muy poca población y caminos aislados.'
           ],
-          correct: 'Muchas personas viviendo cerca unas de otras.',
-          hint: 'Piensa en zonas urbanas con mucha concentración.'
+          correct: 'Muchos edificios y servicios cercanos.',
+          hint: 'Piensa en una ciudad con transporte, hospitales y escuelas.'
         },
         {
-          icon: '🌎',
-          prompt: '¿Qué muestra la diversidad cultural de la población?',
+          icon: '🧳',
+          prompt: '¿Qué significa migración interna?',
           options: [
-            'Que las personas pueden tener lenguas y costumbres distintas.',
-            'Que todas las personas viven igual.',
-            'Que en todos lados se habla una sola lengua.'
+            'Mudarse dentro del mismo país.',
+            'Viajar por vacaciones unos días.',
+            'Vivir siempre en el mismo lugar.'
           ],
-          correct: 'Que las personas pueden tener lenguas y costumbres distintas.',
-          hint: 'La diversidad habla de diferencias culturales.'
+          correct: 'Mudarse dentro del mismo país.',
+          hint: 'No se sale del país, solo se cambia de estado o ciudad.'
         },
         {
-          icon: '🚦',
-          prompt: '¿Cuál puede ser una consecuencia de vivir demasiadas personas en un mismo lugar?',
+          icon: '🌾➡️🏙️',
+          prompt: '¿Qué describe mejor al éxodo rural?',
           options: [
-            'Tráfico y contaminación.',
-            'Más espacio libre para todos.',
-            'Desaparición de todas las calles.'
+            'Salir del campo para vivir en la ciudad.',
+            'Vivir en una zona polar.',
+            'Comparar habitantes por kilómetro cuadrado.'
           ],
-          correct: 'Tráfico y contaminación.',
-          hint: 'Piensa en los problemas de la concentración.'
+          correct: 'Salir del campo para vivir en la ciudad.',
+          hint: 'Recuerda el movimiento del campo hacia zonas urbanas.'
+        },
+        {
+          icon: '🚰',
+          prompt: 'Si una ciudad crece mucho, ¿qué debe crecer también?',
+          options: [
+            'Los servicios como agua, escuela y transporte.',
+            'Solo el número de semáforos.',
+            'Únicamente las tiendas de ropa.'
+          ],
+          correct: 'Los servicios como agua, escuela y transporte.',
+          hint: 'La población necesita servicios para vivir mejor.'
         }
       ]
     },
@@ -389,7 +366,7 @@
   }
 
   function pages() {
-    return Array.from(document.querySelectorAll('.pagina[id^="pagina"], .page'));
+    return Array.from(document.querySelectorAll('.pagina[id^="pagina"], .pagina[id^="page-"], .page'));
   }
 
   function activePageNumber() {
@@ -873,7 +850,7 @@
     const allComplete = allPagesComplete();
     const bayesLocked = !!activeLevelContent && allComplete && !isQuizUnlockedByBayes();
     const locked = !allComplete || bayesLocked;
-    document.querySelectorAll('.btn-quiz, .boton-quiz, .quiz-btn-footer').forEach(function (button) {
+    document.querySelectorAll('.btn-quiz, .boton-quiz, .quiz-btn-footer, .quiz-btn, a[href*="quiz.html"]').forEach(function (button) {
       const display = current === total
         ? (button.classList.contains('quiz-btn-footer') ? 'inline-flex' : 'block')
         : 'none';
@@ -930,7 +907,7 @@
   }
 
   function bindQuizLinks() {
-    document.querySelectorAll('.btn-quiz, .boton-quiz, .quiz-btn-footer').forEach(function (link) {
+    document.querySelectorAll('.btn-quiz, .boton-quiz, .quiz-btn-footer, .quiz-btn, a[href*="quiz.html"]').forEach(function (link) {
       if (link.dataset.reforzamientoSesionBound === 'true') return;
       const href = link.getAttribute('href');
       if (!href) return;
@@ -971,16 +948,31 @@
   }
 
   function bindCompletionBridge() {
-    wrap('completarSubactividad', function (original, args) {
+    const pendingFinalizeKeys = new Set();
+
+    function finalizeCompletedActivity(args) {
       const pageNumber = Number(args[0]);
       const subKey = args[1];
-      const result = original.apply(this, args);
       const apartadoKey = resolveApartadoKey(pageNumber, subKey);
-      if (apartadoKey) {
-        Promise.resolve(finalizeKey(apartadoKey, true)).then(function () {
+      if (!apartadoKey || pendingFinalizeKeys.has(apartadoKey)) return;
+
+      pendingFinalizeKeys.add(apartadoKey);
+      Promise.resolve(finalizeKey(apartadoKey, true))
+        .finally(function () {
+          pendingFinalizeKeys.delete(apartadoKey);
           syncQuizButton();
         });
-      }
+    }
+
+    wrap('completarSubactividad', function (original, args) {
+      const result = original.apply(this, args);
+      finalizeCompletedActivity(args);
+      return result;
+    });
+
+    wrap('completePage', function (original, args) {
+      const result = original.apply(this, args);
+      finalizeCompletedActivity(args);
       return result;
     });
   }
@@ -1002,82 +994,89 @@
   }
 
   function setupEasyVisualVerbal() {
-    wrap('parear', function (original, args) {
-      const el = args[0];
-      const col = args[1];
-      const beforePairs = typeof paresOk === 'number' ? paresOk : 0;
-      const hadSelection = !!selPar;
-      const previousPar = hadSelection && selPar && selPar.el ? selPar.el.dataset.par : null;
-      const previousCol = hadSelection && selPar ? selPar.col : null;
+    wrap('answerDistribution', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = distributionSolved.has(index);
+      const beforeSize = distributionSolved.size;
       const result = original.apply(this, args);
-      if (typeof paresOk === 'number' && paresOk > beforePairs) {
-        ok('p1_relacionar', paresOk - beforePairs);
-      } else if (hadSelection && previousCol !== col && previousPar && el && previousPar !== el.dataset.par) {
-        err('p1_relacionar', 1);
-      }
+      const afterSize = distributionSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p1_distribucion', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== distributionAnswers[index]) err('p1_distribucion', 1);
       return result;
     });
 
-    wrap('verificarOraciones', function (original, args) {
+    wrap('answerConcept', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = conceptSolved.has(index);
+      const beforeSize = conceptSolved.size;
       const result = original.apply(this, args);
-      const blanks = ['b1', 'b2', 'b3', 'b4', 'b5'];
-      const filled = blanks.every(function (id) {
-        const input = document.getElementById(id);
-        return input && input.value.trim() !== '';
-      });
-      const correct = blanks.every(function (id) {
-        const input = document.getElementById(id);
-        return input && input.value.trim().toLowerCase() === String(input.dataset.ans || '').toLowerCase();
-      });
-      if (filled && correct) ok('p2_oraciones', 1);
-      else err('p2_oraciones', 1);
+      const afterSize = conceptSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p2_conceptos', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== conceptAnswers[index]) err('p2_conceptos', 1);
       return result;
     });
 
-    wrap('clickCelda', function (original, args) {
-      const before = typeof encontradas === 'number' ? encontradas : 0;
-      const hadFirst = !!primeraCelda;
+    wrap('checkRetos', function (original, args) {
       const result = original.apply(this, args);
-      const after = typeof encontradas === 'number' ? encontradas : before;
-      if (after > before) ok('p3_sopa', after - before);
-      else if (hadFirst && !primeraCelda) err('p3_sopa', 1);
+      const fb = document.getElementById('fbRetos');
+      if (fb && fb.classList.contains('ok')) ok('p3_retos', 1);
+      else if (fb && fb.classList.contains('fail')) err('p3_retos', 1);
+      return result;
+    });
+
+    wrap('checkIntegrator', function (original, args) {
+      const result = original.apply(this, args);
+      const fb = document.getElementById('fbIntegrator');
+      if (fb && fb.classList.contains('ok')) ok('p4_integrador', 1);
+      else if (fb && fb.classList.contains('fail')) err('p4_integrador', 1);
       return result;
     });
   }
 
-  function setupEasyVisualNoVerbal() {
-    wrap('verificarArrastreVisual', function (original, args) {
-      const beforeAttempts = typeof arrastreIntentos === 'number' ? arrastreIntentos : 0;
+  function setupEasyVisualNoVerbalRebuilt() {
+    wrap('answerDistribVisual', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = distributionSolved.has(index);
+      const beforeSize = distributionSolved.size;
       const result = original.apply(this, args);
-      const afterAttempts = typeof arrastreIntentos === 'number' ? arrastreIntentos : beforeAttempts;
-      if (afterAttempts > beforeAttempts) {
-        if (typeof arrastreCorrecto !== 'undefined' && arrastreCorrecto) ok('p1_arrastrar', 1);
-        else err('p1_arrastrar', 1);
-      }
+      const afterSize = distributionSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p1_distribucion', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== distributionAnswers[index]) err('p1_distribucion', 1);
       return result;
     });
 
-    wrap('verificarSelImagen', function (original, args) {
-      const qId = args[0];
-      const beforeAttempts = visualAttempts[qId];
-      const beforeResolved = visualLocked[qId];
+    wrap('answerConceptVisual', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = conceptVisualSolved.has(index);
+      const beforeSize = conceptVisualSolved.size;
       const result = original.apply(this, args);
-      if (visualAttempts[qId] > beforeAttempts && !beforeResolved) {
-        if (visualLocked[qId] && visualCorrect[qId]) ok('p2_seleccion', 1);
-        else err('p2_seleccion', 1);
-      }
+      const afterSize = conceptVisualSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p2_conceptos', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== conceptVisualAnswers[index]) err('p2_conceptos', 1);
       return result;
     });
 
-    wrap('verificarComp', function (original, args) {
-      const ronda = args[0];
-      const beforeAttempts = compAttempts[ronda];
-      const beforeResolved = compLocked[ronda];
+    wrap('checkRetosVisual', function (original, args) {
       const result = original.apply(this, args);
-      if (compAttempts[ronda] > beforeAttempts && !beforeResolved) {
-        if (compLocked[ronda] && compCorrect[ronda]) ok('p3_comparar', 1);
-        else err('p3_comparar', 1);
-      }
+      const fb = document.getElementById('fbRetosVisual');
+      if (fb && fb.classList.contains('ok')) ok('p3_retos', 1);
+      else if (fb && fb.classList.contains('fail')) err('p3_retos', 1);
+      return result;
+    });
+
+    wrap('answerIntegratorVisual', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = integratorSolved.has(index);
+      const beforeSize = integratorSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = integratorSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p4_integrador', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== integratorAnswers[index]) err('p4_integrador', 1);
       return result;
     });
   }
@@ -1105,6 +1104,18 @@
     });
   }
 
+  function setupEasyAuditivoRebuilt() {
+    wrap('registrarIntentoAuditivoFacil', function (original, args) {
+      const key = args[0];
+      const success = args[1] === true;
+      const result = original.apply(this, args);
+      if (!config.apartados[key]) return result;
+      if (success) ok(key, 1);
+      else err(key, 1);
+      return result;
+    });
+  }
+
   function setupEasyKinestesico() {
     if (typeof window.registrarIntentoDrag1 === 'function') {
       wrap('registrarIntentoDrag1', function (original, args) {
@@ -1123,27 +1134,45 @@
       });
     }
 
-    wrap('verificarMapa', function (original, args) {
-      const result = original.apply(this, args);
-      const correctos = ['China', 'India', 'EE.UU.', 'Indonesia', 'Brasil'];
-      const passed = correctos.every(function (pais) {
-        return seleccionados.has(pais);
-      }) && seleccionados.size === 5;
-      if (passed) ok('p2_mapa', 1);
-      else err('p2_mapa', 1);
-      return result;
-    });
-
-    wrap('verificarOrden', function (original, args) {
-      const result = original.apply(this, args);
-      const items = Array.from(document.querySelectorAll('#seqPaises .seq-item'));
-      const passed = items.every(function (item, index) {
-        return item.dataset.val === ORDEN_CORRECTO[index];
+    if (typeof window.registrarIntentoMapa === 'function') {
+      wrap('registrarIntentoMapa', function (original, args) {
+        const result = original.apply(this, args);
+        if (args[0]) ok('p2_mapa', 1);
+        else err('p2_mapa', 1);
+        return result;
       });
-      if (passed) ok('p3_orden', 1);
-      else err('p3_orden', 1);
-      return result;
-    });
+    } else {
+      wrap('verificarMapa', function (original, args) {
+        const result = original.apply(this, args);
+        const correctos = ['China', 'India', 'EE.UU.', 'Indonesia', 'Brasil'];
+        const passed = correctos.every(function (pais) {
+          return seleccionados.has(pais);
+        }) && seleccionados.size === 5;
+        if (passed) ok('p2_mapa', 1);
+        else err('p2_mapa', 1);
+        return result;
+      });
+    }
+
+    if (typeof window.registrarIntentoOrden === 'function') {
+      wrap('registrarIntentoOrden', function (original, args) {
+        const result = original.apply(this, args);
+        if (args[0]) ok('p3_orden', 1);
+        else err('p3_orden', 1);
+        return result;
+      });
+    } else {
+      wrap('verificarOrden', function (original, args) {
+        const result = original.apply(this, args);
+        const items = Array.from(document.querySelectorAll('#seqPaises .seq-item'));
+        const passed = items.every(function (item, index) {
+          return item.dataset.val === ORDEN_CORRECTO[index];
+        });
+        if (passed) ok('p3_orden', 1);
+        else err('p3_orden', 1);
+        return result;
+      });
+    }
 
     if (typeof window.registrarIntentoRepaso === 'function') {
       wrap('registrarIntentoRepaso', function (original, args) {
@@ -1215,69 +1244,182 @@
     }, true);
   }
 
-  function setupNormalVisualNoVerbal() {
-    wrap('checkFlags', function (original, args) {
+  function setupNormalVisualVerbalRebuilt() {
+    wrap('checkCrossword1', function (original, args) {
       const result = original.apply(this, args);
-      const fb = document.getElementById('fb-flags');
-      if (fb.classList.contains('ok')) ok('p1_flags', 1);
-      else err('p1_flags', 1);
+      const fb = document.getElementById('fbCrossword1');
+      if (fb && fb.classList.contains('ok')) ok('p1_crucigrama', 1);
+      else if (fb && fb.classList.contains('fail')) err('p1_crucigrama', 1);
       return result;
     });
 
-    wrap('answerSym', function (original, args) {
-      const current = symData[symIdx];
+    wrap('answerMigrationCase', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = migrationSolved.has(index);
+      const beforeSize = migrationSolved.size;
       const result = original.apply(this, args);
-      if (current && args[0] === current.a) ok('p1_symbols', 1);
-      else err('p1_symbols', 1);
+      const afterSize = migrationSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p2_migracion', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== migrationAnswers[index]) err('p2_migracion', 1);
       return result;
     });
 
-    wrap('checkCampo', function (original, args) {
+    wrap('evaluateWordsearchSelection', function (original, args) {
+      const beforeSize = wordsearchState.foundWords.size;
       const result = original.apply(this, args);
-      const fb = document.getElementById('fb-campo');
-      if (fb.classList.contains('ok')) ok('p2_campo', 1);
-      else err('p2_campo', 1);
+      const afterSize = wordsearchState.foundWords.size;
+      if (afterSize > beforeSize) {
+        ok('p3_sopa', afterSize - beforeSize);
+      }
       return result;
     });
 
-    wrap('answerPQ', function (original, args) {
-      const current = pqData[pqIdx];
+    wrap('checkFinal', function (original, args) {
       const result = original.apply(this, args);
-      if (current && args[0] === current.ans) ok('p2_pq', 1);
-      else err('p2_pq', 1);
+      const fb = document.getElementById('fbFinal');
+      if (fb && fb.classList.contains('ok')) ok('p4_integrador', 1);
+      else if (fb && fb.classList.contains('fail')) err('p4_integrador', 1);
+      return result;
+    });
+  }
+
+  function setupDifficultVisualVerbalRebuilt() {
+    wrap('checkCrossword1', function (original, args) {
+      const result = original.apply(this, args);
+      const fb = document.getElementById('fbCrossword1');
+      if (fb && fb.classList.contains('ok')) ok('p1_migracion', 1);
+      else if (fb && fb.classList.contains('fail')) err('p1_migracion', 1);
       return result;
     });
 
-    wrap('culturalMatch', function (original, args) {
-      const el = args[0];
-      const side = args[1];
-      const before = cultMatchPairs.size;
-      const hadSelected = !!cultMatchSel;
-      const previousId = hadSelected && cultMatchSel ? cultMatchSel.dataset.id : null;
-      const previousSide = cultMatchSide;
+    wrap('evaluateDifficultWordsearchSelection', function (original, args) {
+      const beforeSize = wordsearchState.foundWords.size;
       const result = original.apply(this, args);
-      if (cultMatchPairs.size > before) ok('p3_match', cultMatchPairs.size - before);
-      else if (hadSelected && previousSide !== side && previousId && el && previousId !== el.dataset.id) err('p3_match', 1);
+      const afterSize = wordsearchState.foundWords.size;
+      if (afterSize > beforeSize) ok('p2_retos', afterSize - beforeSize);
       return result;
     });
 
-    wrap('answerCQ', function (original, args) {
-      const current = cqData[cqIdx];
+    wrap('checkAnalysisForm', function (original, args) {
       const result = original.apply(this, args);
-      if (current && args[0] === current.a) ok('p3_cq', 1);
-      else err('p3_cq', 1);
+      const fb = document.getElementById('fbAnalysisForm');
+      if (fb && fb.classList.contains('ok')) ok('p3_analisis', 1);
+      else if (fb && fb.classList.contains('fail')) err('p3_analisis', 1);
       return result;
     });
 
-    document.addEventListener('click', function (event) {
-      const repBtn = event.target.closest('#repaso-opts .q-opt');
-      if (!repBtn || repBtn.disabled) return;
-      const buttons = Array.from(document.querySelectorAll('#repaso-opts .q-opt'));
-      const chosen = buttons.indexOf(repBtn);
-      const current = repasoQ[repIdx];
-      if (current && chosen === current.a) ok('p4_repaso', 1);
-      else err('p4_repaso', 1);
-    }, true);
+    wrap('checkFinal', function (original, args) {
+      const result = original.apply(this, args);
+      const fb = document.getElementById('fbFinal');
+      if (fb && fb.classList.contains('ok')) ok('p4_integrador', 1);
+      else if (fb && fb.classList.contains('fail')) err('p4_integrador', 1);
+      return result;
+    });
+  }
+
+  function setupNormalVisualNoVerbalRebuilt() {
+    wrap('answerUrbanScene', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = urbanSolved.has(index);
+      const beforeSize = urbanSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = urbanSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p1_urban', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== urbanAnswers[index]) err('p1_urban', 1);
+      return result;
+    });
+
+    wrap('answerMigrationVisual', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = migrationSolved.has(index);
+      const beforeSize = migrationSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = migrationSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p2_migration', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== migrationAnswers[index]) err('p2_migration', 1);
+      return result;
+    });
+
+    wrap('checkServicesVisual', function (original, args) {
+      const result = original.apply(this, args);
+      const fb = document.getElementById('fbServices');
+      if (fb && fb.classList.contains('ok')) ok('p3_services', 1);
+      else if (fb && fb.classList.contains('fail')) err('p3_services', 1);
+      return result;
+    });
+
+    wrap('answerIntegratorVisualNormal', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = integratorSolved.has(index);
+      const beforeSize = integratorSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = integratorSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p4_integrator', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== integratorAnswers[index]) err('p4_integrator', 1);
+      return result;
+    });
+  }
+
+  function setupDifficultVisualNoVerbalRebuilt() {
+    wrap('answerRouteSignal', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = routeSignalSolved.has(index);
+      const beforeSize = routeSignalSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = routeSignalSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p1_signals', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== routeSignalAnswers[index]) err('p1_signals', 1);
+      return result;
+    });
+
+    wrap('selectRetoPair', function (original, args) {
+      const beforeSize = retoMatchPairs.size;
+      const beforeSelected = selectedPair;
+      const beforeSide = selectedPairSide;
+      const chosenButton = args[0];
+      const chosenSide = args[1];
+      const chosenId = args[2];
+      const previousId = beforeSelected ? beforeSelected.dataset.id : null;
+      const result = original.apply(this, args);
+      const afterSize = retoMatchPairs.size;
+
+      if (afterSize > beforeSize) {
+        ok('p2_pairs', afterSize - beforeSize);
+      } else if (
+        beforeSelected &&
+        beforeSelected !== chosenButton &&
+        beforeSide !== chosenSide &&
+        previousId !== chosenId
+      ) {
+        err('p2_pairs', 1);
+      }
+      return result;
+    });
+
+    wrap('checkAnalysisPanel', function (original, args) {
+      const result = original.apply(this, args);
+      const fb = document.getElementById('fbAnalysisPanel');
+      if (fb && fb.classList.contains('ok')) ok('p3_panel', 1);
+      else if (fb && fb.classList.contains('fail')) err('p3_panel', 1);
+      return result;
+    });
+
+    wrap('answerMission', function (original, args) {
+      const index = Number(args[0]);
+      const choice = args[1];
+      const beforeSolved = missionSolved.has(index);
+      const beforeSize = missionSolved.size;
+      const result = original.apply(this, args);
+      const afterSize = missionSolved.size;
+      if (!beforeSolved && afterSize > beforeSize) ok('p4_missions', afterSize - beforeSize);
+      else if (!beforeSolved && choice !== missionAnswers[index]) err('p4_missions', 1);
+      return result;
+    });
   }
 
   function setupNormalAuditivo() {
@@ -1330,6 +1472,30 @@
         else err('p4_repaso', 1);
       }
     }, true);
+  }
+
+  function setupNormalAuditivoRebuilt() {
+    wrap('registrarIntentoAuditivoNormal', function (original, args) {
+      const key = args[0];
+      const success = args[1] === true;
+      const result = original.apply(this, args);
+      if (!config.apartados[key]) return result;
+      if (success) ok(key, 1);
+      else err(key, 1);
+      return result;
+    });
+  }
+
+  function setupDifficultAuditivoRebuilt() {
+    wrap('registrarIntentoAuditivoDificil', function (original, args) {
+      const key = args[0];
+      const success = args[1] === true;
+      const result = original.apply(this, args);
+      if (!config.apartados[key]) return result;
+      if (success) ok(key, 1);
+      else err(key, 1);
+      return result;
+    });
   }
 
   function setupNormalKinestesico() {
@@ -1419,6 +1585,30 @@
       if (current && chosen === current.a) ok('p4_repaso', 1);
       else err('p4_repaso', 1);
     }, true);
+  }
+
+  function setupNormalKinestesicoRebuilt() {
+    wrap('registrarIntentoNormalKin', function (original, args) {
+      const key = args[0];
+      const success = args[1] === true;
+      const result = original.apply(this, args);
+      if (!config.apartados[key]) return result;
+      if (success) ok(key, 1);
+      else err(key, 1);
+      return result;
+    });
+  }
+
+  function setupDifficultKinestesicoRebuilt() {
+    wrap('registrarIntentoDificilKin', function (original, args) {
+      const key = args[0];
+      const success = args[1] === true;
+      const result = original.apply(this, args);
+      if (!config.apartados[key]) return result;
+      if (success) ok(key, 1);
+      else err(key, 1);
+      return result;
+    });
   }
 
   ready(function () {

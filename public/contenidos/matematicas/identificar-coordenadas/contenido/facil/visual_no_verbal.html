@@ -1710,15 +1710,15 @@
                 completadosRegistroVisualNoVerbal[clave] = true;
                 if (trackerVisualNoVerbal) {
                     trackerVisualNoVerbal.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                    trackerVisualNoVerbal.complete(clave, { detalle: { pagina, ejercicio: clave, ...detalle } });
                 }
             }
         } else if (trackerVisualNoVerbal) {
-            trackerVisualNoVerbal.addError(clave, { pagina, ejercicio: clave, ...detalle });
+            trackerVisualNoVerbal.addError(clave, 1, { pagina, ejercicio: clave, ...detalle });
         }
 
         if (!sesionCompletadaVisualNoVerbal && todasPaginasCompletasVisualNoVerbal()) {
             sesionCompletadaVisualNoVerbal = true;
-            if (trackerVisualNoVerbal) trackerVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
             if (sessionTrackerVisualNoVerbal) sessionTrackerVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
         }
     }

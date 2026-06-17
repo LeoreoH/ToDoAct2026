@@ -136,12 +136,12 @@
     window.POBLACION_QUIZ_CONFIG = {
       pageTitle: 'Quiz · Población Mundial · Nivel Fácil',
       headerTitle: 'Quiz · Población Mundial',
-      headerSubtitle: 'Nivel fácil · Distribución, densidad y concentración urbana',
+      headerSubtitle: 'Nivel fácil · Distribución, densidad y concentración',
       levelLabel: 'Nivel fácil',
       levelIcon: 'fas fa-seedling',
       startIcon: '🌍🏙️',
       startTitle: 'Quiz del nivel fácil',
-      startDescription: 'Seleccioné cinco preguntas clave del nivel para que el repaso sea breve, claro y realmente útil antes de avanzar.',
+      startDescription: 'Responderás cinco preguntas visuales para reconocer cómo se distribuye la población y qué problemas aparecen cuando una ciudad se satura.',
       contentId: 3,
       level: 'facil',
       minToPass: 4,
@@ -157,70 +157,85 @@
         failMessage: 'Obtuviste {pct}% de aciertos. Necesitas al menos {min} respuestas correctas para avanzar.'
       },
       topics: [
-        'Distribución desigual de la población en el mundo.',
+        'Distribución desigual de la población en el planeta.',
         'Densidad, concentración y dispersión de la población.',
-        'Problemas que aparecen cuando una ciudad crece sin suficiente planeación.'
+        'Retos urbanos básicos cuando muchas personas viven en poco espacio.'
       ],
       questions: [
         {
-          text: 'Dos regiones tienen el mismo tamaño. En una hay ríos, suelos fértiles y muchas oportunidades de trabajo; en la otra predominan zonas áridas y pocos servicios. ¿En cuál es más probable encontrar mayor concentración de población?',
-          context: 'Piensa en qué condiciones facilitan que más personas quieran vivir y trabajar en un lugar.',
+          text: 'Observa la imagen nocturna. Las zonas con más luces suelen indicar:',
+          context: 'Las luces ayudan a ubicar los lugares donde vive y trabaja más gente.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg',
+          imageAlt: 'Tierra de noche con luces urbanas',
+          imageCaption: 'Las luces nocturnas muestran dónde suele concentrarse más población.',
           options: [
-            'En la región con agua, suelos fértiles y más oportunidades',
-            'En la región árida, porque tiene más espacio libre',
-            'En ambas por igual, porque el tamaño es el mismo',
-            'En ninguna, porque la población no depende del medio'
+            'Mayor concentración de población',
+            'Menor presencia de personas',
+            'Zonas sin ciudades',
+            'Áreas con menos actividad humana'
           ],
           correct: 0,
-          explanation: 'La población suele concentrarse donde hay agua, condiciones favorables y más oportunidades para vivir y trabajar.'
+          explanation: 'Las zonas con más luces suelen corresponder a ciudades y áreas donde se concentra más población.'
         },
         {
-          text: 'Un mapa muestra que un país pequeño reúne muchísimas personas en poco espacio, mientras otro país muy grande tiene habitantes muy separados entre sí. ¿Qué dato permite comparar mejor esa diferencia?',
-          context: 'No basta con saber cuántas personas hay en total; importa cómo se distribuyen dentro del territorio.',
+          text: '¿Qué concepto describe mejor esta escena?',
+          context: 'Aquí muchas personas y vehículos comparten un espacio pequeño.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg',
+          imageAlt: 'Calle muy concurrida en una ciudad',
+          imageCaption: 'Una gran cantidad de personas ocupa un espacio reducido.',
           options: [
-            'La longitud de sus fronteras',
-            'La densidad de población por kilómetro cuadrado',
-            'La edad promedio de sus habitantes',
-            'La cantidad de idiomas que se hablan'
+            'Dispersión',
+            'Concentración',
+            'Despoblación',
+            'Aislamiento'
           ],
           correct: 1,
-          explanation: 'La densidad indica cuántos habitantes hay por kilómetro cuadrado y ayuda a distinguir concentración y dispersión.'
+          explanation: 'Cuando muchas personas viven o circulan en poco espacio, hablamos de concentración de población.'
         },
         {
-          text: 'Bangladesh y Mongolia tienen realidades muy distintas. Si se comparan solo por la forma en que su población ocupa el territorio, ¿cuál interpretación es la más adecuada?',
-          context: 'Uno de estos países concentra mucha gente en poco espacio y el otro presenta grandes áreas con muy poca población.',
+          text: '¿Qué concepto representa mejor esta imagen?',
+          context: 'Las viviendas aparecen separadas y el territorio tiene poca ocupación.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/seydisfjordur-1000x556-8f03c602ab.jpg',
+          imageAlt: 'Poblado con casas separadas y poca ocupación del espacio',
+          imageCaption: 'Hay pocas viviendas y están alejadas entre sí.',
           options: [
-            'Bangladesh es un ejemplo de dispersión y Mongolia de concentración',
-            'Ambos son ejemplos claros de alta densidad',
-            'Bangladesh representa concentración y Mongolia dispersión',
-            'No pueden compararse porque pertenecen a continentes distintos'
-          ],
-          correct: 2,
-          explanation: 'Bangladesh destaca por su alta concentración de habitantes, mientras Mongolia es un caso típico de población dispersa.'
-        },
-        {
-          text: 'Varias ciudades cercanas crecieron tanto que hoy forman una enorme área urbana continua, con millones de habitantes, carreteras compartidas y servicios conectados. ¿Cómo se llama ese tipo de espacio?',
-          context: 'La idea central es una gran continuidad urbana formada por varias ciudades muy pobladas.',
-          options: [
-            'Aldea rural',
+            'Concentración',
             'Megalópolis',
-            'Zona despoblada',
-            'Reserva natural'
-          ],
-          correct: 1,
-          explanation: 'Una megalópolis surge cuando varias ciudades grandes quedan unidas en un mismo sistema urbano de enorme tamaño.'
-        },
-        {
-          text: 'Una ciudad crece rápido, pero la vivienda, el transporte, el agua y la recolección de basura no aumentan al mismo ritmo. ¿Qué consecuencia es la más probable?',
-          context: 'Relaciona el crecimiento de la población con la capacidad real de los servicios urbanos.',
-          options: [
-            'Desaparece la contaminación por falta de espacio',
-            'Mejoran automáticamente todos los servicios',
-            'Aumentan la saturación de servicios y los problemas ambientales',
-            'La población empieza a dispersarse sin afectar a la ciudad'
+            'Dispersión',
+            'Saturación'
           ],
           correct: 2,
-          explanation: 'Cuando la población crece más rápido que la infraestructura, aparecen saturación de servicios, basura, tráfico y contaminación.'
+          explanation: 'Cuando pocas personas viven separadas en un territorio más amplio, se observa dispersión.'
+        },
+        {
+          text: 'El mapa usa colores para comparar dónde vive más o menos gente. ¿Qué dato ayuda a hacer esa comparación?',
+          context: 'No basta con contar habitantes totales; también importa el tamaño del territorio.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dn-e9664128cb.png',
+          imageAlt: 'Mapa de concentración y dispersión de la población en México',
+          imageCaption: 'La población puede compararse según cuánta gente ocupa un territorio.',
+          options: [
+            'La densidad de población',
+            'La cantidad de montañas',
+            'El número de idiomas',
+            'La temperatura del lugar'
+          ],
+          correct: 0,
+          explanation: 'La densidad de población compara habitantes y territorio, por eso ayuda a interpretar mapas de concentración y dispersión.'
+        },
+        {
+          text: '¿Qué problema urbano aparece con más claridad en esta imagen?',
+          context: 'Piensa en lo que ocurre cuando muchas personas y vehículos usan la ciudad al mismo tiempo.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-8f1db13861.jpg',
+          imageAlt: 'Tráfico intenso en una intersección urbana',
+          imageCaption: 'El crecimiento de la ciudad puede saturar sus calles y servicios.',
+          options: [
+            'Dispersión rural',
+            'Tráfico y saturación vial',
+            'Despoblamiento',
+            'Aislamiento del territorio'
+          ],
+          correct: 1,
+          explanation: 'El tráfico intenso es un reto urbano frecuente cuando la población y los autos superan la capacidad de las calles.'
         }
       ]
     };

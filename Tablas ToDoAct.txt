@@ -34,7 +34,7 @@
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     usuario VARCHAR(50) UNIQUE NOT NULL,
-    "contraseña" VARCHAR(50) UNIQUE NOT NULL,
+    contraseña VARCHAR(50) UNIQUE NOT NULL,
     nombrecompleto VARCHAR(255) NOT NULL,
     fechanacimiento DATE NOT NULL,
     genero VARCHAR(20) NOT NULL,
@@ -282,6 +282,181 @@ CREATE TABLE puntuaciones (
 --   - 3 niveles: facil, normal, dificil
 --   - 4 estilos: visual_verbal, visual_no_verbal, auditivo, kinestesico
 -- Sus rutas por nivel/estilo se registran en `contenidos_archivos`.
+
+-- ============================================================
+-- 4A. INSERTS BASE NECESARIOS PARA QUE EL PROYECTO FUNCIONE
+-- ============================================================
+--
+-- Estos inserts SI hacen falta como datos semilla del sistema.
+-- Sin ellos, el servidor no puede resolver correctamente:
+--   - bloques (`contenidos`)
+--   - niveles (`niveles_contenido`)
+--   - archivos HTML por estilo (`contenidos_archivos`)
+--   - examen diagnostico asociado a cada bloque (`examenes_diagnostico`)
+--
+-- No se incluyen aqui:
+--   - preguntas_diagnostico
+--   - respuestas_diagnostico
+-- porque esas viven en los SQL especificos de diagnostico y/o se generan
+-- con la operacion real de los usuarios.
+
+-- 4A.1 Contenidos base
+INSERT INTO contenidos (area, slug, nombre, orden, activo)
+VALUES
+    ('geografia',   'la-tierra',                   'Bloque I: La Tierra', 1, true),
+    ('geografia',   'componentes-naturales',       'Bloque II: Componentes naturales de la Tierra', 2, true),
+    ('geografia',   'poblacion-mundial',           'Bloque III: Poblacion mundial', 3, true),
+    ('matematicas', 'reconocer-fracciones',        'Fracciones: reconocer partes', 4, true),
+    ('matematicas', 'identificar-coordenadas',     'Ubicacion en planos y mapas: identificar coordenadas', 5, true),
+    ('matematicas', 'equivalencias-numericas',     'KC 2.1: Equivalencias numericas', 6, true),
+    ('matematicas', 'seguir-instrucciones-espaciales', 'Seguir instrucciones espaciales', 7, true)
+ON CONFLICT (area, slug) DO UPDATE
+SET nombre = EXCLUDED.nombre,
+    orden = EXCLUDED.orden,
+    activo = EXCLUDED.activo;
+
+-- 4A.2 Niveles base por cada contenido
+INSERT INTO niveles_contenido (contenido_id, nivel)
+VALUES
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'dificil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'facil'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'normal'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'dificil')
+ON CONFLICT (contenido_id, nivel) DO NOTHING;
+
+-- 4A.3 Archivos HTML base por nivel y estilo
+-- Registra las rutas que luego usa /api/contenido/archivo/:slug/:nivel
+INSERT INTO contenidos_archivos (contenido_id, nivel, estilo, archivo)
+VALUES
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'facil',   'visual_verbal',    '/contenidos/geografia/la-tierra/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'facil',   'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'facil',   'auditivo',         '/contenidos/geografia/la-tierra/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'facil',   'kinestesico',      '/contenidos/geografia/la-tierra/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'normal',  'visual_verbal',    '/contenidos/geografia/la-tierra/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'normal',  'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'normal',  'auditivo',         '/contenidos/geografia/la-tierra/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'normal',  'kinestesico',      '/contenidos/geografia/la-tierra/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'dificil', 'visual_verbal',    '/contenidos/geografia/la-tierra/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'dificil', 'visual_no_verbal', '/contenidos/geografia/la-tierra/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'dificil', 'auditivo',         '/contenidos/geografia/la-tierra/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), 'dificil', 'kinestesico',      '/contenidos/geografia/la-tierra/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'facil',   'visual_verbal',    '/contenidos/geografia/componentes-naturales/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'facil',   'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'facil',   'auditivo',         '/contenidos/geografia/componentes-naturales/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'facil',   'kinestesico',      '/contenidos/geografia/componentes-naturales/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'normal',  'visual_verbal',    '/contenidos/geografia/componentes-naturales/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'normal',  'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'normal',  'auditivo',         '/contenidos/geografia/componentes-naturales/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'normal',  'kinestesico',      '/contenidos/geografia/componentes-naturales/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'dificil', 'visual_verbal',    '/contenidos/geografia/componentes-naturales/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'dificil', 'visual_no_verbal', '/contenidos/geografia/componentes-naturales/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'dificil', 'auditivo',         '/contenidos/geografia/componentes-naturales/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), 'dificil', 'kinestesico',      '/contenidos/geografia/componentes-naturales/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'facil',   'visual_verbal',    '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'facil',   'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'facil',   'auditivo',         '/contenidos/geografia/poblacion-mundial/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'facil',   'kinestesico',      '/contenidos/geografia/poblacion-mundial/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'normal',  'visual_verbal',    '/contenidos/geografia/poblacion-mundial/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'normal',  'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'normal',  'auditivo',         '/contenidos/geografia/poblacion-mundial/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'normal',  'kinestesico',      '/contenidos/geografia/poblacion-mundial/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'dificil', 'visual_verbal',    '/contenidos/geografia/poblacion-mundial/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'dificil', 'visual_no_verbal', '/contenidos/geografia/poblacion-mundial/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'dificil', 'auditivo',         '/contenidos/geografia/poblacion-mundial/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), 'dificil', 'kinestesico',      '/contenidos/geografia/poblacion-mundial/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'facil',   'visual_verbal',    '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'facil',   'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'facil',   'auditivo',         '/contenidos/matematicas/reconocer-fracciones/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'facil',   'kinestesico',      '/contenidos/matematicas/reconocer-fracciones/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'normal',  'visual_verbal',    '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'normal',  'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'normal',  'auditivo',         '/contenidos/matematicas/reconocer-fracciones/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'normal',  'kinestesico',      '/contenidos/matematicas/reconocer-fracciones/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'dificil', 'visual_verbal',    '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'dificil', 'visual_no_verbal', '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'dificil', 'auditivo',         '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), 'dificil', 'kinestesico',      '/contenidos/matematicas/reconocer-fracciones/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'facil',   'visual_verbal',    '/contenidos/matematicas/identificar-coordenadas/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'facil',   'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'facil',   'auditivo',         '/contenidos/matematicas/identificar-coordenadas/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'facil',   'kinestesico',      '/contenidos/matematicas/identificar-coordenadas/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'normal',  'visual_verbal',    '/contenidos/matematicas/identificar-coordenadas/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'normal',  'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'normal',  'auditivo',         '/contenidos/matematicas/identificar-coordenadas/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'normal',  'kinestesico',      '/contenidos/matematicas/identificar-coordenadas/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'dificil', 'visual_verbal',    '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'dificil', 'visual_no_verbal', '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'dificil', 'auditivo',         '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), 'dificil', 'kinestesico',      '/contenidos/matematicas/identificar-coordenadas/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'facil',   'visual_verbal',    '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'facil',   'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'facil',   'auditivo',         '/contenidos/matematicas/equivalencias-numericas/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'facil',   'kinestesico',      '/contenidos/matematicas/equivalencias-numericas/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'normal',  'visual_verbal',    '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'normal',  'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'normal',  'auditivo',         '/contenidos/matematicas/equivalencias-numericas/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'normal',  'kinestesico',      '/contenidos/matematicas/equivalencias-numericas/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'dificil', 'visual_verbal',    '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'dificil', 'visual_no_verbal', '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'dificil', 'auditivo',         '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), 'dificil', 'kinestesico',      '/contenidos/matematicas/equivalencias-numericas/contenido/dificil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'facil',   'visual_verbal',    '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/facil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'facil',   'visual_no_verbal', '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/facil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'facil',   'auditivo',         '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/facil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'facil',   'kinestesico',      '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/facil/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'normal',  'visual_verbal',    '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/normal/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'normal',  'visual_no_verbal', '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/normal/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'normal',  'auditivo',         '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/normal/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'normal',  'kinestesico',      '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/normal/kinestesico.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'dificil', 'visual_verbal',    '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/dificil/visual_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'dificil', 'visual_no_verbal', '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/dificil/visual_no_verbal.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'dificil', 'auditivo',         '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/dificil/auditivo.html'),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), 'dificil', 'kinestesico',      '/contenidos/matematicas/seguir-instrucciones-espaciales/contenido/dificil/kinestesico.html')
+ON CONFLICT (contenido_id, nivel, estilo) DO UPDATE
+SET archivo = EXCLUDED.archivo;
+
+-- 4A.4 Examen diagnostico activo por bloque
+INSERT INTO examenes_diagnostico (contenido_id, activo)
+VALUES
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'la-tierra'), true),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'componentes-naturales'), true),
+    ((SELECT id FROM contenidos WHERE area = 'geografia'   AND slug = 'poblacion-mundial'), true),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'reconocer-fracciones'), true),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'identificar-coordenadas'), true),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'equivalencias-numericas'), true),
+    ((SELECT id FROM contenidos WHERE area = 'matematicas' AND slug = 'seguir-instrucciones-espaciales'), true)
+ON CONFLICT (contenido_id) DO UPDATE
+SET activo = EXCLUDED.activo;
+
+-- 4A.5 Tablas que NO requieren inserts iniciales para arrancar
+--   usuarios
+--   progreso_contenido_usuario
+--   respuestas_diagnostico
+--   resultados_quiz
+--   resultados_reforzamiento
+--   sesiones_reforzamiento
+--   resultados_vark
+--   inferencias_bayes
+--   puntuaciones
+--
+-- Esas tablas se llenan con el uso real del sistema.
 
 
 -- ============================================================

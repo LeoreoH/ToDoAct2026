@@ -136,12 +136,12 @@
     window.POBLACION_QUIZ_CONFIG = {
       pageTitle: 'Quiz · Población Mundial · Nivel Normal',
       headerTitle: 'Quiz · Población Mundial',
-      headerSubtitle: 'Nivel normal · Población, ciudad y campo, diversidad cultural',
+      headerSubtitle: 'Nivel normal · Ciudad, campo y migración',
       levelLabel: 'Nivel normal',
       levelIcon: 'fas fa-compass',
       startIcon: '🌎📚',
       startTitle: 'Quiz del nivel normal',
-      startDescription: 'Este cierre reúne los conceptos más importantes sobre distribución de la población, relación ciudad-campo y diversidad cultural.',
+      startDescription: 'Este cierre reúne ciudad, campo y migración para que relaciones mejor cómo vive la población y por qué se mueve.',
       contentId: 3,
       level: 'normal',
       minToPass: 4,
@@ -157,22 +157,40 @@
         failMessage: 'Obtuviste {pct}% de aciertos. Necesitas al menos {min} respuestas correctas para avanzar.'
       },
       topics: [
-        'Países más y menos poblados, y uso correcto de la densidad.',
-        'Interdependencia entre ciudad y campo, y comprensión del éxodo rural.',
-        'Diversidad cultural, patrimonio e interculturalidad.'
+        'Diferencias básicas entre espacio urbano y espacio rural.',
+        'Migración del campo a la ciudad y éxodo rural.',
+        'Relación entre crecimiento urbano y necesidad de servicios.'
       ],
       questions: [
         {
-          text: 'Dos países tienen cantidades enormes de habitantes, pero uno es mucho más extenso que el otro. Si quieres comparar cuál tiene mayor concentración real de población, ¿qué dato necesitas observar?',
-          context: 'El total de habitantes por sí solo puede ser engañoso cuando los territorios tienen tamaños muy distintos.',
+          text: '¿Qué tipo de espacio se observa en la imagen?',
+          context: 'Observa los edificios altos, la infraestructura y la concentración de construcciones.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-497a5816af.jpg',
+          imageAlt: 'Paisaje urbano con edificios altos junto al agua',
+          imageCaption: 'Las ciudades concentran construcciones, servicios y actividades humanas.',
           options: [
-            'La densidad de población por kilómetro cuadrado',
-            'La bandera nacional',
-            'La cantidad de ciudades capitales',
-            'El número de continentes en los que influye'
+            'Espacio urbano',
+            'Espacio rural',
+            'Zona despoblada',
+            'Área natural protegida'
           ],
           correct: 0,
-          explanation: 'La densidad permite comparar cuánta población ocupa realmente cada parte del territorio.'
+          explanation: 'Un espacio urbano concentra edificios, servicios, transporte y más población en un mismo lugar.'
+        },
+        {
+          text: '¿Qué característica del espacio rural se aprecia mejor en esta escena?',
+          context: 'Fíjate en la amplitud del territorio y en la poca concentración de viviendas.',
+          imageSrc: '/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-10ad97ae88.jpg',
+          imageAlt: 'Paisaje amplio con una vivienda aislada y poca ocupación humana',
+          imageCaption: 'En el espacio rural suele haber menos población y mayor separación entre viviendas.',
+          options: [
+            'Alta densidad y muchos edificios',
+            'Viviendas separadas y baja densidad',
+            'Mucho tráfico y servicios saturados',
+            'Concentración de fábricas y avenidas'
+          ],
+          correct: 1,
+          explanation: 'En el espacio rural suele haber menos población y las viviendas se encuentran más separadas.'
         },
         {
           text: 'Una familia deja una comunidad rural para mudarse a la ciudad porque busca empleo, hospitales y escuelas cercanas. ¿Cómo se llama ese movimiento?',
@@ -184,43 +202,31 @@
             'Patrimonio cultural'
           ],
           correct: 1,
-          explanation: 'El éxodo rural ocurre cuando personas del campo se trasladan a las ciudades en busca de mejores condiciones de vida.'
+          explanation: 'El éxodo rural ocurre cuando personas del campo se trasladan a la ciudad en busca de mejores condiciones de vida.'
         },
         {
-          text: '¿Qué ejemplo muestra mejor la relación de interdependencia entre ciudad y campo?',
-          context: 'Ambos espacios cumplen funciones distintas, pero se necesitan mutuamente para funcionar.',
+          text: 'Si una familia sale de su comunidad de origen y llega a otra ciudad para vivir, ¿qué afirmación es correcta?',
+          context: 'Piensa en cómo cambia el nombre del movimiento según el lugar desde donde se mira.',
           options: [
-            'La ciudad produce todos sus alimentos sin apoyo del campo',
-            'El campo vive aislado y no necesita servicios urbanos',
-            'El campo abastece alimentos y la ciudad aporta servicios y tecnología',
-            'Ambos espacios compiten para que uno desaparezca'
-          ],
-          correct: 2,
-          explanation: 'El campo y la ciudad se complementan: uno aporta recursos y el otro concentra servicios, comercio y tecnología.'
-        },
-        {
-          text: 'Una celebración se transmite de generación en generación mediante música, danzas, relatos y rituales comunitarios. Si la UNESCO la protege, ¿cómo se clasifica mejor ese patrimonio?',
-          context: 'No se trata de un edificio ni de un objeto, sino de una práctica cultural viva.',
-          options: [
-            'Patrimonio natural',
-            'Patrimonio industrial',
-            'Patrimonio cultural inmaterial',
-            'Patrimonio urbano'
-          ],
-          correct: 2,
-          explanation: 'Las tradiciones, danzas, rituales y saberes compartidos forman parte del patrimonio cultural inmaterial.'
-        },
-        {
-          text: 'En una escuela conviven estudiantes de distintas culturas. En lugar de ignorar sus diferencias, comparten costumbres, dialogan y aprenden unos de otros con respeto. ¿Qué concepto describe mejor esa situación?',
-          context: 'La respuesta correcta implica convivencia respetuosa y aprendizaje mutuo, no solo coexistencia.',
-          options: [
-            'Interculturalidad',
-            'Despoblamiento',
-            'Segregación territorial',
-            'Urbanización acelerada'
+            'Emigra del lugar de origen e inmigra al lugar de destino',
+            'Inmigra del lugar de origen y emigra al destino',
+            'Solo emigra, porque llegar no cuenta',
+            'Solo inmigra, porque salir no cuenta'
           ],
           correct: 0,
-          explanation: 'La interculturalidad promueve el diálogo, el respeto y el aprendizaje entre personas de diferentes culturas.'
+          explanation: 'Se emigra al salir del lugar de origen y se inmigra al llegar al nuevo lugar de residencia.'
+        },
+        {
+          text: 'Si una ciudad recibe más familias cada año, ¿qué debe crecer también para que la vida diaria funcione mejor?',
+          context: 'Piensa en los servicios que necesita una población urbana cuando aumenta.',
+          options: [
+            'Agua, transporte, salud y vivienda',
+            'Solo los anuncios y comercios',
+            'Solo los edificios altos',
+            'Menos escuelas y menos hospitales'
+          ],
+          correct: 0,
+          explanation: 'Cuando la ciudad crece, también deben crecer servicios como agua, transporte, salud y vivienda para atender a más población.'
         }
       ]
     };

@@ -1147,14 +1147,14 @@ function registrarIntento(pagina, reto, correcto, detalle){
             registrosCompletados[clave] = true;
             if(tracker){
                 tracker.addCorrect(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+                tracker.complete(clave, { detalle: Object.assign({ pagina: pagina, ejercicio: clave }, detalle) });
             }
         }
     } else if(tracker) {
-        tracker.addError(clave, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+        tracker.addError(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
     }
     if(!sesionCompletada && todasPaginasCompletas()){
         sesionCompletada = true;
-        if(tracker) tracker.complete({ paginasCompletas: totalPaginas });
         if(sessionTracker) sessionTracker.complete({ paginasCompletas: totalPaginas });
     }
 }

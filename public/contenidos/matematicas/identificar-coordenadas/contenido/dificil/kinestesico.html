@@ -1739,11 +1739,12 @@ function registrarIntentoDificilKinestesico(pagina, reto, correcto, detalle){
         trackerDificilKinestesico.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
         if(correcto){
             if(!completadosRegistroDificilKinestesico[clave]){
-                trackerDificilKinestesico.addCorrect(clave, detalleFinal);
+                trackerDificilKinestesico.addCorrect(clave, 1, detalleFinal);
+                trackerDificilKinestesico.complete(clave, { detalle: detalleFinal });
                 completadosRegistroDificilKinestesico[clave] = true;
             }
         } else {
-            trackerDificilKinestesico.addError(clave, detalleFinal);
+            trackerDificilKinestesico.addError(clave, 1, detalleFinal);
         }
     }
 }
