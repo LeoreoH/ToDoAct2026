@@ -1540,10 +1540,11 @@
                 completadosRegistroFacilKinestesico[clave] = true;
                 if (trackerFacilKinestesico) {
                     trackerFacilKinestesico.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                    trackerFacilKinestesico.complete(clave, { detalle: { pagina, ejercicio: clave, ...detalle } });
                 }
             }
         } else if (trackerFacilKinestesico) {
-            trackerFacilKinestesico.addError(clave, { pagina, ejercicio: clave, ...detalle });
+            trackerFacilKinestesico.addError(clave, 1, { pagina, ejercicio: clave, ...detalle });
         }
 
         revisarSesionCompletadaKin();
@@ -1552,7 +1553,6 @@
     function revisarSesionCompletadaKin() {
         if (!sesionCompletadaFacilKinestesico && todasPaginasCompletasKin()) {
             sesionCompletadaFacilKinestesico = true;
-            if (trackerFacilKinestesico) trackerFacilKinestesico.complete({ paginasCompletas: totalPaginas });
             if (sessionTrackerFacilKinestesico) sessionTrackerFacilKinestesico.complete({ paginasCompletas: totalPaginas });
         }
     }

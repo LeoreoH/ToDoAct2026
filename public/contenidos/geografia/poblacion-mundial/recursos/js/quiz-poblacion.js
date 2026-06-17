@@ -168,6 +168,7 @@
     const pregunta = config.questions[preguntaActual];
     const respondida = respuestasUsuario[preguntaActual] !== null;
     const acerto = respondida ? respuestasCorrectas[preguntaActual] : false;
+    let mediaHtml = '';
 
     let opcionesHtml = '';
     pregunta.options.forEach((option, idx) => {
@@ -184,11 +185,21 @@
       `;
     });
 
+    if (pregunta.imageSrc) {
+      mediaHtml = `
+        <figure class="question-media">
+          <img src="${pregunta.imageSrc}" alt="${pregunta.imageAlt || ''}">
+          ${pregunta.imageCaption ? `<figcaption class="question-caption">${pregunta.imageCaption}</figcaption>` : ''}
+        </figure>
+      `;
+    }
+
     $('questionContainer').innerHTML = `
       <article class="question-card">
         <div class="question-number">PREGUNTA ${preguntaActual + 1} DE ${config.questions.length}</div>
         <div class="question-text">${pregunta.text}</div>
         <div class="question-context"><i class="fas fa-circle-info"></i> ${pregunta.context}</div>
+        ${mediaHtml}
         <div class="options">${opcionesHtml}</div>
         <div class="feedback ${respondida ? 'visible' : ''} ${acerto ? 'ok' : 'err'}">
           ${respondida ? ((acerto ? 'Correcto: ' : 'Incorrecto: ') + pregunta.explanation) : ''}

@@ -1673,10 +1673,11 @@
                 completadosRegistroNormalVisualNoVerbal[clave] = true;
                 if (trackerNormalVisualNoVerbal) {
                     trackerNormalVisualNoVerbal.addCorrect(clave, 1, { pagina, ejercicio: clave, ...detalle });
+                    trackerNormalVisualNoVerbal.complete(clave, { detalle: { pagina, ejercicio: clave, ...detalle } });
                 }
             }
         } else if (trackerNormalVisualNoVerbal) {
-            trackerNormalVisualNoVerbal.addError(clave, { pagina, ejercicio: clave, ...detalle });
+            trackerNormalVisualNoVerbal.addError(clave, 1, { pagina, ejercicio: clave, ...detalle });
         }
 
         revisarSesionCompletadaNormalVisualNoVerbal();
@@ -1685,7 +1686,6 @@
     function revisarSesionCompletadaNormalVisualNoVerbal() {
         if (!sesionCompletadaNormalVisualNoVerbal && todasPaginasCompletasNormalVisualNoVerbal()) {
             sesionCompletadaNormalVisualNoVerbal = true;
-            if (trackerNormalVisualNoVerbal) trackerNormalVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
             if (sessionTrackerNormalVisualNoVerbal) sessionTrackerNormalVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
         }
     }

@@ -1695,10 +1695,11 @@ function registrarIntentoDificilVisualNoVerbal(pagina, reto, correcto, detalle) 
             completadosRegistroDificilVisualNoVerbal[clave] = true;
             if (trackerDificilVisualNoVerbal) {
                 trackerDificilVisualNoVerbal.addCorrect(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+                trackerDificilVisualNoVerbal.complete(clave, { detalle: Object.assign({ pagina: pagina, ejercicio: clave }, detalle) });
             }
         }
     } else if (trackerDificilVisualNoVerbal) {
-        trackerDificilVisualNoVerbal.addError(clave, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
+        trackerDificilVisualNoVerbal.addError(clave, 1, Object.assign({ pagina: pagina, ejercicio: clave }, detalle));
     }
 
     revisarSesionCompletadaDificilVisualNoVerbal();
@@ -1707,7 +1708,6 @@ function registrarIntentoDificilVisualNoVerbal(pagina, reto, correcto, detalle) 
 function revisarSesionCompletadaDificilVisualNoVerbal() {
     if (!sesionCompletadaDificilVisualNoVerbal && todasPaginasCompletasDificilVisualNoVerbal()) {
         sesionCompletadaDificilVisualNoVerbal = true;
-        if (trackerDificilVisualNoVerbal) trackerDificilVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
         if (sessionTrackerDificilVisualNoVerbal) sessionTrackerDificilVisualNoVerbal.complete({ paginasCompletas: totalPaginas });
     }
 }

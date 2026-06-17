@@ -1,1992 +1,1688 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Migración, retos urbanos y análisis de población · Visual No Verbal · Nivel Difícil</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --guindo: #6B0F2B;
-    --guindo-dark: #4A0A1E;
-    --guindo-light: #8B1A3A;
-    --guindo-mid: #7A1230;
-    --gris: #4A4A5A;
-    --gris-light: #6E6E80;
-    --gris-pale: #D8D7E3;
-    --gris-dark: #2A2A3A;
-    --gold: #F4C842;
-    --accent: #E85D8A;
-    --white: #F5F0F2;
-    --success: #2ECC71;
-    --danger: #E74C3C;
-    --info: #3498DB;
-    --bg: #3A0A1A;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: linear-gradient(160deg, var(--bg) 0%, #2A2A3A 50%, var(--guindo-dark) 100%);
-    min-height: 100vh;
-    color: var(--white);
-  }
-
-  .top-header {
-    background: linear-gradient(135deg, var(--guindo-dark) 0%, var(--gris-dark) 50%, var(--guindo-dark) 100%);
-    text-align: center;
-    padding: 22px 20px 14px;
-    border-bottom: 3px solid var(--gold);
-  }
-
-  .top-header h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.7rem, 4vw, 2.5rem);
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    text-shadow: 0 2px 12px rgba(244,200,66,0.35);
-    margin: 4px 0;
-  }
-
-  .top-header-sub {
-    font-size: 0.84rem;
-    color: var(--gris-pale);
-    margin-bottom: 14px;
-    letter-spacing: 1px;
-  }
-
-  .header-badges {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .header-badge {
-    background: var(--gold);
-    color: var(--guindo-dark);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 800;
-    padding: 6px 18px;
-    border-radius: 22px;
-    letter-spacing: 0.4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-
-  .header-badge.secondary {
-    background: transparent;
-    color: var(--gold);
-    border: 2px solid var(--gold);
-  }
-
-  .progreso {
-    background: linear-gradient(135deg, rgba(74,10,30,0.94), rgba(42,42,58,0.94));
-    border-radius: 60px;
-    margin: 20px auto;
-    max-width: 860px;
-    padding: 13px 26px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    border: 3px solid var(--guindo);
-    box-shadow: 0 5px 0 var(--guindo-dark);
-  }
-
-  .puntos {
-    display: flex;
-    gap: 8px;
-    flex: 1;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .punto {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 3px solid rgba(244,200,66,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--gris-pale);
-    transition: all 0.3s;
-    cursor: pointer;
-  }
-
-  .punto.activo {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--guindo-dark);
-    transform: scale(1.16);
-  }
-
-  .punto.completado {
-    background: rgba(46,204,113,0.18);
-    border-color: rgba(127,207,164,0.55);
-    color: #d9f4e4;
-  }
-
-  .badge-pag {
-    background: var(--guindo);
-    color: #fff;
-    font-size: 0.92rem;
-    padding: 6px 13px;
-    border-radius: 20px;
-    font-weight: 800;
-    white-space: nowrap;
-  }
-
-  .section-title-bar {
-    background: linear-gradient(90deg, var(--guindo-mid), var(--gris), var(--guindo-mid));
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-top: 1px solid rgba(244,200,66,0.2);
-    border-bottom: 1px solid rgba(244,200,66,0.2);
-    margin: 0 0 16px 0;
-  }
-
-  .section-title-bar .sicon {
-    font-size: 1.1rem;
-  }
-
-  .section-title-bar span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: var(--gold);
-    letter-spacing: 0.5px;
-  }
-
-  .main-wrap {
-    max-width: 780px;
-    margin: 0 auto 34px;
-    padding: 0 14px;
-  }
-
-  .page {
-    display: none;
-    animation: fadeIn 0.35s ease;
-  }
-
-  .page.active {
-    display: block;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .game-card {
-    background: linear-gradient(145deg, rgba(90,20,40,0.6), rgba(60,60,80,0.5));
-    border: 1.5px solid rgba(244,200,66,0.25);
-    border-radius: 14px;
-    margin-bottom: 18px;
-    overflow: hidden;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-  }
-
-  .page .game-card:last-child {
-    margin-bottom: 14px;
-  }
-
-  .game-card-header {
-    background: linear-gradient(90deg, var(--guindo-dark), var(--gris-dark));
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 2px solid rgba(244,200,66,0.3);
-  }
-
-  .game-number {
-    background: var(--gold);
-    color: var(--guindo-dark);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 800;
-    padding: 2px 10px;
-    border-radius: 12px;
-    white-space: nowrap;
-  }
-
-  .game-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--white);
-    flex: 1;
-  }
-
-  .game-instruction {
-    padding: 10px 18px 6px;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: var(--gris-pale);
-    background: rgba(0,0,0,0.15);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .instr-icon {
-    font-size: 1rem;
-    margin-top: 1px;
-    flex-shrink: 0;
-  }
-
-  .game-body {
-    padding: 16px 18px;
-  }
-
-  .score-counter {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(244,200,66,0.12);
-    border: 1px solid rgba(244,200,66,0.3);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 0.82rem;
-    color: var(--gold);
-    font-weight: 700;
-    margin-bottom: 14px;
-  }
-
-  .topic-hero {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 14px;
-    align-items: stretch;
-    margin-bottom: 10px;
-  }
-
-  .topic-hero img {
-    width: 100%;
-    min-height: 195px;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 14px;
-    border: 2px solid rgba(244,200,66,0.24);
-    background: rgba(255,255,255,0.08);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-  }
-
-  .hero-copy {
-    background: linear-gradient(145deg, rgba(99,19,45,0.72), rgba(47,46,69,0.74));
-    border: 2px solid rgba(244,200,66,0.16);
-    border-radius: 14px;
-    padding: 14px 16px;
-    color: var(--white);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
-  }
-
-  .hero-copy h3 {
-    margin: 0 0 8px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.24rem;
-    font-weight: 800;
-    color: var(--gold);
-  }
-
-  .hero-copy p {
-    margin: 0 0 8px;
-    color: var(--gris-pale);
-    line-height: 1.62;
-    font-size: 0.9rem;
-  }
-
-  .hero-mini-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 10px;
-  }
-
-  .hero-mini-list span {
-    display: block;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 8px 10px;
-    color: var(--white);
-    font-size: 0.83rem;
-    line-height: 1.4;
-    font-weight: 700;
-  }
-
-  .hero-caption {
-    display: none;
-  }
-
-  .insight-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .insight-card {
-    background: linear-gradient(145deg, rgba(88,17,40,0.7), rgba(49,49,69,0.76));
-    border: 2px solid rgba(244,200,66,0.14);
-    border-radius: 12px;
-    padding: 12px;
-    color: var(--gris-pale);
-  }
-
-  .insight-card strong {
-    display: block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.96rem;
-    color: var(--gold);
-    margin-bottom: 5px;
-  }
-
-  .insight-card p {
-    font-size: 0.83rem;
-    line-height: 1.48;
-  }
-
-  .insight-icon {
-    font-size: 1.5rem;
-    display: inline-block;
-    margin-bottom: 6px;
-  }
-
-  .icon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-    gap: 10px;
-    margin: 14px 0;
-  }
-
-  .icon-card {
-    background: rgba(255,255,255,0.05);
-    border: 2px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 14px 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-
-  .icon-card:hover {
-    border-color: var(--gold);
-    background: rgba(244,200,66,0.08);
-    transform: translateY(-2px);
-  }
-
-  .icon-card.selected {
-    border-color: var(--accent);
-    background: rgba(232,93,138,0.15);
-  }
-
-  .icon-card.correct {
-    border-color: var(--success);
-    background: rgba(46,204,113,0.18);
-  }
-
-  .icon-card.wrong {
-    border-color: var(--danger);
-    background: rgba(231,76,60,0.2);
-    animation: shake 0.4s;
-  }
-
-  .icon-card.correct .icon-label,
-  .icon-card.wrong .icon-label {
-    color: var(--white);
-  }
-
-  .icon-emoji {
-    font-size: 2.2rem;
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  .icon-label {
-    font-size: 0.76rem;
-    color: var(--gris-pale);
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-
-  .sym-question {
-    text-align: center;
-    padding: 16px;
-    background: rgba(0,0,0,0.25);
-    border-radius: 12px;
-    margin-bottom: 12px;
-  }
-
-  .sym-question p {
-    color: var(--white);
-    font-weight: 700;
-    line-height: 1.55;
-    font-size: 0.96rem;
-  }
-
-  .sym-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .sym-btn {
-    min-height: 66px;
-    background: rgba(255,255,255,0.07);
-    border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 12px;
-    padding: 10px 12px;
-    cursor: pointer;
-    transition: all 0.25s;
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .sym-btn:hover {
-    border-color: var(--gold);
-    background: rgba(244,200,66,0.1);
-  }
-
-  .sym-btn.correct {
-    border-color: var(--success);
-    background: rgba(46,204,113,0.2);
-    color: var(--white);
-  }
-
-  .sym-btn.wrong {
-    border-color: var(--danger);
-    background: rgba(231,76,60,0.18);
-    color: var(--white);
-  }
-
-  .pic-question {
-    text-align: center;
-    padding: 16px;
-    background: rgba(0,0,0,0.25);
-    border-radius: 12px;
-    margin-bottom: 12px;
-  }
-
-  .pic-emoji {
-    font-size: 4rem;
-    display: block;
-    margin-bottom: 8px;
-    animation: bounce 2s infinite;
-  }
-
-  @keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  .pic-desc {
-    color: var(--gris-pale);
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .match-grid-v {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .match-col-v {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .match-card-v {
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 12px 14px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-align: center;
-    transition: all 0.25s;
-    min-height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    line-height: 1.35;
-  }
-
-  .match-stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .match-visual {
-    font-size: 1.55rem;
-    line-height: 1;
-  }
-
-  .match-text {
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  .match-side-label {
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: rgba(244,200,66,0.12);
-    border: 1px solid rgba(244,200,66,0.2);
-    color: var(--gold);
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-  }
-
-  .scene-card {
-    background: rgba(0,0,0,0.24);
-    border: 1px solid rgba(244,200,66,0.14);
-    border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 12px;
-  }
-
-  .scene-thumb-wrap {
-    position: relative;
-    margin-bottom: 10px;
-  }
-
-  .scene-thumb {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-    border-radius: 12px;
-    border: 2px solid rgba(244,200,66,0.2);
-    background: rgba(255,255,255,0.06);
-  }
-
-  .scene-tag {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(74,10,30,0.88);
-    border: 1px solid rgba(244,200,66,0.4);
-    color: var(--gold);
-    border-radius: 999px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-  }
-
-  .scene-note {
-    color: var(--gris-pale);
-    font-size: 0.84rem;
-    line-height: 1.45;
-    text-align: center;
-  }
-
-  .match-card-v:hover {
-    border-color: var(--gold);
-    background: rgba(244,200,66,0.1);
-  }
-
-  .match-card-v.selected {
-    border-color: #f0c257;
-    background: #fff0bf;
-    color: var(--guindo-dark);
-    box-shadow: inset 0 0 0 2px rgba(244,200,66,0.18);
-  }
-
-  .match-card-v.matched {
-    border-color: #7fcfa4;
-    background: #d9f4e4;
-    color: #1f5a38;
-    pointer-events: none;
-  }
-
-  .match-card-v.matched.selected {
-    border-color: #7fcfa4;
-    background: #d9f4e4;
-    color: #1f5a38;
-  }
-
-  .match-card-v.wrong-flash {
-    border-color: #d87070;
-    background: #ffe4e4;
-    color: #7a1f1f;
-  }
-
-  .q-opt {
-    background: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.14);
-    border-radius: 9px;
-    padding: 11px 14px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--white);
-    text-align: left;
-    transition: all 0.22s;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-
-  .q-opt:hover {
-    border-color: var(--gold);
-    background: rgba(244,200,66,0.1);
-  }
-
-  .q-opt.correct {
-    border-color: var(--success);
-    background: rgba(46,204,113,0.18);
-    color: var(--white);
-  }
-
-  .q-opt.wrong {
-    border-color: var(--accent);
-    background: rgba(232,93,138,0.2);
-    color: var(--white);
-  }
-
-  .btn {
-    background: linear-gradient(135deg, var(--guindo), var(--gris));
-    border: 2px solid var(--gold);
-    border-radius: 10px;
-    color: var(--gold);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 0.96rem;
-    letter-spacing: 0.5px;
-    padding: 9px 22px;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-
-  .btn:hover {
-    background: var(--gold);
-    color: var(--guindo-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(244,200,66,0.3);
-  }
-
-  .btn-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-    align-items: center;
-  }
-
-  .feedback {
-    padding: 9px 14px;
-    border-radius: 9px;
-    font-weight: 700;
-    font-size: 0.88rem;
-    margin-top: 10px;
-    display: none;
-    text-align: center;
-  }
-
-  .feedback.show {
-    display: block;
-    animation: fadeIn 0.3s;
-  }
-
-  .feedback.ok {
-    background: rgba(46,204,113,0.18);
-    color: #dbffe9;
-    border: 1px solid var(--success);
-  }
-
-  .feedback.fail {
-    background: rgba(232,93,138,0.18);
-    color: #ffe1ec;
-    border: 1px solid var(--accent);
-  }
-
-  .rep-pbar-wrap {
-    width: 100%;
-    background: rgba(255,255,255,0.1);
-    border-radius: 6px;
-    height: 8px;
-    margin: 10px 0;
-    overflow: hidden;
-  }
-
-  .rep-pbar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold), var(--accent));
-    border-radius: 6px;
-    transition: width 0.5s;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(244,200,66,0.14);
-    border: 1px solid var(--gold);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 0.8rem;
-    color: var(--gold);
-    font-weight: 700;
-  }
-
-  .repaso-end {
-    text-align: center;
-    padding: 30px 20px;
-  }
-
-  .nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 12px 0 10px;
-    background: linear-gradient(135deg, rgba(74,10,30,0.94), rgba(42,42,58,0.94));
-    padding: 12px 24px;
-    border-radius: 60px;
-    border: 3px solid var(--guindo);
-    box-shadow: 0 5px 0 var(--guindo-dark);
-  }
-
-  .btn-nav {
-    background: var(--gold);
-    color: var(--guindo-dark);
-    border: 3px solid var(--guindo);
-    padding: 10px 22px;
-    border-radius: 36px;
-    font-weight: 800;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--guindo-dark);
-    transition: all 0.2s;
-  }
-
-  .btn-nav:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 0 var(--guindo-dark);
-  }
-
-  .btn-nav:disabled {
-    background: #e0e0e0;
-    color: #9e9e9e;
-    border-color: #bdbdbd;
-    box-shadow: none;
-    cursor: default;
-  }
-
-  .ind-pag {
-    font-size: 1.22rem;
-    font-weight: 800;
-    background: rgba(255,255,255,0.07);
-    color: var(--gold);
-    padding: 8px 22px;
-    border-radius: 34px;
-    border: 3px solid rgba(244,200,66,0.22);
-  }
-
-  .boton-quiz {
-    display: none;
-    width: fit-content;
-    margin: 10px auto 36px;
-    background: var(--gold);
-    color: var(--guindo-dark);
-    padding: 13px 44px;
-    border-radius: 60px;
-    font-weight: 800;
-    font-size: 1.15rem;
-    text-decoration: none;
-    border: 4px solid var(--guindo);
-    box-shadow: 0 8px 0 var(--guindo-dark);
-    transition: all 0.2s;
-  }
-
-  .boton-quiz:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 0 var(--guindo-dark);
-    background: #fff4cc;
-  }
-
-  .boton-quiz.bloqueado {
-    background: #b9bcc7 !important;
-    border-color: #8f94a3 !important;
-    color: #f6f7fb !important;
-    cursor: not-allowed !important;
-    pointer-events: none !important;
-    box-shadow: 0 8px 0 #8f94a3 !important;
-  }
-
-  @media (max-width: 680px) {
-    .topic-hero {
-      grid-template-columns: 1fr;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Población Mundial · Visual No Verbal · Nivel Difícil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --guindo: #7b1d2e;
+      --guindo-dark: #5a1320;
+      --guindo-light: #a63248;
+      --gold: #f3c24f;
+      --gris: #4a4a5a;
+      --gris-light: #6f6f82;
+      --gris-pale: #ebeaf1;
+      --gris-bg: #f4f4f8;
+      --white: #ffffff;
+      --ok: #1f8a4d;
+      --ok-bg: #dff5e8;
+      --bad: #c73a32;
+      --bad-bg: #fde8e6;
+      --ink-soft: #756c7b;
     }
 
-    .hero-mini-list,
-    .insight-grid,
-    .sym-grid,
-    .match-grid-v {
-      grid-template-columns: 1fr;
-    }
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  @media (max-width: 540px) {
-    .progreso { padding: 12px; gap: 8px; }
-    .nav-bar { padding: 12px; gap: 8px; }
-    .btn-nav { padding: 9px 14px; font-size: 0.88rem; }
-    .boton-quiz { font-size: 1rem; padding: 12px 28px; }
-    .icon-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-</style>
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: linear-gradient(180deg, #f7f7fb 0%, #efeff6 100%);
+      color: var(--gris);
+      min-height: 100vh;
+    }
+
+    .top-header {
+      background: linear-gradient(135deg, var(--guindo-dark), var(--guindo));
+      padding: 26px 20px 18px;
+      text-align: center;
+      border-bottom: 5px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 10px 28px rgba(90, 19, 32, 0.28);
+    }
+
+    .top-header h1 {
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.9rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .top-header-sub {
+      color: #f7d7dd;
+      margin-top: 4px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .header-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--guindo);
+      border: 3px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .header-badge.secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--white);
+    }
+
+    .progress-shell {
+      max-width: 950px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    .progress-bar-wrap {
+      background: var(--white);
+      border-radius: 999px;
+      border: 3px solid var(--guindo);
+      box-shadow: 0 6px 0 var(--guindo-dark);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--guindo);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .progress-dots {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .progress-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--gris-pale);
+      border: 3px solid var(--guindo);
+      color: var(--guindo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      transition: all 0.25s ease;
+    }
+
+    .progress-dot.active {
+      background: var(--guindo);
+      color: var(--white);
+      transform: scale(1.14);
+    }
+
+    .progress-dot.done {
+      background: #d7efe0;
+      border-color: #9ed1b4;
+      color: #1f6b41;
+    }
+
+    .progress-label {
+      background: var(--guindo);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .main-wrap {
+      max-width: 950px;
+      margin: 0 auto 38px;
+      padding: 0 16px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.32s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lesson-card {
+      background: var(--white);
+      border: 3px solid var(--guindo);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: 0 8px 0 var(--guindo-dark);
+      margin-bottom: 18px;
+    }
+
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gris-pale);
+      border: 2px solid #d7d7e3;
+      border-radius: 999px;
+      color: var(--guindo);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 7px 14px;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .lesson-title {
+      color: var(--guindo);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.45rem);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .lesson-intro {
+      color: var(--gris);
+      font-size: 0.97rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .hero-figure {
+      background: var(--gris-bg);
+      border: 2px solid #d9d9e6;
+      border-radius: 22px;
+      padding: 12px;
+    }
+
+    .hero-figure img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 5 / 4;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+      border: 3px solid var(--guindo-dark);
+      background: var(--white);
+    }
+
+    .hero-figure figcaption {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .note-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .note-card {
+      background: var(--gris-bg);
+      border: 2px solid #dfdeea;
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .note-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--white);
+      border: 2px solid #deddeb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .note-card strong {
+      display: block;
+      color: var(--guindo);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .note-card p {
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .mini-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-box {
+      background: var(--white);
+      border: 2px solid #dfdeea;
+      border-radius: 16px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .mini-box span {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .mini-box small {
+      display: block;
+      color: var(--ink-soft);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .activity-shell {
+      margin-top: 18px;
+      background: linear-gradient(180deg, #fff8fb 0%, #fff3f6 100%);
+      border: 3px dashed #c6647d;
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .activity-title {
+      color: var(--guindo);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.72rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .activity-lead {
+      color: var(--gris);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff4cc;
+      border: 2px solid #eed28c;
+      border-radius: 999px;
+      padding: 7px 14px;
+      color: #7a4f00;
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 14px;
+    }
+
+    .signal-grid,
+    .mission-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .signal-card,
+    .mission-card,
+    .match-shell,
+    .panel-shell {
+      background: var(--white);
+      border: 2px solid #e0dfea;
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .signal-head,
+    .mission-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .signal-head strong,
+    .mission-head strong {
+      color: var(--guindo);
+      font-size: 0.95rem;
+    }
+
+    .mini-status {
+      min-width: 34px;
+      text-align: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: var(--gris-pale);
+      color: var(--gris-light);
+    }
+
+    .mini-status.ok {
+      background: var(--ok-bg);
+      color: var(--ok);
+    }
+
+    .mini-status.bad {
+      background: var(--bad-bg);
+      color: var(--bad);
+    }
+
+    .signal-board,
+    .symbol-line {
+      min-height: 118px;
+      border-radius: 16px;
+      background: var(--gris-bg);
+      border: 2px dashed #d7d7e3;
+      padding: 12px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .signal-board small,
+    .symbol-line small {
+      width: 100%;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .signal-board span,
+    .symbol-line span {
+      font-size: 1.9rem;
+      line-height: 1;
+    }
+
+    .photo-cluster {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .photo-cluster.two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .signal-photo {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #d9d9e6;
+      display: block;
+      background: #fff;
+    }
+
+    .choice-row {
+      display: grid;
+      gap: 12px;
+    }
+
+    .choice-row.triple {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .choice-row.double {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tag-btn,
+    .mission-btn,
+    .pair-card,
+    .concept-chip,
+    .slot-card {
+      border: 2px solid #e0dfea;
+      border-radius: 18px;
+      background: #fff;
+      color: var(--gris);
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      font: inherit;
+    }
+
+    .tag-btn:hover:not(:disabled),
+    .mission-btn:hover:not(:disabled),
+    .pair-card:hover:not(.locked),
+    .concept-chip:hover:not(.used),
+    .slot-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--guindo);
+      box-shadow: 0 8px 18px rgba(123, 29, 46, 0.12);
+    }
+
+    .tag-btn,
+    .mission-btn {
+      padding: 12px 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      line-height: 1.35;
+      background: #fffdfd;
+    }
+
+    .tag-btn.correct,
+    .mission-btn.correct,
+    .pair-card.correct,
+    .concept-chip.correct,
+    .slot-card.correct {
+      border-color: var(--ok);
+      background: var(--ok-bg);
+      color: var(--ok);
+    }
+
+    .tag-btn.wrong,
+    .mission-btn.wrong,
+    .pair-card.wrong,
+    .concept-chip.wrong,
+    .slot-card.wrong {
+      border-color: var(--bad);
+      background: var(--bad-bg);
+      color: var(--bad);
+    }
+
+    .tag-btn:disabled,
+    .mission-btn:disabled {
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .match-column strong {
+      display: block;
+      color: var(--guindo);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    .match-column .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pair-card {
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .pair-card img {
+      width: 100%;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #d9d9e6;
+      display: block;
+      margin-bottom: 8px;
+      background: #fff;
+    }
+
+    .pair-card .icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .pair-card small {
+      display: block;
+      color: var(--ink-soft);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .pair-card.selected {
+      border-color: var(--guindo);
+      background: #fdeef2;
+    }
+
+    .pair-card.locked {
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .slot-card {
+      padding: 14px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slot-card strong {
+      color: var(--guindo);
+      font-size: 0.92rem;
+    }
+
+    .visual-box {
+      flex: 1;
+      min-height: 100px;
+      border-radius: 16px;
+      background: var(--gris-bg);
+      border: 2px dashed #d7d7e3;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .visual-box.photo-box {
+      padding: 6px;
+      gap: 6px;
+      align-items: stretch;
+    }
+
+    .visual-box.photo-box img {
+      width: 100%;
+      height: 100%;
+      min-height: 116px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #d9d9e6;
+      display: block;
+      background: #fff;
+    }
+
+    .visual-box.photo-box.dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .visual-box .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid #dda93a;
+    }
+
+    .visual-box .house {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #ffd96e, #f2b94d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      border: 2px solid #e0a53b;
+    }
+
+    .visual-box.spread {
+      justify-content: space-between;
+      align-content: space-between;
+    }
+
+    .bar-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .bar {
+      width: 26px;
+      border-radius: 10px 10px 0 0;
+      background: linear-gradient(180deg, #ffcf6a, #f09b45);
+      border: 2px solid #d98c3d;
+    }
+
+    .slot-label {
+      min-height: 48px;
+      border-radius: 14px;
+      border: 2px dashed #c6647d;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--guindo);
+    }
+
+    .slot-label.filled {
+      background: #fdf0f4;
+      border-style: solid;
+    }
+
+    .chip-bank {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .concept-chip {
+      padding: 12px 10px;
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .concept-chip.selected {
+      border-color: var(--guindo);
+      background: #fdeef2;
+    }
+
+    .concept-chip.used {
+      opacity: 0.45;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .check-btn {
+      margin-top: 14px;
+      border: none;
+      border-radius: 14px;
+      background: var(--guindo);
+      color: var(--white);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .mission-figure {
+      min-height: 132px;
+      border-radius: 16px;
+      background: var(--gris-bg);
+      border: 2px dashed #d7d7e3;
+      margin-bottom: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      text-align: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mission-figure img {
+      width: 100%;
+      height: 156px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      border: 2px solid #d9d9e6;
+      background: #fff;
+    }
+
+    .mission-figure.dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .mission-figure.dual img {
+      height: 118px;
+    }
+
+    .mission-figure span {
+      font-size: 1.9rem;
+    }
+
+    .mission-figure small {
+      width: 100%;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .activity-feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-weight: 700;
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    .activity-feedback.show {
+      display: block;
+    }
+
+    .activity-feedback.ok {
+      background: var(--ok-bg);
+      color: var(--ok);
+      border: 1px solid rgba(31, 138, 77, 0.28);
+    }
+
+    .activity-feedback.fail {
+      background: var(--bad-bg);
+      color: var(--bad);
+      border: 1px solid rgba(199, 58, 50, 0.24);
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 24px 0 14px;
+      background: var(--white);
+      padding: 13px 26px;
+      border-radius: 60px;
+      border: 3px solid var(--guindo);
+      box-shadow: 0 5px 0 var(--guindo-dark);
+      gap: 12px;
+    }
+
+    .btn-nav {
+      background: var(--guindo);
+      color: var(--white);
+      border: 3px solid var(--guindo-dark);
+      padding: 10px 24px;
+      border-radius: 38px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--guindo-dark);
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 0 var(--guindo-dark);
+    }
+
+    .btn-nav:disabled {
+      background: #ccccd4;
+      color: #8e8e9d;
+      border-color: #bbbbc7;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .ind-pag {
+      font-size: 1.08rem;
+      font-weight: 800;
+      background: var(--gris-pale);
+      color: var(--guindo);
+      padding: 8px 24px;
+      border-radius: 36px;
+      border: 3px solid var(--guindo);
+    }
+
+    .quiz-btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 38px;
+      background: var(--guindo);
+      color: var(--white);
+      padding: 14px 40px;
+      border-radius: 60px;
+      font-weight: 900;
+      font-size: 1.15rem;
+      text-decoration: none;
+      border: 4px solid var(--guindo-dark);
+      box-shadow: 0 8px 0 var(--guindo-dark);
+      transition: all 0.2s;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.8px;
+      text-align: center;
+    }
+
+    .quiz-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 11px 0 var(--guindo-dark);
+      color: var(--white);
+    }
+
+    .quiz-btn.bloqueado {
+      background: #ccccd4;
+      color: #f8f8fb;
+      border-color: #bbbbc7;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout,
+      .match-grid,
+      .panel-grid,
+      .mini-strip,
+      .chip-bank {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .choice-row.triple,
+      .choice-row.double,
+      .mission-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .lesson-card {
+        padding: 18px;
+      }
+
+      .progress-dot {
+        width: 34px;
+        height: 34px;
+      }
+
+      .btn-nav {
+        padding: 9px 16px;
+        font-size: 0.88rem;
+      }
+
+      .ind-pag {
+        padding: 7px 16px;
+        font-size: 0.96rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="top-header">
-  <h1>Migración, retos urbanos y análisis de población</h1>
-  <div class="top-header-sub">Bloque · Nivel Difícil · Geografía 5°</div>
-  <div class="header-badges">
-    <div class="header-badge">Estilo Visual No Verbal</div>
-    <div class="header-badge secondary">Nivel Difícil</div>
+  <div class="top-header">
+    <h1>Población Mundial</h1>
+    <div class="top-header-sub">Bloque III · Nivel Difícil · Geografía 5°</div>
+    <div class="header-badges">
+      <div class="header-badge">🖼️ Visual no verbal</div>
+      <div class="header-badge secondary">Nivel difícil</div>
+    </div>
   </div>
-</div>
 
-<div class="progreso">
-  <div class="puntos">
-    <div class="punto activo" id="dot-0" onclick="goToPage(0)">1</div>
-    <div class="punto" id="dot-1" onclick="goToPage(1)">2</div>
-    <div class="punto" id="dot-2" onclick="goToPage(2)">3</div>
-    <div class="punto" id="dot-3" onclick="goToPage(3)">4</div>
-  </div>
-  <span class="badge-pag">Pág <span id="numActual">1</span>/4</span>
-</div>
-
-<div class="section-title-bar">
-  <span class="sicon" id="sectionIcon">🧳</span>
-  <span id="sectionTitle">Migración humana</span>
-</div>
-
-<div class="main-wrap">
-
-  <div class="page active" id="pagina1">
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">CONTENIDO</span>
-        <div class="game-title">Migración humana</div>
+  <div class="progress-shell">
+    <div class="progress-bar-wrap">
+      <div class="progress-icon">🖼️</div>
+      <div class="progress-dots" id="progressDots">
+        <div class="progress-dot active">1</div>
+        <div class="progress-dot">2</div>
+        <div class="progress-dot">3</div>
+        <div class="progress-dot">4</div>
       </div>
-      <div class="game-body">
-        <div class="topic-hero">
-          <div>
-            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg" alt="Personas moviéndose en una estación" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg'">
-            <div class="hero-caption">Moverse de un lugar a otro cambia la vida de las personas y también la distribución de la población.</div>
-          </div>
-          <div class="hero-copy">
-            <h3>Ideas clave para observar</h3>
-            <p>La migración ocurre cuando una persona o familia cambia de lugar para vivir. A veces sale porque algo la empuja. Otras veces llega porque otro sitio ofrece mejores oportunidades.</p>
-            <div class="hero-mini-list">
-              <span>🚶 Emigrar: salir del lugar de origen.</span>
-              <span>🏠 Inmigrar: llegar a un nuevo lugar.</span>
-              <span>⚠️ Factores de salida: sequía, violencia, desempleo.</span>
-              <span>✨ Factores de atracción: trabajo, escuela, salud, familia.</span>
+      <div class="progress-label">Pág. <span id="numActual">1</span>/4</div>
+    </div>
+  </div>
+
+  <main class="main-wrap">
+    <section class="page active" id="page1">
+      <div class="lesson-card">
+        <div class="section-chip">🧳 Página 1 · Migración</div>
+        <h2 class="lesson-title">🧳 Señales de la migración</h2>
+        <p class="lesson-intro">Una migración puede empezar por una necesidad o por una oportunidad. También conviene distinguir de dónde sale alguien y a dónde llega.</p>
+
+        <div class="hero-layout">
+          <figure class="hero-figure">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Train%20station%20crowd%20in%20black%20and%20white%20%28Unsplash%29.jpg" alt="Personas moviendose en una estacion">
+            <figcaption>🔄 Moverse de un lugar a otro cambia a las familias y también a las ciudades.</figcaption>
+          </figure>
+
+          <div class="note-grid">
+            <div class="note-card">
+              <div class="note-icon">🚪</div>
+              <div>
+                <strong>Expulsión</strong>
+                <p>Algo empuja a salir: falta de trabajo, sequía o violencia.</p>
+              </div>
+            </div>
+            <div class="note-card">
+              <div class="note-icon">✨</div>
+              <div>
+                <strong>Atracción</strong>
+                <p>Algo anima a llegar: escuelas, hospitales o empleo.</p>
+              </div>
+            </div>
+            <div class="mini-strip">
+              <div class="mini-box"><span>🏠</span><small>origen</small></div>
+              <div class="mini-box"><span>📍</span><small>destino</small></div>
+              <div class="mini-box"><span>🚪</span><small>sale</small></div>
+              <div class="mini-box"><span>✨</span><small>llega</small></div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 1</span>
-        <div class="game-title">Marca solo los factores de salida</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">👀</span>
-        <span>Selecciona únicamente las escenas que empujan a una familia a salir de su comunidad.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">✅ Deben quedar marcadas solo 4 tarjetas</div>
-        <div class="icon-grid" id="flag-game">
-          <div class="icon-card" data-correct="yes" onclick="flagClick(this)"><span class="icon-emoji">🌵</span><div class="icon-label">Sequía</div></div>
-          <div class="icon-card" data-correct="yes" onclick="flagClick(this)"><span class="icon-emoji">💼❌</span><div class="icon-label">Desempleo</div></div>
-          <div class="icon-card" data-correct="yes" onclick="flagClick(this)"><span class="icon-emoji">⚠️</span><div class="icon-label">Violencia</div></div>
-          <div class="icon-card" data-correct="yes" onclick="flagClick(this)"><span class="icon-emoji">🚱</span><div class="icon-label">Falta de agua</div></div>
-          <div class="icon-card" data-correct="no" onclick="flagClick(this)"><span class="icon-emoji">🎉</span><div class="icon-label">Fiesta local</div></div>
-          <div class="icon-card" data-correct="no" onclick="flagClick(this)"><span class="icon-emoji">🌳</span><div class="icon-label">Parque nuevo</div></div>
-          <div class="icon-card" data-correct="no" onclick="flagClick(this)"><span class="icon-emoji">🏖️</span><div class="icon-label">Turismo</div></div>
-          <div class="icon-card" data-correct="no" onclick="flagClick(this)"><span class="icon-emoji">🎨</span><div class="icon-label">Mural comunitario</div></div>
-        </div>
-        <div class="btn-row">
-          <button class="btn" onclick="checkFlags()">Revisar selección</button>
-          <button class="btn" onclick="resetFlags()">Reiniciar</button>
-        </div>
-        <div class="feedback" id="fb-flags"></div>
-      </div>
-    </div>
+        <div class="activity-shell">
+          <h3 class="activity-title">🔎 Completa la señal correcta</h3>
+          <p class="activity-lead">Cada tarjeta muestra una pista visual. Toca la mejor señal para completarla.</p>
+          <div class="score-pill">✅ Aciertos: <span id="routeScore">0/4</span></div>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 2</span>
-        <div class="game-title">¿Qué símbolo representa mejor la idea?</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">🧠</span>
-        <span>Observa la consigna y elige el símbolo o mini escena que mejor la representa.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">Aciertos: <span id="sym-hits">0</span>/5</div>
-        <div class="sym-question">
-          <p id="sym-q"></p>
-        </div>
-        <div class="sym-grid" id="sym-opts"></div>
-        <div class="btn-row">
-          <button class="btn" onclick="nextSym()">Siguiente símbolo</button>
-        </div>
-        <div class="feedback" id="fb-sym"></div>
-      </div>
-    </div>
-  </div>
+          <div class="signal-grid">
+            <article class="signal-card" data-q="0">
+              <div class="signal-head">
+                <strong>Tarjeta 1</strong>
+                <span class="mini-status" id="route-status-0">0</span>
+              </div>
+              <div class="signal-board">
+                <div class="photo-cluster two">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Drought.jpg" alt="Suelo seco por sequia">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20queue%20for%20water%201963.jpg" alt="Personas formadas para recibir agua">
+                </div>
+                <small>Ambientes difíciles y pocas oportunidades empujan a salir.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="tag-btn" data-choice="expulsion" onclick="answerRouteSignal(0, 'expulsion')">🚪 Expulsión</button>
+                <button type="button" class="tag-btn" data-choice="destino" onclick="answerRouteSignal(0, 'destino')">📍 Destino</button>
+                <button type="button" class="tag-btn" data-choice="atraccion" onclick="answerRouteSignal(0, 'atraccion')">✨ Atracción</button>
+              </div>
+            </article>
 
-  <div class="page" id="pagina2">
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">CONTENIDO</span>
-        <div class="game-title">Retos urbanos</div>
-      </div>
-      <div class="game-body">
-        <div class="topic-hero">
-          <div>
-            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg" alt="Tráfico intenso en ciudad" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg'">
-            <div class="hero-caption">Cuando la población crece rápido en la ciudad, aparecen problemas que necesitan soluciones urbanas.</div>
+            <article class="signal-card" data-q="1">
+              <div class="signal-head">
+                <strong>Tarjeta 2</strong>
+                <span class="mini-status" id="route-status-1">0</span>
+              </div>
+              <div class="signal-board">
+                <div class="photo-cluster two">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Ciudad grande con edificios y empleo">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/City%20Hospital%20%2816094046058%29.jpg" alt="Hospital como servicio urbano">
+                </div>
+                <small>Un lugar con empleo, servicios y vida urbana atrae población.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="tag-btn" data-choice="origen" onclick="answerRouteSignal(1, 'origen')">🏠 Origen</button>
+                <button type="button" class="tag-btn" data-choice="atraccion" onclick="answerRouteSignal(1, 'atraccion')">✨ Atracción</button>
+                <button type="button" class="tag-btn" data-choice="expulsion" onclick="answerRouteSignal(1, 'expulsion')">🚪 Expulsión</button>
+              </div>
+            </article>
+
+            <article class="signal-card" data-q="2">
+              <div class="signal-head">
+                <strong>Tarjeta 3</strong>
+                <span class="mini-status" id="route-status-2">0</span>
+              </div>
+              <div class="signal-board">
+                <div class="photo-cluster">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Rural%20village%20scene%2005.jpg" alt="Comunidad rural de origen">
+                </div>
+                <small>Es el lugar del que sale una persona o una familia.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="tag-btn" data-choice="origen" onclick="answerRouteSignal(2, 'origen')">🏠 Origen</button>
+                <button type="button" class="tag-btn" data-choice="destino" onclick="answerRouteSignal(2, 'destino')">📍 Destino</button>
+                <button type="button" class="tag-btn" data-choice="atraccion" onclick="answerRouteSignal(2, 'atraccion')">✨ Atracción</button>
+              </div>
+            </article>
+
+            <article class="signal-card" data-q="3">
+              <div class="signal-head">
+                <strong>Tarjeta 4</strong>
+                <span class="mini-status" id="route-status-3">0</span>
+              </div>
+              <div class="signal-board">
+                <div class="photo-cluster">
+                  <img class="signal-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Ciudad como destino urbano">
+                </div>
+                <small>Es el lugar al que llega la familia para vivir o trabajar.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="tag-btn" data-choice="expulsion" onclick="answerRouteSignal(3, 'expulsion')">🚪 Expulsión</button>
+                <button type="button" class="tag-btn" data-choice="destino" onclick="answerRouteSignal(3, 'destino')">📍 Destino</button>
+                <button type="button" class="tag-btn" data-choice="origen" onclick="answerRouteSignal(3, 'origen')">🏠 Origen</button>
+              </div>
+            </article>
           </div>
-          <div class="hero-copy">
-            <h3>Del reto a la mejora</h3>
-            <p>Las ciudades concentran muchos servicios, trabajos y escuelas, pero también pueden presentar tráfico, contaminación, basura o falta de vivienda adecuada.</p>
-            <div class="hero-mini-list">
-              <span>🚦 Tráfico: demasiados autos y poco orden.</span>
-              <span>🌫️ Contaminación: aire o ruido que afectan la salud.</span>
-              <span>🗑️ Basura: residuos sin manejo adecuado.</span>
-              <span>🌳 Mejora urbana: parques, transporte, agua y salud.</span>
+
+          <div class="activity-feedback" id="fbRouteSignals"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page2">
+      <div class="lesson-card">
+        <div class="section-chip">🏙️ Página 2 · Retos urbanos</div>
+        <h2 class="lesson-title">🏙️ Problema y mejora</h2>
+        <p class="lesson-intro">Cuando una ciudad crece muy rápido, aparecen problemas. La idea es reconocer cuál mejora ayuda mejor a cada reto.</p>
+
+        <div class="hero-layout">
+          <figure class="hero-figure">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kyiv%20traffic%20jam.JPG" alt="Trafico intenso en la ciudad">
+            <figcaption>⚠️ Una ciudad necesita planeación para que más población no signifique más problemas.</figcaption>
+          </figure>
+
+          <div class="note-grid">
+            <div class="note-card">
+              <div class="note-icon">🚗</div>
+              <div>
+                <strong>Reto</strong>
+                <p>Tráfico, hacinamiento, pocos servicios y poco espacio verde.</p>
+              </div>
+            </div>
+            <div class="note-card">
+              <div class="note-icon">🛠️</div>
+              <div>
+                <strong>Mejora</strong>
+                <p>Transporte público, más viviendas, servicios y áreas verdes.</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 3</span>
-        <div class="game-title">Selecciona solo los retos urbanos</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">🏙️</span>
-        <span>Marca únicamente las tarjetas que muestran un problema de la vida urbana.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">✅ Deben quedar marcadas solo 4 tarjetas</div>
-        <div class="icon-grid" id="campo-game">
-          <div class="icon-card" data-correct="yes" onclick="campoClick(this)"><span class="icon-emoji">🚦</span><div class="icon-label">Tráfico pesado</div></div>
-          <div class="icon-card" data-correct="yes" onclick="campoClick(this)"><span class="icon-emoji">🗑️</span><div class="icon-label">Basura acumulada</div></div>
-          <div class="icon-card" data-correct="yes" onclick="campoClick(this)"><span class="icon-emoji">🌫️</span><div class="icon-label">Aire contaminado</div></div>
-          <div class="icon-card" data-correct="yes" onclick="campoClick(this)"><span class="icon-emoji">🏚️</span><div class="icon-label">Viviendas apretadas</div></div>
-          <div class="icon-card" data-correct="no" onclick="campoClick(this)"><span class="icon-emoji">🌳</span><div class="icon-label">Parque limpio</div></div>
-          <div class="icon-card" data-correct="no" onclick="campoClick(this)"><span class="icon-emoji">🚇</span><div class="icon-label">Transporte público</div></div>
-          <div class="icon-card" data-correct="no" onclick="campoClick(this)"><span class="icon-emoji">🏥</span><div class="icon-label">Clínica cercana</div></div>
-          <div class="icon-card" data-correct="no" onclick="campoClick(this)"><span class="icon-emoji">🚰</span><div class="icon-label">Agua potable</div></div>
-        </div>
-        <div class="btn-row">
-          <button class="btn" onclick="checkCampo()">Revisar selección</button>
-          <button class="btn" onclick="resetCampo()">Reiniciar</button>
-        </div>
-        <div class="feedback" id="fb-campo"></div>
-      </div>
-    </div>
+        <div class="activity-shell">
+          <h3 class="activity-title">🔗 Une problema con mejora</h3>
+          <p class="activity-lead">Primero toca un problema. Luego toca la mejora que mejor lo ayudaría.</p>
+          <div class="score-pill">🔗 Parejas correctas: <span id="matchScore">0/4</span></div>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 4</span>
-        <div class="game-title">¿Esto es un reto o una mejora?</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">🔍</span>
-        <span>Observa la mini escena y decide si representa un reto urbano o una mejora para la ciudad.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">Ronda: <span id="pq-round">1</span>/8 · Aciertos: <span id="pq-score">0</span></div>
-        <div class="pic-question">
-          <span class="pic-emoji" id="pq-emoji">🚦</span>
-          <div class="pic-desc" id="pq-desc">¿Reto urbano o mejora?</div>
-        </div>
-        <div class="btn-row">
-          <button class="btn" onclick="answerPQ('reto')">Es un reto</button>
-          <button class="btn" onclick="answerPQ('mejora')">Es una mejora</button>
-        </div>
-        <div class="feedback" id="fb-pq"></div>
-      </div>
-    </div>
-  </div>
+          <div class="match-shell">
+            <div class="match-grid">
+              <div class="match-column">
+                <strong>⚠️ Problemas</strong>
+                <div class="stack">
+                  <button type="button" class="pair-card" data-side="left" data-id="trafico" onclick="selectRetoPair(this, 'left', 'trafico')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kyiv%20traffic%20jam.JPG" alt="Calles saturadas de trafico">
+                    <small>tráfico intenso</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="left" data-id="vivienda" onclick="selectRetoPair(this, 'left', 'vivienda')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dharavi%20Slum.jpg" alt="Zona con mucha presion de vivienda">
+                    <small>hacinamiento y falta de vivienda</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="left" data-id="agua" onclick="selectRetoPair(this, 'left', 'agua')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20queue%20for%20water%201963.jpg" alt="Personas esperando agua por falta de servicio">
+                    <small>crecimiento sin servicios básicos</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="left" data-id="parques" onclick="selectRetoPair(this, 'left', 'parques')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Atlanta%20thermal.jpg" alt="Mapa termico de calor urbano">
+                    <small>mucho calor y poco espacio verde</small>
+                  </button>
+                </div>
+              </div>
 
-  <div class="page" id="pagina3">
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">CONTENIDO</span>
-        <div class="game-title">Análisis de población</div>
-      </div>
-      <div class="game-body">
-        <div class="topic-hero">
-          <div>
-            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="Luces nocturnas en la Tierra" onerror="this.src='/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg'">
-            <div class="hero-caption">Las luces, mapas y gráficas ayudan a observar dónde vive más gente y cómo se distribuye.</div>
-          </div>
-          <div class="hero-copy">
-            <h3>Pistas para leer los datos</h3>
-            <p>Analizar población no es solo contar habitantes. También importa saber en qué lugares se concentran, dónde están dispersos y cuánto cambia la población con el tiempo.</p>
-            <div class="hero-mini-list">
-              <span>👥/km² Densidad: habitantes por kilómetro cuadrado.</span>
-              <span>🌃 Concentración: mucha gente en poco espacio.</span>
-              <span>🌾 Dispersión: personas separadas en un territorio amplio.</span>
-              <span>📈 Crecimiento: aumento de población con el tiempo.</span>
+              <div class="match-column">
+                <strong>🛠️ Mejoras</strong>
+                <div class="stack">
+                  <button type="button" class="pair-card" data-side="right" data-id="parques" onclick="selectRetoPair(this, 'right', 'parques')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pocket%20Park.jpg" alt="Parque pequeno con areas verdes">
+                    <small>más parques y árboles</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="right" data-id="trafico" onclick="selectRetoPair(this, 'right', 'trafico')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BusTransJakarta.jpg" alt="Transporte publico en autobus">
+                    <small>mejor transporte público</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="right" data-id="agua" onclick="selectRetoPair(this, 'right', 'agua')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Morse%20Road%20Water%20Treatment%20Plant%20-%20DPLA%20-%207c8b24adc76207c025b685951e2691f7.jpg" alt="Planta de tratamiento de agua">
+                    <small>más agua y red de servicio</small>
+                  </button>
+                  <button type="button" class="pair-card" data-side="right" data-id="vivienda" onclick="selectRetoPair(this, 'right', 'vivienda')">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Housing%20construction%20-%20geograph.org.uk%20-%206998620.jpg" alt="Construccion de viviendas">
+                    <small>construcción de más viviendas</small>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div class="activity-feedback" id="fbRetoPairs"></div>
         </div>
-        <div class="insight-grid">
-          <div class="insight-card">
-            <span class="insight-icon">🗺️</span>
-            <strong>Mapa</strong>
-            <p>Muestra en qué regiones vive más o menos población.</p>
-          </div>
-          <div class="insight-card">
-            <span class="insight-icon">💡</span>
-            <strong>Luces nocturnas</strong>
-            <p>Ayudan a observar ciudades y zonas muy pobladas.</p>
-          </div>
-          <div class="insight-card">
-            <span class="insight-icon">📊</span>
-            <strong>Gráficas</strong>
-            <p>Comparan cambios y permiten ver tendencias.</p>
+      </div>
+    </section>
+
+    <section class="page" id="page3">
+      <div class="lesson-card">
+        <div class="section-chip">📊 Página 3 · Análisis de población</div>
+        <h2 class="lesson-title">📊 Completa el panel visual</h2>
+        <p class="lesson-intro">Ahora toca reconocer cuatro ideas clave: densidad, concentración, dispersión y crecimiento. Cada una se puede leer con una pista visual distinta.</p>
+
+        <div class="mini-strip">
+          <div class="mini-box"><span>📏</span><small>mismo espacio</small></div>
+          <div class="mini-box"><span>🏙️</span><small>mucha gente junta</small></div>
+          <div class="mini-box"><span>🌾</span><small>personas separadas</small></div>
+          <div class="mini-box"><span>📈</span><small>sube con el tiempo</small></div>
+        </div>
+
+        <div class="activity-shell">
+          <h3 class="activity-title">🧠 Elige un chip y colócalo</h3>
+          <p class="activity-lead">Toca un chip del banco y luego toca la tarjeta donde debe ir. Si quieres quitarlo, vuelve a tocar la tarjeta.</p>
+          <div class="score-pill">🧩 Correctas: <span id="panelScore">0/4</span></div>
+
+          <div class="panel-shell">
+            <div class="panel-grid">
+              <button type="button" class="slot-card" data-slot="0" onclick="fillAnalysisSlot(0)">
+                <strong>Tarjeta 1</strong>
+                <div class="visual-box photo-box">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/WorldPopulationDensity.png" alt="Mapa de densidad de poblacion mundial">
+                </div>
+                <div class="slot-label" id="analysis-slot-0">_____</div>
+              </button>
+
+              <button type="button" class="slot-card" data-slot="1" onclick="fillAnalysisSlot(1)">
+                <strong>Tarjeta 2</strong>
+                <div class="visual-box photo-box">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shibuya%20Crossing%20005.jpg" alt="Muchas personas reunidas en poco espacio">
+                </div>
+                <div class="slot-label" id="analysis-slot-1">_____</div>
+              </button>
+
+              <button type="button" class="slot-card" data-slot="2" onclick="fillAnalysisSlot(2)">
+                <strong>Tarjeta 3</strong>
+                <div class="visual-box photo-box">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Toconao%20Seen%20From%20Above.jpg" alt="Poblacion dispersa en un territorio amplio">
+                </div>
+                <div class="slot-label" id="analysis-slot-2">_____</div>
+              </button>
+
+              <button type="button" class="slot-card" data-slot="3" onclick="fillAnalysisSlot(3)">
+                <strong>Tarjeta 4</strong>
+                <div class="visual-box photo-box dual">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/View%20of%20Downtown%20Keij%C5%8D%20from%20Seoul%20City%20Wall%20around%20early%201900s.jpg" alt="Ciudad en un tiempo anterior">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Seoul%20Skyline%20%286907571755%29.jpg" alt="Ciudad con mayor crecimiento">
+                </div>
+                <div class="slot-label" id="analysis-slot-3">_____</div>
+              </button>
+            </div>
+
+            <div class="chip-bank" id="analysisBank">
+              <button type="button" class="concept-chip" data-word="densidad" onclick="selectAnalysisChip(this)">📏 Densidad</button>
+              <button type="button" class="concept-chip" data-word="concentracion" onclick="selectAnalysisChip(this)">🏙️ Concentración</button>
+              <button type="button" class="concept-chip" data-word="dispersion" onclick="selectAnalysisChip(this)">🌾 Dispersión</button>
+              <button type="button" class="concept-chip" data-word="crecimiento" onclick="selectAnalysisChip(this)">📈 Crecimiento</button>
+            </div>
+
+            <button type="button" class="check-btn" onclick="checkAnalysisPanel()">✅ Revisar panel</button>
+            <div class="activity-feedback" id="fbAnalysisPanel"></div>
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="page" id="page4">
+      <div class="lesson-card">
+        <div class="section-chip">🎯 Página 4 · Misiones finales</div>
+        <h2 class="lesson-title">🎯 Activa las 4 misiones</h2>
+        <p class="lesson-intro">Aquí ya no repites la misma acción. Cada misión pide mirar un detalle distinto: espacio, movimiento, servicios o lectura de datos.</p>
+
+        <div class="activity-shell" style="margin-top: 0;">
+          <h3 class="activity-title">🧩 Una misión, una idea</h3>
+          <p class="activity-lead">Cada misión tiene pocas opciones y una sola respuesta correcta. Si fallas, podrás intentar otra vez con otra opción.</p>
+          <div class="score-pill">⭐ Aciertos: <span id="missionScore">0/4</span></div>
+
+          <div class="mission-grid">
+            <article class="mission-card" data-q="0">
+              <div class="mission-head">
+                <strong>Misión 1</strong>
+                <span class="mini-status" id="mission-status-0">0</span>
+              </div>
+              <div class="mission-figure">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Zona urbana con mucha actividad">
+              </div>
+              <div class="choice-row double">
+                <button type="button" class="mission-btn" data-choice="urbano" onclick="answerMission(0, 'urbano')">🏙️ Urbano</button>
+                <button type="button" class="mission-btn" data-choice="rural" onclick="answerMission(0, 'rural')">🌾 Rural</button>
+              </div>
+            </article>
+
+            <article class="mission-card" data-q="1">
+              <div class="mission-head">
+                <strong>Misión 2</strong>
+                <span class="mini-status" id="mission-status-1">0</span>
+              </div>
+              <div class="mission-figure dual">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rural%20village%20scene%2005.jpg" alt="Lugar rural con pocas viviendas">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Ciudad como lugar de llegada">
+                <small>Del campo hacia una ciudad con más edificios y servicios.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="mission-btn" data-choice="destino" onclick="answerMission(1, 'destino')">📍 Destino</button>
+                <button type="button" class="mission-btn" data-choice="exodo" onclick="answerMission(1, 'exodo')">🌾➡️🏙️ Éxodo rural</button>
+                <button type="button" class="mission-btn" data-choice="servicios" onclick="answerMission(1, 'servicios')">🛠️ Servicios</button>
+              </div>
+            </article>
+
+            <article class="mission-card" data-q="2">
+              <div class="mission-head">
+                <strong>Misión 3</strong>
+                <span class="mini-status" id="mission-status-2">0</span>
+              </div>
+              <div class="mission-figure dual">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kyiv%20traffic%20jam.JPG" alt="Ciudad con movilidad complicada">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BusTransJakarta.jpg" alt="Ciudad con transporte publico">
+                <small>Una ciudad que crece necesita agua, transporte y vivienda.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="mission-btn" data-choice="servicios" onclick="answerMission(2, 'servicios')">🛠️ Servicios</button>
+                <button type="button" class="mission-btn" data-choice="expulsion" onclick="answerMission(2, 'expulsion')">🚪 Expulsión</button>
+                <button type="button" class="mission-btn" data-choice="dispersion" onclick="answerMission(2, 'dispersion')">🌾 Dispersión</button>
+              </div>
+            </article>
+
+            <article class="mission-card" data-q="3">
+              <div class="mission-head">
+                <strong>Misión 4</strong>
+                <span class="mini-status" id="mission-status-3">0</span>
+              </div>
+              <div class="mission-figure dual">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/View%20of%20Downtown%20Keij%C5%8D%20from%20Seoul%20City%20Wall%20around%20early%201900s.jpg" alt="Ciudad en un tiempo anterior">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Seoul%20Skyline%20%286907571755%29.jpg" alt="Ciudad en crecimiento">
+                <small>Cuando una ciudad pasa del ayer al hoy y se vuelve más grande, hay crecimiento.</small>
+              </div>
+              <div class="choice-row triple">
+                <button type="button" class="mission-btn" data-choice="crecimiento" onclick="answerMission(3, 'crecimiento')">📈 Crecimiento</button>
+                <button type="button" class="mission-btn" data-choice="concentracion" onclick="answerMission(3, 'concentracion')">🏙️ Concentración</button>
+                <button type="button" class="mission-btn" data-choice="origen" onclick="answerMission(3, 'origen')">🏠 Origen</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="activity-feedback" id="fbMissions"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="nav-bar">
+      <button class="btn-nav" id="btnPrev" onclick="changePage(-1)" disabled>← ANTERIOR</button>
+      <div class="ind-pag" id="indPag">1/4</div>
+      <button class="btn-nav" id="btnNext" onclick="changePage(1)" disabled>SIGUIENTE →</button>
     </div>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 5</span>
-        <div class="game-title">Relaciona símbolo con concepto</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">🔗</span>
-        <span>Primero toca una escena visual y después el concepto que mejor la explica. Cada pareja correcta quedará marcada en verde.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">Parejas correctas: <span id="cult-match-score">0</span>/5</div>
-        <div class="match-grid-v">
-          <div class="match-col-v">
-            <span class="match-side-label">ESCENAS</span>
-            <div class="match-card-v" data-id="densidad" onclick="culturalMatch(this,'left')"><div class="match-stack"><div class="match-visual">👥📐</div><div class="match-text">Conteo de personas en un espacio medido</div></div></div>
-            <div class="match-card-v" data-id="concentracion" onclick="culturalMatch(this,'left')"><div class="match-stack"><div class="match-visual">🌃🌃🌃</div><div class="match-text">Muchos edificios y mucha gente en poco espacio</div></div></div>
-            <div class="match-card-v" data-id="dispersion" onclick="culturalMatch(this,'left')"><div class="match-stack"><div class="match-visual">🏠 &nbsp; 🌾 &nbsp; 🏠</div><div class="match-text">Casas separadas en un territorio amplio</div></div></div>
-            <div class="match-card-v" data-id="crecimiento" onclick="culturalMatch(this,'left')"><div class="match-stack"><div class="match-visual">📈👨‍👩‍👧‍👦</div><div class="match-text">La cantidad de habitantes va aumentando</div></div></div>
-            <div class="match-card-v" data-id="baja" onclick="culturalMatch(this,'left')"><div class="match-stack"><div class="match-visual">⛰️🏠</div><div class="match-text">Territorio amplio con muy pocas viviendas</div></div></div>
-          </div>
-          <div class="match-col-v">
-            <span class="match-side-label">CONCEPTOS</span>
-            <div class="match-card-v" data-id="baja" onclick="culturalMatch(this,'right')">Baja densidad</div>
-            <div class="match-card-v" data-id="dispersion" onclick="culturalMatch(this,'right')">Dispersión</div>
-            <div class="match-card-v" data-id="concentracion" onclick="culturalMatch(this,'right')">Concentración</div>
-            <div class="match-card-v" data-id="densidad" onclick="culturalMatch(this,'right')">Habitantes por km²</div>
-            <div class="match-card-v" data-id="crecimiento" onclick="culturalMatch(this,'right')">Crecimiento poblacional</div>
-          </div>
-        </div>
-        <div class="feedback" id="fb-cmatch"></div>
-      </div>
-    </div>
+    <a href="quiz.html" class="quiz-btn bloqueado" id="quizBtn" aria-disabled="true">IR AL QUIZ</a>
+  </main>
 
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">JUEGO 6</span>
-        <div class="game-title">Lee la escena visual</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">📊</span>
-        <span>Observa la imagen y elige el concepto que mejor la describe. La escena cambia en cada ronda.</span>
-      </div>
-      <div class="game-body">
-        <div class="score-counter">Aciertos: <span id="cq-hits">0</span>/6</div>
-        <div class="scene-card">
-          <div class="scene-thumb-wrap">
-            <img id="cq-image" class="scene-thumb" src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-a7e0d25c69.jpg" alt="Escena visual de población">
-            <div class="scene-tag" id="cq-tag">ESCENA VISUAL</div>
-          </div>
-          <div class="scene-note" id="cq-note">Observa con atención qué muestra la imagen.</div>
-        </div>
-        <div class="pic-question">
-          <div class="pic-desc" id="cq-desc">¿Qué concepto representa mejor?</div>
-        </div>
-        <div id="cq-opts"></div>
-        <div class="btn-row">
-          <button class="btn" onclick="nextCQ()">Siguiente escena</button>
-        </div>
-        <div class="feedback" id="fb-cq"></div>
-      </div>
-    </div>
-  </div>
+  <script>
+    const TOTAL_PAGES = 4;
+    let currentPage = 0;
+    const pageProgress = { 1: false, 2: false, 3: false, 4: false };
 
-  <div class="page" id="pagina4">
-    <div class="game-card">
-      <div class="game-card-header">
-        <span class="game-number">REPASO</span>
-        <div class="game-title">Repaso visual final</div>
-      </div>
-      <div class="game-instruction">
-        <span class="instr-icon">🏁</span>
-        <span>Responde las preguntas observando símbolos, conceptos y escenas del nivel.</span>
-      </div>
-      <div class="game-body">
-        <div id="repaso-container">
-          <div class="score-counter">Aciertos: <span id="repaso-pts">0</span>/10</div>
-          <div class="rep-pbar-wrap"><div class="rep-pbar-fill" id="repaso-prog" style="width:10%"></div></div>
-          <div class="sym-question">
-            <span class="pic-emoji" id="rep-emoji">🧳</span>
-            <p id="repaso-q">Cargando pregunta...</p>
-            <div style="margin-top:8px;color:var(--gold);font-weight:800;">Pregunta <span id="rep-num">1</span> de 10</div>
-          </div>
-          <div id="repaso-opts"></div>
-          <div class="feedback" id="fb-rep"></div>
-        </div>
-
-        <div id="repaso-end" class="repaso-end" style="display:none;">
-          <div style="font-size:3rem;margin-bottom:6px;">🏆</div>
-          <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;color:var(--gold);margin-bottom:8px;">¡Repaso completado!</h3>
-          <p style="color:var(--gris-pale);margin-bottom:8px;">Aciertos finales: <strong id="rep-final">0</strong>/10</p>
-          <div id="rep-badge" style="margin:10px 0;"></div>
-          <button class="btn" onclick="restartRepaso()">Jugar de nuevo</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-bar">
-    <button class="btn-nav" id="btnAnt" onclick="changePage(-1)" disabled>← ANTERIOR</button>
-    <span class="ind-pag" id="indPag">1/4</span>
-    <button class="btn-nav" id="btnSig" onclick="changePage(1)">SIGUIENTE →</button>
-  </div>
-  <a class="boton-quiz" href="quiz.html">IR AL QUIZ</a>
-</div>
-
-<script>
-let currentPage = 0;
-const TOTAL_PAGES = 4;
-const PAGE_LABELS = [
-  { icon: '🧳', title: 'Migración humana' },
-  { icon: '🏙️', title: 'Retos urbanos' },
-  { icon: '📊', title: 'Análisis de población' },
-  { icon: '🏁', title: 'Repaso visual final' }
-];
-
-const progresoVisualNoVerbal = {
-  1: { flags: false, symbols: false },
-  2: { campo: false, pq: false },
-  3: { match: false, cq: false },
-  4: { repaso: false }
-};
-
-const paginasCelebradas = new Set();
-const symCorrectSet = new Set();
-let symIdx = 0;
-let symCurrentResolved = false;
-
-let pqIdx = 0;
-let pqScore = 0;
-let pqActive = false;
-let pqCurrentResolved = false;
-
-let cultMatchSel = null;
-let cultMatchSide = '';
-let cultMatchPairs = new Set();
-
-const cqCorrectSet = new Set();
-let cqIdx = 0;
-let cqHits = 0;
-let cqCurrentResolved = false;
-
-let repIdx = 0;
-let repPts = 0;
-
-const sonidos = {
-  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
-  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
-  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
-};
-
-Object.values(sonidos).forEach(audio => {
-  if (audio && audio.src) audio.volume = 0.15;
-});
-
-function reproducirSonido(nombre) {
-  const audio = sonidos[nombre];
-  if (!audio || !audio.src) return;
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
-}
-
-function addPoints() {}
-
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function shuffleOptionsInQuestion(item) {
-  const pairs = item.opts.map((opt, index) => ({ opt, correct: index === item.a }));
-  shuffleArray(pairs);
-  item.opts = pairs.map(pair => pair.opt);
-  item.a = pairs.findIndex(pair => pair.correct);
-}
-
-function shuffleChildren(container) {
-  if (!container) return;
-  const items = Array.from(container.children);
-  const shuffled = shuffleArray(items.slice());
-  shuffled.forEach(item => container.appendChild(item));
-}
-
-function prepararElementosAleatorios() {
-  shuffleArray(symData);
-  symData.forEach(shuffleOptionsInQuestion);
-  shuffleArray(pqData);
-  shuffleArray(cqData);
-  cqData.forEach(shuffleOptionsInQuestion);
-  shuffleArray(repasoQ);
-  repasoQ.forEach(shuffleOptionsInQuestion);
-}
-
-function mezclarTarjetasVisuales() {
-  shuffleChildren(document.getElementById('flag-game'));
-  shuffleChildren(document.getElementById('campo-game'));
-  document.querySelectorAll('.match-col-v').forEach(col => {
-    const label = col.querySelector('.match-side-label');
-    const cards = Array.from(col.querySelectorAll('.match-card-v'));
-    const shuffled = shuffleArray(cards.slice());
-    shuffled.forEach(card => col.appendChild(card));
-    if (label) col.insertBefore(label, col.firstChild);
-  });
-}
-
-function makeSceneSvg(type) {
-  const scenes = {
-    city: `
-      <rect width="800" height="500" fill="#1f2438"/>
-      <rect y="360" width="800" height="140" fill="#33243a"/>
-      <rect x="80" y="150" width="120" height="210" rx="6" fill="#4c5a7a"/>
-      <rect x="220" y="90" width="130" height="270" rx="6" fill="#58698e"/>
-      <rect x="370" y="120" width="150" height="240" rx="6" fill="#475775"/>
-      <rect x="550" y="170" width="120" height="190" rx="6" fill="#5c6d93"/>
-      <g fill="#ffd96b">
-        <rect x="100" y="180" width="16" height="18"/><rect x="132" y="180" width="16" height="18"/><rect x="164" y="180" width="16" height="18"/>
-        <rect x="100" y="214" width="16" height="18"/><rect x="132" y="214" width="16" height="18"/><rect x="164" y="214" width="16" height="18"/>
-        <rect x="248" y="124" width="18" height="20"/><rect x="282" y="124" width="18" height="20"/><rect x="316" y="124" width="18" height="20"/>
-        <rect x="248" y="160" width="18" height="20"/><rect x="282" y="160" width="18" height="20"/><rect x="316" y="160" width="18" height="20"/>
-        <rect x="402" y="152" width="18" height="18"/><rect x="438" y="152" width="18" height="18"/><rect x="474" y="152" width="18" height="18"/>
-        <rect x="576" y="198" width="16" height="16"/><rect x="608" y="198" width="16" height="16"/><rect x="640" y="198" width="16" height="16"/>
-      </g>
-      <circle cx="150" cy="400" r="13" fill="#ffe08a"/><circle cx="200" cy="410" r="13" fill="#ffe08a"/><circle cx="250" cy="400" r="13" fill="#ffe08a"/>
-      <circle cx="470" cy="402" r="13" fill="#ffe08a"/><circle cx="520" cy="412" r="13" fill="#ffe08a"/><circle cx="570" cy="402" r="13" fill="#ffe08a"/>
-    `,
-    dispersed: `
-      <rect width="800" height="500" fill="#dbeed8"/>
-      <rect y="310" width="800" height="190" fill="#9ed28a"/>
-      <path d="M0 330 Q140 280 280 320 T560 320 T800 300 V500 H0 Z" fill="#7eb868"/>
-      <g>
-        <rect x="90" y="270" width="70" height="50" fill="#f8f1dd"/><polygon points="80,270 125,235 170,270" fill="#af5d4a"/>
-        <rect x="365" y="220" width="74" height="54" fill="#f8f1dd"/><polygon points="355,220 402,185 449,220" fill="#af5d4a"/>
-        <rect x="625" y="275" width="70" height="50" fill="#f8f1dd"/><polygon points="615,275 660,242 705,275" fill="#af5d4a"/>
-      </g>
-      <g fill="#4f8f48">
-        <circle cx="220" cy="260" r="38"/><rect x="212" y="260" width="16" height="58" fill="#7b4f2f"/>
-        <circle cx="540" cy="250" r="35"/><rect x="533" y="250" width="14" height="60" fill="#7b4f2f"/>
-      </g>
-    `,
-    density: `
-      <rect width="800" height="500" fill="#eaf0f9"/>
-      <rect x="80" y="80" width="640" height="340" rx="20" fill="#24344f"/>
-      <g>
-        <rect x="120" y="120" width="120" height="90" fill="#f2c94c"/>
-        <rect x="260" y="120" width="120" height="90" fill="#e67e22"/>
-        <rect x="400" y="120" width="120" height="90" fill="#eb5757"/>
-        <rect x="540" y="120" width="120" height="90" fill="#6fcf97"/>
-        <rect x="120" y="230" width="120" height="90" fill="#6fcf97"/>
-        <rect x="260" y="230" width="120" height="90" fill="#f2c94c"/>
-        <rect x="400" y="230" width="120" height="90" fill="#eb5757"/>
-        <rect x="540" y="230" width="120" height="90" fill="#e67e22"/>
-      </g>
-      <rect x="120" y="350" width="540" height="18" rx="9" fill="#ffffff"/>
-      <rect x="120" y="350" width="160" height="18" rx="9" fill="#6fcf97"/>
-      <rect x="280" y="350" width="160" height="18" rx="0" fill="#f2c94c"/>
-      <rect x="440" y="350" width="220" height="18" rx="9" fill="#eb5757"/>
-    `,
-    growth: `
-      <rect width="800" height="500" fill="#f0edf8"/>
-      <rect x="90" y="80" width="620" height="340" rx="20" fill="#ffffff"/>
-      <line x1="150" y1="360" x2="650" y2="360" stroke="#58407a" stroke-width="8"/>
-      <line x1="150" y1="360" x2="150" y2="130" stroke="#58407a" stroke-width="8"/>
-      <polyline points="180,330 270,300 360,270 470,220 600,150" fill="none" stroke="#e85d8a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-      <polygon points="590,145 640,145 615,105" fill="#e85d8a"/>
-      <g fill="#f4c842">
-        <circle cx="180" cy="330" r="10"/><circle cx="270" cy="300" r="10"/><circle cx="360" cy="270" r="10"/><circle cx="470" cy="220" r="10"/><circle cx="600" cy="150" r="10"/>
-      </g>
-      <g fill="#6b0f2b">
-        <circle cx="240" cy="405" r="14"/><circle cx="280" cy="405" r="14"/><circle cx="320" cy="405" r="14"/>
-        <circle cx="520" cy="405" r="14"/><circle cx="560" cy="405" r="14"/><circle cx="600" cy="405" r="14"/><circle cx="640" cy="405" r="14"/>
-      </g>
-    `,
-    lights: `
-      <rect width="800" height="500" fill="#08111f"/>
-      <ellipse cx="400" cy="255" rx="230" ry="170" fill="#11345a"/>
-      <ellipse cx="390" cy="250" rx="200" ry="145" fill="#1f5a86"/>
-      <g fill="#ffd96b">
-        <circle cx="300" cy="210" r="5"/><circle cx="330" cy="228" r="6"/><circle cx="356" cy="240" r="5"/><circle cx="390" cy="250" r="7"/>
-        <circle cx="428" cy="230" r="6"/><circle cx="458" cy="212" r="5"/><circle cx="492" cy="240" r="7"/><circle cx="526" cy="258" r="5"/>
-        <circle cx="310" cy="280" r="5"/><circle cx="350" cy="292" r="6"/><circle cx="392" cy="300" r="7"/><circle cx="438" cy="288" r="6"/><circle cx="482" cy="300" r="5"/>
-      </g>
-      <g fill="#ffffff" opacity="0.9">
-        <circle cx="120" cy="90" r="2"/><circle cx="180" cy="140" r="2"/><circle cx="690" cy="90" r="2"/><circle cx="620" cy="130" r="2"/>
-      </g>
-    `,
-    lowdensity: `
-      <rect width="800" height="500" fill="#d8e7f6"/>
-      <path d="M0 340 L150 180 L280 330 L420 150 L560 330 L690 190 L800 340 V500 H0 Z" fill="#8aa0b8"/>
-      <path d="M0 380 Q180 340 360 370 T800 360 V500 H0 Z" fill="#9ad184"/>
-      <rect x="590" y="330" width="72" height="52" fill="#f7efd9"/>
-      <polygon points="580,330 626,292 672,330" fill="#a55743"/>
-      <circle cx="200" cy="360" r="34" fill="#4d8e4b"/>
-      <rect x="194" y="360" width="12" height="46" fill="#744d2e"/>
-    `
-  };
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">${scenes[type] || scenes.city}</svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
-function paginaCompleta(numero) {
-  return Object.values(progresoVisualNoVerbal[numero] || {}).every(Boolean);
-}
-
-function todoCompletado() {
-  return Object.keys(progresoVisualNoVerbal).every(numero => paginaCompleta(Number(numero)));
-}
-
-function completarSubactividad(pagina, clave) {
-  if (!progresoVisualNoVerbal[pagina] || progresoVisualNoVerbal[pagina][clave]) return;
-  progresoVisualNoVerbal[pagina][clave] = true;
-  if (paginaCompleta(pagina) && !paginasCelebradas.has(pagina)) {
-    paginasCelebradas.add(pagina);
-    reproducirSonido('tada');
-  }
-  syncLockedUI();
-}
-
-function puedeIrAPagina(destino) {
-  if (destino <= currentPage) return true;
-  for (let idx = currentPage; idx < destino; idx++) {
-    if (!paginaCompleta(idx + 1)) return false;
-  }
-  return true;
-}
-
-function syncLockedUI() {
-  document.getElementById('btnAnt').disabled = (currentPage === 0);
-  document.getElementById('btnSig').disabled = (currentPage === TOTAL_PAGES - 1) || !paginaCompleta(currentPage + 1);
-
-  const quizBtn = document.querySelector('.boton-quiz');
-  if (quizBtn) {
-    quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'block' : 'none';
-    const bloqueado = !todoCompletado();
-    quizBtn.classList.toggle('bloqueado', bloqueado);
-    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
-    quizBtn.tabIndex = bloqueado ? -1 : 0;
-    quizBtn.title = bloqueado ? 'Completa todas las páginas para desbloquear el quiz' : '';
-  }
-}
-
-function renderPage() {
-  document.querySelectorAll('.page').forEach((page, index) => {
-    page.classList.toggle('active', index === currentPage);
-  });
-
-  document.querySelectorAll('.punto').forEach((dot, index) => {
-    dot.classList.remove('activo', 'completado');
-    if (index === currentPage) dot.classList.add('activo');
-    else if (index < currentPage) dot.classList.add('completado');
-  });
-
-  document.getElementById('numActual').textContent = String(currentPage + 1);
-  document.getElementById('indPag').textContent = `${currentPage + 1}/${TOTAL_PAGES}`;
-  document.getElementById('sectionIcon').textContent = PAGE_LABELS[currentPage].icon;
-  document.getElementById('sectionTitle').textContent = PAGE_LABELS[currentPage].title;
-  syncLockedUI();
-}
-
-function goToPage(n) {
-  if (!puedeIrAPagina(n)) {
-    reproducirSonido('error');
-    return;
-  }
-  currentPage = n;
-  reproducirSonido('click');
-  renderPage();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function changePage(dir) {
-  const next = Math.max(0, Math.min(TOTAL_PAGES - 1, currentPage + dir));
-  goToPage(next);
-}
-
-function flagClick(el) {
-  reproducirSonido('click');
-  el.classList.toggle('selected');
-}
-
-function checkFlags() {
-  let ok = 0;
-  const total = 8;
-  document.querySelectorAll('#flag-game .icon-card').forEach(card => {
-    const sel = card.classList.contains('selected');
-    const should = card.dataset.correct === 'yes';
-    card.classList.remove('correct', 'wrong');
-    if (sel && should) {
-      card.classList.add('correct');
-      ok++;
-    } else if (sel && !should) {
-      card.classList.add('wrong');
-      card.classList.remove('selected');
-    } else if (!sel && should) {
-      card.classList.add('wrong');
-    } else {
-      ok++;
-    }
-  });
-  const fb = document.getElementById('fb-flags');
-  if (ok === total) {
-    reproducirSonido('acierto');
-    fb.className = 'feedback show ok';
-    fb.textContent = '¡Muy bien! Identificaste los factores de salida.';
-    completarSubactividad(1, 'flags');
-  } else {
-    reproducirSonido('error');
-    fb.className = 'feedback show fail';
-    fb.textContent = `Llevas ${ok}/${total}. Corrige las tarjetas marcadas en rojo e intenta otra vez.`;
-  }
-  syncLockedUI();
-}
-
-function resetFlags() {
-  reproducirSonido('click');
-  document.querySelectorAll('#flag-game .icon-card').forEach(card => {
-    card.classList.remove('selected', 'correct', 'wrong');
-  });
-  shuffleChildren(document.getElementById('flag-game'));
-  document.getElementById('fb-flags').className = 'feedback';
-}
-
-const symData = [
-  { q: '¿Qué símbolo representa mejor salir del lugar de origen?', opts: ['🧳➡️', '🏠⬅️', '🌳', '🎉'], a: 0 },
-  { q: '¿Qué icono muestra mejor un factor de atracción?', opts: ['🌵', '🏥', '⚠️', '🚱'], a: 1 },
-  { q: '¿Qué escena sugiere reunificación familiar?', opts: ['💥', '👨‍👩‍👧❤️', '🏜️', '⛔'], a: 1 },
-  { q: '¿Qué imagen representa migración del campo a la ciudad?', opts: ['🏙️➡️🌾', '🌾➡️🏙️', '🌊➡️⛰️', '🏭➡️🌳'], a: 1 },
-  { q: '¿Qué símbolo muestra un lugar seguro y estable para llegar?', opts: ['🛡️🏠', '🔥', '❌💧', '⚡'], a: 0 }
-];
-
-function loadSym() {
-  if (symCorrectSet.size >= symData.length) {
-    document.getElementById('sym-q').textContent = '¡Completaste todas las preguntas visuales de migración!';
-    document.getElementById('sym-opts').innerHTML = '';
-    const fb = document.getElementById('fb-sym');
-    fb.className = 'feedback show ok';
-    fb.textContent = 'Ya identificaste correctamente todos los símbolos.';
-    completarSubactividad(1, 'symbols');
-    return;
-  }
-  const d = symData[symIdx];
-  symCurrentResolved = false;
-  document.getElementById('sym-q').textContent = d.q;
-  document.getElementById('sym-opts').innerHTML = d.opts.map((option, index) =>
-    `<button class="sym-btn" onclick="answerSym(${index})">${option}</button>`
-  ).join('');
-  document.getElementById('fb-sym').className = 'feedback';
-}
-
-function answerSym(i) {
-  if (symCurrentResolved || symCorrectSet.has(symIdx)) return;
-  const d = symData[symIdx];
-  const buttons = document.querySelectorAll('#sym-opts .sym-btn');
-  const fb = document.getElementById('fb-sym');
-  reproducirSonido('click');
-
-  if (i === d.a) {
-    if (!symCorrectSet.has(symIdx)) {
-      symCorrectSet.add(symIdx);
-      document.getElementById('sym-hits').textContent = symCorrectSet.size;
-    }
-    reproducirSonido('acierto');
-    buttons.forEach((button, index) => {
-      if (index === d.a) button.classList.add('correct');
-      button.disabled = true;
-      button.style.cursor = 'default';
-    });
-    symCurrentResolved = true;
-    fb.className = 'feedback show ok';
-    fb.textContent = symCorrectSet.size === symData.length
-      ? '¡Correcto! Ya terminaste esta ronda.'
-      : '¡Correcto! Presiona "Siguiente símbolo".';
-    if (symCorrectSet.size === symData.length) completarSubactividad(1, 'symbols');
-  } else {
-    reproducirSonido('error');
-    const wrongBtn = buttons[i];
-    if (wrongBtn) {
-      wrongBtn.classList.add('wrong');
-      wrongBtn.disabled = true;
-      wrongBtn.style.cursor = 'default';
-    }
-    fb.className = 'feedback show fail';
-    fb.textContent = 'Ese símbolo no corresponde. Prueba con otra opción.';
-  }
-  syncLockedUI();
-}
-
-function nextSym() {
-  if (symCorrectSet.size >= symData.length) {
-    reproducirSonido('acierto');
-    completarSubactividad(1, 'symbols');
-    return;
-  }
-  if (!symCurrentResolved) {
-    reproducirSonido('error');
-    return;
-  }
-  reproducirSonido('click');
-  for (let step = 1; step <= symData.length; step++) {
-    const next = (symIdx + step) % symData.length;
-    if (!symCorrectSet.has(next)) {
-      symIdx = next;
-      loadSym();
-      return;
-    }
-  }
-}
-
-function campoClick(el) {
-  reproducirSonido('click');
-  el.classList.toggle('selected');
-}
-
-function checkCampo() {
-  let ok = 0;
-  const total = 8;
-  document.querySelectorAll('#campo-game .icon-card').forEach(card => {
-    const sel = card.classList.contains('selected');
-    const should = card.dataset.correct === 'yes';
-    card.classList.remove('correct', 'wrong');
-    if (sel && should) {
-      card.classList.add('correct');
-      ok++;
-    } else if (sel && !should) {
-      card.classList.add('wrong');
-      card.classList.remove('selected');
-    } else if (!sel && should) {
-      card.classList.add('wrong');
-    } else {
-      ok++;
-    }
-  });
-  const fb = document.getElementById('fb-campo');
-  if (ok === total) {
-    reproducirSonido('acierto');
-    fb.className = 'feedback show ok';
-    fb.textContent = 'Excelente. Diferenciaste los retos de las mejoras urbanas.';
-    completarSubactividad(2, 'campo');
-  } else {
-    reproducirSonido('error');
-    fb.className = 'feedback show fail';
-    fb.textContent = `Llevas ${ok}/${total}. Revisa las tarjetas en rojo y vuelve a intentarlo.`;
-  }
-  syncLockedUI();
-}
-
-function resetCampo() {
-  reproducirSonido('click');
-  document.querySelectorAll('#campo-game .icon-card').forEach(card => {
-    card.classList.remove('selected', 'correct', 'wrong');
-  });
-  shuffleChildren(document.getElementById('campo-game'));
-  document.getElementById('fb-campo').className = 'feedback';
-}
-
-const pqData = [
-  { emoji: '🚦', desc: 'Autos detenidos y mucho tráfico', ans: 'reto' },
-  { emoji: '🌳', desc: 'Parque limpio y recuperado', ans: 'mejora' },
-  { emoji: '🗑️', desc: 'Basura acumulada en la calle', ans: 'reto' },
-  { emoji: '🚇', desc: 'Transporte público que ayuda a moverse', ans: 'mejora' },
-  { emoji: '🌫️', desc: 'Aire con humo y contaminación', ans: 'reto' },
-  { emoji: '🏥', desc: 'Servicios de salud cercanos', ans: 'mejora' },
-  { emoji: '🏚️', desc: 'Viviendas muy juntas y sin espacio', ans: 'reto' },
-  { emoji: '🚰', desc: 'Acceso a agua potable', ans: 'mejora' }
-];
-
-function startPQ() {
-  pqIdx = 0;
-  pqScore = 0;
-  pqActive = true;
-  pqCurrentResolved = false;
-  document.getElementById('pq-score').textContent = '0';
-  document.getElementById('pq-round').textContent = '1';
-  showPQ();
-}
-
-function showPQ() {
-  if (pqIdx >= pqData.length) {
-    document.getElementById('pq-emoji').textContent = '🏆';
-    document.getElementById('pq-desc').textContent = `Terminaste la ronda. Aciertos: ${pqScore}/8`;
-    pqActive = false;
-    pqCurrentResolved = true;
-    completarSubactividad(2, 'pq');
-    return;
-  }
-  const d = pqData[pqIdx];
-  document.getElementById('pq-emoji').textContent = d.emoji;
-  document.getElementById('pq-round').textContent = String(pqIdx + 1);
-  document.getElementById('pq-desc').textContent = `${d.desc}. ¿Es un reto o una mejora?`;
-  document.getElementById('fb-pq').className = 'feedback';
-  pqCurrentResolved = false;
-}
-
-function answerPQ(choice) {
-  if (!pqActive || pqCurrentResolved) return;
-  const current = pqData[pqIdx];
-  const fb = document.getElementById('fb-pq');
-  reproducirSonido('click');
-
-  if (choice === current.ans) {
-    pqScore++;
-    document.getElementById('pq-score').textContent = String(pqScore);
-    pqCurrentResolved = true;
-    reproducirSonido('acierto');
-    fb.className = 'feedback show ok';
-    fb.textContent = '¡Correcto!';
-    pqIdx++;
-    if (pqIdx >= pqData.length) completarSubactividad(2, 'pq');
-    setTimeout(showPQ, 700);
-  } else {
-    reproducirSonido('error');
-    fb.className = 'feedback show fail';
-    fb.textContent = 'No corresponde. Observa mejor la escena y vuelve a elegir.';
-  }
-  syncLockedUI();
-}
-
-function culturalMatch(el, side) {
-  if (el.classList.contains('matched')) return;
-  reproducirSonido('click');
-  if (cultMatchSel === null) {
-    cultMatchSel = el;
-    cultMatchSide = side;
-    el.classList.add('selected');
-    return;
-  }
-  if (cultMatchSide === side) {
-    cultMatchSel.classList.remove('selected');
-    cultMatchSel = el;
-    cultMatchSide = side;
-    el.classList.add('selected');
-    return;
-  }
-  const id1 = cultMatchSel.dataset.id;
-  const id2 = el.dataset.id;
-  if (id1 === id2) {
-    reproducirSonido('acierto');
-    cultMatchSel.classList.remove('selected');
-    el.classList.remove('selected');
-    cultMatchSel.classList.add('matched');
-    el.classList.add('matched');
-    cultMatchPairs.add(id1);
-    document.getElementById('cult-match-score').textContent = cultMatchPairs.size;
-    const fb = document.getElementById('fb-cmatch');
-    fb.className = 'feedback show ok';
-    fb.textContent = cultMatchPairs.size === 5
-      ? '¡Perfecto! Ya relacionaste todos los conceptos.'
-      : '¡Pareja correcta!';
-    if (cultMatchPairs.size === 5) completarSubactividad(3, 'match');
-  } else {
-    reproducirSonido('error');
-    const fb = document.getElementById('fb-cmatch');
-    fb.className = 'feedback show fail';
-    fb.textContent = 'Esa pareja no coincide. Prueba otra combinación.';
-    el.classList.add('wrong-flash');
-    cultMatchSel.classList.add('wrong-flash');
-    setTimeout(() => {
-      el.classList.remove('wrong-flash', 'selected');
-      cultMatchSel.classList.remove('wrong-flash', 'selected');
-    }, 500);
-  }
-  cultMatchSel = null;
-  cultMatchSide = '';
-  syncLockedUI();
-}
-
-const cqData = [
-  {
-    image: makeSceneSvg('city'),
-    note: 'Zona urbana con muchísima actividad en un espacio reducido.',
-    tag: 'CIUDAD MUY LLENA',
-    opts: ['Concentración', 'Dispersión', 'Baja densidad', 'Turismo'],
-    a: 0
-  },
-  {
-    image: makeSceneSvg('dispersed'),
-    note: 'Las viviendas aparecen separadas unas de otras en el territorio.',
-    tag: 'CASAS SEPARADAS',
-    opts: ['Concentración', 'Contaminación', 'Dispersión', 'Crecimiento'],
-    a: 2
-  },
-  {
-    image: makeSceneSvg('density'),
-    note: 'Un mapa compara cuánta gente vive en cada región.',
-    tag: 'MAPA COMPARATIVO',
-    opts: ['Migración', 'Densidad poblacional', 'Cultura', 'Basura'],
-    a: 1
-  },
-  {
-    image: makeSceneSvg('growth'),
-    note: 'La gráfica sube porque la cantidad de habitantes va aumentando.',
-    tag: 'GRÁFICA ASCENDENTE',
-    opts: ['Crecimiento', 'Salida', 'Sequía', 'Baja densidad'],
-    a: 0
-  },
-  {
-    image: makeSceneSvg('lights'),
-    note: 'Las luces ayudan a localizar ciudades y zonas muy habitadas.',
-    tag: 'LUCES NOCTURNAS',
-    opts: ['Luces nocturnas', 'Sequía', 'Basura', 'Campo'],
-    a: 0
-  },
-  {
-    image: makeSceneSvg('lowdensity'),
-    note: 'Territorio amplio con muy pocos asentamientos humanos.',
-    tag: 'MUY POCAS VIVIENDAS',
-    opts: ['Baja densidad', 'Tráfico', 'Atractivo urbano', 'Reunificación'],
-    a: 0
-  }
-];
-
-function loadCQ() {
-  if (cqCorrectSet.size >= cqData.length) {
-    document.getElementById('cq-tag').textContent = 'ESCENA COMPLETA';
-    document.getElementById('cq-image').src = '/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg';
-    document.getElementById('cq-note').textContent = 'Ya identificaste correctamente todas las escenas visuales.';
-    document.getElementById('cq-desc').textContent = '¡Completaste todas las escenas visuales!';
-    document.getElementById('cq-opts').innerHTML = '';
-    const fb = document.getElementById('fb-cq');
-    fb.className = 'feedback show ok';
-    fb.textContent = 'Ya resolviste correctamente toda la ronda.';
-    completarSubactividad(3, 'cq');
-    return;
-  }
-  const d = cqData[cqIdx];
-  cqCurrentResolved = false;
-  const img = document.getElementById('cq-image');
-  img.src = d.image;
-  img.alt = d.note;
-  img.onerror = null;
-  document.getElementById('cq-tag').textContent = d.tag;
-  document.getElementById('cq-note').textContent = d.note;
-  document.getElementById('cq-desc').textContent = '¿Qué concepto representa mejor esta escena?';
-  document.getElementById('cq-opts').innerHTML = d.opts.map((option, index) =>
-    `<button class="q-opt" onclick="answerCQ(${index})">${option}</button>`
-  ).join('');
-  document.getElementById('fb-cq').className = 'feedback';
-}
-
-function answerCQ(i) {
-  if (cqCurrentResolved || cqCorrectSet.has(cqIdx)) return;
-  const d = cqData[cqIdx];
-  const buttons = document.querySelectorAll('#cq-opts .q-opt');
-  const fb = document.getElementById('fb-cq');
-  reproducirSonido('click');
-
-  if (i === d.a) {
-    if (!cqCorrectSet.has(cqIdx)) {
-      cqCorrectSet.add(cqIdx);
-      cqHits = cqCorrectSet.size;
-      document.getElementById('cq-hits').textContent = String(cqHits);
-    }
-    reproducirSonido('acierto');
-    buttons.forEach((button, index) => {
-      if (index === d.a) button.classList.add('correct');
-      button.disabled = true;
-    });
-    cqCurrentResolved = true;
-    fb.className = 'feedback show ok';
-    fb.textContent = cqCorrectSet.size === cqData.length
-      ? '¡Correcto! Ya terminaste la ronda visual.'
-      : '¡Correcto! Presiona "Siguiente escena".';
-    if (cqCorrectSet.size === cqData.length) completarSubactividad(3, 'cq');
-  } else {
-    reproducirSonido('error');
-    const wrongBtn = buttons[i];
-    if (wrongBtn) {
-      wrongBtn.classList.add('wrong');
-      wrongBtn.disabled = true;
-    }
-    fb.className = 'feedback show fail';
-    fb.textContent = 'No corresponde. Elige otra opción.';
-  }
-  syncLockedUI();
-}
-
-function nextCQ() {
-  if (cqCorrectSet.size >= cqData.length) {
-    reproducirSonido('acierto');
-    completarSubactividad(3, 'cq');
-    return;
-  }
-  if (!cqCurrentResolved) {
-    reproducirSonido('error');
-    return;
-  }
-  reproducirSonido('click');
-  for (let step = 1; step <= cqData.length; step++) {
-    const next = (cqIdx + step) % cqData.length;
-    if (!cqCorrectSet.has(next)) {
-      cqIdx = next;
-      loadCQ();
-      return;
-    }
-  }
-}
-
-const repasoQ = [
-  { emoji: '🧳➡️', q: 'Una familia sale por sequía y desempleo. ¿Qué tipo de factor observa?', opts: ['Atracción', 'Salida', 'Celebración', 'Turismo'], a: 1 },
-  { emoji: '🏥✨', q: '¿Qué representa este símbolo en la migración?', opts: ['Violencia', 'Desastre', 'Factor de atracción', 'Desperdicio'], a: 2 },
-  { emoji: '🚦🗑️🌫️', q: '¿Qué grupo muestra retos urbanos?', opts: ['Problemas de ciudad', 'Fiestas locales', 'Atractivos turísticos', 'Servicios rurales'], a: 0 },
-  { emoji: '🌳🚇🏥', q: '¿Qué conjunto muestra mejoras urbanas?', opts: ['Migración', 'Servicios y soluciones', 'Factores de salida', 'Problemas rurales'], a: 1 },
-  { emoji: '👥 ÷ km²', q: '¿Qué significa este símbolo?', opts: ['Densidad poblacional', 'Reunificación familiar', 'Basura urbana', 'Cultura local'], a: 0 },
-  { emoji: '🌃🌃🌃', q: '¿Qué idea representa?', opts: ['Dispersión', 'Concentración', 'Despoblación', 'Sequía'], a: 1 },
-  { emoji: '🏠   🏠   🏠', q: '¿Qué concepto describe mejor esta escena?', opts: ['Concentración', 'Crecimiento', 'Dispersión', 'Inmigración'], a: 2 },
-  { emoji: '📈👨‍👩‍👧‍👦', q: '¿Qué se observa aquí?', opts: ['Crecimiento de población', 'Turismo temporal', 'Accidente vial', 'Poca densidad'], a: 0 },
-  { emoji: '🌾➡️🏙️', q: '¿Qué tipo de movimiento es?', opts: ['Migración ciudad-campo', 'Éxodo rural', 'Fiesta urbana', 'Intercambio cultural'], a: 1 },
-  { emoji: '💡🗺️', q: '¿Para qué sirven las luces nocturnas en un análisis?', opts: ['Para medir lluvia', 'Para ubicar concentración de población', 'Para ver montañas', 'Para dibujar banderas'], a: 1 }
-];
-
-function initRepaso() {
-  repIdx = 0;
-  repPts = 0;
-  document.getElementById('repaso-pts').textContent = '0';
-  document.getElementById('rep-num').textContent = '1';
-  document.getElementById('repaso-prog').style.width = '10%';
-  loadRep();
-}
-
-function loadRep() {
-  if (repIdx >= repasoQ.length) {
-    showRepasoEnd();
-    return;
-  }
-  const d = repasoQ[repIdx];
-  document.getElementById('rep-emoji').textContent = d.emoji;
-  document.getElementById('repaso-q').textContent = d.q;
-  const container = document.getElementById('repaso-opts');
-  container.innerHTML = '';
-  d.opts.forEach((option, index) => {
-    const button = document.createElement('button');
-    button.className = 'q-opt';
-    button.textContent = option;
-    button.onclick = () => {
-      if (button.disabled) return;
-      reproducirSonido('click');
-      document.querySelectorAll('#repaso-opts .q-opt').forEach((btn, btnIndex) => {
-        if (btnIndex === d.a) btn.classList.add('correct');
-        else if (btnIndex === index) btn.classList.add('wrong');
-        btn.disabled = true;
-      });
-      const fb = document.getElementById('fb-rep');
-      if (index === d.a) {
-        reproducirSonido('acierto');
-        fb.className = 'feedback show ok';
-        fb.textContent = '¡Correcto!';
-        repPts++;
-      } else {
-        reproducirSonido('error');
-        fb.className = 'feedback show fail';
-        fb.textContent = 'Incorrecto.';
-      }
-      document.getElementById('repaso-pts').textContent = String(repPts);
-      repIdx++;
-      document.getElementById('rep-num').textContent = String(Math.min(repIdx + 1, 10));
-      document.getElementById('repaso-prog').style.width = `${(repIdx / 10) * 100}%`;
-      setTimeout(loadRep, 900);
+    const routeSignalAnswers = {
+      0: 'expulsion',
+      1: 'atraccion',
+      2: 'origen',
+      3: 'destino'
     };
-    container.appendChild(button);
-  });
-  document.getElementById('fb-rep').className = 'feedback';
-}
+    const routeSignalSolved = new Set();
 
-function showRepasoEnd() {
-  document.getElementById('repaso-container').style.display = 'none';
-  document.getElementById('repaso-end').style.display = 'block';
-  document.getElementById('rep-final').textContent = String(repPts);
-  const badge = repPts >= 8 ? '🥇 Observador experto' : repPts >= 5 ? '🥈 Buen analista visual' : '🥉 Sigue observando';
-  document.getElementById('rep-badge').innerHTML = `<span class="badge">${badge}</span>`;
-  completarSubactividad(4, 'repaso');
-}
+    let selectedPair = null;
+    let selectedPairSide = null;
+    const retoMatchPairs = new Set();
 
-function restartRepaso() {
-  reproducirSonido('click');
-  document.getElementById('repaso-container').style.display = 'block';
-  document.getElementById('repaso-end').style.display = 'none';
-  initRepaso();
-}
+    const analysisAnswers = {
+      0: 'densidad',
+      1: 'concentracion',
+      2: 'dispersion',
+      3: 'crecimiento'
+    };
+    const analysisFilled = {
+      0: '',
+      1: '',
+      2: '',
+      3: ''
+    };
+    let selectedChip = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-  prepararElementosAleatorios();
-  mezclarTarjetasVisuales();
-  renderPage();
-  loadSym();
-  startPQ();
-  loadCQ();
-  initRepaso();
-});
-</script>
-<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
+    const missionAnswers = {
+      0: 'urbano',
+      1: 'exodo',
+      2: 'servicios',
+      3: 'crecimiento'
+    };
+    const missionSolved = new Set();
+
+    function pageComplete(page) {
+      return !!pageProgress[page];
+    }
+
+    function allPagesComplete() {
+      return Object.values(pageProgress).every(Boolean);
+    }
+
+    function completePage(page, key) {
+      if (pageProgress[page]) return;
+      pageProgress[page] = true;
+      syncUI();
+    }
+
+    function completarSubactividad(page, key) {
+      completePage(page, key);
+    }
+
+    function canGoToPage(target) {
+      if (target <= currentPage) return true;
+      for (let i = currentPage; i < target; i += 1) {
+        if (!pageComplete(i + 1)) return false;
+      }
+      return true;
+    }
+
+    function syncUI() {
+      document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+        dot.classList.remove('active', 'done');
+        if (index === currentPage) dot.classList.add('active');
+        else if (pageComplete(index + 1)) dot.classList.add('done');
+      });
+
+      document.querySelectorAll('.page').forEach((page, index) => {
+        page.classList.toggle('active', index === currentPage);
+      });
+
+      document.getElementById('numActual').textContent = String(currentPage + 1);
+      document.getElementById('indPag').textContent = `${currentPage + 1}/${TOTAL_PAGES}`;
+      document.getElementById('btnPrev').disabled = currentPage === 0;
+      document.getElementById('btnNext').disabled = currentPage === TOTAL_PAGES - 1 || !pageComplete(currentPage + 1);
+
+      const quizBtn = document.getElementById('quizBtn');
+      quizBtn.style.display = currentPage === TOTAL_PAGES - 1 ? 'block' : 'none';
+      const locked = !allPagesComplete();
+      quizBtn.classList.toggle('bloqueado', locked);
+      quizBtn.setAttribute('aria-disabled', locked ? 'true' : 'false');
+    }
+
+    function goToPage(page) {
+      if (!canGoToPage(page)) {
+        syncUI();
+        return;
+      }
+      currentPage = Math.max(0, Math.min(TOTAL_PAGES - 1, page));
+      syncUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changePage(direction) {
+      goToPage(currentPage + direction);
+    }
+
+    function setMiniStatus(id, type, text) {
+      const status = document.getElementById(id);
+      status.className = `mini-status${type ? ` ${type}` : ''}`;
+      status.textContent = text;
+    }
+
+    function showFeedback(id, type, text) {
+      const fb = document.getElementById(id);
+      fb.className = `activity-feedback show ${type}`;
+      fb.textContent = text;
+    }
+
+    function answerRouteSignal(index, choice) {
+      if (routeSignalSolved.has(index)) return;
+      const card = document.querySelector(`.signal-card[data-q="${index}"]`);
+      const buttons = Array.from(card.querySelectorAll('.tag-btn'));
+      const clicked = buttons.find((button) => button.dataset.choice === choice);
+      const correct = routeSignalAnswers[index];
+
+      if (choice === correct) {
+        routeSignalSolved.add(index);
+        buttons.forEach((button) => {
+          button.disabled = true;
+          if (button.dataset.choice === correct) button.classList.add('correct');
+        });
+        setMiniStatus(`route-status-${index}`, 'ok', '✔');
+        showFeedback('fbRouteSignals', 'ok', '¡Bien! Esa señal quedó completa.');
+      } else {
+        clicked.disabled = true;
+        clicked.classList.add('wrong');
+        setMiniStatus(`route-status-${index}`, 'bad', '↺');
+        showFeedback('fbRouteSignals', 'fail', 'Mira si la pista habla de salir, llegar o del lugar donde empieza o termina el movimiento.');
+      }
+
+      document.getElementById('routeScore').textContent = `${routeSignalSolved.size}/4`;
+
+      if (routeSignalSolved.size === 4) {
+        showFeedback('fbRouteSignals', 'ok', '¡Excelente! Ya reconoces expulsión, atracción, origen y destino.');
+        completePage(1, 'signals');
+      }
+    }
+
+    function resetPairSelection() {
+      document.querySelectorAll('.pair-card.selected').forEach((card) => card.classList.remove('selected'));
+      selectedPair = null;
+      selectedPairSide = null;
+    }
+
+    function selectRetoPair(button, side, id) {
+      if (retoMatchPairs.has(id) || button.classList.contains('locked')) return;
+
+      if (!selectedPair) {
+        selectedPair = button;
+        selectedPairSide = side;
+        button.classList.add('selected');
+        return;
+      }
+
+      if (selectedPair === button) {
+        resetPairSelection();
+        return;
+      }
+
+      if (selectedPairSide === side) {
+        resetPairSelection();
+        selectedPair = button;
+        selectedPairSide = side;
+        button.classList.add('selected');
+        return;
+      }
+
+      if (selectedPair.dataset.id === id) {
+        selectedPair.classList.remove('selected');
+        selectedPair.classList.add('correct', 'locked');
+        button.classList.add('correct', 'locked');
+        retoMatchPairs.add(id);
+        document.getElementById('matchScore').textContent = `${retoMatchPairs.size}/4`;
+        showFeedback('fbRetoPairs', 'ok', '¡Correcto! Ese problema y esa mejora sí van juntos.');
+      } else {
+        selectedPair.classList.remove('selected');
+        selectedPair.classList.add('wrong');
+        button.classList.add('wrong');
+        showFeedback('fbRetoPairs', 'fail', 'Esa mejora ayudaría mejor a otro problema. Intenta otra combinación.');
+        setTimeout(() => {
+          selectedPair.classList.remove('wrong');
+          button.classList.remove('wrong');
+        }, 650);
+      }
+
+      resetPairSelection();
+
+      if (retoMatchPairs.size === 4) {
+        showFeedback('fbRetoPairs', 'ok', '¡Muy bien! Ya relacionaste los retos urbanos con sus mejoras.');
+        completePage(2, 'pairs');
+      }
+    }
+
+    function selectAnalysisChip(button) {
+      if (button.classList.contains('used')) return;
+      document.querySelectorAll('.concept-chip').forEach((chip) => chip.classList.remove('selected'));
+      button.classList.add('selected');
+      selectedChip = button;
+    }
+
+    function restoreChip(word) {
+      if (!word) return;
+      const chip = document.querySelector(`.concept-chip[data-word="${word}"]`);
+      if (chip) chip.classList.remove('used', 'selected', 'correct', 'wrong');
+    }
+
+    function fillAnalysisSlot(index) {
+      const current = analysisFilled[index];
+      const label = document.getElementById(`analysis-slot-${index}`);
+      const card = document.querySelector(`.slot-card[data-slot="${index}"]`);
+
+      if (!selectedChip && current) {
+        restoreChip(current);
+        analysisFilled[index] = '';
+        label.textContent = '_____';
+        label.classList.remove('filled', 'correct', 'wrong');
+        card.classList.remove('correct', 'wrong');
+        return;
+      }
+
+      if (!selectedChip) return;
+
+      if (current) {
+        restoreChip(current);
+      }
+
+      const word = selectedChip.dataset.word;
+      analysisFilled[index] = word;
+      label.textContent = selectedChip.textContent;
+      label.classList.add('filled');
+      label.classList.remove('correct', 'wrong');
+      card.classList.remove('correct', 'wrong');
+      selectedChip.classList.add('used');
+      selectedChip.classList.remove('selected');
+      selectedChip = null;
+    }
+
+    function checkAnalysisPanel() {
+      let correct = 0;
+
+      Object.keys(analysisFilled).forEach((key) => {
+        const index = Number(key);
+        const label = document.getElementById(`analysis-slot-${index}`);
+        const card = document.querySelector(`.slot-card[data-slot="${index}"]`);
+        const value = analysisFilled[index];
+
+        label.classList.remove('correct', 'wrong');
+        card.classList.remove('correct', 'wrong');
+
+        if (value && value === analysisAnswers[index]) {
+          label.classList.add('correct');
+          card.classList.add('correct');
+          correct += 1;
+          const chip = document.querySelector(`.concept-chip[data-word="${value}"]`);
+          if (chip) chip.classList.add('correct');
+        } else {
+          label.classList.add('wrong');
+          card.classList.add('wrong');
+          if (value) {
+            const chip = document.querySelector(`.concept-chip[data-word="${value}"]`);
+            if (chip) chip.classList.add('wrong');
+          }
+        }
+      });
+
+      document.getElementById('panelScore').textContent = `${correct}/4`;
+
+      if (correct === 4) {
+        showFeedback('fbAnalysisPanel', 'ok', '¡Excelente! Ya interpretas mejor las pistas visuales de población.');
+        completePage(3, 'panel');
+      } else {
+        showFeedback('fbAnalysisPanel', 'fail', `Llevas ${correct}/4 correctas. Ajusta las tarjetas marcadas y vuelve a revisar.`);
+      }
+    }
+
+    function answerMission(index, choice) {
+      if (missionSolved.has(index)) return;
+      const card = document.querySelector(`.mission-card[data-q="${index}"]`);
+      const buttons = Array.from(card.querySelectorAll('.mission-btn'));
+      const clicked = buttons.find((button) => button.dataset.choice === choice);
+      const correct = missionAnswers[index];
+
+      if (choice === correct) {
+        missionSolved.add(index);
+        buttons.forEach((button) => {
+          button.disabled = true;
+          if (button.dataset.choice === correct) button.classList.add('correct');
+        });
+        setMiniStatus(`mission-status-${index}`, 'ok', '✔');
+        showFeedback('fbMissions', 'ok', '¡Bien! Esa misión ya quedó activada.');
+      } else {
+        clicked.disabled = true;
+        clicked.classList.add('wrong');
+        setMiniStatus(`mission-status-${index}`, 'bad', '↺');
+        showFeedback('fbMissions', 'fail', 'Observa el detalle clave de la misión y prueba otra opción.');
+      }
+
+      document.getElementById('missionScore').textContent = `${missionSolved.size}/4`;
+
+      if (missionSolved.size === 4) {
+        showFeedback('fbMissions', 'ok', '¡Gran trabajo! Ya integraste migración, retos urbanos y análisis de población.');
+        completePage(4, 'missions');
+      }
+    }
+
+    function shuffleRowOptions(selector) {
+      document.querySelectorAll(selector).forEach((row) => {
+        const buttons = Array.from(row.children);
+        for (let i = buttons.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
+        }
+        row.innerHTML = '';
+        buttons.forEach((button) => row.appendChild(button));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      shuffleRowOptions('.signal-card .choice-row');
+      shuffleRowOptions('.mission-card .choice-row');
+
+      const quizBtn = document.getElementById('quizBtn');
+      quizBtn.addEventListener('click', (event) => {
+        if (!allPagesComplete()) {
+          event.preventDefault();
+        }
+      }, true);
+
+      syncUI();
+    });
+  </script>
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260523g"></script>
 </body>
 </html>

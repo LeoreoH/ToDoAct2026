@@ -1384,11 +1384,12 @@ function registrarIntentoNormalKinestesico(pagina, reto, correcto, detalle) {
         trackerNormalKinestesico.markVisible(clave, { pagina: config.pagina, ejercicio: clave });
         if (correcto) {
             if (!completadosRegistroNormalKinestesico[clave]) {
-                trackerNormalKinestesico.addCorrect(clave, detalleFinal);
+                trackerNormalKinestesico.addCorrect(clave, 1, detalleFinal);
+                trackerNormalKinestesico.complete(clave, { detalle: detalleFinal });
                 completadosRegistroNormalKinestesico[clave] = true;
             }
         } else {
-            trackerNormalKinestesico.addError(clave, detalleFinal);
+            trackerNormalKinestesico.addError(clave, 1, detalleFinal);
         }
     }
 }

@@ -3,659 +3,1377 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Países Poblados · Kinestésico · Nivel Fácil</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Población Mundial · Kinestésico · Nivel Fácil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --guindo:#7b1d2e;
-      --guindo-dark:#5a1320;
-      --guindo-light:#a63248;
-      --gris:#4a4a5a;
-      --gris-light:#6b6b80;
-      --gris-pale:#e8e8ef;
-      --gris-bg:#f2f2f6;
-      --acento:#c0392b;
-      --blanco:#fff;
+    :root {
+      --guindo: #7b1d2e;
+      --guindo-dark: #561321;
+      --guindo-soft: #a33a51;
+      --cream: #fff8ec;
+      --paper: #ffffff;
+      --sand: #f3e4cf;
+      --ink: #3f3846;
+      --muted: #70687a;
+      --line: #dfc8bc;
+      --green: #2f8f5b;
+      --green-soft: #def3e6;
+      --blue: #226b9a;
+      --blue-soft: #dceef8;
+      --gold: #f2c14e;
+      --bad: #c8463d;
+      --bad-soft: #ffe4e1;
+      --shadow: rgba(72, 38, 45, 0.24);
     }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
 
-    /* HEADER */
-    .cabecera{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));padding:28px 20px;border-bottom:6px solid var(--gris-pale);text-align:center;box-shadow:0 10px 24px rgba(90,19,32,.35);}
-    .cabecera h1{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;color:#fff;font-weight:900;letter-spacing:1px;text-shadow:2px 2px 0 var(--guindo-dark);}
-    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:1rem;margin-top:4px;}
-    .badge-estilo{background:var(--gris-pale);color:var(--guindo);padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.05rem;display:inline-block;border:3px solid #fff;margin-top:10px;}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* PROGRESS */
-    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
-    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
-    .punto{width:38px;height:38px;border-radius:50%;background:var(--gris-pale);border:3px solid var(--guindo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--guindo);transition:all .3s;}
-    .punto.activo{background:var(--guindo);color:#fff;transform:scale(1.2);}
-    .punto.completado{background:var(--gris-light);border-color:#fff;color:#fff;}
+    body {
+      min-height: 100vh;
+      font-family: 'Barlow', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(242, 193, 78, 0.28), transparent 26%),
+        radial-gradient(circle at 88% 10%, rgba(34, 107, 154, 0.16), transparent 24%),
+        linear-gradient(135deg, #fbf0dc 0%, #f8f4ef 46%, #efe0dc 100%);
+    }
 
-    /* LAYOUT */
-    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
-    .pagina{display:none;animation:aparecer .45s ease;}
-    .pagina.activa{display:block;}
-    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .top-header {
+      position: relative;
+      overflow: hidden;
+      padding: 30px 20px 24px;
+      text-align: center;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(86, 19, 33, 0.96), rgba(123, 29, 46, 0.96)),
+        url('https://commons.wikimedia.org/wiki/Special:FilePath/WorldPopulationDensity.png') center/cover;
+      border-bottom: 6px solid var(--gold);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
 
-    /* CARD */
-    .card-kine{background:#fff;border-radius:24px;padding:24px;margin-bottom:20px;border:3px solid var(--guindo);box-shadow:0 8px 0 var(--guindo-dark);}
-    .titulo-pag{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;color:var(--guindo);margin-bottom:8px;border-left:8px solid var(--gris-pale);padding-left:16px;font-weight:800;}
-    .subtitulo-tema{background:var(--gris-pale);border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--guindo);margin-bottom:14px;display:inline-block;border:2px solid #d0d0de;}
+    .top-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
 
-    /* INFO PILLS */
-    .info-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gris-bg);border-radius:40px;padding:9px 15px;margin:5px 4px;border:2px solid #d0d0de;font-weight:700;font-size:.9rem;color:var(--gris);}
-    .info-bloque{margin:12px 0 8px;}
-    .info-titulo{font-weight:800;font-size:.95rem;color:var(--guindo);margin-bottom:6px;}
+    .top-header > * { position: relative; z-index: 1; }
 
-    /* DATO BOX */
-    .dato-box{background:var(--gris-bg);border-radius:14px;padding:12px 16px;border-left:6px solid var(--guindo);margin:8px 0;font-size:.92rem;}
-    .dato-box strong{color:var(--guindo);}
+    .top-header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.15rem);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow: 0 3px 0 var(--guindo-dark);
+    }
 
-    /* ACTIVIDAD */
-    .actividad{background:#fdf5f6;border-radius:24px;padding:20px;margin-top:16px;border:4px dashed var(--guindo-light);}
-    .act-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--guindo);margin-bottom:12px;text-align:center;}
+    .top-header-sub {
+      margin-top: 4px;
+      color: #ffe7b0;
+      font-weight: 700;
+    }
 
-    /* PISTA BANNER */
-    .pista-banner{background:linear-gradient(135deg,var(--guindo),var(--guindo-light));color:#fff;border-radius:16px;padding:13px 18px;margin:0 0 12px;text-align:center;}
-    .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
-    .pista-banner small{opacity:.9;font-size:.85rem;}
+    .header-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
 
-    /* DRAG & DROP */
-    .elemento{background:var(--guindo);color:#fff;padding:9px 16px;border-radius:40px;font-weight:700;cursor:grab;border:3px solid var(--guindo-dark);box-shadow:0 4px 0 var(--guindo-dark);display:inline-flex;align-items:center;gap:6px;margin:5px;user-select:none;font-size:.88rem;}
-    .elemento img{width:22px;height:16px;object-fit:cover;border-radius:3px;flex-shrink:0;}
-    .elemento:active{cursor:grabbing;}
-    .elemento.oculto{display:none;}
-    .zona{background:var(--gris-bg);border:3px dashed var(--guindo);border-radius:16px;padding:12px;min-height:90px;text-align:center;transition:all .25s;font-size:.85rem;}
-    .zona.sobre{background:#f5e0e4;border-style:solid;}
-    .zona.ok{background:#f0dde2;border-color:var(--guindo-dark);border-style:solid;}
-    .colocado{background:var(--guindo-light);color:#fff;padding:4px 11px;border-radius:26px;font-weight:600;font-size:.82rem;display:inline-block;margin:3px;}
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--guindo-dark);
+      border: 3px solid rgba(255,255,255,.55);
+      font-weight: 900;
+      box-shadow: 0 4px 0 rgba(0,0,0,.15);
+    }
 
-    /* MAP GAME */
-    .pais-btn{background:#fff;border:3px solid var(--guindo);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;font-weight:700;font-size:.82rem;color:var(--guindo);}
-    .pais-btn img{width:100%;height:42px;object-fit:cover;border-radius:8px;margin-bottom:6px;display:block;}
-    .pais-btn:hover:not(.disabled-btn){background:var(--gris-pale);transform:translateY(-2px);}
-    .pais-btn.correcto{background:#2ecc71;border-color:#27ae60;color:#fff;}
-    .pais-btn.incorrecto{background:#e74c3c;border-color:#c0392b;color:#fff;}
-    .pais-btn.disabled-btn{cursor:default;}
+    .header-badge.secondary {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+    }
 
-    /* ORDENAR */
-    .seq-list{display:flex;flex-direction:column;gap:9px;margin:12px 0;}
-    .seq-item{background:#fff;border:3px solid var(--guindo);border-radius:13px;padding:11px 14px;font-weight:700;cursor:grab;box-shadow:0 4px 0 var(--guindo-dark);display:flex;align-items:center;gap:10px;user-select:none;transition:background .2s;font-size:.88rem;}
-    .seq-item img{width:36px;height:24px;object-fit:cover;border-radius:4px;flex-shrink:0;}
-    .seq-item:active{cursor:grabbing;}
-    .seq-item .handle{color:var(--guindo);font-size:1.1rem;}
-    .seq-item.ok-pos{background:#d5f5e3;border-color:#27ae60;}
-    .seq-item.err-pos{background:#fde8e8;border-color:#e74c3c;}
-    .btn-verificar{background:var(--guindo);color:#fff;border:none;padding:11px 26px;border-radius:26px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);display:block;margin:12px auto 0;transition:all .2s;}
-    .btn-verificar:hover{transform:translateY(-2px);}
+    .progress-shell {
+      max-width: 980px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
 
-    /* PUZZLE REPASO */
-    .puzzle-card{background:var(--gris-bg);border:3px solid var(--guindo);border-radius:16px;padding:14px;text-align:center;}
-    .puzzle-card img{width:100%;height:120px;object-fit:cover;border-radius:10px;margin-bottom:8px;}
-    .puzzle-card h6{color:var(--guindo);font-weight:800;font-size:.9rem;margin-bottom:4px;}
-    .puzzle-card p{font-size:.78rem;color:var(--gris);line-height:1.4;}
+    .progress-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      background: var(--paper);
+      border: 3px solid var(--guindo);
+      border-radius: 999px;
+      box-shadow: 0 6px 0 var(--guindo-dark);
+    }
 
-    /* FEEDBACK */
-    .fb-ok{background:var(--guindo);color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
-    .fb-ok.on{display:block;animation:aparecer .4s ease;}
-    .fb-err{background:#e74c3c;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
-    .fb-err.on{display:block;}
+    .hand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--guindo);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
 
-    /* NAV */
-    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
-    .btn-nav{background:var(--guindo);color:#fff;border:3px solid var(--guindo-dark);padding:10px 24px;border-radius:38px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;}
-    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 var(--guindo-dark);}
-    .btn-nav:disabled{background:#ccc;color:#999;border-color:#bbb;box-shadow:none;cursor:default;}
-    .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
-    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
-    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
-    .boton-quiz.bloqueado{background:#b9bcc7!important;border-color:#8f94a3!important;color:#f6f7fb!important;cursor:not-allowed!important;box-shadow:0 4px 0 #8f94a3!important;transform:none!important;}
-    .boton-quiz.bloqueado:hover{background:#b9bcc7!important;color:#f6f7fb!important;transform:none!important;box-shadow:0 4px 0 #8f94a3!important;}
+    .progress-dots {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
-    @media(max-width:576px){
-      .cabecera h1{font-size:1.8rem;}
-      .titulo-pag{font-size:1.4rem;}
+    .progress-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 3px solid var(--guindo);
+      background: var(--sand);
+      color: var(--guindo);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .progress-dot.active {
+      background: var(--gold);
+      transform: scale(1.16);
+    }
+
+    .progress-dot.done {
+      background: var(--green-soft);
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .progress-label {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--guindo);
+      color: #fff;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .main-wrap {
+      max-width: 980px;
+      margin: 0 auto 40px;
+      padding: 0 16px;
+    }
+
+    .pagina {
+      display: none;
+      animation: pageIn .32s ease;
+    }
+
+    .pagina.activa { display: block; }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lesson-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,255,255,.96);
+      border: 3px solid var(--guindo);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 9px 0 var(--guindo-dark), 0 18px 34px rgba(70, 38, 45, 0.16);
+      margin-bottom: 18px;
+    }
+
+    .lesson-card::before {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(242, 193, 78, .28);
+    }
+
+    .lesson-card > * { position: relative; z-index: 1; }
+
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--sand);
+      color: var(--guindo-dark);
+      border: 2px solid var(--line);
+      font-size: .82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      margin-bottom: 12px;
+    }
+
+    .lesson-title {
+      max-width: 760px;
+      color: var(--guindo);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.9rem, 5vw, 2.7rem);
+      font-weight: 900;
+      line-height: 1.02;
+      margin-bottom: 10px;
+    }
+
+    .lesson-intro {
+      max-width: 780px;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.58;
+      margin-bottom: 16px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 16px;
+    }
+
+    .photo-card {
+      background: var(--cream);
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      padding: 10px;
+    }
+
+    .photo-card img {
+      display: block;
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 3px solid var(--guindo-dark);
+      background: #fff;
+    }
+
+    .photo-card figcaption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .concept-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      align-content: start;
+    }
+
+    .concept-note {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 18px;
+      background: #fffaf1;
+      border: 2px solid var(--line);
+    }
+
+    .concept-note strong {
+      color: var(--guindo);
+      font-weight: 900;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .concept-note span {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .note-symbol {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--guindo);
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.15rem;
+      box-shadow: inset 0 -4px rgba(0,0,0,.12);
+    }
+
+    .activity-board {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(255,248,236,.96), rgba(255,255,255,.98)),
+        repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(123,29,46,.04) 12px, rgba(123,29,46,.04) 24px);
+      border: 3px dashed var(--guindo-soft);
+    }
+
+    .activity-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .activity-title {
+      color: var(--guindo);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .activity-lead {
+      color: var(--muted);
+      font-size: .93rem;
+      line-height: 1.45;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--guindo);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 4px 0 var(--guindo-dark);
+      white-space: nowrap;
+    }
+
+    .drop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .drop-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .drop-grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .drop-grid.final {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    }
+
+    .drop-zone {
+      min-height: 168px;
+      padding: 12px;
+      border-radius: 22px;
+      border: 3px dashed #b98da0;
+      background: rgba(255,255,255,.8);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .drop-zone.hover,
+    .drop-zone.selected-target {
+      transform: translateY(-2px);
+      background: #fff4d8;
+      border-color: var(--gold);
+      border-style: solid;
+    }
+
+    .drop-zone.complete {
+      border-style: solid;
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .drop-zone.wrong {
+      border-color: var(--bad);
+      background: var(--bad-soft);
+      animation: shake .28s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      35% { transform: translateX(-5px); }
+      70% { transform: translateX(5px); }
+    }
+
+    .drop-top {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .drop-top img {
+      width: 72px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid rgba(86,19,33,.35);
+      background: #fff;
+    }
+
+    .drop-top strong {
+      display: block;
+      color: var(--guindo);
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: 3px;
+    }
+
+    .drop-top small {
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .placed-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 44px;
+      padding: 8px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(123,29,46,.12);
+    }
+
+    .piece-tray {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.75);
+      border: 2px solid var(--line);
+    }
+
+    .piece {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 46px;
+      padding: 9px 14px;
+      border: 3px solid var(--guindo-dark);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--guindo), var(--guindo-soft));
+      color: #fff;
+      font-weight: 900;
+      cursor: grab;
+      box-shadow: 0 5px 0 var(--guindo-dark);
+      user-select: none;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .piece:hover,
+    .piece.selected {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 var(--guindo-dark);
+    }
+
+    .piece.selected {
+      outline: 4px solid rgba(242,193,78,.42);
+      background: linear-gradient(135deg, #9f2d43, var(--guindo));
+    }
+
+    .piece:active { cursor: grabbing; }
+
+    .piece.placed {
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+      padding: 7px 11px;
+      min-height: 36px;
+      font-size: .86rem;
+      background: var(--green);
+      border-color: #1f6a41;
+    }
+
+    .piece-symbol {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.22);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 12px;
+      padding: 11px 14px;
+      border-radius: 18px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--green-soft); color: #1f6a41; border: 2px solid rgba(47,143,91,.35); }
+    .feedback.fail { background: var(--bad-soft); color: #9b2c25; border: 2px solid rgba(200,70,61,.35); }
+
+    .city-map {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .city-preview {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3px solid var(--guindo-dark);
+      background: var(--cream);
+      min-height: 310px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .city-preview img {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .city-preview p {
+      padding: 12px 14px;
+      color: var(--guindo-dark);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .repair-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .repair-grid .drop-zone {
+      min-height: 132px;
+    }
+
+    .mission-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mission-photo {
+      position: relative;
+      min-height: 150px;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 3px solid var(--guindo-dark);
+      background: #fff;
+    }
+
+    .mission-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mission-photo span {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(86,19,33,.9);
+      color: #fff;
+      font-weight: 900;
+      font-size: .78rem;
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 14px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: 3px solid var(--guindo);
+      background: var(--paper);
+      box-shadow: 0 6px 0 var(--guindo-dark);
+    }
+
+    .btn-nav {
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: 3px solid var(--guindo-dark);
+      background: var(--guindo);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--guindo-dark);
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 var(--guindo-dark);
+    }
+
+    .btn-nav:disabled {
+      opacity: .45;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .ind-pag {
+      padding: 8px 22px;
+      border-radius: 999px;
+      background: var(--sand);
+      border: 3px solid var(--guindo);
+      color: var(--guindo);
+      font-weight: 900;
+    }
+
+    .boton-quiz {
+      display: none;
+      width: fit-content;
+      margin: 14px auto 38px;
+      padding: 14px 46px;
+      border-radius: 999px;
+      border: 4px solid var(--guindo-dark);
+      background: var(--gold);
+      color: var(--guindo-dark);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.28rem;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 8px 0 var(--guindo-dark);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .boton-quiz:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 11px 0 var(--guindo-dark);
+    }
+
+    .boton-quiz.bloqueado {
+      background: #c8c8d2;
+      color: #fff;
+      border-color: #8f94a3;
+      box-shadow: 0 4px 0 #8f94a3;
+      pointer-events: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .toast-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 50;
+      max-width: min(90vw, 520px);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(86,19,33,.96);
+      color: #fff;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
+    }
+
+    .toast-hint.show { opacity: 1; }
+
+    @media (max-width: 820px) {
+      .hero-grid,
+      .city-map {
+        grid-template-columns: 1fr;
+      }
+
+      .drop-grid,
+      .drop-grid.three,
+      .drop-grid.four,
+      .drop-grid.final,
+      .mission-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-card img {
+        height: 210px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .lesson-card {
+        padding: 18px;
+      }
+
+      .progress-bar-wrap,
+      .nav-bar {
+        padding: 12px;
+      }
+
+      .btn-nav {
+        padding: 9px 15px;
+        font-size: .9rem;
+      }
+
+      .ind-pag {
+        padding: 7px 14px;
+      }
+
+      .piece {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<div class="cabecera">
-  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
-  <div class="sub">Bloque · Nivel Fácil · Geografía 5°</div>
-  <div class="badge-estilo">✋ Estilo Kinestésico</div>
-</div>
-
-<!-- PROGRESO -->
-<div class="progreso">
-  <i class="fas fa-hand-paper fa-2x" style="color:var(--guindo);"></i>
-  <div class="puntos" id="puntosDiv">
-    <div class="punto activo">1</div>
-    <div class="punto">2</div>
-    <div class="punto">3</div>
-    <div class="punto">4</div>
-  </div>
-  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
-    Página <span id="numActual">1</span>/4
-  </span>
-</div>
-
-<div class="contenedor">
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 1 · DISTRIBUCIÓN DE LA POBLACIÓN
-     JUEGO: Drag & Drop — arrastra países a su zona
-     ═══════════════════════════════════════ -->
-<div class="pagina activa" id="pagina1">
-  <div class="card-kine">
-    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
-    <span class="subtitulo-tema">Subtema 1 de 3</span>
-
-    <p class="mb-2">La población mundial no está repartida de forma igual en el planeta. Algunos países tienen <strong>muchísimos habitantes</strong> y otros muy pocos. Los <strong>países más poblados</strong> son China, India, Estados Unidos, Indonesia y Brasil. Los <strong>menos poblados</strong> son Nauru, Tuvalu, Palau, San Marino y Liechtenstein.</p>
-
-    <div class="info-bloque">
-      <div class="info-titulo">Factores que influyen en la distribución</div>
-      <div>
-        <span class="info-pill"><i class="fas fa-cloud-sun"></i> <strong>Clima</strong> — Zonas templadas atraen más población</span>
-        <span class="info-pill"><i class="fas fa-seedling"></i> <strong>Relieve</strong> — Las llanuras son más habitadas que las montañas</span>
-        <span class="info-pill"><i class="fas fa-industry"></i> <strong>Economía</strong> — Zonas industriales concentran más personas</span>
-        <span class="info-pill"><i class="fas fa-tint"></i> <strong>Agua</strong> — Cerca de ríos y costas hay mayor densidad</span>
-      </div>
+  <header class="top-header">
+    <h1>Población Mundial</h1>
+    <div class="top-header-sub">Bloque III · Nivel Fácil · Geografía 5°</div>
+    <div class="header-badges">
+      <span class="header-badge"><span class="piece-symbol">✋</span> Estilo Kinestésico</span>
+      <span class="header-badge secondary">Nivel Fácil</span>
     </div>
+  </header>
 
-    <div class="dato-box"><strong>Dato clave:</strong> China e India juntas superan los 2,800 millones de habitantes — más de un tercio de toda la población mundial.</div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p>Arrastra cada país al grupo correcto</p>
-        <small>¿Es de los más poblados o de los menos poblados del mundo?</small>
+  <div class="progress-shell">
+    <div class="progress-bar-wrap">
+      <div class="hand-mark">✋</div>
+      <div class="progress-dots" id="puntosDiv">
+        <button class="progress-dot active" type="button" onclick="goToPage(1)">1</button>
+        <button class="progress-dot" type="button" onclick="goToPage(2)">2</button>
+        <button class="progress-dot" type="button" onclick="goToPage(3)">3</button>
+        <button class="progress-dot" type="button" onclick="goToPage(4)">4</button>
       </div>
-      <h3 class="act-titulo"><i class="fas fa-arrows-alt me-2"></i>Arrastrar y Soltar</h3>
-
-      <div class="row g-2 mb-3">
-        <div class="col-6">
-          <div class="zona" id="zonaAlta" data-tipo="alta">
-            <strong>Más poblados</strong>
-            <div id="cAlta" class="mt-2"></div>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="zona" id="zonaBaja" data-tipo="baja">
-            <strong>Menos poblados</strong>
-            <div id="cBaja" class="mt-2"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center" id="elems1">
-        <span class="elemento" draggable="true" data-tipo="alta" data-texto="China">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/cn.svg" alt="China"> China
-        </span>
-        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Nauru">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg" alt="Nauru"> Nauru
-        </span>
-        <span class="elemento" draggable="true" data-tipo="alta" data-texto="India">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/in.svg" alt="India"> India
-        </span>
-        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Tuvalu">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/tv.svg" alt="Tuvalu"> Tuvalu
-        </span>
-        <span class="elemento" draggable="true" data-tipo="alta" data-texto="Brasil">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/br.svg" alt="Brasil"> Brasil
-        </span>
-        <span class="elemento" draggable="true" data-tipo="baja" data-texto="Palau">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/pw.svg" alt="Palau"> Palau
-        </span>
-        <span class="elemento" draggable="true" data-tipo="alta" data-texto="Indonesia">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/id.svg" alt="Indonesia"> Indonesia
-        </span>
-        <span class="elemento" draggable="true" data-tipo="baja" data-texto="San Marino">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/sm.svg" alt="San Marino"> San Marino
-        </span>
-      </div>
-
-      <div class="fb-ok" id="fbPag1">¡Excelente! Identificaste correctamente los países más y menos poblados.</div>
+      <span class="progress-label">Pág. <span id="numActual">1</span>/4</span>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════════
-     PÁGINA 2 · CONCENTRACIÓN Y DISPERSIÓN
-     JUEGO: Clic en países más poblados (mapa por banderas)
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina2">
-  <div class="card-kine">
-    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
-    <span class="subtitulo-tema">Subtema 2 de 3</span>
+  <main class="main-wrap">
+    <section class="pagina activa" id="pagina1">
+      <article class="lesson-card">
+        <span class="section-chip">Página 1 · Distribución de la población</span>
+        <h2 class="lesson-title">La gente no vive repartida igual en todos los lugares</h2>
+        <p class="lesson-intro">La población suele reunirse donde hay agua, caminos, trabajo, escuelas y servicios. En cambio, los lugares muy secos, aislados o con pocos servicios suelen tener menos habitantes.</p>
 
-    <p class="mb-2">La <strong>concentración</strong> ocurre cuando muchas personas viven en una zona pequeña, como grandes ciudades. La <strong>dispersión</strong> es cuando la población está repartida en grandes territorios con poca gente por área. Se mide con la <strong>densidad de población</strong>: número de habitantes por kilómetro cuadrado (hab/km²).</p>
-
-    <div class="dato-box"><strong>Más concentrada:</strong> Bangladesh tiene ~1,100 hab/km². <strong>Más dispersa:</strong> Mongolia tiene solo ~2 hab/km².</div>
-    <div class="dato-box"><strong>Megalópolis:</strong> Ciudades como Tokio, Shanghái y Ciudad de México concentran millones de personas en pocos kilómetros.</div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p>Da clic en los países que creas que son los MÁS poblados del mundo</p>
-        <small>Selecciona exactamente 5 países con mayor población</small>
-      </div>
-      <h3 class="act-titulo"><i class="fas fa-mouse-pointer me-2"></i>¿Cuáles son los más poblados?</h3>
-      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Selecciona los <strong>5 países más poblados</strong> — haz clic en cada bandera</p>
-
-      <div class="row g-2" id="mapGame">
-        <!-- se genera con JS -->
-      </div>
-
-      <div class="text-center mt-3">
-        <button class="btn-verificar" onclick="verificarMapa()">Verificar selección</button>
-      </div>
-      <div class="fb-ok" id="fbPag2">¡Perfecto! China, India, EE.UU., Indonesia y Brasil son los 5 más poblados.</div>
-      <div class="fb-err" id="errPag2">Revisa tu selección. Recuerda los 5 países con más habitantes.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 3 · PROBLEMAS DE CONCENTRACIÓN
-     JUEGO: Ordenar países de mayor a menor población
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina3">
-  <div class="card-kine">
-    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
-    <span class="subtitulo-tema">Subtema 3 de 3</span>
-
-    <p class="mb-2">Cuando demasiada gente se concentra en un lugar surgen <strong>problemas graves</strong>: escasez de vivienda, contaminación, desempleo, falta de servicios (agua, luz, salud) y tráfico. Países muy poblados como China e India enfrentan estos retos constantemente.</p>
-
-    <div class="info-bloque">
-      <div class="info-titulo">Principales problemas</div>
-      <div>
-        <span class="info-pill"><i class="fas fa-home"></i> Escasez de vivienda</span>
-        <span class="info-pill"><i class="fas fa-smog"></i> Contaminación del aire</span>
-        <span class="info-pill"><i class="fas fa-briefcase"></i> Desempleo</span>
-        <span class="info-pill"><i class="fas fa-hospital"></i> Falta de servicios</span>
-        <span class="info-pill"><i class="fas fa-car"></i> Congestión vial</span>
-        <span class="info-pill"><i class="fas fa-trash"></i> Residuos y basura</span>
-      </div>
-    </div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p>Ordena los países de mayor a menor población</p>
-        <small>Arrastra los bloques — el 1° debe ser el más poblado</small>
-      </div>
-      <h3 class="act-titulo"><i class="fas fa-sort-amount-down me-2"></i>Ordenar Países</h3>
-
-      <div class="seq-list" id="seqPaises">
-        <!-- se genera con JS -->
-      </div>
-
-      <button class="btn-verificar" onclick="verificarOrden()">Verificar orden</button>
-      <div class="fb-ok" id="fbPag3">¡Correcto! El orden es: China → India → EE.UU. → Indonesia → Brasil.</div>
-      <div class="fb-err" id="errPag3">El orden no está bien. ¡Inténtalo de nuevo! Recuerda: China es el 1°.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 4 · REPASO FINAL — ROMPECABEZAS
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina4">
-  <div class="card-kine">
-    <h2 class="titulo-pag"><i class="fas fa-puzzle-piece me-2"></i>Repaso General</h2>
-    <span class="subtitulo-tema">Retroalimentación · Los 3 subtemas</span>
-
-    <p class="mb-2">¡Revisa lo que aprendiste en las 3 secciones! Cada tarjeta resume un subtema clave del tema <strong>Países más y menos poblados</strong>.</p>
-
-    <div class="row g-3 mt-2" id="puzzleRepaso">
-      <div class="col-md-4">
-        <div class="puzzle-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="Distribución mundial">
-          <h6>Distribución de la Población</h6>
-          <p>La población no está repartida igual. China e India son los más poblados. Clima, agua y economía influyen en dónde vive la gente.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="puzzle-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-898ea4b8c0.jpg" alt="Concentración urbana">
-          <h6>Concentración y Dispersión</h6>
-          <p>La densidad mide hab/km². Bangladesh es muy concentrado. Mongolia es dispersa. Las megalópolis concentran millones de personas.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="puzzle-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/oip-26d79b57d5.webp" alt="Problemas de concentración">
-          <h6>Problemas de Concentración</h6>
-          <p>Demasiada gente en un lugar genera: falta de vivienda, contaminación, desempleo y escasez de servicios básicos.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="actividad mt-3">
-      <h3 class="act-titulo"><i class="fas fa-puzzle-piece me-2"></i>Rompecabezas de Conceptos</h3>
-      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Arrastra cada concepto a su definición correcta</p>
-
-      <div class="row g-2 mb-3">
-        <div class="col-6">
-          <div class="zona" id="zonaConc" data-tipo="conc">
-            <strong>Concentración</strong>
-            <div id="cConc" class="mt-2"></div>
+        <div class="hero-grid">
+          <figure class="photo-card">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/WorldPopulationDensity.png" alt="Mapa de densidad de población mundial">
+            <figcaption>Un mapa de densidad ayuda a notar dónde vive más gente y dónde hay menos población.</figcaption>
+          </figure>
+          <div class="concept-strip">
+            <div class="concept-note">
+              <span class="note-symbol">+</span>
+              <div><strong>Atrae población</strong><span>Facilita vivir, estudiar, trabajar o moverse.</span></div>
+            </div>
+            <div class="concept-note">
+              <span class="note-symbol">!</span>
+              <div><strong>Dificulta vivir ahí</strong><span>Hace más complicado quedarse o establecerse.</span></div>
+            </div>
+            <div class="concept-note">
+              <span class="note-symbol">≈</span>
+              <div><strong>No todo se reparte igual</strong><span>Dos lugares pueden tener tamaños parecidos y cantidades de habitantes muy distintas.</span></div>
+            </div>
+            <div class="concept-note">
+              <span class="note-symbol">→</span>
+              <div><strong>La población se mueve</strong><span>Las oportunidades cambian dónde decide vivir la gente.</span></div>
+            </div>
           </div>
         </div>
-        <div class="col-6">
-          <div class="zona" id="zonaDisp" data-tipo="disp">
-            <strong>Dispersión</strong>
-            <div id="cDisp" class="mt-2"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row g-2 mb-3">
-        <div class="col-6">
-          <div class="zona" id="zonaDens" data-tipo="dens">
-            <strong>Densidad de población</strong>
-            <div id="cDens" class="mt-2"></div>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="zona" id="zonaMega" data-tipo="mega">
-            <strong>Megalópolis</strong>
-            <div id="cMega" class="mt-2"></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="text-center" id="elemsRepaso">
-        <span class="elemento" draggable="true" data-tipo="conc" data-texto="Muchas personas en poco espacio">Muchas personas en poco espacio</span>
-        <span class="elemento" draggable="true" data-tipo="disp" data-texto="Pocos hab. en gran territorio">Pocos hab. en gran territorio</span>
-        <span class="elemento" draggable="true" data-tipo="dens" data-texto="Hab. por km²">Hab. por km²</span>
-        <span class="elemento" draggable="true" data-tipo="mega" data-texto="Ciudad con millones de hab.">Ciudad con millones de hab.</span>
-      </div>
+        <div class="activity-board">
+          <div class="activity-head">
+            <div>
+              <h3 class="activity-title">Arma el tablero de atracción</h3>
+              <p class="activity-lead">Arrastra una pieza o tócala y después toca la zona correcta.</p>
+            </div>
+            <div class="score-pill">Piezas: <span id="score-p1">0/8</span></div>
+          </div>
 
-      <div class="fb-ok" id="fbPag4">¡Excelente repaso! Estás listo para el quiz.</div>
+          <div class="drop-grid">
+            <div class="drop-zone" data-group="p1" data-accept="atrae">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Ciudad con servicios y oportunidades">
+                <div><strong>Ayuda a que llegue más gente</strong><small>Condiciones que atraen población.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p1" data-accept="dificulta">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Drought.jpg" alt="Suelo seco por sequía">
+                <div><strong>Hace difícil vivir ahí</strong><small>Condiciones que reducen la población.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+          </div>
+
+          <div class="piece-tray" id="tray-p1">
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="atrae"><span class="piece-symbol">H</span>Hospital</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="atrae"><span class="piece-symbol">A</span>Agua cercana</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="atrae"><span class="piece-symbol">T</span>Trabajo</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="atrae"><span class="piece-symbol">C</span>Caminos</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="dificulta"><span class="piece-symbol">S</span>Sequía</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="dificulta"><span class="piece-symbol">F</span>Frío extremo</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="dificulta"><span class="piece-symbol">I</span>Aislamiento</button>
+            <button type="button" class="piece" draggable="true" data-group="p1" data-target="dificulta"><span class="piece-symbol">0</span>Pocos servicios</button>
+          </div>
+          <div class="feedback" id="fb-p1"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="pagina" id="pagina2">
+      <article class="lesson-card">
+        <span class="section-chip">Página 2 · Densidad, concentración y dispersión</span>
+        <h2 class="lesson-title">Ahora construye cómo se reparte la gente</h2>
+        <p class="lesson-intro">La densidad compara habitantes y territorio. La concentración muestra mucha gente junta en poco espacio. La dispersión muestra pocas personas separadas en un territorio amplio.</p>
+
+        <div class="activity-board">
+          <div class="activity-head">
+            <div>
+              <h3 class="activity-title">Coloca cada sello en su maqueta</h3>
+              <p class="activity-lead">Mira la imagen, piensa qué representa y coloca la pieza correcta.</p>
+            </div>
+            <div class="score-pill">Sellos: <span id="score-p2">0/3</span></div>
+          </div>
+
+          <div class="drop-grid three">
+            <div class="drop-zone" data-group="p2" data-accept="concentracion">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shibuya%20Crossing%20005.jpg" alt="Muchas personas reunidas en poco espacio">
+                <div><strong>Personas muy juntas</strong><small>Mucha gente en poco espacio.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p2" data-accept="dispersion">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Toconao%20Seen%20From%20Above.jpg" alt="Población dispersa en territorio amplio">
+                <div><strong>Personas separadas</strong><small>Poca gente en un espacio amplio.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p2" data-accept="densidad">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/WorldPopulationDensity.png" alt="Mapa de densidad de población">
+                <div><strong>Habitantes y territorio</strong><small>Compara personas con tamaño del lugar.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+          </div>
+
+          <div class="piece-tray" id="tray-p2">
+            <button type="button" class="piece" draggable="true" data-group="p2" data-target="densidad"><span class="piece-symbol">÷</span>Densidad</button>
+            <button type="button" class="piece" draggable="true" data-group="p2" data-target="concentracion"><span class="piece-symbol">●</span>Concentración</button>
+            <button type="button" class="piece" draggable="true" data-group="p2" data-target="dispersion"><span class="piece-symbol">↔</span>Dispersión</button>
+          </div>
+          <div class="feedback" id="fb-p2"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="pagina" id="pagina3">
+      <article class="lesson-card">
+        <span class="section-chip">Página 3 · Retos urbanos</span>
+        <h2 class="lesson-title">Cuando la ciudad crece, también necesita soluciones</h2>
+        <p class="lesson-intro">Si llegan muchas personas a una ciudad, hacen falta más viviendas, transporte, agua, limpieza y espacios verdes. Si esos servicios no crecen, aparecen problemas urbanos.</p>
+
+        <div class="city-map">
+          <figure class="city-preview">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kyiv%20traffic%20jam.JPG" alt="Tráfico intenso en una ciudad">
+            <p>Una ciudad saturada no se arregla con una sola acción. Hay que unir cada problema con una mejora útil.</p>
+          </figure>
+
+          <div class="activity-board" style="margin-top:0;">
+            <div class="activity-head">
+              <div>
+                <h3 class="activity-title">Repara la ciudad</h3>
+                <p class="activity-lead">Coloca cada solución sobre el problema que ayuda a resolver.</p>
+              </div>
+              <div class="score-pill">Mejoras: <span id="score-p3">0/4</span></div>
+            </div>
+
+            <div class="repair-grid">
+              <div class="drop-zone" data-group="p3" data-accept="transporte">
+                <div class="drop-top">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kyiv%20traffic%20jam.JPG" alt="Tráfico intenso">
+                  <div><strong>Tráfico intenso</strong><small>Muchas personas se mueven al mismo tiempo.</small></div>
+                </div>
+                <div class="placed-list"></div>
+              </div>
+              <div class="drop-zone" data-group="p3" data-accept="agua">
+                <div class="drop-top">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/HK%20queue%20for%20water%201963.jpg" alt="Personas esperando agua">
+                  <div><strong>Falta de agua</strong><small>Los servicios no alcanzan para todos.</small></div>
+                </div>
+                <div class="placed-list"></div>
+              </div>
+              <div class="drop-zone" data-group="p3" data-accept="vivienda">
+                <div class="drop-top">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dharavi%20Slum.jpg" alt="Zona con mucha presión de vivienda">
+                  <div><strong>Falta de vivienda</strong><small>Muchas familias necesitan un lugar adecuado.</small></div>
+                </div>
+                <div class="placed-list"></div>
+              </div>
+              <div class="drop-zone" data-group="p3" data-accept="verde">
+                <div class="drop-top">
+                  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Atlanta%20thermal.jpg" alt="Mapa de calor urbano">
+                  <div><strong>Calor y contaminación</strong><small>La ciudad necesita respirar mejor.</small></div>
+                </div>
+                <div class="placed-list"></div>
+              </div>
+            </div>
+
+            <div class="piece-tray" id="tray-p3" style="margin-top:12px;">
+              <button type="button" class="piece" draggable="true" data-group="p3" data-target="agua"><span class="piece-symbol">A</span>Red de agua</button>
+              <button type="button" class="piece" draggable="true" data-group="p3" data-target="transporte"><span class="piece-symbol">B</span>Transporte público</button>
+              <button type="button" class="piece" draggable="true" data-group="p3" data-target="verde"><span class="piece-symbol">P</span>Parques y árboles</button>
+              <button type="button" class="piece" draggable="true" data-group="p3" data-target="vivienda"><span class="piece-symbol">V</span>Más viviendas</button>
+            </div>
+            <div class="feedback" id="fb-p3"></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="pagina" id="pagina4">
+      <article class="lesson-card">
+        <span class="section-chip">Página 4 · Misión final</span>
+        <h2 class="lesson-title">Activa el tablero de geógrafo</h2>
+        <p class="lesson-intro">Para cerrar el nivel, usa las manos y las ideas: reconoce cómo se reparte la población y qué necesita una ciudad cuando crece.</p>
+
+        <div class="mission-strip">
+          <figure class="mission-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mexico%20City%20skyline.jpg" alt="Ciudad con mucha población">
+            <span>ciudad</span>
+          </figure>
+          <figure class="mission-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Toconao%20Seen%20From%20Above.jpg" alt="Territorio amplio con población separada">
+            <span>territorio amplio</span>
+          </figure>
+          <figure class="mission-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pocket%20Park.jpg" alt="Parque urbano">
+            <span>mejora urbana</span>
+          </figure>
+        </div>
+
+        <div class="activity-board">
+          <div class="activity-head">
+            <div>
+              <h3 class="activity-title">Coloca las piezas finales</h3>
+              <p class="activity-lead">Cada estación pide una idea distinta del nivel.</p>
+            </div>
+            <div class="score-pill">Estaciones: <span id="score-p4">0/5</span></div>
+          </div>
+
+          <div class="drop-grid final">
+            <div class="drop-zone" data-group="p4" data-accept="concentracion">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Shibuya%20Crossing%20005.jpg" alt="Muchas personas juntas">
+                <div><strong>Estación 1</strong><small>Mucha gente en poco espacio.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p4" data-accept="dispersion">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Toconao%20Seen%20From%20Above.jpg" alt="Población separada">
+                <div><strong>Estación 2</strong><small>Pocas personas separadas.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p4" data-accept="densidad">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/WorldPopulationDensity.png" alt="Densidad de población mundial">
+                <div><strong>Estación 3</strong><small>Habitantes comparados con territorio.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p4" data-accept="reto">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dharavi%20Slum.jpg" alt="Reto urbano de vivienda">
+                <div><strong>Estación 4</strong><small>Problema que aparece al crecer rápido.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+            <div class="drop-zone" data-group="p4" data-accept="mejora">
+              <div class="drop-top">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/BusTransJakarta.jpg" alt="Transporte público como mejora urbana">
+                <div><strong>Estación 5</strong><small>Acción que ayuda a la ciudad.</small></div>
+              </div>
+              <div class="placed-list"></div>
+            </div>
+          </div>
+
+          <div class="piece-tray" id="tray-p4">
+            <button type="button" class="piece" draggable="true" data-group="p4" data-target="reto"><span class="piece-symbol">!</span>Reto urbano</button>
+            <button type="button" class="piece" draggable="true" data-group="p4" data-target="densidad"><span class="piece-symbol">÷</span>Densidad</button>
+            <button type="button" class="piece" draggable="true" data-group="p4" data-target="mejora"><span class="piece-symbol">+</span>Mejora urbana</button>
+            <button type="button" class="piece" draggable="true" data-group="p4" data-target="dispersion"><span class="piece-symbol">↔</span>Dispersión</button>
+            <button type="button" class="piece" draggable="true" data-group="p4" data-target="concentracion"><span class="piece-symbol">●</span>Concentración</button>
+          </div>
+          <div class="feedback" id="fb-p4"></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="nav-bar">
+      <button class="btn-nav" id="btnAnt" type="button" onclick="cambiarPag(-1)" disabled>ANTERIOR</button>
+      <span class="ind-pag" id="indPag">1/4</span>
+      <button class="btn-nav" id="btnSig" type="button" onclick="cambiarPag(1)" disabled>SIGUIENTE</button>
     </div>
-  </div>
-</div>
 
-<!-- NAVEGADOR -->
-<div class="nav-bar">
-  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
-  <span class="ind-pag" id="indPag">1/4</span>
-  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
-</div>
-<a href="quiz.html" class="boton-quiz text-center">
-  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
-</a>
+    <a href="quiz.html" class="boton-quiz" id="quizBtn">IR AL QUIZ</a>
+  </main>
 
-</div><!-- /contenedor -->
+  <div class="toast-hint" id="toastHint"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-/* ══════════ PAGINACIÓN ══════════ */
-let pag = 1; const TOTAL = 4;
-const progresoKinestesico = {1:false,2:false,3:false,4:false};
-const paginasCelebradas = new Set();
-const sonidos = {
-  click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
-  acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
-  error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
-  tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
-};
+  <script>
+    const TOTAL = 4;
+    let pag = 1;
+    const progresoKinestesico = { 1: false, 2: false, 3: false, 4: false };
+    const paginasCelebradas = new Set();
+    const selectedByGroup = { p1: 0, p2: 0, p3: 0, p4: 0 };
+    const groupTargets = {
+      p1: { total: 8, page: 1, key: 'drag', scoreId: 'score-p1', feedbackId: 'fb-p1' },
+      p2: { total: 3, page: 2, key: 'mapa', scoreId: 'score-p2', feedbackId: 'fb-p2' },
+      p3: { total: 4, page: 3, key: 'orden', scoreId: 'score-p3', feedbackId: 'fb-p3' },
+      p4: { total: 5, page: 4, key: 'repaso', scoreId: 'score-p4', feedbackId: 'fb-p4' }
+    };
+    let selectedPiece = null;
+    let draggedPiece = null;
+    let escenariosListos = false;
+    let ciudadLista = false;
 
-Object.values(sonidos).forEach(audio => {
-  if (audio && audio.src) audio.volume = 0.15;
-});
+    const sonidos = {
+      click: new Audio('/contenidos/geografia/recursos/sonidos/click.mp3'),
+      acierto: new Audio('/contenidos/geografia/recursos/sonidos/ding.mp3'),
+      error: new Audio('/contenidos/geografia/recursos/sonidos/error.mp3'),
+      tada: new Audio('/contenidos/geografia/recursos/sonidos/tada.mp3')
+    };
 
-function playFx(nombre){
-  const audio = sonidos[nombre];
-  if(!audio || !audio.src) return;
-  audio.currentTime = 0;
-  audio.play().catch(()=>{});
-}
+    Object.values(sonidos).forEach((audio) => {
+      if (audio && audio.src) audio.volume = 0.15;
+    });
 
-function paginaCompleta(numero){
-  return !!progresoKinestesico[numero];
-}
+    function playFx(nombre) {
+      const audio = sonidos[nombre];
+      if (!audio || !audio.src) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
 
-function todoCompletado(){
-  return Object.keys(progresoKinestesico).every(numero => paginaCompleta(Number(numero)));
-}
+    function showToast(message) {
+      const toast = document.getElementById('toastHint');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
 
-function completarPagina(numero){
-  if(progresoKinestesico[numero]) return;
-  progresoKinestesico[numero] = true;
-  if(!paginasCelebradas.has(numero)){
-    paginasCelebradas.add(numero);
-    playFx('tada');
-  }
-  syncUI();
-}
+    function paginaCompleta(numero) {
+      return !!progresoKinestesico[numero];
+    }
 
-function puedeIrAPagina(destino){
-  if(destino <= pag) return true;
-  for(let idx = pag; idx < destino; idx++){
-    if(!paginaCompleta(idx)) return false;
-  }
-  return true;
-}
+    function todoCompletado() {
+      return Object.keys(progresoKinestesico).every((numero) => paginaCompleta(Number(numero)));
+    }
 
-function cambiarPag(d){
-  const destino = Math.max(1, Math.min(TOTAL, pag + d));
-  if(destino > pag && !paginaCompleta(pag)){
-    playFx('error');
-    return;
-  }
-  if(destino === pag) return;
-  playFx('click');
-  document.getElementById('pagina'+pag).classList.remove('activa');
-  pag = destino;
-  document.getElementById('pagina'+pag).classList.add('activa');
-  syncUI(); window.scrollTo({top:0,behavior:'smooth'});
-}
-function syncUI(){
-  document.querySelectorAll('.punto').forEach((p,i)=>{
-    p.classList.remove('activo','completado');
-    if(i+1===pag) p.classList.add('activo');
-    else if(i+1<pag) p.classList.add('completado');
-  });
-  document.getElementById('numActual').innerText=pag;
-  document.getElementById('indPag').innerText=pag+'/'+TOTAL;
-  document.getElementById('btnAnt').disabled=(pag===1);
-  document.getElementById('btnSig').disabled=(pag===TOTAL)||!paginaCompleta(pag);
-  const quizBtn = document.querySelector('.boton-quiz');
-  if(quizBtn){
-    quizBtn.style.display = pag===TOTAL ? 'block' : 'none';
-    const bloqueado = !todoCompletado();
-    quizBtn.classList.toggle('bloqueado', bloqueado);
-    quizBtn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
-    quizBtn.tabIndex = bloqueado ? -1 : 0;
-    quizBtn.title = bloqueado ? 'Completa todas las paginas para desbloquear el quiz' : '';
-  }
-}
-function show(id){const e=document.getElementById(id);if(e)e.classList.add('on');}
-function hide(id){const e=document.getElementById(id);if(e)e.classList.remove('on');}
+    function completarSubactividad(pageNumber, subKey) {
+      return { pageNumber, subKey };
+    }
 
-/* ══════════ PÁG 1 — DRAG & DROP ══════════ */
-let ok1=0;
-function registrarIntentoDrag1(acierto){ return acierto; }
-function initDrag1(){
-  document.querySelectorAll('#elems1 .elemento').forEach(el=>{
-    el.addEventListener('dragstart',e=>{
+    function completePage(numero, key) {
+      if (progresoKinestesico[numero]) return;
+      progresoKinestesico[numero] = true;
+      if (!paginasCelebradas.has(numero)) {
+        paginasCelebradas.add(numero);
+        playFx('tada');
+      }
+      completarSubactividad(numero, key);
+      syncUI();
+    }
+
+    function completarPagina(numero) {
+      const config = Object.values(groupTargets).find((item) => item.page === numero);
+      completePage(numero, config ? config.key : '');
+    }
+
+    function puedeIrAPagina(destino) {
+      if (destino <= pag) return true;
+      for (let idx = pag; idx < destino; idx += 1) {
+        if (!paginaCompleta(idx)) return false;
+      }
+      return true;
+    }
+
+    function goToPage(destino) {
+      const next = Math.max(1, Math.min(TOTAL, destino));
+      if (!puedeIrAPagina(next)) {
+        playFx('error');
+        showToast('Completa el tablero actual para avanzar.');
+        syncUI();
+        return;
+      }
+      if (next === pag) return;
       playFx('click');
-      e.dataTransfer.setData('tipo',el.dataset.tipo);
-      e.dataTransfer.setData('texto',el.dataset.texto);
-    });
-  });
-  ['zonaAlta','zonaBaja'].forEach(zId=>{
-    const z=document.getElementById(zId);
-    const contId = zId==='zonaAlta'?'cAlta':'cBaja';
-    z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('sobre');});
-    z.addEventListener('dragleave',()=>z.classList.remove('sobre'));
-    z.addEventListener('drop',function(e){
-      e.preventDefault(); z.classList.remove('sobre');
-      const tipo=e.dataTransfer.getData('tipo');
-      const texto=e.dataTransfer.getData('texto');
-      if(tipo!==z.dataset.tipo){ playFx('error'); registrarIntentoDrag1(false); return; }
-      document.querySelectorAll('#elems1 .elemento').forEach(el=>{
-        if(el.dataset.texto===texto && !el.classList.contains('oculto')) el.classList.add('oculto');
+      document.getElementById(`pagina${pag}`).classList.remove('activa');
+      pag = next;
+      document.getElementById(`pagina${pag}`).classList.add('activa');
+      syncUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cambiarPag(delta) {
+      goToPage(pag + delta);
+    }
+
+    function syncUI() {
+      document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+        const page = index + 1;
+        dot.classList.remove('active', 'done');
+        if (page === pag) dot.classList.add('active');
+        else if (paginaCompleta(page)) dot.classList.add('done');
       });
-      const sp=document.createElement('span'); sp.className='colocado'; sp.innerText=texto;
-      document.getElementById(contId).appendChild(sp);
-      z.classList.add('ok'); ok1++; playFx('acierto'); registrarIntentoDrag1(true);
-      if(ok1===8){ show('fbPag1'); completarPagina(1); }
-    });
-  });
-}
 
-/* ══════════ PÁG 2 — MAPA CLIC ══════════ */
-const paisesData = [
-  {nombre:'China', bandera:'cn', correcto:true},
-  {nombre:'India', bandera:'in', correcto:true},
-  {nombre:'EE.UU.', bandera:'us', correcto:true},
-  {nombre:'Indonesia', bandera:'id', correcto:true},
-  {nombre:'Brasil', bandera:'br', correcto:true},
-  {nombre:'Noruega', bandera:'no', correcto:false},
-  {nombre:'Mongolia', bandera:'mn', correcto:false},
-  {nombre:'Islandia', bandera:'is', correcto:false},
-  {nombre:'Nauru', bandera:'nr', correcto:false},
-  {nombre:'Luxemburgo', bandera:'lu', correcto:false},
-];
-let seleccionados = new Set();
-function initMapGame(){
-  const cont = document.getElementById('mapGame');
-  paisesData.forEach(p=>{
-    const col = document.createElement('div');
-    col.className = 'col-6 col-sm-4 col-md-2';
-    col.innerHTML = `<div class="pais-btn" data-nombre="${p.nombre}" onclick="togglePais(this,${p.correcto})">
-      <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/${p.bandera}.svg" alt="${p.nombre}">
-      <div>${p.nombre}</div>
-    </div>`;
-    cont.appendChild(col);
-  });
-}
-function togglePais(el, correcto){
-  playFx('click');
-  if(el.classList.contains('disabled-btn')) return;
-  const nombre = el.dataset.nombre;
-  if(seleccionados.has(nombre)){
-    seleccionados.delete(nombre);
-    el.classList.remove('correcto','incorrecto');
-  } else {
-    if(seleccionados.size>=5) return;
-    seleccionados.add(nombre);
-    el.classList.add(correcto?'correcto':'incorrecto');
-  }
-  hide('fbPag2'); hide('errPag2');
-}
-function verificarMapa(){
-  const correctos=['China','India','EE.UU.','Indonesia','Brasil'];
-  const ok = correctos.every(p=>seleccionados.has(p)) && seleccionados.size===5;
-  if(ok){
-    playFx('acierto');
-    document.querySelectorAll('#mapGame .pais-btn').forEach(el=>el.classList.add('disabled-btn'));
-    show('fbPag2'); hide('errPag2'); completarPagina(2);
-  }
-  else{ playFx('error'); show('errPag2'); hide('fbPag2'); }
-}
-
-/* ══════════ PÁG 3 — ORDENAR ══════════ */
-const paisesOrden = [
-  {nombre:'India', bandera:'in', val:'B'},
-  {nombre:'China', bandera:'cn', val:'A'},
-  {nombre:'Brasil', bandera:'br', val:'E'},
-  {nombre:'EE.UU.', bandera:'us', val:'C'},
-  {nombre:'Indonesia', bandera:'id', val:'D'},
-];
-const ORDEN_CORRECTO = ['A','B','C','D','E'];
-let draggedSeq = null;
-function initOrden(){
-  const list = document.getElementById('seqPaises');
-  const shuffled = [...paisesOrden].sort(()=>Math.random()-.5);
-  shuffled.forEach(p=>{
-    const item = document.createElement('div');
-    item.className='seq-item'; item.draggable=true; item.dataset.val=p.val;
-    item.innerHTML=`<span class="handle">☰</span><img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/${p.bandera}.svg" alt="${p.nombre}"><span>${p.nombre}</span>`;
-    item.addEventListener('dragstart',()=>{playFx('click');draggedSeq=item;item.style.opacity='.4';});
-    item.addEventListener('dragend',()=>{item.style.opacity='1';draggedSeq=null;});
-    item.addEventListener('dragover',e=>{
-      e.preventDefault();
-      if(!draggedSeq||draggedSeq===item) return;
-      const rect=item.getBoundingClientRect();
-      const mid=rect.top+rect.height/2;
-      if(e.clientY>mid) item.parentNode.insertBefore(draggedSeq,item.nextSibling);
-      else item.parentNode.insertBefore(draggedSeq,item);
-    });
-    list.appendChild(item);
-  });
-}
-function verificarOrden(){
-  const items=[...document.querySelectorAll('#seqPaises .seq-item')];
-  let ok=true;
-  items.forEach((item,i)=>{
-    item.classList.remove('ok-pos','err-pos');
-    if(item.dataset.val===ORDEN_CORRECTO[i]) item.classList.add('ok-pos');
-    else{item.classList.add('err-pos');ok=false;}
-  });
-  if(ok){playFx('acierto');show('fbPag3');hide('errPag3');completarPagina(3);}
-  else{playFx('error');show('errPag3');hide('fbPag3');}
-}
-
-/* ══════════ PÁG 4 — REPASO DRAG ══════════ */
-let okR=0;
-function registrarIntentoRepaso(acierto){ return acierto; }
-function initDragRepaso(){
-  document.querySelectorAll('#elemsRepaso .elemento').forEach(el=>{
-    el.addEventListener('dragstart',e=>{
-      playFx('click');
-      e.dataTransfer.setData('tipo',el.dataset.tipo);
-      e.dataTransfer.setData('texto',el.dataset.texto);
-    });
-  });
-  const zonas = ['zonaConc','zonaDisp','zonaDens','zonaMega'];
-  const conts  = ['cConc','cDisp','cDens','cMega'];
-  zonas.forEach((zId,idx)=>{
-    const z = document.getElementById(zId);
-    z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('sobre');});
-    z.addEventListener('dragleave',()=>z.classList.remove('sobre'));
-    z.addEventListener('drop',function(e){
-      e.preventDefault(); z.classList.remove('sobre');
-      const tipo=e.dataTransfer.getData('tipo');
-      const texto=e.dataTransfer.getData('texto');
-      if(tipo!==z.dataset.tipo){ playFx('error'); registrarIntentoRepaso(false); return; }
-      document.querySelectorAll('#elemsRepaso .elemento').forEach(el=>{
-        if(el.dataset.texto===texto && !el.classList.contains('oculto')) el.classList.add('oculto');
+      document.querySelectorAll('.pagina').forEach((page, index) => {
+        page.classList.toggle('activa', index + 1 === pag);
       });
-      const sp=document.createElement('span'); sp.className='colocado'; sp.innerText=texto;
-      document.getElementById(conts[idx]).appendChild(sp);
-      z.classList.add('ok'); okR++; playFx('acierto'); registrarIntentoRepaso(true);
-      if(okR===4){ show('fbPag4'); completarPagina(4); }
-    });
-  });
-}
 
-const quizBtnKinestesicoFacil = document.querySelector('.boton-quiz');
-if(quizBtnKinestesicoFacil){
-  quizBtnKinestesicoFacil.addEventListener('click', function(event){
-    if(!todoCompletado()){
-      event.preventDefault();
-      playFx('error');
-    } else {
+      document.getElementById('numActual').textContent = String(pag);
+      document.getElementById('indPag').textContent = `${pag}/${TOTAL}`;
+      document.getElementById('btnAnt').disabled = pag === 1;
+      document.getElementById('btnSig').disabled = pag === TOTAL || !paginaCompleta(pag);
+
+      const quizBtn = document.getElementById('quizBtn');
+      quizBtn.style.display = pag === TOTAL ? 'block' : 'none';
+      const locked = !todoCompletado();
+      quizBtn.classList.toggle('bloqueado', locked);
+      quizBtn.setAttribute('aria-disabled', locked ? 'true' : 'false');
+      quizBtn.title = locked ? 'Completa todas las páginas para desbloquear el quiz.' : '';
+    }
+
+    function setFeedback(id, type, message) {
+      const feedback = document.getElementById(id);
+      if (!feedback) return;
+      feedback.className = `feedback show ${type}`;
+      feedback.textContent = message;
+    }
+
+    function clearSelectedPiece() {
+      if (selectedPiece) selectedPiece.classList.remove('selected');
+      selectedPiece = null;
+      document.querySelectorAll('.drop-zone.selected-target').forEach((zone) => zone.classList.remove('selected-target'));
+    }
+
+    function selectPiece(piece) {
+      if (piece.classList.contains('placed')) return;
+      if (selectedPiece === piece) {
+        clearSelectedPiece();
+        return;
+      }
+      clearSelectedPiece();
+      selectedPiece = piece;
+      piece.classList.add('selected');
+      document.querySelectorAll(`.drop-zone[data-group="${piece.dataset.group}"]`).forEach((zone) => zone.classList.add('selected-target'));
       playFx('click');
     }
-  }, true);
-}
 
-window.addEventListener('DOMContentLoaded',()=>{
-  initDrag1();
-  initMapGame();
-  initOrden();
-  initDragRepaso();
-  syncUI();
-});
-</script>
-<script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
+    function recordAttempt(group, ok) {
+      if (group === 'p1') registrarIntentoDrag1(ok);
+      if (group === 'p2') registrarIntentoMapa(ok);
+      if (group === 'p3') registrarIntentoOrden(ok);
+      if (group === 'p4') registrarIntentoRepaso(ok);
+    }
+
+    function groupCompleteMessage(group) {
+      const messages = {
+        p1: '¡Listo! Ya armaste las condiciones que atraen población y las que dificultan vivir en un lugar.',
+        p2: '¡Muy bien! Las tres maquetas quedaron completas: concentración, dispersión y densidad.',
+        p3: '¡Ciudad reparada! Relacionaste cada problema urbano con una mejora útil.',
+        p4: '¡Tablero final activado! Ya puedes pasar al quiz cuando el sistema termine de revisar tu avance.'
+      };
+      return messages[group] || '¡Actividad completada!';
+    }
+
+    function placePiece(piece, zone) {
+      if (!piece || piece.classList.contains('placed')) return;
+      const group = piece.dataset.group;
+      const config = groupTargets[group];
+      if (!config || zone.dataset.group !== group) return;
+
+      const correct = piece.dataset.target === zone.dataset.accept;
+      recordAttempt(group, correct);
+
+      if (!correct) {
+        playFx('error');
+        zone.classList.add('wrong');
+        setFeedback(config.feedbackId, 'fail', 'Esa pieza no va ahí. Observa la imagen y prueba otra zona.');
+        setTimeout(() => zone.classList.remove('wrong'), 450);
+        return;
+      }
+
+      playFx('acierto');
+      const placedList = zone.querySelector('.placed-list');
+      placedList.appendChild(piece);
+      piece.classList.add('placed');
+      piece.classList.remove('selected');
+      piece.setAttribute('draggable', 'false');
+      piece.disabled = true;
+      zone.classList.add('complete');
+      selectedByGroup[group] += 1;
+      document.getElementById(config.scoreId).textContent = `${selectedByGroup[group]}/${config.total}`;
+      setFeedback(config.feedbackId, 'ok', 'Pieza colocada correctamente.');
+      clearSelectedPiece();
+
+      if (selectedByGroup[group] >= config.total) {
+        if (group === 'p2') escenariosListos = true;
+        if (group === 'p3') ciudadLista = true;
+        setFeedback(config.feedbackId, 'ok', groupCompleteMessage(group));
+        completePage(config.page, config.key);
+      }
+    }
+
+    function setupPieces() {
+      shufflePieceTrays();
+
+      document.querySelectorAll('.piece').forEach((piece) => {
+        piece.addEventListener('dragstart', (event) => {
+          if (piece.classList.contains('placed')) return;
+          draggedPiece = piece;
+          event.dataTransfer.setData('text/plain', piece.textContent.trim());
+          playFx('click');
+        });
+
+        piece.addEventListener('dragend', () => {
+          draggedPiece = null;
+        });
+
+        piece.addEventListener('click', () => selectPiece(piece));
+      });
+
+      document.querySelectorAll('.drop-zone').forEach((zone) => {
+        zone.addEventListener('dragover', (event) => {
+          event.preventDefault();
+          zone.classList.add('hover');
+        });
+
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('hover');
+        });
+
+        zone.addEventListener('drop', (event) => {
+          event.preventDefault();
+          zone.classList.remove('hover');
+          placePiece(draggedPiece, zone);
+        });
+
+        zone.addEventListener('click', () => {
+          if (!selectedPiece) return;
+          placePiece(selectedPiece, zone);
+        });
+      });
+    }
+
+    function shuffleChildren(container) {
+      const children = Array.from(container.children);
+      for (let index = children.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [children[index], children[randomIndex]] = [children[randomIndex], children[index]];
+      }
+      children.forEach((child) => container.appendChild(child));
+    }
+
+    function shufflePieceTrays() {
+      document.querySelectorAll('.piece-tray').forEach(shuffleChildren);
+    }
+
+    function registrarIntentoDrag1(acierto) {
+      return acierto;
+    }
+
+    function registrarIntentoMapa(acierto) {
+      return acierto;
+    }
+
+    function registrarIntentoOrden(acierto) {
+      return acierto;
+    }
+
+    function registrarIntentoRepaso(acierto) {
+      return acierto;
+    }
+
+    function verificarMapa() {
+      return escenariosListos;
+    }
+
+    function verificarOrden() {
+      return ciudadLista;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupPieces();
+      syncUI();
+
+      const quizBtn = document.getElementById('quizBtn');
+      quizBtn.addEventListener('click', (event) => {
+        if (!todoCompletado()) {
+          event.preventDefault();
+          playFx('error');
+          showToast('Completa los cuatro tableros antes de entrar al quiz.');
+        }
+      }, true);
+    });
+  </script>
+  <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
+  <script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260523h"></script>
 </body>
 </html>

@@ -3,138 +3,622 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Países Poblados · Auditivo · Nivel Fácil</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Población mundial · Auditivo · Nivel Fácil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --guindo:#7b1d2e;
-      --guindo-dark:#5a1320;
-      --guindo-light:#a63248;
-      --gris:#4a4a5a;
-      --gris-light:#6b6b80;
-      --gris-pale:#e8e8ef;
-      --gris-bg:#f2f2f6;
-      --blanco:#fff;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Barlow',sans-serif;background:var(--gris-bg);color:var(--gris);min-height:100vh;}
-
-    .cabecera{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));padding:28px 20px;border-bottom:6px solid var(--gris-pale);text-align:center;box-shadow:0 10px 24px rgba(90,19,32,.35);}
-    .cabecera h1{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;color:#fff;font-weight:900;letter-spacing:1px;}
-    .cabecera .sub{color:#f5c6cc;font-weight:600;font-size:1rem;margin-top:4px;}
-    .badge-estilo{background:var(--gris-pale);color:var(--guindo);padding:10px 28px;border-radius:50px;font-weight:800;font-size:1.05rem;display:inline-block;border:3px solid #fff;margin-top:10px;}
-
-    .progreso{background:#fff;border-radius:60px;margin:20px auto;max-width:860px;padding:13px 26px;display:flex;align-items:center;gap:14px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
-    .puntos{display:flex;gap:8px;flex:1;justify-content:center;flex-wrap:wrap;}
-    .punto{width:38px;height:38px;border-radius:50%;background:var(--gris-pale);border:3px solid var(--guindo);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:var(--guindo);transition:all .3s;}
-    .punto.activo{background:var(--guindo);color:#fff;transform:scale(1.2);}
-    .punto.completado{background:var(--gris-light);border-color:#fff;color:#fff;}
-
-    .contenedor{max-width:960px;margin:0 auto 40px;padding:0 16px;}
-    .pagina{display:none;animation:aparecer .45s ease;}
-    .pagina.activa{display:block;}
-    @keyframes aparecer{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-    .card-aud{background:#fff;border-radius:24px;padding:24px;margin-bottom:20px;border:3px solid var(--guindo);box-shadow:0 8px 0 var(--guindo-dark);}
-    .titulo-pag{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;color:var(--guindo);margin-bottom:8px;border-left:8px solid var(--gris-pale);padding-left:16px;font-weight:800;}
-    .subtitulo-tema{background:var(--gris-pale);border-radius:12px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--guindo);margin-bottom:14px;display:inline-block;border:2px solid #d0d0de;}
-
-    .dato-box{background:var(--gris-bg);border-radius:14px;padding:12px 16px;border-left:6px solid var(--guindo);margin:8px 0;font-size:.92rem;}
-    .dato-box strong{color:var(--guindo);}
-    .info-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gris-bg);border-radius:40px;padding:9px 15px;margin:5px 4px;border:2px solid #d0d0de;font-weight:700;font-size:.9rem;color:var(--gris);}
-
-    /* AUDIO PLAYER */
-    .audio-section{background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));border-radius:20px;padding:20px;margin:14px 0;text-align:center;color:#fff;}
-    .audio-section h5{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:12px;}
-    .audio-section .note{font-size:.8rem;opacity:.8;margin-top:8px;}
-    .placeholder-audio{background:rgba(255,255,255,.2);border:2px dashed rgba(255,255,255,.5);border-radius:12px;padding:18px 24px;color:#fff;font-weight:700;font-size:.85rem;text-align:center;margin:10px 0;}
-
-    /* AUDIO POR PREGUNTA */
-    .pregunta-audio-wrap{
-      background:linear-gradient(135deg,var(--guindo-dark),var(--guindo));
-      border-radius:14px;
-      padding:14px 18px;
-      margin-bottom:12px;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-    .pregunta-audio-wrap .audio-label{
-      color:#fff;
-      font-family:'Barlow Condensed',sans-serif;
-      font-weight:800;
-      font-size:1rem;
-      white-space:nowrap;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .pregunta-audio-wrap audio{
-      flex:1;
-      min-width:200px;
-      max-width:400px;
-      border-radius:8px;
-      height:36px;
+    :root {
+      --guindo: #7b1d2e;
+      --guindo-dark: #54111f;
+      --guindo-soft: #a8324d;
+      --crema: #fff5e8;
+      --crema-2: #ffe6c7;
+      --azul: #2467a7;
+      --azul-soft: #dceeff;
+      --verde: #2d9b65;
+      --verde-soft: #e2f7ea;
+      --rojo: #d94a3a;
+      --rojo-soft: #ffe3de;
+      --gris: #4d4653;
+      --gris-soft: #ece8ed;
+      --white: #fff;
+      --shadow: rgba(84, 17, 31, 0.22);
     }
 
-    /* ACTIVIDAD */
-    .actividad{background:#fdf5f6;border-radius:24px;padding:20px;margin-top:16px;border:4px dashed var(--guindo-light);}
-    .act-titulo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--guindo);margin-bottom:12px;text-align:center;}
-    .pista-banner{background:linear-gradient(135deg,var(--guindo),var(--guindo-light));color:#fff;border-radius:16px;padding:13px 18px;margin:0 0 12px;text-align:center;}
-    .pista-banner p{font-weight:800;font-size:1.05rem;margin:0 0 3px;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    /* OPCIONES RESPUESTA */
-    .opcion-btn{background:#fff;border:3px solid var(--guindo);border-radius:14px;padding:14px 20px;font-weight:700;font-size:.95rem;color:var(--guindo);cursor:pointer;transition:all .2s;width:100%;text-align:left;display:flex;align-items:center;gap:12px;margin-bottom:8px;}
-    .opcion-btn img{width:32px;height:22px;object-fit:cover;border-radius:3px;flex-shrink:0;}
-    .opcion-btn:hover:not(.disabled){background:var(--gris-pale);transform:translateX(4px);}
-    .opcion-btn.correcto{background:#d5f5e3;border-color:#27ae60;color:#1a7a46;}
-    .opcion-btn.incorrecto{background:#fde8e8;border-color:#e74c3c;color:#a93226;}
-    .opcion-btn.disabled{cursor:default;}
+    body {
+      min-height: 100vh;
+      font-family: "Nunito", sans-serif;
+      color: var(--gris);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 214, 143, 0.52), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(36, 103, 167, 0.18), transparent 24%),
+        linear-gradient(140deg, #fff8eb 0%, #f9edf1 52%, #edf6ff 100%);
+    }
 
-    /* PREGUNTA ITEM */
-    .vf-item{background:var(--gris-bg);border-radius:16px;padding:14px 18px;margin-bottom:14px;border:2px solid #d0d0de;}
-    .vf-texto{font-weight:700;font-size:.95rem;margin-bottom:10px;color:var(--guindo);}
+    .top-header {
+      padding: 26px 18px 20px;
+      text-align: center;
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(84, 17, 31, 0.96), rgba(123, 29, 46, 0.92)),
+        url("/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg") center/cover;
+      border-bottom: 7px solid var(--crema-2);
+      box-shadow: 0 12px 26px var(--shadow);
+    }
 
-    /* VERDADERO / FALSO */
-    .vf-btns{display:flex;gap:10px;}
-    .vf-btn{padding:10px 24px;border-radius:26px;border:none;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .2s;}
-    .vf-btn.verdad{background:var(--guindo);color:#fff;box-shadow:0 4px 0 var(--guindo-dark);}
-    .vf-btn.falso{background:var(--gris-light);color:#fff;box-shadow:0 4px 0 var(--gris);}
-    .vf-btn:hover:not(.disabled){transform:translateY(-2px);}
-    .vf-btn.ok{background:#27ae60 !important;box-shadow:none;}
-    .vf-btn.err{background:#e74c3c !important;box-shadow:none;}
-    .vf-btn.disabled{cursor:default;opacity:.6;transform:none !important;}
+    .top-header h1 {
+      font-family: "Baloo 2", cursive;
+      font-size: clamp(2rem, 6vw, 3.35rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+    }
 
-    /* PISTAS */
-    .pista-box{background:var(--gris-bg);border-radius:16px;padding:16px;margin-bottom:12px;border:2px solid #d0d0de;}
-    .pista-num{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;color:var(--guindo);margin-bottom:4px;}
-    .pista-txt{font-size:.9rem;font-weight:600;}
+    .header-sub {
+      margin-top: 6px;
+      font-weight: 900;
+      color: #ffe7b6;
+    }
 
-    /* REPASO IMÁGENES */
-    .rep-img{width:100%;height:140px;object-fit:cover;border-radius:14px;margin-bottom:10px;}
-    .rep-card{background:var(--gris-bg);border-radius:16px;padding:14px;border:2px solid #d0d0de;}
-    .rep-card h6{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--guindo);font-size:1.1rem;margin-bottom:6px;}
-    .rep-card p{font-size:.82rem;line-height:1.5;}
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      color: var(--guindo-dark);
+      background: var(--crema);
+      border: 3px solid #ffd58b;
+      font-weight: 900;
+      box-shadow: 0 5px 0 rgba(84, 17, 31, 0.5);
+    }
 
-    /* FEEDBACK */
-    .fb-ok{background:var(--guindo);color:#fff;padding:12px 15px;border-radius:26px;font-weight:700;text-align:center;margin-top:13px;display:none;font-size:.95rem;}
-    .fb-ok.on{display:block;animation:aparecer .4s ease;}
-    .fb-err{background:#e74c3c;color:#fff;padding:10px 13px;border-radius:20px;font-weight:700;text-align:center;margin-top:9px;display:none;}
-    .fb-err.on{display:block;}
+    .progreso {
+      max-width: 920px;
+      margin: 20px auto 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: 3px solid var(--guindo);
+      border-radius: 999px;
+      box-shadow: 0 6px 0 var(--guindo-dark);
+    }
 
-    /* NAV */
-    .nav-bar{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px;background:#fff;padding:13px 26px;border-radius:60px;border:3px solid var(--guindo);box-shadow:0 5px 0 var(--guindo-dark);}
-    .btn-nav{background:var(--guindo);color:#fff;border:3px solid var(--guindo-dark);padding:10px 24px;border-radius:38px;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 var(--guindo-dark);transition:all .2s;}
-    .btn-nav:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 7px 0 var(--guindo-dark);}
-    .btn-nav:disabled{background:#ccc;color:#999;border-color:#bbb;box-shadow:none;cursor:default;}
-    .ind-pag{font-size:1.2rem;font-weight:800;background:var(--gris-pale);color:var(--guindo);padding:8px 24px;border-radius:36px;border:3px solid var(--guindo);}
-    .boton-quiz{display:block;width:fit-content;margin:12px auto 38px;background:var(--guindo);color:#fff;padding:14px 46px;border-radius:60px;font-weight:800;font-size:1.3rem;text-decoration:none;border:4px solid var(--guindo-dark);box-shadow:0 8px 0 var(--guindo-dark);transition:all .2s;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
-    .boton-quiz:hover{transform:translateY(-4px);box-shadow:0 12px 0 var(--guindo-dark);color:#fff;}
-    .boton-quiz.bloqueado{background:#b9bcc7;border-color:#8f94a3;box-shadow:0 8px 0 #8f94a3;color:#f6f7fb;cursor:not-allowed;pointer-events:none;transform:none;}
-    .boton-quiz.bloqueado:hover{transform:none;box-shadow:0 8px 0 #8f94a3;color:#f6f7fb;}
+    .puntos {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .punto {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--guindo);
+      background: #ffe5ec;
+      border: 3px solid var(--guindo);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .punto.activo {
+      color: var(--white);
+      background: var(--guindo);
+      transform: scale(1.16);
+    }
+
+    .punto.completado {
+      color: #17633e;
+      background: #dff5e8;
+      border-color: #3dad73;
+    }
+
+    .badge-pag {
+      padding: 7px 13px;
+      color: var(--white);
+      background: var(--guindo);
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .stage {
+      max-width: 980px;
+      margin: 0 auto 40px;
+      padding: 0 16px;
+    }
+
+    .pagina {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .pagina.activa {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lesson-card {
+      margin: 20px 0;
+      overflow: hidden;
+      background: var(--white);
+      border: 3px solid var(--guindo);
+      border-radius: 28px;
+      box-shadow: 0 10px 0 rgba(84, 17, 31, 0.2), 0 18px 36px rgba(84, 17, 31, 0.14);
+    }
+
+    .card-head {
+      padding: 17px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--guindo-dark), var(--guindo));
+    }
+
+    .card-head h2,
+    .card-head h3 {
+      font-family: "Baloo 2", cursive;
+      font-size: clamp(1.38rem, 4.5vw, 2rem);
+      line-height: 1.05;
+      font-weight: 800;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: var(--guindo-dark);
+      background: var(--crema-2);
+      font-size: 0.84rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(260px, 0.9fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .topic-media {
+      position: relative;
+      min-height: 290px;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 3px solid #f1c7cf;
+      background: var(--gris-soft);
+    }
+
+    .topic-media img,
+    .option-card img,
+    .mini-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .topic-media img[data-zoomable],
+    .option-card img[data-zoomable],
+    .mini-image img[data-zoomable] {
+      cursor: zoom-in;
+    }
+
+    .caption-chip {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--guindo-dark);
+      background: rgba(255, 245, 232, 0.94);
+      border: 2px solid #ffd58b;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .listen-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fffaf0, #fff2f6);
+      border: 3px dashed #eab6c0;
+    }
+
+    .listen-panel h4,
+    .activity-title {
+      font-family: "Baloo 2", cursive;
+      color: var(--guindo);
+      font-size: 1.35rem;
+      line-height: 1.05;
+      font-weight: 800;
+    }
+
+    .brief {
+      color: #604a55;
+      font-size: 0.98rem;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .audio-box {
+      padding: 13px;
+      border-radius: 18px;
+      background: var(--white);
+      border: 2px solid #f1c7cf;
+      box-shadow: 0 5px 16px rgba(84, 17, 31, 0.08);
+    }
+
+    .audio-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--guindo);
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .audio-box audio {
+      width: 100%;
+      height: 38px;
+      display: block;
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .quick-tags span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--azul);
+      background: var(--azul-soft);
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .activity-card {
+      margin-top: 18px;
+      padding: 18px;
+      background: #fffdfa;
+      border: 3px dashed #e2a6b3;
+      border-radius: 26px;
+    }
+
+    .activity-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: #17633e;
+      background: var(--verde-soft);
+      border: 2px solid #a8dfbf;
+      font-weight: 900;
+    }
+
+    .challenge-box {
+      display: grid;
+      gap: 14px;
+    }
+
+    .challenge-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px 14px;
+      border-radius: 18px;
+      color: var(--guindo);
+      background: #fff0f4;
+      border: 2px solid #f1c7cf;
+      font-weight: 900;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .option-card {
+      min-height: 100%;
+      overflow: hidden;
+      border: 3px solid #f1c7cf;
+      border-radius: 22px;
+      background: var(--white);
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      text-align: left;
+      box-shadow: 0 5px 0 rgba(84, 17, 31, 0.12);
+    }
+
+    .option-card:hover:not(:disabled) {
+      transform: translateY(-3px);
+      border-color: var(--guindo);
+      box-shadow: 0 8px 0 rgba(84, 17, 31, 0.18);
+    }
+
+    .option-card:disabled {
+      cursor: default;
+      opacity: 0.72;
+    }
+
+    .option-card.correct {
+      border-color: var(--verde);
+      background: var(--verde-soft);
+    }
+
+    .option-card.wrong {
+      border-color: var(--rojo);
+      background: var(--rojo-soft);
+    }
+
+    .option-img {
+      height: 142px;
+      background: var(--gris-soft);
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 13px;
+      color: var(--guindo);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 13px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.ok {
+      color: #17633e;
+      background: var(--verde-soft);
+      border: 2px solid #a8dfbf;
+    }
+
+    .feedback.fail {
+      color: #982d23;
+      background: var(--rojo-soft);
+      border: 2px solid #efb4ad;
+    }
+
+    .two-choice {
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .mini-image {
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 3px solid #f1c7cf;
+      background: var(--gris-soft);
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 14px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 3px solid var(--guindo);
+      box-shadow: 0 6px 0 var(--guindo-dark);
+    }
+
+    .btn-nav {
+      border: 3px solid var(--guindo-dark);
+      border-radius: 999px;
+      padding: 10px 22px;
+      color: var(--white);
+      background: var(--guindo);
+      box-shadow: 0 4px 0 var(--guindo-dark);
+      font-size: 0.98rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 var(--guindo-dark);
+    }
+
+    .btn-nav:disabled {
+      color: #9c94a0;
+      background: #ded8df;
+      border-color: #bcb3bf;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .ind-pag {
+      padding: 8px 20px;
+      border-radius: 999px;
+      color: var(--guindo);
+      background: #ffe5ec;
+      border: 3px solid var(--guindo);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .boton-quiz {
+      display: none;
+      width: fit-content;
+      margin: 12px auto 38px;
+      padding: 14px 42px;
+      border-radius: 999px;
+      color: var(--white);
+      background: var(--guindo);
+      border: 4px solid var(--guindo-dark);
+      box-shadow: 0 8px 0 var(--guindo-dark);
+      font-family: "Baloo 2", cursive;
+      font-size: 1.24rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .boton-quiz:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 11px 0 var(--guindo-dark);
+    }
+
+    .boton-quiz.bloqueado {
+      color: #f7f3f5;
+      background: #a5a0a8;
+      border-color: #827a85;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .toast-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 20;
+      transform: translateX(-50%);
+      max-width: min(92vw, 560px);
+      padding: 11px 18px;
+      border-radius: 999px;
+      color: var(--white);
+      background: rgba(84, 17, 31, 0.96);
+      font-weight: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+      box-shadow: 0 9px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .toast-hint.on {
+      opacity: 1;
+    }
+
+    .zoom-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      place-items: center;
+      padding: 22px;
+      background: rgba(30, 12, 20, 0.82);
+    }
+
+    .zoom-backdrop.show {
+      display: grid;
+    }
+
+    .zoom-backdrop img {
+      max-width: min(94vw, 1100px);
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 24px;
+      border: 5px solid var(--crema-2);
+      background: var(--white);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
+      cursor: zoom-out;
+    }
+
+    @media (max-width: 760px) {
+      .topic-grid,
+      .two-choice {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-media {
+        min-height: 230px;
+      }
+
+      .card-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .progreso,
+      .nav-bar {
+        border-radius: 28px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .punto {
+        width: 32px;
+        height: 32px;
+      }
+
+      .btn-nav {
+        padding: 9px 14px;
+        font-size: 0.86rem;
+      }
+
+      .ind-pag {
+        padding: 7px 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -143,530 +627,718 @@
 <audio id="sndError" src="/contenidos/geografia/recursos/sonidos/error.mp3"></audio>
 <audio id="sndTada" src="/contenidos/geografia/recursos/sonidos/tada.mp3"></audio>
 
-<!-- HEADER -->
-<div class="cabecera">
-  <h1>PAÍSES MÁS Y MENOS POBLADOS</h1>
-  <div class="sub">Bloque · Nivel Fácil · Geografía 5°</div>
-  <div class="badge-estilo"><i class="fas fa-headphones me-2"></i>Estilo Auditivo</div>
-</div>
+<header class="top-header">
+  <h1>Población mundial</h1>
+  <div class="header-sub">Nivel Fácil · Geografía 5°</div>
+  <div class="header-badge">🎧 Estilo auditivo</div>
+</header>
 
-<!-- PROGRESO -->
-<div class="progreso">
-  <i class="fas fa-headphones fa-2x" style="color:var(--guindo);"></i>
+<div class="progreso" aria-label="Progreso del nivel">
+  <span aria-hidden="true" style="font-size:2rem;line-height:1;">🎧</span>
   <div class="puntos" id="puntosDiv">
-    <div class="punto activo">1</div>
-    <div class="punto">2</div>
-    <div class="punto">3</div>
-    <div class="punto">4</div>
+    <button type="button" class="punto activo" onclick="irPagina(1)">1</button>
+    <button type="button" class="punto" onclick="irPagina(2)">2</button>
+    <button type="button" class="punto" onclick="irPagina(3)">3</button>
+    <button type="button" class="punto" onclick="irPagina(4)">4</button>
   </div>
-  <span style="background:var(--guindo);color:#fff;padding:7px 14px;border-radius:26px;font-weight:700;font-size:.9rem;">
-    Página <span id="numActual">1</span>/4
-  </span>
+  <span class="badge-pag">Página <span id="numActual">1</span>/4</span>
 </div>
 
-<div class="contenedor">
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 1 · DISTRIBUCIÓN DE LA POBLACIÓN
-     JUEGO: Cada pregunta tiene su propio audio
-     ═══════════════════════════════════════ -->
-<div class="pagina activa" id="pagina1">
-  <div class="card-aud">
-    <h2 class="titulo-pag"><i class="fas fa-globe-americas me-2"></i>La Distribución de la Población en el Mundo</h2>
-    <span class="subtitulo-tema">Subtema 1 de 3</span>
-
-    <p class="mb-2">La población mundial no se distribuye de forma uniforme. Factores como el <strong>clima, el relieve, la disponibilidad de agua y la economía</strong> determinan dónde vive la gente. Los países más poblados concentran cientos de millones de personas.</p>
-
-    <div class="dato-box"><strong>Más poblados:</strong> China (~1,400M), India (~1,400M), EE.UU. (~330M), Indonesia (~280M), Brasil (~215M).</div>
-    <div class="dato-box"><strong>Menos poblados:</strong> Nauru, Tuvalu, Palau, San Marino y Liechtenstein — cada uno con menos de 50,000 habitantes.</div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p><i class="fas fa-headphones me-2"></i>Adivina por audio</p>
+<main class="stage">
+  <section class="pagina activa" id="pagina1">
+    <article class="lesson-card">
+      <div class="card-head">
+        <h2>🌎 ¿Dónde vive más gente?</h2>
+        <span class="pill">Escucha primero</span>
       </div>
-      <h3 class="act-titulo">Escucha cada pista y elige el país correcto</h3>
-      <p class="text-center text-muted mb-3" style="font-size:.85rem;">Cada pregunta tiene su propio audio — escúchalo y selecciona la respuesta</p>
-
-      <!-- ── PREGUNTA 1 ── -->
-      <div class="vf-item" id="qAud1">
-        <div class="vf-texto">Pregunta 1 — ¿A qué país corresponde la descripción?</div>
-
-        <!-- AUDIO PREGUNTA 1 — sustituye src por tu archivo -->
-        <div class="pregunta-audio-wrap">
-          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 1</span>
-          <audio controls>
-            <source src="audios/audio 1 china.mp3.mp3" type="audio/mpeg">
-            Tu navegador no soporta audio.
-          </audio>
-        </div>
-
-        <button class="opcion-btn" onclick="responderOpc('qAud1','china','china')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/cn.svg" alt="China"> China
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud1','noruega','china')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/no.svg" alt="Noruega"> Noruega
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud1','nauru','china')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg" alt="Nauru"> Nauru
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud1','islandia','china')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/is.svg" alt="Islandia"> Islandia
-        </button>
-        <div class="fb-ok" id="okQAud1">¡Correcto! China es el país más poblado del mundo con más de 1,400 millones de habitantes.</div>
-        <div class="fb-err" id="errQAud1">Incorrecto. La respuesta es China. Es el país más poblado del mundo.</div>
-      </div>
-
-      <!-- ── PREGUNTA 2 ── -->
-      <div class="vf-item" id="qAud2">
-        <div class="vf-texto">Pregunta 2 — ¿A qué país corresponde esta descripción?</div>
-
-        <!-- AUDIO PREGUNTA 2 — sustituye src por tu archivo -->
-        <div class="pregunta-audio-wrap">
-          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 2</span>
-          <audio controls>
-            <source src="audios/audio 2 india.mp3.mp3" type="audio/mpeg">
-            Tu navegador no soporta audio.
-          </audio>
-        </div>
-
-        <button class="opcion-btn" onclick="responderOpc('qAud2','brasil','india')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/br.svg" alt="Brasil"> Brasil
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud2','india','india')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/in.svg" alt="India"> India
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud2','palau','india')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/pw.svg" alt="Palau"> Palau
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud2','suecia','india')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/se.svg" alt="Suecia"> Suecia
-        </button>
-        <div class="fb-ok" id="okQAud2">¡Correcto! India tiene más de 1,400 millones de habitantes y compite con China por el 1er lugar.</div>
-        <div class="fb-err" id="errQAud2">Incorrecto. La respuesta es India, el segundo país más poblado del mundo.</div>
-      </div>
-
-      <!-- ── PREGUNTA 3 ── -->
-      <div class="vf-item" id="qAud3">
-        <div class="vf-texto">Pregunta 3 — País con menos de 15,000 habitantes, ¿cuál es?</div>
-
-        <!-- AUDIO PREGUNTA 3 — sustituye src por tu archivo -->
-        <div class="pregunta-audio-wrap">
-          <span class="audio-label"><i class="fas fa-volume-up"></i> Audio 3</span>
-          <audio controls>
-            <source src="audios/audio 3 naru.mp3.mp3" type="audio/mpeg">
-            Tu navegador no soporta audio.
-          </audio>
-        </div>
-
-        <button class="opcion-btn" onclick="responderOpc('qAud3','indonesia','nauru')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/id.svg" alt="Indonesia"> Indonesia
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud3','eeuu','nauru')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/us.svg" alt="EE.UU."> EE.UU.
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud3','nauru','nauru')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/nr.svg" alt="Nauru"> Nauru
-        </button>
-        <button class="opcion-btn" onclick="responderOpc('qAud3','alemania','nauru')">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/flags/de.svg" alt="Alemania"> Alemania
-        </button>
-        <div class="fb-ok" id="okQAud3">¡Correcto! Nauru es uno de los países menos poblados del mundo, con menos de 15,000 habitantes.</div>
-        <div class="fb-err" id="errQAud3">Incorrecto. La respuesta es Nauru, un pequeño estado insular con muy poca población.</div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 2 · CONCENTRACIÓN Y DISPERSIÓN
-     JUEGO: Verdadero o Falso con audio
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina2">
-  <div class="card-aud">
-    <h2 class="titulo-pag"><i class="fas fa-map-marked-alt me-2"></i>Concentración y Dispersión de la Población</h2>
-    <span class="subtitulo-tema">Subtema 2 de 3</span>
-
-    <p class="mb-2">La <strong>densidad de población</strong> mide cuántas personas viven en un km². Bangladesh (~1,100 hab/km²) es ejemplo de concentración extrema. Mongolia (~2 hab/km²) es ejemplo de dispersión. Las <strong>megalópolis</strong> como Tokio o Ciudad de México concentran decenas de millones.</p>
-
-    <div class="dato-box"><strong>Concentración:</strong> Muchas personas en poco espacio. Ciudades, costas, llanuras fértiles.</div>
-    <div class="dato-box"><strong>Dispersión:</strong> Pocas personas en gran territorio. Desiertos, zonas polares, selvas.</div>
-
-    <!-- AUDIO GENERAL PÁGINA 2 -->
-    <div class="audio-section">
-      <h5><i class="fas fa-volume-up me-2"></i>Escucha las afirmaciones</h5>
-      <div class="placeholder-audio">
-        <audio controls>
-    <source src="audios/audio 4 verdadfalso.mp3.mp3" type="audio/mpeg">
-  </audio>
-        <i class="fas fa-music fa-2x mb-2 d-block"></i>
-      </div>
-    </div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p><i class="fas fa-check-circle me-2"></i>Verdadero o Falso</p>
-      </div>
-      <h3 class="act-titulo">Escucha y decide: ¿Verdadero o Falso?</h3>
-
-      <div id="vfItems">
-        <div class="vf-item" id="vf1">
-          <div class="vf-texto">1. Bangladesh es uno de los países con mayor densidad de población del mundo.</div>
-          <div class="vf-btns">
-            <button class="vf-btn verdad" onclick="respVF('vf1','V','V')">Verdadero</button>
-            <button class="vf-btn falso" onclick="respVF('vf1','F','V')">Falso</button>
+      <div class="card-body">
+        <div class="topic-grid">
+          <figure class="topic-media">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="La Tierra de noche con zonas iluminadas" data-zoomable>
+            <figcaption class="caption-chip">Población desigual</figcaption>
+          </figure>
+          <div class="listen-panel">
+            <h4>La gente no vive igual en todos lados</h4>
+            <p class="brief">Mucha gente junta forma zonas concentradas. Pocas casas separadas muestran zonas dispersas.</p>
+            <div class="audio-box">
+              <strong>Audio del tema</strong>
+              <audio controls preload="metadata" src="audios/p1_contenido.mp3"></audio>
+            </div>
+            <div class="quick-tags" aria-label="Ideas clave">
+              <span>🏙️ Mucha gente</span>
+              <span>🌾 Poca gente</span>
+              <span>📍 Diferentes lugares</span>
+            </div>
           </div>
         </div>
-        <div class="vf-item" id="vf2">
-          <div class="vf-texto">2. Mongolia tiene una de las densidades de población más altas del mundo.</div>
-          <div class="vf-btns">
-            <button class="vf-btn verdad" onclick="respVF('vf2','V','F')">Verdadero</button>
-            <button class="vf-btn falso" onclick="respVF('vf2','F','F')">Falso</button>
+
+        <div class="activity-card">
+          <div class="activity-top">
+            <h3 class="activity-title">🎧 Escucha y toca la imagen</h3>
+            <span class="score-pill">Aciertos: <span id="p1Score">0</span>/3</span>
           </div>
-        </div>
-        <div class="vf-item" id="vf3">
-          <div class="vf-texto">3. Las megalópolis son ciudades que concentran millones de personas en poco espacio.</div>
-          <div class="vf-btns">
-            <button class="vf-btn verdad" onclick="respVF('vf3','V','V')">Verdadero</button>
-            <button class="vf-btn falso" onclick="respVF('vf3','F','V')">Falso</button>
-          </div>
-        </div>
-        <div class="vf-item" id="vf4">
-          <div class="vf-texto">4. Los desiertos y zonas polares suelen tener alta concentración de población.</div>
-          <div class="vf-btns">
-            <button class="vf-btn verdad" onclick="respVF('vf4','V','F')">Verdadero</button>
-            <button class="vf-btn falso" onclick="respVF('vf4','F','F')">Falso</button>
-          </div>
-        </div>
-        <div class="vf-item" id="vf5">
-          <div class="vf-texto">5. La densidad de población se mide en habitantes por kilómetro cuadrado (hab/km²).</div>
-          <div class="vf-btns">
-            <button class="vf-btn verdad" onclick="respVF('vf5','V','V')">Verdadero</button>
-            <button class="vf-btn falso" onclick="respVF('vf5','F','V')">Falso</button>
+          <div class="challenge-box">
+            <div class="challenge-status">
+              <span id="p1Step">Pista 1 de 3</span>
+              <span>Toca la opción correcta</span>
+            </div>
+            <div class="audio-box">
+              <strong id="p1AudioLabel">Audio de la pista</strong>
+              <audio id="p1Audio" controls preload="metadata"></audio>
+            </div>
+            <div class="option-grid" id="p1Options"></div>
+            <div class="feedback" id="p1Feedback"></div>
           </div>
         </div>
       </div>
+    </article>
+  </section>
 
-      <div class="fb-ok" id="fbPag2">¡Excelente! Respondiste correctamente todas las afirmaciones.</div>
-    </div>
-  </div>
+  <section class="pagina" id="pagina2">
+    <article class="lesson-card">
+      <div class="card-head">
+        <h2>👥 Juntos o separados</h2>
+        <span class="pill">Concentración y dispersión</span>
+      </div>
+      <div class="card-body">
+        <div class="topic-grid">
+          <figure class="topic-media">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/dojgxhxs5are3gynb36ch6yp6t6jc3sachvcdoaizecfr3dn-e9664128cb.png" alt="Mapa con concentración y dispersión de población" data-zoomable>
+            <figcaption class="caption-chip">Juntos o separados</figcaption>
+          </figure>
+          <div class="listen-panel">
+            <h4>Escucha la pista</h4>
+            <p class="brief">Si habla de mucha gente cerca: concentración. Si habla de casas alejadas: dispersión.</p>
+            <div class="audio-box">
+              <strong>Audio del tema</strong>
+              <audio controls preload="metadata" src="audios/p2_contenido.mp3"></audio>
+            </div>
+            <div class="mini-grid">
+              <figure class="mini-image">
+                <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/17187367465141-0f0a309a26.jpg" alt="Calle con muchas personas" data-zoomable>
+                <figcaption class="caption-chip">Concentración</figcaption>
+              </figure>
+              <figure class="mini-image">
+                <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-465ce1fb29.jpg" alt="Viviendas separadas en un espacio amplio" data-zoomable>
+                <figcaption class="caption-chip">Dispersión</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-top">
+            <h3 class="activity-title">🔊 ¿Juntos o separados?</h3>
+            <span class="score-pill">Aciertos: <span id="p2Score">0</span>/4</span>
+          </div>
+          <div class="challenge-box">
+            <div class="challenge-status">
+              <span id="p2Step">Reto 1 de 4</span>
+              <span>Elige lo que escuchas</span>
+            </div>
+            <div class="audio-box">
+              <strong id="p2AudioLabel">Audio del reto</strong>
+              <audio id="p2Audio" controls preload="metadata"></audio>
+            </div>
+            <div class="option-grid two-choice" id="p2Options"></div>
+            <div class="feedback" id="p2Feedback"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="pagina" id="pagina3">
+    <article class="lesson-card">
+      <div class="card-head">
+        <h2>🏙️ Cuando la ciudad crece</h2>
+        <span class="pill">Retos y mejoras</span>
+      </div>
+      <div class="card-body">
+        <div class="topic-grid">
+          <figure class="topic-media">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-8f1db13861.jpg" alt="Tráfico intenso en una ciudad" data-zoomable>
+            <figcaption class="caption-chip">Reto urbano</figcaption>
+          </figure>
+          <div class="listen-panel">
+            <h4>La ciudad necesita servicios</h4>
+            <p class="brief">Si llegan más personas, también hacen falta agua, transporte, vivienda, limpieza y áreas verdes.</p>
+            <div class="audio-box">
+              <strong>Audio del tema</strong>
+              <audio controls preload="metadata" src="audios/p3_contenido.mp3"></audio>
+            </div>
+            <div class="quick-tags" aria-label="Soluciones">
+              <span>🚌 Transporte</span>
+              <span>🚰 Agua</span>
+              <span>🌳 Árboles</span>
+              <span>🏠 Vivienda</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-top">
+            <h3 class="activity-title">🛠️ Escucha el problema y elige la ayuda</h3>
+            <span class="score-pill">Aciertos: <span id="p3Score">0</span>/5</span>
+          </div>
+          <div class="challenge-box">
+            <div class="challenge-status">
+              <span id="p3Step">Caso 1 de 5</span>
+              <span>Elige una mejora</span>
+            </div>
+            <div class="audio-box">
+              <strong id="p3AudioLabel">Audio del caso</strong>
+              <audio id="p3Audio" controls preload="metadata"></audio>
+            </div>
+            <div class="option-grid" id="p3Options"></div>
+            <div class="feedback" id="p3Feedback"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="pagina" id="pagina4">
+    <article class="lesson-card">
+      <div class="card-head">
+        <h2>🏁 Repaso final</h2>
+        <span class="pill">Antes del quiz</span>
+      </div>
+      <div class="card-body">
+        <div class="topic-grid">
+          <figure class="topic-media">
+            <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/dhaka-2737683-1-41c2a7b103.jpg" alt="Ciudad con alta concentración de población" data-zoomable>
+            <figcaption class="caption-chip">Escucha y recuerda</figcaption>
+          </figure>
+          <div class="listen-panel">
+            <h4>Ideas para cerrar</h4>
+            <p class="brief">Concentración, dispersión y servicios ayudan a entender cómo vive la población.</p>
+            <div class="audio-box">
+              <strong>Audio de repaso</strong>
+              <audio controls preload="metadata" src="audios/p4_repaso.mp3"></audio>
+            </div>
+            <div class="quick-tags" aria-label="Repaso">
+              <span>👥 Concentración</span>
+              <span>🌾 Dispersión</span>
+              <span>🚦 Reto urbano</span>
+              <span>🚰 Servicios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-top">
+            <h3 class="activity-title">🎧 Últimas pistas</h3>
+            <span class="score-pill">Aciertos: <span id="p4Score">0</span>/5</span>
+          </div>
+          <div class="challenge-box">
+            <div class="challenge-status">
+              <span id="p4Step">Pista final 1 de 5</span>
+              <span>Elige la idea correcta</span>
+            </div>
+            <div class="audio-box">
+              <strong id="p4AudioLabel">Audio de la pista final</strong>
+              <audio id="p4Audio" controls preload="metadata"></audio>
+            </div>
+            <div class="option-grid" id="p4Options"></div>
+            <div class="feedback" id="p4Feedback"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <nav class="nav-bar" aria-label="Navegación del nivel">
+    <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
+    <span class="ind-pag" id="indPag">1/4</span>
+    <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)" disabled>SIGUIENTE →</button>
+  </nav>
+
+  <a href="quiz.html" class="boton-quiz">IR AL QUIZ</a>
+</main>
+
+<div class="toast-hint" id="toastHint" role="status" aria-live="polite"></div>
+<div class="zoom-backdrop" id="zoomBackdrop" aria-hidden="true">
+  <img src="" alt="Imagen ampliada" id="zoomedImage">
 </div>
 
-<!-- ═══════════════════════════════════════
-     PÁGINA 3 · PROBLEMAS DE CONCENTRACIÓN
-     JUEGO: Escuchar pistas y escoger el concepto
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina3">
-  <div class="card-aud">
-    <h2 class="titulo-pag"><i class="fas fa-city me-2"></i>Problemas de la Concentración de Población</h2>
-    <span class="subtitulo-tema">Subtema 3 de 3</span>
-
-    <p class="mb-2">Cuando demasiada población se concentra en un lugar, los <strong>servicios básicos se saturan</strong>. Aumentan la contaminación, el desempleo, la inseguridad y la falta de vivienda. Es un reto para países como China, India y México.</p>
-
-    <div class="dato-box"><strong>Consecuencias:</strong> Escasez de agua, problemas de transporte, contaminación del aire y el suelo, desigualdad social.</div>
-
-    <!-- AUDIO GENERAL PÁGINA 3 -->
-    <div class="audio-section">
-      <h5><i class="fas fa-volume-up me-2"></i>Escucha las pistas</h5>
-      <div class="placeholder-audio">
-        <i class="fas fa-music fa-2x mb-2 d-block"></i>
-       <audio controls>
-    <source src="audios/audio 5 pistas.mp3.mp3" type="audio/mpeg">
-  </audio><br>
-      </div>
-    </div>
-
-    <div class="actividad">
-      <div class="pista-banner">
-        <p><i class="fas fa-lightbulb me-2"></i>Escucha las pistas y escoge la respuesta</p>
-      </div>
-      <h3 class="act-titulo">¿De qué concepto se habla?</h3>
-
-      <div class="pista-box mb-3" id="pista1">
-        <div class="pista-num">Pista 1:</div>
-        <div class="pista-txt mb-2">Cuando la ciudad crece demasiado, no hay suficientes casas para todos los habitantes.</div>
-        <div>
-          <button class="opcion-btn" onclick="responderPista('pista1','contaminacion','vivienda')">Contaminación</button>
-          <button class="opcion-btn" onclick="responderPista('pista1','vivienda','vivienda')">Escasez de vivienda</button>
-          <button class="opcion-btn" onclick="responderPista('pista1','desempleo','vivienda')">Desempleo</button>
-        </div>
-        <div class="fb-ok" id="okPista1">¡Correcto! La escasez de vivienda es uno de los principales problemas de la concentración.</div>
-        <div class="fb-err" id="errPista1">Incorrecto. La respuesta es "Escasez de vivienda".</div>
-      </div>
-
-      <div class="pista-box mb-3" id="pista2">
-        <div class="pista-num">Pista 2:</div>
-        <div class="pista-txt mb-2">Muchos vehículos, fábricas y personas en poco espacio ensucian el aire que respiramos.</div>
-        <div>
-          <button class="opcion-btn" onclick="responderPista('pista2','trafico','contaminacion')">Tráfico vehicular</button>
-          <button class="opcion-btn" onclick="responderPista('pista2','vivienda','contaminacion')">Falta de vivienda</button>
-          <button class="opcion-btn" onclick="responderPista('pista2','contaminacion','contaminacion')">Contaminación del aire</button>
-        </div>
-        <div class="fb-ok" id="okPista2">¡Correcto! La contaminación es un grave problema en zonas muy pobladas.</div>
-        <div class="fb-err" id="errPista2">Incorrecto. La respuesta es "Contaminación del aire".</div>
-      </div>
-
-      <div class="pista-box" id="pista3">
-        <div class="pista-num">Pista 3:</div>
-        <div class="pista-txt mb-2">Hay más personas que trabajos disponibles. Muchas personas no pueden ganarse la vida.</div>
-        <div>
-          <button class="opcion-btn" onclick="responderPista('pista3','desempleo','desempleo')">Desempleo</button>
-          <button class="opcion-btn" onclick="responderPista('pista3','agua','desempleo')">Escasez de agua</button>
-          <button class="opcion-btn" onclick="responderPista('pista3','vivienda','desempleo')">Vivienda</button>
-        </div>
-        <div class="fb-ok" id="okPista3">¡Correcto! El desempleo se agrava cuando hay mucha población concentrada en una zona.</div>
-        <div class="fb-err" id="errPista3">Incorrecto. La respuesta es "Desempleo".</div>
-      </div>
-
-      <div class="fb-ok mt-2" id="fbPag3">¡Muy bien! Identificaste todos los problemas de la concentración de población.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     PÁGINA 4 · REPASO AUDITIVO CON IMÁGENES
-     ═══════════════════════════════════════ -->
-<div class="pagina" id="pagina4">
-  <div class="card-aud">
-    <h2 class="titulo-pag"><i class="fas fa-star me-2"></i>Repaso General</h2>
-    <span class="subtitulo-tema">Retroalimentación · Los 3 subtemas</span>
-
-    <p class="mb-2">Escucha el audio de repaso mientras observas las imágenes. ¡Refuerza todo lo que aprendiste!</p>
-
-    <div class="audio-section">
-      <h5><i class="fas fa-volume-up me-2"></i>Audio de Repaso — Escúchalo completo</h5>
-      <div class="placeholder-audio">
-        <i class="fas fa-music fa-2x mb-2 d-block"></i>
-        <audio controls>
-    <source src="audios/audio 6 repaso.mp3.mp3" type="audio/mpeg">
-  </audio><br>
-        <small>Este audio debe repasar los 3 subtemas: distribución, concentración/dispersión y problemas</small>
-      </div>
-      <div class="note">Escucha mientras lees la información de cada imagen</div>
-    </div>
-
-    <div class="row g-3 mt-2">
-      <div class="col-md-4">
-        <div class="rep-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/x1080-953806db8a.jpg" alt="Tierra" class="rep-img">
-          <h6>Distribución Mundial</h6>
-          <p>La población no está repartida igual. China e India son los más poblados. Clima, agua y economía influyen en dónde vive la gente. Los países insulares pequeños son los menos poblados.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="rep-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/r-898ea4b8c0.jpg" alt="Ciudad densa" class="rep-img">
-          <h6>Concentración y Dispersión</h6>
-          <p>La densidad mide habitantes por km². Ciudades como Tokio o Dhaka están muy concentradas. Mongolia y el Sahara son ejemplos de dispersión poblacional extrema.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="rep-card">
-          <img src="/contenidos/geografia/poblacion-mundial/recursos/img/locales/17187367465141-0f0a309a26.jpg" alt="Problemas de concentración" class="rep-img">
-          <h6>Problemas de Concentración</h6>
-          <p>Demasiada gente en un lugar causa: falta de vivienda, contaminación, desempleo y saturación de servicios. Es uno de los retos más grandes del mundo actual.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- NAVEGADOR -->
-<div class="nav-bar">
-  <button class="btn-nav" id="btnAnt" onclick="cambiarPag(-1)" disabled>← ANTERIOR</button>
-  <span class="ind-pag" id="indPag">1/4</span>
-  <button class="btn-nav" id="btnSig" onclick="cambiarPag(1)">SIGUIENTE →</button>
-</div>
-<a href="quiz.html" class="boton-quiz text-center">
-  <i class="fas fa-puzzle-piece me-3"></i>IR AL QUIZ
-</a>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-let pag=1; const TOTAL=4;
-const progresoPaginas = {1:false,2:false,3:false,4:true};
-const aciertosAuditivos = {
-  p1: new Set(),
-  p2: new Set(),
-  p3: new Set()
+const TOTAL = 4;
+let pag = 1;
+
+const progresoPaginas = {
+  1: false,
+  2: false,
+  3: false,
+  4: false
 };
 
-[document.getElementById('sndClick'), document.getElementById('sndDing'), document.getElementById('sndError'), document.getElementById('sndTada')].forEach(audio => {
-  if (audio) audio.volume = 0.15;
+const activityState = {
+  p1_audio: { index: 0, solved: new Set(), total: 3 },
+  p2_escucha: { index: 0, solved: new Set(), total: 4 },
+  p3_soluciones: { index: 0, solved: new Set(), total: 5 },
+  p4_repaso: { index: 0, solved: new Set(), total: 5 }
+};
+
+const completionKeysByPage = {
+  1: 'p1_audio',
+  2: 'p2_escucha',
+  3: 'p3_soluciones',
+  4: 'p4_repaso'
+};
+
+const imageBase = '/contenidos/geografia/poblacion-mundial/recursos/img/locales/';
+
+const optionLibrary = {
+  ciudad: {
+    label: 'Mucha gente junta',
+    icon: '🏙️',
+    image: imageBase + '17187367465141-0f0a309a26.jpg',
+    alt: 'Calle con muchas personas'
+  },
+  campo: {
+    label: 'Poca gente separada',
+    icon: '🌾',
+    image: imageBase + 'r-465ce1fb29.jpg',
+    alt: 'Viviendas separadas en un espacio amplio'
+  },
+  concentracion: {
+    label: 'Concentración',
+    icon: '👥',
+    image: imageBase + 'dhaka-2737683-1-41c2a7b103.jpg',
+    alt: 'Ciudad con alta concentración de población'
+  },
+  dispersion: {
+    label: 'Dispersión',
+    icon: '🌄',
+    image: imageBase + 'r-10ad97ae88.jpg',
+    alt: 'Paisaje amplio con poca población'
+  },
+  transporte: {
+    label: 'Transporte público',
+    icon: '🚌',
+    image: imageBase + 'r-8f1db13861.jpg',
+    alt: 'Tráfico y transporte en una ciudad'
+  },
+  basura: {
+    label: 'Recolección de basura',
+    icon: '🧹',
+    image: imageBase + 'r-497a5816af.jpg',
+    alt: 'Ciudad grande donde se requieren servicios'
+  },
+  vivienda: {
+    label: 'Vivienda planeada',
+    icon: '🏠',
+    image: imageBase + 'gettyimages-638920569-edb2814efc.jpg',
+    alt: 'Zona urbana con edificios'
+  },
+  agua: {
+    label: 'Agua potable',
+    icon: '🚰',
+    image: imageBase + 'r-1ec334e38c.jpg',
+    alt: 'Paisaje con agua'
+  },
+  verdes: {
+    label: 'Áreas verdes',
+    icon: '🌳',
+    image: imageBase + 'wp11088637-afddb7fb17.jpg',
+    alt: 'Paisaje verde con árboles'
+  },
+  reto: {
+    label: 'Reto urbano',
+    icon: '🚦',
+    image: imageBase + 'r-8f1db13861.jpg',
+    alt: 'Tráfico intenso en la ciudad'
+  },
+  servicios: {
+    label: 'Servicios básicos',
+    icon: '🚰',
+    image: imageBase + 'r-1ec334e38c.jpg',
+    alt: 'Agua como servicio básico'
+  }
+};
+
+const retos = {
+  p1_audio: [
+    {
+      audio: 'audios/p1_pista_1.mp3',
+      label: 'Pista 1',
+      correct: 'ciudad',
+      options: ['ciudad', 'campo'],
+      ok: 'Correcto. Esa imagen muestra una zona con mucha población.'
+    },
+    {
+      audio: 'audios/p1_pista_2.mp3',
+      label: 'Pista 2',
+      correct: 'campo',
+      options: ['campo', 'ciudad'],
+      ok: 'Muy bien. Ahí las personas viven más separadas.'
+    },
+    {
+      audio: 'audios/p1_pista_3.mp3',
+      label: 'Pista 3',
+      correct: 'concentracion',
+      options: ['concentracion', 'dispersion'],
+      ok: 'Exacto. Mucha gente en poco espacio es concentración.'
+    }
+  ],
+  p2_escucha: [
+    {
+      audio: 'audios/p2_reto_1.mp3',
+      label: 'Reto 1',
+      correct: 'concentracion',
+      options: ['concentracion', 'dispersion'],
+      ok: 'Sí. Esa pista describe mucha gente reunida.'
+    },
+    {
+      audio: 'audios/p2_reto_2.mp3',
+      label: 'Reto 2',
+      correct: 'dispersion',
+      options: ['concentracion', 'dispersion'],
+      ok: 'Correcto. Casas alejadas indican dispersión.'
+    },
+    {
+      audio: 'audios/p2_reto_3.mp3',
+      label: 'Reto 3',
+      correct: 'concentracion',
+      options: ['concentracion', 'dispersion'],
+      ok: 'Muy bien. Departamentos y ciudad apuntan a concentración.'
+    },
+    {
+      audio: 'audios/p2_reto_4.mp3',
+      label: 'Reto 4',
+      correct: 'dispersion',
+      options: ['concentracion', 'dispersion'],
+      ok: 'Exacto. Viviendas separadas: dispersión.'
+    }
+  ],
+  p3_soluciones: [
+    {
+      audio: 'audios/p3_reto_1.mp3',
+      label: 'Caso 1',
+      correct: 'transporte',
+      options: ['transporte', 'basura', 'verdes'],
+      ok: 'Correcto. El transporte público ayuda a mover a muchas personas.'
+    },
+    {
+      audio: 'audios/p3_reto_2.mp3',
+      label: 'Caso 2',
+      correct: 'basura',
+      options: ['basura', 'agua', 'vivienda'],
+      ok: 'Muy bien. Se necesita recolección de basura.'
+    },
+    {
+      audio: 'audios/p3_reto_3.mp3',
+      label: 'Caso 3',
+      correct: 'vivienda',
+      options: ['vivienda', 'verdes', 'transporte'],
+      ok: 'Sí. La ciudad necesita planear vivienda segura.'
+    },
+    {
+      audio: 'audios/p3_reto_4.mp3',
+      label: 'Caso 4',
+      correct: 'agua',
+      options: ['agua', 'basura', 'transporte'],
+      ok: 'Correcto. El agua potable es un servicio básico.'
+    },
+    {
+      audio: 'audios/p3_reto_5.mp3',
+      label: 'Caso 5',
+      correct: 'verdes',
+      options: ['verdes', 'vivienda', 'basura'],
+      ok: 'Exacto. Más árboles y parques ayudan al ambiente.'
+    }
+  ],
+  p4_repaso: [
+    {
+      audio: 'audios/p4_final_1.mp3',
+      label: 'Pista final 1',
+      correct: 'concentracion',
+      options: ['concentracion', 'dispersion', 'servicios'],
+      ok: 'Bien. Mucha gente en poco espacio es concentración.'
+    },
+    {
+      audio: 'audios/p4_final_2.mp3',
+      label: 'Pista final 2',
+      correct: 'dispersion',
+      options: ['dispersion', 'concentracion', 'reto'],
+      ok: 'Correcto. Pocas casas separadas indican dispersión.'
+    },
+    {
+      audio: 'audios/p4_final_3.mp3',
+      label: 'Pista final 3',
+      correct: 'reto',
+      options: ['reto', 'servicios', 'verdes'],
+      ok: 'Muy bien. El tráfico es un reto urbano.'
+    },
+    {
+      audio: 'audios/p4_final_4.mp3',
+      label: 'Pista final 4',
+      correct: 'transporte',
+      options: ['transporte', 'basura', 'vivienda'],
+      ok: 'Sí. Autobuses y trenes son transporte público.'
+    },
+    {
+      audio: 'audios/p4_final_5.mp3',
+      label: 'Pista final 5',
+      correct: 'servicios',
+      options: ['servicios', 'dispersion', 'reto'],
+      ok: 'Exacto. Agua, drenaje y limpieza son servicios básicos.'
+    }
+  ]
+};
+
+const fxIds = ['sndClick', 'sndDing', 'sndError', 'sndTada'];
+fxIds.forEach(id => {
+  const audio = document.getElementById(id);
+  if (audio) audio.volume = 0.16;
 });
 
-function playFx(id){
-  try{
-    const audio=document.getElementById(id);
-    if(!audio) return;
-    audio.volume=0.15;
-    audio.currentTime=0;
-    const p=audio.play();
-    if(p && typeof p.catch==='function') p.catch(()=>{});
-  }catch(_){}
+function playFx(id) {
+  const audio = document.getElementById(id);
+  if (!audio) return;
+  audio.currentTime = 0;
+  const promise = audio.play();
+  if (promise && typeof promise.catch === 'function') promise.catch(() => {});
 }
 
-function puedeAvanzarDesdePaginaActual(){
-  return !!progresoPaginas[pag];
+function shuffle(list) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
 
-function todoCompletado(){
+function showToast(message) {
+  const toast = document.getElementById('toastHint');
+  toast.textContent = message;
+  toast.classList.add('on');
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove('on'), 2200);
+}
+
+function todoCompletado() {
   return Object.values(progresoPaginas).every(Boolean);
 }
 
-function marcarPaginaCompleta(numero){
-  if(progresoPaginas[numero]) return;
-  progresoPaginas[numero]=true;
+function completarPagina(numero) {
+  if (progresoPaginas[numero]) return;
+  progresoPaginas[numero] = true;
+  completarSubactividad(numero, completionKeysByPage[numero]);
   playFx('sndTada');
   syncUI();
 }
 
-function revisarPagina1(){
-  if(aciertosAuditivos.p1.size >= 3) marcarPaginaCompleta(1);
+function puedeIr(target) {
+  if (target <= pag) return true;
+  for (let page = 1; page < target; page++) {
+    if (!progresoPaginas[page]) return false;
+  }
+  return true;
 }
 
-function revisarPagina2(){
-  if(aciertosAuditivos.p2.size >= 5) marcarPaginaCompleta(2);
+function irPagina(target) {
+  if (!puedeIr(target)) {
+    playFx('sndError');
+    showToast('Completa la página actual para avanzar.');
+    syncUI();
+    return;
+  }
+  if (target !== pag) playFx('sndClick');
+  document.getElementById('pagina' + pag).classList.remove('activa');
+  pag = target;
+  document.getElementById('pagina' + pag).classList.add('activa');
+  syncUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function revisarPagina3(){
-  if(aciertosAuditivos.p3.size >= 3) marcarPaginaCompleta(3);
+function cambiarPag(delta) {
+  const target = Math.max(1, Math.min(TOTAL, pag + delta));
+  irPagina(target);
 }
 
-function actualizarQuizBtn(){
-  const btn=document.querySelector('.boton-quiz');
-  if(!btn) return;
-  btn.style.display = pag===TOTAL ? 'block' : 'none';
-  const bloqueado = !todoCompletado();
-  btn.classList.toggle('bloqueado', bloqueado);
-  btn.setAttribute('aria-disabled', bloqueado ? 'true' : 'false');
-  btn.tabIndex = bloqueado ? -1 : 0;
-  btn.title = bloqueado ? 'Completa todas las páginas para desbloquear el quiz' : '';
-}
-
-function cambiarPag(d){
-  if(d>0 && !puedeAvanzarDesdePaginaActual()) return;
-  playFx('sndClick');
-  document.getElementById('pagina'+pag).classList.remove('activa');
-  pag+=d;
-  document.getElementById('pagina'+pag).classList.add('activa');
-  syncUI(); window.scrollTo({top:0,behavior:'smooth'});
-}
-function syncUI(){
-  document.querySelectorAll('.punto').forEach((p,i)=>{
-    p.classList.remove('activo','completado');
-    if(i+1===pag) p.classList.add('activo');
-    else if(i+1<pag) p.classList.add('completado');
+function syncUI() {
+  document.querySelectorAll('.punto').forEach((dot, index) => {
+    const pageNumber = index + 1;
+    dot.classList.remove('activo', 'completado');
+    if (pageNumber === pag) dot.classList.add('activo');
+    else if (pageNumber < pag && progresoPaginas[pageNumber]) dot.classList.add('completado');
   });
-  document.getElementById('numActual').innerText=pag;
-  document.getElementById('indPag').innerText=pag+'/'+TOTAL;
-  document.getElementById('btnAnt').disabled=(pag===1);
-  document.getElementById('btnSig').disabled=(pag===TOTAL)||!puedeAvanzarDesdePaginaActual();
-  actualizarQuizBtn();
-}
-function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
-function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
 
-/* ── PÁG 1: OPCIÓN CON AUDIO POR PREGUNTA ── */
-function responderOpc(pregId, elegida, correcta){
-  if(aciertosAuditivos.p1.has(pregId)) return;
-  const cont = document.getElementById(pregId);
-  const btns = cont.querySelectorAll('.opcion-btn');
-  playFx('sndClick');
+  document.getElementById('numActual').textContent = String(pag);
+  document.getElementById('indPag').textContent = pag + '/' + TOTAL;
+  document.getElementById('btnAnt').disabled = pag === 1;
+  document.getElementById('btnSig').disabled = pag === TOTAL || !progresoPaginas[pag];
 
-  const okId  = 'ok'  + pregId.charAt(0).toUpperCase() + pregId.slice(1);
-  const errId = 'err' + pregId.charAt(0).toUpperCase() + pregId.slice(1);
-  const clickedBtn = [...btns].find(b => b.getAttribute('onclick').includes("'"+elegida+"'"));
-
-  if(elegida === correcta){
-    aciertosAuditivos.p1.add(pregId);
-    playFx('sndDing');
-    show(okId); hide(errId);
-    btns.forEach(b => b.classList.add('disabled'));
-    // resaltar botón correcto
-    [...btns].forEach(b => {
-      if(b.getAttribute('onclick').includes("'"+elegida+"'")){
-        b.classList.add('correcto');
-      }
-    });
-  } else {
-    playFx('sndError');
-    show(errId); hide(okId);
-    if(clickedBtn){
-      clickedBtn.classList.add('incorrecto','disabled');
-    }
+  const quiz = document.querySelector('.boton-quiz');
+  if (quiz) {
+    const blocked = !todoCompletado();
+    quiz.style.display = pag === TOTAL ? 'block' : 'none';
+    quiz.classList.toggle('bloqueado', blocked);
+    quiz.setAttribute('aria-disabled', blocked ? 'true' : 'false');
+    quiz.title = blocked ? 'Completa todo el nivel antes de ir al quiz.' : '';
   }
-  revisarPagina1();
 }
 
-/* ── PÁG 2: VERDADERO / FALSO ── */
-let vfAciertos = 0;
-function respVF(id, elegida, correcta){
-  if(aciertosAuditivos.p2.has(id)) return;
-  const cont = document.getElementById(id);
-  const btns = cont.querySelectorAll('.vf-btn');
-  playFx('sndClick');
-  const btnElegido = [...btns].find(b => b.classList.contains(elegida==='V'?'verdad':'falso'));
-  if(elegida === correcta){
-    aciertosAuditivos.p2.add(id);
-    playFx('sndDing');
-    btns.forEach(b => b.classList.add('disabled'));
-    if(btnElegido) btnElegido.classList.add('ok');
-    vfAciertos++;
-    if(vfAciertos >= 4) show('fbPag2');
-  } else {
-    playFx('sndError');
-    if(btnElegido){
-      btnElegido.classList.add('err','disabled');
-    }
-  }
-  revisarPagina2();
+function makeOptionButton(optionKey, activityKey, challengeIndex, correctKey) {
+  const data = optionLibrary[optionKey];
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'option-card';
+  button.dataset.option = optionKey;
+  button.innerHTML = `
+    <div class="option-img">
+      <img src="${data.image}" alt="${data.alt}" data-zoomable>
+    </div>
+    <div class="option-label">
+      <span>${data.icon} ${data.label}</span>
+      <span>↗</span>
+    </div>
+  `;
+  button.addEventListener('click', event => {
+    if (event.target && event.target.matches('img[data-zoomable]')) return;
+    answerChallenge(activityKey, challengeIndex, optionKey, correctKey, button);
+  });
+  return button;
 }
 
-/* ── PÁG 3: PISTAS ── */
-let pistaAciertos = 0;
-function responderPista(pistaId, elegida, correcta){
-  if(aciertosAuditivos.p3.has(pistaId)) return;
-  const cont = document.getElementById(pistaId);
-  const btns = cont.querySelectorAll('.opcion-btn');
-  playFx('sndClick');
-  const prefix = pistaId.charAt(0).toUpperCase() + pistaId.slice(1);
-  const clickedBtn = [...btns].find(b => b.getAttribute('onclick').includes("'"+elegida+"'"));
-  if(elegida === correcta){
-    aciertosAuditivos.p3.add(pistaId);
-    playFx('sndDing');
-    show('ok'+prefix); hide('err'+prefix);
-    btns.forEach(b => b.classList.add('disabled'));
-    pistaAciertos++;
-    if(pistaAciertos >= 3) show('fbPag3');
-  } else {
-    playFx('sndError');
-    show('err'+prefix); hide('ok'+prefix);
-    if(clickedBtn){
-      clickedBtn.classList.add('incorrecto','disabled');
-    }
+function renderChallenge(activityKey) {
+  const state = activityState[activityKey];
+  const list = retos[activityKey];
+  const current = list[state.index];
+  const pageNumber = Number(activityKey.charAt(1)) || pag;
+  const prefix = 'p' + pageNumber;
+
+  if (!current) {
+    document.getElementById(prefix + 'Feedback').className = 'feedback show ok';
+    document.getElementById(prefix + 'Feedback').textContent = 'Actividad terminada. Ya puedes avanzar.';
+    return;
   }
-  revisarPagina3();
+
+  const audio = document.getElementById(prefix + 'Audio');
+  const label = document.getElementById(prefix + 'AudioLabel');
+  const step = document.getElementById(prefix + 'Step');
+  const options = document.getElementById(prefix + 'Options');
+  const feedback = document.getElementById(prefix + 'Feedback');
+
+  audio.src = current.audio;
+  label.textContent = current.label;
+  step.textContent = current.label + ' de ' + list.length;
+  options.innerHTML = '';
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+
+  shuffle(current.options).forEach(optionKey => {
+    options.appendChild(makeOptionButton(optionKey, activityKey, state.index, current.correct));
+  });
+}
+
+function answerChallenge(activityKey, challengeIndex, chosenKey, correctKey, button) {
+  const state = activityState[activityKey];
+  if (state.solved.has(challengeIndex)) return;
+
+  playFx('sndClick');
+  const success = chosenKey === correctKey;
+  registrarIntentoAuditivoFacil(activityKey, success);
+
+  const pageNumber = Number(activityKey.charAt(1)) || pag;
+  const prefix = 'p' + pageNumber;
+  const feedback = document.getElementById(prefix + 'Feedback');
+  const challenge = retos[activityKey][challengeIndex];
+
+  if (!success) {
+    playFx('sndError');
+    button.classList.add('wrong');
+    button.disabled = true;
+    feedback.className = 'feedback show fail';
+    feedback.textContent = 'Esa no es. Escucha otra vez y prueba con otra opción.';
+    return;
+  }
+
+  playFx('sndDing');
+  state.solved.add(challengeIndex);
+  button.classList.add('correct');
+  document.querySelectorAll('#' + prefix + 'Options .option-card').forEach(option => {
+    option.disabled = true;
+    if (option.dataset.option === correctKey) option.classList.add('correct');
+  });
+
+  document.getElementById(prefix + 'Score').textContent = String(state.solved.size);
+  feedback.className = 'feedback show ok';
+  feedback.textContent = challenge.ok;
+
+  if (state.solved.size >= state.total) {
+    completarPagina(pageNumber);
+    return;
+  }
+
+  setTimeout(() => {
+    state.index += 1;
+    renderChallenge(activityKey);
+  }, 850);
+}
+
+function registrarIntentoAuditivoFacil(key, success) {
+  return { key, success };
+}
+
+function completarSubactividad(numero, key) {
+  return { numero, key };
+}
+
+function setupZoomableImages() {
+  const backdrop = document.getElementById('zoomBackdrop');
+  const zoomed = document.getElementById('zoomedImage');
+
+  document.addEventListener('click', event => {
+    const image = event.target.closest('img[data-zoomable]');
+    if (!image) return;
+    event.preventDefault();
+    event.stopPropagation();
+    zoomed.src = image.src;
+    zoomed.alt = image.alt || 'Imagen ampliada';
+    backdrop.classList.add('show');
+    backdrop.setAttribute('aria-hidden', 'false');
+  });
+
+  backdrop.addEventListener('click', () => {
+    backdrop.classList.remove('show');
+    backdrop.setAttribute('aria-hidden', 'true');
+    zoomed.src = '';
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      backdrop.classList.remove('show');
+      backdrop.setAttribute('aria-hidden', 'true');
+      zoomed.src = '';
+    }
+  });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  setupZoomableImages();
+  renderChallenge('p1_audio');
+  renderChallenge('p2_escucha');
+  renderChallenge('p3_soluciones');
+  renderChallenge('p4_repaso');
   syncUI();
-  const btnQuiz=document.querySelector('.boton-quiz');
-  if(btnQuiz){
-    btnQuiz.addEventListener('click', function(event){
-      if(!todoCompletado()){
+
+  const quiz = document.querySelector('.boton-quiz');
+  if (quiz) {
+    quiz.addEventListener('click', event => {
+      if (!todoCompletado()) {
         event.preventDefault();
         playFx('sndError');
-      } else {
-        playFx('sndClick');
+        showToast('Completa todo el nivel antes de ir al quiz.');
       }
     }, true);
   }
 });
 </script>
 <script src="/contenidos/recursos/js/reforzamiento-tracker.js"></script>
-<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260505d"></script>
+<script src="/contenidos/geografia/poblacion-mundial/recursos/js/poblacion-tracking.js?v=20260523a"></script>
 </body>
 </html>
